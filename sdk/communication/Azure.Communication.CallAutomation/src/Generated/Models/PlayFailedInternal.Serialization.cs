@@ -9,22 +9,37 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class PlayFailed
+    internal partial class PlayFailedInternal
     {
-        internal static PlayFailed DeserializePlayFailed(JsonElement element)
+        internal static PlayFailedInternal DeserializePlayFailedInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string operationContext = default;
-            ResultInformation resultInformation = default;
-            int? failedPlaySourceIndex = default;
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
+            int? failedPlaySourceIndex = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("callConnectionId"u8))
+                {
+                    callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"u8))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
@@ -48,37 +63,22 @@ namespace Azure.Communication.CallAutomation
                     failedPlaySourceIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("callConnectionId"u8))
-                {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
-                    continue;
-                }
             }
-            return new PlayFailed(
-                operationContext,
-                resultInformation,
-                failedPlaySourceIndex,
+            return new PlayFailedInternal(
                 callConnectionId,
                 serverCallId,
-                correlationId);
+                correlationId,
+                operationContext,
+                resultInformation,
+                failedPlaySourceIndex);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PlayFailed FromResponse(Response response)
+        internal static PlayFailedInternal FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializePlayFailed(document.RootElement);
+            return DeserializePlayFailedInternal(document.RootElement);
         }
     }
 }

@@ -10,27 +10,34 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class StartHoldMusicRequestInternal : IUtf8JsonSerializable
+    internal partial class ConnectRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
-            if (Optional.IsDefined(PlaySourceInfo))
-            {
-                writer.WritePropertyName("playSourceInfo"u8);
-                writer.WriteObjectValue(PlaySourceInfo);
-            }
+            writer.WritePropertyName("callLocator"u8);
+            writer.WriteObjectValue(CallLocator);
+            writer.WritePropertyName("callbackUri"u8);
+            writer.WriteStringValue(CallbackUri);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Optional.IsDefined(OperationCallbackUri))
+            if (Optional.IsDefined(CallIntelligenceOptions))
             {
-                writer.WritePropertyName("operationCallbackUri"u8);
-                writer.WriteStringValue(OperationCallbackUri);
+                writer.WritePropertyName("callIntelligenceOptions"u8);
+                writer.WriteObjectValue(CallIntelligenceOptions);
+            }
+            if (Optional.IsDefined(MediaStreamingOptions))
+            {
+                writer.WritePropertyName("mediaStreamingOptions"u8);
+                writer.WriteObjectValue(MediaStreamingOptions);
+            }
+            if (Optional.IsDefined(TranscriptionOptions))
+            {
+                writer.WritePropertyName("transcriptionOptions"u8);
+                writer.WriteObjectValue(TranscriptionOptions);
             }
             writer.WriteEndObject();
         }

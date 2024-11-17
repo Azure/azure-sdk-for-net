@@ -9,35 +9,21 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class PlayCompleted
+    internal partial class HoldFailedInternal
     {
-        internal static PlayCompleted DeserializePlayCompleted(JsonElement element)
+        internal static HoldFailedInternal DeserializeHoldFailedInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResultInformation resultInformation = default;
-            string operationContext = default;
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resultInformation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("operationContext"u8))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
@@ -53,16 +39,30 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resultInformation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    continue;
+                }
             }
-            return new PlayCompleted(resultInformation, operationContext, callConnectionId, serverCallId, correlationId);
+            return new HoldFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PlayCompleted FromResponse(Response response)
+        internal static HoldFailedInternal FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializePlayCompleted(document.RootElement);
+            return DeserializeHoldFailedInternal(document.RootElement);
         }
     }
 }

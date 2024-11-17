@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 {
     internal class StreamingDataParserTests
     {
         #region Audio
-
         [Test]
         public void ParseAudioMetadata_Test()
         {
@@ -28,6 +28,26 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 + "}";
 
             AudioMetadata streamingMetadata = (AudioMetadata)StreamingDataParser.Parse(metadataJson);
+            ValidateAudioMetadata(streamingMetadata);
+        }
+
+        [Test]
+        public void ParseAudioMetadata_bytes_Test()
+        {
+            string metadataJson = "{"
+                + "\"kind\": \"AudioMetadata\","
+                + "\"audioMetadata\": {"
+                + "\"subscriptionId\": \"subscriptionId\","
+                + "\"encoding\": \"encodingType\","
+                + "\"sampleRate\": 8,"
+                + "\"channels\": 2,"
+                + "\"length\": 640"
+                + "}"
+                + "}";
+
+            byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(metadataJson);
+
+            AudioMetadata streamingMetadata = (AudioMetadata)StreamingDataParser.Parse(receivedBytes);
             ValidateAudioMetadata(streamingMetadata);
         }
 
@@ -59,7 +79,8 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 + "}"
                 + "}";
 
-            AudioData streamingAudio = (AudioData)StreamingDataParser.Parse(audioJson);
+            byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(audioJson);
+            AudioData streamingAudio = (AudioData)StreamingDataParser.Parse(receivedBytes);
             ValidateAudioDataNoParticipant(streamingAudio);
         }
 
@@ -111,7 +132,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         private static void ValidateAudioData(AudioData streamingAudio)
         {
             Assert.IsNotNull(streamingAudio);
-            Assert.AreEqual("AQIDBAU=", streamingAudio.Data);
+            Assert.AreEqual(Convert.FromBase64String("AQIDBAU="), streamingAudio.Data);
             Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
             Assert.IsTrue(streamingAudio.Participant is CommunicationIdentifier);
             Assert.AreEqual("participantId", streamingAudio.Participant.RawId);
@@ -120,7 +141,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         private static void ValidateAudioDataNoParticipant(AudioData streamingAudio)
         {
             Assert.IsNotNull(streamingAudio);
-            Assert.AreEqual("AQIDBAU=", streamingAudio.Data);
+            Assert.AreEqual(Convert.FromBase64String("AQIDBAU="), streamingAudio.Data);
             Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
             Assert.IsNull(streamingAudio.Participant);
             Assert.IsFalse(streamingAudio.IsSilent);
@@ -226,6 +247,26 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         }
 
         [Test]
+        public void ParseTranscriptionMetadataBinaryArray_Test()
+        {
+            var metadataJson =
+            "{" +
+                "\"kind\":\"TranscriptionMetadata\"," +
+                "\"transcriptionMetadata\":" +
+                "{" +
+                    "\"subscriptionId\":\"subscriptionId\"," +
+                    "\"locale\":\"en-US\"," +
+                    "\"callConnectionId\":\"callConnectionId\"," +
+                    "\"correlationId\":\"correlationId\"" +
+                "}" +
+            "}";
+
+            byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(metadataJson);
+            TranscriptionMetadata streamingMetadata = (TranscriptionMetadata)StreamingDataParser.Parse(receivedBytes);
+            ValidateTranscriptionMetadata(streamingMetadata);
+        }
+
+        [Test]
         public void ParseTranscriptionDataEventsWithBinaryArray()
         {
             JObject jsonData = new()
@@ -283,23 +324,23 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("Hello World!", transcription.Text);
             Assert.AreEqual(TextFormat.Display, transcription.Format);
             Assert.AreEqual(0.98d, transcription.Confidence);
-            Assert.AreEqual(1, transcription.Offset);
-            Assert.AreEqual(2, transcription.Duration);
+            Assert.AreEqual(1, transcription.Offset.Ticks);
+            Assert.AreEqual(2, transcription.Duration.Ticks);
 
             // validate individual words
             IList<WordData> words = transcription.Words.ToList();
             Assert.AreEqual(2, words.Count);
             Assert.AreEqual("Hello", words[0].Text);
-            Assert.AreEqual(1, words[0].Offset);
-            Assert.AreEqual(1, words[0].Duration);
+            Assert.AreEqual(1, words[0].Offset.Ticks);
+            Assert.AreEqual(1, words[0].Duration.Ticks);
             Assert.AreEqual("World", words[1].Text);
-            Assert.AreEqual(6, words[1].Offset);
-            Assert.AreEqual(1, words[1].Duration);
+            Assert.AreEqual(6, words[1].Offset.Ticks);
+            Assert.AreEqual(1, words[1].Duration.Ticks);
 
             Assert.IsTrue(transcription.Participant is CommunicationIdentifier);
             Assert.AreEqual("abc12345", transcription.Participant.RawId);
-            Console.WriteLine(transcription.ResultStatus.ToString());
-            Assert.AreEqual(ResultStatus.Final, transcription.ResultStatus);
+            Console.WriteLine(transcription.ResultState.ToString());
+            Assert.AreEqual(TranscriptionResultState.Final, transcription.ResultState);
         }
         #endregion
     }

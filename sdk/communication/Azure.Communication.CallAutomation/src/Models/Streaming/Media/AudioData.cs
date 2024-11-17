@@ -10,26 +10,35 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class AudioData : StreamingData
     {
-        internal AudioData(string data, DateTime timestamp, string participantId, bool silent)
+        /// <summary>
+        /// Creates the new AudioData object
+        /// </summary>
+        /// <param name="data"></param>
+        public AudioData(byte[] data)
         {
             Data = data;
+        }
+
+        internal AudioData(string data, DateTime timestamp, string participantId, bool silent)
+        {
+            Data = !string.IsNullOrWhiteSpace(data) ? Convert.FromBase64String(data) : default;
             Timestamp = timestamp;
             if (participantId != null)
             {
-                Participant = CommunicationIdentifier.FromRawId(participantId);;
+                Participant = CommunicationIdentifier.FromRawId(participantId);
             }
             IsSilent = silent;
         }
 
         /// <summary>
-        /// The audio data in base64 string.
+        /// The audio data in base64 byte.
         /// </summary>
-        public string Data { get; }
+        public byte[] Data { get; }
 
         /// <summary>
         /// The timestamp of thwn the media was sourced.
         /// </summary>
-        public DateTime Timestamp { get; }
+        public DateTimeOffset Timestamp { get; }
         /// <summary>
         /// Participant ID
         /// </summary>

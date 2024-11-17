@@ -10,13 +10,20 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class StopHoldMusicRequestInternal : IUtf8JsonSerializable
+    internal partial class InterruptAudioAndAnnounceRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            writer.WritePropertyName("playSources"u8);
+            writer.WriteStartArray();
+            foreach (var item in PlaySources)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("playTo"u8);
+            writer.WriteObjectValue(PlayTo);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
