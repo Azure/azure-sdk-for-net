@@ -11,19 +11,21 @@ namespace Azure.CloudMachine.Tests;
 
 public class CloudMachineTests
 {
-    [Theory]
-    [TestCase([new string[] { "-bicep" }])]
-    [TestCase([new string[] { }])]
-    public void Provisioning(string[] args)
+    [Test]
+    public void GenerateBicep()
     {
-        CloudMachineInfrastructure.Configure(args, (cm) =>
+        CloudMachineCommands.Execute(["-bicep"], (CloudMachineInfrastructure infrastructure) =>
         {
-            cm.AddFeature(new KeyVaultFeature());
-            cm.AddFeature(new OpenAIFeature() // TODO: rework it such that models can be added as features
-            {
-                Chat = new AIModel("gpt-35-turbo", "0125"),
-                Embeddings = new AIModel("text-embedding-ada-002", "2")
-            });
-        });
+            infrastructure.AddFeature(new KeyVaultFeature());
+            infrastructure.AddFeature(new OpenAIModel("gpt-35-turbo", "0125"));
+            infrastructure.AddFeature(new OpenAIModel("text-embedding-ada-002", "2", AIModelKind.Embedding));
+        }, exitProcessIfHandled:false);
+    }
+
+    [Ignore("no recordings yet")]
+    [Test]
+    public void ListModels()
+    {
+        CloudMachineCommands.Execute(["-ai", "chat"], exitProcessIfHandled: false);
     }
 }

@@ -618,6 +618,7 @@ namespace Azure.ResourceManager.Fabric
             switch (message.Response.Status)
             {
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -642,6 +643,7 @@ namespace Azure.ResourceManager.Fabric
             switch (message.Response.Status)
             {
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -702,6 +704,7 @@ namespace Azure.ResourceManager.Fabric
             switch (message.Response.Status)
             {
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -726,6 +729,7 @@ namespace Azure.ResourceManager.Fabric
             switch (message.Response.Status)
             {
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
