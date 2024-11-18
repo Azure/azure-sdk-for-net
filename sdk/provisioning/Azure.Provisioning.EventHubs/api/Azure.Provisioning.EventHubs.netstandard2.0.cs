@@ -3,12 +3,13 @@ namespace Azure.Provisioning.EventHubs
     public partial class CaptureDescription : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CaptureDescription() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubDestination> Destination { get { throw null; } set { } }
+        public Azure.Provisioning.EventHubs.EventHubDestination Destination { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> Enabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EncodingCaptureDescription> Encoding { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> IntervalInSeconds { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> SizeLimitInBytes { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> SkipEmptyArchives { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum CleanupPolicyRetentionDescription
     {
@@ -24,7 +25,7 @@ namespace Azure.Provisioning.EventHubs
     public partial class EventHub : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public EventHub(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.CaptureDescription> CaptureDescription { get { throw null; } set { } }
+        public Azure.Provisioning.EventHubs.CaptureDescription CaptureDescription { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
@@ -32,10 +33,11 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.EventHubs.EventHubsNamespace? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> PartitionCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> PartitionIds { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.RetentionDescription> RetentionDescription { get { throw null; } set { } }
+        public Azure.Provisioning.EventHubs.RetentionDescription RetentionDescription { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubEntityStatus> Status { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpdatedOn { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHub FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
@@ -52,7 +54,8 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.EventHubs.EventHub? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.EventHubs.EventHubsAccessRight> Rights { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubAuthorizationRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.EventHubs.EventHubsAccessKeys GetKeys() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -72,9 +75,10 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<string> DataLakeAccountName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DataLakeFolderPath { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> DataLakeSubscriptionId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsCaptureIdentity> Identity { get { throw null; } set { } }
+        public Azure.Provisioning.EventHubs.EventHubsCaptureIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> StorageAccountResourceId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum EventHubEntityStatus
     {
@@ -98,8 +102,7 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<string> PrimaryKey { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondaryConnectionString { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondaryKey { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.EventHubs.EventHubsAccessKeys FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum EventHubsAccessRight
     {
@@ -117,7 +120,8 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.EventHubs.EventHubsNamespace? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.EventHubs.EventHubsApplicationGroupPolicy> Policies { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsApplicationGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
@@ -128,6 +132,7 @@ namespace Azure.Provisioning.EventHubs
     {
         public EventHubsApplicationGroupPolicy() { }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventHubsBuiltInRole : System.IEquatable<Azure.Provisioning.EventHubs.EventHubsBuiltInRole>
@@ -157,6 +162,7 @@ namespace Azure.Provisioning.EventHubs
         public EventHubsCaptureIdentity() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsCaptureIdentityType> IdentityType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> UserAssignedIdentity { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum EventHubsCaptureIdentityType
     {
@@ -172,14 +178,15 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<string> MetricId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsClusterProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsClusterSku> Sku { get { throw null; } set { } }
+        public Azure.Provisioning.EventHubs.EventHubsClusterSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Status { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> SupportsScaling { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpdatedOn { get { throw null; } }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.EventHubs.EventHubsBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.EventHubs.EventHubsBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsCluster FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
@@ -205,6 +212,7 @@ namespace Azure.Provisioning.EventHubs
         public EventHubsClusterSku() { }
         public Azure.Provisioning.BicepValue<int> Capacity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsClusterSkuName> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum EventHubsClusterSkuName
     {
@@ -218,9 +226,10 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.EventHubs.EventHub? Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpdatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> UserMetadata { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsConsumerGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
@@ -243,7 +252,8 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<long> PendingReplicationOperationsCount { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsDisasterRecoveryProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsDisasterRecoveryRole> Role { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsDisasterRecovery FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
@@ -272,6 +282,7 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsKeySource> KeySource { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.EventHubs.EventHubsKeyVaultProperties> KeyVaultProperties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> RequireInfrastructureEncryption { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum EventHubsKeySource
     {
@@ -285,6 +296,7 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<System.Uri> KeyVaultUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KeyVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> UserAssignedIdentity { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum EventHubsMetricId
     {
@@ -300,10 +312,10 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ClusterArmId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> DisableLocalAuth { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsEncryption> Encryption { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.NamespaceGeoDataReplicationProperties> GeoDataReplication { get { throw null; } set { } }
+        public Azure.Provisioning.EventHubs.EventHubsEncryption Encryption { get { throw null; } set { } }
+        public Azure.Provisioning.EventHubs.NamespaceGeoDataReplicationProperties GeoDataReplication { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ManagedServiceIdentity> Identity { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsAutoInflateEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> KafkaEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
@@ -315,14 +327,15 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ServiceBusEndpoint { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsSku> Sku { get { throw null; } set { } }
+        public Azure.Provisioning.EventHubs.EventHubsSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Status { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpdatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> ZoneRedundant { get { throw null; } set { } }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.EventHubs.EventHubsBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.EventHubs.EventHubsBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsNamespace FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
@@ -343,7 +356,8 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.EventHubs.EventHubsNamespace? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.EventHubs.EventHubsAccessRight> Rights { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsNamespaceAuthorizationRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.EventHubs.EventHubsAccessKeys GetKeys() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -369,9 +383,10 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.EventHubs.EventHubsNamespace? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsPublicNetworkAccessFlag> PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> TrustedServiceAccessEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.EventHubs.EventHubsNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsNetworkRuleSet FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
@@ -390,24 +405,27 @@ namespace Azure.Provisioning.EventHubs
         public EventHubsNetworkRuleSetIPRules() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsNetworkRuleIPAction> Action { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> IPMask { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class EventHubsNetworkRuleSetVirtualNetworkRules : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public EventHubsNetworkRuleSetVirtualNetworkRules() { }
         public Azure.Provisioning.BicepValue<bool> IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class EventHubsPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public EventHubsPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsPrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.EventHubs.EventHubsPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.EventHubs.EventHubsNamespace? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
@@ -418,13 +436,14 @@ namespace Azure.Provisioning.EventHubs
     public partial class EventHubsPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public EventHubsPrivateEndpointConnectionData() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsPrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.EventHubs.EventHubsPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum EventHubsPrivateEndpointConnectionProvisioningState
     {
@@ -447,6 +466,7 @@ namespace Azure.Provisioning.EventHubs
         public EventHubsPrivateLinkServiceConnectionState() { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsPrivateLinkConnectionStatus> Status { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum EventHubsPublicNetworkAccess
     {
@@ -478,8 +498,9 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.EventHubs.EventHubsNamespace? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsSchemaCompatibility> SchemaCompatibility { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsSchemaType> SchemaType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpdatedAtUtc { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsSchemaGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
@@ -501,6 +522,7 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<int> Capacity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsSkuName> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsSkuTier> Tier { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum EventHubsSkuName
     {
@@ -519,6 +541,7 @@ namespace Azure.Provisioning.EventHubs
         public EventHubsThrottlingPolicy() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsMetricId> MetricId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> RateLimitThreshold { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum EventHubsTlsVersion
     {
@@ -534,6 +557,7 @@ namespace Azure.Provisioning.EventHubs
         public NamespaceGeoDataReplicationProperties() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.EventHubs.NamespaceReplicaLocation> Locations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MaxReplicationLagDurationInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum NamespaceGeoDRRoleType
     {
@@ -546,6 +570,7 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ClusterArmId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> LocationName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.NamespaceGeoDRRoleType> RoleType { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class RetentionDescription : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -553,5 +578,6 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.CleanupPolicyRetentionDescription> CleanupPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> RetentionTimeInHours { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> TombstoneRetentionTimeInHours { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
 }

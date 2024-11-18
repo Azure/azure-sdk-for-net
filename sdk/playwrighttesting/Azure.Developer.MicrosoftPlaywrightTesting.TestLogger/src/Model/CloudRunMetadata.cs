@@ -9,6 +9,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model
     {
         internal string? WorkspaceId { get; set; }
         internal string? RunId { get; set; }
+        internal string? RunName { get; set; }
         internal Uri? BaseUri { get; set; }
         internal string? PortalUrl
         {
@@ -18,5 +19,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model
         internal bool EnableGithubSummary { get; set; } = true;
         internal DateTime TestRunStartTime { get; set; }
         internal TokenDetails? AccessTokenDetails { get; set; }
+        internal int NumberOfTestWorkers { get; set; } = 1;
     }
 }

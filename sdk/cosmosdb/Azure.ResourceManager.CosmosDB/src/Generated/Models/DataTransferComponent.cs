@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         private const string CosmosDBCassandraValue = "CosmosDBCassandra";
         private const string CosmosDBMongoValue = "CosmosDBMongo";
+        private const string CosmosDBMongoVCoreValue = "CosmosDBMongoVCore";
         private const string CosmosDBSqlValue = "CosmosDBSql";
         private const string AzureBlobStorageValue = "AzureBlobStorage";
 
@@ -31,6 +32,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static DataTransferComponent CosmosDBCassandra { get; } = new DataTransferComponent(CosmosDBCassandraValue);
         /// <summary> CosmosDBMongo. </summary>
         public static DataTransferComponent CosmosDBMongo { get; } = new DataTransferComponent(CosmosDBMongoValue);
+        /// <summary> CosmosDBMongoVCore. </summary>
+        public static DataTransferComponent CosmosDBMongoVCore { get; } = new DataTransferComponent(CosmosDBMongoVCoreValue);
         /// <summary> CosmosDBSql. </summary>
         public static DataTransferComponent CosmosDBSql { get; } = new DataTransferComponent(CosmosDBSqlValue);
         /// <summary> AzureBlobStorage. </summary>

@@ -17,7 +17,6 @@ sample-gen:
   clear-output-folder: true
 skip-csproj: true
 use-model-reader-writer: true
-use-write-core: true
 modelerfour:
   flatten-payloads: false
 

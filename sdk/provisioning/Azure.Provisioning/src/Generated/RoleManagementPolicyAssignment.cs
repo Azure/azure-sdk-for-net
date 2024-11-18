@@ -22,26 +22,42 @@ public partial class RoleManagementPolicyAssignment : ProvisionableResource
     /// The name of format {guid_guid} the role management policy assignment to
     /// upsert.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The policy id role management policy assignment.
     /// </summary>
-    public BicepValue<ResourceIdentifier> PolicyId { get => _policyId; set => _policyId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _policyId;
+    public BicepValue<ResourceIdentifier> PolicyId 
+    {
+        get { Initialize(); return _policyId!; }
+        set { Initialize(); _policyId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _policyId;
 
     /// <summary>
     /// The role definition of management policy assignment.
     /// </summary>
-    public BicepValue<ResourceIdentifier> RoleDefinitionId { get => _roleDefinitionId; set => _roleDefinitionId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _roleDefinitionId;
+    public BicepValue<ResourceIdentifier> RoleDefinitionId 
+    {
+        get { Initialize(); return _roleDefinitionId!; }
+        set { Initialize(); _roleDefinitionId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _roleDefinitionId;
 
     /// <summary>
     /// The role management policy scope.
     /// </summary>
-    public BicepValue<string> Scope { get => _scope; set => _scope.Assign(value); }
-    private readonly BicepValue<string> _scope;
+    public BicepValue<string> Scope 
+    {
+        get { Initialize(); return _scope!; }
+        set { Initialize(); _scope!.Assign(value); }
+    }
+    private BicepValue<string>? _scope;
 
     /// <summary>
     /// The readonly computed rule applied to the policy.             Please
@@ -58,26 +74,38 @@ public partial class RoleManagementPolicyAssignment : ProvisionableResource
     /// and
     /// Azure.ResourceManager.Authorization.Models.RoleManagementPolicyNotificationRule.
     /// </summary>
-    public BicepList<RoleManagementPolicyRule> EffectiveRules { get => _effectiveRules; }
-    private readonly BicepList<RoleManagementPolicyRule> _effectiveRules;
+    public BicepList<RoleManagementPolicyRule> EffectiveRules 
+    {
+        get { Initialize(); return _effectiveRules!; }
+    }
+    private BicepList<RoleManagementPolicyRule>? _effectiveRules;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Additional properties of scope, role definition and policy.
     /// </summary>
-    public BicepValue<PolicyAssignmentProperties> PolicyAssignmentProperties { get => _policyAssignmentProperties; }
-    private readonly BicepValue<PolicyAssignmentProperties> _policyAssignmentProperties;
+    public PolicyAssignmentProperties PolicyAssignmentProperties 
+    {
+        get { Initialize(); return _policyAssignmentProperties!; }
+    }
+    private PolicyAssignmentProperties? _policyAssignmentProperties;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new RoleManagementPolicyAssignment.
@@ -92,14 +120,22 @@ public partial class RoleManagementPolicyAssignment : ProvisionableResource
     public RoleManagementPolicyAssignment(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Authorization/roleManagementPolicyAssignments", resourceVersion ?? "2020-10-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _policyId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PolicyId", ["properties", "policyId"]);
-        _roleDefinitionId = BicepValue<ResourceIdentifier>.DefineProperty(this, "RoleDefinitionId", ["properties", "roleDefinitionId"]);
-        _scope = BicepValue<string>.DefineProperty(this, "Scope", ["properties", "scope"]);
-        _effectiveRules = BicepList<RoleManagementPolicyRule>.DefineProperty(this, "EffectiveRules", ["properties", "effectiveRules"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _policyAssignmentProperties = BicepValue<PolicyAssignmentProperties>.DefineProperty(this, "PolicyAssignmentProperties", ["properties", "policyAssignmentProperties"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// RoleManagementPolicyAssignment.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _policyId = DefineProperty<ResourceIdentifier>("PolicyId", ["properties", "policyId"]);
+        _roleDefinitionId = DefineProperty<ResourceIdentifier>("RoleDefinitionId", ["properties", "roleDefinitionId"]);
+        _scope = DefineProperty<string>("Scope", ["properties", "scope"]);
+        _effectiveRules = DefineListProperty<RoleManagementPolicyRule>("EffectiveRules", ["properties", "effectiveRules"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _policyAssignmentProperties = DefineModelProperty<PolicyAssignmentProperties>("PolicyAssignmentProperties", ["properties", "policyAssignmentProperties"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>

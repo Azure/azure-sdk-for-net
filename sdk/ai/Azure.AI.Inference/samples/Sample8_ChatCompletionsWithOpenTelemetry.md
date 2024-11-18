@@ -80,7 +80,7 @@ any additional code.
 var client = new ChatCompletionsClient(
     endpoint,
     credential,
-    new ChatCompletionsClientOptions());
+    new AzureAIInferenceClientOptions());
 
 var requestOptions = new ChatCompletionsOptions()
 {

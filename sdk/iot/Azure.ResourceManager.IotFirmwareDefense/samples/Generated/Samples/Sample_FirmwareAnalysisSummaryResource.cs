@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.IotFirmwareDefense.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 {
     public partial class Sample_FirmwareAnalysisSummaryResource
     {
-        // Summaries_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SummariesGetMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Summaries_Get_MaximumSet_Gen.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Summaries_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SummariesGetMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Summaries_Get_MinimumSet_Gen.json

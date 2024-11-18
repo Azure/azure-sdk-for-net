@@ -19,13 +19,21 @@ namespace Azure.Communication.Messages
 
         void IJsonModel<MessageReceipt>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MessageReceipt>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MessageReceipt)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
             writer.WritePropertyName("to"u8);
@@ -45,7 +53,6 @@ namespace Azure.Communication.Messages
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MessageReceipt IJsonModel<MessageReceipt>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

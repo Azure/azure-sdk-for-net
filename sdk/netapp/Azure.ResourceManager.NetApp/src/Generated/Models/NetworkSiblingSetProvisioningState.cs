@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Gets the status of the NetworkSiblingSet at the time the operation was called.
-    /// Serialized Name: NetworkSiblingSetProvisioningState
-    /// </summary>
+    /// <summary> Gets the status of the NetworkSiblingSet at the time the operation was called. </summary>
     public readonly partial struct NetworkSiblingSetProvisioningState : IEquatable<NetworkSiblingSetProvisioningState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string CanceledValue = "Canceled";
         private const string UpdatingValue = "Updating";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: NetworkSiblingSetProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static NetworkSiblingSetProvisioningState Succeeded { get; } = new NetworkSiblingSetProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: NetworkSiblingSetProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static NetworkSiblingSetProvisioningState Failed { get; } = new NetworkSiblingSetProvisioningState(FailedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: NetworkSiblingSetProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static NetworkSiblingSetProvisioningState Canceled { get; } = new NetworkSiblingSetProvisioningState(CanceledValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: NetworkSiblingSetProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static NetworkSiblingSetProvisioningState Updating { get; } = new NetworkSiblingSetProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="NetworkSiblingSetProvisioningState"/> values are the same. </summary>
         public static bool operator ==(NetworkSiblingSetProvisioningState left, NetworkSiblingSetProvisioningState right) => left.Equals(right);

@@ -106,30 +106,35 @@ internal static class BicepTypeMapping
             ResourceIdentifier i => BicepSyntax.Value(ToLiteralString(i, format)),
             Enum e => BicepSyntax.Value(ToLiteralString(e, format)),
             ProvisionableConstruct c => CompileNestedConstruct(c),
-            IDictionary<string, BicepValue> d =>
-                d is BicepValue b && b.Kind == BicepValueKind.Expression ? b.Expression! : ToObject(d),
+            IDictionary<string, IBicepValue> d =>
+                d is IBicepValue b && b.Kind == BicepValueKind.Expression ? b.Expression! : ToObject(d),
             IEnumerable seq =>
-                seq is BicepValue b && b.Kind == BicepValueKind.Expression ? b.Expression! : ToArray(seq.OfType<object>()),
+                seq is IBicepValue b && b.Kind == BicepValueKind.Expression ? b.Expression! : ToArray(seq.OfType<object>()),
             // Extensible enums like Azure.Location
             ValueType ee => BicepSyntax.Value(ToLiteralString(ee, format)),
             // Unwrap BicepValue after collections so it doesn't loop forever
-            BicepValue v when (v.Kind == BicepValueKind.Expression) => v.Expression!,
-            BicepValue v when (v.Source is not null) => v.Source.GetReference(),
-            BicepValue v when (v.Kind == BicepValueKind.Literal) => ToBicep(v.GetLiteralValue(), format),
-            BicepValue v when (v.Self is not null) => v.Self.GetReference(),
-            BicepValue v when (v.Kind == BicepValueKind.Unset) => BicepSyntax.Null(),
+            IBicepValue v when (v.Kind == BicepValueKind.Expression) => v.Expression!,
+            IBicepValue v when (v.Source is not null) => v.Source.GetReference(),
+            IBicepValue v when (v.Kind == BicepValueKind.Literal) => ToBicep(v.LiteralValue, format),
+            IBicepValue v when (v.Self is not null) => v.Self.GetReference(),
+            IBicepValue v when (v.Kind == BicepValueKind.Unset) => BicepSyntax.Null(),
             _ => throw new InvalidOperationException($"Cannot convert {value} to a Bicep expression.")
         };
 
         ArrayExpression ToArray(IEnumerable<object> seq) =>
             BicepSyntax.Array([.. seq.Select(v => ToBicep(v, v is BicepValue b ? b.Format : null))]);
 
-        ObjectExpression ToObject(IDictionary<string, BicepValue> dict)
+        ObjectExpression ToObject(IDictionary<string, IBicepValue> dict)
         {
             Dictionary<string, BicepExpression> values = [];
-            foreach (KeyValuePair<string, BicepValue> pair in dict)
+            foreach (KeyValuePair<string, IBicepValue> pair in dict)
             {
-                values[pair.Key] = ToBicep(pair.Value, pair.Value.Format);
+                string? format = null;
+                if (pair.Value is BicepValue v)
+                {
+                    format = v.Format;
+                }
+                values[pair.Key] = ToBicep(pair.Value, format);
             }
             return BicepSyntax.Object(values);
         }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text.Json;
 
@@ -13,6 +14,7 @@ namespace Azure.Core.Serialization
     {
         internal class AllowList
         {
+            [RequiresUnreferencedCode("Reflection over unknown type")]
             public static void AssertAllowedValue<T>(T value)
             {
                 if (value == null)
@@ -26,6 +28,7 @@ namespace Azure.Core.Serialization
                 }
             }
 
+            [RequiresUnreferencedCode("Reflection over unknown type")]
             private static bool IsAllowedValue<T>(T value)
             {
                 if (value == null)
@@ -63,6 +66,7 @@ namespace Azure.Core.Serialization
                     type == typeof(DynamicData);
             }
 
+            [RequiresUnreferencedCode("Reflection over unknown type")]
             private static bool IsAllowedCollectionValue<T>(Type type, T value)
             {
                 return
@@ -71,6 +75,7 @@ namespace Azure.Core.Serialization
                     IsAllowedDictionaryValue(type, value);
             }
 
+            [RequiresUnreferencedCode("Reflection over unknown type")]
             private static bool IsAllowedArrayValue<T>(Type type, T value)
             {
                 if (value is not Array array)
@@ -92,6 +97,7 @@ namespace Azure.Core.Serialization
                 return IsAllowedEnumerableValue(elementType, array);
             }
 
+            [RequiresUnreferencedCode("Reflection over unknown type")]
             private static bool IsAllowedListValue<T>(Type type, T value)
             {
                 if (value == null)
@@ -118,6 +124,7 @@ namespace Azure.Core.Serialization
                 return IsAllowedEnumerableValue(genericArgument, (IEnumerable)value);
             }
 
+            [RequiresUnreferencedCode("Reflection over unknown type")]
             private static bool IsAllowedDictionaryValue<T>(Type type, T value)
             {
                 if (value == null)
@@ -149,6 +156,7 @@ namespace Azure.Core.Serialization
                 return IsAllowedEnumerableValue(genericArguments[1], ((IDictionary)value).Values);
             }
 
+            [RequiresUnreferencedCode("Reflection over unknown type")]
             private static bool IsAllowedEnumerableValue(Type elementType, IEnumerable enumerable)
             {
                 foreach (var item in enumerable)
@@ -174,7 +182,8 @@ namespace Azure.Core.Serialization
                 return true;
             }
 
-            private static bool IsAllowedAnonymousValue<T>(Type type, T value)
+            [RequiresUnreferencedCode("Reflection over unknown type")]
+            private static bool IsAllowedAnonymousValue<T>([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] Type type, T value)
             {
                 if (!IsAnonymousType(type))
                 {

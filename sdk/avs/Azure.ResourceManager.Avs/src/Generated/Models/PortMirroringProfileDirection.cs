@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Direction of port mirroring profile. </summary>
+    /// <summary> Port Mirroring Direction. </summary>
     public readonly partial struct PortMirroringProfileDirection : IEquatable<PortMirroringProfileDirection>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Avs.Models
         private const string EgressValue = "EGRESS";
         private const string BidirectionalValue = "BIDIRECTIONAL";
 
-        /// <summary> INGRESS. </summary>
+        /// <summary> is ingress. </summary>
         public static PortMirroringProfileDirection Ingress { get; } = new PortMirroringProfileDirection(IngressValue);
-        /// <summary> EGRESS. </summary>
+        /// <summary> is egress. </summary>
         public static PortMirroringProfileDirection Egress { get; } = new PortMirroringProfileDirection(EgressValue);
-        /// <summary> BIDIRECTIONAL. </summary>
+        /// <summary> is bidirectional. </summary>
         public static PortMirroringProfileDirection Bidirectional { get; } = new PortMirroringProfileDirection(BidirectionalValue);
         /// <summary> Determines if two <see cref="PortMirroringProfileDirection"/> values are the same. </summary>
         public static bool operator ==(PortMirroringProfileDirection left, PortMirroringProfileDirection right) => left.Equals(right);

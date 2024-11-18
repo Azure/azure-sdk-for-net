@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// The full path to a volume that is to be migrated into ANF. Required for Migration volumes
-    /// Serialized Name: RemotePath
-    /// </summary>
+    /// <summary> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </summary>
     public partial class RemotePath
     {
         /// <summary>
@@ -49,18 +46,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RemotePath"/>. </summary>
-        /// <param name="externalHostName">
-        /// The Path to a ONTAP Host
-        /// Serialized Name: RemotePath.externalHostName
-        /// </param>
-        /// <param name="serverName">
-        /// The name of a server on the ONTAP Host
-        /// Serialized Name: RemotePath.serverName
-        /// </param>
-        /// <param name="volumeName">
-        /// The name of a volume on the server
-        /// Serialized Name: RemotePath.volumeName
-        /// </param>
+        /// <param name="externalHostName"> The Path to a ONTAP Host. </param>
+        /// <param name="serverName"> The name of a server on the ONTAP Host. </param>
+        /// <param name="volumeName"> The name of a volume on the server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="externalHostName"/>, <paramref name="serverName"/> or <paramref name="volumeName"/> is null. </exception>
         public RemotePath(string externalHostName, string serverName, string volumeName)
         {
@@ -74,18 +62,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RemotePath"/>. </summary>
-        /// <param name="externalHostName">
-        /// The Path to a ONTAP Host
-        /// Serialized Name: RemotePath.externalHostName
-        /// </param>
-        /// <param name="serverName">
-        /// The name of a server on the ONTAP Host
-        /// Serialized Name: RemotePath.serverName
-        /// </param>
-        /// <param name="volumeName">
-        /// The name of a volume on the server
-        /// Serialized Name: RemotePath.volumeName
-        /// </param>
+        /// <param name="externalHostName"> The Path to a ONTAP Host. </param>
+        /// <param name="serverName"> The name of a server on the ONTAP Host. </param>
+        /// <param name="volumeName"> The name of a volume on the server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RemotePath(string externalHostName, string serverName, string volumeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -100,20 +79,11 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// The Path to a ONTAP Host
-        /// Serialized Name: RemotePath.externalHostName
-        /// </summary>
+        /// <summary> The Path to a ONTAP Host. </summary>
         public string ExternalHostName { get; set; }
-        /// <summary>
-        /// The name of a server on the ONTAP Host
-        /// Serialized Name: RemotePath.serverName
-        /// </summary>
+        /// <summary> The name of a server on the ONTAP Host. </summary>
         public string ServerName { get; set; }
-        /// <summary>
-        /// The name of a volume on the server
-        /// Serialized Name: RemotePath.volumeName
-        /// </summary>
+        /// <summary> The name of a volume on the server. </summary>
         public string VolumeName { get; set; }
     }
 }

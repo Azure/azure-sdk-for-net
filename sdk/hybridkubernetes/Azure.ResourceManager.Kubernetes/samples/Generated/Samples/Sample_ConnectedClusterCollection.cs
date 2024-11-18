@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Kubernetes.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Kubernetes.Samples
 {
     public partial class Sample_ConnectedClusterCollection
     {
-        // CreateClusterExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateClusterExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/CreateClusterExample.json
@@ -58,9 +58,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreateClusterPrivateLinkExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateClusterPrivateLinkExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/CreateClusterPrivateLinkExample.json
@@ -101,9 +100,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetClusterExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetClusterExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/GetClusterExample.json
@@ -135,9 +133,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetClusterExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetClusterExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/GetClusterExample.json
@@ -165,9 +162,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetClusterExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetClusterExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/GetClusterExample.json
@@ -195,7 +191,7 @@ namespace Azure.ResourceManager.Kubernetes.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -207,9 +203,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             }
         }
 
-        // GetClustersExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetClustersExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/GetClustersByResourceGroupExample.json
@@ -240,7 +235,7 @@ namespace Azure.ResourceManager.Kubernetes.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

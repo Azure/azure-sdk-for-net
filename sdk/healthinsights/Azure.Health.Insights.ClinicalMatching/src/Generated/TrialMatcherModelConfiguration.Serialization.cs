@@ -19,13 +19,21 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         void IJsonModel<TrialMatcherModelConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TrialMatcherModelConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TrialMatcherModelConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Verbose))
             {
                 writer.WritePropertyName("verbose"u8);
@@ -53,7 +61,6 @@ namespace Azure.Health.Insights.ClinicalMatching
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TrialMatcherModelConfiguration IJsonModel<TrialMatcherModelConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

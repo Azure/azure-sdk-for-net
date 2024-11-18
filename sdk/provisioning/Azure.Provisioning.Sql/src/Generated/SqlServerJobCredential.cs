@@ -20,38 +20,60 @@ public partial class SqlServerJobCredential : ProvisionableResource
     /// <summary>
     /// The name of the credential.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The credential password.
     /// </summary>
-    public BicepValue<string> Password { get => _password; set => _password.Assign(value); }
-    private readonly BicepValue<string> _password;
+    public BicepValue<string> Password 
+    {
+        get { Initialize(); return _password!; }
+        set { Initialize(); _password!.Assign(value); }
+    }
+    private BicepValue<string>? _password;
 
     /// <summary>
     /// The credential user name.
     /// </summary>
-    public BicepValue<string> Username { get => _username; set => _username.Assign(value); }
-    private readonly BicepValue<string> _username;
+    public BicepValue<string> Username 
+    {
+        get { Initialize(); return _username!; }
+        set { Initialize(); _username!.Assign(value); }
+    }
+    private BicepValue<string>? _username;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServerJobAgent.
     /// </summary>
-    public SqlServerJobAgent? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlServerJobAgent> _parent;
+    public SqlServerJobAgent? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlServerJobAgent>? _parent;
 
     /// <summary>
     /// Creates a new SqlServerJobCredential.
@@ -66,12 +88,19 @@ public partial class SqlServerJobCredential : ProvisionableResource
     public SqlServerJobCredential(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents/credentials", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _password = BicepValue<string>.DefineProperty(this, "Password", ["properties", "password"]);
-        _username = BicepValue<string>.DefineProperty(this, "Username", ["properties", "username"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlServerJobAgent>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SqlServerJobCredential.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _password = DefineProperty<string>("Password", ["properties", "password"]);
+        _username = DefineProperty<string>("Username", ["properties", "username"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlServerJobAgent>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

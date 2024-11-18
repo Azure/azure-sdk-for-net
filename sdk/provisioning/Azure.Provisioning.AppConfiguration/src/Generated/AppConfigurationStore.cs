@@ -25,108 +25,170 @@ public partial class AppConfigurationStore : ProvisionableResource
     /// <summary>
     /// The name of the configuration store.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Indicates whether the configuration store need to be recovered.
     /// </summary>
-    public BicepValue<AppConfigurationCreateMode> CreateMode { get => _createMode; set => _createMode.Assign(value); }
-    private readonly BicepValue<AppConfigurationCreateMode> _createMode;
+    public BicepValue<AppConfigurationCreateMode> CreateMode 
+    {
+        get { Initialize(); return _createMode!; }
+        set { Initialize(); _createMode!.Assign(value); }
+    }
+    private BicepValue<AppConfigurationCreateMode>? _createMode;
 
     /// <summary>
     /// Disables all authentication methods other than AAD authentication.
     /// </summary>
-    public BicepValue<bool> DisableLocalAuth { get => _disableLocalAuth; set => _disableLocalAuth.Assign(value); }
-    private readonly BicepValue<bool> _disableLocalAuth;
+    public BicepValue<bool> DisableLocalAuth 
+    {
+        get { Initialize(); return _disableLocalAuth!; }
+        set { Initialize(); _disableLocalAuth!.Assign(value); }
+    }
+    private BicepValue<bool>? _disableLocalAuth;
 
     /// <summary>
     /// Property specifying whether protection against purge is enabled for
     /// this configuration store.
     /// </summary>
-    public BicepValue<bool> EnablePurgeProtection { get => _enablePurgeProtection; set => _enablePurgeProtection.Assign(value); }
-    private readonly BicepValue<bool> _enablePurgeProtection;
+    public BicepValue<bool> EnablePurgeProtection 
+    {
+        get { Initialize(); return _enablePurgeProtection!; }
+        set { Initialize(); _enablePurgeProtection!.Assign(value); }
+    }
+    private BicepValue<bool>? _enablePurgeProtection;
 
     /// <summary>
     /// Key vault properties.
     /// </summary>
-    public BicepValue<AppConfigurationKeyVaultProperties> EncryptionKeyVaultProperties { get => _encryptionKeyVaultProperties; set => _encryptionKeyVaultProperties.Assign(value); }
-    private readonly BicepValue<AppConfigurationKeyVaultProperties> _encryptionKeyVaultProperties;
+    public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties 
+    {
+        get { Initialize(); return _encryptionKeyVaultProperties!; }
+        set { Initialize(); AssignOrReplace(ref _encryptionKeyVaultProperties, value); }
+    }
+    private AppConfigurationKeyVaultProperties? _encryptionKeyVaultProperties;
 
     /// <summary>
     /// The managed identity information, if configured.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// Control permission for data plane traffic coming from public networks
     /// while private endpoint is enabled.
     /// </summary>
-    public BicepValue<AppConfigurationPublicNetworkAccess> PublicNetworkAccess { get => _publicNetworkAccess; set => _publicNetworkAccess.Assign(value); }
-    private readonly BicepValue<AppConfigurationPublicNetworkAccess> _publicNetworkAccess;
+    public BicepValue<AppConfigurationPublicNetworkAccess> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<AppConfigurationPublicNetworkAccess>? _publicNetworkAccess;
 
     /// <summary>
     /// The SKU name of the configuration store.
     /// </summary>
-    public BicepValue<string> SkuName { get => _skuName; set => _skuName.Assign(value); }
-    private readonly BicepValue<string> _skuName;
+    public BicepValue<string> SkuName 
+    {
+        get { Initialize(); return _skuName!; }
+        set { Initialize(); _skuName!.Assign(value); }
+    }
+    private BicepValue<string>? _skuName;
 
     /// <summary>
     /// The amount of time in days that the configuration store will be
     /// retained when it is soft deleted.
     /// </summary>
-    public BicepValue<int> SoftDeleteRetentionInDays { get => _softDeleteRetentionInDays; set => _softDeleteRetentionInDays.Assign(value); }
-    private readonly BicepValue<int> _softDeleteRetentionInDays;
+    public BicepValue<int> SoftDeleteRetentionInDays 
+    {
+        get { Initialize(); return _softDeleteRetentionInDays!; }
+        set { Initialize(); _softDeleteRetentionInDays!.Assign(value); }
+    }
+    private BicepValue<int>? _softDeleteRetentionInDays;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The creation date of configuration store.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// The DNS endpoint where the configuration store API will be available.
     /// </summary>
-    public BicepValue<string> Endpoint { get => _endpoint; }
-    private readonly BicepValue<string> _endpoint;
+    public BicepValue<string> Endpoint 
+    {
+        get { Initialize(); return _endpoint!; }
+    }
+    private BicepValue<string>? _endpoint;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The list of private endpoint connections that are set up for this
     /// resource.
     /// </summary>
-    public BicepList<AppConfigurationPrivateEndpointConnectionReference> PrivateEndpointConnections { get => _privateEndpointConnections; }
-    private readonly BicepList<AppConfigurationPrivateEndpointConnectionReference> _privateEndpointConnections;
+    public BicepList<AppConfigurationPrivateEndpointConnectionReference> PrivateEndpointConnections 
+    {
+        get { Initialize(); return _privateEndpointConnections!; }
+    }
+    private BicepList<AppConfigurationPrivateEndpointConnectionReference>? _privateEndpointConnections;
 
     /// <summary>
     /// The provisioning state of the configuration store.
     /// </summary>
-    public BicepValue<AppConfigurationProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<AppConfigurationProvisioningState> _provisioningState;
+    public BicepValue<AppConfigurationProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<AppConfigurationProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new AppConfigurationStore.
@@ -141,23 +203,30 @@ public partial class AppConfigurationStore : ProvisionableResource
     public AppConfigurationStore(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores", resourceVersion ?? "2024-05-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _createMode = BicepValue<AppConfigurationCreateMode>.DefineProperty(this, "CreateMode", ["properties", "createMode"]);
-        _disableLocalAuth = BicepValue<bool>.DefineProperty(this, "DisableLocalAuth", ["properties", "disableLocalAuth"]);
-        _enablePurgeProtection = BicepValue<bool>.DefineProperty(this, "EnablePurgeProtection", ["properties", "enablePurgeProtection"]);
-        _encryptionKeyVaultProperties = BicepValue<AppConfigurationKeyVaultProperties>.DefineProperty(this, "EncryptionKeyVaultProperties", ["properties", "encryption", "keyVaultProperties"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _publicNetworkAccess = BicepValue<AppConfigurationPublicNetworkAccess>.DefineProperty(this, "PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
-        _skuName = BicepValue<string>.DefineProperty(this, "SkuName", ["sku", "name"]);
-        _softDeleteRetentionInDays = BicepValue<int>.DefineProperty(this, "SoftDeleteRetentionInDays", ["properties", "softDeleteRetentionInDays"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "creationDate"], isOutput: true);
-        _endpoint = BicepValue<string>.DefineProperty(this, "Endpoint", ["properties", "endpoint"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _privateEndpointConnections = BicepList<AppConfigurationPrivateEndpointConnectionReference>.DefineProperty(this, "PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
-        _provisioningState = BicepValue<AppConfigurationProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of AppConfigurationStore.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _createMode = DefineProperty<AppConfigurationCreateMode>("CreateMode", ["properties", "createMode"]);
+        _disableLocalAuth = DefineProperty<bool>("DisableLocalAuth", ["properties", "disableLocalAuth"]);
+        _enablePurgeProtection = DefineProperty<bool>("EnablePurgeProtection", ["properties", "enablePurgeProtection"]);
+        _encryptionKeyVaultProperties = DefineModelProperty<AppConfigurationKeyVaultProperties>("EncryptionKeyVaultProperties", ["properties", "encryption", "keyVaultProperties"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _publicNetworkAccess = DefineProperty<AppConfigurationPublicNetworkAccess>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
+        _skuName = DefineProperty<string>("SkuName", ["sku", "name"]);
+        _softDeleteRetentionInDays = DefineProperty<int>("SoftDeleteRetentionInDays", ["properties", "softDeleteRetentionInDays"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationDate"], isOutput: true);
+        _endpoint = DefineProperty<string>("Endpoint", ["properties", "endpoint"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _privateEndpointConnections = DefineListProperty<AppConfigurationPrivateEndpointConnectionReference>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _provisioningState = DefineProperty<AppConfigurationProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -217,10 +286,12 @@ public partial class AppConfigurationStore : ProvisionableResource
     /// Get access keys for this AppConfigurationStore resource.
     /// </summary>
     /// <returns>The keys for this AppConfigurationStore resource.</returns>
-    public BicepList<AppConfigurationStoreApiKey> GetKeys() =>
-        BicepList<AppConfigurationStoreApiKey>.FromExpression(
-            AppConfigurationStoreApiKey.FromExpression,
+    public BicepList<AppConfigurationStoreApiKey> GetKeys()
+    {
+        return BicepList<AppConfigurationStoreApiKey>.FromExpression(
+            e => { AppConfigurationStoreApiKey key = new(); ((IBicepValue)key).Expression = e; return key; },
             new MemberExpression(new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")), "keys"));
+    }
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants

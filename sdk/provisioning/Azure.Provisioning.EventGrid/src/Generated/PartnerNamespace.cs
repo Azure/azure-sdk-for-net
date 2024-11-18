@@ -21,36 +21,56 @@ public partial class PartnerNamespace : ProvisionableResource
     /// <summary>
     /// Name of the partner namespace.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// This can be used to restrict traffic from specific IPs instead of all
     /// IPs. Note: These are considered only if PublicNetworkAccess is enabled.
     /// </summary>
-    public BicepList<EventGridInboundIPRule> InboundIPRules { get => _inboundIPRules; set => _inboundIPRules.Assign(value); }
-    private readonly BicepList<EventGridInboundIPRule> _inboundIPRules;
+    public BicepList<EventGridInboundIPRule> InboundIPRules 
+    {
+        get { Initialize(); return _inboundIPRules!; }
+        set { Initialize(); _inboundIPRules!.Assign(value); }
+    }
+    private BicepList<EventGridInboundIPRule>? _inboundIPRules;
 
     /// <summary>
     /// This boolean is used to enable or disable local auth. Default value is
     /// false. When the property is set to true, only AAD token will be used
     /// to authenticate if user is allowed to publish to the partner namespace.
     /// </summary>
-    public BicepValue<bool> IsLocalAuthDisabled { get => _isLocalAuthDisabled; set => _isLocalAuthDisabled.Assign(value); }
-    private readonly BicepValue<bool> _isLocalAuthDisabled;
+    public BicepValue<bool> IsLocalAuthDisabled 
+    {
+        get { Initialize(); return _isLocalAuthDisabled!; }
+        set { Initialize(); _isLocalAuthDisabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isLocalAuthDisabled;
 
     /// <summary>
     /// Minimum TLS version of the publisher allowed to publish to this partner
     /// namespace.
     /// </summary>
-    public BicepValue<TlsVersion> MinimumTlsVersionAllowed { get => _minimumTlsVersionAllowed; set => _minimumTlsVersionAllowed.Assign(value); }
-    private readonly BicepValue<TlsVersion> _minimumTlsVersionAllowed;
+    public BicepValue<TlsVersion> MinimumTlsVersionAllowed 
+    {
+        get { Initialize(); return _minimumTlsVersionAllowed!; }
+        set { Initialize(); _minimumTlsVersionAllowed!.Assign(value); }
+    }
+    private BicepValue<TlsVersion>? _minimumTlsVersionAllowed;
 
     /// <summary>
     /// The fully qualified ARM Id of the partner registration that should be
@@ -58,8 +78,12 @@ public partial class PartnerNamespace : ProvisionableResource
     /// format:
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}.
     /// </summary>
-    public BicepValue<ResourceIdentifier> PartnerRegistrationFullyQualifiedId { get => _partnerRegistrationFullyQualifiedId; set => _partnerRegistrationFullyQualifiedId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _partnerRegistrationFullyQualifiedId;
+    public BicepValue<ResourceIdentifier> PartnerRegistrationFullyQualifiedId 
+    {
+        get { Initialize(); return _partnerRegistrationFullyQualifiedId!; }
+        set { Initialize(); _partnerRegistrationFullyQualifiedId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _partnerRegistrationFullyQualifiedId;
 
     /// <summary>
     /// This determines if events published to this partner namespace should
@@ -68,8 +92,12 @@ public partial class PartnerNamespace : ProvisionableResource
     /// is specified, source attribute routing will be used to match the
     /// partner topic.
     /// </summary>
-    public BicepValue<PartnerTopicRoutingMode> PartnerTopicRoutingMode { get => _partnerTopicRoutingMode; set => _partnerTopicRoutingMode.Assign(value); }
-    private readonly BicepValue<PartnerTopicRoutingMode> _partnerTopicRoutingMode;
+    public BicepValue<PartnerTopicRoutingMode> PartnerTopicRoutingMode 
+    {
+        get { Initialize(); return _partnerTopicRoutingMode!; }
+        set { Initialize(); _partnerTopicRoutingMode!.Assign(value); }
+    }
+    private BicepValue<PartnerTopicRoutingMode>? _partnerTopicRoutingMode;
 
     /// <summary>
     /// This determines if traffic is allowed over public network. By default
@@ -78,44 +106,67 @@ public partial class PartnerNamespace : ProvisionableResource
     /// cref=&quot;P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PartnerNamespaceProperties.InboundIpRules&quot;
     /// /&gt;
     /// </summary>
-    public BicepValue<EventGridPublicNetworkAccess> PublicNetworkAccess { get => _publicNetworkAccess; set => _publicNetworkAccess.Assign(value); }
-    private readonly BicepValue<EventGridPublicNetworkAccess> _publicNetworkAccess;
+    public BicepValue<EventGridPublicNetworkAccess> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<EventGridPublicNetworkAccess>? _publicNetworkAccess;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Endpoint for the partner namespace.
     /// </summary>
-    public BicepValue<Uri> Endpoint { get => _endpoint; }
-    private readonly BicepValue<Uri> _endpoint;
+    public BicepValue<Uri> Endpoint 
+    {
+        get { Initialize(); return _endpoint!; }
+    }
+    private BicepValue<Uri>? _endpoint;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// List of private endpoint connections.
     /// </summary>
-    public BicepList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get => _privateEndpointConnections; }
-    private readonly BicepList<EventGridPrivateEndpointConnectionData> _privateEndpointConnections;
+    public BicepList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections 
+    {
+        get { Initialize(); return _privateEndpointConnections!; }
+    }
+    private BicepList<EventGridPrivateEndpointConnectionData>? _privateEndpointConnections;
 
     /// <summary>
     /// Provisioning state of the partner namespace.
     /// </summary>
-    public BicepValue<PartnerNamespaceProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<PartnerNamespaceProvisioningState> _provisioningState;
+    public BicepValue<PartnerNamespaceProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<PartnerNamespaceProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new PartnerNamespace.
@@ -130,20 +181,27 @@ public partial class PartnerNamespace : ProvisionableResource
     public PartnerNamespace(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.EventGrid/partnerNamespaces", resourceVersion ?? "2022-06-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _inboundIPRules = BicepList<EventGridInboundIPRule>.DefineProperty(this, "InboundIPRules", ["properties", "inboundIpRules"]);
-        _isLocalAuthDisabled = BicepValue<bool>.DefineProperty(this, "IsLocalAuthDisabled", ["properties", "disableLocalAuth"]);
-        _minimumTlsVersionAllowed = BicepValue<TlsVersion>.DefineProperty(this, "MinimumTlsVersionAllowed", ["properties", "minimumTlsVersionAllowed"]);
-        _partnerRegistrationFullyQualifiedId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PartnerRegistrationFullyQualifiedId", ["properties", "partnerRegistrationFullyQualifiedId"]);
-        _partnerTopicRoutingMode = BicepValue<PartnerTopicRoutingMode>.DefineProperty(this, "PartnerTopicRoutingMode", ["properties", "partnerTopicRoutingMode"]);
-        _publicNetworkAccess = BicepValue<EventGridPublicNetworkAccess>.DefineProperty(this, "PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _endpoint = BicepValue<Uri>.DefineProperty(this, "Endpoint", ["properties", "endpoint"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _privateEndpointConnections = BicepList<EventGridPrivateEndpointConnectionData>.DefineProperty(this, "PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
-        _provisioningState = BicepValue<PartnerNamespaceProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of PartnerNamespace.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _inboundIPRules = DefineListProperty<EventGridInboundIPRule>("InboundIPRules", ["properties", "inboundIpRules"]);
+        _isLocalAuthDisabled = DefineProperty<bool>("IsLocalAuthDisabled", ["properties", "disableLocalAuth"]);
+        _minimumTlsVersionAllowed = DefineProperty<TlsVersion>("MinimumTlsVersionAllowed", ["properties", "minimumTlsVersionAllowed"]);
+        _partnerRegistrationFullyQualifiedId = DefineProperty<ResourceIdentifier>("PartnerRegistrationFullyQualifiedId", ["properties", "partnerRegistrationFullyQualifiedId"]);
+        _partnerTopicRoutingMode = DefineProperty<PartnerTopicRoutingMode>("PartnerTopicRoutingMode", ["properties", "partnerTopicRoutingMode"]);
+        _publicNetworkAccess = DefineProperty<EventGridPublicNetworkAccess>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _endpoint = DefineProperty<Uri>("Endpoint", ["properties", "endpoint"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _privateEndpointConnections = DefineListProperty<EventGridPrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _provisioningState = DefineProperty<PartnerNamespaceProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
