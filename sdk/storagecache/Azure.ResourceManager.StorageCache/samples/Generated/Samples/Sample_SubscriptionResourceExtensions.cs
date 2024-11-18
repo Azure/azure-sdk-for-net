@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageCache.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageCache.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // checkAmlFSSubnets
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckAmlFSSubnets_CheckAmlFSSubnets()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/checkAmlFSSubnets.json
@@ -44,12 +44,11 @@ namespace Azure.ResourceManager.StorageCache.Samples
             };
             await subscriptionResource.CheckAmlFSSubnetsAsync(content: content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // getRequiredAmlFilesystemSubnetsSize
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRequiredAmlFSSubnetsSize_GetRequiredAmlFilesystemSubnetsSize()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/getRequiredAmlFSSubnetsSize.json
@@ -72,9 +71,8 @@ namespace Azure.ResourceManager.StorageCache.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Skus_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetStorageCacheSkus_SkusList()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/Skus_List.json
@@ -97,12 +95,11 @@ namespace Azure.ResourceManager.StorageCache.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // UsageModels_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUsageModels_UsageModelsList()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/UsageModels_List.json
@@ -125,12 +122,11 @@ namespace Azure.ResourceManager.StorageCache.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AscUsages_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetStorageCacheUsages_AscUsagesList()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/AscResourceUsages_Get.json
@@ -154,7 +150,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

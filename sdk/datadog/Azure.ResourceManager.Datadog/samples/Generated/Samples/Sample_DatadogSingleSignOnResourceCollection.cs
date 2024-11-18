@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Datadog.Samples
 {
     public partial class Sample_DatadogSingleSignOnResourceCollection
     {
-        // SingleSignOnConfigurations_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SingleSignOnConfigurationsList()
         {
             // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/SingleSignOnConfigurations_List.json
@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.Datadog.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SingleSignOnConfigurations_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SingleSignOnConfigurationsCreateOrUpdate()
         {
             // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/SingleSignOnConfigurations_CreateOrUpdate.json
@@ -88,9 +87,8 @@ namespace Azure.ResourceManager.Datadog.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SingleSignOnConfigurations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SingleSignOnConfigurationsGet()
         {
             // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/SingleSignOnConfigurations_Get.json
@@ -123,9 +121,8 @@ namespace Azure.ResourceManager.Datadog.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SingleSignOnConfigurations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_SingleSignOnConfigurationsGet()
         {
             // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/SingleSignOnConfigurations_Get.json
@@ -154,9 +151,8 @@ namespace Azure.ResourceManager.Datadog.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SingleSignOnConfigurations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SingleSignOnConfigurationsGet()
         {
             // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/SingleSignOnConfigurations_Get.json
@@ -185,7 +181,7 @@ namespace Azure.ResourceManager.Datadog.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

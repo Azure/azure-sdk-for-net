@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_ExpressRouteCrossConnectionPeeringResource
     {
-        // GetExpressRouteCrossConnectionsArpTable
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetArpTableExpressRouteCrossConnection_GetExpressRouteCrossConnectionsArpTable()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteCrossConnectionsArpTable.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetExpressRouteCrossConnectionsRouteTableSummary
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRoutesTableSummaryExpressRouteCrossConnection_GetExpressRouteCrossConnectionsRouteTableSummary()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteCrossConnectionsRouteTableSummary.json
@@ -75,9 +74,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetExpressRouteCrossConnectionsRouteTable
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRoutesTableExpressRouteCrossConnection_GetExpressRouteCrossConnectionsRouteTable()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteCrossConnectionsRouteTable.json
@@ -105,9 +103,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // DeleteExpressRouteCrossConnectionBgpPeering
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteExpressRouteCrossConnectionBgpPeering()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteCrossConnectionBgpPeeringDelete.json
@@ -130,12 +127,11 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             await expressRouteCrossConnectionPeering.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GetExpressRouteCrossConnectionBgpPeering
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetExpressRouteCrossConnectionBgpPeering()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteCrossConnectionBgpPeeringGet.json
@@ -165,9 +161,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExpressRouteCrossConnectionBgpPeeringCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ExpressRouteCrossConnectionBgpPeeringCreate()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteCrossConnectionBgpPeeringCreate.json

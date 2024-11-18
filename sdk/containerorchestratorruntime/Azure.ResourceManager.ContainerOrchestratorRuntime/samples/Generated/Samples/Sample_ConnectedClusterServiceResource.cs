@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
 {
     public partial class Sample_ConnectedClusterServiceResource
     {
-        // Services_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ServicesGet()
         {
             // Generated from example definition: 2024-03-01/Services_Get.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Services_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ServicesCreateOrUpdate()
         {
             // Generated from example definition: 2024-03-01/Services_CreateOrUpdate.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Services_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ServicesDelete()
         {
             // Generated from example definition: 2024-03-01/Services_Delete.json
@@ -103,7 +101,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             // invoke the operation
             await connectedClusterService.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

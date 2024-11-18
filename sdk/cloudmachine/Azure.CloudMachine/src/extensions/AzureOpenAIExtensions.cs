@@ -3,6 +3,8 @@
 
 using System.ClientModel;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text;
 using Azure.AI.OpenAI;
 using Azure.Core;
 using OpenAI.Chat;
@@ -45,6 +47,37 @@ public static class AzureOpenAIExtensions
         });
 
         return embeddingsClient;
+    }
+
+    /// <summary>
+    /// returns full text of all parts.
+    /// </summary>
+    /// <param name="completion"></param>
+    /// <returns></returns>
+    public static string AsText(this ChatCompletion completion)
+        => completion.Content.AsText();
+
+    /// <summary>
+    /// returns full text of all parts.
+    /// </summary>
+    /// <param name="completion"></param>
+    /// <returns></returns>
+    public static string AsText(this ChatMessageContent completion)
+    {
+        StringBuilder sb = new();
+        foreach (ChatMessageContentPart part in completion)
+        {
+            switch (part.Kind)
+            {
+                case ChatMessageContentPartKind.Text:
+                    sb.AppendLine(part.Text);
+                    break;
+                default:
+                    sb.AppendLine($"<{part.Kind}>");
+                    break;
+            }
+        }
+        return sb.ToString();
     }
 
     private static AzureOpenAIClient CreateAzureOpenAIClient(this ClientWorkspace workspace)

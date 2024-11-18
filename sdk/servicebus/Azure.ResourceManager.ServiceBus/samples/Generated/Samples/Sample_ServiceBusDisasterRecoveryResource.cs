@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceBus.Samples
 {
     public partial class Sample_ServiceBusDisasterRecoveryResource
     {
-        // SBAliasCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SBAliasCreate()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/disasterRecoveryConfigs/SBAliasCreate.json
@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SBAliasDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SBAliasDelete()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/disasterRecoveryConfigs/SBAliasDelete.json
@@ -77,12 +76,11 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // invoke the operation
             await serviceBusDisasterRecovery.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SBAliasGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SBAliasGet()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/disasterRecoveryConfigs/SBAliasGet.json
@@ -112,9 +110,8 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SBEHAliasBreakPairing
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task BreakPairing_SBEHAliasBreakPairing()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/disasterRecoveryConfigs/SBEHAliasBreakPairing.json
@@ -137,12 +134,11 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // invoke the operation
             await serviceBusDisasterRecovery.BreakPairingAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SBAliasFailOver
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task FailOver_SBAliasFailOver()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/disasterRecoveryConfigs/SBAliasFailOver.json
@@ -165,7 +161,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // invoke the operation
             await serviceBusDisasterRecovery.FailOverAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

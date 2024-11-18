@@ -205,16 +205,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
-            using (Stream stream = new MemoryStream())
-            {
-                header.Serialize(stream);
-
-                // Act
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: partNumber,
-                    headerStream: stream);
-            }
+            // Act
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: partNumber,
+                header: header);
 
             // Assert
             List<string> transferIds = await transferCheckpointer.GetStoredTransfersAsync();
@@ -242,22 +237,17 @@ namespace Azure.Storage.DataMovement.Tests
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
-            using (Stream stream = new MemoryStream())
-            {
-                header.Serialize(stream);
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: partNumber,
+                header: header);
 
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: partNumber,
-                    headerStream: stream);
-
-                // Add the same job part twice
-                Assert.CatchAsync<ArgumentException>(
-                    async () => await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: partNumber,
-                    headerStream: stream));
-            }
+            // Add the same job part twice
+            Assert.CatchAsync<ArgumentException>(
+                async () => await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: partNumber,
+                header: header));
 
             // Assert
             List<string> transferIds = await transferCheckpointer.GetStoredTransfersAsync();
@@ -292,42 +282,22 @@ namespace Azure.Storage.DataMovement.Tests
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
-            using (Stream stream = new MemoryStream())
-            {
-                header1.Serialize(stream);
-
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: 0,
-                    headerStream: stream);
-            }
-            using (Stream stream = new MemoryStream())
-            {
-                header2.Serialize(stream);
-
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: 1,
-                    headerStream: stream);
-            }
-            using (Stream stream = new MemoryStream())
-            {
-                header3.Serialize(stream);
-
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: 2,
-                    headerStream: stream);
-            }
-            using (Stream stream = new MemoryStream())
-            {
-                header4.Serialize(stream);
-
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: 3,
-                    headerStream: stream);
-            }
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: 0,
+                header: header1);
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: 1,
+                header: header2);
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: 2,
+                header: header3);
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: 3,
+                header: header4);
 
             // Assert
             List<string> transferIds = await transferCheckpointer.GetStoredTransfersAsync();
@@ -353,26 +323,16 @@ namespace Azure.Storage.DataMovement.Tests
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
-            using (Stream stream = new MemoryStream())
-            {
-                header.Serialize(stream);
-
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: 1,
-                    headerStream: stream);
-            }
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: 1,
+                header: header);
             await transferCheckpointer.TryRemoveStoredTransferAsync(transferId);
             await AddJobToCheckpointer(transferCheckpointer, transferId);
-            using (Stream stream = new MemoryStream())
-            {
-                header.Serialize(stream);
-
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: 1,
-                    headerStream: stream);
-            }
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: 1,
+                header: header);
 
             // Assert
             List<string> transferIds = await transferCheckpointer.GetStoredTransfersAsync();
@@ -560,15 +520,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
-            using (Stream stream = new MemoryStream())
-            {
-                header.Serialize(stream);
-
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: partNumber,
-                    headerStream: stream);
-            }
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: partNumber,
+                header: header);
 
             // Act
             int partCount = await transferCheckpointer.CurrentJobPartCountAsync(transferId);
@@ -601,42 +556,22 @@ namespace Azure.Storage.DataMovement.Tests
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
-            using (Stream stream = new MemoryStream())
-            {
-                header1.Serialize(stream);
-
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: 0,
-                    headerStream: stream);
-            }
-            using (Stream stream = new MemoryStream())
-            {
-                header2.Serialize(stream);
-
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: 1,
-                    headerStream: stream);
-            }
-            using (Stream stream = new MemoryStream())
-            {
-                header3.Serialize(stream);
-
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: 2,
-                    headerStream: stream);
-            }
-            using (Stream stream = new MemoryStream())
-            {
-                header4.Serialize(stream);
-
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: 3,
-                    headerStream: stream);
-            }
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: 0,
+                header: header1);
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: 1,
+                header: header2);
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: 2,
+                header: header3);
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: 3,
+                header: header4);
 
             // Act
             int partCount = await transferCheckpointer.CurrentJobPartCountAsync(transferId);
@@ -730,15 +665,10 @@ namespace Azure.Storage.DataMovement.Tests
             SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
-            using (MemoryStream stream = new MemoryStream())
-            {
-                header.Serialize(stream);
-
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: partNumber,
-                    headerStream: stream);
-            }
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: partNumber,
+                header: header);
 
             // Act
             await transferCheckpointer.AssertJobPlanHeaderAsync(transferId, partNumber, header);
@@ -891,15 +821,10 @@ namespace Azure.Storage.DataMovement.Tests
             SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
-            using (MemoryStream stream = new MemoryStream())
-            {
-                header.Serialize(stream);
-
-                await transferCheckpointer.AddNewJobPartAsync(
-                    transferId: transferId,
-                    partNumber: partNumber,
-                    headerStream: stream);
-            }
+            await transferCheckpointer.AddNewJobPartAsync(
+                transferId: transferId,
+                partNumber: partNumber,
+                header: header);
 
             // Act
             await transferCheckpointer.SetJobPartTransferStatusAsync(transferId, partNumber, newStatus);

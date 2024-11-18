@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CustomerInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CustomerInsights.Samples
 {
     public partial class Sample_AuthorizationPolicyResourceFormatResource
     {
-        // AuthorizationPolicies_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AuthorizationPoliciesCreateOrUpdate()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/AuthorizationPoliciesCreateOrUpdate.json
@@ -55,9 +55,8 @@ PermissionType.Read,PermissionType.Write,PermissionType.Manage
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AuthorizationPolicies_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AuthorizationPoliciesGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/AuthorizationPoliciesGet.json
@@ -87,9 +86,8 @@ PermissionType.Read,PermissionType.Write,PermissionType.Manage
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AuthorizationPolicies_RegeneratePrimaryKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegeneratePrimaryKey_AuthorizationPoliciesRegeneratePrimaryKey()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/AuthorizationPoliciesRegeneratePrimaryKey.json
@@ -115,9 +113,8 @@ PermissionType.Read,PermissionType.Write,PermissionType.Manage
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AuthorizationPolicies_RegenerateSecondaryKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateSecondaryKey_AuthorizationPoliciesRegenerateSecondaryKey()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/AuthorizationPoliciesRegenerateSecondaryKey.json

@@ -45,7 +45,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
         /// <param name="partNumber">The job part number.</param>
-        /// <param name="headerStream">A <see cref="Stream"/> to the job part plan header.</param>
+        /// <param name="header">A <see cref="Stream"/> to the job part plan header.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement
         public abstract Task AddNewJobPartAsync(
             string transferId,
             int partNumber,
-            Stream headerStream,
+            JobPartPlanHeader header,
             CancellationToken cancellationToken = default);
 
         /// <summary>

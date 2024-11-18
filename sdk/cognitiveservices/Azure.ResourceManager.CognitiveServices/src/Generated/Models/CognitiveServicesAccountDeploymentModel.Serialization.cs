@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentModel)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(Publisher))
+            {
+                writer.WritePropertyName("publisher"u8);
+                writer.WriteStringValue(Publisher);
+            }
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
@@ -54,6 +59,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
+            }
+            if (Optional.IsDefined(SourceAccount))
+            {
+                writer.WritePropertyName("sourceAccount"u8);
+                writer.WriteStringValue(SourceAccount);
             }
             if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
@@ -97,15 +107,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
+            string publisher = default;
             string format = default;
             string name = default;
             string version = default;
             string source = default;
+            ResourceIdentifier sourceAccount = default;
             ServiceAccountCallRateLimit callRateLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("publisher"u8))
+                {
+                    publisher = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("format"u8))
                 {
                     format = property.Value.GetString();
@@ -126,6 +143,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     source = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("sourceAccount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceAccount = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("callRateLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -142,10 +168,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new CognitiveServicesAccountDeploymentModel(
+                publisher,
                 format,
                 name,
                 version,
                 source,
+                sourceAccount,
                 callRateLimit,
                 serializedAdditionalRawData);
         }
@@ -160,6 +188,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string propertyOverride = null;
 
             builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Publisher), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  publisher: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Publisher))
+                {
+                    builder.Append("  publisher: ");
+                    if (Publisher.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Publisher}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Publisher}'");
+                    }
+                }
+            }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Format), out propertyOverride);
             if (hasPropertyOverride)
@@ -250,6 +301,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         builder.AppendLine($"'{Source}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceAccount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sourceAccount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceAccount))
+                {
+                    builder.Append("  sourceAccount: ");
+                    builder.AppendLine($"'{SourceAccount.ToString()}'");
                 }
             }
 

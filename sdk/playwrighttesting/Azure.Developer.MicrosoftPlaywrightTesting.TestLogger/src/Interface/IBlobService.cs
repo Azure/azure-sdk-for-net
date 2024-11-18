@@ -14,7 +14,8 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface
         /// <param name="fileRelativePath"></param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         Task UploadBufferAsync(string uri, string buffer, string fileRelativePath);
-         string GetCloudFilePath(string uri, string fileRelativePath);
+        void UploadBuffer(string uri, string buffer, string fileRelativePath);
+        string GetCloudFilePath(string uri, string fileRelativePath);
         void UploadBlobFile(string uri, string fileRelativePath, string filePath);
         public string? GetCloudFileName(string filePath, string testExecutionId);
     }

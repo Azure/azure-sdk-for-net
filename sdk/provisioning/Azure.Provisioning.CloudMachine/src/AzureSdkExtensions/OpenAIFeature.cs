@@ -1,38 +1,24 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using System;
+using System.Collections.Generic;
 using Azure.Provisioning.Authorization;
+using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
+using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.CloudMachine.OpenAI;
+namespace Azure.CloudMachine.OpenAI;
 
-public class OpenAIFeature : CloudMachineFeature
+internal class OpenAIFeature : CloudMachineFeature
 {
+    private List<OpenAIModel> _models = new List<OpenAIModel>();
+
     public OpenAIFeature()
-    {
-    }
+    {}
 
-    public AIModel? Chat { get; set; }
-    public AIModel? Embeddings { get; set; }
-
-    public override void AddTo(CloudMachineInfrastructure cloudMachine)
+    protected override ProvisionableResource EmitCore(CloudMachineInfrastructure cloudMachine)
     {
-        if (Chat == default && Embeddings == default)
-        {
-            throw new InvalidOperationException("At least one of Chat or Embeddings must be specified.");
-        }
-        CognitiveServicesAccount cognitiveServices = new("openai")
-        {
-            Name = cloudMachine.Id,
-            Kind = "OpenAI",
-            Sku = new CognitiveServicesSku { Name = "S0" },
-            Properties = new CognitiveServicesAccountProperties()
-            {
-                PublicNetworkAccess = ServiceAccountPublicNetworkAccess.Enabled,
-                CustomSubDomainName = cloudMachine.Id
-            },
-        };
+        CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(cloudMachine);
         cloudMachine.AddResource(cognitiveServices);
 
         cloudMachine.AddResource(cognitiveServices.CreateRoleAssignment(
@@ -41,62 +27,44 @@ public class OpenAIFeature : CloudMachineFeature
             cloudMachine.PrincipalIdParameter)
         );
 
-        CognitiveServicesAccountDeployment? chat = default;
-        if (Chat != default)
-        {
-            chat = new("openai_deployment_chat", "2024-06-01-preview")
-            {
-                Parent = cognitiveServices,
-                Name = cloudMachine.Id,
-                Properties = new CognitiveServicesAccountDeploymentProperties()
-                {
-                    Model = new CognitiveServicesAccountDeploymentModel()
-                    {
-                        Name = Chat.Model,
-                        Format = "OpenAI",
-                        Version = Chat.ModelVersion
-                    },
-                    VersionUpgradeOption = DeploymentModelVersionUpgradeOption.OnceNewDefaultVersionAvailable,
-                    RaiPolicyName = "Microsoft.DefaultV2",
-                },
-                Sku = new CognitiveServicesSku
-                {
-                    Capacity = 120,
-                    Name = "Standard"
-                }
-            };
-            cloudMachine.AddResource(chat);
-        }
+        Emitted = cognitiveServices;
 
-        if (Embeddings != null)
+        OpenAIModel? previous = null;
+        foreach (OpenAIModel model in _models)
         {
-            CognitiveServicesAccountDeployment embeddings = new("openai_deployment_embedding", "2024-06-01-preview")
+            model.Emit(cloudMachine);
+            if (previous != null)
             {
-                Parent = cognitiveServices,
-                Name = $"{cloudMachine.Id}-embedding",
-                Properties = new CognitiveServicesAccountDeploymentProperties()
-                {
-                    Model = new CognitiveServicesAccountDeploymentModel()
-                    {
-                        Name = Embeddings.Model,
-                        Format = "OpenAI",
-                        Version = Embeddings.ModelVersion
-                    }
-                },
-                Sku = new CognitiveServicesSku
-                {
-                    Capacity = 120,
-                    Name = "Standard"
-                }
-            };
-
-            // Ensure that additional deployments, are chained using DependsOn.
-            // The reason is that deployments need to be deployed/created serially.
-            if (chat != default)
-            {
-                embeddings.DependsOn.Add(chat);
+                model.Emitted.DependsOn.Add(previous.Emitted);
             }
-            cloudMachine.AddResource(embeddings);
+            previous = model;
         }
+
+        return cognitiveServices;
+    }
+
+    internal void AddModel(OpenAIModel model)
+    {
+        if (model.Account!= null)
+        {
+            throw new InvalidOperationException("Model already added to an account");
+        }
+        model.Account = this;
+        _models.Add(model);
+    }
+
+    internal CognitiveServicesAccount CreateOpenAIAccount(CloudMachineInfrastructure cm)
+    {
+        return new("openai")
+        {
+            Name = cm.Id,
+            Kind = "OpenAI",
+            Sku = new CognitiveServicesSku { Name = "S0" },
+            Properties = new CognitiveServicesAccountProperties()
+            {
+                PublicNetworkAccess = ServiceAccountPublicNetworkAccess.Enabled,
+                CustomSubDomainName = cm.Id
+            },
+        };
     }
 }
