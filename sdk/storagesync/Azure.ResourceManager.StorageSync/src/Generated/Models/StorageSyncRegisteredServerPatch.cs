@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    /// <summary> List of private endpoint connections associated with the specified resource. </summary>
-    internal partial class StorageSyncPrivateEndpointConnectionListResult
+    /// <summary> The parameters used when updating a registered server. </summary>
+    public partial class StorageSyncRegisteredServerPatch : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +47,29 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StorageSyncPrivateEndpointConnectionListResult"/>. </summary>
-        internal StorageSyncPrivateEndpointConnectionListResult()
+        /// <summary> Initializes a new instance of <see cref="StorageSyncRegisteredServerPatch"/>. </summary>
+        public StorageSyncRegisteredServerPatch()
         {
-            Value = new ChangeTrackingList<StorageSyncPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageSyncPrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value"> Array of private endpoint connections. </param>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncRegisteredServerPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="identity"> Apply server with newly discovered ApplicationId if available. </param>
+        /// <param name="applicationId"> Apply server with new ServicePrincipal Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncPrivateEndpointConnectionListResult(IReadOnlyList<StorageSyncPrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageSyncRegisteredServerPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? identity, string applicationId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Value = value;
+            Identity = identity;
+            ApplicationId = applicationId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of private endpoint connections. </summary>
-        public IReadOnlyList<StorageSyncPrivateEndpointConnectionData> Value { get; }
+        /// <summary> Apply server with newly discovered ApplicationId if available. </summary>
+        public bool? Identity { get; set; }
+        /// <summary> Apply server with new ServicePrincipal Id. </summary>
+        public string ApplicationId { get; set; }
     }
 }

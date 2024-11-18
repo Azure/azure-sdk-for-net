@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
     /// A class representing the StorageSyncPrivateEndpointConnection data model.
-    /// The Private Endpoint Connection resource.
+    /// The private endpoint connection resource.
     /// </summary>
     public partial class StorageSyncPrivateEndpointConnectionData : ResourceData
     {
@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> Initializes a new instance of <see cref="StorageSyncPrivateEndpointConnectionData"/>. </summary>
         public StorageSyncPrivateEndpointConnectionData()
         {
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSyncPrivateEndpointConnectionData"/>. </summary>
@@ -62,19 +63,23 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpoint"> The resource of private end point. </param>
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
+        /// <param name="privateEndpoint"> The private endpoint resource. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, StorageSyncPrivateLinkServiceConnectionState connectionState, StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StorageSyncPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, StorageSyncPrivateLinkServiceConnectionState connectionState, StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource of private end point. </summary>
+        /// <summary> The group ids for the private endpoint resource. </summary>
+        public IReadOnlyList<string> GroupIds { get; }
+        /// <summary> The private endpoint resource. </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
