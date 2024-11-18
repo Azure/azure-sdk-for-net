@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Storage.Common;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -169,7 +170,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(0, 10)]
         [TestCase(100, 10)]
         [TestCase(Constants.KB, 10)]
@@ -227,7 +227,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DownloadDirectoryAsync_Empty()
         {
             // Arrange
@@ -249,7 +248,10 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer destinationResource = localProvider.FromDirectory(destinationFolder);
 
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventRaised,
+                cancellationTokenSource.Token);
 
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
@@ -262,7 +264,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DownloadDirectoryAsync_SingleFile()
         {
             // Arrange
@@ -276,7 +277,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DownloadDirectoryAsync_ManySubDirectories()
         {
             // Arrange
@@ -300,7 +300,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
@@ -328,7 +327,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DownloadDirectoryAsync_SmallChunks_ManyFiles()
         {
             // Arrange
@@ -375,7 +373,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DownloadDirectoryAsync_Root()
         {
             // Arrange
@@ -446,7 +443,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_AwaitCompletion()
         {
             // Arrange
@@ -466,7 +462,10 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: cancellationTokenSource.Token);
 
             // Act
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -476,7 +475,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/46717
         public async Task StartTransfer_AwaitCompletion_Failed()
         {
             // Arrange
@@ -503,7 +502,10 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: cancellationTokenSource.Token);
 
             // Act
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -515,7 +517,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_AwaitCompletion_Skipped()
         {
             // Arrange
@@ -543,7 +544,10 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: cancellationTokenSource.Token);
 
             // Act
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -554,7 +558,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_EnsureCompleted()
         {
             // Arrange
@@ -575,7 +578,10 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: cancellationTokenSource.Token);
 
             // Act
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -585,7 +591,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/46717
         public async Task StartTransfer_EnsureCompleted_Failed()
         {
             // Arrange
@@ -612,7 +618,10 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: cancellationTokenSource.Token);
 
             // Act
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -624,7 +633,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_EnsureCompleted_Skipped()
         {
             // Arrange
@@ -652,7 +660,10 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: cancellationTokenSource.Token);
 
             // Act
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -663,7 +674,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/46717
         public async Task StartTransfer_EnsureCompleted_Failed_SmallChunks()
         {
             // Arrange
@@ -693,7 +704,10 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: cancellationTokenSource.Token);
 
             // Act
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);

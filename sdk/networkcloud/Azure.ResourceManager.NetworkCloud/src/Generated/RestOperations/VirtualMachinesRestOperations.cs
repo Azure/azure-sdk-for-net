@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetworkCloud.Models;
@@ -33,8 +32,19 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-07-01";
+            _apiVersion = apiVersion ?? "2024-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/virtualMachines", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
@@ -102,6 +112,19 @@ namespace Azure.ResourceManager.NetworkCloud
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/virtualMachines", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -175,6 +198,20 @@ namespace Azure.ResourceManager.NetworkCloud
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string virtualMachineName)
@@ -259,6 +296,20 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineName, NetworkCloudVirtualMachineData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string virtualMachineName, NetworkCloudVirtualMachineData data)
         {
             var message = _pipeline.CreateMessage();
@@ -277,7 +328,7 @@ namespace Azure.ResourceManager.NetworkCloud
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -335,6 +386,20 @@ namespace Azure.ResourceManager.NetworkCloud
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string virtualMachineName)
@@ -409,6 +474,20 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineName, NetworkCloudVirtualMachinePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string virtualMachineName, NetworkCloudVirtualMachinePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -427,7 +506,7 @@ namespace Azure.ResourceManager.NetworkCloud
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -487,6 +566,21 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        internal RequestUriBuilder CreatePowerOffRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachinePowerOffContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/powerOff", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePowerOffRequest(string subscriptionId, string resourceGroupName, string virtualMachineName, VirtualMachinePowerOffContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -508,7 +602,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -535,7 +629,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -562,11 +655,25 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateReimageRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/reimage", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateReimageRequest(string subscriptionId, string resourceGroupName, string virtualMachineName)
@@ -609,7 +716,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -635,11 +741,25 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRestartRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/restart", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRestartRequest(string subscriptionId, string resourceGroupName, string virtualMachineName)
@@ -682,7 +802,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -708,11 +827,25 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStartRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string virtualMachineName)
@@ -755,7 +888,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -781,11 +913,18 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
@@ -854,6 +993,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)

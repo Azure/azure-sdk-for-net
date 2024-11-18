@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class GitHubConnectorProperties : IUtf8JsonSerializable
+    public partial class GitHubConnectorProperties : IUtf8JsonSerializable, IJsonModel<GitHubConnectorProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitHubConnectorProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<GitHubConnectorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GitHubConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GitHubConnectorProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -25,17 +44,47 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static GitHubConnectorProperties DeserializeGitHubConnectorProperties(JsonElement element)
+        GitHubConnectorProperties IJsonModel<GitHubConnectorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GitHubConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GitHubConnectorProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGitHubConnectorProperties(document.RootElement, options);
+        }
+
+        internal static GitHubConnectorProperties DeserializeGitHubConnectorProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> code = default;
+            ProvisioningState? provisioningState = default;
+            string code = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -52,8 +101,44 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     code = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GitHubConnectorProperties(Optional.ToNullable(provisioningState), code.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GitHubConnectorProperties(provisioningState, code, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GitHubConnectorProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GitHubConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GitHubConnectorProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GitHubConnectorProperties IPersistableModel<GitHubConnectorProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GitHubConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGitHubConnectorProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GitHubConnectorProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GitHubConnectorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,34 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class SubnetReferenceInfo : IUtf8JsonSerializable
+    public partial class SubnetReferenceInfo : IUtf8JsonSerializable, IJsonModel<SubnetReferenceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubnetReferenceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SubnetReferenceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            writer.WritePropertyName("sourceArmResourceId"u8);
-            writer.WriteStringValue(SourceArmResourceId);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static SubnetReferenceInfo DeserializeSubnetReferenceInfo(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SubnetReferenceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubnetReferenceInfo)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        SubnetReferenceInfo IJsonModel<SubnetReferenceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubnetReferenceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubnetReferenceInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubnetReferenceInfo(document.RootElement, options);
+        }
+
+        internal static SubnetReferenceInfo DeserializeSubnetReferenceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             ResourceIdentifier sourceArmResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -45,8 +73,44 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     sourceArmResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SubnetReferenceInfo(sourceArmResourceId, name.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SubnetReferenceInfo(sourceArmResourceId, serializedAdditionalRawData, name);
         }
+
+        BinaryData IPersistableModel<SubnetReferenceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubnetReferenceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SubnetReferenceInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SubnetReferenceInfo IPersistableModel<SubnetReferenceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubnetReferenceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSubnetReferenceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SubnetReferenceInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SubnetReferenceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

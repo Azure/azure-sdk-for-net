@@ -8,20 +8,17 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Kusto.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Kusto.Samples
 {
     public partial class Sample_KustoDatabaseResource
     {
-        // KustoDatabasesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_KustoDatabasesGet()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabasesGet.json
@@ -51,9 +48,8 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // KustoSuspendedDatabasesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_KustoSuspendedDatabasesGet()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoSuspendedDatabasesGet.json
@@ -83,9 +79,8 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // KustoDatabasesUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_KustoDatabasesUpdate()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabasesUpdate.json
@@ -120,9 +115,8 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // KustoDatabasesDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_KustoDatabasesDelete()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabasesDelete.json
@@ -145,12 +139,11 @@ namespace Azure.ResourceManager.Kusto.Samples
             // invoke the operation
             await kustoDatabase.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // KustoDatabaseListPrincipals
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrincipals_KustoDatabaseListPrincipals()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabaseListPrincipals.json
@@ -176,12 +169,11 @@ namespace Azure.ResourceManager.Kusto.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // KustoDatabaseAddPrincipals
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AddPrincipals_KustoDatabaseAddPrincipals()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabaseAddPrincipals.json
@@ -229,12 +221,11 @@ AppId = "some_guid_app_id",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // KustoDatabaseRemovePrincipals
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RemovePrincipals_KustoDatabaseRemovePrincipals()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabaseRemovePrincipals.json
@@ -282,12 +273,11 @@ AppId = "some_guid_app_id",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // KustoDatabaseInviteFollower
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task InviteFollowerDatabase_KustoDatabaseInviteFollower()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabaseInviteFollower.json
@@ -350,9 +340,8 @@ AppId = "some_guid_app_id",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // KustoDatabaseCheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckKustoDatabasePrincipalAssignmentNameAvailability_KustoDatabaseCheckNameAvailability()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabasePrincipalAssignmentsCheckNameAvailability.json
@@ -379,9 +368,8 @@ AppId = "some_guid_app_id",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // KustoScriptsCheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckKustoScriptNameAvailability_KustoScriptsCheckNameAvailability()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoScriptsCheckNameAvailability.json
@@ -408,13 +396,12 @@ AppId = "some_guid_app_id",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // KustoDataConnectionEventGridValidation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateDataConnection_KustoDataConnectionEventGridValidation()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDataConnectionEventGridValidationAsync.json
-            // this example is just showing the usage of "DataConnections_dataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DataConnections_DataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -455,13 +442,12 @@ AppId = "some_guid_app_id",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // KustoDataConnectionValidation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateDataConnection_KustoDataConnectionValidation()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDataConnectionValidationAsync.json
-            // this example is just showing the usage of "DataConnections_dataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DataConnections_DataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -498,9 +484,8 @@ AppId = "some_guid_app_id",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // KustoDataConnectionsCheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckKustoDataConnectionNameAvailability_KustoDataConnectionsCheckNameAvailability()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDataConnectionsCheckNameAvailability.json

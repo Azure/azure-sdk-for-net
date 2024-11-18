@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkFabricIPPrefixCollection
     {
-        // IpPrefixes_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_IpPrefixesCreateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_Create_MaximumSet_Gen.json
@@ -49,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 Annotation = "annotation",
                 IPPrefixRules =
 {
-new IPPrefixRule(CommunityActionType.Permit,4155123341,"10.10.10.10/30")
+new IPPrefixRule(CommunityActionType.Permit,4155123341L,"10.10.10.10/30")
 {
 Condition = IPPrefixRuleCondition.GreaterThanOrEqualTo,
 SubnetMaskLength = "10",
@@ -70,9 +67,8 @@ SubnetMaskLength = "10",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // IpPrefixes_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_IpPrefixesGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_Get_MaximumSet_Gen.json
@@ -104,9 +100,8 @@ SubnetMaskLength = "10",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // IpPrefixes_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_IpPrefixesGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_Get_MaximumSet_Gen.json
@@ -134,9 +129,8 @@ SubnetMaskLength = "10",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // IpPrefixes_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_IpPrefixesGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_Get_MaximumSet_Gen.json
@@ -164,7 +158,7 @@ SubnetMaskLength = "10",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -176,9 +170,8 @@ SubnetMaskLength = "10",
             }
         }
 
-        // IpPrefixes_ListByResourceGroup_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_IpPrefixesListByResourceGroupMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_ListByResourceGroup_MaximumSet_Gen.json
@@ -209,7 +202,7 @@ SubnetMaskLength = "10",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

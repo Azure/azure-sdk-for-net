@@ -6,30 +6,139 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class ServerEndpointCloudTieringStatus
+    public partial class ServerEndpointCloudTieringStatus : IUtf8JsonSerializable, IJsonModel<ServerEndpointCloudTieringStatus>
     {
-        internal static ServerEndpointCloudTieringStatus DeserializeServerEndpointCloudTieringStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointCloudTieringStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ServerEndpointCloudTieringStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointCloudTieringStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            {
+                writer.WritePropertyName("lastUpdatedTimestamp"u8);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Health))
+            {
+                writer.WritePropertyName("health"u8);
+                writer.WriteStringValue(Health.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(HealthLastUpdatedOn))
+            {
+                writer.WritePropertyName("healthLastUpdatedTimestamp"u8);
+                writer.WriteStringValue(HealthLastUpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastCloudTieringResult))
+            {
+                writer.WritePropertyName("lastCloudTieringResult"u8);
+                writer.WriteNumberValue(LastCloudTieringResult.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastSuccessTimestamp))
+            {
+                writer.WritePropertyName("lastSuccessTimestamp"u8);
+                writer.WriteStringValue(LastSuccessTimestamp.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(SpaceSavings))
+            {
+                writer.WritePropertyName("spaceSavings"u8);
+                writer.WriteObjectValue(SpaceSavings, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CachePerformance))
+            {
+                writer.WritePropertyName("cachePerformance"u8);
+                writer.WriteObjectValue(CachePerformance, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FilesNotTiering))
+            {
+                writer.WritePropertyName("filesNotTiering"u8);
+                writer.WriteObjectValue(FilesNotTiering, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VolumeFreeSpacePolicyStatus))
+            {
+                writer.WritePropertyName("volumeFreeSpacePolicyStatus"u8);
+                writer.WriteObjectValue(VolumeFreeSpacePolicyStatus, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DatePolicyStatus))
+            {
+                writer.WritePropertyName("datePolicyStatus"u8);
+                writer.WriteObjectValue(DatePolicyStatus, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LowDiskMode))
+            {
+                writer.WritePropertyName("lowDiskMode"u8);
+                writer.WriteObjectValue(LowDiskMode, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ServerEndpointCloudTieringStatus IJsonModel<ServerEndpointCloudTieringStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointCloudTieringStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServerEndpointCloudTieringStatus(document.RootElement, options);
+        }
+
+        internal static ServerEndpointCloudTieringStatus DeserializeServerEndpointCloudTieringStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<ServerEndpointHealthState> health = default;
-            Optional<DateTimeOffset> healthLastUpdatedTimestamp = default;
-            Optional<int> lastCloudTieringResult = default;
-            Optional<DateTimeOffset> lastSuccessTimestamp = default;
-            Optional<CloudTieringSpaceSavings> spaceSavings = default;
-            Optional<CloudTieringCachePerformance> cachePerformance = default;
-            Optional<CloudTieringFilesNotTiering> filesNotTiering = default;
-            Optional<CloudTieringVolumeFreeSpacePolicyStatus> volumeFreeSpacePolicyStatus = default;
-            Optional<CloudTieringDatePolicyStatus> datePolicyStatus = default;
-            Optional<CloudTieringLowDiskMode> lowDiskMode = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            ServerEndpointHealthState? health = default;
+            DateTimeOffset? healthLastUpdatedTimestamp = default;
+            int? lastCloudTieringResult = default;
+            DateTimeOffset? lastSuccessTimestamp = default;
+            CloudTieringSpaceSavings spaceSavings = default;
+            CloudTieringCachePerformance cachePerformance = default;
+            CloudTieringFilesNotTiering filesNotTiering = default;
+            CloudTieringVolumeFreeSpacePolicyStatus volumeFreeSpacePolicyStatus = default;
+            CloudTieringDatePolicyStatus datePolicyStatus = default;
+            CloudTieringLowDiskMode lowDiskMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -83,7 +192,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    spaceSavings = CloudTieringSpaceSavings.DeserializeCloudTieringSpaceSavings(property.Value);
+                    spaceSavings = CloudTieringSpaceSavings.DeserializeCloudTieringSpaceSavings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cachePerformance"u8))
@@ -92,7 +201,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    cachePerformance = CloudTieringCachePerformance.DeserializeCloudTieringCachePerformance(property.Value);
+                    cachePerformance = CloudTieringCachePerformance.DeserializeCloudTieringCachePerformance(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("filesNotTiering"u8))
@@ -101,7 +210,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    filesNotTiering = CloudTieringFilesNotTiering.DeserializeCloudTieringFilesNotTiering(property.Value);
+                    filesNotTiering = CloudTieringFilesNotTiering.DeserializeCloudTieringFilesNotTiering(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volumeFreeSpacePolicyStatus"u8))
@@ -110,7 +219,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    volumeFreeSpacePolicyStatus = CloudTieringVolumeFreeSpacePolicyStatus.DeserializeCloudTieringVolumeFreeSpacePolicyStatus(property.Value);
+                    volumeFreeSpacePolicyStatus = CloudTieringVolumeFreeSpacePolicyStatus.DeserializeCloudTieringVolumeFreeSpacePolicyStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datePolicyStatus"u8))
@@ -119,7 +228,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    datePolicyStatus = CloudTieringDatePolicyStatus.DeserializeCloudTieringDatePolicyStatus(property.Value);
+                    datePolicyStatus = CloudTieringDatePolicyStatus.DeserializeCloudTieringDatePolicyStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lowDiskMode"u8))
@@ -128,11 +237,59 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    lowDiskMode = CloudTieringLowDiskMode.DeserializeCloudTieringLowDiskMode(property.Value);
+                    lowDiskMode = CloudTieringLowDiskMode.DeserializeCloudTieringLowDiskMode(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServerEndpointCloudTieringStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(health), Optional.ToNullable(healthLastUpdatedTimestamp), Optional.ToNullable(lastCloudTieringResult), Optional.ToNullable(lastSuccessTimestamp), spaceSavings.Value, cachePerformance.Value, filesNotTiering.Value, volumeFreeSpacePolicyStatus.Value, datePolicyStatus.Value, lowDiskMode.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ServerEndpointCloudTieringStatus(
+                lastUpdatedTimestamp,
+                health,
+                healthLastUpdatedTimestamp,
+                lastCloudTieringResult,
+                lastSuccessTimestamp,
+                spaceSavings,
+                cachePerformance,
+                filesNotTiering,
+                volumeFreeSpacePolicyStatus,
+                datePolicyStatus,
+                lowDiskMode,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServerEndpointCloudTieringStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointCloudTieringStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServerEndpointCloudTieringStatus IPersistableModel<ServerEndpointCloudTieringStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointCloudTieringStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServerEndpointCloudTieringStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServerEndpointCloudTieringStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
         /// <term>Operation Id</term>
         /// <description>ConnectedCluster_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Kubernetes cluster on which get is called. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedCluster_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

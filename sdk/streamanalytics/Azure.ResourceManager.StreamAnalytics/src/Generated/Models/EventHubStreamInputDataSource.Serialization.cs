@@ -5,18 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class EventHubStreamInputDataSource : IUtf8JsonSerializable
+    public partial class EventHubStreamInputDataSource : IUtf8JsonSerializable, IJsonModel<EventHubStreamInputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubStreamInputDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<EventHubStreamInputDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(StreamInputDataSourceType);
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventHubStreamInputDataSource)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceBusNamespace))
@@ -60,24 +78,39 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteNumberValue(PrefetchCount.Value);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static EventHubStreamInputDataSource DeserializeEventHubStreamInputDataSource(JsonElement element)
+        EventHubStreamInputDataSource IJsonModel<EventHubStreamInputDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventHubStreamInputDataSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubStreamInputDataSource(document.RootElement, options);
+        }
+
+        internal static EventHubStreamInputDataSource DeserializeEventHubStreamInputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<string> serviceBusNamespace = default;
-            Optional<string> sharedAccessPolicyName = default;
-            Optional<string> sharedAccessPolicyKey = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
-            Optional<string> eventHubName = default;
-            Optional<int> partitionCount = default;
-            Optional<string> consumerGroupName = default;
-            Optional<int> prefetchCount = default;
+            string serviceBusNamespace = default;
+            string sharedAccessPolicyName = default;
+            string sharedAccessPolicyKey = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
+            string eventHubName = default;
+            int? partitionCount = default;
+            string consumerGroupName = default;
+            int? prefetchCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -149,8 +182,54 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventHubStreamInputDataSource(type, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), eventHubName.Value, Optional.ToNullable(partitionCount), consumerGroupName.Value, Optional.ToNullable(prefetchCount));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EventHubStreamInputDataSource(
+                type,
+                serializedAdditionalRawData,
+                serviceBusNamespace,
+                sharedAccessPolicyName,
+                sharedAccessPolicyKey,
+                authenticationMode,
+                eventHubName,
+                partitionCount,
+                consumerGroupName,
+                prefetchCount);
         }
+
+        BinaryData IPersistableModel<EventHubStreamInputDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EventHubStreamInputDataSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EventHubStreamInputDataSource IPersistableModel<EventHubStreamInputDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEventHubStreamInputDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventHubStreamInputDataSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EventHubStreamInputDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

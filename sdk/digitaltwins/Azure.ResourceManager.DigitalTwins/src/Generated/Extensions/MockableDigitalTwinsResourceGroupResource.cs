@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DigitalTwins;
 
 namespace Azure.ResourceManager.DigitalTwins.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.DigitalTwins.Mocking
         /// <term>Operation Id</term>
         /// <description>DigitalTwins_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the DigitalTwinsInstance. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.DigitalTwins.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DigitalTwins_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

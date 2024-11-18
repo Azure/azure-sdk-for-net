@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor.Administration;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -50,11 +51,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             NotificationHookKind hookType = "Unknown";
-            Optional<string> hookId = default;
+            string hookId = default;
             string hookName = default;
-            Optional<string> description = default;
-            Optional<string> externalLink = default;
-            Optional<IList<string>> admins = default;
+            string description = default;
+            string externalLink = default;
+            IList<string> admins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hookType"u8))
@@ -97,7 +98,29 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new UnknownHookInfo(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins));
+            return new UnknownHookInfo(
+                hookType,
+                hookId,
+                hookName,
+                description,
+                externalLink,
+                admins ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownHookInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownHookInfo(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<NotificationHook>(this);
+            return content;
         }
     }
 }

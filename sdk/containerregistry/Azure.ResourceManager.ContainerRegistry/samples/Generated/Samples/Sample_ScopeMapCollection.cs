@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerRegistry;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerRegistry.Samples
 {
     public partial class Sample_ScopeMapCollection
     {
-        // ScopeMapList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ScopeMapList()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/ScopeMapList.json
@@ -51,12 +48,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ScopeMapGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ScopeMapGet()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/ScopeMapGet.json
@@ -89,9 +85,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ScopeMapGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ScopeMapGet()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/ScopeMapGet.json
@@ -120,9 +115,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ScopeMapGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ScopeMapGet()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/ScopeMapGet.json
@@ -151,7 +145,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -163,9 +157,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             }
         }
 
-        // ScopeMapCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ScopeMapCreate()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/ScopeMapCreate.json

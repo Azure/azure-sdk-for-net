@@ -8,22 +8,19 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Samples
 {
     public partial class Sample_DataFactoryResource
     {
-        // Factories_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDataFactories_FactoriesList()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Factories_List.json
@@ -50,12 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Factories_ConfigureFactoryRepo
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ConfigureFactoryRepoInformation_FactoriesConfigureFactoryRepo()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Factories_ConfigureFactoryRepo.json
@@ -92,9 +88,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Factories_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_FactoriesUpdate()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Factories_Update.json
@@ -130,9 +125,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Factories_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FactoriesGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Factories_Get.json
@@ -161,9 +155,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Factories_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_FactoriesDelete()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Factories_Delete.json
@@ -185,12 +178,11 @@ namespace Azure.ResourceManager.DataFactory.Samples
             // invoke the operation
             await dataFactory.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Factories_GetGitHubAccessToken
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetGitHubAccessToken_FactoriesGetGitHubAccessToken()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Factories_GetGitHubAccessToken.json
@@ -219,9 +211,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Factories_GetDataPlaneAccess
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDataPlaneAccess_FactoriesGetDataPlaneAccess()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Factories_GetDataPlaneAccess.json
@@ -254,9 +245,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExposureControl_GetFeatureValueByFactory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetExposureControlFeature_ExposureControlGetFeatureValueByFactory()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ExposureControl_GetFeatureValueByFactory.json
@@ -286,9 +276,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExposureControl_QueryFeatureValuesByFactory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetExposureControlFeatures_ExposureControlQueryFeatureValuesByFactory()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ExposureControl_QueryFeatureValuesByFactory.json
@@ -325,9 +314,8 @@ FeatureType = "Feature",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PipelineRuns_QueryByFactory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPipelineRuns_PipelineRunsQueryByFactory()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/PipelineRuns_QueryByFactory.json
@@ -362,12 +350,11 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PipelineRuns_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPipelineRun_PipelineRunsGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/PipelineRuns_Get.json
@@ -393,9 +380,8 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PipelineRuns_Cancel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CancelPipelineRun_PipelineRunsCancel()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/PipelineRuns_Cancel.json
@@ -418,12 +404,11 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
             string runId = "16ac5348-ff82-4f95-a80d-638c1d47b721";
             await dataFactory.CancelPipelineRunAsync(runId);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ActivityRuns_QueryByPipelineRun
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetActivityRun_ActivityRunsQueryByPipelineRun()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ActivityRuns_QueryByPipelineRun.json
@@ -450,12 +435,11 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Triggers_QueryByFactory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTriggers_TriggersQueryByFactory()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Triggers_QueryByFactory.json
@@ -488,12 +472,11 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // TriggerRuns_QueryByFactory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTriggerRuns_TriggerRunsQueryByFactory()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/TriggerRuns_QueryByFactory.json
@@ -528,12 +511,11 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // DataFlowDebugSession_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateDataFlowDebugSession_DataFlowDebugSessionCreate()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_Create.json
@@ -579,9 +561,8 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // DataFlowDebugSession_QueryByFactory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDataFlowDebugSessions_DataFlowDebugSessionQueryByFactory()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_QueryByFactory.json
@@ -606,12 +587,11 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // DataFlowDebugSession_AddDataFlow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AddDataFlowToDebugSession_DataFlowDebugSessionAddDataFlow()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_AddDataFlow.json
@@ -732,9 +712,8 @@ RowLimit = 222,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // DataFlowDebugSession_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteDataFlowDebugSession_DataFlowDebugSessionDelete()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_Delete.json
@@ -760,12 +739,11 @@ RowLimit = 222,
             };
             await dataFactory.DeleteDataFlowDebugSessionAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // DataFlowDebugSession_ExecuteCommand
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExecuteDataFlowDebugSessionCommand_DataFlowDebugSessionExecuteCommand()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_ExecuteCommand.json
@@ -800,9 +778,8 @@ RowLimit = 222,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get private link resources of a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResources_GetPrivateLinkResourcesOfASite()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/GetPrivateLinkResources.json
@@ -827,7 +804,7 @@ RowLimit = 222,
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

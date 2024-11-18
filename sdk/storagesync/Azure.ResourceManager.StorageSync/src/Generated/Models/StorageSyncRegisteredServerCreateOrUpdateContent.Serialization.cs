@@ -6,17 +6,36 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class StorageSyncRegisteredServerCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class StorageSyncRegisteredServerCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<StorageSyncRegisteredServerCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSyncRegisteredServerCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<StorageSyncRegisteredServerCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncRegisteredServerCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageSyncRegisteredServerCreateOrUpdateContent)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerCertificate))
@@ -82,11 +101,24 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteBooleanValue(Identity.Value);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static StorageSyncRegisteredServerCreateOrUpdateContent DeserializeStorageSyncRegisteredServerCreateOrUpdateContent(JsonElement element)
+        StorageSyncRegisteredServerCreateOrUpdateContent IJsonModel<StorageSyncRegisteredServerCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncRegisteredServerCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageSyncRegisteredServerCreateOrUpdateContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageSyncRegisteredServerCreateOrUpdateContent(document.RootElement, options);
+        }
+
+        internal static StorageSyncRegisteredServerCreateOrUpdateContent DeserializeStorageSyncRegisteredServerCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -94,6 +126,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+<<<<<<< HEAD
             Optional<SystemData> systemData = default;
             Optional<BinaryData> serverCertificate = default;
             Optional<string> agentVersion = default;
@@ -106,6 +139,20 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<string> friendlyName = default;
             Optional<string> applicationId = default;
             Optional<bool> identity = default;
+=======
+            SystemData systemData = default;
+            BinaryData serverCertificate = default;
+            string agentVersion = default;
+            string serverOSVersion = default;
+            string lastHeartbeat = default;
+            string serverRole = default;
+            Guid? clusterId = default;
+            string clusterName = default;
+            Guid? serverId = default;
+            string friendlyName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+>>>>>>> upstream/main
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -215,8 +262,62 @@ namespace Azure.ResourceManager.StorageSync.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
+<<<<<<< HEAD
             return new StorageSyncRegisteredServerCreateOrUpdateContent(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, serverOSVersion.Value, lastHeartbeat.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), friendlyName.Value, applicationId.Value, Optional.ToNullable(identity));
+=======
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StorageSyncRegisteredServerCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData,
+                serverCertificate,
+                agentVersion,
+                serverOSVersion,
+                lastHeartbeat,
+                serverRole,
+                clusterId,
+                clusterName,
+                serverId,
+                friendlyName,
+                serializedAdditionalRawData);
+>>>>>>> upstream/main
         }
+
+        BinaryData IPersistableModel<StorageSyncRegisteredServerCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncRegisteredServerCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageSyncRegisteredServerCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StorageSyncRegisteredServerCreateOrUpdateContent IPersistableModel<StorageSyncRegisteredServerCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncRegisteredServerCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageSyncRegisteredServerCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageSyncRegisteredServerCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageSyncRegisteredServerCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

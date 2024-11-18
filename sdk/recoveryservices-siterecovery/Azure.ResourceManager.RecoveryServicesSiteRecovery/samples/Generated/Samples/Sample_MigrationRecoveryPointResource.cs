@@ -9,19 +9,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 {
     public partial class Sample_MigrationRecoveryPointResource
     {
-        // Gets a recovery point for a migration item.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsARecoveryPointForAMigrationItem()
         {
-            // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/MigrationRecoveryPoints_Get.json
+            // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/MigrationRecoveryPoints_Get.json
             // this example is just showing the usage of "MigrationRecoveryPoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -7,24 +7,21 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_VirtualNetworkCollection
     {
-        // Get virtual network
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetwork()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGet.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,12 +50,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get virtual network
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVirtualNetwork()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGet.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,12 +79,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get virtual network
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVirtualNetwork()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGet.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,7 +108,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -125,12 +120,11 @@ namespace Azure.ResourceManager.Network.Samples
             }
         }
 
-        // Get virtual network with a delegated subnet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkWithADelegatedSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkGetWithSubnetDelegation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGetWithSubnetDelegation.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -159,12 +153,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get virtual network with a delegated subnet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVirtualNetworkWithADelegatedSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkGetWithSubnetDelegation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGetWithSubnetDelegation.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -189,12 +182,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get virtual network with a delegated subnet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVirtualNetworkWithADelegatedSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkGetWithSubnetDelegation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGetWithSubnetDelegation.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,7 +211,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -231,12 +223,11 @@ namespace Azure.ResourceManager.Network.Samples
             }
         }
 
-        // Get virtual network with service association links
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkWithServiceAssociationLinks()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkGetWithServiceAssociationLink.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGetWithServiceAssociationLink.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -265,12 +256,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get virtual network with service association links
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVirtualNetworkWithServiceAssociationLinks()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkGetWithServiceAssociationLink.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGetWithServiceAssociationLink.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -295,12 +285,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get virtual network with service association links
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVirtualNetworkWithServiceAssociationLinks()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkGetWithServiceAssociationLink.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGetWithServiceAssociationLink.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -325,7 +314,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -337,12 +326,11 @@ namespace Azure.ResourceManager.Network.Samples
             }
         }
 
-        // Create virtual network
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetwork()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkCreate.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -381,12 +369,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create virtual network with Bgp Communities
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithBgpCommunities()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkCreateWithBgpCommunities.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkCreateWithBgpCommunities.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -433,12 +420,11 @@ Name = "test-1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create virtual network with delegated subnets
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithDelegatedSubnets()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkCreateSubnetWithDelegation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkCreateSubnetWithDelegation.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -492,12 +478,11 @@ Name = "test-1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create virtual network with encryption
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithEncryption()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkCreateWithEncryption.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkCreateWithEncryption.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -547,12 +532,11 @@ Name = "test-1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create virtual network with service endpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithServiceEndpoints()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkCreateServiceEndpoints.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkCreateServiceEndpoints.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -605,12 +589,11 @@ Name = "test-1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create virtual network with service endpoints and service endpoint policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithServiceEndpointsAndServiceEndpointPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkCreateServiceEndpointPolicy.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkCreateServiceEndpointPolicy.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -670,12 +653,11 @@ Name = "test-1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create virtual network with subnet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkCreateSubnet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkCreateSubnet.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -721,12 +703,11 @@ Name = "test-1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create virtual network with subnet containing address prefixes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithSubnetContainingAddressPrefixes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkCreateSubnetWithAddressPrefixes.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkCreateSubnetWithAddressPrefixes.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -775,12 +756,11 @@ Name = "test-2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List virtual networks in resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListVirtualNetworksInResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/VirtualNetworkList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkList.json
             // this example is just showing the usage of "VirtualNetworks_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -808,7 +788,7 @@ Name = "test-2",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

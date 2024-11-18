@@ -5,28 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AutoTargetRollingWindowSize : IUtf8JsonSerializable
+    public partial class AutoTargetRollingWindowSize : IUtf8JsonSerializable, IJsonModel<AutoTargetRollingWindowSize>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoTargetRollingWindowSize>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AutoTargetRollingWindowSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("mode"u8);
-            writer.WriteStringValue(Mode.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static AutoTargetRollingWindowSize DeserializeAutoTargetRollingWindowSize(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoTargetRollingWindowSize>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoTargetRollingWindowSize)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        AutoTargetRollingWindowSize IJsonModel<AutoTargetRollingWindowSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoTargetRollingWindowSize>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoTargetRollingWindowSize)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoTargetRollingWindowSize(document.RootElement, options);
+        }
+
+        internal static AutoTargetRollingWindowSize DeserializeAutoTargetRollingWindowSize(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             TargetRollingWindowSizeMode mode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -34,8 +68,73 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     mode = new TargetRollingWindowSizeMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutoTargetRollingWindowSize(mode);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutoTargetRollingWindowSize(mode, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  mode: ");
+                builder.AppendLine($"'{Mode.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AutoTargetRollingWindowSize>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoTargetRollingWindowSize>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AutoTargetRollingWindowSize)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutoTargetRollingWindowSize IPersistableModel<AutoTargetRollingWindowSize>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoTargetRollingWindowSize>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutoTargetRollingWindowSize(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoTargetRollingWindowSize)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutoTargetRollingWindowSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

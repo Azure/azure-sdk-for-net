@@ -5,12 +5,13 @@
 
 #nullable disable
 
-using Azure;
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    /// <summary> The UnknownChannel. </summary>
+    /// <summary> Unknown version of Channel. </summary>
     internal partial class UnknownChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChannel"/>. </summary>
@@ -18,9 +19,15 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
-        internal UnknownChannel(string channelName, ETag? etag, string provisioningState, AzureLocation? location) : base(channelName, etag, provisioningState, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownChannel(string channelName, ETag? etag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(channelName, etag, provisioningState, location, serializedAdditionalRawData)
         {
             ChannelName = channelName ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownChannel"/> for deserialization. </summary>
+        internal UnknownChannel()
+        {
         }
     }
 }

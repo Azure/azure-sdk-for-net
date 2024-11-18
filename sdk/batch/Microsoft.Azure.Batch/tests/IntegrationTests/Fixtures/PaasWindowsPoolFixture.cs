@@ -24,12 +24,16 @@ namespace BatchClientIntegrationTests.Fixtures
             if (currentPool == null)
             {
                 // gotta create a new pool
-                CloudServiceConfiguration passConfiguration = new CloudServiceConfiguration(OSFamily);
+                var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(client);
+
+                VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                    ubuntuImageDetails.ImageReference,
+                    nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
 
                 currentPool = client.PoolOperations.CreatePool(
                     PoolId,
                     VMSize,
-                    passConfiguration,
+                    virtualMachineConfiguration,
                     targetDedicatedComputeNodes: 1);
                 var password = TestUtilities.GenerateRandomPassword();
                 currentPool.UserAccounts = new List<UserAccount>()

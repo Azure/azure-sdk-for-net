@@ -22,18 +22,24 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string HealthyValue = "Healthy";
-        private const string UnhealthyValue = "Unhealthy";
+        private const string PassedValue = "Passed";
+        private const string FailedValue = "Failed";
+        private const string NotApplicableValue = "NotApplicable";
+        private const string PendingApprovalValue = "PendingApproval";
 
-        /// <summary> Healthy. </summary>
-        public static ControlFamilyStatus Healthy { get; } = new ControlFamilyStatus(HealthyValue);
-        /// <summary> Unhealthy. </summary>
-        public static ControlFamilyStatus Unhealthy { get; } = new ControlFamilyStatus(UnhealthyValue);
+        /// <summary> The control family is passed. </summary>
+        public static ControlFamilyStatus Passed { get; } = new ControlFamilyStatus(PassedValue);
+        /// <summary> The control family is failed. </summary>
+        public static ControlFamilyStatus Failed { get; } = new ControlFamilyStatus(FailedValue);
+        /// <summary> The control family is not applicable. </summary>
+        public static ControlFamilyStatus NotApplicable { get; } = new ControlFamilyStatus(NotApplicableValue);
+        /// <summary> The control family is pending for approval. </summary>
+        public static ControlFamilyStatus PendingApproval { get; } = new ControlFamilyStatus(PendingApprovalValue);
         /// <summary> Determines if two <see cref="ControlFamilyStatus"/> values are the same. </summary>
         public static bool operator ==(ControlFamilyStatus left, ControlFamilyStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ControlFamilyStatus"/> values are not the same. </summary>
         public static bool operator !=(ControlFamilyStatus left, ControlFamilyStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ControlFamilyStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ControlFamilyStatus"/>. </summary>
         public static implicit operator ControlFamilyStatus(string value) => new ControlFamilyStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +50,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

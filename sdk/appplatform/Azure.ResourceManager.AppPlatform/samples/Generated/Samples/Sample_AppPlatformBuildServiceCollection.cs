@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppPlatform;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppPlatform.Samples
 {
     public partial class Sample_AppPlatformBuildServiceCollection
     {
-        // BuildService_ListBuildServices
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_BuildServiceListBuildServices()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/BuildService_ListBuildServices.json
@@ -51,12 +48,11 @@ namespace Azure.ResourceManager.AppPlatform.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BuildService_GetBuildService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BuildServiceGetBuildService()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/BuildService_GetBuildService.json
@@ -89,9 +85,8 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BuildService_GetBuildService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_BuildServiceGetBuildService()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/BuildService_GetBuildService.json
@@ -120,9 +115,8 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BuildService_GetBuildService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_BuildServiceGetBuildService()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/BuildService_GetBuildService.json
@@ -151,7 +145,7 @@ namespace Azure.ResourceManager.AppPlatform.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

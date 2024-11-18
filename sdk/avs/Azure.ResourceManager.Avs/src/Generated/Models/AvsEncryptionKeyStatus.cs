@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The state of key provided. </summary>
+    /// <summary> Whether the the encryption key is connected or access denied. </summary>
     public readonly partial struct AvsEncryptionKeyStatus : IEquatable<AvsEncryptionKeyStatus>
     {
         private readonly string _value;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Avs.Models
         private const string ConnectedValue = "Connected";
         private const string AccessDeniedValue = "AccessDenied";
 
-        /// <summary> Connected. </summary>
+        /// <summary> is connected. </summary>
         public static AvsEncryptionKeyStatus Connected { get; } = new AvsEncryptionKeyStatus(ConnectedValue);
-        /// <summary> AccessDenied. </summary>
+        /// <summary> is access denied. </summary>
         public static AvsEncryptionKeyStatus AccessDenied { get; } = new AvsEncryptionKeyStatus(AccessDeniedValue);
         /// <summary> Determines if two <see cref="AvsEncryptionKeyStatus"/> values are the same. </summary>
         public static bool operator ==(AvsEncryptionKeyStatus left, AvsEncryptionKeyStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsEncryptionKeyStatus"/> values are not the same. </summary>
         public static bool operator !=(AvsEncryptionKeyStatus left, AvsEncryptionKeyStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvsEncryptionKeyStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsEncryptionKeyStatus"/>. </summary>
         public static implicit operator AvsEncryptionKeyStatus(string value) => new AvsEncryptionKeyStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

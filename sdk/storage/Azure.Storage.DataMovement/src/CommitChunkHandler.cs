@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Threading.Channels;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
@@ -16,8 +17,8 @@ namespace Azure.Storage.DataMovement
         private static Task _processStageChunkEvents;
 
         #region Delegate Definitions
-        public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength);
-        public delegate Task QueueCommitBlockTaskInternal();
+        public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength, StorageResourceItemProperties properties);
+        public delegate Task QueueCommitBlockTaskInternal(StorageResourceItemProperties sourceProperties);
         public delegate void ReportProgressInBytes(long bytesWritten);
         public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
         #endregion Delegate Definitions
@@ -50,6 +51,7 @@ namespace Azure.Storage.DataMovement
         private readonly long _blockSize;
         private readonly DataTransferOrder _transferOrder;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly StorageResourceItemProperties _sourceProperties;
 
         public CommitChunkHandler(
             long expectedLength,
@@ -57,6 +59,7 @@ namespace Azure.Storage.DataMovement
             Behaviors behaviors,
             DataTransferOrder transferOrder,
             ClientDiagnostics clientDiagnostics,
+            StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken)
         {
             if (expectedLength <= 0)
@@ -89,10 +92,11 @@ namespace Azure.Storage.DataMovement
                     SingleReader = true,
                 });
             _cancellationToken = cancellationToken;
-            _processStageChunkEvents = Task.Run(() => NotifyOfPendingStageChunkEvents());
 
             // Set bytes transferred to block size because we transferred the initial block
             _bytesTransferred = blockSize;
+
+            _processStageChunkEvents = Task.Run(() => NotifyOfPendingStageChunkEvents());
 
             _blockSize = blockSize;
             _transferOrder = transferOrder;
@@ -102,6 +106,7 @@ namespace Azure.Storage.DataMovement
             }
             _commitBlockHandler += ConcurrentBlockEvent;
             _clientDiagnostics = clientDiagnostics;
+            _sourceProperties = sourceProperties;
         }
 
         public void Dispose()
@@ -151,14 +156,17 @@ namespace Azure.Storage.DataMovement
                     // Read one event argument at a time.
                     StageChunkEventArgs args = await _stageChunkChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
 
-                    Interlocked.Add(ref _bytesTransferred, args.BytesTransferred);
+                    // don't need to use Interlocked.Add() as we are reading one event at a time
+                    // and _bytesTransferred is not being read/updated from any other thread
+                    _bytesTransferred += args.BytesTransferred;
+
                     // Report the incremental bytes transferred
                     _reportProgressInBytes(args.BytesTransferred);
 
                     if (_bytesTransferred == _expectedLength)
                     {
                         // Add CommitBlockList task to the channel
-                        await _queueCommitBlockTask().ConfigureAwait(false);
+                        await _queueCommitBlockTask(_sourceProperties).ConfigureAwait(false);
                     }
                     else if (_bytesTransferred > _expectedLength)
                     {
@@ -187,7 +195,7 @@ namespace Azure.Storage.DataMovement
                         long blockLength = (newOffset + _blockSize < _expectedLength) ?
                                         _blockSize :
                                         _expectedLength - newOffset;
-                        await _queuePutBlockTask(newOffset, blockLength, _expectedLength).ConfigureAwait(false);
+                        await _queuePutBlockTask(newOffset, blockLength, _expectedLength, _sourceProperties).ConfigureAwait(false);
                     }
                 }
                 else

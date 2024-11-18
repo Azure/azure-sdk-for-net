@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -32,6 +31,72 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Initializes a new instance of WebPubSubServiceClient for mocking. </summary>
         protected WebPubSubServiceClient()
         {
+        }
+
+        /// <summary>
+        /// [Protocol Method] Add filtered connections to multiple groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> AddConnectionsToGroupsAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionsToGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddConnectionsToGroupsRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Add filtered connections to multiple groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response AddConnectionsToGroups(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionsToGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddConnectionsToGroupsRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -112,16 +177,17 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="group"> Groups that the connection will join when it connects. </param>
+        /// <param name="clientType"> The type of client. Case-insensitive. If not set, it's "Default". For Web PubSub for Socket.IO, only the default value is supported. For Web PubSub, the valid values are 'Default' and 'MQTT'. Allowed values: "Default" | "MQTT". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, RequestContext context = null)
+        internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, string clientType = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, group, context);
+                using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, group, clientType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -145,16 +211,83 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="group"> Groups that the connection will join when it connects. </param>
+        /// <param name="clientType"> The type of client. Case-insensitive. If not set, it's "Default". For Web PubSub for Socket.IO, only the default value is supported. For Web PubSub, the valid values are 'Default' and 'MQTT'. Allowed values: "Default" | "MQTT". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, RequestContext context = null)
+        internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, string clientType = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, group, context);
+                using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, group, clientType, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Remove filtered connections from multiple groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> RemoveConnectionsFromGroupsAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionsFromGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveConnectionsFromGroupsRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Remove filtered connections from multiple groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response RemoveConnectionsFromGroups(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionsFromGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveConnectionsFromGroupsRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1406,6 +1539,24 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
+        internal HttpMessage CreateAddConnectionsToGroupsRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/:addToGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateCloseAllConnectionsRequest(IEnumerable<string> excluded, string reason, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1416,7 +1567,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/:closeConnections", false);
-            if (excluded != null && Optional.IsCollectionDefined(excluded))
+            if (excluded != null && !(excluded is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in excluded)
                 {
@@ -1433,7 +1584,7 @@ namespace Azure.Messaging.WebPubSub
             return message;
         }
 
-        internal HttpMessage CreateGenerateClientTokenImplRequest(string userId, IEnumerable<string> role, int? minutesToExpire, IEnumerable<string> group, RequestContext context)
+        internal HttpMessage CreateGenerateClientTokenImplRequest(string userId, IEnumerable<string> role, int? minutesToExpire, IEnumerable<string> group, string clientType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1447,7 +1598,7 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("userId", userId, true);
             }
-            if (role != null && Optional.IsCollectionDefined(role))
+            if (role != null && !(role is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in role)
                 {
@@ -1459,15 +1610,37 @@ namespace Azure.Messaging.WebPubSub
                 uri.AppendQuery("minutesToExpire", minutesToExpire.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (group != null && Optional.IsCollectionDefined(group))
+            if (group != null && !(group is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in group)
                 {
                     uri.AppendQuery("group", param, true);
                 }
             }
+            if (clientType != null)
+            {
+                uri.AppendQuery("clientType", clientType, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        internal HttpMessage CreateRemoveConnectionsFromGroupsRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/:removeFromGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 
@@ -1481,7 +1654,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/:send", false);
-            if (excluded != null && Optional.IsCollectionDefined(excluded))
+            if (excluded != null && !(excluded is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in excluded)
                 {
@@ -1603,7 +1776,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
             uri.AppendPath("/:closeConnections", false);
-            if (excluded != null && Optional.IsCollectionDefined(excluded))
+            if (excluded != null && !(excluded is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in excluded)
                 {
@@ -1632,7 +1805,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
             uri.AppendPath("/:send", false);
-            if (excluded != null && Optional.IsCollectionDefined(excluded))
+            if (excluded != null && !(excluded is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in excluded)
                 {
@@ -1785,7 +1958,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/:closeConnections", false);
-            if (excluded != null && Optional.IsCollectionDefined(excluded))
+            if (excluded != null && !(excluded is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in excluded)
                 {
@@ -1882,10 +2055,10 @@ namespace Azure.Messaging.WebPubSub
             return message;
         }
 
-        private static ResponseClassifier _responseClassifier204;
-        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
         private static ResponseClassifier _responseClassifier202;
         private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200404;

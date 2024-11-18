@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServices;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServices.Samples
 {
     public partial class Sample_RecoveryServicesVaultExtendedInfoResource
     {
-        // Get ExtendedInfo of Resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetExtendedInfoOfResource()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/GETVaultExtendedInfo.json
@@ -48,9 +45,8 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Put ExtendedInfo of Resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutExtendedInfoOfResource()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/UpdateVaultExtendedInfo.json
@@ -81,9 +77,8 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PATCH ExtendedInfo of Resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PATCHExtendedInfoOfResource()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/UpdateVaultExtendedInfo.json

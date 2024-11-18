@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Advisor;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Advisor.Samples
 {
     public partial class Sample_SuppressionContractCollection
     {
-        // GetSuppressionDetail
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSuppressionDetail()
         {
             // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/GetSuppressionDetail.json
@@ -51,9 +48,8 @@ namespace Azure.ResourceManager.Advisor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetSuppressionDetail
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSuppressionDetail()
         {
             // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/GetSuppressionDetail.json
@@ -81,9 +77,8 @@ namespace Azure.ResourceManager.Advisor.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetSuppressionDetail
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSuppressionDetail()
         {
             // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/GetSuppressionDetail.json
@@ -111,7 +106,7 @@ namespace Azure.ResourceManager.Advisor.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -123,9 +118,8 @@ namespace Azure.ResourceManager.Advisor.Samples
             }
         }
 
-        // CreateSuppression
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSuppression()
         {
             // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/CreateSuppression.json

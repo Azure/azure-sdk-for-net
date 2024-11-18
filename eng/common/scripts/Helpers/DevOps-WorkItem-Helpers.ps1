@@ -5,18 +5,14 @@ $ReleaseDevOpsCommonParametersWithProject = $ReleaseDevOpsCommonParameters + @("
 
 function Get-DevOpsRestHeaders()
 {
-  $headers = $null
-  if (Get-Variable -Name "devops_pat" -ValueOnly -ErrorAction "Ignore")
-  {
-    $encodedToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes([string]::Format("{0}:{1}", "", $devops_pat)))
-    $headers = @{ Authorization = "Basic $encodedToken" }
+  # Get a temp access token from the logged in az cli user for azure devops resource
+  $headerAccessToken = (az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv)
+
+  if ([System.String]::IsNullOrEmpty($headerAccessToken)) {
+    throw "Unable to create the DevOpsRestHeader due to access token being null or empty. The caller needs to be logged in with az login to an account with enough permissions to edit work items in the azure-sdk Release team project."
   }
-  else
-  {
-    # Get a temp access token from the logged in az cli user for azure devops resource
-    $jwt_accessToken = (az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv)
-    $headers = @{ Authorization = "Bearer $jwt_accessToken" }
-  }
+
+  $headers = @{ Authorization = "Bearer $headerAccessToken" }
 
   return $headers
 }
@@ -101,15 +97,6 @@ function Invoke-Query($fields, $wiql, $output = $true)
   }
 
   return $workItems
-}
-
-function LoginToAzureDevops([string]$devops_pat)
-{
-  if (!$devops_pat) {
-    return
-  }
-  # based on the docs at https://aka.ms/azure-devops-cli-auth the recommendation is to set this env variable to login
-  $env:AZURE_DEVOPS_EXT_PAT = $devops_pat
 }
 
 function BuildHashKeyNoNull()
@@ -374,7 +361,7 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
   {
     CreateWorkItemRelation $workItemId $parentId "parent" $outputCommand
   }
-  
+
   # Add a work item as related if given.
   if ($relatedId)
   {
@@ -985,4 +972,46 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
     -Uri "https://dev.azure.com/azure-sdk/_apis/wit/workitems/${id}?api-version=6.0" `
     -Headers (Get-DevOpsRestHeaders) -Body $body -ContentType "application/json-patch+json" | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
   return $response
+}
+
+function UpdateValidationStatus($pkgvalidationDetails, $BuildDefinition, $PipelineUrl)
+{
+    $pkgName = $pkgValidationDetails.Name
+    $versionString = $pkgValidationDetails.Version
+
+    $parsedNewVersion = [AzureEngSemanticVersion]::new($versionString)
+    $versionMajorMinor = "" + $parsedNewVersion.Major + "." + $parsedNewVersion.Minor
+    $workItem = FindPackageWorkItem -lang $LanguageDisplayName -packageName $pkgName -version $versionMajorMinor -includeClosed $true -outputCommand $false
+
+    if (!$workItem)
+    {
+        Write-Host"No work item found for package [$pkgName]."
+        return $false
+    }
+
+    $changeLogStatus = $pkgValidationDetails.ChangeLogValidation.Status
+    $changeLogDetails  = $pkgValidationDetails.ChangeLogValidation.Message
+    $apiReviewStatus = $pkgValidationDetails.APIReviewValidation.Status
+    $apiReviewDetails = $pkgValidationDetails.APIReviewValidation.Message
+    $packageNameStatus = $pkgValidationDetails.PackageNameValidation.Status
+    $packageNameDetails = $pkgValidationDetails.PackageNameValidation.Message
+
+    $fields = @()
+    $fields += "`"PackageVersion=${versionString}`""
+    $fields += "`"ChangeLogStatus=${changeLogStatus}`""
+    $fields += "`"ChangeLogValidationDetails=${changeLogDetails}`""
+    $fields += "`"APIReviewStatus=${apiReviewStatus}`""
+    $fields += "`"APIReviewStatusDetails=${apiReviewDetails}`""
+    $fields += "`"PackageNameApprovalStatus=${packageNameStatus}`""
+    $fields += "`"PackageNameApprovalDetails=${packageNameDetails}`""
+    if ($BuildDefinition) {
+        $fields += "`"PipelineDefinition=$BuildDefinition`""
+    }
+    if ($PipelineUrl) {
+        $fields += "`"LatestPipelineRun=$PipelineUrl`""
+    }
+
+    $workItem = UpdateWorkItem -id $workItem.id -fields $fields
+    Write-Host "[$($workItem.id)]$LanguageDisplayName - $pkgName($versionMajorMinor) - Updated"
+    return $true
 }

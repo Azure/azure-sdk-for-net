@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,26 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2024-10-28)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-03-01' to 'package-2023-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/e19b5771846718774c0452800b9a42c251319f48/specification/vmware/resource-manager/readme.md.
+    - WorkloadNetworkResource is now a singleton resource
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+## 1.3.0 (2024-01-22)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2022-05-01' to 'package-2023-03-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/a032c2413b49d297196a0c64393e862433fccbb1/specification/vmware/resource-manager/readme.md.
+    - Added ExtendedNetworkBlocks to AvsPrivateCloudData class
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.10.0.
 
 ## 1.2.0 (2023-11-27)
 

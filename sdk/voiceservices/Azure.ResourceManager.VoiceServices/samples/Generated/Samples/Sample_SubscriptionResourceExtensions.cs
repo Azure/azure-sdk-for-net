@@ -9,18 +9,16 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.VoiceServices;
 using Azure.ResourceManager.VoiceServices.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.VoiceServices.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // CheckLocalNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckVoiceServicesNameAvailability_CheckLocalNameAvailability()
         {
             // Generated from example definition: specification/voiceservices/resource-manager/Microsoft.VoiceServices/stable/2023-01-31/examples/NameAvailability_CheckLocal.json

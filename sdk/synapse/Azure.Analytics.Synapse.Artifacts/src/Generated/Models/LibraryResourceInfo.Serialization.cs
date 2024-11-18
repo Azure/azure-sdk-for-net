@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,15 +20,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<int> recordId = default;
-            Optional<string> state = default;
-            Optional<string> created = default;
-            Optional<string> changed = default;
-            Optional<string> type = default;
-            Optional<string> name = default;
-            Optional<string> operationId = default;
-            Optional<string> artifactId = default;
+            string id = default;
+            int? recordId = default;
+            string state = default;
+            string created = default;
+            string changed = default;
+            string type = default;
+            string name = default;
+            string operationId = default;
+            string artifactId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -82,7 +81,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LibraryResourceInfo(id.Value, Optional.ToNullable(recordId), state.Value, created.Value, changed.Value, type.Value, name.Value, operationId.Value, artifactId.Value);
+            return new LibraryResourceInfo(
+                id,
+                recordId,
+                state,
+                created,
+                changed,
+                type,
+                name,
+                operationId,
+                artifactId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LibraryResourceInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLibraryResourceInfo(document.RootElement);
         }
 
         internal partial class LibraryResourceInfoConverter : JsonConverter<LibraryResourceInfo>
@@ -91,6 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override LibraryResourceInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

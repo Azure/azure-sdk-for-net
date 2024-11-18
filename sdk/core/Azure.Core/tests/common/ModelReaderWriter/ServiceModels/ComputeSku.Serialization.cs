@@ -6,9 +6,8 @@
 #nullable disable
 
 using System;
-using System.Linq;
-using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core.Tests.Common;
 

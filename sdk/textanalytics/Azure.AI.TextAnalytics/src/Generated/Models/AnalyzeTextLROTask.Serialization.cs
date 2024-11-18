@@ -48,22 +48,23 @@ namespace Azure.AI.TextAnalytics.Models
                     case "SentimentAnalysis": return SentimentAnalysisLROTask.DeserializeSentimentAnalysisLROTask(element);
                 }
             }
-            AnalyzeTextLROTaskKind kind = default;
-            Optional<string> taskName = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new AnalyzeTextLROTaskKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("taskName"u8))
-                {
-                    taskName = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new AnalyzeTextLROTask(taskName.Value, kind);
+            return UnknownAnalyzeTextLROTask.DeserializeUnknownAnalyzeTextLROTask(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AnalyzeTextLROTask FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnalyzeTextLROTask(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

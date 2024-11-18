@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataShare;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataShare.Samples
 {
     public partial class Sample_ProviderShareSubscriptionCollection
     {
-        // ProviderShareSubscriptions_GetByShare
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ProviderShareSubscriptionsGetByShare()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ProviderShareSubscriptions_GetByShare.json
@@ -53,9 +50,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ProviderShareSubscriptions_GetByShare
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ProviderShareSubscriptionsGetByShare()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ProviderShareSubscriptions_GetByShare.json
@@ -85,9 +81,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ProviderShareSubscriptions_GetByShare
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ProviderShareSubscriptionsGetByShare()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ProviderShareSubscriptions_GetByShare.json
@@ -117,7 +112,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -129,9 +124,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             }
         }
 
-        // ProviderShareSubscriptions_ListByShare
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ProviderShareSubscriptionsListByShare()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ProviderShareSubscriptions_ListByShare.json
@@ -164,7 +158,7 @@ namespace Azure.ResourceManager.DataShare.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

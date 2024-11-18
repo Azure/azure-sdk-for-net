@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.BotService;
 using Azure.ResourceManager.BotService.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.BotService.Samples
 {
     public partial class Sample_BotChannelResource
     {
-        // Update Alexa Channel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAlexaChannel()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/UpdateAlexaChannel.json
@@ -57,9 +54,8 @@ namespace Azure.ResourceManager.BotService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Channel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateChannel()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/UpdateChannel.json
@@ -99,9 +95,8 @@ namespace Azure.ResourceManager.BotService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update DirectLine Speech Channel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateDirectLineSpeechChannel()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/UpdateDirectLineSpeechChannel.json
@@ -143,9 +138,8 @@ namespace Azure.ResourceManager.BotService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Line Channel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateLineChannel()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/UpdateLineChannel.json
@@ -189,9 +183,8 @@ ChannelAccessToken = "channelAccessToken",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Channel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteChannel()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/DeleteChannel.json
@@ -214,12 +207,11 @@ ChannelAccessToken = "channelAccessToken",
             // invoke the operation
             await botChannel.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Delete DirectLine Speech Channel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteDirectLineSpeechChannel()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/DeleteDirectLineSpeechChannel.json
@@ -242,12 +234,11 @@ ChannelAccessToken = "channelAccessToken",
             // invoke the operation
             await botChannel.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Alexa Channel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAlexaChannel()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetAlexaChannel.json
@@ -277,9 +268,8 @@ ChannelAccessToken = "channelAccessToken",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Channel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetChannel()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetChannel.json
@@ -309,9 +299,8 @@ ChannelAccessToken = "channelAccessToken",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get DirectLine Speech Channel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDirectLineSpeechChannel()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetDirectLineSpeechChannel.json
@@ -341,9 +330,8 @@ ChannelAccessToken = "channelAccessToken",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Line Channel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetLineChannel()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetLineChannel.json
@@ -373,9 +361,8 @@ ChannelAccessToken = "channelAccessToken",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List Channel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetChannelWithKeys_ListChannel()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/ListChannel.json

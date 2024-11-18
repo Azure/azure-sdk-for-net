@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.FrontDoor.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.FrontDoor.Samples
 {
     public partial class Sample_FrontDoorExperimentCollection
     {
-        // Gets a list of Experiments
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsAListOfExperiments()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2019-11-01/examples/NetworkExperimentListExperiments.json
@@ -52,12 +49,11 @@ namespace Azure.ResourceManager.FrontDoor.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets an Experiment by ExperimentName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAnExperimentByExperimentName()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2019-11-01/examples/NetworkExperimentGetExperiment.json
@@ -90,9 +86,8 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets an Experiment by ExperimentName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsAnExperimentByExperimentName()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2019-11-01/examples/NetworkExperimentGetExperiment.json
@@ -121,9 +116,8 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets an Experiment by ExperimentName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsAnExperimentByExperimentName()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2019-11-01/examples/NetworkExperimentGetExperiment.json
@@ -152,7 +146,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -164,9 +158,8 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             }
         }
 
-        // Creates an Experiment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesAnExperiment()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2019-11-01/examples/NetworkExperimentCreateExperiment.json

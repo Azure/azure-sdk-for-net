@@ -6,32 +6,75 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class DocumentModelBuildOperationDetails
+    public partial class DocumentModelBuildOperationDetails : IUtf8JsonSerializable, IJsonModel<DocumentModelBuildOperationDetails>
     {
-        internal static DocumentModelBuildOperationDetails DeserializeDocumentModelBuildOperationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentModelBuildOperationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DocumentModelBuildOperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentModelBuildOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentModelBuildOperationDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Result))
+            {
+                writer.WritePropertyName("result"u8);
+                writer.WriteObjectValue(Result, options);
+            }
+        }
+
+        DocumentModelBuildOperationDetails IJsonModel<DocumentModelBuildOperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentModelBuildOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentModelBuildOperationDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentModelBuildOperationDetails(document.RootElement, options);
+        }
+
+        internal static DocumentModelBuildOperationDetails DeserializeDocumentModelBuildOperationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DocumentModelDetails> result = default;
+            DocumentModelDetails result = default;
             string operationId = default;
             OperationStatus status = default;
-            Optional<int> percentCompleted = default;
+            int? percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             OperationKind kind = default;
             Uri resourceLocation = default;
-            Optional<string> apiVersion = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<DocumentIntelligenceError> error = default;
+            string apiVersion = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            DocumentIntelligenceError error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"u8))
@@ -40,7 +83,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    result = DocumentModelDetails.DeserializeDocumentModelDetails(property.Value);
+                    result = DocumentModelDetails.DeserializeDocumentModelDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("operationId"u8))
@@ -107,12 +150,60 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(property.Value);
+                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentModelBuildOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error.Value, result.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DocumentModelBuildOperationDetails(
+                operationId,
+                status,
+                percentCompleted,
+                createdDateTime,
+                lastUpdatedDateTime,
+                kind,
+                resourceLocation,
+                apiVersion,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                error,
+                serializedAdditionalRawData,
+                result);
         }
+
+        BinaryData IPersistableModel<DocumentModelBuildOperationDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentModelBuildOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DocumentModelBuildOperationDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DocumentModelBuildOperationDetails IPersistableModel<DocumentModelBuildOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentModelBuildOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDocumentModelBuildOperationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DocumentModelBuildOperationDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DocumentModelBuildOperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -120,6 +211,14 @@ namespace Azure.AI.DocumentIntelligence
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeDocumentModelBuildOperationDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

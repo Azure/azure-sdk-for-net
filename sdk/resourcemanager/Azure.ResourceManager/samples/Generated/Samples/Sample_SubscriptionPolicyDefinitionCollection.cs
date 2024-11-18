@@ -8,20 +8,17 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_SubscriptionPolicyDefinitionCollection
     {
-        // Create or update a policy definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyDefinition()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/createOrUpdatePolicyDefinition.json
@@ -99,9 +96,8 @@ Description = "Resource name suffix",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a policy definition with advanced parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyDefinitionWithAdvancedParameters()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/createOrUpdatePolicyDefinitionAdvancedParams.json
@@ -186,9 +182,8 @@ Description = "The required diagnostic logs retention in days",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyDefinition()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicyDefinition.json
@@ -219,9 +214,8 @@ Description = "The required diagnostic logs retention in days",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAPolicyDefinition()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicyDefinition.json
@@ -248,9 +242,8 @@ Description = "The required diagnostic logs retention in days",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Retrieve a policy definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAPolicyDefinition()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicyDefinition.json
@@ -277,7 +270,7 @@ Description = "The required diagnostic logs retention in days",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -289,9 +282,8 @@ Description = "The required diagnostic logs retention in days",
             }
         }
 
-        // List policy definitions by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPolicyDefinitionsBySubscription()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/listPolicyDefinitions.json
@@ -321,7 +313,7 @@ Description = "The required diagnostic logs retention in days",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

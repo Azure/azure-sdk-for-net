@@ -6,8 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set mapping. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataSetId"> The id of the source data set. </param>
         /// <param name="dataSetMappingStatus"> Gets the status of the data set mapping. </param>
         /// <param name="dataWarehouseName"> DataWarehouse name of the source data set. </param>
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="schemaName"> Schema of the table. Default value is dbo. </param>
         /// <param name="sqlServerResourceId"> Resource id of SQL server. </param>
         /// <param name="tableName"> SQL DW table name. </param>
-        internal SqlDWTableDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, Guid dataSetId, DataSetMappingStatus? dataSetMappingStatus, string dataWarehouseName, DataShareProvisioningState? provisioningState, string schemaName, ResourceIdentifier sqlServerResourceId, string tableName) : base(id, name, resourceType, systemData, kind)
+        internal SqlDWTableDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid dataSetId, DataSetMappingStatus? dataSetMappingStatus, string dataWarehouseName, DataShareProvisioningState? provisioningState, string schemaName, ResourceIdentifier sqlServerResourceId, string tableName) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             DataSetId = dataSetId;
             DataSetMappingStatus = dataSetMappingStatus;
@@ -60,6 +61,11 @@ namespace Azure.ResourceManager.DataShare.Models
             SqlServerResourceId = sqlServerResourceId;
             TableName = tableName;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlDWTableDataSetMapping"/> for deserialization. </summary>
+        internal SqlDWTableDataSetMapping()
+        {
         }
 
         /// <summary> The id of the source data set. </summary>

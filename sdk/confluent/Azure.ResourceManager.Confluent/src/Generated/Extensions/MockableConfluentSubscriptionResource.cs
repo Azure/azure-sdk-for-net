@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Confluent;
 using Azure.ResourceManager.Confluent.Models;
 
 namespace Azure.ResourceManager.Confluent.Mocking
@@ -60,6 +57,10 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfluentAgreement.DeserializeConfluentAgreement, MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableConfluentSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConfluentAgreement.DeserializeConfluentAgreement(e), MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableConfluentSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -82,6 +83,10 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfluentAgreement.DeserializeConfluentAgreement, MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableConfluentSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConfluentAgreement.DeserializeConfluentAgreement(e), MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableConfluentSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -103,6 +108,10 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +144,10 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> Confluent Marketplace Agreement resource. </param>
@@ -166,6 +179,14 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <term>Operation Id</term>
         /// <description>Organization_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -187,6 +208,14 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organization_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -8,21 +8,18 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkFabricNeighborGroupCollection
     {
-        // NeighborGroups_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NeighborGroupsCreateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NeighborGroups_Create_MaximumSet_Gen.json
@@ -74,9 +71,8 @@ IPAddress.Parse("10.10.10.10"),IPAddress.Parse("20.10.10.10"),IPAddress.Parse("3
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NeighborGroups_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NeighborGroupsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NeighborGroups_Get_MaximumSet_Gen.json
@@ -108,9 +104,8 @@ IPAddress.Parse("10.10.10.10"),IPAddress.Parse("20.10.10.10"),IPAddress.Parse("3
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NeighborGroups_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_NeighborGroupsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NeighborGroups_Get_MaximumSet_Gen.json
@@ -138,9 +133,8 @@ IPAddress.Parse("10.10.10.10"),IPAddress.Parse("20.10.10.10"),IPAddress.Parse("3
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NeighborGroups_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NeighborGroupsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NeighborGroups_Get_MaximumSet_Gen.json
@@ -168,7 +162,7 @@ IPAddress.Parse("10.10.10.10"),IPAddress.Parse("20.10.10.10"),IPAddress.Parse("3
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -180,9 +174,8 @@ IPAddress.Parse("10.10.10.10"),IPAddress.Parse("20.10.10.10"),IPAddress.Parse("3
             }
         }
 
-        // NeighborGroups_ListByResourceGroup_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_NeighborGroupsListByResourceGroupMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NeighborGroups_ListByResourceGroup_MaximumSet_Gen.json
@@ -213,7 +206,7 @@ IPAddress.Parse("10.10.10.10"),IPAddress.Parse("20.10.10.10"),IPAddress.Parse("3
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_CloudServiceCollection
     {
-        // Create New Cloud Service with Multiple Roles
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateNewCloudServiceWithMultipleRoles()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Create_WithMultiRole.json
@@ -58,7 +55,7 @@ Sku = new CloudServiceRoleSku()
 {
 Name = "Standard_D1_v2",
 Tier = "Standard",
-Capacity = 1,
+Capacity = 1L,
 },
 },new CloudServiceRoleProfileProperties()
 {
@@ -67,7 +64,7 @@ Sku = new CloudServiceRoleSku()
 {
 Name = "Standard_D1_v2",
 Tier = "Standard",
-Capacity = 1,
+Capacity = 1L,
 },
 }
 },
@@ -95,9 +92,8 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/{subscription-id}/res
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create New Cloud Service with Multiple Roles in a specific availability zone
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateNewCloudServiceWithMultipleRolesInASpecificAvailabilityZone()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Create_WithMultiRole_WithZones.json
@@ -138,7 +134,7 @@ Sku = new CloudServiceRoleSku()
 {
 Name = "Standard_D1_v2",
 Tier = "Standard",
-Capacity = 1,
+Capacity = 1L,
 },
 },new CloudServiceRoleProfileProperties()
 {
@@ -147,7 +143,7 @@ Sku = new CloudServiceRoleSku()
 {
 Name = "Standard_D1_v2",
 Tier = "Standard",
-Capacity = 1,
+Capacity = 1L,
 },
 }
 },
@@ -175,9 +171,8 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/{subscription-id}/res
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create New Cloud Service with Single Role
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateNewCloudServiceWithSingleRole()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Create_WithSingleRole.json
@@ -214,7 +209,7 @@ Sku = new CloudServiceRoleSku()
 {
 Name = "Standard_D1_v2",
 Tier = "Standard",
-Capacity = 1,
+Capacity = 1L,
 },
 }
 },
@@ -242,9 +237,8 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/{subscription-id}/res
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create New Cloud Service with Single Role and Certificate from Key Vault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateNewCloudServiceWithSingleRoleAndCertificateFromKeyVault()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Create_WithSingleRoleAndCertificate.json
@@ -281,7 +275,7 @@ Sku = new CloudServiceRoleSku()
 {
 Name = "Standard_D1_v2",
 Tier = "Standard",
-Capacity = 1,
+Capacity = 1L,
 },
 }
 },
@@ -323,9 +317,8 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/{subscription-id}/res
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create New Cloud Service with Single Role and RDP Extension
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateNewCloudServiceWithSingleRoleAndRDPExtension()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Create_WithSingleRoleAndRDP.json
@@ -362,7 +355,7 @@ Sku = new CloudServiceRoleSku()
 {
 Name = "Standard_D1_v2",
 Tier = "Standard",
-Capacity = 1,
+Capacity = 1L,
 },
 }
 },
@@ -403,9 +396,8 @@ ProtectedSettings = BinaryData.FromString("\"<PrivateConfig><Password>{password}
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Cloud Service with Multiple Roles and RDP Extension
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCloudServiceWithMultipleRolesAndRDPExtension()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Get_WithMultiRoleAndRDP.json
@@ -437,9 +429,8 @@ ProtectedSettings = BinaryData.FromString("\"<PrivateConfig><Password>{password}
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Cloud Service with Multiple Roles and RDP Extension
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetCloudServiceWithMultipleRolesAndRDPExtension()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Get_WithMultiRoleAndRDP.json
@@ -467,9 +458,8 @@ ProtectedSettings = BinaryData.FromString("\"<PrivateConfig><Password>{password}
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Cloud Service with Multiple Roles and RDP Extension
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetCloudServiceWithMultipleRolesAndRDPExtension()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Get_WithMultiRoleAndRDP.json
@@ -497,7 +487,7 @@ ProtectedSettings = BinaryData.FromString("\"<PrivateConfig><Password>{password}
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -509,9 +499,8 @@ ProtectedSettings = BinaryData.FromString("\"<PrivateConfig><Password>{password}
             }
         }
 
-        // List Cloud Services in a Resource Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListCloudServicesInAResourceGroup()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_List_ByResourceGroup.json
@@ -542,7 +531,7 @@ ProtectedSettings = BinaryData.FromString("\"<PrivateConfig><Password>{password}
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

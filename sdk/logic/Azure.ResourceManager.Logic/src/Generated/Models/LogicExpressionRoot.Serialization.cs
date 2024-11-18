@@ -6,25 +6,69 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicExpressionRoot
+    public partial class LogicExpressionRoot : IUtf8JsonSerializable, IJsonModel<LogicExpressionRoot>
     {
-        internal static LogicExpressionRoot DeserializeLogicExpressionRoot(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicExpressionRoot>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LogicExpressionRoot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicExpressionRoot>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogicExpressionRoot)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Path))
+            {
+                writer.WritePropertyName("path"u8);
+                writer.WriteStringValue(Path);
+            }
+        }
+
+        LogicExpressionRoot IJsonModel<LogicExpressionRoot>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicExpressionRoot>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogicExpressionRoot)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicExpressionRoot(document.RootElement, options);
+        }
+
+        internal static LogicExpressionRoot DeserializeLogicExpressionRoot(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<string> text = default;
-            Optional<BinaryData> value = default;
-            Optional<IReadOnlyList<LogicExpression>> subexpressions = default;
-            Optional<LogicExpressionErrorInfo> error = default;
+            string path = default;
+            string text = default;
+            BinaryData value = default;
+            IReadOnlyList<LogicExpression> subexpressions = default;
+            LogicExpressionErrorInfo error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -55,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicExpression> array = new List<LogicExpression>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeLogicExpression(item));
+                        array.Add(DeserializeLogicExpression(item, options));
                     }
                     subexpressions = array;
                     continue;
@@ -66,11 +110,53 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = LogicExpressionErrorInfo.DeserializeLogicExpressionErrorInfo(property.Value);
+                    error = LogicExpressionErrorInfo.DeserializeLogicExpressionErrorInfo(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogicExpressionRoot(text.Value, value.Value, Optional.ToList(subexpressions), error.Value, path.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LogicExpressionRoot(
+                text,
+                value,
+                subexpressions ?? new ChangeTrackingList<LogicExpression>(),
+                error,
+                serializedAdditionalRawData,
+                path);
         }
+
+        BinaryData IPersistableModel<LogicExpressionRoot>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicExpressionRoot>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LogicExpressionRoot)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LogicExpressionRoot IPersistableModel<LogicExpressionRoot>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicExpressionRoot>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLogicExpressionRoot(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LogicExpressionRoot)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LogicExpressionRoot>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

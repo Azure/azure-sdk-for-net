@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CustomerInsights;
 using Azure.ResourceManager.CustomerInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CustomerInsights.Samples
 {
     public partial class Sample_RelationshipResourceFormatCollection
     {
-        // Relationships_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RelationshipsCreateOrUpdate()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RelationshipsCreateOrUpdate.json
@@ -71,9 +68,8 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Relationships_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RelationshipsGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RelationshipsGet.json
@@ -106,9 +102,8 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Relationships_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RelationshipsGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RelationshipsGet.json
@@ -137,9 +132,8 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Relationships_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RelationshipsGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RelationshipsGet.json
@@ -168,7 +162,7 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -180,9 +174,8 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             }
         }
 
-        // Relationships_ListByHub
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_RelationshipsListByHub()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RelationshipsListByHub.json
@@ -214,7 +207,7 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Avs.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.Avs
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-05-01";
+            _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/authorizations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string privateCloudName)
@@ -58,8 +72,8 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List ExpressRoute Circuit Authorizations in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List ExpressRouteAuthorization resources by PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -87,8 +101,8 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List ExpressRoute Circuit Authorizations in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List ExpressRouteAuthorization resources by PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -116,6 +130,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string authorizationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/authorizations/", false);
+            uri.AppendPath(authorizationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string authorizationName)
         {
             var message = _pipeline.CreateMessage();
@@ -138,11 +168,11 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Get an ExpressRoute Circuit Authorization by name in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a ExpressRouteAuthorization. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="authorizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -171,11 +201,11 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Get an ExpressRoute Circuit Authorization by name in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a ExpressRouteAuthorization. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="authorizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -204,6 +234,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string authorizationName, ExpressRouteAuthorizationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/authorizations/", false);
+            uri.AppendPath(authorizationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string authorizationName, ExpressRouteAuthorizationData data)
         {
             var message = _pipeline.CreateMessage();
@@ -224,18 +270,18 @@ namespace Azure.ResourceManager.Avs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Create or update an ExpressRoute Circuit Authorization in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Create a ExpressRouteAuthorization. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> The name of the private cloud. </param>
-        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
-        /// <param name="data"> An ExpressRoute Circuit Authorization. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="authorizationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -259,12 +305,12 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Create or update an ExpressRoute Circuit Authorization in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Create a ExpressRouteAuthorization. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> The name of the private cloud. </param>
-        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
-        /// <param name="data"> An ExpressRoute Circuit Authorization. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="authorizationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -286,6 +332,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string authorizationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/authorizations/", false);
+            uri.AppendPath(authorizationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string authorizationName)
@@ -310,11 +372,11 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Delete an ExpressRoute Circuit Authorization in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Delete a ExpressRouteAuthorization. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="authorizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -338,11 +400,11 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Delete an ExpressRoute Circuit Authorization in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Delete a ExpressRouteAuthorization. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="authorizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -366,6 +428,14 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
@@ -380,9 +450,9 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List ExpressRoute Circuit Authorizations in a private cloud. </summary>
+        /// <summary> List ExpressRouteAuthorization resources by PrivateCloud. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -411,9 +481,9 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List ExpressRoute Circuit Authorizations in a private cloud. </summary>
+        /// <summary> List ExpressRouteAuthorization resources by PrivateCloud. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

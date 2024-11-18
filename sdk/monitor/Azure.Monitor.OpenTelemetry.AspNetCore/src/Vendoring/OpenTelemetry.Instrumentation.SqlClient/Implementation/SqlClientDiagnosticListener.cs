@@ -1,18 +1,6 @@
-// <copyright file="SqlClientDiagnosticListener.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// </copyright>
+// SPDX-License-Identifier: Apache-2.0
+
 #if !NETFRAMEWORK
 using System.Data;
 using System.Diagnostics;
@@ -44,17 +32,17 @@ internal sealed class SqlClientDiagnosticListener : ListenerHandler
     private readonly PropertyFetcher<CommandType> commandTypeFetcher = new("CommandType");
     private readonly PropertyFetcher<object> commandTextFetcher = new("CommandText");
     private readonly PropertyFetcher<Exception> exceptionFetcher = new("Exception");
-    private readonly SqlClientInstrumentationOptions options;
+    private readonly SqlClientTraceInstrumentationOptions options;
 
-    public SqlClientDiagnosticListener(string sourceName, SqlClientInstrumentationOptions options)
+    public SqlClientDiagnosticListener(string sourceName, SqlClientTraceInstrumentationOptions? options)
         : base(sourceName)
     {
-        this.options = options ?? new SqlClientInstrumentationOptions();
+        this.options = options ?? new SqlClientTraceInstrumentationOptions();
     }
 
     public override bool SupportsNullActivity => true;
 
-    public override void OnEventWritten(string name, object payload)
+    public override void OnEventWritten(string name, object? payload)
     {
         var activity = Activity.Current;
         switch (name)
@@ -106,39 +94,41 @@ internal sealed class SqlClientDiagnosticListener : ListenerHandler
                         _ = this.connectionFetcher.TryFetch(command, out var connection);
                         _ = this.databaseFetcher.TryFetch(connection, out var database);
 
-                        activity.DisplayName = (string)database;
+                        if (database != null)
+                        {
+                            activity.DisplayName = (string)database;
+                            activity.SetTag(SemanticConventions.AttributeDbName, database);
+                        }
 
                         _ = this.dataSourceFetcher.TryFetch(connection, out var dataSource);
                         _ = this.commandTextFetcher.TryFetch(command, out var commandText);
 
-                        activity.SetTag(SemanticConventions.AttributeDbName, (string)database);
-
-                        this.options.AddConnectionLevelDetailsToActivity((string)dataSource, activity);
+                        if (dataSource != null)
+                        {
+                            this.options.AddConnectionLevelDetailsToActivity((string)dataSource, activity);
+                        }
 
                         if (this.commandTypeFetcher.TryFetch(command, out CommandType commandType))
                         {
                             switch (commandType)
                             {
                                 case CommandType.StoredProcedure:
-                                    activity.SetTag(SpanAttributeConstants.DatabaseStatementTypeKey, nameof(CommandType.StoredProcedure));
                                     if (this.options.SetDbStatementForStoredProcedure)
                                     {
-                                        activity.SetTag(SemanticConventions.AttributeDbStatement, (string)commandText);
+                                        activity.SetTag(SemanticConventions.AttributeDbStatement, commandText);
                                     }
 
                                     break;
 
                                 case CommandType.Text:
-                                    activity.SetTag(SpanAttributeConstants.DatabaseStatementTypeKey, nameof(CommandType.Text));
                                     if (this.options.SetDbStatementForText)
                                     {
-                                        activity.SetTag(SemanticConventions.AttributeDbStatement, (string)commandText);
+                                        activity.SetTag(SemanticConventions.AttributeDbStatement, commandText);
                                     }
 
                                     break;
 
                                 case CommandType.TableDirect:
-                                    activity.SetTag(SpanAttributeConstants.DatabaseStatementTypeKey, nameof(CommandType.TableDirect));
                                     break;
                             }
                         }
@@ -191,7 +181,7 @@ internal sealed class SqlClientDiagnosticListener : ListenerHandler
                     {
                         if (activity.IsAllDataRequested)
                         {
-                            if (this.exceptionFetcher.TryFetch(payload, out Exception exception) && exception != null)
+                            if (this.exceptionFetcher.TryFetch(payload, out Exception? exception) && exception != null)
                             {
                                 activity.SetStatus(ActivityStatusCode.Error, exception.Message);
 

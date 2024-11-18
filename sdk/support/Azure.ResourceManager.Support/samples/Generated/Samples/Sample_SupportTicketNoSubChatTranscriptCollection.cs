@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Support;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Support.Samples
 {
     public partial class Sample_SupportTicketNoSubChatTranscriptCollection
     {
-        // List communications for a no-subscription support ticket
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListCommunicationsForANoSubscriptionSupportTicket()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListChatTranscriptsForANoSubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/ListChatTranscriptsForSupportTicket.json
-            // this example is just showing the usage of "SupportTicketChatTranscriptsNoSubscription_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/ListChatTranscriptsForSupportTicket.json
+            // this example is just showing the usage of "ChatTranscriptsNoSubscription_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -49,15 +46,14 @@ namespace Azure.ResourceManager.Support.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get chat transcript details for a subscription support ticket
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetChatTranscriptDetailsForASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/GetchatTranscriptDetailsForSupportTicket.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetchatTranscriptDetailsForSupportTicket.json
             // this example is just showing the usage of "ChatTranscriptsNoSubscription_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,12 +81,11 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get chat transcript details for a subscription support ticket
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetChatTranscriptDetailsForASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/GetchatTranscriptDetailsForSupportTicket.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetchatTranscriptDetailsForSupportTicket.json
             // this example is just showing the usage of "ChatTranscriptsNoSubscription_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,12 +109,11 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get chat transcript details for a subscription support ticket
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetChatTranscriptDetailsForASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/GetchatTranscriptDetailsForSupportTicket.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetchatTranscriptDetailsForSupportTicket.json
             // this example is just showing the usage of "ChatTranscriptsNoSubscription_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -143,7 +137,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

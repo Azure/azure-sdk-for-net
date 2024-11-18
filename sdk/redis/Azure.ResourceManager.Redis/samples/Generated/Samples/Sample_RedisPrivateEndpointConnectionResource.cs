@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Redis;
 using Azure.ResourceManager.Redis.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Redis.Samples
 {
     public partial class Sample_RedisPrivateEndpointConnectionResource
     {
-        // RedisCacheGetPrivateEndpointConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RedisCacheGetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheGetPrivateEndpointConnection.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-03-01/examples/RedisCacheGetPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,12 +47,11 @@ namespace Azure.ResourceManager.Redis.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RedisCachePutPrivateEndpointConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RedisCachePutPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCachePutPrivateEndpointConnection.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-03-01/examples/RedisCachePutPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Put" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,12 +87,11 @@ namespace Azure.ResourceManager.Redis.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RedisCacheDeletePrivateEndpointConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RedisCacheDeletePrivateEndpointConnection()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheDeletePrivateEndpointConnection.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-03-01/examples/RedisCacheDeletePrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,7 +111,7 @@ namespace Azure.ResourceManager.Redis.Samples
             // invoke the operation
             await redisPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -6,34 +6,66 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmBackupContent : IUtf8JsonSerializable
+    public partial class IaasVmBackupContent : IUtf8JsonSerializable, IJsonModel<IaasVmBackupContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmBackupContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<IaasVmBackupContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IaasVmBackupContent)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(RecoveryPointExpireOn))
             {
                 writer.WritePropertyName("recoveryPointExpiryTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointExpireOn.Value, "O");
             }
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
-            writer.WriteEndObject();
         }
 
-        internal static IaasVmBackupContent DeserializeIaasVmBackupContent(JsonElement element)
+        IaasVmBackupContent IJsonModel<IaasVmBackupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IaasVmBackupContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIaasVmBackupContent(document.RootElement, options);
+        }
+
+        internal static IaasVmBackupContent DeserializeIaasVmBackupContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> recoveryPointExpiryTimeInUTC = default;
+            DateTimeOffset? recoveryPointExpiryTimeInUTC = default;
             string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointExpiryTimeInUTC"u8))
@@ -50,8 +82,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IaasVmBackupContent(objectType, Optional.ToNullable(recoveryPointExpiryTimeInUTC));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IaasVmBackupContent(objectType, serializedAdditionalRawData, recoveryPointExpiryTimeInUTC);
         }
+
+        BinaryData IPersistableModel<IaasVmBackupContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IaasVmBackupContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IaasVmBackupContent IPersistableModel<IaasVmBackupContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIaasVmBackupContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IaasVmBackupContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IaasVmBackupContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

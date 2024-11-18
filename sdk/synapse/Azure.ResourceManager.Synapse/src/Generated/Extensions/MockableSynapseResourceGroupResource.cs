@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +120,14 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -129,6 +150,14 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

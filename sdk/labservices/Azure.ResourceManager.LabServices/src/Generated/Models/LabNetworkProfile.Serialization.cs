@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabNetworkProfile : IUtf8JsonSerializable
+    public partial class LabNetworkProfile : IUtf8JsonSerializable, IJsonModel<LabNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LabNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
@@ -30,18 +49,48 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WritePropertyName("publicIpId"u8);
                 writer.WriteStringValue(PublicIPId);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static LabNetworkProfile DeserializeLabNetworkProfile(JsonElement element)
+        LabNetworkProfile IJsonModel<LabNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LabNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabNetworkProfile(document.RootElement, options);
+        }
+
+        internal static LabNetworkProfile DeserializeLabNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<ResourceIdentifier> loadBalancerId = default;
-            Optional<ResourceIdentifier> publicIPId = default;
+            ResourceIdentifier subnetId = default;
+            ResourceIdentifier loadBalancerId = default;
+            ResourceIdentifier publicIPId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
@@ -71,8 +120,44 @@ namespace Azure.ResourceManager.LabServices.Models
                     publicIPId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LabNetworkProfile(subnetId.Value, loadBalancerId.Value, publicIPId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LabNetworkProfile(subnetId, loadBalancerId, publicIPId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LabNetworkProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LabNetworkProfile IPersistableModel<LabNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLabNetworkProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LabNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

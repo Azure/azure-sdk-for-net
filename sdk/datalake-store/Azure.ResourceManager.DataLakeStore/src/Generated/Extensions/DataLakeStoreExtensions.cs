@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataLakeStore.Mocking;
 using Azure.ResourceManager.DataLakeStore.Models;
 using Azure.ResourceManager.Resources;
@@ -139,6 +137,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -168,6 +174,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -199,6 +213,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -227,6 +249,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -257,6 +287,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -285,6 +323,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -315,6 +361,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>Locations_GetCapability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -342,6 +392,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_GetCapability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -371,6 +425,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>Locations_GetUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -399,6 +457,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_GetUsage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
         /// </item>
         /// </list>
         /// <item>

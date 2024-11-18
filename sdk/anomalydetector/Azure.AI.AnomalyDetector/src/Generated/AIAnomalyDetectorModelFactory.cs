@@ -14,66 +14,6 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Model factory for models. </summary>
     public static partial class AIAnomalyDetectorModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.UnivariateLastDetectionResult"/>. </summary>
-        /// <param name="period">
-        /// Frequency extracted from the series. Zero means no recurrent pattern has been
-        /// found.
-        /// </param>
-        /// <param name="suggestedWindow"> Suggested input series points needed for detecting the latest point. </param>
-        /// <param name="expectedValue"> Expected value of the latest point. </param>
-        /// <param name="upperMargin">
-        /// Upper margin of the latest point. UpperMargin is used to calculate
-        /// upperBoundary, which is equal to expectedValue + (100 - marginScale)*upperMargin.
-        /// If the value of latest point is between upperBoundary and lowerBoundary, it
-        /// should be treated as a normal value. Adjusting the marginScale value enables the anomaly
-        /// status of the latest point to be changed.
-        /// </param>
-        /// <param name="lowerMargin">
-        /// Lower margin of the latest point. LowerMargin is used to calculate
-        /// lowerBoundary, which is equal to expectedValue - (100 - marginScale)*lowerMargin.
-        /// </param>
-        /// <param name="isAnomaly">
-        /// Anomaly status of the latest point. True means the latest point is an anomaly,
-        /// either in the negative direction or in the positive direction.
-        /// </param>
-        /// <param name="isNegativeAnomaly">
-        /// Anomaly status of the latest point in a negative direction. True means the latest
-        /// point is an anomaly and its real value is smaller than the expected one.
-        /// </param>
-        /// <param name="isPositiveAnomaly">
-        /// Anomaly status of the latest point in a positive direction. True means the latest
-        /// point is an anomaly and its real value is larger than the expected one.
-        /// </param>
-        /// <param name="severity">
-        /// Severity score for the last input point. The larger the value is, the more
-        /// severe the anomaly is. For normal points, the severity is always 0.
-        /// </param>
-        /// <returns> A new <see cref="AnomalyDetector.UnivariateLastDetectionResult"/> instance for mocking. </returns>
-        public static UnivariateLastDetectionResult UnivariateLastDetectionResult(int period = default, int suggestedWindow = default, float expectedValue = default, float upperMargin = default, float lowerMargin = default, bool isAnomaly = default, bool isNegativeAnomaly = default, bool isPositiveAnomaly = default, float? severity = null)
-        {
-            return new UnivariateLastDetectionResult(period, suggestedWindow, expectedValue, upperMargin, lowerMargin, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, severity);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.UnivariateChangePointDetectionResult"/>. </summary>
-        /// <param name="period">
-        /// Frequency extracted from the series. Zero means no recurrent pattern has been
-        /// found.
-        /// </param>
-        /// <param name="isChangePoint">
-        /// Change point properties for each input point. True means
-        /// an anomaly (either negative or positive) has been detected. The index of the
-        /// array is consistent with the input series.
-        /// </param>
-        /// <param name="confidenceScores"> Change point confidence of each point. </param>
-        /// <returns> A new <see cref="AnomalyDetector.UnivariateChangePointDetectionResult"/> instance for mocking. </returns>
-        public static UnivariateChangePointDetectionResult UnivariateChangePointDetectionResult(int? period = null, IEnumerable<bool> isChangePoint = null, IEnumerable<float> confidenceScores = null)
-        {
-            isChangePoint ??= new List<bool>();
-            confidenceScores ??= new List<float>();
-
-            return new UnivariateChangePointDetectionResult(period, isChangePoint?.ToList(), confidenceScores?.ToList());
-        }
-
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.MultivariateDetectionResult"/>. </summary>
         /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
@@ -83,7 +23,7 @@ namespace Azure.AI.AnomalyDetector
         {
             results ??= new List<AnomalyState>();
 
-            return new MultivariateDetectionResult(resultId, summary, results?.ToList());
+            return new MultivariateDetectionResult(resultId, summary, results?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.MultivariateBatchDetectionResultSummary"/>. </summary>
@@ -100,7 +40,34 @@ namespace Azure.AI.AnomalyDetector
             errors ??= new List<ErrorResponse>();
             variableStates ??= new List<VariableState>();
 
-            return new MultivariateBatchDetectionResultSummary(status, errors?.ToList(), variableStates?.ToList(), setupInfo);
+            return new MultivariateBatchDetectionResultSummary(status, errors?.ToList(), variableStates?.ToList(), setupInfo, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.ErrorResponse"/>. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Message that explains the error that the service reported. </param>
+        /// <returns> A new <see cref="AnomalyDetector.ErrorResponse"/> instance for mocking. </returns>
+        public static ErrorResponse ErrorResponse(string code = null, string message = null)
+        {
+            return new ErrorResponse(code, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.VariableState"/>. </summary>
+        /// <param name="variable"> Variable name in variable states. </param>
+        /// <param name="filledNARatio"> Proportion of missing values that need to be filled by fillNAMethod. </param>
+        /// <param name="effectiveCount"> Number of effective data points before fillNAMethod is applied. </param>
+        /// <param name="firstTimestamp"> First valid time stamp with a value of input data. </param>
+        /// <param name="lastTimestamp"> Last valid time stamp with a value of input data. </param>
+        /// <returns> A new <see cref="AnomalyDetector.VariableState"/> instance for mocking. </returns>
+        public static VariableState VariableState(string variable = null, float? filledNARatio = null, int? effectiveCount = null, DateTimeOffset? firstTimestamp = null, DateTimeOffset? lastTimestamp = null)
+        {
+            return new VariableState(
+                variable,
+                filledNARatio,
+                effectiveCount,
+                firstTimestamp,
+                lastTimestamp,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyState"/>. </summary>
@@ -112,7 +79,7 @@ namespace Azure.AI.AnomalyDetector
         {
             errors ??= new List<ErrorResponse>();
 
-            return new AnomalyState(timestamp, value, errors?.ToList());
+            return new AnomalyState(timestamp, value, errors?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyValue"/>. </summary>
@@ -128,7 +95,7 @@ namespace Azure.AI.AnomalyDetector
         {
             interpretation ??= new List<AnomalyInterpretation>();
 
-            return new AnomalyValue(isAnomaly, severity, score, interpretation?.ToList());
+            return new AnomalyValue(isAnomaly, severity, score, interpretation?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyInterpretation"/>. </summary>
@@ -141,7 +108,7 @@ namespace Azure.AI.AnomalyDetector
         /// <returns> A new <see cref="AnomalyDetector.AnomalyInterpretation"/> instance for mocking. </returns>
         public static AnomalyInterpretation AnomalyInterpretation(string variable = null, float? contributionScore = null, CorrelationChanges correlationChanges = null)
         {
-            return new AnomalyInterpretation(variable, contributionScore, correlationChanges);
+            return new AnomalyInterpretation(variable, contributionScore, correlationChanges, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.CorrelationChanges"/>. </summary>
@@ -151,7 +118,7 @@ namespace Azure.AI.AnomalyDetector
         {
             changedVariables ??= new List<string>();
 
-            return new CorrelationChanges(changedVariables?.ToList());
+            return new CorrelationChanges(changedVariables?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.ModelInfo"/>. </summary>
@@ -189,7 +156,54 @@ namespace Azure.AI.AnomalyDetector
         {
             errors ??= new List<ErrorResponse>();
 
-            return new ModelInfo(dataSource, dataSchema, startTime, endTime, displayName, slidingWindow, alignPolicy, status, errors?.ToList(), diagnosticsInfo);
+            return new ModelInfo(
+                dataSource,
+                dataSchema,
+                startTime,
+                endTime,
+                displayName,
+                slidingWindow,
+                alignPolicy,
+                status,
+                errors?.ToList(),
+                diagnosticsInfo,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.DiagnosticsInfo"/>. </summary>
+        /// <param name="modelState"> Model status. </param>
+        /// <param name="variableStates"> Variable status. </param>
+        /// <returns> A new <see cref="AnomalyDetector.DiagnosticsInfo"/> instance for mocking. </returns>
+        public static DiagnosticsInfo DiagnosticsInfo(ModelState modelState = null, IEnumerable<VariableState> variableStates = null)
+        {
+            variableStates ??= new List<VariableState>();
+
+            return new DiagnosticsInfo(modelState, variableStates?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.ModelState"/>. </summary>
+        /// <param name="epochIds">
+        /// Number of passes of the entire training dataset that the
+        /// algorithm has completed.
+        /// </param>
+        /// <param name="trainLosses">
+        /// List of metrics used to assess how the model fits the training data for each
+        /// epoch.
+        /// </param>
+        /// <param name="validationLosses">
+        /// List of metrics used to assess how the model fits the validation set for each
+        /// epoch.
+        /// </param>
+        /// <param name="latenciesInSeconds"> Latency for each epoch. </param>
+        /// <returns> A new <see cref="AnomalyDetector.ModelState"/> instance for mocking. </returns>
+        public static ModelState ModelState(IEnumerable<int> epochIds = null, IEnumerable<float> trainLosses = null, IEnumerable<float> validationLosses = null, IEnumerable<float> latenciesInSeconds = null)
+        {
+            epochIds ??= new List<int>();
+            trainLosses ??= new List<float>();
+            validationLosses ??= new List<float>();
+            latenciesInSeconds ??= new List<float>();
+
+            return new ModelState(epochIds?.ToList(), trainLosses?.ToList(), validationLosses?.ToList(), latenciesInSeconds?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyDetectionModel"/>. </summary>
@@ -203,7 +217,7 @@ namespace Azure.AI.AnomalyDetector
         /// <returns> A new <see cref="AnomalyDetector.AnomalyDetectionModel"/> instance for mocking. </returns>
         public static AnomalyDetectionModel AnomalyDetectionModel(Guid modelId = default, DateTimeOffset createdTime = default, DateTimeOffset lastUpdatedTime = default, ModelInfo modelInfo = null)
         {
-            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo);
+            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.MultivariateLastDetectionResult"/>. </summary>
@@ -215,7 +229,125 @@ namespace Azure.AI.AnomalyDetector
             variableStates ??= new List<VariableState>();
             results ??= new List<AnomalyState>();
 
-            return new MultivariateLastDetectionResult(variableStates?.ToList(), results?.ToList());
+            return new MultivariateLastDetectionResult(variableStates?.ToList(), results?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.TimeSeriesPoint"/>. </summary>
+        /// <param name="timestamp"> Argument that indicates the time stamp of a data point (ISO8601 format). </param>
+        /// <param name="value"> Measurement of that point. </param>
+        /// <returns> A new <see cref="AnomalyDetector.TimeSeriesPoint"/> instance for mocking. </returns>
+        public static TimeSeriesPoint TimeSeriesPoint(DateTimeOffset? timestamp = null, float value = default)
+        {
+            return new TimeSeriesPoint(timestamp, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.UnivariateLastDetectionResult"/>. </summary>
+        /// <param name="period">
+        /// Frequency extracted from the series. Zero means no recurrent pattern has been
+        /// found.
+        /// </param>
+        /// <param name="suggestedWindow"> Suggested input series points needed for detecting the latest point. </param>
+        /// <param name="expectedValue"> Expected value of the latest point. </param>
+        /// <param name="upperMargin">
+        /// Upper margin of the latest point. UpperMargin is used to calculate
+        /// upperBoundary, which is equal to expectedValue + (100 - marginScale)*upperMargin.
+        /// If the value of latest point is between upperBoundary and lowerBoundary, it
+        /// should be treated as a normal value. Adjusting the marginScale value enables the anomaly
+        /// status of the latest point to be changed.
+        /// </param>
+        /// <param name="lowerMargin">
+        /// Lower margin of the latest point. LowerMargin is used to calculate
+        /// lowerBoundary, which is equal to expectedValue - (100 - marginScale)*lowerMargin.
+        /// </param>
+        /// <param name="isAnomaly">
+        /// Anomaly status of the latest point. True means the latest point is an anomaly,
+        /// either in the negative direction or in the positive direction.
+        /// </param>
+        /// <param name="isNegativeAnomaly">
+        /// Anomaly status of the latest point in a negative direction. True means the latest
+        /// point is an anomaly and its real value is smaller than the expected one.
+        /// </param>
+        /// <param name="isPositiveAnomaly">
+        /// Anomaly status of the latest point in a positive direction. True means the latest
+        /// point is an anomaly and its real value is larger than the expected one.
+        /// </param>
+        /// <param name="severity">
+        /// Severity score for the last input point. The larger the value is, the more
+        /// severe the anomaly is. For normal points, the severity is always 0.
+        /// </param>
+        /// <returns> A new <see cref="AnomalyDetector.UnivariateLastDetectionResult"/> instance for mocking. </returns>
+        public static UnivariateLastDetectionResult UnivariateLastDetectionResult(int period = default, int suggestedWindow = default, float expectedValue = default, float upperMargin = default, float lowerMargin = default, bool isAnomaly = default, bool isNegativeAnomaly = default, bool isPositiveAnomaly = default, float? severity = null)
+        {
+            return new UnivariateLastDetectionResult(
+                period,
+                suggestedWindow,
+                expectedValue,
+                upperMargin,
+                lowerMargin,
+                isAnomaly,
+                isNegativeAnomaly,
+                isPositiveAnomaly,
+                severity,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.UnivariateChangePointDetectionOptions"/>. </summary>
+        /// <param name="series">
+        /// Time series data points. Points should be sorted by time stamp in ascending
+        /// order to match the change point detection result.
+        /// </param>
+        /// <param name="granularity"> Granularity is used to verify whether the input series is valid. </param>
+        /// <param name="customInterval">
+        /// A custom interval is used to set a nonstandard time interval. For example, if the
+        /// series is 5 minutes, the request can be set as {"granularity":"minutely",
+        /// "customInterval":5}.
+        /// </param>
+        /// <param name="period">
+        /// Argument that indicates the periodic value of a time series. If the value is null or
+        /// not present, the API will determine the period automatically.
+        /// </param>
+        /// <param name="stableTrendWindow">
+        /// Argument that indicates an advanced model parameter. A default stableTrendWindow value will
+        /// be used in detection.
+        /// </param>
+        /// <param name="threshold">
+        /// Argument that indicates an advanced model parameter between 0.0 and 1.0. The lower the
+        /// value is, the larger the trend error is, which means less change point will
+        /// be accepted.
+        /// </param>
+        /// <returns> A new <see cref="AnomalyDetector.UnivariateChangePointDetectionOptions"/> instance for mocking. </returns>
+        public static UnivariateChangePointDetectionOptions UnivariateChangePointDetectionOptions(IEnumerable<TimeSeriesPoint> series = null, TimeGranularity granularity = default, int? customInterval = null, int? period = null, int? stableTrendWindow = null, float? threshold = null)
+        {
+            series ??= new List<TimeSeriesPoint>();
+
+            return new UnivariateChangePointDetectionOptions(
+                series?.ToList(),
+                granularity,
+                customInterval,
+                period,
+                stableTrendWindow,
+                threshold,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.UnivariateChangePointDetectionResult"/>. </summary>
+        /// <param name="period">
+        /// Frequency extracted from the series. Zero means no recurrent pattern has been
+        /// found.
+        /// </param>
+        /// <param name="isChangePoint">
+        /// Change point properties for each input point. True means
+        /// an anomaly (either negative or positive) has been detected. The index of the
+        /// array is consistent with the input series.
+        /// </param>
+        /// <param name="confidenceScores"> Change point confidence of each point. </param>
+        /// <returns> A new <see cref="AnomalyDetector.UnivariateChangePointDetectionResult"/> instance for mocking. </returns>
+        public static UnivariateChangePointDetectionResult UnivariateChangePointDetectionResult(int? period = null, IEnumerable<bool> isChangePoint = null, IEnumerable<float> confidenceScores = null)
+        {
+            isChangePoint ??= new List<bool>();
+            confidenceScores ??= new List<float>();
+
+            return new UnivariateChangePointDetectionResult(period, isChangePoint?.ToList(), confidenceScores?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

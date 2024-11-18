@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<ImageScale> scale = default;
-            Optional<ImageFormatProperties> format = default;
+            ImageScale scale = default;
+            ImageFormatProperties format = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scale"u8))
@@ -57,7 +57,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new ImageProperties(scale.Value, format.Value);
+            return new ImageProperties(scale, format);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ImageProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeImageProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

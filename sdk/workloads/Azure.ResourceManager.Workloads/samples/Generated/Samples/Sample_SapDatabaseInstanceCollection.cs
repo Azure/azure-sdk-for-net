@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Workloads;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Workloads.Samples
 {
     public partial class Sample_SapDatabaseInstanceCollection
     {
-        // SAPDatabaseInstances_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SAPDatabaseInstancesGet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDatabaseInstances_Get.json
@@ -52,9 +49,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SAPDatabaseInstances_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_SAPDatabaseInstancesGet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDatabaseInstances_Get.json
@@ -83,9 +79,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SAPDatabaseInstances_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SAPDatabaseInstancesGet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDatabaseInstances_Get.json
@@ -114,7 +109,7 @@ namespace Azure.ResourceManager.Workloads.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -126,9 +121,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             }
         }
 
-        // Create SAP Database Instances for HA System with Availability Set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSAPDatabaseInstancesForHASystemWithAvailabilitySet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDatabaseInstances_Create_HA_AvSet.json
@@ -168,9 +162,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SAPDatabaseInstances_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SAPDatabaseInstancesCreate()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDatabaseInstances_Create.json
@@ -210,9 +203,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SAPDatabaseInstances_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SAPDatabaseInstancesList()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDatabaseInstances_List.json
@@ -244,7 +236,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StorageSync;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageSync.Samples
 {
     public partial class Sample_StorageSyncWorkflowCollection
     {
-        // Workflows_ListByStorageSyncService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_WorkflowsListByStorageSyncService()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/Workflows_ListByStorageSyncService.json
@@ -51,12 +48,11 @@ namespace Azure.ResourceManager.StorageSync.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Workflows_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkflowsGet()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/Workflows_Get.json
@@ -89,9 +85,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Workflows_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_WorkflowsGet()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/Workflows_Get.json
@@ -120,9 +115,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Workflows_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_WorkflowsGet()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/Workflows_Get.json
@@ -151,7 +145,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

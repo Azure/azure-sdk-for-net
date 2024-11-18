@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OperationalInsights
@@ -65,6 +63,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Clusters_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -83,7 +89,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _operationalInsightsClusterClustersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsClusterResource>(new OperationalInsightsClusterOperationSource(Client), _operationalInsightsClusterClustersClientDiagnostics, Pipeline, _operationalInsightsClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsClusterResource>(new OperationalInsightsClusterOperationSource(Client), _operationalInsightsClusterClustersClientDiagnostics, Pipeline, _operationalInsightsClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -106,6 +112,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Clusters_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -124,7 +138,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _operationalInsightsClusterClustersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsClusterResource>(new OperationalInsightsClusterOperationSource(Client), _operationalInsightsClusterClustersClientDiagnostics, Pipeline, _operationalInsightsClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsClusterResource>(new OperationalInsightsClusterOperationSource(Client), _operationalInsightsClusterClustersClientDiagnostics, Pipeline, _operationalInsightsClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -146,6 +160,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,6 +206,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> Name of the Log Analytics Cluster. </param>
@@ -221,6 +251,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Clusters_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -243,6 +281,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Clusters_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -264,6 +310,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +354,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> Name of the Log Analytics Cluster. </param>
@@ -334,6 +396,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,6 +441,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

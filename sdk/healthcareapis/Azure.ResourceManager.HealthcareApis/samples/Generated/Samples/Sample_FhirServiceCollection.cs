@@ -7,24 +7,21 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HealthcareApis;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HealthcareApis.Samples
 {
     public partial class Sample_FhirServiceCollection
     {
-        // List fhirservices
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListFhirservices()
         {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2023-11-01/examples/fhirservices/FhirServices_List.json
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/fhirservices/FhirServices_List.json
             // this example is just showing the usage of "FhirServices_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,15 +50,14 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a Fhir Service
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAFhirService()
         {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2023-11-01/examples/fhirservices/FhirServices_Get.json
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/fhirservices/FhirServices_Get.json
             // this example is just showing the usage of "FhirServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,12 +87,11 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a Fhir Service
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAFhirService()
         {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2023-11-01/examples/fhirservices/FhirServices_Get.json
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/fhirservices/FhirServices_Get.json
             // this example is just showing the usage of "FhirServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,12 +117,11 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a Fhir Service
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAFhirService()
         {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2023-11-01/examples/fhirservices/FhirServices_Get.json
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/fhirservices/FhirServices_Get.json
             // this example is just showing the usage of "FhirServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +147,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -165,12 +159,11 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             }
         }
 
-        // Create or update a Fhir Service
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAFhirService()
         {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2023-11-01/examples/fhirservices/FhirServices_Create.json
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/fhirservices/FhirServices_Create.json
             // this example is just showing the usage of "FhirServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -206,6 +199,25 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
                     Authority = "https://login.microsoftonline.com/abfde7b2-df0f-47e6-aabf-2462b07508dc",
                     Audience = "https://azurehealthcareapis.com",
                     IsSmartProxyEnabled = true,
+                    SmartIdentityProviders =
+{
+new SmartIdentityProviderConfiguration()
+{
+Authority = "https://login.b2clogin.com/11111111-1111-1111-1111-111111111111/v2.0",
+Applications =
+{
+new SmartIdentityProviderApplication()
+{
+ClientId = "22222222-2222-2222-2222-222222222222",
+Audience = "22222222-2222-2222-2222-222222222222",
+AllowedDataActions =
+{
+SmartDataAction.Read
+},
+}
+},
+}
+},
                 },
                 CorsConfiguration = new FhirServiceCorsConfiguration()
                 {

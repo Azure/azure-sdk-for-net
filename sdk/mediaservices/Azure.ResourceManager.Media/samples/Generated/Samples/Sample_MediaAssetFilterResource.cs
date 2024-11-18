@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Media;
 using Azure.ResourceManager.Media.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Samples
 {
     public partial class Sample_MediaAssetFilterResource
     {
-        // Get an Asset Filter by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAssetFilterByName()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/assetFilters-get-by-name.json
@@ -51,9 +48,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete an Asset Filter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnAssetFilter()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/assetFilters-delete.json
@@ -77,12 +73,11 @@ namespace Azure.ResourceManager.Media.Samples
             // invoke the operation
             await mediaAssetFilter.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update an Asset Filter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAnAssetFilter()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/assetFilters-update.json
@@ -108,11 +103,11 @@ namespace Azure.ResourceManager.Media.Samples
             {
                 PresentationTimeRange = new PresentationTimeRange()
                 {
-                    StartTimestamp = 10,
-                    EndTimestamp = 170000000,
-                    PresentationWindowDuration = 9223372036854775000,
-                    LiveBackoffDuration = 0,
-                    Timescale = 10000000,
+                    StartTimestamp = 10L,
+                    EndTimestamp = 170000000L,
+                    PresentationWindowDuration = 9223372036854775000L,
+                    LiveBackoffDuration = 0L,
+                    Timescale = 10000000L,
                     ForceEndTimestamp = false,
                 },
                 FirstQualityBitrate = 128000,

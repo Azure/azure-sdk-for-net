@@ -1,0 +1,41 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/batch/ci.data.yml
+    - sdk/batch/service.projects
+    - sdk/batch/Microsoft.Azure.Batch
+    exclude:
+    - sdk/batch/Azure.ResourceManager.Batch/
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/batch/ci.data.yml
+    - sdk/batch/service.projects
+    - sdk/batch/Microsoft.Azure.Batch
+    exclude:
+    - sdk/batch/Azure.ResourceManager.Batch/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SdkType: data
+    ServiceDirectory: batch
+    ArtifactName: packages
+    BuildSnippets: false
+    Artifacts:
+    - name: Microsoft.Azure.Batch
+      safeName: MicrosoftAzureBatch

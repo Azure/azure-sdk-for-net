@@ -5,22 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningFeatureProperties : IUtf8JsonSerializable
+    public partial class MachineLearningFeatureProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningFeatureProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningFeatureProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningFeatureProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataType))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFeatureProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("dataType"u8);
-                writer.WriteStringValue(DataType.Value.ToString());
+                throw new FormatException($"The model {nameof(MachineLearningFeatureProperties)} does not support writing '{format}' format.");
             }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(FeatureName))
             {
                 if (FeatureName != null)
@@ -33,79 +49,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featureName");
                 }
             }
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(DataType))
             {
-                if (Description != null)
-                {
-                    writer.WritePropertyName("description"u8);
-                    writer.WriteStringValue(Description);
-                }
-                else
-                {
-                    writer.WriteNull("description");
-                }
+                writer.WritePropertyName("dataType"u8);
+                writer.WriteStringValue(DataType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Properties))
-            {
-                if (Properties != null)
-                {
-                    writer.WritePropertyName("properties"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Properties)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("properties");
-                }
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                if (Tags != null)
-                {
-                    writer.WritePropertyName("tags"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Tags)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("tags");
-                }
-            }
-            writer.WriteEndObject();
         }
 
-        internal static MachineLearningFeatureProperties DeserializeMachineLearningFeatureProperties(JsonElement element)
+        MachineLearningFeatureProperties IJsonModel<MachineLearningFeatureProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFeatureProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningFeatureProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningFeatureProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningFeatureProperties DeserializeMachineLearningFeatureProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<FeatureDataType> dataType = default;
-            Optional<string> featureName = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string featureName = default;
+            FeatureDataType? dataType = default;
+            string description = default;
+            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dataType = new FeatureDataType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("featureName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -116,6 +95,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     featureName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("dataType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataType = new FeatureDataType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -124,21 +112,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        properties = null;
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    properties = dictionary;
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -156,8 +129,217 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        properties = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    properties = dictionary;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningFeatureProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(dataType), featureName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningFeatureProperties(
+                description,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                featureName,
+                dataType);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FeatureName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  featureName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FeatureName))
+                {
+                    builder.Append("  featureName: ");
+                    if (FeatureName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FeatureName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FeatureName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataType))
+                {
+                    builder.Append("  dataType: ");
+                    builder.AppendLine($"'{DataType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("  tags: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Properties))
+                {
+                    if (Properties.Any())
+                    {
+                        builder.Append("  properties: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Properties)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningFeatureProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFeatureProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningFeatureProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningFeatureProperties IPersistableModel<MachineLearningFeatureProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFeatureProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningFeatureProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningFeatureProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningFeatureProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

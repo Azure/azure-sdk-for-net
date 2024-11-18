@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 using Azure.ResourceManager.Resources;
 
@@ -111,6 +109,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>CertificateObjectLocalRulestack_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackCertificateObjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> certificate name. </param>
@@ -133,6 +139,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CertificateObjectLocalRulestack_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackCertificateObjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -164,6 +178,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>FqdnListLocalRulestack_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackFqdnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> fqdn list name. </param>
@@ -186,6 +208,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FqdnListLocalRulestack_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackFqdnResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +247,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>LocalRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="priority"> Local Rule priority. </param>
@@ -239,6 +277,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,6 +316,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>PrefixListLocalRulestack_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackPrefixResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Local Rule priority. </param>
@@ -293,6 +347,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>PrefixListLocalRulestack_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackPrefixResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Local Rule priority. </param>
@@ -315,6 +377,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -348,6 +418,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -379,6 +457,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,6 +500,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -447,6 +541,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -482,6 +584,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
@@ -514,7 +624,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_commit</description>
+        /// <description>LocalRulestacks_Commit</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -548,7 +666,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_commit</description>
+        /// <description>LocalRulestacks_Commit</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -582,7 +708,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_getChangeLog</description>
+        /// <description>LocalRulestacks_GetChangeLog</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -612,7 +746,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_getChangeLog</description>
+        /// <description>LocalRulestacks_GetChangeLog</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -642,7 +784,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_getSupportInfo</description>
+        /// <description>LocalRulestacks_GetSupportInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -673,7 +823,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_getSupportInfo</description>
+        /// <description>LocalRulestacks_GetSupportInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -704,7 +862,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_listAdvancedSecurityObjects</description>
+        /// <description>LocalRulestacks_ListAdvancedSecurityObjects</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -737,7 +903,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_listAdvancedSecurityObjects</description>
+        /// <description>LocalRulestacks_ListAdvancedSecurityObjects</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -770,7 +944,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_listAppIds</description>
+        /// <description>LocalRulestacks_ListAppIds</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -795,7 +977,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_listAppIds</description>
+        /// <description>LocalRulestacks_ListAppIds</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -820,7 +1010,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_listCountries</description>
+        /// <description>LocalRulestacks_ListCountries</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -831,7 +1029,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual AsyncPageable<RulestackCountry> GetCountriesAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListCountriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RulestackCountry.DeserializeRulestackCountry, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetCountries", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RulestackCountry.DeserializeRulestackCountry(e), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetCountries", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -843,7 +1041,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_listCountries</description>
+        /// <description>LocalRulestacks_ListCountries</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -854,7 +1060,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Pageable<RulestackCountry> GetCountries(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListCountriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RulestackCountry.DeserializeRulestackCountry, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetCountries", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RulestackCountry.DeserializeRulestackCountry(e), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetCountries", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -866,7 +1072,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_listFirewalls</description>
+        /// <description>LocalRulestacks_ListFirewalls</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -887,7 +1101,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_listFirewalls</description>
+        /// <description>LocalRulestacks_ListFirewalls</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -908,7 +1130,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_listPredefinedUrlCategories</description>
+        /// <description>LocalRulestacks_ListPredefinedUrlCategories</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -919,7 +1149,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual AsyncPageable<PredefinedUrlCategory> GetPredefinedUrlCategoriesAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListPredefinedUrlCategoriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PredefinedUrlCategory.DeserializePredefinedUrlCategory(e), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -931,7 +1161,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_listPredefinedUrlCategories</description>
+        /// <description>LocalRulestacks_ListPredefinedUrlCategories</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -942,7 +1180,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Pageable<PredefinedUrlCategory> GetPredefinedUrlCategories(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListPredefinedUrlCategoriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PredefinedUrlCategory.DeserializePredefinedUrlCategory(e), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -954,7 +1192,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_listSecurityServices</description>
+        /// <description>LocalRulestacks_ListSecurityServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -987,7 +1233,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_listSecurityServices</description>
+        /// <description>LocalRulestacks_ListSecurityServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1020,7 +1274,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_revert</description>
+        /// <description>LocalRulestacks_Revert</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1050,7 +1312,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_revert</description>
+        /// <description>LocalRulestacks_Revert</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1081,6 +1351,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1136,6 +1414,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1190,6 +1476,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1239,6 +1533,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1287,6 +1589,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1339,6 +1649,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

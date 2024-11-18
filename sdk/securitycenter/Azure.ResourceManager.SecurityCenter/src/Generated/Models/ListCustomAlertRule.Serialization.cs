@@ -5,25 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ListCustomAlertRule : IUtf8JsonSerializable
+    public partial class ListCustomAlertRule : IUtf8JsonSerializable, IJsonModel<ListCustomAlertRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListCustomAlertRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ListCustomAlertRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("isEnabled"u8);
-            writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ListCustomAlertRule DeserializeListCustomAlertRule(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ListCustomAlertRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ListCustomAlertRule)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ValueType))
+            {
+                writer.WritePropertyName("valueType"u8);
+                writer.WriteStringValue(ValueType.Value.ToString());
+            }
+        }
+
+        ListCustomAlertRule IJsonModel<ListCustomAlertRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListCustomAlertRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ListCustomAlertRule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeListCustomAlertRule(document.RootElement, options);
+        }
+
+        internal static ListCustomAlertRule DeserializeListCustomAlertRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,19 +66,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AllowlistCustomAlertRule": return AllowlistCustomAlertRule.DeserializeAllowlistCustomAlertRule(element);
-                    case "ConnectionFromIpNotAllowed": return ConnectionFromIPNotAllowed.DeserializeConnectionFromIPNotAllowed(element);
-                    case "ConnectionToIpNotAllowed": return ConnectionToIPNotAllowed.DeserializeConnectionToIPNotAllowed(element);
-                    case "DenylistCustomAlertRule": return DenylistCustomAlertRule.DeserializeDenylistCustomAlertRule(element);
-                    case "LocalUserNotAllowed": return LocalUserNotAllowed.DeserializeLocalUserNotAllowed(element);
-                    case "ProcessNotAllowed": return ProcessNotAllowed.DeserializeProcessNotAllowed(element);
+                    case "AllowlistCustomAlertRule": return AllowlistCustomAlertRule.DeserializeAllowlistCustomAlertRule(element, options);
+                    case "ConnectionFromIpNotAllowed": return ConnectionFromIPNotAllowed.DeserializeConnectionFromIPNotAllowed(element, options);
+                    case "ConnectionToIpNotAllowed": return ConnectionToIPNotAllowed.DeserializeConnectionToIPNotAllowed(element, options);
+                    case "DenylistCustomAlertRule": return DenylistCustomAlertRule.DeserializeDenylistCustomAlertRule(element, options);
+                    case "LocalUserNotAllowed": return LocalUserNotAllowed.DeserializeLocalUserNotAllowed(element, options);
+                    case "ProcessNotAllowed": return ProcessNotAllowed.DeserializeProcessNotAllowed(element, options);
                 }
             }
-            Optional<SecurityValueType> valueType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            SecurityValueType? valueType = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = "ListCustomAlertRule";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("valueType"u8))
@@ -76,8 +112,50 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ruleType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ListCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, Optional.ToNullable(valueType));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ListCustomAlertRule(
+                displayName,
+                description,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                valueType);
         }
+
+        BinaryData IPersistableModel<ListCustomAlertRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListCustomAlertRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ListCustomAlertRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ListCustomAlertRule IPersistableModel<ListCustomAlertRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListCustomAlertRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeListCustomAlertRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ListCustomAlertRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ListCustomAlertRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.MySql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MySql.Samples
 {
     public partial class Sample_MySqlServerKeyResource
     {
-        // Get the MySQL Server key
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheMySQLServerKey()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2020-01-01/examples/ServerKeyGet.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates a MySQL Server key
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesOrUpdatesAMySQLServerKey()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2020-01-01/examples/ServerKeyCreateOrUpdate.json
@@ -88,9 +84,8 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete the MySQL Server key
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteTheMySQLServerKey()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2020-01-01/examples/ServerKeyDelete.json
@@ -113,7 +108,7 @@ namespace Azure.ResourceManager.MySql.Samples
             // invoke the operation
             await mySqlServerKey.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

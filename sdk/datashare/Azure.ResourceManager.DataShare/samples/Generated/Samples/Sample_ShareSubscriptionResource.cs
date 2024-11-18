@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.DataShare.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataShare.Samples
 {
     public partial class Sample_ShareSubscriptionResource
     {
-        // ShareSubscriptions_CancelSynchronization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CancelSynchronization_ShareSubscriptionsCancelSynchronization()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_CancelSynchronization.json
@@ -48,9 +45,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ShareSubscriptions_ListSourceShareSynchronizationSettings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSourceShareSynchronizationSettings_ShareSubscriptionsListSourceShareSynchronizationSettings()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_ListSourceShareSynchronizationSettings.json
@@ -76,12 +72,11 @@ namespace Azure.ResourceManager.DataShare.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ShareSubscriptions_ListSynchronizationDetails
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSynchronizationDetails_ShareSubscriptionsListSynchronizationDetails()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_ListSynchronizationDetails.json
@@ -108,12 +103,11 @@ namespace Azure.ResourceManager.DataShare.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ShareSubscriptions_ListSynchronizations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSynchronizations_ShareSubscriptionsListSynchronizations()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_ListSynchronizations.json
@@ -139,12 +133,11 @@ namespace Azure.ResourceManager.DataShare.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ShareSubscriptions_Synchronize
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Synchronize_ShareSubscriptionsSynchronize()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_Synchronize.json
@@ -175,9 +168,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ShareSubscriptions_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ShareSubscriptionsGet()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_Get.json
@@ -207,9 +199,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ShareSubscriptions_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ShareSubscriptionsCreate()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_Create.json
@@ -244,9 +235,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ShareSubscriptions_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ShareSubscriptionsDelete()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_Delete.json
@@ -273,9 +263,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ConsumerSourceDataSets_ListByShareSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConsumerSourceDataSets_ConsumerSourceDataSetsListByShareSubscription()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ConsumerSourceDataSets_ListByShareSubscription.json
@@ -301,7 +290,7 @@ namespace Azure.ResourceManager.DataShare.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,11 +14,28 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FtpReadSettings : IUtf8JsonSerializable
+    public partial class FtpReadSettings : IUtf8JsonSerializable, IJsonModel<FtpReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FtpReadSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FtpReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FtpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FtpReadSettings)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
@@ -63,18 +81,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("disableChunking"u8);
                 JsonSerializer.Serialize(writer, DisableChunking);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(StoreReadSettingsType);
-            if (Optional.IsDefined(MaxConcurrentConnections))
-            {
-                writer.WritePropertyName("maxConcurrentConnections"u8);
-                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
-            }
-            if (Optional.IsDefined(DisableMetricsCollection))
-            {
-                writer.WritePropertyName("disableMetricsCollection"u8);
-                JsonSerializer.Serialize(writer, DisableMetricsCollection);
-            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -87,27 +93,40 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static FtpReadSettings DeserializeFtpReadSettings(JsonElement element)
+        FtpReadSettings IJsonModel<FtpReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FtpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FtpReadSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFtpReadSettings(document.RootElement, options);
+        }
+
+        internal static FtpReadSettings DeserializeFtpReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<bool>> recursive = default;
-            Optional<DataFactoryElement<string>> wildcardFolderPath = default;
-            Optional<DataFactoryElement<string>> wildcardFileName = default;
-            Optional<DataFactoryElement<bool>> enablePartitionDiscovery = default;
-            Optional<DataFactoryElement<string>> partitionRootPath = default;
-            Optional<DataFactoryElement<bool>> deleteFilesAfterCompletion = default;
-            Optional<DataFactoryElement<string>> fileListPath = default;
-            Optional<DataFactoryElement<bool>> useBinaryTransfer = default;
-            Optional<DataFactoryElement<bool>> disableChunking = default;
+            DataFactoryElement<bool> recursive = default;
+            DataFactoryElement<string> wildcardFolderPath = default;
+            DataFactoryElement<string> wildcardFileName = default;
+            DataFactoryElement<bool> enablePartitionDiscovery = default;
+            DataFactoryElement<string> partitionRootPath = default;
+            DataFactoryElement<bool> deleteFilesAfterCompletion = default;
+            DataFactoryElement<string> fileListPath = default;
+            DataFactoryElement<bool> useBinaryTransfer = default;
+            DataFactoryElement<bool> disableChunking = default;
             string type = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +238,51 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FtpReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, fileListPath.Value, useBinaryTransfer.Value, disableChunking.Value);
+            return new FtpReadSettings(
+                type,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                recursive,
+                wildcardFolderPath,
+                wildcardFileName,
+                enablePartitionDiscovery,
+                partitionRootPath,
+                deleteFilesAfterCompletion,
+                fileListPath,
+                useBinaryTransfer,
+                disableChunking);
         }
+
+        BinaryData IPersistableModel<FtpReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FtpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FtpReadSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FtpReadSettings IPersistableModel<FtpReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FtpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFtpReadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FtpReadSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FtpReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

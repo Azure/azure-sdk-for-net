@@ -7,22 +7,19 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AgFoodPlatform;
 using Azure.ResourceManager.AgFoodPlatform.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Samples
 {
     public partial class Sample_FarmBeatResource
     {
-        // FarmBeatsModels_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FarmBeatsModelsGet()
         {
             // Generated from example definition: specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Get.json
@@ -51,9 +48,8 @@ namespace Azure.ResourceManager.AgFoodPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // FarmBeatsModels_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_FarmBeatsModelsUpdate()
         {
             // Generated from example definition: specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Update.json
@@ -91,9 +87,8 @@ namespace Azure.ResourceManager.AgFoodPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // FarmBeatsModels_UpdateWithSensor
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_FarmBeatsModelsUpdateWithSensor()
         {
             // Generated from example definition: specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_UpdateWithSensor.json
@@ -139,9 +134,8 @@ namespace Azure.ResourceManager.AgFoodPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // FarmBeatsModels_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_FarmBeatsModelsDelete()
         {
             // Generated from example definition: specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Delete.json
@@ -163,12 +157,11 @@ namespace Azure.ResourceManager.AgFoodPlatform.Samples
             // invoke the operation
             await farmBeat.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // FarmBeatsModels_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFarmBeats_FarmBeatsModelsListBySubscription()
         {
             // Generated from example definition: specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_ListBySubscription.json
@@ -195,12 +188,11 @@ namespace Azure.ResourceManager.AgFoodPlatform.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // FarmBeatsModels_GetOperationResult
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetOperationResult_FarmBeatsModelsGetOperationResult()
         {
             // Generated from example definition: specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_GetOperationResult.json

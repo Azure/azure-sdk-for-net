@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Relay;
 using Azure.ResourceManager.Relay.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Relay.Samples
 {
     public partial class Sample_RelayNamespaceResource
     {
-        // RelayCheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckRelayNamespaceNameAvailability_RelayCheckNameAvailability()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceCheckNameAvailability.json
@@ -45,9 +42,8 @@ namespace Azure.ResourceManager.Relay.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RelayNameSpaceListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRelayNamespaces_RelayNameSpaceListBySubscription()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceListBySubscription.json
@@ -74,12 +70,11 @@ namespace Azure.ResourceManager.Relay.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RelayNameSpaceDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RelayNameSpaceDelete()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceDelete.json
@@ -101,12 +96,11 @@ namespace Azure.ResourceManager.Relay.Samples
             // invoke the operation
             await relayNamespace.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RelayNameSpaceGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RelayNameSpaceGet()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceGet.json
@@ -135,9 +129,8 @@ namespace Azure.ResourceManager.Relay.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RelayNameSpaceUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RelayNameSpaceUpdate()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceUpdate.json

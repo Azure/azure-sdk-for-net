@@ -5,32 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class AzureStorageSmbFileShareEndpointProperties : IUtf8JsonSerializable
+    public partial class AzureStorageSmbFileShareEndpointProperties : IUtf8JsonSerializable, IJsonModel<AzureStorageSmbFileShareEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureStorageSmbFileShareEndpointProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AzureStorageSmbFileShareEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageSmbFileShareEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureStorageSmbFileShareEndpointProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("storageAccountResourceId"u8);
             writer.WriteStringValue(StorageAccountResourceId);
             writer.WritePropertyName("fileShareName"u8);
             writer.WriteStringValue(FileShareName);
-            writer.WritePropertyName("endpointType"u8);
-            writer.WriteStringValue(EndpointType.ToString());
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static AzureStorageSmbFileShareEndpointProperties DeserializeAzureStorageSmbFileShareEndpointProperties(JsonElement element)
+        AzureStorageSmbFileShareEndpointProperties IJsonModel<AzureStorageSmbFileShareEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageSmbFileShareEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureStorageSmbFileShareEndpointProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureStorageSmbFileShareEndpointProperties(document.RootElement, options);
+        }
+
+        internal static AzureStorageSmbFileShareEndpointProperties DeserializeAzureStorageSmbFileShareEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,8 +64,10 @@ namespace Azure.ResourceManager.StorageMover.Models
             ResourceIdentifier storageAccountResourceId = default;
             string fileShareName = default;
             EndpointType endpointType = default;
-            Optional<string> description = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            string description = default;
+            StorageMoverProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountResourceId"u8))
@@ -71,8 +99,50 @@ namespace Azure.ResourceManager.StorageMover.Models
                     provisioningState = new StorageMoverProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureStorageSmbFileShareEndpointProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), storageAccountResourceId, fileShareName);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureStorageSmbFileShareEndpointProperties(
+                endpointType,
+                description,
+                provisioningState,
+                serializedAdditionalRawData,
+                storageAccountResourceId,
+                fileShareName);
         }
+
+        BinaryData IPersistableModel<AzureStorageSmbFileShareEndpointProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageSmbFileShareEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureStorageSmbFileShareEndpointProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureStorageSmbFileShareEndpointProperties IPersistableModel<AzureStorageSmbFileShareEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageSmbFileShareEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureStorageSmbFileShareEndpointProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureStorageSmbFileShareEndpointProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureStorageSmbFileShareEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

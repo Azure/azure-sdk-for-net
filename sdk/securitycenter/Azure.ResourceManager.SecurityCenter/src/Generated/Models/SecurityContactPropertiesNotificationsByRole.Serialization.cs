@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityContactPropertiesNotificationsByRole : IUtf8JsonSerializable
+    public partial class SecurityContactPropertiesNotificationsByRole : IUtf8JsonSerializable, IJsonModel<SecurityContactPropertiesNotificationsByRole>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityContactPropertiesNotificationsByRole>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SecurityContactPropertiesNotificationsByRole>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityContactPropertiesNotificationsByRole>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
@@ -31,17 +49,47 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SecurityContactPropertiesNotificationsByRole DeserializeSecurityContactPropertiesNotificationsByRole(JsonElement element)
+        SecurityContactPropertiesNotificationsByRole IJsonModel<SecurityContactPropertiesNotificationsByRole>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityContactPropertiesNotificationsByRole>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityContactPropertiesNotificationsByRole(document.RootElement, options);
+        }
+
+        internal static SecurityContactPropertiesNotificationsByRole DeserializeSecurityContactPropertiesNotificationsByRole(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<SecurityAlertNotificationByRoleState> state = default;
-            Optional<IList<SecurityAlertReceivingRole>> roles = default;
+            SecurityAlertNotificationByRoleState? state = default;
+            IList<SecurityAlertReceivingRole> roles = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -67,8 +115,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     roles = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityContactPropertiesNotificationsByRole(Optional.ToNullable(state), Optional.ToList(roles));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityContactPropertiesNotificationsByRole(state, roles ?? new ChangeTrackingList<SecurityAlertReceivingRole>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityContactPropertiesNotificationsByRole>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityContactPropertiesNotificationsByRole>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityContactPropertiesNotificationsByRole IPersistableModel<SecurityContactPropertiesNotificationsByRole>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityContactPropertiesNotificationsByRole>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityContactPropertiesNotificationsByRole(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityContactPropertiesNotificationsByRole>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

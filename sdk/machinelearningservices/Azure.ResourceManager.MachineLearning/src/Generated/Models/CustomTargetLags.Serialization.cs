@@ -5,17 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class CustomTargetLags : IUtf8JsonSerializable
+    public partial class CustomTargetLags : IUtf8JsonSerializable, IJsonModel<CustomTargetLags>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomTargetLags>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CustomTargetLags>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomTargetLags>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomTargetLags)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("values"u8);
             writer.WriteStartArray();
             foreach (var item in Values)
@@ -23,19 +44,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("mode"u8);
-            writer.WriteStringValue(Mode.ToString());
-            writer.WriteEndObject();
         }
 
-        internal static CustomTargetLags DeserializeCustomTargetLags(JsonElement element)
+        CustomTargetLags IJsonModel<CustomTargetLags>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomTargetLags>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomTargetLags)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomTargetLags(document.RootElement, options);
+        }
+
+        internal static CustomTargetLags DeserializeCustomTargetLags(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<int> values = default;
             TargetLagsMode mode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"u8))
@@ -53,8 +87,96 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     mode = new TargetLagsMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomTargetLags(mode, values);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CustomTargetLags(mode, serializedAdditionalRawData, values);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Values), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  values: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Values))
+                {
+                    if (Values.Any())
+                    {
+                        builder.Append("  values: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Values)
+                        {
+                            builder.AppendLine($"    {item}");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  mode: ");
+                builder.AppendLine($"'{Mode.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<CustomTargetLags>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomTargetLags>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomTargetLags)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CustomTargetLags IPersistableModel<CustomTargetLags>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomTargetLags>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomTargetLags(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomTargetLags)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomTargetLags>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

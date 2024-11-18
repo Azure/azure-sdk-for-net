@@ -5,17 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringServiceLocation : IUtf8JsonSerializable
+    public partial class PeeringServiceLocation : IUtf8JsonSerializable, IJsonModel<PeeringServiceLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringServiceLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PeeringServiceLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringServiceLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PeeringServiceLocation)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Country))
@@ -34,11 +54,24 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStringValue(AzureRegion.Value);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static PeeringServiceLocation DeserializePeeringServiceLocation(JsonElement element)
+        PeeringServiceLocation IJsonModel<PeeringServiceLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringServiceLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PeeringServiceLocation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePeeringServiceLocation(document.RootElement, options);
+        }
+
+        internal static PeeringServiceLocation DeserializePeeringServiceLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,10 +79,12 @@ namespace Azure.ResourceManager.Peering.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> country = default;
-            Optional<string> state = default;
-            Optional<AzureLocation> azureRegion = default;
+            SystemData systemData = default;
+            string country = default;
+            string state = default;
+            AzureLocation? azureRegion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -107,8 +142,52 @@ namespace Azure.ResourceManager.Peering.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PeeringServiceLocation(id, name, type, systemData.Value, country.Value, state.Value, Optional.ToNullable(azureRegion));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PeeringServiceLocation(
+                id,
+                name,
+                type,
+                systemData,
+                country,
+                state,
+                azureRegion,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PeeringServiceLocation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringServiceLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PeeringServiceLocation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PeeringServiceLocation IPersistableModel<PeeringServiceLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringServiceLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePeeringServiceLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PeeringServiceLocation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PeeringServiceLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

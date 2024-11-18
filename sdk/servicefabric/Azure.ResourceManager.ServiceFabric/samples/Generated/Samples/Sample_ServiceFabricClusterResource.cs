@@ -7,24 +7,21 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.ServiceFabric;
 using Azure.ResourceManager.ServiceFabric.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceFabric.Samples
 {
     public partial class Sample_ServiceFabricClusterResource
     {
-        // Get a cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACluster()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ClusterGetOperation_example.json
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ClusterGetOperation_example.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,12 +47,11 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch a cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchACluster()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ClusterPatchOperation_example.json
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ClusterPatchOperation_example.json
             // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,11 +82,13 @@ new ClusterNodeTypeDescription("nt1vm",19000,19007,true,5)
 DurabilityLevel = ClusterDurabilityLevel.Bronze,
 ApplicationPorts = new ClusterEndpointRangeDescription(20000,30000),
 EphemeralPorts = new ClusterEndpointRangeDescription(49000,64000),
+HttpGatewayTokenAuthEndpointPort = 19081,
 },new ClusterNodeTypeDescription("testnt1",0,0,false,3)
 {
 DurabilityLevel = ClusterDurabilityLevel.Bronze,
 ApplicationPorts = new ClusterEndpointRangeDescription(1000,2000),
 EphemeralPorts = new ClusterEndpointRangeDescription(3000,4000),
+HttpGatewayTokenAuthEndpointPort = 19081,
 }
 },
                 ReliabilityLevel = ClusterReliabilityLevel.Bronze,
@@ -98,6 +96,7 @@ EphemeralPorts = new ClusterEndpointRangeDescription(3000,4000),
                 UpgradeWave = new ClusterUpgradeCadence("Wave"),
                 UpgradePauseStartOn = DateTimeOffset.Parse("2021-06-21T22:00:00Z"),
                 UpgradePauseEndOn = DateTimeOffset.Parse("2021-06-25T22:00:00Z"),
+                IsHttpGatewayExclusiveAuthModeEnabled = true,
             };
             ArmOperation<ServiceFabricClusterResource> lro = await serviceFabricCluster.UpdateAsync(WaitUntil.Completed, patch);
             ServiceFabricClusterResource result = lro.Value;
@@ -109,12 +108,11 @@ EphemeralPorts = new ClusterEndpointRangeDescription(3000,4000),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteACluster()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ClusterDeleteOperation_example.json
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ClusterDeleteOperation_example.json
             // this example is just showing the usage of "Clusters_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,15 +131,14 @@ EphemeralPorts = new ClusterEndpointRangeDescription(3000,4000),
             // invoke the operation
             await serviceFabricCluster.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List clusters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetServiceFabricClusters_ListClusters()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ClusterListOperation_example.json
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ClusterListOperation_example.json
             // this example is just showing the usage of "Clusters_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,15 +162,14 @@ EphemeralPorts = new ClusterEndpointRangeDescription(3000,4000),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get minimum and maximum code versions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUpgradableVersions_GetMinimumAndMaximumCodeVersions()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ListUpgradableVersionsMinMax_example.json
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ListUpgradableVersionsMinMax_example.json
             // this example is just showing the usage of "Clusters_ListUpgradableVersions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -195,12 +191,11 @@ EphemeralPorts = new ClusterEndpointRangeDescription(3000,4000),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get upgrade path
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUpgradableVersions_GetUpgradePath()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ListUpgradableVersionsPath_example.json
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ListUpgradableVersionsPath_example.json
             // this example is just showing the usage of "Clusters_ListUpgradableVersions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

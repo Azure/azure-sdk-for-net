@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using Azure.Storage.DataMovement;
 
 namespace Azure.Storage
 {
@@ -126,5 +125,14 @@ namespace Azure.Storage
         public static ArgumentException NoResourceProviderFound(bool isSource, string providerId)
             => new ArgumentException($"Unable to find resource provider for transfer {(isSource ? "source" : "destination")} with provider id: {providerId}. " +
                 $"Please ensure you have registered the required resource provider with TransferManagerOptions.ResumeProviders.");
+
+        public static ArgumentException UnexpectedPropertyType(string propertyName, params string[] expectedTypes)
+            => new ArgumentException($"Unexpected property type encountered for storage resource property {propertyName}: {string.Join(",", (string[])expectedTypes)}");
+
+        public static InvalidOperationException CheckpointerDisabled(string method)
+            => new InvalidOperationException($"Unable to perform {method}. The transfer checkpointer is disabled.");
+
+        public static InvalidOperationException CollisionTransferId(string id)
+            => new InvalidOperationException($"Transfer Id Collision: The transfer id, {id}, already exists in the transfer manager.");
     }
 }

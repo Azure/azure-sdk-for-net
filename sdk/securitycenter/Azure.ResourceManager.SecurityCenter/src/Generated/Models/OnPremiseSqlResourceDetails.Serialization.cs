@@ -6,35 +6,57 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class OnPremiseSqlResourceDetails : IUtf8JsonSerializable
+    public partial class OnPremiseSqlResourceDetails : IUtf8JsonSerializable, IJsonModel<OnPremiseSqlResourceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OnPremiseSqlResourceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<OnPremiseSqlResourceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OnPremiseSqlResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OnPremiseSqlResourceDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("serverName"u8);
             writer.WriteStringValue(ServerName);
             writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
-            writer.WritePropertyName("workspaceId"u8);
-            writer.WriteStringValue(WorkspaceId);
-            writer.WritePropertyName("vmuuid"u8);
-            writer.WriteStringValue(VmUuid);
-            writer.WritePropertyName("sourceComputerId"u8);
-            writer.WriteStringValue(SourceComputerId);
-            writer.WritePropertyName("machineName"u8);
-            writer.WriteStringValue(MachineName);
-            writer.WritePropertyName("source"u8);
-            writer.WriteStringValue(Source.ToString());
-            writer.WriteEndObject();
         }
 
-        internal static OnPremiseSqlResourceDetails DeserializeOnPremiseSqlResourceDetails(JsonElement element)
+        OnPremiseSqlResourceDetails IJsonModel<OnPremiseSqlResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OnPremiseSqlResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OnPremiseSqlResourceDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOnPremiseSqlResourceDetails(document.RootElement, options);
+        }
+
+        internal static OnPremiseSqlResourceDetails DeserializeOnPremiseSqlResourceDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,7 +67,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Guid vmuuid = default;
             string sourceComputerId = default;
             string machineName = default;
-            Source source = default;
+            HealthReportSource source = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverName"u8))
@@ -80,11 +104,55 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("source"u8))
                 {
-                    source = new Source(property.Value.GetString());
+                    source = new HealthReportSource(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OnPremiseSqlResourceDetails(source, workspaceId, vmuuid, sourceComputerId, machineName, serverName, databaseName);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OnPremiseSqlResourceDetails(
+                source,
+                serializedAdditionalRawData,
+                workspaceId,
+                vmuuid,
+                sourceComputerId,
+                machineName,
+                serverName,
+                databaseName);
         }
+
+        BinaryData IPersistableModel<OnPremiseSqlResourceDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OnPremiseSqlResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OnPremiseSqlResourceDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OnPremiseSqlResourceDetails IPersistableModel<OnPremiseSqlResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OnPremiseSqlResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOnPremiseSqlResourceDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OnPremiseSqlResourceDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OnPremiseSqlResourceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

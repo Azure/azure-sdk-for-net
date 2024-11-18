@@ -57,6 +57,24 @@ class Version {
   }
 }
 
+Function Resolve-Proxy {
+    $testProxyExe = "test-proxy"
+    # this script requires the presence of the test-proxy on the PATH
+    $proxyToolPresent = Test-Exe-In-Path -ExeToLookFor "test-proxy" -ExitOnError $false
+    $proxyStandalonePresent = Test-Exe-In-Path -ExeToLookFor "Azure.Sdk.Tools.TestProxy" -ExitOnError $false
+
+    if (-not $proxyToolPresent -and -not $proxyStandalonePresent) {
+        Write-Error "This script requires the presence of a test-proxy executable to complete its operations. Exiting."
+        exit 1
+    }
+
+    if (-not $proxyToolPresent) {
+        $testProxyExe = "Azure.Sdk.Tools.TestProxy"
+    }
+
+    return $testProxyExe
+}
+
 Function Test-Exe-In-Path {
   Param([string] $ExeToLookFor, [bool]$ExitOnError = $true)
   if ($null -eq (Get-Command $ExeToLookFor -ErrorAction SilentlyContinue)) {
@@ -188,41 +206,6 @@ Function Invoke-ProxyCommand {
     [string] $TargetDirectory
   )
   $updatedDirectory = $TargetDirectory.Replace("`\", "/")
-
-  # CommandString just a string indicating the proxy arguments. In the default case of running against the proxy tool, can just be used directly.
-  # However, in the case of docker, we need to append a bunch more arguments to the string.
-  if ($TestProxyExe -eq "docker" -or $TestProxyExe -eq "podman"){
-    $token = $env:GIT_TOKEN
-    $committer = $env:GIT_COMMIT_OWNER
-    $email = $env:GIT_COMMIT_EMAIL
-
-    if (-not $committer) {
-      $committer = & git config --global user.name
-    }
-
-    if (-not $email) {
-      $email = & git config --global user.email
-    }
-
-    if(-not $token -or -not $committer -or -not $email){
-      Write-Error ("When running this transition script in `"docker`" or `"podman`" mode, " `
-        + "the environment variables GIT_TOKEN, GIT_COMMIT_OWNER, and GIT_COMMIT_EMAIL must be set to reflect the appropriate user. ")
-        exit 1
-    }
-
-    $targetImage = if ($env:TRANSITION_SCRIPT_DOCKER_TAG) { $env:TRANSITION_SCRIPT_DOCKER_TAG } else { "azsdkengsys.azurecr.io/engsys/test-proxy:latest" }
-
-    $CommandString = @(
-      "run --rm --name transition.test.proxy",
-      "-v `"${updatedDirectory}:/srv/testproxy`"",
-      "-e `"GIT_TOKEN=${token}`"",
-      "-e `"GIT_COMMIT_OWNER=${committer}`"",
-      "-e `"GIT_COMMIT_EMAIL=${email}`"",
-      $targetImage,
-      "test-proxy",
-      $CommandString
-    ) -join " "
-  }
 
   Write-Host "$TestProxyExe $CommandString"
   [array] $output = & "$TestProxyExe" $CommandString.Split(" ") --storage-location="$updatedDirectory"

@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HybridNetwork;
 using Azure.ResourceManager.HybridNetwork.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridNetwork.Samples
 {
     public partial class Sample_NetworkFunctionDefinitionVersionCollection
     {
-        // Create or update a network function definition version resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateANetworkFunctionDefinitionVersionResource()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionDefinitionVersionCreate.json
@@ -127,9 +124,8 @@ UpdateDependsOn =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a network function definition version resource for AzureCore VNF
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateANetworkFunctionDefinitionVersionResourceForAzureCoreVNF()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionDefinitionVersionCreate.json
@@ -240,9 +236,8 @@ UpdateDependsOn =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a network function definition version resource for AzureOperatorNexus VNF
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateANetworkFunctionDefinitionVersionResourceForAzureOperatorNexusVNF()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionDefinitionVersionCreate.json
@@ -353,9 +348,8 @@ UpdateDependsOn =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a network function definition version resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetANetworkFunctionDefinitionVersionResource()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionDefinitionVersionGet.json
@@ -389,9 +383,8 @@ UpdateDependsOn =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a network function definition version resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetANetworkFunctionDefinitionVersionResource()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionDefinitionVersionGet.json
@@ -421,9 +414,8 @@ UpdateDependsOn =
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a network function definition version resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetANetworkFunctionDefinitionVersionResource()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionDefinitionVersionGet.json
@@ -453,7 +445,7 @@ UpdateDependsOn =
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -465,9 +457,8 @@ UpdateDependsOn =
             }
         }
 
-        // Get network function definition version resource for AzureCore VNF
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkFunctionDefinitionVersionResourceForAzureCoreVNF()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionDefinitionVersionGet.json
@@ -501,9 +492,8 @@ UpdateDependsOn =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get network function definition version resource for AzureCore VNF
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetNetworkFunctionDefinitionVersionResourceForAzureCoreVNF()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionDefinitionVersionGet.json
@@ -533,9 +523,8 @@ UpdateDependsOn =
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get network function definition version resource for AzureCore VNF
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetNetworkFunctionDefinitionVersionResourceForAzureCoreVNF()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionDefinitionVersionGet.json
@@ -565,7 +554,7 @@ UpdateDependsOn =
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -577,9 +566,8 @@ UpdateDependsOn =
             }
         }
 
-        // Get network function definition version resource for AzureOperatorNexus VNF
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkFunctionDefinitionVersionResourceForAzureOperatorNexusVNF()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionDefinitionVersionGet.json
@@ -613,9 +601,8 @@ UpdateDependsOn =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get network function definition version resource for AzureOperatorNexus VNF
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetNetworkFunctionDefinitionVersionResourceForAzureOperatorNexusVNF()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionDefinitionVersionGet.json
@@ -645,9 +632,8 @@ UpdateDependsOn =
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get network function definition version resource for AzureOperatorNexus VNF
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetNetworkFunctionDefinitionVersionResourceForAzureOperatorNexusVNF()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionDefinitionVersionGet.json
@@ -677,7 +663,7 @@ UpdateDependsOn =
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -689,9 +675,8 @@ UpdateDependsOn =
             }
         }
 
-        // Get Publisher resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetPublisherResource()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionDefinitionVersionListByNetworkFunctionDefinitionGroup.json
@@ -724,7 +709,7 @@ UpdateDependsOn =
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

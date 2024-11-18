@@ -9,7 +9,7 @@ $workingFolder = $webappRoot;
 if ($null -ne $Env:AGENT_WORKFOLDER) {
   $workingFolder = $Env:AGENT_WORKFOLDER
 }
-az login --service-principal -u $DeploymentOutputs['IDENTITY_CLIENT_ID'] -p $DeploymentOutputs['IDENTITY_CLIENT_SECRET'] --tenant $DeploymentOutputs['IDENTITY_TENANT_ID']
+
 az account set --subscription $DeploymentOutputs['IDENTITY_SUBSCRIPTION_ID']
 
 # Deploy the webapp

@@ -1,6 +1,5 @@
 parameters:
   ArtifactPath: $(Build.ArtifactStagingDirectory)
-  Artifacts: []
   ArtifactName: 'packages'
 
 steps:
@@ -14,7 +13,6 @@ steps:
     inputs:
       filePath: $(Build.SourcesDirectory)/eng/common/scripts/Detect-Api-Changes.ps1
       arguments: >
-        -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
         -ArtifactPath ${{parameters.ArtifactPath}}
         -CommitSha '$(Build.SourceVersion)'
         -BuildId $(Build.BuildId)
@@ -22,6 +20,7 @@ steps:
         -RepoFullName $(Build.Repository.Name)
         -APIViewUri $(ApiChangeDetectRequestUrl)
         -ArtifactName ${{ parameters.ArtifactName }}
+        -DevopsProject $(System.TeamProject)
       pwsh: true
     displayName: Detect API changes
     condition: and(succeededOrFailed(), eq(variables['Build.Reason'],'PullRequest'))

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagementPartner
@@ -62,6 +60,14 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <term>Operation Id</term>
         /// <description>Partner_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -78,7 +84,9 @@ namespace Azure.ResourceManager.ManagementPartner
             try
             {
                 var response = await _partnerResponsePartnerRestClient.CreateAsync(partnerId, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementPartnerArmOperation<PartnerResponseResource>(Response.FromValue(new PartnerResponseResource(Client, response), response.GetRawResponse()));
+                var uri = _partnerResponsePartnerRestClient.CreateCreateRequestUri(partnerId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ManagementPartnerArmOperation<PartnerResponseResource>(Response.FromValue(new PartnerResponseResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -101,6 +109,14 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <term>Operation Id</term>
         /// <description>Partner_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -117,7 +133,9 @@ namespace Azure.ResourceManager.ManagementPartner
             try
             {
                 var response = _partnerResponsePartnerRestClient.Create(partnerId, cancellationToken);
-                var operation = new ManagementPartnerArmOperation<PartnerResponseResource>(Response.FromValue(new PartnerResponseResource(Client, response), response.GetRawResponse()));
+                var uri = _partnerResponsePartnerRestClient.CreateCreateRequestUri(partnerId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ManagementPartnerArmOperation<PartnerResponseResource>(Response.FromValue(new PartnerResponseResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -139,6 +157,14 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,6 +203,14 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerId"> Id of the Partner. </param>
@@ -214,6 +248,14 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerId"> Id of the Partner. </param>
@@ -249,6 +291,14 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerId"> Id of the Partner. </param>
@@ -283,6 +333,14 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,6 +378,14 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

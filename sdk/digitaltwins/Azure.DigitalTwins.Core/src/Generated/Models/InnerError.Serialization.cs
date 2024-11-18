@@ -34,8 +34,8 @@ namespace Azure.DigitalTwins.Core
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<InnerError> innererror = default;
+            string code = default;
+            InnerError innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -53,7 +53,23 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new InnerError(code.Value, innererror.Value);
+            return new InnerError(code, innererror);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static InnerError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeInnerError(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

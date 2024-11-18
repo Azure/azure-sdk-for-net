@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.AppConfiguration
     /// </summary>
     public partial class AppConfigurationStoreData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The sku of the configuration store. </param>
@@ -50,7 +82,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="softDeleteRetentionInDays"> The amount of time in days that the configuration store will be retained when it is soft deleted. </param>
         /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this configuration store. </param>
         /// <param name="createMode"> Indicates whether the configuration store need to be recovered. </param>
-        internal AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, AppConfigurationSku sku, AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, AppConfigurationStoreEncryptionProperties encryption, IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, AppConfigurationCreateMode? createMode) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, AppConfigurationSku sku, AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, AppConfigurationStoreEncryptionProperties encryption, IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, AppConfigurationCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -64,13 +97,21 @@ namespace Azure.ResourceManager.AppConfiguration
             SoftDeleteRetentionInDays = softDeleteRetentionInDays;
             EnablePurgeProtection = enablePurgeProtection;
             CreateMode = createMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreData"/> for deserialization. </summary>
+        internal AppConfigurationStoreData()
+        {
         }
 
         /// <summary> The managed identity information, if configured. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The sku of the configuration store. </summary>
         internal AppConfigurationSku Sku { get; set; }
         /// <summary> The SKU name of the configuration store. </summary>
+        [WirePath("sku.name")]
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -78,14 +119,18 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The provisioning state of the configuration store. </summary>
+        [WirePath("properties.provisioningState")]
         public AppConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> The creation date of configuration store. </summary>
+        [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The DNS endpoint where the configuration store API will be available. </summary>
+        [WirePath("properties.endpoint")]
         public string Endpoint { get; }
         /// <summary> The encryption settings of the configuration store. </summary>
         internal AppConfigurationStoreEncryptionProperties Encryption { get; set; }
         /// <summary> Key vault properties. </summary>
+        [WirePath("properties.encryption.keyVaultProperties")]
         public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties
         {
             get => Encryption is null ? default : Encryption.KeyVaultProperties;
@@ -98,16 +143,22 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> PrivateEndpointConnections { get; }
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public AppConfigurationPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Disables all authentication methods other than AAD authentication. </summary>
+        [WirePath("properties.disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
         /// <summary> The amount of time in days that the configuration store will be retained when it is soft deleted. </summary>
+        [WirePath("properties.softDeleteRetentionInDays")]
         public int? SoftDeleteRetentionInDays { get; set; }
         /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
+        [WirePath("properties.enablePurgeProtection")]
         public bool? EnablePurgeProtection { get; set; }
         /// <summary> Indicates whether the configuration store need to be recovered. </summary>
+        [WirePath("properties.createMode")]
         public AppConfigurationCreateMode? CreateMode { get; set; }
     }
 }

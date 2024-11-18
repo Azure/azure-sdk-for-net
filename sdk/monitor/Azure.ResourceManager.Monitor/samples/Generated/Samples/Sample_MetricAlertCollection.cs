@@ -8,21 +8,18 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Samples
 {
     public partial class Sample_MetricAlertCollection
     {
-        // List metric alert rules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListMetricAlertRules()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/listMetricAlert.json
@@ -53,12 +50,11 @@ namespace Azure.ResourceManager.Monitor.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a dynamic alert rule for multiple resources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADynamicAlertRuleForMultipleResources()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getDynamicMetricAlertMultipleResource.json
@@ -90,9 +86,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a dynamic alert rule for multiple resources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetADynamicAlertRuleForMultipleResources()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getDynamicMetricAlertMultipleResource.json
@@ -120,9 +115,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a dynamic alert rule for multiple resources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetADynamicAlertRuleForMultipleResources()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getDynamicMetricAlertMultipleResource.json
@@ -150,7 +144,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -162,9 +156,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             }
         }
 
-        // Get a dynamic alert rule for single resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADynamicAlertRuleForSingleResource()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getDynamicMetricAlertSingleResource.json
@@ -196,9 +189,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a dynamic alert rule for single resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetADynamicAlertRuleForSingleResource()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getDynamicMetricAlertSingleResource.json
@@ -226,9 +218,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a dynamic alert rule for single resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetADynamicAlertRuleForSingleResource()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getDynamicMetricAlertSingleResource.json
@@ -256,7 +247,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -268,9 +259,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             }
         }
 
-        // Get a web test alert rule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAWebTestAlertRule()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getWebTestMetricAlert.json
@@ -302,9 +292,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a web test alert rule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAWebTestAlertRule()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getWebTestMetricAlert.json
@@ -332,9 +321,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a web test alert rule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAWebTestAlertRule()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getWebTestMetricAlert.json
@@ -362,7 +350,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -374,9 +362,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             }
         }
 
-        // Get an alert rule for multiple resources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAlertRuleForMultipleResources()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertMultipleResource.json
@@ -408,9 +395,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an alert rule for multiple resources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAlertRuleForMultipleResources()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertMultipleResource.json
@@ -438,9 +424,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an alert rule for multiple resources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAlertRuleForMultipleResources()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertMultipleResource.json
@@ -468,7 +453,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -480,9 +465,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             }
         }
 
-        // Get an alert rule for single resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAlertRuleForSingleResource()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertSingleResource.json
@@ -514,9 +498,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an alert rule for single resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAlertRuleForSingleResource()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertSingleResource.json
@@ -544,9 +527,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an alert rule for single resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAlertRuleForSingleResource()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertSingleResource.json
@@ -574,7 +556,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -586,9 +568,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             }
         }
 
-        // Get an alert rule on resource group(s)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAlertRuleOnResourceGroupS()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertResourceGroup.json
@@ -620,9 +601,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an alert rule on resource group(s)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAlertRuleOnResourceGroupS()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertResourceGroup.json
@@ -650,9 +630,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an alert rule on resource group(s)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAlertRuleOnResourceGroupS()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertResourceGroup.json
@@ -680,7 +659,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -692,9 +671,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             }
         }
 
-        // Get an alert rule on subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAlertRuleOnSubscription()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertSubscription.json
@@ -726,9 +704,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an alert rule on subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAlertRuleOnSubscription()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertSubscription.json
@@ -756,9 +733,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an alert rule on subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAlertRuleOnSubscription()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertSubscription.json
@@ -786,7 +762,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -798,9 +774,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             }
         }
 
-        // Create or update a dynamic alert rule for Multiple Resources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateADynamicAlertRuleForMultipleResources()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateDynamicMetricAlertMultipleResource.json
@@ -870,9 +845,8 @@ WebHookProperties =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a dynamic alert rule for Single Resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateADynamicAlertRuleForSingleResource()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateDynamicMetricAlertSingleResource.json
@@ -941,9 +915,8 @@ WebHookProperties =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a web test alert rule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAWebTestAlertRule()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateWebTestMetricAlert.json
@@ -991,9 +964,8 @@ WebHookProperties =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update an alert rule for Multiple Resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnAlertRuleForMultipleResource()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateMetricAlertMultipleResource.json
@@ -1063,9 +1035,8 @@ WebHookProperties =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update an alert rule for Single Resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnAlertRuleForSingleResource()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateMetricAlertSingleResource.json
@@ -1132,9 +1103,8 @@ WebHookProperties =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update an alert rule on Resource group(s)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnAlertRuleOnResourceGroupS()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateMetricAlertResourceGroup.json
@@ -1204,9 +1174,8 @@ WebHookProperties =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update an alert rule on Subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnAlertRuleOnSubscription()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateMetricAlertSubscription.json
@@ -1276,9 +1245,8 @@ WebHookProperties =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update an alert rules with dimensions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnAlertRulesWithDimensions()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateMetricAlertWithDimensions.json

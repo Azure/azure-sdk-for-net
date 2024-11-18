@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string CertificateValue = "Certificate";
         private const string SasValue = "Sas";
         private const string ServicePrincipalValue = "ServicePrincipal";
-        private const string KerberosPasswordValue = "KerberosPassword";
-        private const string KerberosKeytabValue = "KerberosKeytab";
 
         /// <summary> AccountKey. </summary>
         public static SecretsType AccountKey { get; } = new SecretsType(AccountKeyValue);
@@ -37,15 +35,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static SecretsType Sas { get; } = new SecretsType(SasValue);
         /// <summary> ServicePrincipal. </summary>
         public static SecretsType ServicePrincipal { get; } = new SecretsType(ServicePrincipalValue);
-        /// <summary> KerberosPassword. </summary>
-        public static SecretsType KerberosPassword { get; } = new SecretsType(KerberosPasswordValue);
-        /// <summary> KerberosKeytab. </summary>
-        public static SecretsType KerberosKeytab { get; } = new SecretsType(KerberosKeytabValue);
         /// <summary> Determines if two <see cref="SecretsType"/> values are the same. </summary>
         public static bool operator ==(SecretsType left, SecretsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecretsType"/> values are not the same. </summary>
         public static bool operator !=(SecretsType left, SecretsType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecretsType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecretsType"/>. </summary>
         public static implicit operator SecretsType(string value) => new SecretsType(value);
 
         /// <inheritdoc />
@@ -56,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

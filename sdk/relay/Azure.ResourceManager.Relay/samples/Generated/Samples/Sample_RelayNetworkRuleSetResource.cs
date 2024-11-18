@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Relay;
 using Azure.ResourceManager.Relay.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Relay.Samples
 {
     public partial class Sample_RelayNetworkRuleSetResource
     {
-        // NameSpaceNetworkRuleSetCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NameSpaceNetworkRuleSetCreate()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/VirtualNetworkRules/RelayNetworkRuleSetCreate.json
@@ -78,9 +75,8 @@ Action = RelayNetworkRuleIPAction.Allow,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NameSpaceNetworkRuleSetGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NameSpaceNetworkRuleSetGet()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/VirtualNetworkRules/RelayNetworkRuleSetGet.json

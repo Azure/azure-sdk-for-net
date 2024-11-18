@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -61,6 +59,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_UpdateVnetGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -79,7 +85,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient.UpdateVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AppServicePlanVirtualNetworkConnectionGatewayResource>(Response.FromValue(new AppServicePlanVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()));
+                var uri = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient.CreateUpdateVnetGatewayRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<AppServicePlanVirtualNetworkConnectionGatewayResource>(Response.FromValue(new AppServicePlanVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -102,6 +110,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_UpdateVnetGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -120,7 +136,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient.UpdateVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<AppServicePlanVirtualNetworkConnectionGatewayResource>(Response.FromValue(new AppServicePlanVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()));
+                var uri = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansRestClient.CreateUpdateVnetGatewayRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<AppServicePlanVirtualNetworkConnectionGatewayResource>(Response.FromValue(new AppServicePlanVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -142,6 +160,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetGateway</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,6 +206,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
@@ -217,6 +251,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
@@ -252,6 +294,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
@@ -286,6 +336,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetGateway</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,6 +381,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetGateway</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

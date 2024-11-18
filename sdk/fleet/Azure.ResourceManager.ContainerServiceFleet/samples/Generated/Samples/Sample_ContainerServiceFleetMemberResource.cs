@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerServiceFleet;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 {
     public partial class Sample_ContainerServiceFleetMemberResource
     {
-        // Gets a FleetMember resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAFleetMemberResource()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2023-10-15/examples/FleetMembers_Get.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/FleetMembers_Get.json
             // this example is just showing the usage of "FleetMembers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,12 +47,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Updates a FleetMember resource synchronously.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesAFleetMemberResourceSynchronously()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2023-10-15/examples/FleetMembers_Update.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/FleetMembers_Update.json
             // this example is just showing the usage of "FleetMembers_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,12 +83,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes a FleetMember resource asynchronously with a long running operation.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesAFleetMemberResourceAsynchronouslyWithALongRunningOperation()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2023-10-15/examples/FleetMembers_Delete.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/FleetMembers_Delete.json
             // this example is just showing the usage of "FleetMembers_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -112,7 +107,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             // invoke the operation
             await containerServiceFleetMember.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

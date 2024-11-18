@@ -15,7 +15,6 @@ namespace Microsoft.Azure.Batch.Protocol
     using Models;
     using System.Collections;
     using System.Collections.Generic;
-    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -194,8 +193,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </summary>
         /// <remarks>
         /// You can reinstall the operating system on a Compute Node only if it
-        /// is in an idle or running state. This API can be invoked only on
-        /// Pools created with the cloud service configuration property.
+        /// is in an idle or running state.
         /// </remarks>
         /// <param name='poolId'>
         /// The ID of the Pool that contains the Compute Node.
@@ -290,14 +288,73 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationHeaderResponse<ComputeNodeEnableSchedulingHeaders>> EnableSchedulingWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeEnableSchedulingOptions computeNodeEnableSchedulingOptions = default(ComputeNodeEnableSchedulingOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Starts the specified Compute Node.
+        /// </summary>
+        /// <remarks>
+        /// You can start a Compute Node only if it has been deallocated
+        /// </remarks>
+        /// <param name='poolId'>
+        /// The ID of the Pool that contains the Compute Node.
+        /// </param>
+        /// <param name='nodeId'>
+        /// The ID of the Compute Node that you want to start.
+        /// </param>
+        /// <param name='computeNodeStartOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="BatchErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<ComputeNodeStartHeaders>> StartWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeStartOptions computeNodeStartOptions = default(ComputeNodeStartOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deallocates the specified Compute Node.
+        /// </summary>
+        /// <remarks>
+        /// You can deallocate a Compute Node only if it is in an idle or
+        /// running state.
+        /// </remarks>
+        /// <param name='poolId'>
+        /// The ID of the Pool that contains the Compute Node.
+        /// </param>
+        /// <param name='nodeId'>
+        /// The ID of the Compute Node that you want to deallocate.
+        /// </param>
+        /// <param name='nodeDeallocateOption'>
+        /// When to deallocate the Compute Node and what to do with currently
+        /// running Tasks. The default value is requeue. Possible values
+        /// include: 'requeue', 'terminate', 'taskCompletion', 'retainedData'
+        /// </param>
+        /// <param name='computeNodeDeallocateOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="BatchErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<ComputeNodeDeallocateHeaders>> DeallocateWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeDeallocateOption? nodeDeallocateOption = default(ComputeNodeDeallocateOption?), ComputeNodeDeallocateOptions computeNodeDeallocateOptions = default(ComputeNodeDeallocateOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets the settings required for remote login to a Compute Node.
         /// </summary>
         /// <remarks>
         /// Before you can remotely login to a Compute Node using the remote
         /// login settings, you must create a user Account on the Compute Node.
-        /// This API can be invoked only on Pools created with the virtual
-        /// machine configuration property. For Pools created with a cloud
-        /// service configuration, see the GetRemoteDesktop API.
         /// </remarks>
         /// <param name='poolId'>
         /// The ID of the Pool that contains the Compute Node.
@@ -325,43 +382,6 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ComputeNodeGetRemoteLoginSettingsResult,ComputeNodeGetRemoteLoginSettingsHeaders>> GetRemoteLoginSettingsWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeGetRemoteLoginSettingsOptions computeNodeGetRemoteLoginSettingsOptions = default(ComputeNodeGetRemoteLoginSettingsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the Remote Desktop Protocol file for the specified Compute
-        /// Node.
-        /// </summary>
-        /// <remarks>
-        /// Before you can access a Compute Node by using the RDP file, you
-        /// must create a user Account on the Compute Node. This API can only
-        /// be invoked on Pools created with a cloud service configuration. For
-        /// Pools created with a virtual machine configuration, see the
-        /// GetRemoteLoginSettings API.
-        /// </remarks>
-        /// <param name='poolId'>
-        /// The ID of the Pool that contains the Compute Node.
-        /// </param>
-        /// <param name='nodeId'>
-        /// The ID of the Compute Node for which you want to get the Remote
-        /// Desktop Protocol file.
-        /// </param>
-        /// <param name='computeNodeGetRemoteDesktopOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="BatchErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<Stream,ComputeNodeGetRemoteDesktopHeaders>> GetRemoteDesktopWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeGetRemoteDesktopOptions computeNodeGetRemoteDesktopOptions = default(ComputeNodeGetRemoteDesktopOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Upload Azure Batch service log files from the specified Compute
         /// Node to Azure Blob Storage.

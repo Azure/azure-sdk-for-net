@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
             List<CosmosDBAccountCapability> capabilities = new List<CosmosDBAccountCapability>();
-            capabilities.Add(new CosmosDBAccountCapability("EnableMongo"));
-            capabilities.Add(new CosmosDBAccountCapability("EnableMongoRoleBasedAccessControl"));
+            capabilities.Add(new CosmosDBAccountCapability("EnableMongo", null));
+            capabilities.Add(new CosmosDBAccountCapability("EnableMongoRoleBasedAccessControl", null));
             _databaseAccount = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB, capabilities);
 
             _mongoDBDatabase = await MongoDBDatabaseTests.CreateMongoDBDatabase(SessionRecording.GenerateAssetName("mongodb-"), null, _databaseAccount.GetMongoDBDatabases());
@@ -51,15 +51,18 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (_roleDefinition != null)
+            if (Mode != RecordedTestMode.Playback)
             {
-                if (await MongoRoleDefinitionCollection.ExistsAsync(this._roleDefinitionId))
+                if (_roleDefinition != null)
                 {
-                    await _roleDefinition.DeleteAsync(WaitUntil.Completed);
+                    if (await MongoRoleDefinitionCollection.ExistsAsync(this._roleDefinitionId))
+                    {
+                        await _roleDefinition.DeleteAsync(WaitUntil.Completed);
+                    }
                 }
+                await _mongoDBDatabase.DeleteAsync(WaitUntil.Completed);
+                await _databaseAccount.DeleteAsync(WaitUntil.Completed);
             }
-            await _mongoDBDatabase.DeleteAsync(WaitUntil.Completed);
-            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]

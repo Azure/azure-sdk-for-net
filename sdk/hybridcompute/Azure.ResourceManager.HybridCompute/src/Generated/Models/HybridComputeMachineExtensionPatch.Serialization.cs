@@ -5,27 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputeMachineExtensionPatch : IUtf8JsonSerializable
+    public partial class HybridComputeMachineExtensionPatch : IUtf8JsonSerializable, IJsonModel<HybridComputeMachineExtensionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeMachineExtensionPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HybridComputeMachineExtensionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeMachineExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                throw new FormatException($"The model {nameof(HybridComputeMachineExtensionPatch)} does not support writing '{format}' format.");
             }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ForceUpdateTag))
@@ -105,7 +114,195 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
+
+        HybridComputeMachineExtensionPatch IJsonModel<HybridComputeMachineExtensionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeMachineExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridComputeMachineExtensionPatch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridComputeMachineExtensionPatch(document.RootElement, options);
+        }
+
+        internal static HybridComputeMachineExtensionPatch DeserializeHybridComputeMachineExtensionPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IDictionary<string, string> tags = default;
+            string forceUpdateTag = default;
+            string publisher = default;
+            string type = default;
+            string typeHandlerVersion = default;
+            bool? enableAutomaticUpgrade = default;
+            bool? autoUpgradeMinorVersion = default;
+            IDictionary<string, BinaryData> settings = default;
+            IDictionary<string, BinaryData> protectedSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("forceUpdateTag"u8))
+                        {
+                            forceUpdateTag = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("publisher"u8))
+                        {
+                            publisher = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("type"u8))
+                        {
+                            type = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("typeHandlerVersion"u8))
+                        {
+                            typeHandlerVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableAutomaticUpgrade"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableAutomaticUpgrade = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("autoUpgradeMinorVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoUpgradeMinorVersion = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("settings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            settings = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("protectedSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            protectedSettings = dictionary;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HybridComputeMachineExtensionPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                forceUpdateTag,
+                publisher,
+                type,
+                typeHandlerVersion,
+                enableAutomaticUpgrade,
+                autoUpgradeMinorVersion,
+                settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
+        BinaryData IPersistableModel<HybridComputeMachineExtensionPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeMachineExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HybridComputeMachineExtensionPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HybridComputeMachineExtensionPatch IPersistableModel<HybridComputeMachineExtensionPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeMachineExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHybridComputeMachineExtensionPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HybridComputeMachineExtensionPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HybridComputeMachineExtensionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

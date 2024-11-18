@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using Azure;
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -26,13 +27,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="addressPrefix"> The destination CIDR to which the route applies. </param>
         /// <param name="nextHopType"> The type of Azure hop the packet should be sent to. </param>
         /// <param name="nextHopIPAddress"> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </param>
         /// <param name="provisioningState"> The provisioning state of the route resource. </param>
         /// <param name="hasBgpOverride"> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </param>
-        internal RouteData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, RouteNextHopType? nextHopType, string nextHopIPAddress, NetworkProvisioningState? provisioningState, bool? hasBgpOverride) : base(id, name, resourceType)
+        internal RouteData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string addressPrefix, RouteNextHopType? nextHopType, string nextHopIPAddress, NetworkProvisioningState? provisioningState, bool? hasBgpOverride) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             AddressPrefix = addressPrefix;

@@ -6,17 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CopyComputeScaleProperties : IUtf8JsonSerializable
+    public partial class CopyComputeScaleProperties : IUtf8JsonSerializable, IJsonModel<CopyComputeScaleProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyComputeScaleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CopyComputeScaleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyComputeScaleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CopyComputeScaleProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(DataIntegrationUnit))
             {
                 writer.WritePropertyName("dataIntegrationUnit"u8);
@@ -39,17 +56,30 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static CopyComputeScaleProperties DeserializeCopyComputeScaleProperties(JsonElement element)
+        CopyComputeScaleProperties IJsonModel<CopyComputeScaleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyComputeScaleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CopyComputeScaleProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCopyComputeScaleProperties(document.RootElement, options);
+        }
+
+        internal static CopyComputeScaleProperties DeserializeCopyComputeScaleProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> dataIntegrationUnit = default;
-            Optional<int> timeToLive = default;
+            int? dataIntegrationUnit = default;
+            int? timeToLive = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -75,7 +105,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CopyComputeScaleProperties(Optional.ToNullable(dataIntegrationUnit), Optional.ToNullable(timeToLive), additionalProperties);
+            return new CopyComputeScaleProperties(dataIntegrationUnit, timeToLive, additionalProperties);
         }
+
+        BinaryData IPersistableModel<CopyComputeScaleProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyComputeScaleProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CopyComputeScaleProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CopyComputeScaleProperties IPersistableModel<CopyComputeScaleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyComputeScaleProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCopyComputeScaleProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CopyComputeScaleProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CopyComputeScaleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

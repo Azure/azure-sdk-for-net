@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TrafficManager.Mocking;
 using Azure.ResourceManager.TrafficManager.Models;
@@ -118,7 +116,7 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Gets an object representing a <see cref="TrafficManagerUserMetricsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TrafficManagerUserMetricsResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerUserMetricsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="TrafficManagerUserMetricsResource.CreateResourceIdentifier(string)" /> to create a <see cref="TrafficManagerUserMetricsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerUserMetricsResource(ResourceIdentifier)"/> instead.</description>
@@ -163,6 +161,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -192,6 +198,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -238,7 +252,15 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// <description>Profiles_CheckTrafficManagerNameAvailabilityV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -266,7 +288,15 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// <description>Profiles_CheckTrafficManagerNameAvailabilityV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -296,6 +326,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>Profiles_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -323,6 +361,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -369,6 +415,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -396,6 +450,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
         /// </item>
         /// </list>
         /// <item>

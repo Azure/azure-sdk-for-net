@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Kusto;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Kusto.Samples
 {
     public partial class Sample_KustoManagedPrivateEndpointResource
     {
-        // KustoManagedPrivateEndpointsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_KustoManagedPrivateEndpointsGet()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoManagedPrivateEndpointsGet.json
@@ -49,9 +46,8 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // KustoManagedPrivateEndpointsUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_KustoManagedPrivateEndpointsUpdate()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoManagedPrivateEndpointsUpdate.json
@@ -88,9 +84,8 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ManagedPrivateEndpointsDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ManagedPrivateEndpointsDelete()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoManagedPrivateEndpointsDelete.json
@@ -113,7 +108,7 @@ namespace Azure.ResourceManager.Kusto.Samples
             // invoke the operation
             await kustoManagedPrivateEndpoint.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

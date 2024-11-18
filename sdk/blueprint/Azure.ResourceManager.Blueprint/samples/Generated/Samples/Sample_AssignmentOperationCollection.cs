@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Blueprint;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Blueprint.Samples
 {
     public partial class Sample_AssignmentOperationCollection
     {
-        // Assignment at management group scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AssignmentAtManagementGroupScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPAssignment/BlueprintAssignmentOperation_List.json
@@ -50,12 +47,11 @@ namespace Azure.ResourceManager.Blueprint.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Assignment at subscription scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AssignmentAtSubscriptionScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPAssignment/BlueprintAssignmentOperation_List.json
@@ -86,12 +82,11 @@ namespace Azure.ResourceManager.Blueprint.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Assignment at management group scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AssignmentAtManagementGroupScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPAssignment/BlueprintAssignmentOperation_Get.json
@@ -123,9 +118,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Assignment at management group scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_AssignmentAtManagementGroupScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPAssignment/BlueprintAssignmentOperation_Get.json
@@ -153,9 +147,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Assignment at management group scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AssignmentAtManagementGroupScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPAssignment/BlueprintAssignmentOperation_Get.json
@@ -183,7 +176,7 @@ namespace Azure.ResourceManager.Blueprint.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -195,9 +188,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             }
         }
 
-        // Assignment at subscription scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AssignmentAtSubscriptionScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPAssignment/BlueprintAssignmentOperation_Get.json
@@ -229,9 +221,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Assignment at subscription scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_AssignmentAtSubscriptionScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPAssignment/BlueprintAssignmentOperation_Get.json
@@ -259,9 +250,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Assignment at subscription scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AssignmentAtSubscriptionScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPAssignment/BlueprintAssignmentOperation_Get.json
@@ -289,7 +279,7 @@ namespace Azure.ResourceManager.Blueprint.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

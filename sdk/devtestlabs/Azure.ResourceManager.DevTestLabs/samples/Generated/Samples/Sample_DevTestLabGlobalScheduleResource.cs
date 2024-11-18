@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DevTestLabs;
 using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
     public partial class Sample_DevTestLabGlobalScheduleResource
     {
-        // GlobalSchedules_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDevTestLabGlobalSchedules_GlobalSchedulesListBySubscription()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/GlobalSchedules_ListBySubscription.json
@@ -48,12 +45,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GlobalSchedules_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GlobalSchedulesGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/GlobalSchedules_Get.json
@@ -82,9 +78,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GlobalSchedules_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_GlobalSchedulesDelete()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/GlobalSchedules_Delete.json
@@ -106,12 +101,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // invoke the operation
             await devTestLabGlobalSchedule.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GlobalSchedules_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_GlobalSchedulesUpdate()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/GlobalSchedules_Update.json
@@ -147,9 +141,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GlobalSchedules_Execute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Execute_GlobalSchedulesExecute()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/GlobalSchedules_Execute.json
@@ -171,12 +164,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // invoke the operation
             await devTestLabGlobalSchedule.ExecuteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GlobalSchedules_Retarget
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Retarget_GlobalSchedulesRetarget()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/GlobalSchedules_Retarget.json
@@ -203,7 +195,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             };
             await devTestLabGlobalSchedule.RetargetAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

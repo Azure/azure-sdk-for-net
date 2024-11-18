@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -30,12 +30,18 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="createdOn"> The artifact creation time. </param>
         /// <param name="changedOn"> The artifact changed time. </param>
         /// <param name="metadata"> Anything. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="batchGroupName"> The name of the batch group. </param>
         /// <param name="releaseCriteria"> The batch release criteria. </param>
-        internal IntegrationAccountBatchConfigurationProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, string batchGroupName, IntegrationAccountBatchReleaseCriteria releaseCriteria) : base(createdOn, changedOn, metadata)
+        internal IntegrationAccountBatchConfigurationProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IDictionary<string, BinaryData> serializedAdditionalRawData, string batchGroupName, IntegrationAccountBatchReleaseCriteria releaseCriteria) : base(createdOn, changedOn, metadata, serializedAdditionalRawData)
         {
             BatchGroupName = batchGroupName;
             ReleaseCriteria = releaseCriteria;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountBatchConfigurationProperties"/> for deserialization. </summary>
+        internal IntegrationAccountBatchConfigurationProperties()
+        {
         }
 
         /// <summary> The name of the batch group. </summary>

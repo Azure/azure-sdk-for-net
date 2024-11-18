@@ -8,20 +8,17 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StorageSync;
 using Azure.ResourceManager.StorageSync.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageSync.Samples
 {
     public partial class Sample_StorageSyncGroupResource
     {
-        // SyncGroups_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SyncGroupsCreate()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/SyncGroups_Create.json
@@ -58,9 +55,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SyncGroups_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SyncGroupsGet()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/SyncGroups_Get.json
@@ -90,9 +86,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SyncGroups_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SyncGroupsDelete()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/SyncGroups_Delete.json
@@ -115,7 +110,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
             // invoke the operation
             await storageSyncGroup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

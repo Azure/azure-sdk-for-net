@@ -53,30 +53,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
-            writer.WriteObjectValue(Host);
+            writer.WriteObjectValue<object>(Host);
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port);
+                writer.WriteObjectValue<object>(Port);
             }
             if (Optional.IsDefined(HttpPath))
             {
                 writer.WritePropertyName("httpPath"u8);
-                writer.WriteObjectValue(HttpPath);
+                writer.WriteObjectValue<object>(HttpPath);
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username);
+                writer.WriteObjectValue<object>(Username);
             }
             if (Optional.IsDefined(Password))
             {
@@ -86,33 +86,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl"u8);
-                writer.WriteObjectValue(EnableSsl);
+                writer.WriteObjectValue<object>(EnableSsl);
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
-                writer.WriteObjectValue(TrustedCertPath);
+                writer.WriteObjectValue<object>(TrustedCertPath);
             }
             if (Optional.IsDefined(AllowHostNameCNMismatch))
             {
                 writer.WritePropertyName("allowHostNameCNMismatch"u8);
-                writer.WriteObjectValue(AllowHostNameCNMismatch);
+                writer.WriteObjectValue<object>(AllowHostNameCNMismatch);
             }
             if (Optional.IsDefined(AllowSelfSignedServerCert))
             {
                 writer.WritePropertyName("allowSelfSignedServerCert"u8);
-                writer.WriteObjectValue(AllowSelfSignedServerCert);
+                writer.WriteObjectValue<object>(AllowSelfSignedServerCert);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -124,21 +124,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object host = default;
-            Optional<object> port = default;
-            Optional<object> httpPath = default;
+            object port = default;
+            object httpPath = default;
             HBaseAuthenticationType authenticationType = default;
-            Optional<object> username = default;
-            Optional<SecretBase> password = default;
-            Optional<object> enableSsl = default;
-            Optional<object> trustedCertPath = default;
-            Optional<object> allowHostNameCNMismatch = default;
-            Optional<object> allowSelfSignedServerCert = default;
-            Optional<object> encryptedCredential = default;
+            object username = default;
+            SecretBase password = default;
+            object enableSsl = default;
+            object trustedCertPath = default;
+            object allowHostNameCNMismatch = default;
+            object allowSelfSignedServerCert = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -303,7 +303,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HBaseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, port.Value, httpPath.Value, authenticationType, username.Value, password.Value, enableSsl.Value, trustedCertPath.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
+            return new HBaseLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                host,
+                port,
+                httpPath,
+                authenticationType,
+                username,
+                password,
+                enableSsl,
+                trustedCertPath,
+                allowHostNameCNMismatch,
+                allowSelfSignedServerCert,
+                encryptedCredential);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HBaseLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHBaseLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class HBaseLinkedServiceConverter : JsonConverter<HBaseLinkedService>
@@ -312,6 +345,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override HBaseLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

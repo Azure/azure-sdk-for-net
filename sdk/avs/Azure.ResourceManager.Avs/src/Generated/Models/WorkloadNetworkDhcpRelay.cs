@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="segments"> NSX Segments consuming DHCP. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverAddresses"> DHCP Relay Addresses. Max 3. </param>
-        internal WorkloadNetworkDhcpRelay(DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision, IList<string> serverAddresses) : base(dhcpType, displayName, segments, provisioningState, revision)
+        internal WorkloadNetworkDhcpRelay(DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> serverAddresses) : base(dhcpType, displayName, segments, provisioningState, revision, serializedAdditionalRawData)
         {
             ServerAddresses = serverAddresses;
             DhcpType = dhcpType;

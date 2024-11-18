@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiCollection
     {
-        // ApiManagementListApis
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ApiManagementListApis()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListApis.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListApis.json
             // this example is just showing the usage of "Api_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -52,15 +49,14 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetApiContract
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetApiContract()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetApiContract.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiContract.json
             // this example is just showing the usage of "Api_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -90,12 +86,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementGetApiContract
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ApiManagementGetApiContract()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetApiContract.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiContract.json
             // this example is just showing the usage of "Api_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -121,12 +116,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementGetApiContract
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApiManagementGetApiContract()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetApiContract.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiContract.json
             // this example is just showing the usage of "Api_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -152,7 +146,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -164,12 +158,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             }
         }
 
-        // ApiManagementGetApiRevisionContract
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetApiRevisionContract()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetApiRevision.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiRevision.json
             // this example is just showing the usage of "Api_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -179,7 +172,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -199,12 +192,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementGetApiRevisionContract
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ApiManagementGetApiRevisionContract()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetApiRevision.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiRevision.json
             // this example is just showing the usage of "Api_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -214,7 +206,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -230,12 +222,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementGetApiRevisionContract
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApiManagementGetApiRevisionContract()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetApiRevision.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiRevision.json
             // this example is just showing the usage of "Api_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -245,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -261,7 +252,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -273,12 +264,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             }
         }
 
-        // ApiManagementCreateApi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateApi.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApi.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -288,7 +278,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -316,7 +306,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                     Query = "query3037",
                 },
                 DisplayName = "apiname1463",
-                ServiceUri = new Uri("http://newechoapi.cloudapp.net/api"),
+                ServiceLink = "http://newechoapi.cloudapp.net/api",
                 Path = "newapiPath",
                 Protocols =
 {
@@ -333,12 +323,11 @@ ApiOperationInvokableProtocol.Https,ApiOperationInvokableProtocol.Http
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateApiClone
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiClone()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateApiClone.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiClone.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -348,7 +337,7 @@ ApiOperationInvokableProtocol.Https,ApiOperationInvokableProtocol.Http
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -364,9 +353,9 @@ ApiOperationInvokableProtocol.Https,ApiOperationInvokableProtocol.Http
                 Description = "Copy of Existing Echo Api including Operations.",
                 IsCurrent = true,
                 IsSubscriptionRequired = true,
-                SourceApiId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/58a4aeac497000007d040001"),
+                SourceApiId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/58a4aeac497000007d040001"),
                 DisplayName = "Echo API2",
-                ServiceUri = new Uri("http://echoapi.cloudapp.net/api"),
+                ServiceLink = "http://echoapi.cloudapp.net/api",
                 Path = "echo2",
                 Protocols =
 {
@@ -383,12 +372,11 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateApiNewVersionUsingExistingApi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiNewVersionUsingExistingApi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateApiNewVersionUsingExistingApi.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiNewVersionUsingExistingApi.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -398,7 +386,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -414,11 +402,11 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
                 Description = "Create Echo API into a new Version using Existing Version Set and Copy all Operations.",
                 ApiVersion = "v4",
                 IsCurrent = true,
-                ApiVersionSetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apiVersionSets/aa9c59e6-c0cd-4258-9356-9ca7d2f0b458"),
+                ApiVersionSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apiVersionSets/aa9c59e6-c0cd-4258-9356-9ca7d2f0b458"),
                 IsSubscriptionRequired = true,
-                SourceApiId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/echoPath"),
+                SourceApiId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/echoPath"),
                 DisplayName = "Echo API2",
-                ServiceUri = new Uri("http://echoapi.cloudapp.net/api"),
+                ServiceLink = "http://echoapi.cloudapp.net/api",
                 Path = "echo2",
                 Protocols =
 {
@@ -435,12 +423,11 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateApiRevisionFromExistingApi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiRevisionFromExistingApi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateApiRevisionFromExistingApi.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiRevisionFromExistingApi.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -450,7 +437,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -464,8 +451,8 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
             ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 ApiRevisionDescription = "Creating a Revision of an existing API",
-                SourceApiId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/echo-api"),
-                ServiceUri = new Uri("http://echoapi.cloudapp.net/apiv3"),
+                SourceApiId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/echo-api"),
+                ServiceLink = "http://echoapi.cloudapp.net/apiv3",
                 Path = "echo",
             };
             ArmOperation<ApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
@@ -478,12 +465,11 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateApiUsingImportOverrideServiceUrl
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiUsingImportOverrideServiceUrl()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateApiUsingImportOverrideServiceUrl.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiUsingImportOverrideServiceUrl.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -493,7 +479,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -506,7 +492,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
             string apiId = "apidocs";
             ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
-                ServiceUri = new Uri("http://petstore.swagger.wordnik.com/api"),
+                ServiceLink = "http://petstore.swagger.wordnik.com/api",
                 Path = "petstoreapi123",
                 Value = "http://apimpimportviaurl.azurewebsites.net/api/apidocs/",
                 Format = new ContentFormat("swagger-link"),
@@ -521,12 +507,11 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateApiUsingOai3Import
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiUsingOai3Import()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateApiUsingOai3Import.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiUsingOai3Import.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -536,7 +521,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -563,12 +548,11 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateApiUsingSwaggerImport
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_ApiManagementCreateApiUsingSwaggerImport()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateApiUsingOai3ImportWithTranslateRequiredQueryParametersConduct()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateApiUsingSwaggerImport.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiUsingOai3ImportWithTranslateRequiredQueryParametersConduct.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -578,7 +562,49 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // get the collection of this ApiResource
+            ApiCollection collection = apiManagementService.GetApis();
+
+            // invoke the operation
+            string apiId = "petstore";
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
+            {
+                Path = "petstore",
+                Value = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml",
+                Format = ContentFormat.OpenApiLink,
+                TranslateRequiredQueryParametersConduct = TranslateRequiredQueryParametersConduct.Template,
+            };
+            ArmOperation<ApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
+            ApiResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateApiUsingSwaggerImport()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiUsingSwaggerImport.json
+            // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -605,12 +631,11 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateApiUsingWadlImport
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiUsingWadlImport()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateApiUsingWadlImport.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiUsingWadlImport.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -620,7 +645,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -647,12 +672,11 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateApiWithOpenIdConnect
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_ApiManagementCreateApiWithOpenIdConnect()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateApiWithMultipleAuthServers()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateApiWithOpenIdConnect.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiWithMultipleAuthServers.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -662,7 +686,145 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // get the collection of this ApiResource
+            ApiCollection collection = apiManagementService.GetApis();
+
+            // invoke the operation
+            string apiId = "tempgroup";
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
+            {
+                Description = "apidescription5200",
+                AuthenticationSettings = new AuthenticationSettingsContract()
+                {
+                    OAuth2AuthenticationSettings =
+{
+new OAuth2AuthenticationSettingsContract()
+{
+AuthorizationServerId = "authorizationServerId2283",
+Scope = "oauth2scope2580",
+},new OAuth2AuthenticationSettingsContract()
+{
+AuthorizationServerId = "authorizationServerId2284",
+Scope = "oauth2scope2581",
+}
+},
+                },
+                SubscriptionKeyParameterNames = new SubscriptionKeyParameterNamesContract()
+                {
+                    Header = "header4520",
+                    Query = "query3037",
+                },
+                DisplayName = "apiname1463",
+                ServiceLink = "http://newechoapi.cloudapp.net/api",
+                Path = "newapiPath",
+                Protocols =
+{
+ApiOperationInvokableProtocol.Https,ApiOperationInvokableProtocol.Http
+},
+            };
+            ArmOperation<ApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
+            ApiResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateApiWithMultipleOpenIdConnectProviders()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiWithMultipleOpenIdConnectProviders.json
+            // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // get the collection of this ApiResource
+            ApiCollection collection = apiManagementService.GetApis();
+
+            // invoke the operation
+            string apiId = "tempgroup";
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
+            {
+                Description = "apidescription5200",
+                AuthenticationSettings = new AuthenticationSettingsContract()
+                {
+                    OpenidAuthenticationSettings =
+{
+new OpenIdAuthenticationSettingsContract()
+{
+OpenIdProviderId = "openidProviderId2283",
+BearerTokenSendingMethods =
+{
+BearerTokenSendingMethod.AuthorizationHeader
+},
+},new OpenIdAuthenticationSettingsContract()
+{
+OpenIdProviderId = "openidProviderId2284",
+BearerTokenSendingMethods =
+{
+BearerTokenSendingMethod.AuthorizationHeader
+},
+}
+},
+                },
+                SubscriptionKeyParameterNames = new SubscriptionKeyParameterNamesContract()
+                {
+                    Header = "header4520",
+                    Query = "query3037",
+                },
+                DisplayName = "apiname1463",
+                ServiceLink = "http://newechoapi.cloudapp.net/api",
+                Path = "newapiPath",
+                Protocols =
+{
+ApiOperationInvokableProtocol.Https,ApiOperationInvokableProtocol.Http
+},
+            };
+            ArmOperation<ApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
+            ApiResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateApiWithOpenIdConnect()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiWithOpenIdConnect.json
+            // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -693,7 +855,7 @@ BearerTokenSendingMethod.AuthorizationHeader
                     Query = "subscription-key",
                 },
                 DisplayName = "Swagger Petstore",
-                ServiceUri = new Uri("http://petstore.swagger.io/v2"),
+                ServiceLink = "http://petstore.swagger.io/v2",
                 Path = "petstore",
                 Protocols =
 {
@@ -710,12 +872,11 @@ ApiOperationInvokableProtocol.Https
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateGraphQLApi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateGraphQLApi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateGraphQLApi.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateGraphQLApi.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -725,7 +886,7 @@ ApiOperationInvokableProtocol.Https
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -741,7 +902,7 @@ ApiOperationInvokableProtocol.Https
                 Description = "apidescription5200",
                 ApiType = ApiType.GraphQL,
                 DisplayName = "apiname1463",
-                ServiceUri = new Uri("https://api.spacex.land/graphql"),
+                ServiceLink = "https://api.spacex.land/graphql",
                 Path = "graphql-api",
                 Protocols =
 {
@@ -758,12 +919,11 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateSoapPassThroughApiUsingWsdlImport
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_ApiManagementCreateSoapPassThroughApiUsingWsdlImport()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateODataApi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateSoapPassThroughApiUsingWsdlImport.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateODataApi.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -773,7 +933,56 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // get the collection of this ApiResource
+            ApiCollection collection = apiManagementService.GetApis();
+
+            // invoke the operation
+            string apiId = "tempgroup";
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
+            {
+                Description = "apidescription5200",
+                ApiType = ApiType.Odata,
+                DisplayName = "apiname1463",
+                ServiceLink = "https://services.odata.org/TripPinWebApiService",
+                Path = "odata-api",
+                Protocols =
+{
+ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
+},
+                Value = "https://services.odata.org/TripPinWebApiService/$metadata",
+                Format = ContentFormat.OdataLink,
+            };
+            ArmOperation<ApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
+            ApiResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateSoapPassThroughApiUsingWsdlImport()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateSoapPassThroughApiUsingWsdlImport.json
+            // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -806,12 +1015,11 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateSoapToRestApiUsingWsdlImport
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateSoapToRestApiUsingWsdlImport()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateSoapToRestApiUsingWsdlImport.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateSoapToRestApiUsingWsdlImport.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -821,7 +1029,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -853,12 +1061,11 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateWebSocketApi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateWebSocketApi()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateWebsocketApi.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateWebsocketApi.json
             // this example is just showing the usage of "Api_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -868,7 +1075,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
@@ -884,7 +1091,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
                 Description = "apidescription5200",
                 ApiType = ApiType.WebSocket,
                 DisplayName = "apiname1463",
-                ServiceUri = new Uri("wss://echo.websocket.org"),
+                ServiceLink = "wss://echo.websocket.org",
                 Path = "newapiPath",
                 Protocols =
 {

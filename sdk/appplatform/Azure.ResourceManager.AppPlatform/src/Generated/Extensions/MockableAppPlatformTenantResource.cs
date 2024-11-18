@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.AppPlatform.Models;
 
 namespace Azure.ResourceManager.AppPlatform.Mocking
@@ -54,6 +51,10 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>RuntimeVersions_ListRuntimeVersions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         public virtual AsyncPageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RuntimeVersionsRestClient.CreateListRuntimeVersionsRequest();
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion, RuntimeVersionsClientDiagnostics, Pipeline, "MockableAppPlatformTenantResource.GetRuntimeVersions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion(e), RuntimeVersionsClientDiagnostics, Pipeline, "MockableAppPlatformTenantResource.GetRuntimeVersions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -75,6 +76,10 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>RuntimeVersions_ListRuntimeVersions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,7 +87,7 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         public virtual Pageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RuntimeVersionsRestClient.CreateListRuntimeVersionsRequest();
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion, RuntimeVersionsClientDiagnostics, Pipeline, "MockableAppPlatformTenantResource.GetRuntimeVersions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion(e), RuntimeVersionsClientDiagnostics, Pipeline, "MockableAppPlatformTenantResource.GetRuntimeVersions", "value", null, cancellationToken);
         }
     }
 }

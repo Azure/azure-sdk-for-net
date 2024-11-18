@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusNamespaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusNamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

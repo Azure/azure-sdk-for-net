@@ -6,24 +6,40 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ParquetReadSettings : IUtf8JsonSerializable
+    public partial class ParquetReadSettings : IUtf8JsonSerializable, IJsonModel<ParquetReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParquetReadSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ParquetReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ParquetReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ParquetReadSettings)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue(CompressionProperties);
+                writer.WriteObjectValue(CompressionProperties, options);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(FormatReadSettingsType);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -36,16 +52,29 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static ParquetReadSettings DeserializeParquetReadSettings(JsonElement element)
+        ParquetReadSettings IJsonModel<ParquetReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ParquetReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ParquetReadSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeParquetReadSettings(document.RootElement, options);
+        }
+
+        internal static ParquetReadSettings DeserializeParquetReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<CompressionReadSettings> compressionProperties = default;
+            CompressionReadSettings compressionProperties = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -57,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value);
+                    compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -68,7 +97,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ParquetReadSettings(type, additionalProperties, compressionProperties.Value);
+            return new ParquetReadSettings(type, additionalProperties, compressionProperties);
         }
+
+        BinaryData IPersistableModel<ParquetReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ParquetReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ParquetReadSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ParquetReadSettings IPersistableModel<ParquetReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ParquetReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeParquetReadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ParquetReadSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ParquetReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

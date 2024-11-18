@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkToNetworkInterconnectResource
     {
-        // NetworkToNetworkInterconnects_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkToNetworkInterconnectsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_Get_MaximumSet_Gen.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkToNetworkInterconnects_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_NetworkToNetworkInterconnectsUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_Update_MaximumSet_Gen.json
@@ -85,7 +81,7 @@ new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/reso
                 },
                 OptionBLayer3Configuration = new OptionBLayer3Configuration()
                 {
-                    PeerAsn = 2345,
+                    PeerAsn = 2345L,
                     VlanId = 1235,
                     PrimaryIPv4Prefix = "20.0.0.12/29",
                     PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
@@ -137,9 +133,8 @@ new StaticRouteProperties("4FFE:FFFF:0:CD30::ac/127",new string[]
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkToNetworkInterconnects_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_NetworkToNetworkInterconnectsDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_Delete_MaximumSet_Gen.json
@@ -162,16 +157,15 @@ new StaticRouteProperties("4FFE:FFFF:0:CD30::ac/127",new string[]
             // invoke the operation
             await networkToNetworkInterconnect.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // NetworkToNetworkInterconnects_updateNpbStaticRouteBfdAdministrativeState_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateNpbStaticRouteBfdAdministrativeState_NetworkToNetworkInterconnectsUpdateNpbStaticRouteBfdAdministrativeStateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_updateNpbStaticRouteBfdAdministrativeState_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkToNetworkInterconnects_updateNpbStaticRouteBfdAdministrativeState" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkToNetworkInterconnects_UpdateNpbStaticRouteBfdAdministrativeState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -202,13 +196,12 @@ new ResourceIdentifier("")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkToNetworkInterconnects_updateAdministrativeState_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAdministrativeState_NetworkToNetworkInterconnectsUpdateAdministrativeStateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_updateAdministrativeState_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkToNetworkInterconnects_updateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkToNetworkInterconnects_UpdateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

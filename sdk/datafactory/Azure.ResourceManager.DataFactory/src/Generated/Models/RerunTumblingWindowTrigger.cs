@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -48,6 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             RequestedEndOn = requestedEndOn;
             RerunConcurrency = rerunConcurrency;
             TriggerType = triggerType ?? "RerunTumblingWindowTrigger";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTrigger"/> for deserialization. </summary>
+        internal RerunTumblingWindowTrigger()
+        {
         }
 
         /// <summary>

@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Mocking
 {
@@ -57,6 +54,14 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <term>Operation Id</term>
         /// <description>Labs_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
@@ -82,6 +87,14 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,6 +122,14 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <term>Operation Id</term>
         /// <description>GlobalSchedules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabGlobalScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
@@ -134,6 +155,14 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GlobalSchedules_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabGlobalScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

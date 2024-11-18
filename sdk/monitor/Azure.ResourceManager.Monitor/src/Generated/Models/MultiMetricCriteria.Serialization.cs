@@ -5,16 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MultiMetricCriteria : IUtf8JsonSerializable
+    public partial class MultiMetricCriteria : IUtf8JsonSerializable, IJsonModel<MultiMetricCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiMetricCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MultiMetricCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MultiMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("criterionType"u8);
             writer.WriteStringValue(CriterionType.ToString());
             writer.WritePropertyName("name"u8);
@@ -34,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,11 +73,24 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static MultiMetricCriteria DeserializeMultiMetricCriteria(JsonElement element)
+        MultiMetricCriteria IJsonModel<MultiMetricCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MultiMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMultiMetricCriteria(document.RootElement, options);
+        }
+
+        internal static MultiMetricCriteria DeserializeMultiMetricCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -68,11 +99,42 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DynamicThresholdCriterion": return DynamicMetricCriteria.DeserializeDynamicMetricCriteria(element);
-                    case "StaticThresholdCriterion": return MetricCriteria.DeserializeMetricCriteria(element);
+                    case "DynamicThresholdCriterion": return DynamicMetricCriteria.DeserializeDynamicMetricCriteria(element, options);
+                    case "StaticThresholdCriterion": return MetricCriteria.DeserializeMetricCriteria(element, options);
                 }
             }
-            return UnknownMultiMetricCriteria.DeserializeUnknownMultiMetricCriteria(element);
+            return UnknownMultiMetricCriteria.DeserializeUnknownMultiMetricCriteria(element, options);
         }
+
+        BinaryData IPersistableModel<MultiMetricCriteria>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MultiMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MultiMetricCriteria IPersistableModel<MultiMetricCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MultiMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMultiMetricCriteria(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MultiMetricCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

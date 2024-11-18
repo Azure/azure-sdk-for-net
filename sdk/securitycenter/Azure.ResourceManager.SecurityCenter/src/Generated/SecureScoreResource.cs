@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityCenter.Models;
 
@@ -106,6 +104,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>SecureScores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecureScoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -137,6 +143,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SecureScores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecureScoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,6 +184,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>SecureScoreControls_ListBySecureScore</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> OData expand. Optional. </param>
@@ -179,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _secureScoreControlsRestClient.CreateListBySecureScoreRequest(Id.SubscriptionId, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _secureScoreControlsRestClient.CreateListBySecureScoreNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecureScoreControlDetails.DeserializeSecureScoreControlDetails, _secureScoreControlsClientDiagnostics, Pipeline, "SecureScoreResource.GetSecureScoreControls", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SecureScoreControlDetails.DeserializeSecureScoreControlDetails(e), _secureScoreControlsClientDiagnostics, Pipeline, "SecureScoreResource.GetSecureScoreControls", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -193,6 +211,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>SecureScoreControls_ListBySecureScore</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> OData expand. Optional. </param>
@@ -202,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _secureScoreControlsRestClient.CreateListBySecureScoreRequest(Id.SubscriptionId, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _secureScoreControlsRestClient.CreateListBySecureScoreNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecureScoreControlDetails.DeserializeSecureScoreControlDetails, _secureScoreControlsClientDiagnostics, Pipeline, "SecureScoreResource.GetSecureScoreControls", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SecureScoreControlDetails.DeserializeSecureScoreControlDetails(e), _secureScoreControlsClientDiagnostics, Pipeline, "SecureScoreResource.GetSecureScoreControls", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,11 +14,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class DeviceUpdatePrivateLinkServiceProxy : IUtf8JsonSerializable
+    public partial class DeviceUpdatePrivateLinkServiceProxy : IUtf8JsonSerializable, IJsonModel<DeviceUpdatePrivateLinkServiceProxy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdatePrivateLinkServiceProxy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DeviceUpdatePrivateLinkServiceProxy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateLinkServiceProxy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceProxy)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -25,7 +43,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             if (Optional.IsDefined(RemotePrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("remotePrivateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(RemotePrivateLinkServiceConnectionState);
+                writer.WriteObjectValue(RemotePrivateLinkServiceConnectionState, options);
             }
             if (Optional.IsDefined(RemotePrivateEndpointConnection))
             {
@@ -38,23 +56,53 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in GroupConnectivityInformation)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DeviceUpdatePrivateLinkServiceProxy DeserializeDeviceUpdatePrivateLinkServiceProxy(JsonElement element)
+        DeviceUpdatePrivateLinkServiceProxy IJsonModel<DeviceUpdatePrivateLinkServiceProxy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateLinkServiceProxy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceProxy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceUpdatePrivateLinkServiceProxy(document.RootElement, options);
+        }
+
+        internal static DeviceUpdatePrivateLinkServiceProxy DeserializeDeviceUpdatePrivateLinkServiceProxy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<DeviceUpdatePrivateLinkServiceConnectionState> remotePrivateLinkServiceConnectionState = default;
-            Optional<SubResource> remotePrivateEndpointConnection = default;
-            Optional<IList<GroupConnectivityInformation>> groupConnectivityInformation = default;
+            ResourceIdentifier id = default;
+            DeviceUpdatePrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState = default;
+            SubResource remotePrivateEndpointConnection = default;
+            IList<GroupConnectivityInformation> groupConnectivityInformation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -72,7 +120,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     {
                         continue;
                     }
-                    remotePrivateLinkServiceConnectionState = DeviceUpdatePrivateLinkServiceConnectionState.DeserializeDeviceUpdatePrivateLinkServiceConnectionState(property.Value);
+                    remotePrivateLinkServiceConnectionState = DeviceUpdatePrivateLinkServiceConnectionState.DeserializeDeviceUpdatePrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("remotePrivateEndpointConnection"u8))
@@ -93,13 +141,49 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<GroupConnectivityInformation> array = new List<GroupConnectivityInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.GroupConnectivityInformation.DeserializeGroupConnectivityInformation(item));
+                        array.Add(Models.GroupConnectivityInformation.DeserializeGroupConnectivityInformation(item, options));
                     }
                     groupConnectivityInformation = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeviceUpdatePrivateLinkServiceProxy(id.Value, remotePrivateLinkServiceConnectionState.Value, remotePrivateEndpointConnection, Optional.ToList(groupConnectivityInformation));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DeviceUpdatePrivateLinkServiceProxy(id, remotePrivateLinkServiceConnectionState, remotePrivateEndpointConnection, groupConnectivityInformation ?? new ChangeTrackingList<GroupConnectivityInformation>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeviceUpdatePrivateLinkServiceProxy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateLinkServiceProxy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceProxy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DeviceUpdatePrivateLinkServiceProxy IPersistableModel<DeviceUpdatePrivateLinkServiceProxy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateLinkServiceProxy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeviceUpdatePrivateLinkServiceProxy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceProxy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeviceUpdatePrivateLinkServiceProxy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

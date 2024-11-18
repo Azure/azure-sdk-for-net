@@ -7,22 +7,19 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Qumulo;
 using Azure.ResourceManager.Qumulo.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Qumulo.Samples
 {
     public partial class Sample_QumuloFileSystemResource
     {
-        // FileSystems_ListBySubscription_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetQumuloFileSystemResources_FileSystemsListBySubscriptionMaximumSetGen()
         {
             // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_ListBySubscription_MaximumSet_Gen.json
@@ -49,12 +46,11 @@ namespace Azure.ResourceManager.Qumulo.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // FileSystems_ListBySubscription_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetQumuloFileSystemResources_FileSystemsListBySubscriptionMinimumSetGen()
         {
             // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_ListBySubscription_MinimumSet_Gen.json
@@ -81,12 +77,11 @@ namespace Azure.ResourceManager.Qumulo.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // FileSystems_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FileSystemsGetMaximumSetGen()
         {
             // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_Get_MaximumSet_Gen.json
@@ -115,9 +110,8 @@ namespace Azure.ResourceManager.Qumulo.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // FileSystems_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FileSystemsGetMinimumSetGen()
         {
             // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_Get_MinimumSet_Gen.json
@@ -146,9 +140,8 @@ namespace Azure.ResourceManager.Qumulo.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // FileSystems_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_FileSystemsUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_Update_MaximumSet_Gen.json
@@ -205,9 +198,8 @@ namespace Azure.ResourceManager.Qumulo.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // FileSystems_Update_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_FileSystemsUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_Update_MinimumSet_Gen.json
@@ -237,9 +229,8 @@ namespace Azure.ResourceManager.Qumulo.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // FileSystems_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_FileSystemsDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_Delete_MaximumSet_Gen.json
@@ -261,12 +252,11 @@ namespace Azure.ResourceManager.Qumulo.Samples
             // invoke the operation
             await qumuloFileSystemResource.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // FileSystems_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_FileSystemsDeleteMinimumSetGen()
         {
             // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_Delete_MinimumSet_Gen.json
@@ -288,7 +278,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
             // invoke the operation
             await qumuloFileSystemResource.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Samples
 {
     public partial class Sample_TableCollection
     {
-        // TableOperationPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_TableOperationPut()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/TableOperationPut.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/TableOperationPut.json
             // this example is just showing the usage of "Table_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,12 +52,11 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TableOperationPutOrPatchAcls
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_TableOperationPutOrPatchAcls()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/TableOperationPutOrPatchAcls.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/TableOperationPutOrPatchAcls.json
             // this example is just showing the usage of "Table_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -112,12 +108,11 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TableOperationGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TableOperationGet()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/TableOperationGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/TableOperationGet.json
             // this example is just showing the usage of "Table_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -147,12 +142,11 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TableOperationGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_TableOperationGet()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/TableOperationGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/TableOperationGet.json
             // this example is just showing the usage of "Table_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,12 +172,11 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // TableOperationGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_TableOperationGet()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/TableOperationGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/TableOperationGet.json
             // this example is just showing the usage of "Table_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -209,7 +202,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -221,12 +214,11 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
             }
         }
 
-        // TableOperationList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_TableOperationList()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/TableOperationList.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/TableOperationList.json
             // this example is just showing the usage of "Table_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -255,7 +247,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

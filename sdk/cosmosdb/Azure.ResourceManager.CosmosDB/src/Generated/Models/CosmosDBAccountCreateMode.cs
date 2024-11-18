@@ -24,19 +24,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         private const string DefaultValue = "Default";
         private const string RestoreValue = "Restore";
-        private const string PointInTimeRestoreValue = "PointInTimeRestore";
 
         /// <summary> Default. </summary>
         public static CosmosDBAccountCreateMode Default { get; } = new CosmosDBAccountCreateMode(DefaultValue);
         /// <summary> Restore. </summary>
         public static CosmosDBAccountCreateMode Restore { get; } = new CosmosDBAccountCreateMode(RestoreValue);
-        /// <summary> PointInTimeRestore. </summary>
-        public static CosmosDBAccountCreateMode PointInTimeRestore { get; } = new CosmosDBAccountCreateMode(PointInTimeRestoreValue);
         /// <summary> Determines if two <see cref="CosmosDBAccountCreateMode"/> values are the same. </summary>
         public static bool operator ==(CosmosDBAccountCreateMode left, CosmosDBAccountCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBAccountCreateMode"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBAccountCreateMode left, CosmosDBAccountCreateMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBAccountCreateMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBAccountCreateMode"/>. </summary>
         public static implicit operator CosmosDBAccountCreateMode(string value) => new CosmosDBAccountCreateMode(value);
 
         /// <inheritdoc />
@@ -47,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

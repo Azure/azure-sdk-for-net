@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static bool operator ==(MaintenanceUpdateStatus left, MaintenanceUpdateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaintenanceUpdateStatus"/> values are not the same. </summary>
         public static bool operator !=(MaintenanceUpdateStatus left, MaintenanceUpdateStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MaintenanceUpdateStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MaintenanceUpdateStatus"/>. </summary>
         public static implicit operator MaintenanceUpdateStatus(string value) => new MaintenanceUpdateStatus(value);
 
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

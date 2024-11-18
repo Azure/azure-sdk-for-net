@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class ScalingHostPoolReference : IUtf8JsonSerializable
+    public partial class ScalingHostPoolReference : IUtf8JsonSerializable, IJsonModel<ScalingHostPoolReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingHostPoolReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ScalingHostPoolReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingHostPoolReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(HostPoolId))
             {
                 writer.WritePropertyName("hostPoolArmPath"u8);
@@ -25,17 +45,47 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("scalingPlanEnabled"u8);
                 writer.WriteBooleanValue(IsScalingPlanEnabled.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ScalingHostPoolReference DeserializeScalingHostPoolReference(JsonElement element)
+        ScalingHostPoolReference IJsonModel<ScalingHostPoolReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingHostPoolReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScalingHostPoolReference(document.RootElement, options);
+        }
+
+        internal static ScalingHostPoolReference DeserializeScalingHostPoolReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> hostPoolArmPath = default;
-            Optional<bool> scalingPlanEnabled = default;
+            ResourceIdentifier hostPoolArmPath = default;
+            bool? scalingPlanEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostPoolArmPath"u8))
@@ -56,8 +106,92 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     scalingPlanEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScalingHostPoolReference(hostPoolArmPath.Value, Optional.ToNullable(scalingPlanEnabled));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ScalingHostPoolReference(hostPoolArmPath, scalingPlanEnabled, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostPoolId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hostPoolArmPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HostPoolId))
+                {
+                    builder.Append("  hostPoolArmPath: ");
+                    builder.AppendLine($"'{HostPoolId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsScalingPlanEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scalingPlanEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsScalingPlanEnabled))
+                {
+                    builder.Append("  scalingPlanEnabled: ");
+                    var boolValue = IsScalingPlanEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ScalingHostPoolReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingHostPoolReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ScalingHostPoolReference IPersistableModel<ScalingHostPoolReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingHostPoolReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeScalingHostPoolReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ScalingHostPoolReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

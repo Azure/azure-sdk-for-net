@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         public static bool operator ==(PropertyChangeLevel left, PropertyChangeLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PropertyChangeLevel"/> values are not the same. </summary>
         public static bool operator !=(PropertyChangeLevel left, PropertyChangeLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PropertyChangeLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PropertyChangeLevel"/>. </summary>
         public static implicit operator PropertyChangeLevel(string value) => new PropertyChangeLevel(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

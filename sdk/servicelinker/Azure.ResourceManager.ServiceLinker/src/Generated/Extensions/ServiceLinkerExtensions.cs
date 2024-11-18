@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ServiceLinker.Mocking;
 
 namespace Azure.ResourceManager.ServiceLinker
@@ -57,6 +55,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -87,6 +93,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -155,6 +169,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -184,6 +206,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// <item>

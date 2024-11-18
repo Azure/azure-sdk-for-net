@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -19,23 +18,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            Optional<string> etag = default;
-            Optional<IReadOnlyList<DerivedMetricInfo>> metrics = default;
-            Optional<IReadOnlyList<DocumentStreamInfo>> documentStreams = default;
-            Optional<QuotaConfigurationInfo> quotaInfo = default;
+            string eTag = default;
+            IReadOnlyList<DerivedMetricInfo> metrics = default;
+            IReadOnlyList<DocumentStreamInfo> documentStreams = default;
+            QuotaConfigurationInfo quotaInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Etag"u8))
+                if (property.NameEquals("ETag"u8))
                 {
-                    etag = property.Value.GetString();
+                    eTag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("Metrics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DerivedMetricInfo> array = new List<DerivedMetricInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -46,10 +41,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 if (property.NameEquals("DocumentStreams"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DocumentStreamInfo> array = new List<DocumentStreamInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -68,7 +59,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new CollectionConfigurationInfo(etag.Value, Optional.ToList(metrics), Optional.ToList(documentStreams), quotaInfo.Value);
+            return new CollectionConfigurationInfo(eTag, metrics, documentStreams, quotaInfo);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CollectionConfigurationInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCollectionConfigurationInfo(document.RootElement);
         }
     }
 }

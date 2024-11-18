@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StreamAnalytics;
 using Azure.ResourceManager.StreamAnalytics.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StreamAnalytics.Samples
 {
     public partial class Sample_StreamAnalyticsPrivateEndpointCollection
     {
-        // Create a private endpoint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAPrivateEndpoint()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2020-03-01-preview/examples/PrivateEndpoint_Create.json
@@ -71,9 +68,8 @@ GroupIds =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a private endpoint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPrivateEndpoint()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2020-03-01-preview/examples/PrivateEndpoint_Get.json
@@ -106,9 +102,8 @@ GroupIds =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a private endpoint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAPrivateEndpoint()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2020-03-01-preview/examples/PrivateEndpoint_Get.json
@@ -137,9 +132,8 @@ GroupIds =
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a private endpoint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAPrivateEndpoint()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2020-03-01-preview/examples/PrivateEndpoint_Get.json
@@ -168,7 +162,7 @@ GroupIds =
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -180,9 +174,8 @@ GroupIds =
             }
         }
 
-        // Get the private endpoints in a cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetThePrivateEndpointsInACluster()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2020-03-01-preview/examples/PrivateEndpoint_ListByCluster.json
@@ -214,7 +207,7 @@ GroupIds =
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

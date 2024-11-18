@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The availability strategy for the private cloud. </summary>
+    /// <summary> Whether the private clouds is available in a single zone or two zones. </summary>
     public readonly partial struct AvailabilityStrategy : IEquatable<AvailabilityStrategy>
     {
         private readonly string _value;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Avs.Models
         private const string SingleZoneValue = "SingleZone";
         private const string DualZoneValue = "DualZone";
 
-        /// <summary> SingleZone. </summary>
+        /// <summary> in single zone. </summary>
         public static AvailabilityStrategy SingleZone { get; } = new AvailabilityStrategy(SingleZoneValue);
-        /// <summary> DualZone. </summary>
+        /// <summary> in two zones. </summary>
         public static AvailabilityStrategy DualZone { get; } = new AvailabilityStrategy(DualZoneValue);
         /// <summary> Determines if two <see cref="AvailabilityStrategy"/> values are the same. </summary>
         public static bool operator ==(AvailabilityStrategy left, AvailabilityStrategy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvailabilityStrategy"/> values are not the same. </summary>
         public static bool operator !=(AvailabilityStrategy left, AvailabilityStrategy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvailabilityStrategy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvailabilityStrategy"/>. </summary>
         public static implicit operator AvailabilityStrategy(string value) => new AvailabilityStrategy(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

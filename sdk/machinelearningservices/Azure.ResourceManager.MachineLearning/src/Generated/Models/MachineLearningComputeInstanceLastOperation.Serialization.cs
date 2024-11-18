@@ -6,23 +6,98 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeInstanceLastOperation
+    public partial class MachineLearningComputeInstanceLastOperation : IUtf8JsonSerializable, IJsonModel<MachineLearningComputeInstanceLastOperation>
     {
-        internal static MachineLearningComputeInstanceLastOperation DeserializeMachineLearningComputeInstanceLastOperation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningComputeInstanceLastOperation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningComputeInstanceLastOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceLastOperation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceLastOperation)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(OperationName))
+            {
+                writer.WritePropertyName("operationName"u8);
+                writer.WriteStringValue(OperationName.Value.ToString());
+            }
+            if (Optional.IsDefined(OperationOn))
+            {
+                writer.WritePropertyName("operationTime"u8);
+                writer.WriteStringValue(OperationOn.Value, "O");
+            }
+            if (Optional.IsDefined(OperationStatus))
+            {
+                writer.WritePropertyName("operationStatus"u8);
+                writer.WriteStringValue(OperationStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(OperationTrigger))
+            {
+                writer.WritePropertyName("operationTrigger"u8);
+                writer.WriteStringValue(OperationTrigger.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        MachineLearningComputeInstanceLastOperation IJsonModel<MachineLearningComputeInstanceLastOperation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceLastOperation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceLastOperation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningComputeInstanceLastOperation(document.RootElement, options);
+        }
+
+        internal static MachineLearningComputeInstanceLastOperation DeserializeMachineLearningComputeInstanceLastOperation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MachineLearningOperationName> operationName = default;
-            Optional<DateTimeOffset> operationTime = default;
-            Optional<MachineLearningOperationStatus> operationStatus = default;
-            Optional<MachineLearningOperationTrigger> operationTrigger = default;
+            MachineLearningOperationName? operationName = default;
+            DateTimeOffset? operationTime = default;
+            MachineLearningOperationStatus? operationStatus = default;
+            MachineLearningOperationTrigger? operationTrigger = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationName"u8))
@@ -61,8 +136,122 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     operationTrigger = new MachineLearningOperationTrigger(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningComputeInstanceLastOperation(Optional.ToNullable(operationName), Optional.ToNullable(operationTime), Optional.ToNullable(operationStatus), Optional.ToNullable(operationTrigger));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningComputeInstanceLastOperation(operationName, operationTime, operationStatus, operationTrigger, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  operationName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationName))
+                {
+                    builder.Append("  operationName: ");
+                    builder.AppendLine($"'{OperationName.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  operationTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationOn))
+                {
+                    builder.Append("  operationTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(OperationOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  operationStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationStatus))
+                {
+                    builder.Append("  operationStatus: ");
+                    builder.AppendLine($"'{OperationStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationTrigger), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  operationTrigger: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationTrigger))
+                {
+                    builder.Append("  operationTrigger: ");
+                    builder.AppendLine($"'{OperationTrigger.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningComputeInstanceLastOperation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceLastOperation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceLastOperation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningComputeInstanceLastOperation IPersistableModel<MachineLearningComputeInstanceLastOperation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceLastOperation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningComputeInstanceLastOperation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceLastOperation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningComputeInstanceLastOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

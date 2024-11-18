@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetworkCloud.Models;
@@ -33,8 +32,19 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-07-01";
+            _apiVersion = apiVersion ?? "2024-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
@@ -102,6 +112,19 @@ namespace Azure.ResourceManager.NetworkCloud
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -175,6 +198,20 @@ namespace Azure.ResourceManager.NetworkCloud
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string bareMetalMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
+            uri.AppendPath(bareMetalMachineName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName)
@@ -259,6 +296,20 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string bareMetalMachineName, NetworkCloudBareMetalMachinePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
+            uri.AppendPath(bareMetalMachineName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName, NetworkCloudBareMetalMachinePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -277,7 +328,7 @@ namespace Azure.ResourceManager.NetworkCloud
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -337,6 +388,21 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        internal RequestUriBuilder CreateCordonRequestUri(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachineCordonContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
+            uri.AppendPath(bareMetalMachineName, true);
+            uri.AppendPath("/cordon", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCordonRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachineCordonContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -358,7 +424,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -385,7 +451,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -412,11 +477,25 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePowerOffRequestUri(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachinePowerOffContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
+            uri.AppendPath(bareMetalMachineName, true);
+            uri.AppendPath("/powerOff", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePowerOffRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachinePowerOffContent content)
@@ -440,7 +519,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -467,7 +546,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -494,11 +572,25 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateReimageRequestUri(string subscriptionId, string resourceGroupName, string bareMetalMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
+            uri.AppendPath(bareMetalMachineName, true);
+            uri.AppendPath("/reimage", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateReimageRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName)
@@ -541,7 +633,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -567,11 +658,25 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateReplaceRequestUri(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachineReplaceContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
+            uri.AppendPath(bareMetalMachineName, true);
+            uri.AppendPath("/replace", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateReplaceRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachineReplaceContent content)
@@ -595,7 +700,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -622,7 +727,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -649,11 +753,25 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRestartRequestUri(string subscriptionId, string resourceGroupName, string bareMetalMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
+            uri.AppendPath(bareMetalMachineName, true);
+            uri.AppendPath("/restart", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRestartRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName)
@@ -696,7 +814,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -722,11 +839,25 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRunCommandRequestUri(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachineRunCommandContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
+            uri.AppendPath(bareMetalMachineName, true);
+            uri.AppendPath("/runCommand", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRunCommandRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachineRunCommandContent content)
@@ -748,7 +879,7 @@ namespace Azure.ResourceManager.NetworkCloud
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -775,7 +906,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -803,11 +933,25 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRunDataExtractsRequestUri(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachineRunDataExtractsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
+            uri.AppendPath(bareMetalMachineName, true);
+            uri.AppendPath("/runDataExtracts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRunDataExtractsRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachineRunDataExtractsContent content)
@@ -829,7 +973,7 @@ namespace Azure.ResourceManager.NetworkCloud
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -856,7 +1000,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -884,11 +1027,25 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRunReadCommandsRequestUri(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachineRunReadCommandsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
+            uri.AppendPath(bareMetalMachineName, true);
+            uri.AppendPath("/runReadCommands", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRunReadCommandsRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachineRunReadCommandsContent content)
@@ -910,7 +1067,7 @@ namespace Azure.ResourceManager.NetworkCloud
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -937,7 +1094,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -965,11 +1121,25 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStartRequestUri(string subscriptionId, string resourceGroupName, string bareMetalMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
+            uri.AppendPath(bareMetalMachineName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName)
@@ -1012,7 +1182,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1038,11 +1207,25 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUncordonRequestUri(string subscriptionId, string resourceGroupName, string bareMetalMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
+            uri.AppendPath(bareMetalMachineName, true);
+            uri.AppendPath("/uncordon", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUncordonRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName)
@@ -1085,7 +1268,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1111,11 +1293,18 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
@@ -1184,6 +1373,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)

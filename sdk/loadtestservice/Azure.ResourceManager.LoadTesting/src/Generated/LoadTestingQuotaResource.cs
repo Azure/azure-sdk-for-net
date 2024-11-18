@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.LoadTesting.Models;
 using Azure.ResourceManager.Resources;
 
@@ -102,6 +100,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <term>Operation Id</term>
         /// <description>Quotas_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingQuotaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +140,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <term>Operation Id</term>
         /// <description>Quotas_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingQuotaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +179,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quotas_CheckAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +221,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quotas_CheckAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

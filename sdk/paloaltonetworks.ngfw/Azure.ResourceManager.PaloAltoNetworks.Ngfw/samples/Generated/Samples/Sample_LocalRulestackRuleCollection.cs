@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 {
     public partial class Sample_LocalRulestackRuleCollection
     {
-        // LocalRules_ListByLocalRulestacks_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_LocalRulesListByLocalRulestacksMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_ListByLocalRulestacks_MaximumSet_Gen.json
@@ -52,12 +49,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // LocalRules_ListByLocalRulestacks_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_LocalRulesListByLocalRulestacksMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_ListByLocalRulestacks_MinimumSet_Gen.json
@@ -89,12 +85,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // LocalRules_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_LocalRulesGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_Get_MaximumSet_Gen.json
@@ -127,9 +122,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LocalRules_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_LocalRulesGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_Get_MaximumSet_Gen.json
@@ -158,9 +152,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // LocalRules_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_LocalRulesGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_Get_MaximumSet_Gen.json
@@ -189,7 +182,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -201,9 +194,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             }
         }
 
-        // LocalRules_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_LocalRulesGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_Get_MinimumSet_Gen.json
@@ -236,9 +228,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LocalRules_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_LocalRulesGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_Get_MinimumSet_Gen.json
@@ -267,9 +258,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // LocalRules_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_LocalRulesGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_Get_MinimumSet_Gen.json
@@ -298,7 +288,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -310,9 +300,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             }
         }
 
-        // LocalRules_CreateOrUpdate_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_LocalRulesCreateOrUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_CreateOrUpdate_MaximumSet_Gen.json
@@ -421,9 +410,8 @@ new RulestackTagInfo("keyName","value")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LocalRules_CreateOrUpdate_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_LocalRulesCreateOrUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_CreateOrUpdate_MinimumSet_Gen.json

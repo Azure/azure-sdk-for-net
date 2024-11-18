@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Mocking
 {
@@ -59,10 +56,18 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -83,10 +88,18 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -342,6 +355,30 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             PartnerTopicResource.ValidateResourceId(id);
             return new PartnerTopicResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TopicNetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TopicNetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="TopicNetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TopicNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual TopicNetworkSecurityPerimeterConfigurationResource GetTopicNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            TopicNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new TopicNetworkSecurityPerimeterConfigurationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DomainNetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual DomainNetworkSecurityPerimeterConfigurationResource GetDomainNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            DomainNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new DomainNetworkSecurityPerimeterConfigurationResource(Client, id);
         }
 
         /// <summary>

@@ -23,20 +23,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         private const string StaticValue = "Static";
-        private const string TrailingValue = "Trailing";
+        private const string RollingValue = "Rolling";
         private const string FixedValue = "Fixed";
 
         /// <summary> An input data with a fixed window size. </summary>
         public static MonitoringInputDataType Static { get; } = new MonitoringInputDataType(StaticValue);
-        /// <summary> An input data which trailing relatively to the monitor's current run. </summary>
-        public static MonitoringInputDataType Trailing { get; } = new MonitoringInputDataType(TrailingValue);
+        /// <summary> An input data which rolls relatively to the monitor's current run time. </summary>
+        public static MonitoringInputDataType Rolling { get; } = new MonitoringInputDataType(RollingValue);
         /// <summary> An input data with tabular format which doesn't require preprocessing. </summary>
         public static MonitoringInputDataType Fixed { get; } = new MonitoringInputDataType(FixedValue);
         /// <summary> Determines if two <see cref="MonitoringInputDataType"/> values are the same. </summary>
         public static bool operator ==(MonitoringInputDataType left, MonitoringInputDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitoringInputDataType"/> values are not the same. </summary>
         public static bool operator !=(MonitoringInputDataType left, MonitoringInputDataType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitoringInputDataType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitoringInputDataType"/>. </summary>
         public static implicit operator MonitoringInputDataType(string value) => new MonitoringInputDataType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

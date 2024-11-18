@@ -611,6 +611,54 @@ BlobSasBuilder sasBuilder = new BlobSasBuilder
 };
 ```
 
+To create a simple User Delegation SAS with any optional parameters, use the convenience overload of GenerateUserDelegationSas which only requires taking in permissions and the expiry time.
+
+```C# Snippet:SampleSnippetsBlobMigration_GenerateUserDelegationSas
+// Create a BlobClient
+BlobClient blobClient = new BlobClient(blobUri);
+
+// Create full, self-authenticating URI to the resource from the BlobClient
+Uri sasUri = blobClient.GenerateUserDelegationSasUri(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1), userDelegationKey);
+```
+
+To create a more complex User Delegation SAS, pass the SAS builder to the GenerateUserDelegationSas method.
+
+```C# Snippet:SampleSnippetsBlobMigration_GenerateUserDelegationSas_Builder
+// Create a BlobClient
+BlobClient blobClient = new BlobClient(blobUri);
+// Create BlobSasBuilder and specify parameters
+BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1))
+{
+    // Since we are generating from the client, the client will have the container and blob name
+    // Specify any optional paremeters here
+    StartsOn = DateTimeOffset.UtcNow.AddHours(-1)
+};
+
+// Create full, self-authenticating URI to the resource from the BlobClient
+Uri sasUri = blobClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey);
+```
+
+You can also generate an User Delegation SAS without use of the client.
+
+```C# Snippet:SampleSnippetsBlobMigration_UserDelegationSasBuilder
+// Create BlobSasBuilder and specify parameters
+BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1))
+{
+    // with no url in a client to read from, container and blob name must be provided if applicable
+    BlobContainerName = containerName,
+    BlobName = blobName
+};
+
+// Create full, self-authenticating URI to the resource
+BlobUriBuilder uriBuilder = new BlobUriBuilder(StorageAccountBlobUri)
+{
+    BlobContainerName = containerName,
+    BlobName = blobName,
+    Sas = sasBuilder.ToSasQueryParameters(userDelegationKey, accountName)
+};
+Uri sasUri = uriBuilder.ToUri();
+```
+
 ### Content Hashes
 
 #### Blob Content MD5

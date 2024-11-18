@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Marketplace;
 using Azure.ResourceManager.Marketplace.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Marketplace.Samples
 {
     public partial class Sample_PrivateStoreCollectionInfoResource
     {
-        // SetCollectionRules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SetCollectionRules_SetCollectionRules()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/SetCollectionRules.json
@@ -51,12 +48,11 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             };
             await privateStoreCollectionInfo.SetCollectionRulesAsync(content: content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GetCollectionRules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task QueryRules_GetCollectionRules()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetCollectionRules.json
@@ -80,12 +76,11 @@ RuleType = MarketplaceRuleType.PrivateProducts,
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GetPrivateStoreCollection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPrivateStoreCollection()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetPrivateStoreCollection.json
@@ -113,9 +108,8 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreatePrivateStoreCollection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatePrivateStoreCollection()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/CreatePrivateStoreCollection.json
@@ -154,9 +148,8 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeletePrivateStoreCollection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletePrivateStoreCollection()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/DeletePrivateStoreCollection.json
@@ -177,12 +170,11 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             // invoke the operation
             await privateStoreCollectionInfo.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PostPrivateStoreCollection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PostPrivateStoreCollection()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/PostPrivateStoreCollection.json
@@ -203,12 +195,11 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             // invoke the operation
             await privateStoreCollectionInfo.DeleteAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // TransferOffers
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TransferOffers_TransferOffers()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/TransferOffers.json
@@ -244,9 +235,8 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApproveAllItems
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ApproveAllItems_ApproveAllItems()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/ApproveAllItems.json
@@ -274,9 +264,8 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DisableApproveAllItems
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DisableApproveAllItems_DisableApproveAllItems()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/DisableApproveAllItems.json
@@ -304,9 +293,8 @@ RuleType = MarketplaceRuleType.PrivateProducts,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetPrivateStoreCollectionOffersWithFullContext
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateStoreCollectionOffersByContexts_GetPrivateStoreCollectionOffersWithFullContext()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetPrivateStoreCollectionOffersWithFullContext.json
@@ -337,7 +325,7 @@ RuleType = MarketplaceRuleType.PrivateProducts,
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

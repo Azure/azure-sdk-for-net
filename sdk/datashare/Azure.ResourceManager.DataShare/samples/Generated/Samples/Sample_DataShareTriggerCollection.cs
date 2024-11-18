@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.DataShare.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataShare.Samples
 {
     public partial class Sample_DataShareTriggerCollection
     {
-        // Triggers_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TriggersGet()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Triggers_Get.json
@@ -54,9 +51,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Triggers_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_TriggersGet()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Triggers_Get.json
@@ -86,9 +82,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Triggers_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_TriggersGet()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Triggers_Get.json
@@ -118,7 +113,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -130,9 +125,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             }
         }
 
-        // Triggers_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_TriggersCreate()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Triggers_Create.json
@@ -171,9 +165,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Triggers_ListByShareSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_TriggersListByShareSubscription()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Triggers_ListByShareSubscription.json
@@ -206,7 +199,7 @@ namespace Azure.ResourceManager.DataShare.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

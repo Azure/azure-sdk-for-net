@@ -6,28 +6,46 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryApplicationVersionPublishingProfile : IUtf8JsonSerializable
+    public partial class GalleryApplicationVersionPublishingProfile : IUtf8JsonSerializable, IJsonModel<GalleryApplicationVersionPublishingProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryApplicationVersionPublishingProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<GalleryApplicationVersionPublishingProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue(Source, options);
             if (Optional.IsDefined(ManageActions))
             {
                 writer.WritePropertyName("manageActions"u8);
-                writer.WriteObjectValue(ManageActions);
+                writer.WriteObjectValue(ManageActions, options);
             }
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                writer.WriteObjectValue(Settings, options);
             }
             if (Optional.IsCollectionDefined(AdvancedSettings))
             {
@@ -51,83 +69,53 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TargetRegions))
-            {
-                writer.WritePropertyName("targetRegions"u8);
-                writer.WriteStartArray();
-                foreach (var item in TargetRegions)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ReplicaCount))
-            {
-                writer.WritePropertyName("replicaCount"u8);
-                writer.WriteNumberValue(ReplicaCount.Value);
-            }
-            if (Optional.IsDefined(IsExcludedFromLatest))
-            {
-                writer.WritePropertyName("excludeFromLatest"u8);
-                writer.WriteBooleanValue(IsExcludedFromLatest.Value);
-            }
-            if (Optional.IsDefined(EndOfLifeOn))
-            {
-                writer.WritePropertyName("endOfLifeDate"u8);
-                writer.WriteStringValue(EndOfLifeOn.Value, "O");
-            }
-            if (Optional.IsDefined(StorageAccountType))
-            {
-                writer.WritePropertyName("storageAccountType"u8);
-                writer.WriteStringValue(StorageAccountType.Value.ToString());
-            }
-            if (Optional.IsDefined(ReplicationMode))
-            {
-                writer.WritePropertyName("replicationMode"u8);
-                writer.WriteStringValue(ReplicationMode.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(TargetExtendedLocations))
-            {
-                writer.WritePropertyName("targetExtendedLocations"u8);
-                writer.WriteStartArray();
-                foreach (var item in TargetExtendedLocations)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
-        internal static GalleryApplicationVersionPublishingProfile DeserializeGalleryApplicationVersionPublishingProfile(JsonElement element)
+        GalleryApplicationVersionPublishingProfile IJsonModel<GalleryApplicationVersionPublishingProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGalleryApplicationVersionPublishingProfile(document.RootElement, options);
+        }
+
+        internal static GalleryApplicationVersionPublishingProfile DeserializeGalleryApplicationVersionPublishingProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             UserArtifactSource source = default;
-            Optional<UserArtifactManagement> manageActions = default;
-            Optional<UserArtifactSettings> settings = default;
-            Optional<IDictionary<string, string>> advancedSettings = default;
-            Optional<bool> enableHealthCheck = default;
-            Optional<IList<GalleryApplicationCustomAction>> customActions = default;
-            Optional<IList<TargetRegion>> targetRegions = default;
-            Optional<int> replicaCount = default;
-            Optional<bool> excludeFromLatest = default;
-            Optional<DateTimeOffset> publishedDate = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<ImageStorageAccountType> storageAccountType = default;
-            Optional<GalleryReplicationMode> replicationMode = default;
-            Optional<IList<GalleryTargetExtendedLocation>> targetExtendedLocations = default;
+            UserArtifactManagement manageActions = default;
+            UserArtifactSettings settings = default;
+            IDictionary<string, string> advancedSettings = default;
+            bool? enableHealthCheck = default;
+            IList<GalleryApplicationCustomAction> customActions = default;
+            IList<TargetRegion> targetRegions = default;
+            int? replicaCount = default;
+            bool? excludeFromLatest = default;
+            DateTimeOffset? publishedDate = default;
+            DateTimeOffset? endOfLifeDate = default;
+            ImageStorageAccountType? storageAccountType = default;
+            GalleryReplicationMode? replicationMode = default;
+            IList<GalleryTargetExtendedLocation> targetExtendedLocations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = UserArtifactSource.DeserializeUserArtifactSource(property.Value);
+                    source = UserArtifactSource.DeserializeUserArtifactSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("manageActions"u8))
@@ -136,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    manageActions = UserArtifactManagement.DeserializeUserArtifactManagement(property.Value);
+                    manageActions = UserArtifactManagement.DeserializeUserArtifactManagement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("settings"u8))
@@ -145,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    settings = UserArtifactSettings.DeserializeUserArtifactSettings(property.Value);
+                    settings = UserArtifactSettings.DeserializeUserArtifactSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("advancedSettings"u8))
@@ -180,7 +168,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryApplicationCustomAction> array = new List<GalleryApplicationCustomAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item));
+                        array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item, options));
                     }
                     customActions = array;
                     continue;
@@ -194,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<TargetRegion> array = new List<TargetRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetRegion.DeserializeTargetRegion(item));
+                        array.Add(TargetRegion.DeserializeTargetRegion(item, options));
                     }
                     targetRegions = array;
                     continue;
@@ -262,13 +250,64 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryTargetExtendedLocation> array = new List<GalleryTargetExtendedLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryTargetExtendedLocation.DeserializeGalleryTargetExtendedLocation(item));
+                        array.Add(GalleryTargetExtendedLocation.DeserializeGalleryTargetExtendedLocation(item, options));
                     }
                     targetExtendedLocations = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), Optional.ToList(targetExtendedLocations), source, manageActions.Value, settings.Value, Optional.ToDictionary(advancedSettings), Optional.ToNullable(enableHealthCheck), Optional.ToList(customActions));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GalleryApplicationVersionPublishingProfile(
+                targetRegions ?? new ChangeTrackingList<TargetRegion>(),
+                replicaCount,
+                excludeFromLatest,
+                publishedDate,
+                endOfLifeDate,
+                storageAccountType,
+                replicationMode,
+                targetExtendedLocations ?? new ChangeTrackingList<GalleryTargetExtendedLocation>(),
+                serializedAdditionalRawData,
+                source,
+                manageActions,
+                settings,
+                advancedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                enableHealthCheck,
+                customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>());
         }
+
+        BinaryData IPersistableModel<GalleryApplicationVersionPublishingProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GalleryApplicationVersionPublishingProfile IPersistableModel<GalleryApplicationVersionPublishingProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGalleryApplicationVersionPublishingProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GalleryApplicationVersionPublishingProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

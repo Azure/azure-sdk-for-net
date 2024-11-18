@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -20,7 +18,7 @@ namespace Azure.ResourceManager.Hci
     /// A Class representing a HciSku along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciSkuResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetHciSkuResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OfferResource"/> using the GetHciSku method.
+    /// Otherwise you can get one from its parent resource <see cref="HciClusterOfferResource"/> using the GetHciSku method.
     /// </summary>
     public partial class HciSkuResource : ArmResource
     {
@@ -103,6 +101,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
@@ -135,6 +141,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

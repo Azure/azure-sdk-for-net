@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,56 +14,28 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapTableLinkedService : IUtf8JsonSerializable
+    public partial class SapTableLinkedService : IUtf8JsonSerializable, IJsonModel<SapTableLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapTableLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SapTableLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapTableLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                throw new FormatException($"The model {nameof(SapTableLinkedService)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteStartObject();
-                foreach (var item in Parameters)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Annotations))
-            {
-                writer.WritePropertyName("annotations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Annotations)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndArray();
-            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Server))
@@ -158,36 +131,50 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static SapTableLinkedService DeserializeSapTableLinkedService(JsonElement element)
+        SapTableLinkedService IJsonModel<SapTableLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapTableLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapTableLinkedService)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapTableLinkedService(document.RootElement, options);
+        }
+
+        internal static SapTableLinkedService DeserializeSapTableLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DataFactoryElement<string>> server = default;
-            Optional<DataFactoryElement<string>> systemNumber = default;
-            Optional<DataFactoryElement<string>> clientId = default;
-            Optional<DataFactoryElement<string>> language = default;
-            Optional<DataFactoryElement<string>> systemId = default;
-            Optional<DataFactoryElement<string>> userName = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<string>> messageServer = default;
-            Optional<DataFactoryElement<string>> messageServerService = default;
-            Optional<DataFactoryElement<string>> sncMode = default;
-            Optional<DataFactoryElement<string>> sncMyName = default;
-            Optional<DataFactoryElement<string>> sncPartnerName = default;
-            Optional<DataFactoryElement<string>> sncLibraryPath = default;
-            Optional<DataFactoryElement<string>> sncQop = default;
-            Optional<DataFactoryElement<string>> logonGroup = default;
-            Optional<string> encryptedCredential = default;
+            string version = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
+            DataFactoryElement<string> server = default;
+            DataFactoryElement<string> systemNumber = default;
+            DataFactoryElement<string> clientId = default;
+            DataFactoryElement<string> language = default;
+            DataFactoryElement<string> systemId = default;
+            DataFactoryElement<string> userName = default;
+            DataFactorySecret password = default;
+            DataFactoryElement<string> messageServer = default;
+            DataFactoryElement<string> messageServerService = default;
+            DataFactoryElement<string> sncMode = default;
+            DataFactoryElement<string> sncMyName = default;
+            DataFactoryElement<string> sncPartnerName = default;
+            DataFactoryElement<string> sncLibraryPath = default;
+            DataFactoryElement<string> sncQop = default;
+            DataFactoryElement<string> logonGroup = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,13 +184,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("connectVia"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -220,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -315,7 +307,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("messageServer"u8))
@@ -401,7 +393,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapTableLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password, messageServer.Value, messageServerService.Value, sncMode.Value, sncMyName.Value, sncPartnerName.Value, sncLibraryPath.Value, sncQop.Value, logonGroup.Value, encryptedCredential.Value);
+            return new SapTableLinkedService(
+                type,
+                version,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                server,
+                systemNumber,
+                clientId,
+                language,
+                systemId,
+                userName,
+                password,
+                messageServer,
+                messageServerService,
+                sncMode,
+                sncMyName,
+                sncPartnerName,
+                sncLibraryPath,
+                sncQop,
+                logonGroup,
+                encryptedCredential);
         }
+
+        BinaryData IPersistableModel<SapTableLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapTableLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SapTableLinkedService)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SapTableLinkedService IPersistableModel<SapTableLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapTableLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSapTableLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapTableLinkedService)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SapTableLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

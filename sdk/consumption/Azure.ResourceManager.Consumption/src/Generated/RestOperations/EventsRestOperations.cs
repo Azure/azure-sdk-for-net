@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Consumption.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.Consumption
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByBillingProfileRequestUri(string billingAccountId, string billingProfileId, string startDate, string endDate)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/events", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("startDate", startDate, true);
+            uri.AppendQuery("endDate", endDate, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingProfileRequest(string billingAccountId, string billingProfileId, string startDate, string endDate)
@@ -120,6 +134,21 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
+        internal RequestUriBuilder CreateListByBillingAccountRequestUri(string billingAccountId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/events", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListByBillingAccountRequest(string billingAccountId, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -191,6 +220,14 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByBillingProfileNextPageRequestUri(string nextLink, string billingAccountId, string billingProfileId, string startDate, string endDate)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingProfileNextPageRequest(string nextLink, string billingAccountId, string billingProfileId, string startDate, string endDate)
@@ -271,6 +308,14 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByBillingAccountNextPageRequestUri(string nextLink, string billingAccountId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingAccountNextPageRequest(string nextLink, string billingAccountId, string filter)

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static bool operator ==(FleetMemberProvisioningState left, FleetMemberProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FleetMemberProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(FleetMemberProvisioningState left, FleetMemberProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FleetMemberProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FleetMemberProvisioningState"/>. </summary>
         public static implicit operator FleetMemberProvisioningState(string value) => new FleetMemberProvisioningState(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataShare;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataShare.Samples
 {
     public partial class Sample_DataShareConsumerInvitationCollection
     {
-        // ConsumerInvitations_ListInvitations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ConsumerInvitationsListInvitations()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ConsumerInvitations_ListInvitations.json
@@ -47,12 +44,11 @@ namespace Azure.ResourceManager.DataShare.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ConsumerInvitations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ConsumerInvitationsGet()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ConsumerInvitations_Get.json
@@ -82,9 +78,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ConsumerInvitations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ConsumerInvitationsGet()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ConsumerInvitations_Get.json
@@ -110,9 +105,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ConsumerInvitations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ConsumerInvitationsGet()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ConsumerInvitations_Get.json
@@ -138,7 +132,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

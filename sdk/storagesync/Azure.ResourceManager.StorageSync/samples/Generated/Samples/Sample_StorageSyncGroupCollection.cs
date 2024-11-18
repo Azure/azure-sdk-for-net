@@ -8,20 +8,17 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StorageSync;
 using Azure.ResourceManager.StorageSync.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageSync.Samples
 {
     public partial class Sample_StorageSyncGroupCollection
     {
-        // SyncGroups_ListByStorageSyncService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SyncGroupsListByStorageSyncService()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/SyncGroups_ListByStorageSyncService.json
@@ -53,12 +50,11 @@ namespace Azure.ResourceManager.StorageSync.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SyncGroups_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SyncGroupsCreate()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/SyncGroups_Create.json
@@ -98,9 +94,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SyncGroups_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SyncGroupsGet()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/SyncGroups_Get.json
@@ -133,9 +128,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SyncGroups_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_SyncGroupsGet()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/SyncGroups_Get.json
@@ -164,9 +158,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SyncGroups_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SyncGroupsGet()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/SyncGroups_Get.json
@@ -195,7 +188,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

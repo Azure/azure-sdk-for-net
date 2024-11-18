@@ -36,6 +36,14 @@ namespace Azure.Storage.DataMovement.Tests
         public ClientBuilder<TSourceServiceClient, TSourceClientOptions> SourceClientBuilder { get; protected set; }
         public ClientBuilder<TDestinationServiceClient, TDestinationClientOptions> DestinationClientBuilder { get; protected set; }
 
+        public enum TransferPropertiesTestType
+        {
+            Default = 0,
+            Preserve = 1,
+            NoPreserve = 2,
+            NewProperties = 3,
+        }
+
         /// <summary>
         /// Constructor for TransferManager.StartTransferAsync tests
         ///
@@ -49,7 +57,14 @@ namespace Azure.Storage.DataMovement.Tests
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null) : base(async, mode)
         {
-            Argument.CheckNotNullOrEmpty(expectedOverwriteExceptionMessage, nameof(expectedOverwriteExceptionMessage));
+            if (expectedOverwriteExceptionMessage is null)
+            {
+                throw new ArgumentNullException(expectedOverwriteExceptionMessage);
+            }
+            if (expectedOverwriteExceptionMessage.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", expectedOverwriteExceptionMessage);
+            }
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
             _expectedOverwriteExceptionMessage = expectedOverwriteExceptionMessage;
             _firstItemName = "item1";
@@ -106,6 +121,7 @@ namespace Azure.Storage.DataMovement.Tests
             long? objectLength = null,
             string objectName = null,
             Stream contents = default,
+            TransferPropertiesTestType propertiesType = default,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -130,7 +146,10 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="containerClient">The container client to get the respective storage resource.</param>
         /// <param name="directoryPath">The respective directory path of the storage resource container.</param>
         /// <returns></returns>
-        protected abstract StorageResourceContainer GetDestinationStorageResourceContainer(TDestinationContainerClient containerClient, string directoryPath);
+        protected abstract StorageResourceContainer GetDestinationStorageResourceContainer(
+            TDestinationContainerClient containerClient,
+            string directoryPath,
+            TransferPropertiesTestType propertiesTestType = default);
 
         /// <summary>
         /// Creates the directory within the source container. Will also create any parent directories if required and is a hierarchical structure.
@@ -185,6 +204,7 @@ namespace Azure.Storage.DataMovement.Tests
             string sourcePrefix,
             TDestinationContainerClient destinationContainer,
             string destinationPrefix,
+            TransferPropertiesTestType propertiesTestType = default,
             CancellationToken cancellationToken = default);
         #endregion
 
@@ -237,7 +257,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
-            await transfer.WaitForCompletionAsync(tokenSource.Token);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventFailed,
+                tokenSource.Token);
 
             await testEventFailed.AssertContainerCompletedCheck(itemTransferCount);
             Assert.IsTrue(transfer.HasCompleted);
@@ -251,11 +274,10 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPrefix: destinationPrefix);
         }
 
-        [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [RecordedTest]
         [TestCase(0, 10)]
-        [TestCase(Constants.KB / 2, 10)]
-        [TestCase(Constants.KB, 10)]
+        [TestCase(DataMovementTestConstants.KB / 2, 10)]
+        [TestCase(DataMovementTestConstants.KB, 10)]
         public async Task DirectoryToDirectory_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -294,10 +316,10 @@ namespace Azure.Storage.DataMovement.Tests
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
         [LiveOnly]
-        [TestCase(4 * Constants.MB, 20)]
-        [TestCase(4 * Constants.MB, 200)]
-        [TestCase(257 * Constants.MB, 500)]
-        [TestCase(Constants.GB, 500)]
+        [TestCase(4 * DataMovementTestConstants.MB, 20)]
+        [TestCase(4 * DataMovementTestConstants.MB, 200)]
+        [TestCase(257 * DataMovementTestConstants.MB, 500)]
+        [TestCase(DataMovementTestConstants.GB, 500)]
         public async Task DirectoryToDirectory_LargeSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -332,8 +354,7 @@ namespace Azure.Storage.DataMovement.Tests
                 waitTimeInSec).ConfigureAwait(false);
         }
 
-        [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [RecordedTest]
         public async Task DirectoryToDirectory_EmptyFolder()
         {
             // Arrange
@@ -361,7 +382,10 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
 
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await transfer.WaitForCompletionAsync(tokenSource.Token);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                tokenSource.Token);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
 
@@ -370,8 +394,7 @@ namespace Azure.Storage.DataMovement.Tests
             testEventsRaised.AssertUnexpectedFailureCheck();
         }
 
-        [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [RecordedTest]
         public async Task DirectoryToDirectory_SingleFile()
         {
             // Arrange
@@ -382,7 +405,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             string itemName1 = string.Join("/", sourcePrefix, GetNewObjectName());
             await CreateDirectoryInSourceAsync(source.Container, sourcePrefix);
-            await CreateObjectInSourceAsync(source.Container, Constants.KB, itemName1);
+            await CreateObjectInSourceAsync(source.Container, DataMovementTestConstants.KB, itemName1);
 
             string destinationPrefix = "destFolder";
 
@@ -395,8 +418,7 @@ namespace Azure.Storage.DataMovement.Tests
                 itemTransferCount: 1).ConfigureAwait(false);
         }
 
-        [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [RecordedTest]
         public async Task DirectoryToDirectory_ManySubDirectories()
         {
             // Arrange
@@ -409,15 +431,15 @@ namespace Azure.Storage.DataMovement.Tests
             string subDir1 = string.Join("/", sourcePrefix, "foo");
             await CreateDirectoryInSourceAsync(source.Container, subDir1);
             string itemName1 = string.Join("/", subDir1, GetNewObjectName());
-            await CreateObjectInSourceAsync(source.Container, Constants.KB, itemName1);
+            await CreateObjectInSourceAsync(source.Container, DataMovementTestConstants.KB, itemName1);
             string subDir2 = string.Join("/", sourcePrefix, "rul");
             await CreateDirectoryInSourceAsync(source.Container, subDir2);
             string itemName2 = string.Join("/", subDir2, GetNewObjectName());
-            await CreateObjectInSourceAsync(source.Container, Constants.KB, itemName2);
+            await CreateObjectInSourceAsync(source.Container, DataMovementTestConstants.KB, itemName2);
             string subDir3 = string.Join("/", sourcePrefix, "pik");
             await CreateDirectoryInSourceAsync(source.Container, subDir3);
             string itemName3 = string.Join("/", subDir3, GetNewObjectName());
-            await CreateObjectInSourceAsync(source.Container, Constants.KB, itemName3);
+            await CreateObjectInSourceAsync(source.Container, DataMovementTestConstants.KB, itemName3);
 
             string destinationPrefix = "destFolder";
 
@@ -430,8 +452,7 @@ namespace Azure.Storage.DataMovement.Tests
                 itemTransferCount: 3).ConfigureAwait(false);
         }
 
-        [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [RecordedTest]
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
@@ -451,7 +472,7 @@ namespace Azure.Storage.DataMovement.Tests
                 subDirPrefix = string.Join("/", subDirPrefix, $"folder{i}");
                 await CreateDirectoryInSourceAsync(source.Container, subDirPrefix);
                 string fullFilePath = string.Join("/", subDirPrefix, GetNewObjectName());
-                await CreateObjectInSourceAsync(source.Container, Constants.KB, fullFilePath);
+                await CreateObjectInSourceAsync(source.Container, DataMovementTestConstants.KB, fullFilePath);
             }
 
             string destinationPrefix = "destFolder";
@@ -465,15 +486,14 @@ namespace Azure.Storage.DataMovement.Tests
                 itemTransferCount: level).ConfigureAwait(false);
         }
 
-        [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [RecordedTest]
         public async Task DirectoryToDirectory_OverwriteExists()
         {
             // Arrange
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
             await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
-            long size = Constants.KB;
+            long size = DataMovementTestConstants.KB;
             string sourcePrefix = "sourceFolder";
             string destinationPrefix = "destPrefix";
 
@@ -515,15 +535,14 @@ namespace Azure.Storage.DataMovement.Tests
                 options: options).ConfigureAwait(false);
         }
 
-        [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [RecordedTest]
         public async Task DirectoryToDirectory_OverwriteNotExists()
         {
             // Arrange
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
             await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
-            long size = Constants.KB;
+            long size = DataMovementTestConstants.KB;
             string sourcePrefix = "sourceFolder";
             string destinationPrefix = "destPrefix";
 
@@ -561,12 +580,11 @@ namespace Azure.Storage.DataMovement.Tests
                 options: options).ConfigureAwait(false);
         }
 
-        [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [RecordedTest]
         public virtual async Task DirectoryToDirectory_OAuth()
         {
             // Arrange
-            long size = Constants.KB;
+            long size = DataMovementTestConstants.KB;
             int waitTimeInSec = 20;
             string sourceContainerName = GetNewObjectName();
             string destContainerName = GetNewObjectName();
@@ -608,7 +626,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         #region Single Concurrency
-        private async Task CreateDirectoryTree(
+        internal async Task CreateDirectoryTree(
             TSourceContainerClient client,
             string sourcePrefix,
             int size)
@@ -635,7 +653,7 @@ namespace Azure.Storage.DataMovement.Tests
             int concurrency,
             bool createFailedCondition = false,
             DataTransferOptions options = default,
-            int size = Constants.KB)
+            int size = DataMovementTestConstants.KB)
         {
             // Arrange
             string sourcePrefix = "sourceFolder";
@@ -670,8 +688,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options).ConfigureAwait(false);
         }
 
-        [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [RecordedTest]
         public async Task StartTransfer_AwaitCompletion()
         {
             // Arrange
@@ -689,7 +706,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
@@ -699,7 +719,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/46717
         public async Task StartTransfer_AwaitCompletion_Failed()
         {
             // Arrange
@@ -722,7 +742,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -733,8 +756,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
         }
 
-        [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [RecordedTest]
         public async Task StartTransfer_AwaitCompletion_Skipped()
         {
             // Arrange
@@ -758,7 +780,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -768,8 +793,7 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
         }
 
-        [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [RecordedTest]
         public async Task StartTransfer_EnsureCompleted()
         {
             // Arrange
@@ -788,7 +812,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
@@ -798,7 +825,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/46717
         public async Task StartTransfer_EnsureCompleted_Failed()
         {
             // Arrange
@@ -821,7 +848,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -832,8 +862,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
         }
 
-        [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [RecordedTest]
         public async Task StartTransfer_EnsureCompleted_Skipped()
         {
             // Arrange
@@ -857,7 +886,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
@@ -868,7 +900,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/46717
         public async Task StartTransfer_EnsureCompleted_Failed_SmallChunks()
         {
             // Arrange
@@ -890,11 +922,14 @@ namespace Azure.Storage.DataMovement.Tests
                 1,
                 createFailedCondition: true,
                 options: options,
-                size: Constants.KB * 4);
+                size: DataMovementTestConstants.KB * 4);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -905,5 +940,90 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
         }
         #endregion
+
+        #region Properties
+        private async Task CopyRemoteObjects_VerifyProperties(
+            TSourceContainerClient sourceContainer,
+            TDestinationContainerClient destinationContainer,
+            TransferPropertiesTestType propertiesType)
+        {
+            // Arrange
+            int size = Constants.KB;
+            string sourcePrefix = "sourceFolder";
+            string destPrefix = "destFolder";
+            await CreateDirectoryInSourceAsync(sourceContainer, sourcePrefix);
+            string itemName1 = string.Join("/", sourcePrefix, GetNewObjectName());
+            string itemName2 = string.Join("/", sourcePrefix, GetNewObjectName());
+            await CreateObjectInSourceAsync(sourceContainer, size, itemName1, propertiesType: propertiesType);
+            await CreateObjectInSourceAsync(sourceContainer, size, itemName2, propertiesType: propertiesType);
+
+            string subDirName = string.Join("/", sourcePrefix, "bar");
+            await CreateDirectoryInSourceAsync(sourceContainer, subDirName);
+            string itemName3 = string.Join("/", subDirName, GetNewObjectName());
+            await CreateObjectInSourceAsync(sourceContainer, size, itemName3, propertiesType: propertiesType);
+
+            string subDirName2 = string.Join("/", sourcePrefix, "pik");
+            await CreateDirectoryInSourceAsync(sourceContainer, subDirName2);
+            string itemName4 = string.Join("/", subDirName2, GetNewObjectName());
+            await CreateObjectInSourceAsync(sourceContainer, size, itemName4, propertiesType: propertiesType);
+
+            await CreateDirectoryInDestinationAsync(destinationContainer, destPrefix);
+
+            // Create storage resource containers
+            StorageResourceContainer sourceResource =
+                GetSourceStorageResourceContainer(sourceContainer, sourcePrefix);
+            StorageResourceContainer destinationResource =
+                GetDestinationStorageResourceContainer(destinationContainer, destPrefix, propertiesType);
+
+            // Create Transfer Manager
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
+
+            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                tokenSource.Token);
+
+            // Verify completion
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            await testEventsRaised.AssertContainerCompletedCheck(4);
+
+            // Assert
+            await VerifyResultsAsync(
+                sourceContainer,
+                sourcePrefix,
+                destinationContainer,
+                destPrefix,
+                propertiesType);
+        }
+
+        [RecordedTest]
+        [TestCase((int) TransferPropertiesTestType.Default)]
+        [TestCase((int) TransferPropertiesTestType.Preserve)]
+        [TestCase((int) TransferPropertiesTestType.NoPreserve)]
+        [TestCase((int) TransferPropertiesTestType.NewProperties)]
+        public async Task CopyRemoteObjects_VerifyProperties(int propertiesType)
+        {
+            // Arrange
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+
+            // Act
+            await CopyRemoteObjects_VerifyProperties(
+                source.Container,
+                destination.Container,
+                (TransferPropertiesTestType) propertiesType).ConfigureAwait(false);
+        }
+        #endregion Properties
     }
 }

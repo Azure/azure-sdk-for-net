@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -54,7 +52,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update a global reach connection in a private cloud
+        /// Create a GlobalReachConnection
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -64,11 +62,19 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>GlobalReachConnections_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalReachConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
-        /// <param name="data"> A global reach connection in the private cloud. </param>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> or <paramref name="data"/> is null. </exception>
@@ -82,7 +88,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _globalReachConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<GlobalReachConnectionResource>(new GlobalReachConnectionOperationSource(Client), _globalReachConnectionClientDiagnostics, Pipeline, _globalReachConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<GlobalReachConnectionResource>(new GlobalReachConnectionOperationSource(Client), _globalReachConnectionClientDiagnostics, Pipeline, _globalReachConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +101,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update a global reach connection in a private cloud
+        /// Create a GlobalReachConnection
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -105,11 +111,19 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>GlobalReachConnections_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalReachConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
-        /// <param name="data"> A global reach connection in the private cloud. </param>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> or <paramref name="data"/> is null. </exception>
@@ -123,7 +137,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _globalReachConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, data, cancellationToken);
-                var operation = new AvsArmOperation<GlobalReachConnectionResource>(new GlobalReachConnectionOperationSource(Client), _globalReachConnectionClientDiagnostics, Pipeline, _globalReachConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<GlobalReachConnectionResource>(new GlobalReachConnectionOperationSource(Client), _globalReachConnectionClientDiagnostics, Pipeline, _globalReachConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalReachConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -136,7 +150,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a global reach connection by name in a private cloud
+        /// Get a GlobalReachConnection
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -146,9 +160,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>GlobalReachConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalReachConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
@@ -173,7 +195,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a global reach connection by name in a private cloud
+        /// Get a GlobalReachConnection
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -183,9 +205,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>GlobalReachConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalReachConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
@@ -210,7 +240,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// List global reach connections in a private cloud
+        /// List GlobalReachConnection resources by PrivateCloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -219,6 +249,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GlobalReachConnections_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalReachConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +270,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// List global reach connections in a private cloud
+        /// List GlobalReachConnection resources by PrivateCloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -241,6 +279,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GlobalReachConnections_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalReachConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,9 +310,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>GlobalReachConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalReachConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
@@ -299,9 +353,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>GlobalReachConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalReachConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
@@ -334,9 +396,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>GlobalReachConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalReachConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
@@ -371,9 +441,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>GlobalReachConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalReachConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>

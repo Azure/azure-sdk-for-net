@@ -6,43 +6,74 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformContentCertificateProperties : IUtf8JsonSerializable
+    public partial class AppPlatformContentCertificateProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformContentCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformContentCertificateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppPlatformContentCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformContentCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformContentCertificateProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CertificatePropertiesType);
-            writer.WriteEndObject();
         }
 
-        internal static AppPlatformContentCertificateProperties DeserializeAppPlatformContentCertificateProperties(JsonElement element)
+        AppPlatformContentCertificateProperties IJsonModel<AppPlatformContentCertificateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformContentCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformContentCertificateProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformContentCertificateProperties(document.RootElement, options);
+        }
+
+        internal static AppPlatformContentCertificateProperties DeserializeAppPlatformContentCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> content = default;
+            string content = default;
             string type = default;
-            Optional<string> thumbprint = default;
-            Optional<string> issuer = default;
-            Optional<DateTimeOffset> issuedDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<DateTimeOffset> activateDate = default;
-            Optional<string> subjectName = default;
-            Optional<IReadOnlyList<string>> dnsNames = default;
-            Optional<AppPlatformCertificateProvisioningState> provisioningState = default;
+            string thumbprint = default;
+            string issuer = default;
+            DateTimeOffset? issuedDate = default;
+            DateTimeOffset? expirationDate = default;
+            DateTimeOffset? activateDate = default;
+            string subjectName = default;
+            IReadOnlyList<string> dnsNames = default;
+            AppPlatformCertificateProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))
@@ -120,8 +151,55 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     provisioningState = new AppPlatformCertificateProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformContentCertificateProperties(type, thumbprint.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), Optional.ToNullable(activateDate), subjectName.Value, Optional.ToList(dnsNames), Optional.ToNullable(provisioningState), content.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformContentCertificateProperties(
+                type,
+                thumbprint,
+                issuer,
+                issuedDate,
+                expirationDate,
+                activateDate,
+                subjectName,
+                dnsNames ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                serializedAdditionalRawData,
+                content);
         }
+
+        BinaryData IPersistableModel<AppPlatformContentCertificateProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformContentCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformContentCertificateProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformContentCertificateProperties IPersistableModel<AppPlatformContentCertificateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformContentCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformContentCertificateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformContentCertificateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformContentCertificateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

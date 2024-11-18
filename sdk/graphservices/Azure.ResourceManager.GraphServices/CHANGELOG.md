@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -21,7 +24,7 @@
 - Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.0.0 (2023-07-25)
-  
+
 This release is first stable release for the Graph Services Management library.
 
 ### Bugs Fixed

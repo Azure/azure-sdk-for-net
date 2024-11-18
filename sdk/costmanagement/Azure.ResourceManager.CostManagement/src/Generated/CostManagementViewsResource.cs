@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CostManagement
 {
@@ -99,6 +97,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Views_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +136,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Views_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +177,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Views_DeleteByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -174,7 +196,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await _costManagementViewsViewsRestClient.DeleteByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation(response);
+                var uri = _costManagementViewsViewsRestClient.CreateDeleteByScopeRequestUri(Id.Parent, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -197,6 +221,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Views_DeleteByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -208,7 +240,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = _costManagementViewsViewsRestClient.DeleteByScope(Id.Parent, Id.Name, cancellationToken);
-                var operation = new CostManagementArmOperation(response);
+                var uri = _costManagementViewsViewsRestClient.CreateDeleteByScopeRequestUri(Id.Parent, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -231,6 +265,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Views_CreateOrUpdateByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -246,7 +288,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await _costManagementViewsViewsRestClient.CreateOrUpdateByScopeAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()));
+                var uri = _costManagementViewsViewsRestClient.CreateCreateOrUpdateByScopeRequestUri(Id.Parent, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -269,6 +313,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Views_CreateOrUpdateByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -284,7 +336,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = _costManagementViewsViewsRestClient.CreateOrUpdateByScope(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()));
+                var uri = _costManagementViewsViewsRestClient.CreateCreateOrUpdateByScopeRequestUri(Id.Parent, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

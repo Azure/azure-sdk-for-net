@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Samples
 {
     public partial class Sample_DataFactoryManagedVirtualNetworkCollection
     {
-        // ManagedVirtualNetworks_ListByFactory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ManagedVirtualNetworksListByFactory()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ManagedVirtualNetworks_ListByFactory.json
@@ -52,12 +49,11 @@ namespace Azure.ResourceManager.DataFactory.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ManagedVirtualNetworks_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ManagedVirtualNetworksCreate()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ManagedVirtualNetworks_Create.json
@@ -92,9 +88,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ManagedVirtualNetworks_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ManagedVirtualNetworksGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ManagedVirtualNetworks_Get.json
@@ -127,9 +122,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ManagedVirtualNetworks_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ManagedVirtualNetworksGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ManagedVirtualNetworks_Get.json
@@ -158,9 +152,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ManagedVirtualNetworks_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ManagedVirtualNetworksGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ManagedVirtualNetworks_Get.json
@@ -189,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

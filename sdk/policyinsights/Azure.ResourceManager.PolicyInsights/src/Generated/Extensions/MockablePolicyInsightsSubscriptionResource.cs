@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PolicyInsights;
 using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights.Mocking
@@ -68,6 +65,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyTrackedResources_ListQueryResultsForSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-07-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only "default" is allowed. </param>
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord, PolicyTrackedResourcesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord(e), PolicyTrackedResourcesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -92,6 +93,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyTrackedResources_ListQueryResultsForSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-07-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only "default" is allowed. </param>
@@ -102,7 +107,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord, PolicyTrackedResourcesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord(e), PolicyTrackedResourcesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -115,6 +120,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyEvents_ListQueryResultsForSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +135,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -140,6 +149,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyEvents_ListQueryResultsForSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
@@ -150,7 +163,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -163,6 +176,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyEvents_ListQueryResultsForPolicySetDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,7 +196,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicySetDefinitionPolicyEvents", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicySetDefinitionPolicyEvents", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -192,6 +209,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyEvents_ListQueryResultsForPolicySetDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,7 +229,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicySetDefinitionPolicyEvents", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicySetDefinitionPolicyEvents", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -221,6 +242,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyEvents_ListQueryResultsForPolicyDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,7 +262,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionPolicyEvents", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionPolicyEvents", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,6 +275,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyEvents_ListQueryResultsForPolicyDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,7 +295,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionPolicyEvents", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionPolicyEvents", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -279,6 +308,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyEvents_ListQueryResultsForSubscriptionLevelPolicyAssignment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,7 +328,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, Id.SubscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,6 +341,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyEvents_ListQueryResultsForSubscriptionLevelPolicyAssignment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +361,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, Id.SubscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -337,6 +374,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_ListQueryResultsForSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -348,7 +389,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -362,6 +403,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyStates_ListQueryResultsForSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
@@ -372,7 +417,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -385,6 +430,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_SummarizeForSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +444,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForSubscriptionRequest(Id.SubscriptionId, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizePolicyStates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizePolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -409,6 +458,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyStates_SummarizeForSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
@@ -418,7 +471,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         public virtual Pageable<PolicySummary> SummarizePolicyStates(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForSubscriptionRequest(Id.SubscriptionId, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizePolicyStates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizePolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -431,6 +484,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_TriggerSubscriptionEvaluation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,6 +523,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyStates_TriggerSubscriptionEvaluation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -500,6 +561,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyStates_ListQueryResultsForPolicySetDefinition</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> Policy set definition name. </param>
@@ -515,7 +580,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicySetDefinitionPolicyStates", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicySetDefinitionPolicyStates", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -528,6 +593,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_ListQueryResultsForPolicySetDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -544,7 +613,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicySetDefinitionPolicyStates", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicySetDefinitionPolicyStates", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -557,6 +626,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_SummarizeForPolicySetDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -572,7 +645,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicySetDefinitionPolicyStates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicySetDefinitionPolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -585,6 +658,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_SummarizeForPolicySetDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -600,7 +677,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicySetDefinitionPolicyStates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicySetDefinitionPolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -613,6 +690,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_ListQueryResultsForPolicyDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -629,7 +710,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionPolicyStates", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionPolicyStates", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -642,6 +723,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_ListQueryResultsForPolicyDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -658,7 +743,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionPolicyStates", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionPolicyStates", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -671,6 +756,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_SummarizeForPolicyDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -686,7 +775,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicyDefinitionPolicyStates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicyDefinitionPolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -699,6 +788,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_SummarizeForPolicyDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -714,7 +807,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicyDefinitionPolicyStates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicyDefinitionPolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -727,6 +820,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -743,7 +840,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, Id.SubscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -756,6 +853,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -772,7 +873,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, Id.SubscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -785,6 +886,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -800,7 +905,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -813,6 +918,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -828,7 +937,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -841,6 +950,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyRestrictions_CheckAtSubscriptionScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -875,6 +988,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyRestrictions_CheckAtSubscriptionScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
         /// </item>
         /// </list>
         /// </summary>

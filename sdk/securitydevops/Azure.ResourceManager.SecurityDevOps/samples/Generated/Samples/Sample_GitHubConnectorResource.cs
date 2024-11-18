@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.SecurityDevOps;
 using Azure.ResourceManager.SecurityDevOps.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityDevOps.Samples
 {
     public partial class Sample_GitHubConnectorResource
     {
-        // GitHubConnector_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GitHubConnectorGet()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/GitHubConnectorGet.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GitHubConnector_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_GitHubConnectorUpdate()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/GitHubConnectorUpdate.json
@@ -90,9 +86,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GitHubConnector_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_GitHubConnectorDelete()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/GitHubConnectorDelete.json
@@ -114,12 +109,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
             // invoke the operation
             await gitHubConnector.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GitHubConnector_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetGitHubConnectors_GitHubConnectorListBySubscription()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/GitHubConnectorListBySubscription.json
@@ -146,12 +140,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GitHubRepo_ListByConnector
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetGitHubReposByConnector_GitHubRepoListByConnector()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/GitHubRepoListByConnector.json
@@ -180,12 +173,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GitHubConnectorStats_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetGitHubConnectorStats_GitHubConnectorStatsGet()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/GitHubConnectorStatsGet.json
@@ -210,7 +202,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

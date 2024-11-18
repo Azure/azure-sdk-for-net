@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ProviderHub;
 using Azure.ResourceManager.ProviderHub.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ProviderHub.Samples
 {
     public partial class Sample_NestedResourceTypeSecondSkuCollection
     {
-        // Skus_GetNestedResourceTypeSecond
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SkusGetNestedResourceTypeSecond()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_GetNestedResourceTypeSecond.json
@@ -55,9 +52,8 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Skus_GetNestedResourceTypeSecond
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_SkusGetNestedResourceTypeSecond()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_GetNestedResourceTypeSecond.json
@@ -88,9 +84,8 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Skus_GetNestedResourceTypeSecond
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SkusGetNestedResourceTypeSecond()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_GetNestedResourceTypeSecond.json
@@ -121,7 +116,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -133,9 +128,8 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             }
         }
 
-        // Skus_CreateOrUpdateNestedResourceTypeSecond
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SkusCreateOrUpdateNestedResourceTypeSecond()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_CreateOrUpdateNestedResourceTypeSecond.json
@@ -190,9 +184,8 @@ new ResourceTypeSkuCost("xxx")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Skus_ListByResourceTypeRegistrationsNestedResourceTypeSecond
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SkusListByResourceTypeRegistrationsNestedResourceTypeSecond()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_ListByResourceTypeRegistrationsNestedResourceTypeSecond.json
@@ -226,7 +219,7 @@ new ResourceTypeSkuCost("xxx")
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Reservations.Mocking;
 using Azure.ResourceManager.Reservations.Models;
 using Azure.ResourceManager.Resources;
@@ -142,6 +140,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Quota_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationQuotaResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -173,6 +179,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quota_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationQuotaResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -226,6 +240,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -257,6 +279,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -290,6 +320,10 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>GetCatalog</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -318,6 +352,10 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetCatalog</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -348,6 +386,10 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>GetAppliedReservationList</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -374,6 +416,10 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetAppliedReservationList</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -419,6 +465,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>ReservationOrder_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationOrderResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -448,6 +502,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReservationOrder_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationOrderResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -479,6 +541,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Reservation_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationDetailResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -507,6 +577,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Reservation_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationDetailResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -537,6 +615,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>ReservationOrder_Calculate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationOrderResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -564,6 +650,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReservationOrder_Calculate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationOrderResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -593,6 +687,10 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CalculateExchange_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -624,6 +722,10 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>CalculateExchange_Post</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -654,6 +756,10 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Exchange_Post</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -683,6 +789,10 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Exchange_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// </list>
         /// <item>

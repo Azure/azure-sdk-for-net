@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearning;
 using Azure.ResourceManager.MachineLearning.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearning.Samples
 {
     public partial class Sample_MachineLearningOutboundRuleBasicCollection
     {
-        // List ManagedNetworkSettingsRule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListManagedNetworkSettingsRule()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/ManagedNetwork/listRule.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/ManagedNetwork/listRule.json
             // this example is just showing the usage of "ManagedNetworkSettingsRule_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,15 +49,14 @@ namespace Azure.ResourceManager.MachineLearning.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get ManagedNetworkSettingsRule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagedNetworkSettingsRule()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/ManagedNetwork/getRule.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/ManagedNetwork/getRule.json
             // this example is just showing the usage of "ManagedNetworkSettingsRule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningOutboundRuleBasicCollection collection = machineLearningWorkspace.GetMachineLearningOutboundRuleBasics();
 
             // invoke the operation
-            string ruleName = "some_string";
+            string ruleName = "name_of_the_fqdn_rule";
             MachineLearningOutboundRuleBasicResource result = await collection.GetAsync(ruleName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -90,12 +86,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get ManagedNetworkSettingsRule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetManagedNetworkSettingsRule()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/ManagedNetwork/getRule.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/ManagedNetwork/getRule.json
             // this example is just showing the usage of "ManagedNetworkSettingsRule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,18 +110,17 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningOutboundRuleBasicCollection collection = machineLearningWorkspace.GetMachineLearningOutboundRuleBasics();
 
             // invoke the operation
-            string ruleName = "some_string";
+            string ruleName = "name_of_the_fqdn_rule";
             bool result = await collection.ExistsAsync(ruleName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get ManagedNetworkSettingsRule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetManagedNetworkSettingsRule()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/ManagedNetwork/getRule.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/ManagedNetwork/getRule.json
             // this example is just showing the usage of "ManagedNetworkSettingsRule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,13 +140,13 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningOutboundRuleBasicCollection collection = machineLearningWorkspace.GetMachineLearningOutboundRuleBasics();
 
             // invoke the operation
-            string ruleName = "some_string";
+            string ruleName = "name_of_the_fqdn_rule";
             NullableResponse<MachineLearningOutboundRuleBasicResource> response = await collection.GetIfExistsAsync(ruleName);
             MachineLearningOutboundRuleBasicResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -164,12 +158,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             }
         }
 
-        // CreateOrUpdate ManagedNetworkSettingsRule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateManagedNetworkSettingsRule()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/ManagedNetwork/createOrUpdateRule.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/ManagedNetwork/createOrUpdateRule.json
             // this example is just showing the usage of "ManagedNetworkSettingsRule_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -189,10 +182,10 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningOutboundRuleBasicCollection collection = machineLearningWorkspace.GetMachineLearningOutboundRuleBasics();
 
             // invoke the operation
-            string ruleName = "some_string";
+            string ruleName = "rule_name_1";
             MachineLearningOutboundRuleBasicData data = new MachineLearningOutboundRuleBasicData(new FqdnOutboundRule()
             {
-                Destination = "some_string",
+                Destination = "destination_endpoint",
                 Category = OutboundRuleCategory.UserDefined,
                 Status = OutboundRuleStatus.Active,
             });

@@ -45,6 +45,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             Status = options.Status;
             EnableBatchedOperations = options.EnableBatchedOperations;
             EnablePartitioning = options.EnablePartitioning;
+            SupportOrdering = options.SupportOrdering;
             if (options.UserMetadata != null)
             {
                 UserMetadata = options.UserMetadata;
@@ -201,7 +202,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>
         /// Gets or sets the maximum message size, in kilobytes, for messages sent to this topic.
         /// This feature is only available when using a Premium namespace and service version "2021-05" or higher.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging"/>
         /// </summary>
         public long? MaxMessageSizeInKilobytes { get; set; }
 

@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Mocking
 {
@@ -61,6 +58,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerGroupName"> The name of the container group. </param>
@@ -84,6 +89,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerGroupName"> The name of the container group. </param>
@@ -96,6 +109,75 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             return GetContainerGroups().Get(containerGroupName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ContainerGroupProfileResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ContainerGroupProfileResources and their operations over a ContainerGroupProfileResource. </returns>
+        public virtual ContainerGroupProfileCollection GetContainerGroupProfiles()
+        {
+            return GetCachedClient(client => new ContainerGroupProfileCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified container group profile in the specified subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerGroupProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="containerGroupProfileName"> The name of the container group profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerGroupProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerGroupProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerGroupProfileResource>> GetContainerGroupProfileAsync(string containerGroupProfileName, CancellationToken cancellationToken = default)
+        {
+            return await GetContainerGroupProfiles().GetAsync(containerGroupProfileName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified container group profile in the specified subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerGroupProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="containerGroupProfileName"> The name of the container group profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerGroupProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerGroupProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerGroupProfileResource> GetContainerGroupProfile(string containerGroupProfileName, CancellationToken cancellationToken = default)
+        {
+            return GetContainerGroupProfiles().Get(containerGroupProfileName, cancellationToken);
+        }
+
         /// <summary>
         /// Delete container group virtual network association links. The operation does not delete other resources provided by the user.
         /// <list type="bullet">
@@ -106,6 +188,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubnetServiceAssociationLink_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -147,6 +233,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubnetServiceAssociationLink_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

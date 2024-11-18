@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class TriggeredWebJobData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TriggeredWebJobData"/>. </summary>
         public TriggeredWebJobData()
         {
@@ -39,9 +71,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="webJobType"> Job type. </param>
         /// <param name="error"> Error information. </param>
         /// <param name="isUsingSdk"> Using SDK?. </param>
+        /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
+        /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
         /// <param name="settings"> Job settings. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggeredJobRun latestRun, Uri historyUri, Uri schedulerLogsUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, IDictionary<string, BinaryData> settings, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggeredJobRun latestRun, Uri historyUri, Uri schedulerLogsUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, string publicNetworkAccess, bool? isStorageAccountRequired, IDictionary<string, BinaryData> settings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LatestRun = latestRun;
             HistoryUri = historyUri;
@@ -52,28 +87,46 @@ namespace Azure.ResourceManager.AppService
             WebJobType = webJobType;
             Error = error;
             IsUsingSdk = isUsingSdk;
+            PublicNetworkAccess = publicNetworkAccess;
+            IsStorageAccountRequired = isStorageAccountRequired;
             Settings = settings;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Latest job run information. </summary>
+        [WirePath("properties.latest_run")]
         public TriggeredJobRun LatestRun { get; set; }
         /// <summary> History URL. </summary>
+        [WirePath("properties.history_url")]
         public Uri HistoryUri { get; set; }
         /// <summary> Scheduler Logs URL. </summary>
+        [WirePath("properties.scheduler_logs_url")]
         public Uri SchedulerLogsUri { get; set; }
         /// <summary> Run command. </summary>
+        [WirePath("properties.run_command")]
         public string RunCommand { get; set; }
         /// <summary> Job URL. </summary>
+        [WirePath("properties.url")]
         public Uri Uri { get; set; }
         /// <summary> Extra Info URL. </summary>
+        [WirePath("properties.extra_info_url")]
         public Uri ExtraInfoUri { get; set; }
         /// <summary> Job type. </summary>
+        [WirePath("properties.web_job_type")]
         public WebJobType? WebJobType { get; set; }
         /// <summary> Error information. </summary>
+        [WirePath("properties.error")]
         public string Error { get; set; }
         /// <summary> Using SDK?. </summary>
+        [WirePath("properties.using_sdk")]
         public bool? IsUsingSdk { get; set; }
+        /// <summary> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+        /// <summary> Checks if Customer provided storage account is required. </summary>
+        [WirePath("properties.storageAccountRequired")]
+        public bool? IsStorageAccountRequired { get; set; }
         /// <summary>
         /// Job settings.
         /// <para>
@@ -104,8 +157,10 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.settings")]
         public IDictionary<string, BinaryData> Settings { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

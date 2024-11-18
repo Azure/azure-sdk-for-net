@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_ResourceGroupCollection
     {
-        // Create or update a resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAResourceGroup()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/CreateResourceGroup.json

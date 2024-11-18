@@ -5,18 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class CustomClrFormatSerialization : IUtf8JsonSerializable
+    public partial class CustomClrFormatSerialization : IUtf8JsonSerializable, IJsonModel<CustomClrFormatSerialization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomClrFormatSerialization>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CustomClrFormatSerialization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(EventSerializationType.ToString());
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomClrFormatSerialization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomClrFormatSerialization)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SerializationDllPath))
@@ -30,18 +48,33 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStringValue(SerializationClassName);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static CustomClrFormatSerialization DeserializeCustomClrFormatSerialization(JsonElement element)
+        CustomClrFormatSerialization IJsonModel<CustomClrFormatSerialization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomClrFormatSerialization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomClrFormatSerialization)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomClrFormatSerialization(document.RootElement, options);
+        }
+
+        internal static CustomClrFormatSerialization DeserializeCustomClrFormatSerialization(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             EventSerializationType type = default;
-            Optional<string> serializationDllPath = default;
-            Optional<string> serializationClassName = default;
+            string serializationDllPath = default;
+            string serializationClassName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -71,8 +104,44 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomClrFormatSerialization(type, serializationDllPath.Value, serializationClassName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CustomClrFormatSerialization(type, serializedAdditionalRawData, serializationDllPath, serializationClassName);
         }
+
+        BinaryData IPersistableModel<CustomClrFormatSerialization>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomClrFormatSerialization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomClrFormatSerialization)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CustomClrFormatSerialization IPersistableModel<CustomClrFormatSerialization>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomClrFormatSerialization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomClrFormatSerialization(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomClrFormatSerialization)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomClrFormatSerialization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

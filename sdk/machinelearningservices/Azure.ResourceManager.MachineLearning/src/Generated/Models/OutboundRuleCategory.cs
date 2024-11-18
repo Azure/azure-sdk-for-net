@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string RequiredValue = "Required";
         private const string RecommendedValue = "Recommended";
         private const string UserDefinedValue = "UserDefined";
+        private const string DependencyValue = "Dependency";
 
         /// <summary> Required. </summary>
         public static OutboundRuleCategory Required { get; } = new OutboundRuleCategory(RequiredValue);
@@ -32,11 +33,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static OutboundRuleCategory Recommended { get; } = new OutboundRuleCategory(RecommendedValue);
         /// <summary> UserDefined. </summary>
         public static OutboundRuleCategory UserDefined { get; } = new OutboundRuleCategory(UserDefinedValue);
+        /// <summary> Dependency. </summary>
+        public static OutboundRuleCategory Dependency { get; } = new OutboundRuleCategory(DependencyValue);
         /// <summary> Determines if two <see cref="OutboundRuleCategory"/> values are the same. </summary>
         public static bool operator ==(OutboundRuleCategory left, OutboundRuleCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OutboundRuleCategory"/> values are not the same. </summary>
         public static bool operator !=(OutboundRuleCategory left, OutboundRuleCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OutboundRuleCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OutboundRuleCategory"/>. </summary>
         public static implicit operator OutboundRuleCategory(string value) => new OutboundRuleCategory(value);
 
         /// <inheritdoc />
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -3,6 +3,7 @@
 using System;
 using System.Threading;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
@@ -12,14 +13,14 @@ namespace Azure.Storage.DataMovement
     public class TransferItemFailedEventArgs : DataTransferEventArgs
     {
         /// <summary>
-        /// Gets the <see cref="StorageResourceItem"/> that was the source resource for the transfer.
+        /// Gets the <see cref="StorageResource"/> that was the source resource for the transfer.
         /// </summary>
-        public StorageResourceItem SourceResource { get; }
+        public StorageResource SourceResource { get; }
 
         /// <summary>
-        /// Gets the <see cref="StorageResourceItem"/> that was the destination resource for the transfer.
+        /// Gets the <see cref="StorageResource"/> that was the destination resource for the transfer.
         /// </summary>
-        public StorageResourceItem DestinationResource { get; }
+        public StorageResource DestinationResource { get; }
 
         /// <summary>
         /// Gets the <see cref="Exception"/> that was thrown during the job.
@@ -52,8 +53,8 @@ namespace Azure.Storage.DataMovement
         /// </exception>
         public TransferItemFailedEventArgs(
             string transferId,
-            StorageResourceItem sourceResource,
-            StorageResourceItem destinationResource,
+            StorageResource sourceResource,
+            StorageResource destinationResource,
             Exception exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)

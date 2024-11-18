@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor.Mocking
@@ -62,6 +59,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoscaleSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
@@ -84,6 +89,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoscaleSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +128,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>AlertRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AlertRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
@@ -137,6 +158,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AlertRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AlertRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +197,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>ActionGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ActionGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="actionGroupName"> The name of the action group. </param>
@@ -190,6 +227,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ActionGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ActionGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +266,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetricAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
@@ -243,6 +296,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetricAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,6 +335,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledQueryRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
@@ -296,6 +365,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledQueryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,6 +404,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
@@ -349,6 +434,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -380,6 +473,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>ActivityLogAlerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ActivityLogAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
@@ -402,6 +503,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ActivityLogAlerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ActivityLogAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -433,6 +542,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>DataCollectionEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataCollectionEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
@@ -455,6 +572,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataCollectionEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataCollectionEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -486,6 +611,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>DataCollectionRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataCollectionRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataCollectionRuleName"> The name of the data collection rule. The name is case insensitive. </param>
@@ -508,6 +641,14 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataCollectionRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataCollectionRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -539,9 +680,17 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureMonitorWorkspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitorWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace.  The name is case insensitive. </param>
+        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -562,9 +711,17 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureMonitorWorkspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitorWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace.  The name is case insensitive. </param>
+        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -572,6 +729,75 @@ namespace Azure.ResourceManager.Monitor.Mocking
         public virtual Response<MonitorWorkspaceResource> GetMonitorWorkspaceResource(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
             return GetMonitorWorkspaceResources().Get(azureMonitorWorkspaceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PipelineGroupResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PipelineGroupResources and their operations over a PipelineGroupResource. </returns>
+        public virtual PipelineGroupCollection GetPipelineGroups()
+        {
+            return GetCachedClient(client => new PipelineGroupCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Returns the specific pipeline group instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PipelineGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PipelineGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pipelineGroupName"> The name of pipeline group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PipelineGroupResource>> GetPipelineGroupAsync(string pipelineGroupName, CancellationToken cancellationToken = default)
+        {
+            return await GetPipelineGroups().GetAsync(pipelineGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the specific pipeline group instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PipelineGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PipelineGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pipelineGroupName"> The name of pipeline group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PipelineGroupResource> GetPipelineGroup(string pipelineGroupName, CancellationToken cancellationToken = default)
+        {
+            return GetPipelineGroups().Get(pipelineGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -584,6 +810,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopeOperationStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -619,6 +849,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopeOperationStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

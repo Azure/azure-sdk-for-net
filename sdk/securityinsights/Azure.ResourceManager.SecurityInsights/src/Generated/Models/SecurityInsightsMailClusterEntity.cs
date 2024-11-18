@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="networkMessageIds"> The mail message IDs that are part of the mail cluster. </param>
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="clusterQueryStartOn"> The cluster query start time. </param>
         /// <param name="clusterQueryEndOn"> The cluster query end time. </param>
         /// <param name="clusterGroup"> The cluster group. </param>
-        internal SecurityInsightsMailClusterEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IReadOnlyList<string> networkMessageIds, BinaryData countByDeliveryStatus, BinaryData countByThreatType, BinaryData countByProtectionStatus, IReadOnlyList<string> threats, string query, DateTimeOffset? queryOn, int? mailCount, bool? isVolumeAnomaly, string source, string clusterSourceIdentifier, string clusterSourceType, DateTimeOffset? clusterQueryStartOn, DateTimeOffset? clusterQueryEndOn, string clusterGroup) : base(id, name, resourceType, systemData, kind)
+        internal SecurityInsightsMailClusterEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IReadOnlyList<string> networkMessageIds, BinaryData countByDeliveryStatus, BinaryData countByThreatType, BinaryData countByProtectionStatus, IReadOnlyList<string> threats, string query, DateTimeOffset? queryOn, int? mailCount, bool? isVolumeAnomaly, string source, string clusterSourceIdentifier, string clusterSourceType, DateTimeOffset? clusterQueryStartOn, DateTimeOffset? clusterQueryEndOn, string clusterGroup) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
@@ -99,10 +100,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The mail message IDs that are part of the mail cluster. </summary>
+        [WirePath("properties.networkMessageIds")]
         public IReadOnlyList<string> NetworkMessageIds { get; }
         /// <summary>
         /// Count of mail messages by DeliveryStatus string representation
@@ -134,6 +138,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.countByDeliveryStatus")]
         public BinaryData CountByDeliveryStatus { get; }
         /// <summary>
         /// Count of mail messages by ThreatType string representation
@@ -165,6 +170,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.countByThreatType")]
         public BinaryData CountByThreatType { get; }
         /// <summary>
         /// Count of mail messages by ProtectionStatus string representation
@@ -196,28 +202,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.countByProtectionStatus")]
         public BinaryData CountByProtectionStatus { get; }
         /// <summary> The threats of mail messages that are part of the mail cluster. </summary>
+        [WirePath("properties.threats")]
         public IReadOnlyList<string> Threats { get; }
         /// <summary> The query that was used to identify the messages of the mail cluster. </summary>
+        [WirePath("properties.query")]
         public string Query { get; }
         /// <summary> The query time. </summary>
+        [WirePath("properties.queryTime")]
         public DateTimeOffset? QueryOn { get; }
         /// <summary> The number of mail messages that are part of the mail cluster. </summary>
+        [WirePath("properties.mailCount")]
         public int? MailCount { get; }
         /// <summary> Is this a volume anomaly mail cluster. </summary>
+        [WirePath("properties.isVolumeAnomaly")]
         public bool? IsVolumeAnomaly { get; }
         /// <summary> The source of the mail cluster (default is 'O365 ATP'). </summary>
+        [WirePath("properties.source")]
         public string Source { get; }
         /// <summary> The id of the cluster source. </summary>
+        [WirePath("properties.clusterSourceIdentifier")]
         public string ClusterSourceIdentifier { get; }
         /// <summary> The type of the cluster source. </summary>
+        [WirePath("properties.clusterSourceType")]
         public string ClusterSourceType { get; }
         /// <summary> The cluster query start time. </summary>
+        [WirePath("properties.clusterQueryStartTime")]
         public DateTimeOffset? ClusterQueryStartOn { get; }
         /// <summary> The cluster query end time. </summary>
+        [WirePath("properties.clusterQueryEndTime")]
         public DateTimeOffset? ClusterQueryEndOn { get; }
         /// <summary> The cluster group. </summary>
+        [WirePath("properties.clusterGroup")]
         public string ClusterGroup { get; }
     }
 }

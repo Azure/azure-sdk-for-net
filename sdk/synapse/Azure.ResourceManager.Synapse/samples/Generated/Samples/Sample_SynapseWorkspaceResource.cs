@@ -8,22 +8,19 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Synapse;
 using Azure.ResourceManager.Synapse.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Samples
 {
     public partial class Sample_SynapseWorkspaceResource
     {
-        // Replace all IP firewall rules in a workspace
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ReplaceAllIpFirewallRule_ReplaceAllIPFirewallRulesInAWorkspace()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/ReplaceAllIpFirewallRules.json
@@ -65,9 +62,8 @@ StartIPAddress = IPAddress.Parse("10.0.0.0"),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List usages metric for the workspace managed sql server
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetWorkspaceManagedSqlServerUsages_ListUsagesMetricForTheWorkspaceManagedSqlServer()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/ListWorkspaceManagedSqlServerUsages.json
@@ -92,12 +88,11 @@ StartIPAddress = IPAddress.Parse("10.0.0.0"),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a workspace
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAWorkspace()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/GetWorkspace.json
@@ -126,9 +121,8 @@ StartIPAddress = IPAddress.Parse("10.0.0.0"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a workspace
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAWorkspace()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/UpdateWorkspace.json
@@ -199,9 +193,8 @@ StartIPAddress = IPAddress.Parse("10.0.0.0"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a workspace
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAWorkspace()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/DeleteWorkspace.json
@@ -231,9 +224,8 @@ StartIPAddress = IPAddress.Parse("10.0.0.0"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List workspaces in subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSynapseWorkspaces_ListWorkspacesInSubscription()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/ListWorkspacesInSubscription.json
@@ -260,7 +252,7 @@ StartIPAddress = IPAddress.Parse("10.0.0.0"),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

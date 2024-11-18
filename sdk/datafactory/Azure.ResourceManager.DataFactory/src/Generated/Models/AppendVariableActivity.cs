@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -41,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             VariableName = variableName;
             Value = value;
             ActivityType = activityType ?? "AppendVariable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppendVariableActivity"/> for deserialization. </summary>
+        internal AppendVariableActivity()
+        {
         }
 
         /// <summary> Name of the variable whose value needs to be appended to. </summary>

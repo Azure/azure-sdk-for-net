@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -25,12 +26,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
         /// <param name="userManagedIdentities"> Gets or sets user-managed identities. </param>
         /// <param name="targetAvailabilityZone"> Gets or sets the target availability zone. </param>
         /// <param name="targetVmSize"> Gets or sets the target virtual machine size. </param>
         /// <param name="targetAvailabilitySetId"> Gets or sets the target availability set id for virtual machines not in an availability set at source. </param>
-        internal VirtualMachineResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName, IDictionary<string, string> tags, IList<ResourceIdentifier> userManagedIdentities, MoverTargetAvailabilityZone? targetAvailabilityZone, string targetVmSize, ResourceIdentifier targetAvailabilitySetId) : base(resourceType, targetResourceName, targetResourceGroupName)
+        internal VirtualMachineResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> tags, IList<ResourceIdentifier> userManagedIdentities, MoverTargetAvailabilityZone? targetAvailabilityZone, string targetVmSize, ResourceIdentifier targetAvailabilitySetId) : base(resourceType, targetResourceName, targetResourceGroupName, serializedAdditionalRawData)
         {
             Tags = tags;
             UserManagedIdentities = userManagedIdentities;

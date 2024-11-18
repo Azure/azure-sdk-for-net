@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
@@ -111,6 +109,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the integration runtime entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -143,6 +149,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,6 +191,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -188,7 +210,9 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation(response);
+                var uri = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -211,6 +235,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -222,7 +254,9 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation(response);
+                var uri = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,6 +278,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,6 +321,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The parameters for updating an integration runtime. </param>
@@ -313,6 +363,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_GetStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -342,6 +400,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_GetStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,6 +439,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_ListOutboundNetworkDependenciesEndpoints</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -380,7 +454,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual AsyncPageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint, _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(e), _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -394,6 +468,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_ListOutboundNetworkDependenciesEndpoints</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -401,7 +483,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual Pageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependencies(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint, _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(e), _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -414,6 +496,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_GetConnectionInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -445,6 +535,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_GetConnectionInfo</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -474,6 +572,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_RegenerateAuthKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -509,6 +615,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_RegenerateAuthKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The parameters for regenerating integration runtime authentication key. </param>
@@ -543,6 +657,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_ListAuthKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -573,6 +695,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_ListAuthKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -602,6 +732,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Start</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -637,6 +775,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -670,6 +816,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -705,6 +859,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -739,6 +901,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_SyncCredentials</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -768,6 +938,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_SyncCredentials</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -799,6 +977,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_GetMonitoringData</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -828,6 +1014,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_GetMonitoringData</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -859,6 +1053,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Upgrade</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -889,6 +1091,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Upgrade</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -918,6 +1128,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_RemoveLinks</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -953,6 +1171,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_RemoveLinks</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The data factory name for the linked integration runtime. </param>
@@ -986,6 +1212,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_CreateLinkedIntegrationRuntime</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1021,6 +1255,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_CreateLinkedIntegrationRuntime</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The linked integration runtime properties. </param>
@@ -1054,6 +1296,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimeObjectMetadata_Refresh</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1089,6 +1335,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimeObjectMetadata_Refresh</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1123,6 +1373,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimeObjectMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
@@ -1131,7 +1385,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual AsyncPageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadataAsync(GetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SsisObjectMetadata.DeserializeSsisObjectMetadata, _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SsisObjectMetadata.DeserializeSsisObjectMetadata(e), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1145,6 +1399,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimeObjectMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
@@ -1153,7 +1411,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual Pageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadata(GetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SsisObjectMetadata.DeserializeSsisObjectMetadata, _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SsisObjectMetadata.DeserializeSsisObjectMetadata(e), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1166,6 +1424,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimeNodes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1202,6 +1464,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimeNodes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="nodeName"> The integration runtime node name. </param>
@@ -1236,6 +1502,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimeNodes_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1272,6 +1542,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimeNodes_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="nodeName"> The integration runtime node name. </param>
@@ -1306,6 +1580,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimeNodes_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1344,6 +1622,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimeNodes_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="nodeName"> The integration runtime node name. </param>
@@ -1379,7 +1661,11 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IntegrationRuntimeNodes_GetIpAddress</description>
+        /// <description>IntegrationRuntimeNodes_GetIPAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1414,7 +1700,11 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IntegrationRuntimeNodes_GetIpAddress</description>
+        /// <description>IntegrationRuntimeNodes_GetIPAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>

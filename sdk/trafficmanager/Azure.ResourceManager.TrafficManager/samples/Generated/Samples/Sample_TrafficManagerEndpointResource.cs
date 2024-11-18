@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.TrafficManager;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.TrafficManager.Samples
 {
     public partial class Sample_TrafficManagerEndpointResource
     {
-        // Endpoint-PATCH-External-Target
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_EndpointPATCHExternalTarget()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-PATCH-External-Target.json
@@ -57,9 +54,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Endpoint-GET-External-WithGeoMapping
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_EndpointGETExternalWithGeoMapping()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-GET-External-WithGeoMapping.json
@@ -90,9 +86,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Endpoint-GET-External-WithLocation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_EndpointGETExternalWithLocation()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-GET-External-WithLocation.json
@@ -123,9 +118,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Endpoint-GET-External-WithSubnetMapping
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_EndpointGETExternalWithSubnetMapping()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-GET-External-WithSubnetMapping.json
@@ -156,9 +150,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Endpoint-DELETE-External
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_EndpointDELETEExternal()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Endpoint-DELETE-External.json
@@ -182,7 +175,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             // invoke the operation
             await trafficManagerEndpoint.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -5,17 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class KubeletConfig : IUtf8JsonSerializable
+    public partial class KubeletConfig : IUtf8JsonSerializable, IJsonModel<KubeletConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubeletConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KubeletConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubeletConfig)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(CpuManagerPolicy))
             {
                 writer.WritePropertyName("cpuManagerPolicy"u8);
@@ -76,26 +96,56 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("podMaxPids"u8);
                 writer.WriteNumberValue(PodMaxPids.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static KubeletConfig DeserializeKubeletConfig(JsonElement element)
+        KubeletConfig IJsonModel<KubeletConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubeletConfig)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubeletConfig(document.RootElement, options);
+        }
+
+        internal static KubeletConfig DeserializeKubeletConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> cpuManagerPolicy = default;
-            Optional<bool> cpuCfsQuota = default;
-            Optional<string> cpuCfsQuotaPeriod = default;
-            Optional<int> imageGcHighThreshold = default;
-            Optional<int> imageGcLowThreshold = default;
-            Optional<string> topologyManagerPolicy = default;
-            Optional<IList<string>> allowedUnsafeSysctls = default;
-            Optional<bool> failSwapOn = default;
-            Optional<int> containerLogMaxSizeMB = default;
-            Optional<int> containerLogMaxFiles = default;
-            Optional<int> podMaxPids = default;
+            string cpuManagerPolicy = default;
+            bool? cpuCfsQuota = default;
+            string cpuCfsQuotaPeriod = default;
+            int? imageGcHighThreshold = default;
+            int? imageGcLowThreshold = default;
+            string topologyManagerPolicy = default;
+            IList<string> allowedUnsafeSysctls = default;
+            bool? failSwapOn = default;
+            int? containerLogMaxSizeMB = default;
+            int? containerLogMaxFiles = default;
+            int? podMaxPids = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpuManagerPolicy"u8))
@@ -190,8 +240,285 @@ namespace Azure.ResourceManager.ContainerService.Models
                     podMaxPids = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KubeletConfig(cpuManagerPolicy.Value, Optional.ToNullable(cpuCfsQuota), cpuCfsQuotaPeriod.Value, Optional.ToNullable(imageGcHighThreshold), Optional.ToNullable(imageGcLowThreshold), topologyManagerPolicy.Value, Optional.ToList(allowedUnsafeSysctls), Optional.ToNullable(failSwapOn), Optional.ToNullable(containerLogMaxSizeMB), Optional.ToNullable(containerLogMaxFiles), Optional.ToNullable(podMaxPids));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KubeletConfig(
+                cpuManagerPolicy,
+                cpuCfsQuota,
+                cpuCfsQuotaPeriod,
+                imageGcHighThreshold,
+                imageGcLowThreshold,
+                topologyManagerPolicy,
+                allowedUnsafeSysctls ?? new ChangeTrackingList<string>(),
+                failSwapOn,
+                containerLogMaxSizeMB,
+                containerLogMaxFiles,
+                podMaxPids,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CpuManagerPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cpuManagerPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CpuManagerPolicy))
+                {
+                    builder.Append("  cpuManagerPolicy: ");
+                    if (CpuManagerPolicy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CpuManagerPolicy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CpuManagerPolicy}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsCpuCfsQuotaEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cpuCfsQuota: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsCpuCfsQuotaEnabled))
+                {
+                    builder.Append("  cpuCfsQuota: ");
+                    var boolValue = IsCpuCfsQuotaEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CpuCfsQuotaPeriod), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cpuCfsQuotaPeriod: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CpuCfsQuotaPeriod))
+                {
+                    builder.Append("  cpuCfsQuotaPeriod: ");
+                    if (CpuCfsQuotaPeriod.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CpuCfsQuotaPeriod}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CpuCfsQuotaPeriod}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImageGcHighThreshold), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  imageGcHighThreshold: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImageGcHighThreshold))
+                {
+                    builder.Append("  imageGcHighThreshold: ");
+                    builder.AppendLine($"{ImageGcHighThreshold.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImageGcLowThreshold), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  imageGcLowThreshold: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImageGcLowThreshold))
+                {
+                    builder.Append("  imageGcLowThreshold: ");
+                    builder.AppendLine($"{ImageGcLowThreshold.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TopologyManagerPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  topologyManagerPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TopologyManagerPolicy))
+                {
+                    builder.Append("  topologyManagerPolicy: ");
+                    if (TopologyManagerPolicy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TopologyManagerPolicy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TopologyManagerPolicy}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedUnsafeSysctls), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allowedUnsafeSysctls: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedUnsafeSysctls))
+                {
+                    if (AllowedUnsafeSysctls.Any())
+                    {
+                        builder.Append("  allowedUnsafeSysctls: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedUnsafeSysctls)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailStartWithSwapOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  failSwapOn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailStartWithSwapOn))
+                {
+                    builder.Append("  failSwapOn: ");
+                    var boolValue = FailStartWithSwapOn.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerLogMaxSizeInMB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  containerLogMaxSizeMB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerLogMaxSizeInMB))
+                {
+                    builder.Append("  containerLogMaxSizeMB: ");
+                    builder.AppendLine($"{ContainerLogMaxSizeInMB.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerLogMaxFiles), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  containerLogMaxFiles: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerLogMaxFiles))
+                {
+                    builder.Append("  containerLogMaxFiles: ");
+                    builder.AppendLine($"{ContainerLogMaxFiles.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PodMaxPids), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  podMaxPids: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PodMaxPids))
+                {
+                    builder.Append("  podMaxPids: ");
+                    builder.AppendLine($"{PodMaxPids.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<KubeletConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(KubeletConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KubeletConfig IPersistableModel<KubeletConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKubeletConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubeletConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubeletConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
@@ -31,7 +32,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The <see cref="TransferManager"/> responsible for this transfer.
         /// </summary>
-        public TransferManager TransferManager { get; }
+        public TransferManager TransferManager { get; internal set; }
 
         /// <summary>
         /// Defines the current state of the transfer.
@@ -49,18 +50,14 @@ namespace Azure.Storage.DataMovement
         /// Constructing a DataTransfer object.
         /// </summary>
         /// <param name="id">The transfer ID of the transfer object.</param>
-        /// <param name="transferManager">Reference to the transfer manager running this transfer.</param>
         /// <param name="status">The Transfer Status of the Transfer. See <see cref="DataTransferStatus"/>.</param>
         internal DataTransfer(
             string id,
-            TransferManager transferManager,
             DataTransferStatus status = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(transferManager, nameof(transferManager));
             status ??= new DataTransferStatus();
             _state = new DataTransferInternalState(id, status);
-            TransferManager = transferManager;
         }
 
         /// <summary>

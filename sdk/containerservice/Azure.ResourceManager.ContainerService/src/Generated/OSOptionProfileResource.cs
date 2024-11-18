@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerService
@@ -100,6 +98,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_GetOSOptions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OSOptionProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
@@ -132,6 +138,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_GetOSOptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OSOptionProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

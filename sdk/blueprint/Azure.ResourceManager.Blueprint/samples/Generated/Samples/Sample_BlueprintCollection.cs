@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Blueprint;
 using Azure.ResourceManager.Blueprint.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Blueprint.Samples
 {
     public partial class Sample_BlueprintCollection
     {
-        // ManagementGroupBlueprint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ManagementGroupBlueprint()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPDef/Blueprint_Create.json
@@ -79,9 +76,8 @@ Description = "Contains storageAccounts that collect all shoebox logs.",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ResourceGroupWithTags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ResourceGroupWithTags()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/ResourceGroupWithTags.json
@@ -131,9 +127,8 @@ DisplayName = "My Resource Group",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SubscriptionBlueprint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SubscriptionBlueprint()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPDef/Blueprint_Create.json
@@ -192,9 +187,8 @@ Description = "Contains storageAccounts that collect all shoebox logs.",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ManagementGroupBlueprint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ManagementGroupBlueprint()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPDef/Blueprint_Get.json
@@ -224,9 +218,8 @@ Description = "Contains storageAccounts that collect all shoebox logs.",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ManagementGroupBlueprint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ManagementGroupBlueprint()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPDef/Blueprint_Get.json
@@ -252,9 +245,8 @@ Description = "Contains storageAccounts that collect all shoebox logs.",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ManagementGroupBlueprint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ManagementGroupBlueprint()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPDef/Blueprint_Get.json
@@ -280,7 +272,7 @@ Description = "Contains storageAccounts that collect all shoebox logs.",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -292,9 +284,8 @@ Description = "Contains storageAccounts that collect all shoebox logs.",
             }
         }
 
-        // SubscriptionBlueprint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SubscriptionBlueprint()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPDef/Blueprint_Get.json
@@ -324,9 +315,8 @@ Description = "Contains storageAccounts that collect all shoebox logs.",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SubscriptionBlueprint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_SubscriptionBlueprint()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPDef/Blueprint_Get.json
@@ -352,9 +342,8 @@ Description = "Contains storageAccounts that collect all shoebox logs.",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SubscriptionBlueprint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SubscriptionBlueprint()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPDef/Blueprint_Get.json
@@ -380,7 +369,7 @@ Description = "Contains storageAccounts that collect all shoebox logs.",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -392,9 +381,8 @@ Description = "Contains storageAccounts that collect all shoebox logs.",
             }
         }
 
-        // ManagementGroupBlueprint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ManagementGroupBlueprint()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPDef/Blueprint_List.json
@@ -423,12 +411,11 @@ Description = "Contains storageAccounts that collect all shoebox logs.",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SubscriptionBlueprint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SubscriptionBlueprint()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPDef/Blueprint_List.json
@@ -457,7 +444,7 @@ Description = "Contains storageAccounts that collect all shoebox logs.",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

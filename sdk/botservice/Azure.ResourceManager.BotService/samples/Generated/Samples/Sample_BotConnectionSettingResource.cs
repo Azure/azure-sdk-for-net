@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.BotService;
 using Azure.ResourceManager.BotService.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.BotService.Samples
 {
     public partial class Sample_BotConnectionSettingResource
     {
-        // List Auth Service Providers
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBotConnectionServiceProviders_ListAuthServiceProviders()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/ListServiceProviders.json
@@ -44,12 +41,11 @@ namespace Azure.ResourceManager.BotService.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List Connection Setting With Secrets
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetWithSecrets_ListConnectionSettingWithSecrets()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetConnection.json
@@ -79,9 +75,8 @@ namespace Azure.ResourceManager.BotService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Connection Setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateConnectionSetting()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/UpdateConnection.json
@@ -135,9 +130,8 @@ Value = "value2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Connection Setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetConnectionSetting()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetConnection.json
@@ -167,9 +161,8 @@ Value = "value2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Connection Setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteConnectionSetting()
         {
             // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/DeleteConnection.json
@@ -192,7 +185,7 @@ Value = "value2",
             // invoke the operation
             await botConnectionSetting.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

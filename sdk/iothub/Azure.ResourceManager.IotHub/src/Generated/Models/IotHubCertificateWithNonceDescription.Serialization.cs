@@ -5,27 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubCertificateWithNonceDescription
+    public partial class IotHubCertificateWithNonceDescription : IUtf8JsonSerializable, IJsonModel<IotHubCertificateWithNonceDescription>
     {
-        internal static IotHubCertificateWithNonceDescription DeserializeIotHubCertificateWithNonceDescription(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubCertificateWithNonceDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<IotHubCertificateWithNonceDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubCertificateWithNonceDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotHubCertificateWithNonceDescription)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+        }
+
+        IotHubCertificateWithNonceDescription IJsonModel<IotHubCertificateWithNonceDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubCertificateWithNonceDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotHubCertificateWithNonceDescription)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubCertificateWithNonceDescription(document.RootElement, options);
+        }
+
+        internal static IotHubCertificateWithNonceDescription DeserializeIotHubCertificateWithNonceDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IotHubCertificatePropertiesWithNonce> properties = default;
-            Optional<ETag> etag = default;
+            IotHubCertificatePropertiesWithNonce properties = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -34,7 +84,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    properties = IotHubCertificatePropertiesWithNonce.DeserializeIotHubCertificatePropertiesWithNonce(property.Value);
+                    properties = IotHubCertificatePropertiesWithNonce.DeserializeIotHubCertificatePropertiesWithNonce(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -70,8 +120,51 @@ namespace Azure.ResourceManager.IotHub.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IotHubCertificateWithNonceDescription(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IotHubCertificateWithNonceDescription(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                etag,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IotHubCertificateWithNonceDescription>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubCertificateWithNonceDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IotHubCertificateWithNonceDescription)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IotHubCertificateWithNonceDescription IPersistableModel<IotHubCertificateWithNonceDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubCertificateWithNonceDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIotHubCertificateWithNonceDescription(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotHubCertificateWithNonceDescription)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IotHubCertificateWithNonceDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

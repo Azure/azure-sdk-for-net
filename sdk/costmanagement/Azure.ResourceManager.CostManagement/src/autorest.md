@@ -14,7 +14,7 @@ sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
   skipped-operations:
-  - BenefitRecommendations_List 
+  - BenefitRecommendations_List
   - Forecast_Usage
   - Dimensions_List
   - Query_Usage
@@ -22,6 +22,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 # mgmt-debug:
 #   show-serialized-names: true
@@ -63,6 +64,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
 
 request-path-to-resource-name:
   /providers/Microsoft.CostManagement/views/{viewName}: TenantsCostManagementViews
@@ -122,14 +124,17 @@ rename-mapping:
   Dimension.properties.groupingEnabled: IsGroupingEnabled
   KpiProperties.enabled: IsEnabled
   CheckNameAvailabilityRequest: CostManagementNameAvailabilityContent
-  CheckNameAvailabilityResponse: CostManagementNameAvailabilityResult  
+  CheckNameAvailabilityResponse: CostManagementNameAvailabilityResult
   CheckNameAvailabilityReason: CostManagementUnavailabilityReason
   BenefitUtilizationSummariesRequest: BenefitUtilizationSummariesContent
   GrainParameter: GrainContent
   AlertPropertiesDefinition.type: AlertType
 
+suppress-abstract-base-class:
+- BenefitUtilizationSummary
+
 directive:
-  # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX 
+  # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX
   - remove-operation: Views_List
   - remove-operation: ScheduledActions_List
   # [Build Error][LRO issue] Return 'Response' instead of 'Response<Foo>'

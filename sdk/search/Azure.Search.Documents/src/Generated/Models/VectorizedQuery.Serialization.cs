@@ -40,6 +40,26 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("exhaustive"u8);
                 writer.WriteBooleanValue(Exhaustive.Value);
             }
+            if (Optional.IsDefined(Oversampling))
+            {
+                writer.WritePropertyName("oversampling"u8);
+                writer.WriteNumberValue(Oversampling.Value);
+            }
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
+            if (Optional.IsDefined(Threshold))
+            {
+                writer.WritePropertyName("threshold"u8);
+                writer.WriteObjectValue(Threshold);
+            }
+            if (Optional.IsDefined(FilterOverride))
+            {
+                writer.WritePropertyName("filterOverride"u8);
+                writer.WriteStringValue(FilterOverride);
+            }
             writer.WriteEndObject();
         }
 
@@ -51,9 +71,13 @@ namespace Azure.Search.Documents.Models
             }
             ReadOnlyMemory<float> vector = default;
             VectorQueryKind kind = default;
-            Optional<int> k = default;
-            Optional<string> fields = default;
-            Optional<bool> exhaustive = default;
+            int? k = default;
+            string fields = default;
+            bool? exhaustive = default;
+            double? oversampling = default;
+            float? weight = default;
+            VectorThreshold threshold = default;
+            string filterOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vector"u8))
@@ -100,8 +124,65 @@ namespace Azure.Search.Documents.Models
                     exhaustive = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("oversampling"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    oversampling = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("weight"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    weight = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("threshold"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    threshold = VectorThreshold.DeserializeVectorThreshold(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("filterOverride"u8))
+                {
+                    filterOverride = property.Value.GetString();
+                    continue;
+                }
             }
-            return new VectorizedQuery(kind, Optional.ToNullable(k), fields.Value, Optional.ToNullable(exhaustive), vector);
+            return new VectorizedQuery(
+                kind,
+                k,
+                fields,
+                exhaustive,
+                oversampling,
+                weight,
+                threshold,
+                filterOverride,
+                vector);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new VectorizedQuery FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVectorizedQuery(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

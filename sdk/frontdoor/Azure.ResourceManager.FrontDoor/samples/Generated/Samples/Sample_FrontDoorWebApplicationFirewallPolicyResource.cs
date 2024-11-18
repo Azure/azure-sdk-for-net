@@ -7,23 +7,52 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.FrontDoor.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.FrontDoor.Samples
 {
     public partial class Sample_FrontDoorWebApplicationFirewallPolicyResource
     {
-        // Get Policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicy_GetAllPoliciesInAResourceGroup()
+        {
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafListPoliciesUnderSubscription.json
+            // this example is just showing the usage of "Policies_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "subid";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (FrontDoorWebApplicationFirewallPolicyResource item in subscriptionResource.GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicyAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                FrontDoorWebApplicationFirewallPolicyData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPolicy()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2022-05-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "Policies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,12 +78,11 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patches specific policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchesSpecificPolicy()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2022-05-01/examples/WafPolicyPatch.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafPolicyPatch.json
             // this example is just showing the usage of "Policies_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,12 +117,11 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete protection policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteProtectionPolicy()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2022-05-01/examples/WafPolicyDelete.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafPolicyDelete.json
             // this example is just showing the usage of "Policies_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,7 +140,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             // invoke the operation
             await frontDoorWebApplicationFirewallPolicy.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

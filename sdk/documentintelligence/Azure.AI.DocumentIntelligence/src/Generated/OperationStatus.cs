@@ -26,6 +26,7 @@ namespace Azure.AI.DocumentIntelligence
         private const string RunningValue = "running";
         private const string FailedValue = "failed";
         private const string SucceededValue = "succeeded";
+        private const string CompletedValue = "completed";
         private const string CanceledValue = "canceled";
 
         /// <summary> The operation has not started yet. </summary>
@@ -36,13 +37,15 @@ namespace Azure.AI.DocumentIntelligence
         public static OperationStatus Failed { get; } = new OperationStatus(FailedValue);
         /// <summary> The operation has succeeded. </summary>
         public static OperationStatus Succeeded { get; } = new OperationStatus(SucceededValue);
+        /// <summary> The operation has completed. </summary>
+        public static OperationStatus Completed { get; } = new OperationStatus(CompletedValue);
         /// <summary> The operation has been canceled. </summary>
         public static OperationStatus Canceled { get; } = new OperationStatus(CanceledValue);
         /// <summary> Determines if two <see cref="OperationStatus"/> values are the same. </summary>
         public static bool operator ==(OperationStatus left, OperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationStatus"/> values are not the same. </summary>
         public static bool operator !=(OperationStatus left, OperationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OperationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationStatus"/>. </summary>
         public static implicit operator OperationStatus(string value) => new OperationStatus(value);
 
         /// <inheritdoc />
@@ -53,7 +56,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

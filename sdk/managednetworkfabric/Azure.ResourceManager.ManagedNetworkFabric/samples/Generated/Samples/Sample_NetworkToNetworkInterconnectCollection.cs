@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkToNetworkInterconnectCollection
     {
-        // NetworkToNetworkInterconnects_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NetworkToNetworkInterconnectsCreateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_Create_MaximumSet_Gen.json
@@ -58,7 +55,7 @@ new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/reso
                 },
                 OptionBLayer3Configuration = new NetworkToNetworkInterconnectOptionBLayer3Configuration()
                 {
-                    PeerAsn = 61234,
+                    PeerAsn = 61234L,
                     VlanId = 1234,
                     PrimaryIPv4Prefix = "10.0.0.12/30",
                     PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
@@ -110,9 +107,8 @@ new StaticRouteProperties("3FFE:FFFF:0:CD30::ac/127",new string[]
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkToNetworkInterconnects_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkToNetworkInterconnectsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_Get_MaximumSet_Gen.json
@@ -145,9 +141,8 @@ new StaticRouteProperties("3FFE:FFFF:0:CD30::ac/127",new string[]
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkToNetworkInterconnects_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_NetworkToNetworkInterconnectsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_Get_MaximumSet_Gen.json
@@ -176,9 +171,8 @@ new StaticRouteProperties("3FFE:FFFF:0:CD30::ac/127",new string[]
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkToNetworkInterconnects_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NetworkToNetworkInterconnectsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_Get_MaximumSet_Gen.json
@@ -207,7 +201,7 @@ new StaticRouteProperties("3FFE:FFFF:0:CD30::ac/127",new string[]
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -219,9 +213,8 @@ new StaticRouteProperties("3FFE:FFFF:0:CD30::ac/127",new string[]
             }
         }
 
-        // NetworkToNetworkInterconnects_ListByNetworkFabric_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_NetworkToNetworkInterconnectsListByNetworkFabricMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_ListByNetworkFabric_MaximumSet_Gen.json
@@ -253,7 +246,7 @@ new StaticRouteProperties("3FFE:FFFF:0:CD30::ac/127",new string[]
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

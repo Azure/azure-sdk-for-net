@@ -6,17 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class DpmBackupJob : IUtf8JsonSerializable
+    public partial class DpmBackupJob : IUtf8JsonSerializable, IJsonModel<DpmBackupJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DpmBackupJob>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DpmBackupJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DpmBackupJob)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
@@ -58,77 +76,55 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue(ExtendedInfo, options);
             }
-            if (Optional.IsDefined(EntityFriendlyName))
-            {
-                writer.WritePropertyName("entityFriendlyName"u8);
-                writer.WriteStringValue(EntityFriendlyName);
-            }
-            if (Optional.IsDefined(BackupManagementType))
-            {
-                writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
-            }
-            if (Optional.IsDefined(Operation))
-            {
-                writer.WritePropertyName("operation"u8);
-                writer.WriteStringValue(Operation);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
-            }
-            if (Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
-            }
-            if (Optional.IsDefined(EndOn))
-            {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
-            }
-            if (Optional.IsDefined(ActivityId))
-            {
-                writer.WritePropertyName("activityId"u8);
-                writer.WriteStringValue(ActivityId);
-            }
-            writer.WritePropertyName("jobType"u8);
-            writer.WriteStringValue(JobType);
-            writer.WriteEndObject();
         }
 
-        internal static DpmBackupJob DeserializeDpmBackupJob(JsonElement element)
+        DpmBackupJob IJsonModel<DpmBackupJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DpmBackupJob)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDpmBackupJob(document.RootElement, options);
+        }
+
+        internal static DpmBackupJob DeserializeDpmBackupJob(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<TimeSpan> duration = default;
-            Optional<string> dpmServerName = default;
-            Optional<string> containerName = default;
-            Optional<string> containerType = default;
-            Optional<string> workloadType = default;
-            Optional<IList<JobSupportedAction>> actionsInfo = default;
-            Optional<IList<DpmErrorInfo>> errorDetails = default;
-            Optional<DpmBackupJobExtendedInfo> extendedInfo = default;
-            Optional<string> entityFriendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> operation = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> activityId = default;
+            TimeSpan? duration = default;
+            string dpmServerName = default;
+            string containerName = default;
+            string containerType = default;
+            string workloadType = default;
+            IList<JobSupportedAction> actionsInfo = default;
+            IList<DpmErrorInfo> errorDetails = default;
+            DpmBackupJobExtendedInfo extendedInfo = default;
+            string entityFriendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string operation = default;
+            string status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string activityId = default;
             string jobType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("duration"u8))
@@ -183,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DpmErrorInfo> array = new List<DpmErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DpmErrorInfo.DeserializeDpmErrorInfo(item));
+                        array.Add(DpmErrorInfo.DeserializeDpmErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -194,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = DpmBackupJobExtendedInfo.DeserializeDpmBackupJobExtendedInfo(property.Value);
+                    extendedInfo = DpmBackupJobExtendedInfo.DeserializeDpmBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("entityFriendlyName"u8))
@@ -249,8 +245,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     jobType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DpmBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, Optional.ToNullable(duration), dpmServerName.Value, containerName.Value, containerType.Value, workloadType.Value, Optional.ToList(actionsInfo), Optional.ToList(errorDetails), extendedInfo.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DpmBackupJob(
+                entityFriendlyName,
+                backupManagementType,
+                operation,
+                status,
+                startTime,
+                endTime,
+                activityId,
+                jobType,
+                serializedAdditionalRawData,
+                duration,
+                dpmServerName,
+                containerName,
+                containerType,
+                workloadType,
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                errorDetails ?? new ChangeTrackingList<DpmErrorInfo>(),
+                extendedInfo);
         }
+
+        BinaryData IPersistableModel<DpmBackupJob>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DpmBackupJob)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DpmBackupJob IPersistableModel<DpmBackupJob>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDpmBackupJob(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DpmBackupJob)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DpmBackupJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

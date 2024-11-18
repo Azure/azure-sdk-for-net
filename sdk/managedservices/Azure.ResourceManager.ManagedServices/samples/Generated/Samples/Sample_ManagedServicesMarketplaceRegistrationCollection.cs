@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedServices;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedServices.Samples
 {
     public partial class Sample_ManagedServicesMarketplaceRegistrationCollection
     {
-        // Get Registration Definitions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetRegistrationDefinitions()
         {
             // Generated from example definition: specification/managedservices/resource-manager/Microsoft.ManagedServices/stable/2022-10-01/examples/GetMarketplaceRegistrationDefinitions.json
@@ -49,12 +46,11 @@ namespace Azure.ResourceManager.ManagedServices.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Registration Definitions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRegistrationDefinitions()
         {
             // Generated from example definition: specification/managedservices/resource-manager/Microsoft.ManagedServices/stable/2022-10-01/examples/GetMarketplaceRegistrationDefinition.json
@@ -84,9 +80,8 @@ namespace Azure.ResourceManager.ManagedServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Registration Definitions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetRegistrationDefinitions()
         {
             // Generated from example definition: specification/managedservices/resource-manager/Microsoft.ManagedServices/stable/2022-10-01/examples/GetMarketplaceRegistrationDefinition.json
@@ -112,9 +107,8 @@ namespace Azure.ResourceManager.ManagedServices.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Registration Definitions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetRegistrationDefinitions()
         {
             // Generated from example definition: specification/managedservices/resource-manager/Microsoft.ManagedServices/stable/2022-10-01/examples/GetMarketplaceRegistrationDefinition.json
@@ -140,7 +134,7 @@ namespace Azure.ResourceManager.ManagedServices.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

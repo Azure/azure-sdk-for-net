@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.ManagementGroups
     /// </summary>
     public partial class ManagementGroupData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ManagementGroupData"/>. </summary>
         internal ManagementGroupData()
         {
@@ -34,21 +66,27 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="displayName"> The friendly name of the management group. </param>
         /// <param name="details"> The details of a management group. </param>
         /// <param name="children"> The list of children. </param>
-        internal ManagementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string displayName, ManagementGroupInfo details, IReadOnlyList<ManagementGroupChildInfo> children) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string displayName, ManagementGroupInfo details, IReadOnlyList<ManagementGroupChildInfo> children, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TenantId = tenantId;
             DisplayName = displayName;
             Details = details;
             Children = children;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; }
         /// <summary> The friendly name of the management group. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> The details of a management group. </summary>
+        [WirePath("properties.details")]
         public ManagementGroupInfo Details { get; }
         /// <summary> The list of children. </summary>
+        [WirePath("properties.children")]
         public IReadOnlyList<ManagementGroupChildInfo> Children { get; }
     }
 }

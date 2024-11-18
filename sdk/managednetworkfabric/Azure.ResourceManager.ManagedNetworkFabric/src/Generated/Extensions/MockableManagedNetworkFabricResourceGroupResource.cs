@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>AccessControlLists_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricAccessControlListResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessControlListName"> Name of the Access Control List. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AccessControlLists_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricAccessControlListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +120,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>InternetGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricInternetGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
@@ -129,6 +150,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InternetGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricInternetGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +189,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>InternetGatewayRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricInternetGatewayRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
@@ -182,6 +219,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InternetGatewayRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricInternetGatewayRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +258,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>IpCommunities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
@@ -235,6 +288,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpCommunities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +327,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>IpExtendedCommunities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricIPExtendedCommunityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
@@ -288,6 +357,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpExtendedCommunities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricIPExtendedCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,6 +396,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>IpPrefixes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
@@ -341,6 +426,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpPrefixes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +465,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>L2IsolationDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricL2IsolationDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
@@ -394,6 +495,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>L2IsolationDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricL2IsolationDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,6 +534,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>L3IsolationDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
@@ -447,6 +564,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>L3IsolationDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -478,6 +603,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NeighborGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricNeighborGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="neighborGroupName"> Name of the Neighbor Group. </param>
@@ -500,6 +633,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NeighborGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricNeighborGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -531,6 +672,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkDevices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkDeviceName"> Name of the Network Device. </param>
@@ -553,6 +702,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkDevices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -584,6 +741,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkFabricControllerName"> Name of the Network Fabric Controller. </param>
@@ -606,6 +771,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -637,6 +810,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFabrics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkFabricName"> Name of the Network Fabric. </param>
@@ -659,6 +840,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFabrics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -690,6 +879,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkPacketBrokers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkPacketBrokerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkPacketBrokerName"> Name of the Network Packet Broker. </param>
@@ -712,6 +909,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkPacketBrokers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkPacketBrokerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -743,6 +948,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkRacks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkRackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkRackName"> Name of the Network Rack. </param>
@@ -765,6 +978,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkRacks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkRackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -796,6 +1017,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkTapRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
@@ -818,6 +1047,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkTapRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -849,6 +1086,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkTaps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTapName"> Name of the Network Tap. </param>
@@ -871,6 +1116,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkTaps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -902,6 +1155,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>RoutePolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routePolicyName"> Name of the Route Policy. </param>
@@ -924,6 +1185,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoutePolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

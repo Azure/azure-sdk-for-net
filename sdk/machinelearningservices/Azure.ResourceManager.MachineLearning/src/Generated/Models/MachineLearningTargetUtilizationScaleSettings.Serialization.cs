@@ -6,26 +6,36 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningTargetUtilizationScaleSettings : IUtf8JsonSerializable
+    public partial class MachineLearningTargetUtilizationScaleSettings : IUtf8JsonSerializable, IJsonModel<MachineLearningTargetUtilizationScaleSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningTargetUtilizationScaleSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningTargetUtilizationScaleSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxInstances))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTargetUtilizationScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("maxInstances"u8);
-                writer.WriteNumberValue(MaxInstances.Value);
+                throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(MinInstances))
-            {
-                writer.WritePropertyName("minInstances"u8);
-                writer.WriteNumberValue(MinInstances.Value);
-            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(PollingInterval))
             {
                 writer.WritePropertyName("pollingInterval"u8);
@@ -36,42 +46,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("targetUtilizationPercentage"u8);
                 writer.WriteNumberValue(TargetUtilizationPercentage.Value);
             }
-            writer.WritePropertyName("scaleType"u8);
-            writer.WriteStringValue(ScaleType.ToString());
-            writer.WriteEndObject();
+            if (Optional.IsDefined(MinInstances))
+            {
+                writer.WritePropertyName("minInstances"u8);
+                writer.WriteNumberValue(MinInstances.Value);
+            }
+            if (Optional.IsDefined(MaxInstances))
+            {
+                writer.WritePropertyName("maxInstances"u8);
+                writer.WriteNumberValue(MaxInstances.Value);
+            }
         }
 
-        internal static MachineLearningTargetUtilizationScaleSettings DeserializeMachineLearningTargetUtilizationScaleSettings(JsonElement element)
+        MachineLearningTargetUtilizationScaleSettings IJsonModel<MachineLearningTargetUtilizationScaleSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTargetUtilizationScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningTargetUtilizationScaleSettings(document.RootElement, options);
+        }
+
+        internal static MachineLearningTargetUtilizationScaleSettings DeserializeMachineLearningTargetUtilizationScaleSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> maxInstances = default;
-            Optional<int> minInstances = default;
-            Optional<TimeSpan> pollingInterval = default;
-            Optional<int> targetUtilizationPercentage = default;
+            TimeSpan? pollingInterval = default;
+            int? targetUtilizationPercentage = default;
+            int? minInstances = default;
+            int? maxInstances = default;
             ScaleType scaleType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxInstances"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxInstances = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("minInstances"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    minInstances = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("pollingInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -90,13 +105,163 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     targetUtilizationPercentage = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("minInstances"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minInstances = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maxInstances"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxInstances = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("scaleType"u8))
                 {
                     scaleType = new ScaleType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningTargetUtilizationScaleSettings(scaleType, Optional.ToNullable(maxInstances), Optional.ToNullable(minInstances), Optional.ToNullable(pollingInterval), Optional.ToNullable(targetUtilizationPercentage));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningTargetUtilizationScaleSettings(
+                scaleType,
+                serializedAdditionalRawData,
+                pollingInterval,
+                targetUtilizationPercentage,
+                minInstances,
+                maxInstances);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PollingInterval), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pollingInterval: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PollingInterval))
+                {
+                    builder.Append("  pollingInterval: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(PollingInterval.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetUtilizationPercentage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetUtilizationPercentage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetUtilizationPercentage))
+                {
+                    builder.Append("  targetUtilizationPercentage: ");
+                    builder.AppendLine($"{TargetUtilizationPercentage.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinInstances), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minInstances: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinInstances))
+                {
+                    builder.Append("  minInstances: ");
+                    builder.AppendLine($"{MinInstances.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxInstances), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxInstances: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxInstances))
+                {
+                    builder.Append("  maxInstances: ");
+                    builder.AppendLine($"{MaxInstances.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scaleType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  scaleType: ");
+                builder.AppendLine($"'{ScaleType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningTargetUtilizationScaleSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTargetUtilizationScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningTargetUtilizationScaleSettings IPersistableModel<MachineLearningTargetUtilizationScaleSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTargetUtilizationScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningTargetUtilizationScaleSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningTargetUtilizationScaleSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

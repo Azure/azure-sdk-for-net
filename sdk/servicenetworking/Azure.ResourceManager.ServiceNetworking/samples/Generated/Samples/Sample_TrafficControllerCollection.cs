@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.ServiceNetworking;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceNetworking.Samples
 {
     public partial class Sample_TrafficControllerCollection
     {
-        // Get Traffic Controllers
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetTrafficControllers()
         {
             // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2023-11-01/examples/TrafficControllersGet.json
@@ -51,12 +48,11 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Traffic Controller
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTrafficController()
         {
             // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2023-11-01/examples/TrafficControllerGet.json
@@ -88,9 +84,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Traffic Controller
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetTrafficController()
         {
             // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2023-11-01/examples/TrafficControllerGet.json
@@ -118,9 +113,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Traffic Controller
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetTrafficController()
         {
             // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2023-11-01/examples/TrafficControllerGet.json
@@ -148,7 +142,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -160,9 +154,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             }
         }
 
-        // Put Traffic Controller
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutTrafficController()
         {
             // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2023-11-01/examples/TrafficControllerPut.json

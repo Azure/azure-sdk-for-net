@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(QueryOperatorType left, QueryOperatorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryOperatorType"/> values are not the same. </summary>
         public static bool operator !=(QueryOperatorType left, QueryOperatorType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QueryOperatorType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryOperatorType"/>. </summary>
         public static implicit operator QueryOperatorType(string value) => new QueryOperatorType(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

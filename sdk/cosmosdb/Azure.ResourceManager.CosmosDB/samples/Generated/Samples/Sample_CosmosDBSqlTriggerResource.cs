@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.CosmosDB.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
     public partial class Sample_CosmosDBSqlTriggerResource
     {
-        // CosmosDBSqlTriggerGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CosmosDBSqlTriggerGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlTriggerGet.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBSqlTriggerGet.json
             // this example is just showing the usage of "SqlResources_GetSqlTrigger" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,12 +49,11 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBSqlTriggerCreateUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CosmosDBSqlTriggerCreateUpdate()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlTriggerCreateUpdate.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBSqlTriggerCreateUpdate.json
             // this example is just showing the usage of "SqlResources_CreateUpdateSqlTrigger" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,12 +92,11 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBSqlTriggerDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_CosmosDBSqlTriggerDelete()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlTriggerDelete.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBSqlTriggerDelete.json
             // this example is just showing the usage of "SqlResources_DeleteSqlTrigger" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // invoke the operation
             await cosmosDBSqlTrigger.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

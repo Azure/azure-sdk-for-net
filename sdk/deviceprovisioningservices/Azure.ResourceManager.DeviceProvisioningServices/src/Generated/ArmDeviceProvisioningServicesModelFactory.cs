@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.DeviceProvisioningServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
@@ -28,7 +26,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServicesCertificateData"/> instance for mocking. </returns>
         public static DeviceProvisioningServicesCertificateData DeviceProvisioningServicesCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeviceProvisioningServicesCertificateProperties properties = null, ETag? etag = null)
         {
-            return new DeviceProvisioningServicesCertificateData(id, name, resourceType, systemData, properties, etag);
+            return new DeviceProvisioningServicesCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServicesCertificateProperties"/>. </summary>
@@ -42,7 +47,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <returns> A new <see cref="Models.DeviceProvisioningServicesCertificateProperties"/> instance for mocking. </returns>
         public static DeviceProvisioningServicesCertificateProperties DeviceProvisioningServicesCertificateProperties(string subject = null, DateTimeOffset? expireOn = null, BinaryData thumbprint = null, bool? isVerified = null, BinaryData certificate = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {
-            return new DeviceProvisioningServicesCertificateProperties(subject, expireOn, thumbprint, isVerified, certificate, createdOn, updatedOn);
+            return new DeviceProvisioningServicesCertificateProperties(
+                subject,
+                expireOn,
+                thumbprint,
+                isVerified,
+                certificate,
+                createdOn,
+                updatedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServices.DeviceProvisioningServiceData"/>. </summary>
@@ -60,7 +73,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DeviceProvisioningServiceData(id, name, resourceType, systemData, tags, location, etag, properties, sku);
+            return new DeviceProvisioningServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                properties,
+                sku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServiceProperties"/>. </summary>
@@ -87,7 +110,20 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             iotHubs ??= new List<IotHubDefinitionDescription>();
             authorizationPolicies ??= new List<DeviceProvisioningServicesSharedAccessKey>();
 
-            return new DeviceProvisioningServiceProperties(state, publicNetworkAccess, ipFilterRules?.ToList(), privateEndpointConnections?.ToList(), provisioningState, iotHubs?.ToList(), allocationPolicy, serviceOperationsHostName, deviceProvisioningHostName, idScope, authorizationPolicies?.ToList(), isDataResidencyEnabled);
+            return new DeviceProvisioningServiceProperties(
+                state,
+                publicNetworkAccess,
+                ipFilterRules?.ToList(),
+                privateEndpointConnections?.ToList(),
+                provisioningState,
+                iotHubs?.ToList(),
+                allocationPolicy,
+                serviceOperationsHostName,
+                deviceProvisioningHostName,
+                idScope,
+                authorizationPolicies?.ToList(),
+                isDataResidencyEnabled,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionData"/>. </summary>
@@ -99,7 +135,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static DeviceProvisioningServicesPrivateEndpointConnectionData DeviceProvisioningServicesPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeviceProvisioningServicesPrivateEndpointConnectionProperties properties = null)
         {
-            return new DeviceProvisioningServicesPrivateEndpointConnectionData(id, name, resourceType, systemData, properties);
+            return new DeviceProvisioningServicesPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubDefinitionDescription"/>. </summary>
@@ -111,7 +153,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <returns> A new <see cref="Models.IotHubDefinitionDescription"/> instance for mocking. </returns>
         public static IotHubDefinitionDescription IotHubDefinitionDescription(bool? applyAllocationPolicy = null, int? allocationWeight = null, string name = null, string connectionString = null, AzureLocation location = default)
         {
-            return new IotHubDefinitionDescription(applyAllocationPolicy, allocationWeight, name, connectionString, location);
+            return new IotHubDefinitionDescription(
+                applyAllocationPolicy,
+                allocationWeight,
+                name,
+                connectionString,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServicesSkuInfo"/>. </summary>
@@ -121,7 +169,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <returns> A new <see cref="Models.DeviceProvisioningServicesSkuInfo"/> instance for mocking. </returns>
         public static DeviceProvisioningServicesSkuInfo DeviceProvisioningServicesSkuInfo(DeviceProvisioningServicesSku? name = null, string tier = null, long? capacity = null)
         {
-            return new DeviceProvisioningServicesSkuInfo(name, tier, capacity);
+            return new DeviceProvisioningServicesSkuInfo(name, tier, capacity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServicesSkuDefinition"/>. </summary>
@@ -129,7 +177,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <returns> A new <see cref="Models.DeviceProvisioningServicesSkuDefinition"/> instance for mocking. </returns>
         public static DeviceProvisioningServicesSkuDefinition DeviceProvisioningServicesSkuDefinition(DeviceProvisioningServicesSku? name = null)
         {
-            return new DeviceProvisioningServicesSkuDefinition(name);
+            return new DeviceProvisioningServicesSkuDefinition(name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CertificateVerificationCodeResult"/>. </summary>
@@ -142,7 +190,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <returns> A new <see cref="Models.CertificateVerificationCodeResult"/> instance for mocking. </returns>
         public static CertificateVerificationCodeResult CertificateVerificationCodeResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, CertificateVerificationCodeProperties properties = null)
         {
-            return new CertificateVerificationCodeResult(id, name, resourceType, systemData, etag, properties);
+            return new CertificateVerificationCodeResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CertificateVerificationCodeProperties"/>. </summary>
@@ -157,7 +212,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <returns> A new <see cref="Models.CertificateVerificationCodeProperties"/> instance for mocking. </returns>
         public static CertificateVerificationCodeProperties CertificateVerificationCodeProperties(string verificationCode = null, string subject = null, DateTimeOffset? expireOn = null, BinaryData thumbprint = null, bool? isVerified = null, BinaryData certificate = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {
-            return new CertificateVerificationCodeProperties(verificationCode, subject, expireOn, thumbprint, isVerified, certificate, createdOn, updatedOn);
+            return new CertificateVerificationCodeProperties(
+                verificationCode,
+                subject,
+                expireOn,
+                thumbprint,
+                isVerified,
+                certificate,
+                createdOn,
+                updatedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServicesNameAvailabilityResult"/>. </summary>
@@ -167,7 +231,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <returns> A new <see cref="Models.DeviceProvisioningServicesNameAvailabilityResult"/> instance for mocking. </returns>
         public static DeviceProvisioningServicesNameAvailabilityResult DeviceProvisioningServicesNameAvailabilityResult(bool? isNameAvailable = null, DeviceProvisioningServicesNameUnavailableReason? reason = null, string message = null)
         {
-            return new DeviceProvisioningServicesNameAvailabilityResult(isNameAvailable, reason, message);
+            return new DeviceProvisioningServicesNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResourceData"/>. </summary>
@@ -179,7 +243,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResourceData"/> instance for mocking. </returns>
         public static DeviceProvisioningServicesPrivateLinkResourceData DeviceProvisioningServicesPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeviceProvisioningServicesPrivateLinkResourceProperties properties = null)
         {
-            return new DeviceProvisioningServicesPrivateLinkResourceData(id, name, resourceType, systemData, properties);
+            return new DeviceProvisioningServicesPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeviceProvisioningServicesPrivateLinkResourceProperties"/>. </summary>
@@ -192,7 +262,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new DeviceProvisioningServicesPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new DeviceProvisioningServicesPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

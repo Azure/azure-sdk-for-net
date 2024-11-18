@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public static bool operator ==(DataBoxValidationCategory left, DataBoxValidationCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxValidationCategory"/> values are not the same. </summary>
         public static bool operator !=(DataBoxValidationCategory left, DataBoxValidationCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxValidationCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxValidationCategory"/>. </summary>
         public static implicit operator DataBoxValidationCategory(string value) => new DataBoxValidationCategory(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

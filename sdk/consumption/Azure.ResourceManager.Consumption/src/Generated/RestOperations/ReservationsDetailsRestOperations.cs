@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Consumption.Models;
@@ -35,6 +34,18 @@ namespace Azure.ResourceManager.Consumption
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByReservationOrderRequestUri(string reservationOrderId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationorders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/reservationDetails", false);
+            uri.AppendQuery("$filter", filter, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByReservationOrderRequest(string reservationOrderId, string filter)
@@ -107,6 +118,20 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByReservationOrderAndReservationRequestUri(string reservationOrderId, string reservationId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationorders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/reservationDetails", false);
+            uri.AppendQuery("$filter", filter, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByReservationOrderAndReservationRequest(string reservationOrderId, string reservationId, string filter)
@@ -185,6 +210,37 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string resourceScope, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Consumption/reservationDetails", false);
+            if (startDate != null)
+            {
+                uri.AppendQuery("startDate", startDate, true);
+            }
+            if (endDate != null)
+            {
+                uri.AppendQuery("endDate", endDate, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (reservationId != null)
+            {
+                uri.AppendQuery("reservationId", reservationId, true);
+            }
+            if (reservationOrderId != null)
+            {
+                uri.AppendQuery("reservationOrderId", reservationOrderId, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string resourceScope, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
@@ -282,6 +338,14 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
+        internal RequestUriBuilder CreateListByReservationOrderNextPageRequestUri(string nextLink, string reservationOrderId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByReservationOrderNextPageRequest(string nextLink, string reservationOrderId, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -352,6 +416,14 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByReservationOrderAndReservationNextPageRequestUri(string nextLink, string reservationOrderId, string reservationId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByReservationOrderAndReservationNextPageRequest(string nextLink, string reservationOrderId, string reservationId, string filter)
@@ -428,6 +500,14 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceScope, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceScope, string startDate, string endDate, string filter, string reservationId, string reservationOrderId)

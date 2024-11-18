@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MySql;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MySql.Samples
 {
     public partial class Sample_MySqlAdvisorCollection
     {
-        // AdvisorsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AdvisorsGet()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/AdvisorsGet.json
@@ -52,9 +49,8 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AdvisorsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_AdvisorsGet()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/AdvisorsGet.json
@@ -83,9 +79,8 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AdvisorsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AdvisorsGet()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/AdvisorsGet.json
@@ -114,7 +109,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -126,9 +121,8 @@ namespace Azure.ResourceManager.MySql.Samples
             }
         }
 
-        // AdvisorsListByServer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AdvisorsListByServer()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/AdvisorsListByServer.json
@@ -160,7 +154,7 @@ namespace Azure.ResourceManager.MySql.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

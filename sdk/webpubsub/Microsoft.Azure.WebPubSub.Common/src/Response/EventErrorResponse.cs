@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -17,11 +16,10 @@ namespace Microsoft.Azure.WebPubSub.Common
         internal override WebPubSubStatusCode StatusCode { get; set; }
 
         /// <summary>
-        /// Error code. Required field to deserialize ErrorResponse.
+        /// Error code.
         /// </summary>
         [IgnoreDataMember]
         [JsonIgnore]
-        [JsonPropertyName("code"), JsonConverter(typeof(JsonStringEnumConverter))]
         public WebPubSubErrorCode Code
         {
             get

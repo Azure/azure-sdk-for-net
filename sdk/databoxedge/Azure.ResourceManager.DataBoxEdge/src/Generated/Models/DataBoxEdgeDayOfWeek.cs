@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(DataBoxEdgeDayOfWeek left, DataBoxEdgeDayOfWeek right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeDayOfWeek"/> values are not the same. </summary>
         public static bool operator !=(DataBoxEdgeDayOfWeek left, DataBoxEdgeDayOfWeek right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeDayOfWeek"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeDayOfWeek"/>. </summary>
         public static implicit operator DataBoxEdgeDayOfWeek(string value) => new DataBoxEdgeDayOfWeek(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

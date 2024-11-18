@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataFactory;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Samples
 {
     public partial class Sample_DataFactoryChangeDataCaptureCollection
     {
-        // ChangeDataCapture_ListByFactory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ChangeDataCaptureListByFactory()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ChangeDataCapture_ListByFactory.json
@@ -51,12 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ChangeDataCapture_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ChangeDataCaptureGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Get.json
@@ -89,9 +85,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ChangeDataCapture_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ChangeDataCaptureGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Get.json
@@ -120,9 +115,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ChangeDataCapture_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ChangeDataCaptureGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Get.json
@@ -151,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

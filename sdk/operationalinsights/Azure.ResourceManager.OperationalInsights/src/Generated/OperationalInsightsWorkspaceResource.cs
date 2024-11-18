@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.OperationalInsights.Models;
 using Azure.ResourceManager.Resources;
 
@@ -143,6 +141,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>DataExports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsDataExportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataExportName"> The data export rule name. </param>
@@ -165,6 +171,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataExports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsDataExportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +210,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>DataSources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsDataSourceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataSourceName"> Name of the datasource. </param>
@@ -218,6 +240,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataSources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsDataSourceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,6 +279,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>LinkedServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsLinkedServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkedServiceName"> Name of the linked service. </param>
@@ -271,6 +309,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LinkedServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsLinkedServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +348,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>LinkedStorageAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsLinkedStorageAccountsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataSourceType"> Linked storage accounts type. </param>
@@ -322,6 +376,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LinkedStorageAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsLinkedStorageAccountsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,6 +413,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>StorageInsightConfigs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageInsightResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageInsightName"> Name of the storageInsightsConfigs resource. </param>
@@ -373,6 +443,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageInsightConfigs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageInsightResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,6 +482,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>SavedSearches_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsSavedSearchResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="savedSearchId"> The id of the saved search. </param>
@@ -426,6 +512,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavedSearches_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsSavedSearchResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,6 +551,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Tables_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tableName"> The name of the table. </param>
@@ -480,6 +582,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Tables_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tableName"> The name of the table. </param>
@@ -502,6 +612,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -535,6 +653,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -566,6 +692,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -602,6 +736,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Workspaces_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -637,6 +779,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Workspaces_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The parameters required to patch a workspace. </param>
@@ -671,6 +821,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Workspaces_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The parameters required to patch a workspace. </param>
@@ -704,6 +862,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntelligencePacks_Disable</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -740,6 +902,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>IntelligencePacks_Disable</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="intelligencePackName"> The name of the intelligence pack to be disabled. </param>
@@ -774,6 +940,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntelligencePacks_Enable</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -810,6 +980,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>IntelligencePacks_Enable</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="intelligencePackName"> The name of the intelligence pack to be enabled. </param>
@@ -845,6 +1019,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>IntelligencePacks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -852,7 +1030,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsIntelligencePack> GetIntelligencePacksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _intelligencePacksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack, _intelligencePacksClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetIntelligencePacks", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack(e), _intelligencePacksClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetIntelligencePacks", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -866,6 +1044,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>IntelligencePacks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -873,7 +1055,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsIntelligencePack> GetIntelligencePacks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _intelligencePacksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack, _intelligencePacksClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetIntelligencePacks", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack(e), _intelligencePacksClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetIntelligencePacks", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -886,6 +1068,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagementGroups_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -894,7 +1080,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsManagementGroup> GetManagementGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup, _managementGroupsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetManagementGroups", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup(e), _managementGroupsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetManagementGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -908,6 +1094,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>ManagementGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -915,7 +1105,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsManagementGroup> GetManagementGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup, _managementGroupsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetManagementGroups", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup(e), _managementGroupsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetManagementGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -928,6 +1118,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SharedKeys_GetSharedKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -959,6 +1153,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>SharedKeys_GetSharedKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -988,6 +1186,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SharedKeys_Regenerate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1019,6 +1221,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>SharedKeys_Regenerate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1049,6 +1255,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1056,7 +1266,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsUsageMetric> GetUsagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric, _usagesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric(e), _usagesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1070,6 +1280,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1077,7 +1291,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsUsageMetric> GetUsages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric, _usagesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric(e), _usagesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1090,6 +1304,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableServiceTiers_ListByWorkspace</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1098,7 +1316,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsAvailableServiceTier> GetAvailableServiceTiersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availableServiceTiersRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier, _availableServiceTiersClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetAvailableServiceTiers", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier(e), _availableServiceTiersClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetAvailableServiceTiers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1112,6 +1330,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>AvailableServiceTiers_ListByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1119,7 +1341,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsAvailableServiceTier> GetAvailableServiceTiers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availableServiceTiersRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier, _availableServiceTiersClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetAvailableServiceTiers", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier(e), _availableServiceTiersClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetAvailableServiceTiers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1132,6 +1354,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Gateways_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1164,6 +1390,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Gateways_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gatewayId"> The Log Analytics gateway Id. </param>
@@ -1195,6 +1425,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Schema_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1202,7 +1436,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsSearchSchemaValue> GetSchemasAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _schemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue, _schemaClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetSchemas", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue(e), _schemaClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetSchemas", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1216,6 +1450,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Schema_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1223,7 +1461,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsSearchSchemaValue> GetSchemas(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _schemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue, _schemaClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetSchemas", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue(e), _schemaClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetSchemas", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1239,6 +1477,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspacePurge_Purge</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1277,6 +1519,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>WorkspacePurge_Purge</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Describes the body of a request to purge data in a single table of an Log Analytics Workspace. </param>
@@ -1310,6 +1556,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspacePurge_GetPurgeStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1346,6 +1596,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>WorkspacePurge_GetPurgeStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="purgeId"> In a purge status request, this is the Id of the operation the status of which is returned. </param>
@@ -1380,6 +1634,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1435,6 +1697,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1489,6 +1759,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1538,6 +1816,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1586,6 +1872,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1638,6 +1932,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

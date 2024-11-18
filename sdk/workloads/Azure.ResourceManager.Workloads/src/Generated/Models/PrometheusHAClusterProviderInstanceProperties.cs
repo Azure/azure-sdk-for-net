@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -20,13 +21,14 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> Initializes a new instance of <see cref="PrometheusHAClusterProviderInstanceProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="prometheusUri"> URL of the Node Exporter endpoint. </param>
         /// <param name="hostname"> Gets or sets the target machine name. </param>
         /// <param name="sid"> Gets or sets the cluster sid. </param>
         /// <param name="clusterName"> Gets or sets the clusterName. </param>
         /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
         /// <param name="sslCertificateUri"> Gets or sets the blob URI to SSL certificate for the HA cluster exporter. </param>
-        internal PrometheusHAClusterProviderInstanceProperties(string providerType, Uri prometheusUri, string hostname, string sid, string clusterName, SapSslPreference? sslPreference, Uri sslCertificateUri) : base(providerType)
+        internal PrometheusHAClusterProviderInstanceProperties(string providerType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri prometheusUri, string hostname, string sid, string clusterName, SapSslPreference? sslPreference, Uri sslCertificateUri) : base(providerType, serializedAdditionalRawData)
         {
             PrometheusUri = prometheusUri;
             Hostname = hostname;

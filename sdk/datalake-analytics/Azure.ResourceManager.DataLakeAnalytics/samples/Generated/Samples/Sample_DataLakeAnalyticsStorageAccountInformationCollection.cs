@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataLakeAnalytics;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 {
     public partial class Sample_DataLakeAnalyticsStorageAccountInformationCollection
     {
-        // Gets the first page of Azure Storage accounts linked to the specified Data Lake Analytics account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsTheFirstPageOfAzureStorageAccountsLinkedToTheSpecifiedDataLakeAnalyticsAccount()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/StorageAccounts_ListByAccount.json
@@ -53,12 +50,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Adds an Azure Storage account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AddsAnAzureStorageAccount()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/StorageAccounts_Add.json
@@ -88,12 +84,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             };
             await collection.CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets the specified Azure Storage account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheSpecifiedAzureStorageAccount()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/StorageAccounts_Get.json
@@ -126,9 +121,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets the specified Azure Storage account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsTheSpecifiedAzureStorageAccount()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/StorageAccounts_Get.json
@@ -157,9 +151,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets the specified Azure Storage account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsTheSpecifiedAzureStorageAccount()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/StorageAccounts_Get.json
@@ -188,7 +181,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

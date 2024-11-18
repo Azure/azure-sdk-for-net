@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            Optional<float> initialQuota = default;
+            float? initialQuota = default;
             float maxQuota = default;
             float quotaAccrualRatePerSec = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +42,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new QuotaConfigurationInfo(Optional.ToNullable(initialQuota), maxQuota, quotaAccrualRatePerSec);
+            return new QuotaConfigurationInfo(initialQuota, maxQuota, quotaAccrualRatePerSec);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static QuotaConfigurationInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeQuotaConfigurationInfo(document.RootElement);
         }
     }
 }

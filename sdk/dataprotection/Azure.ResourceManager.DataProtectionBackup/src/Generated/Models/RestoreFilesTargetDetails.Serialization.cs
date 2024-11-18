@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RestoreFilesTargetDetails : IUtf8JsonSerializable
+    public partial class RestoreFilesTargetDetails : IUtf8JsonSerializable, IJsonModel<RestoreFilesTargetDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreFilesTargetDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RestoreFilesTargetDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestoreFilesTargetDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("filePrefix"u8);
             writer.WriteStringValue(FilePrefix);
             writer.WritePropertyName("restoreTargetLocationType"u8);
@@ -26,7 +45,113 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("targetResourceArmId"u8);
                 writer.WriteStringValue(TargetResourceArmId);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
+
+        RestoreFilesTargetDetails IJsonModel<RestoreFilesTargetDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestoreFilesTargetDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestoreFilesTargetDetails(document.RootElement, options);
+        }
+
+        internal static RestoreFilesTargetDetails DeserializeRestoreFilesTargetDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string filePrefix = default;
+            RestoreTargetLocationType restoreTargetLocationType = default;
+            Uri url = default;
+            ResourceIdentifier targetResourceArmId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("filePrefix"u8))
+                {
+                    filePrefix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("restoreTargetLocationType"u8))
+                {
+                    restoreTargetLocationType = new RestoreTargetLocationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("url"u8))
+                {
+                    url = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetResourceArmId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceArmId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RestoreFilesTargetDetails(filePrefix, restoreTargetLocationType, url, targetResourceArmId, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<RestoreFilesTargetDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestoreFilesTargetDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RestoreFilesTargetDetails IPersistableModel<RestoreFilesTargetDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestoreFilesTargetDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRestoreFilesTargetDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RestoreFilesTargetDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

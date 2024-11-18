@@ -5,28 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayHttpListener : IUtf8JsonSerializable
+    public partial class ApplicationGatewayHttpListener : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayHttpListener>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayHttpListener>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ApplicationGatewayHttpListener>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayHttpListener>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                throw new FormatException($"The model {nameof(ApplicationGatewayHttpListener)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -65,13 +78,18 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("requireServerNameIndication"u8);
                 writer.WriteBooleanValue(RequireServerNameIndication.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(CustomErrorConfigurations))
             {
                 writer.WritePropertyName("customErrorConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomErrorConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,30 +109,45 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayHttpListener DeserializeApplicationGatewayHttpListener(JsonElement element)
+        ApplicationGatewayHttpListener IJsonModel<ApplicationGatewayHttpListener>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayHttpListener>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayHttpListener)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayHttpListener(document.RootElement, options);
+        }
+
+        internal static ApplicationGatewayHttpListener DeserializeApplicationGatewayHttpListener(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> frontendIPConfiguration = default;
-            Optional<WritableSubResource> frontendPort = default;
-            Optional<ApplicationGatewayProtocol> protocol = default;
-            Optional<string> hostName = default;
-            Optional<WritableSubResource> sslCertificate = default;
-            Optional<WritableSubResource> sslProfile = default;
-            Optional<bool> requireServerNameIndication = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<ApplicationGatewayCustomError>> customErrorConfigurations = default;
-            Optional<WritableSubResource> firewallPolicy = default;
-            Optional<IList<string>> hostNames = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource frontendIPConfiguration = default;
+            WritableSubResource frontendPort = default;
+            ApplicationGatewayProtocol? protocol = default;
+            string hostName = default;
+            WritableSubResource sslCertificate = default;
+            WritableSubResource sslProfile = default;
+            bool? requireServerNameIndication = default;
+            NetworkProvisioningState? provisioningState = default;
+            IList<ApplicationGatewayCustomError> customErrorConfigurations = default;
+            WritableSubResource firewallPolicy = default;
+            IList<string> hostNames = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -235,7 +268,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ApplicationGatewayCustomError> array = new List<ApplicationGatewayCustomError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayCustomError.DeserializeApplicationGatewayCustomError(item));
+                                array.Add(ApplicationGatewayCustomError.DeserializeApplicationGatewayCustomError(item, options));
                             }
                             customErrorConfigurations = array;
                             continue;
@@ -266,8 +299,60 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationGatewayHttpListener(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), hostName.Value, sslCertificate, sslProfile, Optional.ToNullable(requireServerNameIndication), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), firewallPolicy, Optional.ToList(hostNames));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewayHttpListener(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                frontendIPConfiguration,
+                frontendPort,
+                protocol,
+                hostName,
+                sslCertificate,
+                sslProfile,
+                requireServerNameIndication,
+                provisioningState,
+                customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>(),
+                firewallPolicy,
+                hostNames ?? new ChangeTrackingList<string>());
         }
+
+        BinaryData IPersistableModel<ApplicationGatewayHttpListener>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayHttpListener>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayHttpListener)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApplicationGatewayHttpListener IPersistableModel<ApplicationGatewayHttpListener>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayHttpListener>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationGatewayHttpListener(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayHttpListener)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationGatewayHttpListener>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,17 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BlobBackupDataSourceSettings : IUtf8JsonSerializable
+    public partial class BlobBackupDataSourceSettings : IUtf8JsonSerializable, IJsonModel<BlobBackupDataSourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobBackupDataSourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BlobBackupDataSourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobBackupDataSourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BlobBackupDataSourceSettings)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("containersList"u8);
             writer.WriteStartArray();
             foreach (var item in ContainersList)
@@ -23,19 +42,32 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
-            writer.WriteEndObject();
         }
 
-        internal static BlobBackupDataSourceSettings DeserializeBlobBackupDataSourceSettings(JsonElement element)
+        BlobBackupDataSourceSettings IJsonModel<BlobBackupDataSourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobBackupDataSourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BlobBackupDataSourceSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobBackupDataSourceSettings(document.RootElement, options);
+        }
+
+        internal static BlobBackupDataSourceSettings DeserializeBlobBackupDataSourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<string> containersList = default;
             string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containersList"u8))
@@ -53,8 +85,44 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BlobBackupDataSourceSettings(objectType, containersList);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BlobBackupDataSourceSettings(objectType, serializedAdditionalRawData, containersList);
         }
+
+        BinaryData IPersistableModel<BlobBackupDataSourceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobBackupDataSourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BlobBackupDataSourceSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BlobBackupDataSourceSettings IPersistableModel<BlobBackupDataSourceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobBackupDataSourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBlobBackupDataSourceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobBackupDataSourceSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobBackupDataSourceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

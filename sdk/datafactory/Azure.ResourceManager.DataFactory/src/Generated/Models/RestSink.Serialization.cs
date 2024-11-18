@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,11 +14,28 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class RestSink : IUtf8JsonSerializable
+    public partial class RestSink : IUtf8JsonSerializable, IJsonModel<RestSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RestSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RestSink)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
@@ -48,46 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(HttpCompressionType))
             {
                 writer.WritePropertyName("httpCompressionType"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(HttpCompressionType);
-#else
-                using (JsonDocument document = JsonDocument.Parse(HttpCompressionType))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
-            {
-                writer.WritePropertyName("writeBatchSize"u8);
-                JsonSerializer.Serialize(writer, WriteBatchSize);
-            }
-            if (Optional.IsDefined(WriteBatchTimeout))
-            {
-                writer.WritePropertyName("writeBatchTimeout"u8);
-                JsonSerializer.Serialize(writer, WriteBatchTimeout);
-            }
-            if (Optional.IsDefined(SinkRetryCount))
-            {
-                writer.WritePropertyName("sinkRetryCount"u8);
-                JsonSerializer.Serialize(writer, SinkRetryCount);
-            }
-            if (Optional.IsDefined(SinkRetryWait))
-            {
-                writer.WritePropertyName("sinkRetryWait"u8);
-                JsonSerializer.Serialize(writer, SinkRetryWait);
-            }
-            if (Optional.IsDefined(MaxConcurrentConnections))
-            {
-                writer.WritePropertyName("maxConcurrentConnections"u8);
-                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
-            }
-            if (Optional.IsDefined(DisableMetricsCollection))
-            {
-                writer.WritePropertyName("disableMetricsCollection"u8);
-                JsonSerializer.Serialize(writer, DisableMetricsCollection);
+                JsonSerializer.Serialize(writer, HttpCompressionType);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -101,27 +80,40 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static RestSink DeserializeRestSink(JsonElement element)
+        RestSink IJsonModel<RestSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RestSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RestSink)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestSink(document.RootElement, options);
+        }
+
+        internal static RestSink DeserializeRestSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> requestMethod = default;
-            Optional<DataFactoryElement<string>> additionalHeaders = default;
-            Optional<DataFactoryElement<string>> httpRequestTimeout = default;
-            Optional<BinaryData> requestInterval = default;
-            Optional<BinaryData> httpCompressionType = default;
+            DataFactoryElement<string> requestMethod = default;
+            DataFactoryElement<IDictionary<string, string>> additionalHeaders = default;
+            DataFactoryElement<string> httpRequestTimeout = default;
+            BinaryData requestInterval = default;
+            DataFactoryElement<string> httpCompressionType = default;
             string type = default;
-            Optional<DataFactoryElement<int>> writeBatchSize = default;
-            Optional<DataFactoryElement<string>> writeBatchTimeout = default;
-            Optional<DataFactoryElement<int>> sinkRetryCount = default;
-            Optional<DataFactoryElement<string>> sinkRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> writeBatchSize = default;
+            DataFactoryElement<string> writeBatchTimeout = default;
+            DataFactoryElement<int> sinkRetryCount = default;
+            DataFactoryElement<string> sinkRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    additionalHeaders = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    additionalHeaders = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("httpRequestTimeout"u8))
@@ -168,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    httpCompressionType = BinaryData.FromString(property.Value.GetRawText());
+                    httpCompressionType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -233,7 +225,51 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, requestMethod.Value, additionalHeaders.Value, httpRequestTimeout.Value, requestInterval.Value, httpCompressionType.Value);
+            return new RestSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                requestMethod,
+                additionalHeaders,
+                httpRequestTimeout,
+                requestInterval,
+                httpCompressionType);
         }
+
+        BinaryData IPersistableModel<RestSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RestSink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RestSink IPersistableModel<RestSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRestSink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RestSink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RestSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

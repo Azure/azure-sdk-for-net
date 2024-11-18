@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectivityHub : IUtf8JsonSerializable
+    public partial class ConnectivityHub : IUtf8JsonSerializable, IJsonModel<ConnectivityHub>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityHub>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConnectivityHub>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHub>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectivityHub)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
@@ -25,17 +44,47 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ConnectivityHub DeserializeConnectivityHub(JsonElement element)
+        ConnectivityHub IJsonModel<ConnectivityHub>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHub>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectivityHub)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectivityHub(document.RootElement, options);
+        }
+
+        internal static ConnectivityHub DeserializeConnectivityHub(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<ResourceType> resourceType = default;
+            ResourceIdentifier resourceId = default;
+            ResourceType? resourceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -56,8 +105,44 @@ namespace Azure.ResourceManager.Network.Models
                     resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectivityHub(resourceId.Value, Optional.ToNullable(resourceType));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectivityHub(resourceId, resourceType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectivityHub>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHub>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectivityHub)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConnectivityHub IPersistableModel<ConnectivityHub>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHub>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectivityHub(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectivityHub)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectivityHub>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

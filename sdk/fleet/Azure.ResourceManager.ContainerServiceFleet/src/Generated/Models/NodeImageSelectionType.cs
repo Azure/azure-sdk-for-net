@@ -24,16 +24,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         private const string LatestValue = "Latest";
         private const string ConsistentValue = "Consistent";
+        private const string CustomValue = "Custom";
 
         /// <summary> Use the latest image version when upgrading nodes. Clusters may use different image versions (e.g., 'AKSUbuntu-1804gen2containerd-2021.10.12' and 'AKSUbuntu-1804gen2containerd-2021.10.19') because, for example, the latest available version is different in different regions. </summary>
         public static NodeImageSelectionType Latest { get; } = new NodeImageSelectionType(LatestValue);
         /// <summary> The image versions to upgrade nodes to are selected as described below: for each node pool in managed clusters affected by the update run, the system selects the latest image version such that it is available across all other node pools (in all other clusters) of the same image type. As a result, all node pools of the same image type will be upgraded to the same image version. For example, if the latest image version for image type 'AKSUbuntu-1804gen2containerd' is 'AKSUbuntu-1804gen2containerd-2021.10.12' for a node pool in cluster A in region X, and is 'AKSUbuntu-1804gen2containerd-2021.10.17' for a node pool in cluster B in region Y, the system will upgrade both node pools to image version 'AKSUbuntu-1804gen2containerd-2021.10.12'. </summary>
         public static NodeImageSelectionType Consistent { get; } = new NodeImageSelectionType(ConsistentValue);
+        /// <summary> Upgrade the nodes to the custom image versions. When set, update run will use node image versions provided in customNodeImageVersions to upgrade the nodes. If set, customNodeImageVersions must not be empty. </summary>
+        public static NodeImageSelectionType Custom { get; } = new NodeImageSelectionType(CustomValue);
         /// <summary> Determines if two <see cref="NodeImageSelectionType"/> values are the same. </summary>
         public static bool operator ==(NodeImageSelectionType left, NodeImageSelectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeImageSelectionType"/> values are not the same. </summary>
         public static bool operator !=(NodeImageSelectionType left, NodeImageSelectionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NodeImageSelectionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NodeImageSelectionType"/>. </summary>
         public static implicit operator NodeImageSelectionType(string value) => new NodeImageSelectionType(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

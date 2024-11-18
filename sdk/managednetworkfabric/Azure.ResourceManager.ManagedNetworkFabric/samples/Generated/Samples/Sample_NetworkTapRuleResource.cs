@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkTapRuleResource
     {
-        // NetworkTapRules_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkTapRulesGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTapRules_Get_MaximumSet_Gen.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkTapRules_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_NetworkTapRulesUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTapRules_Update_MaximumSet_Gen.json
@@ -82,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 new NetworkTapRuleMatchConfiguration()
 {
 MatchConfigurationName = "config1",
-SequenceNumber = 10,
+SequenceNumber = 10L,
 IPAddressType = NetworkFabricIPAddressType.IPv4,
 MatchConditions =
 {
@@ -203,9 +199,8 @@ Ports =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkTapRules_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_NetworkTapRulesDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTapRules_Delete_MaximumSet_Gen.json
@@ -227,12 +222,11 @@ Ports =
             // invoke the operation
             await networkTapRule.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // NetworkTapRules_ListBySubscription_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTapRules_NetworkTapRulesListBySubscriptionMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTapRules_ListBySubscription_MaximumSet_Gen.json
@@ -259,12 +253,11 @@ Ports =
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // NetworkTapRules_UpdateAdministrativeState_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAdministrativeState_NetworkTapRulesUpdateAdministrativeStateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTapRules_UpdateAdministrativeState_MaximumSet_Gen.json
@@ -298,9 +291,8 @@ new ResourceIdentifier("")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkTapRules_Resync_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Resync_NetworkTapRulesResyncMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTapRules_Resync_MaximumSet_Gen.json
@@ -326,9 +318,8 @@ new ResourceIdentifier("")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkTapRules_ValidateConfiguration_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateConfiguration_NetworkTapRulesValidateConfigurationMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTapRules_ValidateConfiguration_MaximumSet_Gen.json

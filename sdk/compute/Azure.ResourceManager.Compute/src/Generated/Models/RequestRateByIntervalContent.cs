@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -35,10 +35,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="groupByResourceName"> Group query result by Resource Name. </param>
         /// <param name="groupByClientApplicationId"> Group query result by Client Application ID. </param>
         /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="intervalLength"> Interval value in minutes used to create LogAnalytics call rate logs. </param>
-        internal RequestRateByIntervalContent(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName, bool? groupByClientApplicationId, bool? groupByUserAgent, IntervalInMins intervalLength) : base(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent)
+        internal RequestRateByIntervalContent(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName, bool? groupByClientApplicationId, bool? groupByUserAgent, IDictionary<string, BinaryData> serializedAdditionalRawData, IntervalInMins intervalLength) : base(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent, serializedAdditionalRawData)
         {
             IntervalLength = intervalLength;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RequestRateByIntervalContent"/> for deserialization. </summary>
+        internal RequestRateByIntervalContent()
+        {
         }
 
         /// <summary> Interval value in minutes used to create LogAnalytics call rate logs. </summary>

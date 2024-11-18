@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDBForPostgreSql;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 {
     public partial class Sample_CosmosDBForPostgreSqlRoleResource
     {
-        // Get the role of the cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheRoleOfTheCluster()
         {
             // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/RoleGet.json
@@ -49,9 +46,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RoleCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RoleCreate()
         {
             // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/RoleCreate.json
@@ -83,9 +79,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RoleDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RoleDelete()
         {
             // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/RoleDelete.json
@@ -108,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // invoke the operation
             await cosmosDBForPostgreSqlRole.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanInMageAzureV2FailoverContent : IUtf8JsonSerializable
+    public partial class RecoveryPlanInMageAzureV2FailoverContent : IUtf8JsonSerializable, IJsonModel<RecoveryPlanInMageAzureV2FailoverContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanInMageAzureV2FailoverContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RecoveryPlanInMageAzureV2FailoverContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanInMageAzureV2FailoverContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanInMageAzureV2FailoverContent)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("recoveryPointType"u8);
             writer.WriteStringValue(RecoveryPointType.ToString());
             if (Optional.IsDefined(UseMultiVmSyncPoint))
@@ -22,9 +42,88 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("useMultiVmSyncPoint"u8);
                 writer.WriteStringValue(UseMultiVmSyncPoint);
             }
-            writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType);
-            writer.WriteEndObject();
         }
+
+        RecoveryPlanInMageAzureV2FailoverContent IJsonModel<RecoveryPlanInMageAzureV2FailoverContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanInMageAzureV2FailoverContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanInMageAzureV2FailoverContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryPlanInMageAzureV2FailoverContent(document.RootElement, options);
+        }
+
+        internal static RecoveryPlanInMageAzureV2FailoverContent DeserializeRecoveryPlanInMageAzureV2FailoverContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            InMageV2RpRecoveryPointType recoveryPointType = default;
+            string useMultiVmSyncPoint = default;
+            string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("recoveryPointType"u8))
+                {
+                    recoveryPointType = new InMageV2RpRecoveryPointType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("useMultiVmSyncPoint"u8))
+                {
+                    useMultiVmSyncPoint = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RecoveryPlanInMageAzureV2FailoverContent(instanceType, serializedAdditionalRawData, recoveryPointType, useMultiVmSyncPoint);
+        }
+
+        BinaryData IPersistableModel<RecoveryPlanInMageAzureV2FailoverContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanInMageAzureV2FailoverContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPlanInMageAzureV2FailoverContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RecoveryPlanInMageAzureV2FailoverContent IPersistableModel<RecoveryPlanInMageAzureV2FailoverContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanInMageAzureV2FailoverContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRecoveryPlanInMageAzureV2FailoverContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPlanInMageAzureV2FailoverContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RecoveryPlanInMageAzureV2FailoverContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

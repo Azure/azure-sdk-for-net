@@ -53,18 +53,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
-            writer.WriteObjectValue(Host);
+            writer.WriteObjectValue<object>(Host);
             if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
-                writer.WriteObjectValue(UserId);
+                writer.WriteObjectValue<object>(UserId);
             }
             if (Optional.IsDefined(Password))
             {
@@ -74,7 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString);
+                writer.WriteObjectValue<object>(ConnectionString);
             }
             if (Optional.IsDefined(AccountKey))
             {
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
-                writer.WriteObjectValue(SasUri);
+                writer.WriteObjectValue<object>(SasUri);
             }
             if (Optional.IsDefined(SasToken))
             {
@@ -94,23 +94,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(FileShare))
             {
                 writer.WritePropertyName("fileShare"u8);
-                writer.WriteObjectValue(FileShare);
+                writer.WriteObjectValue<object>(FileShare);
             }
             if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
-                writer.WriteObjectValue(Snapshot);
+                writer.WriteObjectValue<object>(Snapshot);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -122,20 +122,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object host = default;
-            Optional<object> userId = default;
-            Optional<SecretBase> password = default;
-            Optional<object> connectionString = default;
-            Optional<AzureKeyVaultSecretReference> accountKey = default;
-            Optional<object> sasUri = default;
-            Optional<AzureKeyVaultSecretReference> sasToken = default;
-            Optional<object> fileShare = default;
-            Optional<object> snapshot = default;
-            Optional<object> encryptedCredential = default;
+            object userId = default;
+            SecretBase password = default;
+            object connectionString = default;
+            AzureKeyVaultSecretReference accountKey = default;
+            object sasUri = default;
+            AzureKeyVaultSecretReference sasToken = default;
+            object fileShare = default;
+            object snapshot = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -295,7 +295,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFileStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, userId.Value, password.Value, connectionString.Value, accountKey.Value, sasUri.Value, sasToken.Value, fileShare.Value, snapshot.Value, encryptedCredential.Value);
+            return new AzureFileStorageLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                host,
+                userId,
+                password,
+                connectionString,
+                accountKey,
+                sasUri,
+                sasToken,
+                fileShare,
+                snapshot,
+                encryptedCredential);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureFileStorageLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureFileStorageLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class AzureFileStorageLinkedServiceConverter : JsonConverter<AzureFileStorageLinkedService>
@@ -304,6 +336,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override AzureFileStorageLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -8,6 +8,8 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Files.Shares;
+using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Files.Shares.Specialized;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
@@ -28,7 +30,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ResourceOptions = options;
         }
 
-        protected override StorageResourceItem GetStorageResourceReference(string path)
+        protected override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
         {
             List<string> pathSegments = path.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
             ShareDirectoryClient dir = ShareDirectoryClient;
@@ -41,19 +43,28 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         protected override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+            StorageResourceContainer destinationContainer = default,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach ((ShareDirectoryClient dir, ShareFileClient file) in PathScanner.ScanAsync(
-                ShareDirectoryClient, cancellationToken).ConfigureAwait(false))
+            // Set the ShareFileTraits to send when listing.
+            ShareFileTraits traits = ShareFileTraits.Attributes;
+            if (ResourceOptions?.FilePermissions?.Preserve ?? false)
             {
-                if (file != default)
-                {
-                    yield return new ShareFileStorageResource(file, ResourceOptions);
-                }
-                else
-                {
-                    yield return new ShareDirectoryStorageResourceContainer(dir, ResourceOptions);
-                }
+                traits |= ShareFileTraits.PermissionKey;
+            }
+            ShareClient parentDestinationShare = default;
+            if (destinationContainer != default)
+            {
+                parentDestinationShare = (destinationContainer as ShareDirectoryStorageResourceContainer)?.ShareDirectoryClient.GetParentShareClient();
+            }
+            await foreach (StorageResource resource in PathScanner.ScanAsync(
+                sourceDirectory: ShareDirectoryClient,
+                destinationShare: parentDestinationShare,
+                sourceOptions: ResourceOptions,
+                traits: traits,
+                cancellationToken: cancellationToken).ConfigureAwait(false))
+            {
+                yield return resource;
             }
         }
 
@@ -64,7 +75,19 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            return new ShareFileDestinationCheckpointData(null, null, null, null);
+            return new ShareFileDestinationCheckpointData(
+                contentType: ResourceOptions?.ContentType,
+                contentEncoding: ResourceOptions?.ContentEncoding,
+                contentLanguage: ResourceOptions?.ContentLanguage,
+                contentDisposition: ResourceOptions?.ContentDisposition,
+                cacheControl: ResourceOptions?.CacheControl,
+                fileAttributes: ResourceOptions?.FileAttributes,
+                preserveFilePermission: ResourceOptions?.FilePermissions?.Preserve,
+                fileCreatedOn: ResourceOptions?.FileCreatedOn,
+                fileLastWrittenOn: ResourceOptions?.FileLastWrittenOn,
+                fileChangedOn: ResourceOptions?.FileChangedOn,
+                fileMetadata: ResourceOptions?.FileMetadata,
+                directoryMetadata: ResourceOptions?.DirectoryMetadata);
         }
 
         protected override async Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)

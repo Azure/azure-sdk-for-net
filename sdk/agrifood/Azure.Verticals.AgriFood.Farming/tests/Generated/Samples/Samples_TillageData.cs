@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
@@ -25,7 +23,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Response response = client.GetTillageData("<partyId>", "<tillageDataId>", null);
 
@@ -39,7 +37,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Response response = await client.GetTillageDataAsync("<partyId>", "<tillageDataId>", null);
 
@@ -53,7 +51,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Response response = client.GetTillageData("<partyId>", "<tillageDataId>", null);
 
@@ -89,7 +87,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Response response = await client.GetTillageDataAsync("<partyId>", "<tillageDataId>", null);
 
@@ -125,7 +123,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<partyId>", "<tillageDataId>", content);
@@ -140,7 +138,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<tillageDataId>", content);
@@ -155,7 +153,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -211,7 +209,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -267,7 +265,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Response response = client.Delete("<partyId>", "<tillageDataId>");
 
@@ -280,7 +278,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Response response = await client.DeleteAsync("<partyId>", "<tillageDataId>");
 
@@ -293,7 +291,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Response response = client.Delete("<partyId>", "<tillageDataId>");
 
@@ -306,7 +304,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Response response = await client.DeleteAsync("<partyId>", "<tillageDataId>");
 
@@ -319,7 +317,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -335,7 +333,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -351,7 +349,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -376,7 +374,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -401,7 +399,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             foreach (BinaryData item in client.GetAllTillageDataByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -416,7 +414,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             await foreach (BinaryData item in client.GetAllTillageDataByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -431,7 +429,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             foreach (BinaryData item in client.GetAllTillageDataByPartyId("<partyId>", 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -468,7 +466,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             await foreach (BinaryData item in client.GetAllTillageDataByPartyIdAsync("<partyId>", 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -505,7 +503,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             foreach (BinaryData item in client.GetAllTillageData(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -520,7 +518,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             await foreach (BinaryData item in client.GetAllTillageDataAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -535,7 +533,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             foreach (BinaryData item in client.GetAllTillageData(123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<tillageDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -572,7 +570,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             await foreach (BinaryData item in client.GetAllTillageDataAsync(123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<tillageDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -609,7 +607,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>", null);
             BinaryData responseData = operation.Value;
@@ -626,7 +624,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>", null);
             BinaryData responseData = operation.Value;
@@ -643,7 +641,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>", null);
             BinaryData responseData = operation.Value;
@@ -669,7 +667,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
+            TillageData client = new FarmBeatsClient(endpoint, credential).GetTillageDataClient();
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<tillageDataId>", null);
             BinaryData responseData = operation.Value;

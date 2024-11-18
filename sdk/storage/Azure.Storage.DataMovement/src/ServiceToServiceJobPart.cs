@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
@@ -23,7 +24,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Creating job part based on a single transfer job
         /// </summary>
-        private ServiceToServiceJobPart(ServiceToServiceTransferJob job, int partNumber)
+        private ServiceToServiceJobPart(TransferJobInternal job, int partNumber)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
@@ -49,7 +50,7 @@ namespace Azure.Storage.DataMovement
         /// Creating transfer job based on a storage resource created from listing.
         /// </summary>
         private ServiceToServiceJobPart(
-            ServiceToServiceTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
@@ -81,7 +82,7 @@ namespace Azure.Storage.DataMovement
         /// Creating transfer job based on a checkpoint file.
         /// </summary>
         private ServiceToServiceJobPart(
-            ServiceToServiceTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
@@ -120,8 +121,8 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Called when creating a job part from a single transfer.
         /// </summary>
-        public static async Task<ServiceToServiceJobPart> CreateJobPartAsync(
-            ServiceToServiceTransferJob job,
+        public static async Task<JobPartInternal> CreateJobPartAsync(
+            TransferJobInternal job,
             int partNumber)
         {
             // Create Job Part file as we're initializing the job part
@@ -133,20 +134,21 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Called when creating a job part from a container transfer.
         /// </summary>
-        public static async Task<ServiceToServiceJobPart> CreateJobPartAsync(
-            ServiceToServiceTransferJob job,
+        public static async Task<JobPartInternal> CreateJobPartAsync(
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
-            StorageResourceItem destinationResource,
-            long? length = default)
+            StorageResourceItem destinationResource)
         {
+            Argument.AssertNotNull(sourceResource, nameof(sourceResource));
+            Argument.AssertNotNull(destinationResource, nameof(destinationResource));
+
             // Create Job Part file as we're initializing the job part
             ServiceToServiceJobPart part = new ServiceToServiceJobPart(
                 job: job,
                 partNumber: partNumber,
                 sourceResource: sourceResource,
-                destinationResource: destinationResource,
-                length: length);
+                destinationResource: destinationResource);
             await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
             return part;
         }
@@ -155,7 +157,7 @@ namespace Azure.Storage.DataMovement
         /// Called when creating a job part from a checkpoint file on resume.
         /// </summary>
         public static ServiceToServiceJobPart CreateJobPartFromCheckpoint(
-            ServiceToServiceTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
@@ -175,69 +177,78 @@ namespace Azure.Storage.DataMovement
                 createPreference: createPreference);
         }
 
+        /// <summary>
+        /// Processes the job part to chunks
+        /// </summary>
+        /// <returns>The task that's queueing up the chunks</returns>
         public override async Task ProcessPartToChunkAsync()
         {
-            await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
-
-            // Attempt to get the length, it's possible the file could
-            // not be accessible (or does not exist).
-            long? fileLength = _sourceResource.Length;
-            if (!fileLength.HasValue)
+            try
             {
-                try
+                await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
+
+                long? fileLength = default;
+                StorageResourceItemProperties sourceProperties = default;
+                fileLength = _sourceResource.Length;
+                sourceProperties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
+                await _destinationResource.SetPermissionsAsync(
+                    _sourceResource,
+                    sourceProperties,
+                    _cancellationToken).ConfigureAwait(false);
+
+                fileLength = sourceProperties.ResourceLength;
+                if (!fileLength.HasValue)
                 {
-                    StorageResourceProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
-                    fileLength = properties.ContentLength;
-                }
-                catch (Exception ex)
-                {
-                    // TODO: logging when given the event handler
-                    await InvokeFailedArg(ex).ConfigureAwait(false);
+                    await InvokeFailedArgAsync(Errors.UnableToGetLength()).ConfigureAwait(false);
                     return;
                 }
-            }
-            if (!fileLength.HasValue)
-            {
-                await InvokeFailedArg(Errors.UnableToGetLength()).ConfigureAwait(false);
-                return;
-            }
-            long length = fileLength.Value;
+                long length = fileLength.Value;
 
-            // Perform a single copy operation
-            if (_initialTransferSize >= length)
-            {
-                await QueueChunkToChannelAsync(
-                    async () =>
-                    await StartSingleCallCopy(length).ConfigureAwait(false))
-                    .ConfigureAwait(false);
-                return;
-            }
-
-            // Perform a series of chunk copies followed by a commit
-            long blockSize = _transferChunkSize;
-
-            _commitBlockHandler = GetCommitController(
-                expectedLength: length,
-                blockSize: blockSize,
-                this,
-                _destinationResource.TransferType);
-            // If we cannot upload in one shot, initiate the parallel block uploader
-            if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
-            {
-                List<(long Offset, long Length)> commitBlockList = GetRangeList(blockSize, length);
-                if (_destinationResource.TransferType == DataTransferOrder.Unordered)
+                // Perform a single copy operation
+                if (_initialTransferSize >= length)
                 {
-                    await QueueStageBlockRequests(commitBlockList, length).ConfigureAwait(false);
+                    await QueueChunkToChannelAsync(
+                        async () =>
+                        await StartSingleCallCopy(length).ConfigureAwait(false))
+                        .ConfigureAwait(false);
+                    return;
                 }
-                else // Sequential
+
+                // Perform a series of chunk copies followed by a commit
+                long blockSize = _transferChunkSize;
+
+                _commitBlockHandler = GetCommitController(
+                    expectedLength: length,
+                    blockSize: blockSize,
+                    this,
+                    _destinationResource.TransferType,
+                    sourceProperties);
+                // If we cannot upload in one shot, initiate the parallel block uploader
+                if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
                 {
-                    // Queue the first partitioned block task
-                    await QueueStageBlockRequest(commitBlockList[0].Offset, commitBlockList[0].Length, length).ConfigureAwait(false);
+                    List<(long Offset, long Length)> commitBlockList = GetRangeList(blockSize, length);
+                    if (_destinationResource.TransferType == DataTransferOrder.Unordered)
+                    {
+                        await QueueStageBlockRequests(commitBlockList, length, sourceProperties).ConfigureAwait(false);
+                    }
+                    else // Sequential
+                    {
+                        // Queue the first partitioned block task
+                        await QueueStageBlockRequest(
+                            commitBlockList[0].Offset,
+                            commitBlockList[0].Length,
+                            length,
+                            sourceProperties).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
             }
         }
 
@@ -247,6 +258,7 @@ namespace Azure.Storage.DataMovement
             {
                 StorageResourceCopyFromUriOptions options =
                     await GetCopyFromUriOptionsAsync(_cancellationToken).ConfigureAwait(false);
+
                 await _destinationResource.CopyFromUriAsync(
                     sourceResource: _sourceResource,
                     overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
@@ -261,17 +273,17 @@ namespace Azure.Storage.DataMovement
                 when (_createMode == StorageResourceCreationPreference.SkipIfExists
                  && exception.ErrorCode == "BlobAlreadyExists")
             {
-                await InvokeSkippedArg().ConfigureAwait(false);
+                await InvokeSkippedArgAsync().ConfigureAwait(false);
             }
             catch (InvalidOperationException ex)
             when (_createMode == StorageResourceCreationPreference.SkipIfExists
                 && ex.Message.Contains("Cannot overwrite file."))
             {
-                await InvokeSkippedArg().ConfigureAwait(false);
+                await InvokeSkippedArgAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
             }
         }
 
@@ -299,7 +311,7 @@ namespace Azure.Storage.DataMovement
 
                 if (blockSize == length)
                 {
-                    await CompleteTransferAsync().ConfigureAwait(false);
+                    await CompleteTransferAsync(options.SourceProperties).ConfigureAwait(false);
                     return false;
                 }
                 return true;
@@ -308,11 +320,11 @@ namespace Azure.Storage.DataMovement
                 when (_createMode == StorageResourceCreationPreference.SkipIfExists
                  && exception.ErrorCode == "BlobAlreadyExists")
             {
-                await InvokeSkippedArg().ConfigureAwait(false);
+                await InvokeSkippedArgAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
             }
             return false;
         }
@@ -322,13 +334,15 @@ namespace Azure.Storage.DataMovement
             long expectedLength,
             long blockSize,
             ServiceToServiceJobPart jobPart,
-            DataTransferOrder transferType)
+            DataTransferOrder transferType,
+            StorageResourceItemProperties sourceProperties)
         => new CommitChunkHandler(
             expectedLength,
             blockSize,
             GetBlockListCommitHandlerBehaviors(jobPart),
             transferType,
             ClientDiagnostics,
+            sourceProperties,
             _cancellationToken);
 
         internal static CommitChunkHandler.Behaviors GetBlockListCommitHandlerBehaviors(
@@ -339,18 +353,19 @@ namespace Azure.Storage.DataMovement
                 QueuePutBlockTask = jobPart.QueueStageBlockRequest,
                 QueueCommitBlockTask = jobPart.CompleteTransferAsync,
                 ReportProgressInBytes = jobPart.ReportBytesWritten,
-                InvokeFailedHandler = jobPart.InvokeFailedArg,
+                InvokeFailedHandler = jobPart.InvokeFailedArgAsync,
             };
         }
         #endregion
 
-        internal async Task CompleteTransferAsync()
+        internal async Task CompleteTransferAsync(StorageResourceItemProperties sourceProperties)
         {
             try
             {
                 // Apply necessary transfer completions on the destination.
                 await _destinationResource.CompleteTransferAsync(
                     overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                    completeTransferOptions: new() { SourceProperties = sourceProperties },
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
@@ -361,11 +376,14 @@ namespace Azure.Storage.DataMovement
             }
             catch (Exception ex)
             {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
             }
         }
 
-        private async Task QueueStageBlockRequests(List<(long Offset, long Size)> commitBlockList, long expectedLength)
+        private async Task QueueStageBlockRequests(
+            List<(long Offset, long Size)> commitBlockList,
+            long expectedLength,
+            StorageResourceItemProperties sourceProperties)
         {
             _queueingTasks = true;
             // Partition the stream into individual blocks
@@ -377,14 +395,22 @@ namespace Azure.Storage.DataMovement
                 }
 
                 // Queue partitioned block task
-                await QueueStageBlockRequest(block.Offset, block.Length, expectedLength).ConfigureAwait(false);
+                await QueueStageBlockRequest(
+                    block.Offset,
+                    block.Length,
+                    expectedLength,
+                    sourceProperties).ConfigureAwait(false);
             }
 
             _queueingTasks = false;
             await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
         }
 
-        private Task QueueStageBlockRequest(long offset, long blockSize, long expectedLength)
+        private Task QueueStageBlockRequest(
+            long offset,
+            long blockSize,
+            long expectedLength,
+            StorageResourceItemProperties properties)
         {
             return QueueChunkToChannelAsync(
                 async () =>
@@ -434,11 +460,11 @@ namespace Azure.Storage.DataMovement
                 // before uploading to it.
                 if (_createMode == StorageResourceCreationPreference.FailIfExists)
                 {
-                    await InvokeFailedArg(ex).ConfigureAwait(false);
+                    await InvokeFailedArgAsync(ex).ConfigureAwait(false);
                 }
                 else // (_createMode == StorageResourceCreateMode.Skip)
                 {
-                    await InvokeSkippedArg().ConfigureAwait(false);
+                    await InvokeSkippedArgAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -459,21 +485,21 @@ namespace Azure.Storage.DataMovement
                 {
                     // If the _commitBlockHandler has been disposed before we call to it
                     // we should at least filter the exception to error handling just in case.
-                    await InvokeFailedArg(ex).ConfigureAwait(false);
+                    await InvokeFailedArgAsync(ex).ConfigureAwait(false);
                 }
             }
         }
 
-        public override async Task InvokeSkippedArg()
+        public override async Task InvokeSkippedArgAsync()
         {
             DisposeHandlers();
-            await base.InvokeSkippedArg().ConfigureAwait(false);
+            await base.InvokeSkippedArgAsync().ConfigureAwait(false);
         }
 
-        public override async Task InvokeFailedArg(Exception ex)
+        public override async Task InvokeFailedArgAsync(Exception ex)
         {
             DisposeHandlers();
-            await base.InvokeFailedArg(ex).ConfigureAwait(false);
+            await base.InvokeFailedArgAsync(ex).ConfigureAwait(false);
         }
 
         internal void DisposeHandlers()
@@ -487,14 +513,15 @@ namespace Azure.Storage.DataMovement
 
         private async Task<StorageResourceCopyFromUriOptions> GetCopyFromUriOptionsAsync(CancellationToken cancellationToken)
         {
-            StorageResourceCopyFromUriOptions options = default;
+            StorageResourceItemProperties properties = await _sourceResource.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
+            StorageResourceCopyFromUriOptions options = new()
+            {
+                SourceProperties = properties
+            };
             HttpAuthorization authorization = await _sourceResource.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
             if (authorization != null)
             {
-                options = new StorageResourceCopyFromUriOptions()
-                {
-                    SourceAuthentication = authorization
-                };
+                options.SourceAuthentication = authorization;
             }
             return options;
         }

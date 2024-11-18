@@ -8,19 +8,16 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Automanage;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automanage.Samples
 {
     public partial class Sample_AutomanageConfigurationProfileVersionCollection
     {
-        // Create or update configuration profile version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateConfigurationProfileVersion()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/createOrUpdateConfigurationProfileVersion.json
@@ -73,9 +70,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a configuration profile version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAConfigurationProfileVersion()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/getConfigurationProfileVersion.json
@@ -108,9 +104,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a configuration profile version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAConfigurationProfileVersion()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/getConfigurationProfileVersion.json
@@ -139,9 +134,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a configuration profile version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAConfigurationProfileVersion()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/getConfigurationProfileVersion.json
@@ -170,7 +164,7 @@ namespace Azure.ResourceManager.Automanage.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -182,9 +176,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             }
         }
 
-        // List configuration profile versions by configuration profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListConfigurationProfileVersionsByConfigurationProfile()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/listConfigurationProfileVersions.json
@@ -216,7 +209,7 @@ namespace Azure.ResourceManager.Automanage.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

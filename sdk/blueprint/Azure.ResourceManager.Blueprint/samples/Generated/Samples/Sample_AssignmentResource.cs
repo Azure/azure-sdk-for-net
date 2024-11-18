@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Blueprint;
 using Azure.ResourceManager.Blueprint.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Blueprint.Samples
 {
     public partial class Sample_AssignmentResource
     {
-        // Assignment at management group scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AssignmentAtManagementGroupScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPAssignment/BlueprintAssignment_Get.json
@@ -48,9 +45,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Assignment at subscription scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AssignmentAtSubscriptionScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPAssignment/BlueprintAssignment_Get.json
@@ -78,9 +74,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Assignment_Delete at management group scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_AssignmentDeleteAtManagementGroupScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPAssignment/BlueprintAssignment_Delete.json
@@ -109,9 +104,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Assignment_Delete at management group scope, and delete the resources created by the assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_AssignmentDeleteAtManagementGroupScopeAndDeleteTheResourcesCreatedByTheAssignment()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPAssignment/BlueprintAssignment_Delete_AndDeleteChildren.json
@@ -141,9 +135,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Assignment_Delete at subscription scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_AssignmentDeleteAtSubscriptionScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPAssignment/BlueprintAssignment_Delete.json
@@ -172,9 +165,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Assignment_Delete at subscription scope, and delete the resources created by the assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_AssignmentDeleteAtSubscriptionScopeAndDeleteTheResourcesCreatedByTheAssignment()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPAssignment/BlueprintAssignment_Delete_AndDeleteChildren.json
@@ -204,9 +196,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // WhoIsBlueprint_Action at management group scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task WhoIsBlueprint_WhoIsBlueprintActionAtManagementGroupScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPAssignment/WhoIsBlueprint_Action.json
@@ -230,9 +221,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // WhoIsBlueprint_Action at subscription scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task WhoIsBlueprint_WhoIsBlueprintActionAtSubscriptionScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPAssignment/WhoIsBlueprint_Action.json

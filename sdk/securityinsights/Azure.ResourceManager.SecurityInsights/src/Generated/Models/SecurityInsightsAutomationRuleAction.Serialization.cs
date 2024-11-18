@@ -5,25 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAutomationRuleAction : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownAutomationRuleAction))]
+    public partial class SecurityInsightsAutomationRuleAction : IUtf8JsonSerializable, IJsonModel<SecurityInsightsAutomationRuleAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAutomationRuleAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SecurityInsightsAutomationRuleAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAutomationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsAutomationRuleAction)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SecurityInsightsAutomationRuleAction DeserializeSecurityInsightsAutomationRuleAction(JsonElement element)
+        SecurityInsightsAutomationRuleAction IJsonModel<SecurityInsightsAutomationRuleAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAutomationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsAutomationRuleAction)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsAutomationRuleAction(document.RootElement, options);
+        }
+
+        internal static SecurityInsightsAutomationRuleAction DeserializeSecurityInsightsAutomationRuleAction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,11 +81,84 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ModifyProperties": return AutomationRuleModifyPropertiesAction.DeserializeAutomationRuleModifyPropertiesAction(element);
-                    case "RunPlaybook": return AutomationRuleRunPlaybookAction.DeserializeAutomationRuleRunPlaybookAction(element);
+                    case "AddIncidentTask": return AutomationRuleAddIncidentTaskAction.DeserializeAutomationRuleAddIncidentTaskAction(element, options);
+                    case "ModifyProperties": return AutomationRuleModifyPropertiesAction.DeserializeAutomationRuleModifyPropertiesAction(element, options);
+                    case "RunPlaybook": return AutomationRuleRunPlaybookAction.DeserializeAutomationRuleRunPlaybookAction(element, options);
                 }
             }
-            return UnknownAutomationRuleAction.DeserializeUnknownAutomationRuleAction(element);
+            return UnknownAutomationRuleAction.DeserializeUnknownAutomationRuleAction(element, options);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Order), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  order: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  order: ");
+                builder.AppendLine($"{Order}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actionType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  actionType: ");
+                builder.AppendLine($"'{ActionType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SecurityInsightsAutomationRuleAction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAutomationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsAutomationRuleAction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityInsightsAutomationRuleAction IPersistableModel<SecurityInsightsAutomationRuleAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAutomationRuleAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityInsightsAutomationRuleAction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsAutomationRuleAction)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityInsightsAutomationRuleAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

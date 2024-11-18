@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,23 +14,28 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class HdfsLocation : IUtf8JsonSerializable
+    public partial class HdfsLocation : IUtf8JsonSerializable, IJsonModel<HdfsLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HdfsLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HdfsLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(DatasetLocationType);
-            if (Optional.IsDefined(FolderPath))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HdfsLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("folderPath"u8);
-                JsonSerializer.Serialize(writer, FolderPath);
+                throw new FormatException($"The model {nameof(HdfsLocation)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(FileName))
-            {
-                writer.WritePropertyName("fileName"u8);
-                JsonSerializer.Serialize(writer, FileName);
-            }
+
+            base.JsonModelWriteCore(writer, options);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -42,18 +48,31 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static HdfsLocation DeserializeHdfsLocation(JsonElement element)
+        HdfsLocation IJsonModel<HdfsLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HdfsLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HdfsLocation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHdfsLocation(document.RootElement, options);
+        }
+
+        internal static HdfsLocation DeserializeHdfsLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<DataFactoryElement<string>> folderPath = default;
-            Optional<DataFactoryElement<string>> fileName = default;
+            DataFactoryElement<string> folderPath = default;
+            DataFactoryElement<string> fileName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -84,7 +103,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HdfsLocation(type, folderPath.Value, fileName.Value, additionalProperties);
+            return new HdfsLocation(type, folderPath, fileName, additionalProperties);
         }
+
+        BinaryData IPersistableModel<HdfsLocation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HdfsLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HdfsLocation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HdfsLocation IPersistableModel<HdfsLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HdfsLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHdfsLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HdfsLocation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HdfsLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

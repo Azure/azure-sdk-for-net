@@ -1,18 +1,5 @@
-// <copyright file="SqlEventSourceListener.netfx.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// </copyright>
+// SPDX-License-Identifier: Apache-2.0
 
 #if NETFRAMEWORK
 using System.Diagnostics;
@@ -42,13 +29,13 @@ internal sealed class SqlEventSourceListener : EventListener
     internal const int BeginExecuteEventId = 1;
     internal const int EndExecuteEventId = 2;
 
-    private readonly SqlClientInstrumentationOptions options;
-    private EventSource adoNetEventSource;
-    private EventSource mdsEventSource;
+    private readonly SqlClientTraceInstrumentationOptions options;
+    private EventSource? adoNetEventSource;
+    private EventSource? mdsEventSource;
 
-    public SqlEventSourceListener(SqlClientInstrumentationOptions options = null)
+    public SqlEventSourceListener(SqlClientTraceInstrumentationOptions? options = null)
     {
-        this.options = options ?? new SqlClientInstrumentationOptions();
+        this.options = options ?? new SqlClientTraceInstrumentationOptions();
     }
 
     public override void Dispose()
@@ -119,7 +106,7 @@ internal sealed class SqlEventSourceListener : EventListener
                 (https://github.com/dotnet/SqlClient/blob/f4568ce68da21db3fe88c0e72e1287368aaa1dc8/src/Microsoft.Data.SqlClient/netcore/src/Microsoft/Data/SqlClient/SqlCommand.cs#L6641)
          */
 
-        if ((eventData?.Payload?.Count ?? 0) < 4)
+        if (eventData.Payload.Count < 4)
         {
             SqlClientInstrumentationEventSource.Log.InvalidPayload(nameof(SqlEventSourceListener), nameof(this.OnBeginExecute));
             return;
@@ -137,7 +124,7 @@ internal sealed class SqlEventSourceListener : EventListener
             return;
         }
 
-        string databaseName = (string)eventData.Payload[2];
+        string? databaseName = (string)eventData.Payload[2];
 
         activity.DisplayName = databaseName;
 
@@ -164,7 +151,7 @@ internal sealed class SqlEventSourceListener : EventListener
             [2] -> SqlExceptionNumber
          */
 
-        if ((eventData?.Payload?.Count ?? 0) < 3)
+        if (eventData.Payload.Count < 3)
         {
             SqlClientInstrumentationEventSource.Log.InvalidPayload(nameof(SqlEventSourceListener), nameof(this.OnEndExecute));
             return;

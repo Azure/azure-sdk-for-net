@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
@@ -65,6 +63,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_UpdateByHostPool</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -83,7 +89,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = await _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateByHostPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, connection, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource>(Response.FromValue(new HostPoolPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateByHostPoolRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, connection);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource>(Response.FromValue(new HostPoolPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_UpdateByHostPool</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -124,7 +140,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateByHostPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, connection, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource>(Response.FromValue(new HostPoolPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _hostPoolPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateByHostPoolRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, connection);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DesktopVirtualizationArmOperation<HostPoolPrivateEndpointConnectionResource>(Response.FromValue(new HostPoolPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -146,6 +164,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_GetByHostPool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,6 +210,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_GetByHostPool</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
@@ -221,6 +255,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_ListByHostPool</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -246,6 +288,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_ListByHostPool</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -270,6 +320,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_GetByHostPool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,6 +364,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_GetByHostPool</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
@@ -340,6 +406,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_GetByHostPool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,6 +451,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_GetByHostPool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

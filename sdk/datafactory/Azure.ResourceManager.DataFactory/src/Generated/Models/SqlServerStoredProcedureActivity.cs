@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -46,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             StoredProcedureName = storedProcedureName;
             StoredProcedureParameters = storedProcedureParameters;
             ActivityType = activityType ?? "SqlServerStoredProcedure";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerStoredProcedureActivity"/> for deserialization. </summary>
+        internal SqlServerStoredProcedureActivity()
+        {
         }
 
         /// <summary> Stored procedure name. Type: string (or Expression with resultType string). </summary>

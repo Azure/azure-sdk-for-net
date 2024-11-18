@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetwork;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetwork.Samples
 {
     public partial class Sample_ManagedNetworkGroupCollection
     {
-        // ManagementNetworkGroupsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ManagementNetworkGroupsGet()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkGroup/ManagedNetworkGroupsGet.json
@@ -53,9 +50,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ManagementNetworkGroupsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ManagementNetworkGroupsGet()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkGroup/ManagedNetworkGroupsGet.json
@@ -84,9 +80,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ManagementNetworkGroupsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ManagementNetworkGroupsGet()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkGroup/ManagedNetworkGroupsGet.json
@@ -115,7 +110,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -127,9 +122,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
             }
         }
 
-        // ManagementNetworkGroupsPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ManagementNetworkGroupsPut()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkGroup/ManagedNetworkGroupsPut.json
@@ -189,9 +183,8 @@ Id = new ResourceIdentifier("/subscriptionB/resourceGroups/myResourceGroup/provi
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ManagedNetworksGroupsListByManagedNetwork
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ManagedNetworksGroupsListByManagedNetwork()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkGroup/ManagedNetworkGroupsListByManagedNetwork.json
@@ -223,7 +216,7 @@ Id = new ResourceIdentifier("/subscriptionB/resourceGroups/myResourceGroup/provi
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

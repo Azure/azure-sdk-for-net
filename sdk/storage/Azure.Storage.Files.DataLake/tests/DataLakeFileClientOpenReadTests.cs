@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -90,6 +91,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Position = position,
                 Conditions = conditions
             });
+
+        protected override async Task<Stream> OpenReadAsyncOverload(DataLakeFileClient client, int? bufferSize = null, long position = 0, bool allowModifications = false)
+            => await client.OpenReadAsync(allowModifications, position, bufferSize);
 
         protected override async Task StageDataAsync(DataLakeFileClient client, Stream data)
         {

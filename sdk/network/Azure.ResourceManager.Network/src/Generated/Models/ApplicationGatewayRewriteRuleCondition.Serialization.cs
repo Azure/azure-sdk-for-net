@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayRewriteRuleCondition : IUtf8JsonSerializable
+    public partial class ApplicationGatewayRewriteRuleCondition : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayRewriteRuleCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayRewriteRuleCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ApplicationGatewayRewriteRuleCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRewriteRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRuleCondition)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Variable))
             {
                 writer.WritePropertyName("variable"u8);
@@ -35,19 +54,49 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("negate"u8);
                 writer.WriteBooleanValue(Negate.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ApplicationGatewayRewriteRuleCondition DeserializeApplicationGatewayRewriteRuleCondition(JsonElement element)
+        ApplicationGatewayRewriteRuleCondition IJsonModel<ApplicationGatewayRewriteRuleCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRewriteRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRuleCondition)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayRewriteRuleCondition(document.RootElement, options);
+        }
+
+        internal static ApplicationGatewayRewriteRuleCondition DeserializeApplicationGatewayRewriteRuleCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> variable = default;
-            Optional<string> pattern = default;
-            Optional<bool> ignoreCase = default;
-            Optional<bool> negate = default;
+            string variable = default;
+            string pattern = default;
+            bool? ignoreCase = default;
+            bool? negate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("variable"u8))
@@ -78,8 +127,44 @@ namespace Azure.ResourceManager.Network.Models
                     negate = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationGatewayRewriteRuleCondition(variable.Value, pattern.Value, Optional.ToNullable(ignoreCase), Optional.ToNullable(negate));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewayRewriteRuleCondition(variable, pattern, ignoreCase, negate, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApplicationGatewayRewriteRuleCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRewriteRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRuleCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApplicationGatewayRewriteRuleCondition IPersistableModel<ApplicationGatewayRewriteRuleCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRewriteRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationGatewayRewriteRuleCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRuleCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationGatewayRewriteRuleCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

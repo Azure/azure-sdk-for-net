@@ -5,28 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    internal partial class UnknownFabricModelCustomProperties : IUtf8JsonSerializable
+    internal partial class UnknownFabricModelCustomProperties : IUtf8JsonSerializable, IJsonModel<FabricModelCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FabricModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static UnknownFabricModelCustomProperties DeserializeUnknownFabricModelCustomProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FabricModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FabricModelCustomProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        FabricModelCustomProperties IJsonModel<FabricModelCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FabricModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FabricModelCustomProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFabricModelCustomProperties(document.RootElement, options);
+        }
+
+        internal static UnknownFabricModelCustomProperties DeserializeUnknownFabricModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string instanceType = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceType"u8))
@@ -34,8 +67,44 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownFabricModelCustomProperties(instanceType);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownFabricModelCustomProperties(instanceType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FabricModelCustomProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FabricModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FabricModelCustomProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FabricModelCustomProperties IPersistableModel<FabricModelCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FabricModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFabricModelCustomProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FabricModelCustomProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FabricModelCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

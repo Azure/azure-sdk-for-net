@@ -30,10 +30,15 @@ namespace Azure.Identity.Tests
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
             };
             if (config.Transport != null)
             {
                 options.Transport = config.Transport;
+            }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
             }
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new ClientSecretCredential(config.TenantId, ClientId, "secret", options, pipeline, config.MockConfidentialMsalClient));

@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Kusto.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Kusto.Samples
 {
     public partial class Sample_KustoAttachedDatabaseConfigurationCollection
     {
-        // KustoAttachedDatabaseConfigurationsListByCluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_KustoAttachedDatabaseConfigurationsListByCluster()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoAttachedDatabaseConfigurationsListByCluster.json
@@ -52,12 +49,11 @@ namespace Azure.ResourceManager.Kusto.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AttachedDatabaseConfigurationsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AttachedDatabaseConfigurationsGet()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoAttachedDatabaseConfigurationsGet.json
@@ -90,9 +86,8 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AttachedDatabaseConfigurationsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_AttachedDatabaseConfigurationsGet()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoAttachedDatabaseConfigurationsGet.json
@@ -121,9 +116,8 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AttachedDatabaseConfigurationsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AttachedDatabaseConfigurationsGet()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoAttachedDatabaseConfigurationsGet.json
@@ -152,7 +146,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -164,9 +158,8 @@ namespace Azure.ResourceManager.Kusto.Samples
             }
         }
 
-        // AttachedDatabaseConfigurationsCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AttachedDatabaseConfigurationsCreateOrUpdate()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoAttachedDatabaseConfigurationsCreateOrUpdate.json

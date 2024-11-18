@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql.Models;
 
@@ -77,6 +75,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The backup name. </param>
@@ -113,6 +119,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,6 +165,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_ListByDatabase</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -175,6 +197,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_ListByDatabase</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -198,6 +228,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,6 +272,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The backup name. </param>
@@ -268,6 +314,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +359,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

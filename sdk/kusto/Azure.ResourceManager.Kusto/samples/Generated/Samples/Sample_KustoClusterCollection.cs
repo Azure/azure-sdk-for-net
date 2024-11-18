@@ -7,22 +7,19 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Kusto.Samples
 {
     public partial class Sample_KustoClusterCollection
     {
-        // KustoClustersGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_KustoClustersGet()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoClustersGet.json
@@ -54,9 +51,8 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // KustoClustersGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_KustoClustersGet()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoClustersGet.json
@@ -84,9 +80,8 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // KustoClustersGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_KustoClustersGet()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoClustersGet.json
@@ -114,7 +109,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -126,9 +121,8 @@ namespace Azure.ResourceManager.Kusto.Samples
             }
         }
 
-        // KustoClustersCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_KustoClustersCreateOrUpdate()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoClustersCreateOrUpdate.json
@@ -191,9 +185,8 @@ LanguageExtensionImageName = KustoLanguageExtensionImageName.R,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // KustoClustersListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_KustoClustersListByResourceGroup()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoClustersListByResourceGroup.json
@@ -224,7 +217,7 @@ LanguageExtensionImageName = KustoLanguageExtensionImageName.R,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

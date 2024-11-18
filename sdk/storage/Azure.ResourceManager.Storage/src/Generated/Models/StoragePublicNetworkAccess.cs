@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Allow or disallow public network access to Storage Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+    /// <summary> Allow, disallow, or let Network Security Perimeter configuration to evaluate public network access to Storage Account. Value is optional but if passed in, must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </summary>
     public readonly partial struct StoragePublicNetworkAccess : IEquatable<StoragePublicNetworkAccess>
     {
         private readonly string _value;
@@ -24,16 +24,19 @@ namespace Azure.ResourceManager.Storage.Models
 
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Enabled. </summary>
         public static StoragePublicNetworkAccess Enabled { get; } = new StoragePublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static StoragePublicNetworkAccess Disabled { get; } = new StoragePublicNetworkAccess(DisabledValue);
+        /// <summary> SecuredByPerimeter. </summary>
+        public static StoragePublicNetworkAccess SecuredByPerimeter { get; } = new StoragePublicNetworkAccess(SecuredByPerimeterValue);
         /// <summary> Determines if two <see cref="StoragePublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(StoragePublicNetworkAccess left, StoragePublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StoragePublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(StoragePublicNetworkAccess left, StoragePublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StoragePublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StoragePublicNetworkAccess"/>. </summary>
         public static implicit operator StoragePublicNetworkAccess(string value) => new StoragePublicNetworkAccess(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

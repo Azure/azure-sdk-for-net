@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -30,11 +29,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
         /// <param name="startOn"> Start time for recurrence. </param>
         /// <param name="endOn"> End time for recurrence. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="daysOfWeek"> Specifies the values for weekly recurrence pattern. </param>
-        internal AlertProcessingRuleWeeklyRecurrence(RecurrenceType recurrenceType, TimeSpan? startOn, TimeSpan? endOn, IList<AlertsManagementDayOfWeek> daysOfWeek) : base(recurrenceType, startOn, endOn)
+        internal AlertProcessingRuleWeeklyRecurrence(RecurrenceType recurrenceType, TimeSpan? startOn, TimeSpan? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<AlertsManagementDayOfWeek> daysOfWeek) : base(recurrenceType, startOn, endOn, serializedAdditionalRawData)
         {
             DaysOfWeek = daysOfWeek;
             RecurrenceType = recurrenceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleWeeklyRecurrence"/> for deserialization. </summary>
+        internal AlertProcessingRuleWeeklyRecurrence()
+        {
         }
 
         /// <summary> Specifies the values for weekly recurrence pattern. </summary>

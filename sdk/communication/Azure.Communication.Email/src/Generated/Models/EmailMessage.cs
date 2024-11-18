@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.Email
 {
@@ -19,7 +18,7 @@ namespace Azure.Communication.Email
         /// <param name="senderAddress"> Sender email address from a verified domain. </param>
         /// <param name="content"> Email content to be sent. </param>
         /// <param name="recipients"> Recipients for the email. </param>
-        /// <param name="attachments"> List of attachments. Please note that we limit the total size of an email request (which includes attachments) to 10MB. </param>
+        /// <param name="attachments"> List of attachments. Please note that we limit the total size of an email request (which includes both regular and inline attachments) to 10MB. </param>
         /// <param name="replyTo"> Email addresses where recipients' replies will be sent to. </param>
         /// <param name="userEngagementTrackingDisabled"> Indicates whether user engagement tracking should be disabled for this request if the resource-level user engagement tracking setting was already enabled in the control plane. </param>
         internal EmailMessage(IDictionary<string, string> headers, string senderAddress, EmailContent content, EmailRecipients recipients, IList<EmailAttachment> attachments, IList<EmailAddress> replyTo, bool? userEngagementTrackingDisabled)
@@ -41,7 +40,7 @@ namespace Azure.Communication.Email
         public EmailContent Content { get; }
         /// <summary> Recipients for the email. </summary>
         public EmailRecipients Recipients { get; }
-        /// <summary> List of attachments. Please note that we limit the total size of an email request (which includes attachments) to 10MB. </summary>
+        /// <summary> List of attachments. Please note that we limit the total size of an email request (which includes both regular and inline attachments) to 10MB. </summary>
         public IList<EmailAttachment> Attachments { get; }
         /// <summary> Email addresses where recipients' replies will be sent to. </summary>
         public IList<EmailAddress> ReplyTo { get; }

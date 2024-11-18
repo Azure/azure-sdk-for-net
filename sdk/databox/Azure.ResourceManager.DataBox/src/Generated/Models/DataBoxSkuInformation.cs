@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Information of the sku. </summary>
     public partial class DataBoxSkuInformation
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataBoxSkuInformation"/>. </summary>
         internal DataBoxSkuInformation()
         {
@@ -33,7 +65,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="disabledReasonMessage"> Message for why the Sku is disabled. </param>
         /// <param name="requiredFeature"> Required feature to access the sku. </param>
         /// <param name="countriesWithinCommerceBoundary"> List of all the Countries in the SKU specific commerce boundary. </param>
-        internal DataBoxSkuInformation(DataBoxSku sku, bool? isEnabled, IReadOnlyList<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap, DataBoxSkuCapacity capacity, IReadOnlyList<DataBoxSkuCost> costs, IReadOnlyList<string> apiVersions, SkuDisabledReason? disabledReason, string disabledReasonMessage, string requiredFeature, IReadOnlyList<string> countriesWithinCommerceBoundary)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxSkuInformation(DataBoxSku sku, bool? isEnabled, IReadOnlyList<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap, DataBoxSkuCapacity capacity, IReadOnlyList<DataBoxSkuCost> costs, IReadOnlyList<string> apiVersions, SkuDisabledReason? disabledReason, string disabledReasonMessage, string requiredFeature, IReadOnlyList<string> countriesWithinCommerceBoundary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             IsEnabled = isEnabled;
@@ -45,6 +78,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DisabledReasonMessage = disabledReasonMessage;
             RequiredFeature = requiredFeature;
             CountriesWithinCommerceBoundary = countriesWithinCommerceBoundary;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Sku. </summary>

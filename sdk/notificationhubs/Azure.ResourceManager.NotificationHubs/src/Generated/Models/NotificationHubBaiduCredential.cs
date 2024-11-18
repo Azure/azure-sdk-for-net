@@ -6,33 +6,79 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Description of a NotificationHub BaiduCredential. </summary>
     public partial class NotificationHubBaiduCredential
     {
-        /// <summary> Initializes a new instance of <see cref="NotificationHubBaiduCredential"/>. </summary>
-        public NotificationHubBaiduCredential()
-        {
-        }
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubBaiduCredential"/>. </summary>
-        /// <param name="baiduApiKey"> Baidu Api Key. </param>
-        /// <param name="baiduEndpoint"> Baidu Endpoint. </param>
-        /// <param name="baiduSecretKey"> Baidu Secret Key. </param>
-        internal NotificationHubBaiduCredential(string baiduApiKey, Uri baiduEndpoint, string baiduSecretKey)
+        /// <param name="baiduApiKey"> Gets or sets baidu Api Key. </param>
+        /// <param name="baiduEndpoint"> Gets or sets baidu Endpoint. </param>
+        /// <param name="baiduSecretKey"> Gets or sets baidu Secret Key. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="baiduApiKey"/>, <paramref name="baiduEndpoint"/> or <paramref name="baiduSecretKey"/> is null. </exception>
+        public NotificationHubBaiduCredential(string baiduApiKey, Uri baiduEndpoint, string baiduSecretKey)
         {
+            Argument.AssertNotNull(baiduApiKey, nameof(baiduApiKey));
+            Argument.AssertNotNull(baiduEndpoint, nameof(baiduEndpoint));
+            Argument.AssertNotNull(baiduSecretKey, nameof(baiduSecretKey));
+
             BaiduApiKey = baiduApiKey;
             BaiduEndpoint = baiduEndpoint;
             BaiduSecretKey = baiduSecretKey;
         }
 
-        /// <summary> Baidu Api Key. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubBaiduCredential"/>. </summary>
+        /// <param name="baiduApiKey"> Gets or sets baidu Api Key. </param>
+        /// <param name="baiduEndpoint"> Gets or sets baidu Endpoint. </param>
+        /// <param name="baiduSecretKey"> Gets or sets baidu Secret Key. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHubBaiduCredential(string baiduApiKey, Uri baiduEndpoint, string baiduSecretKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            BaiduApiKey = baiduApiKey;
+            BaiduEndpoint = baiduEndpoint;
+            BaiduSecretKey = baiduSecretKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Gets or sets baidu Api Key. </summary>
         public string BaiduApiKey { get; set; }
-        /// <summary> Baidu Endpoint. </summary>
+        /// <summary> Gets or sets baidu Endpoint. </summary>
         public Uri BaiduEndpoint { get; set; }
-        /// <summary> Baidu Secret Key. </summary>
+        /// <summary> Gets or sets baidu Secret Key. </summary>
         public string BaiduSecretKey { get; set; }
     }
 }

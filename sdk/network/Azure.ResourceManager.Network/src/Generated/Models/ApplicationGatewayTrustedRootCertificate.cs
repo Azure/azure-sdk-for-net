@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -23,11 +23,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="data"> Certificate public data. </param>
         /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </param>
         /// <param name="provisioningState"> The provisioning state of the trusted root certificate resource. </param>
-        internal ApplicationGatewayTrustedRootCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, BinaryData data, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayTrustedRootCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, BinaryData data, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Data = data;

@@ -9,11 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -92,7 +89,6 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Lists machine learning workspaces connections by name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -101,6 +97,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,7 +128,6 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Lists machine learning workspaces connections by name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -133,6 +136,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,7 +167,6 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Delete machine learning workspaces connections by name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,6 +175,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceConnections_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +195,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation(response);
+                var uri = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MachineLearningArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -190,7 +210,6 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Delete machine learning workspaces connections by name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -199,6 +218,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceConnections_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,78 +238,12 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineLearningArmOperation(response);
+                var uri = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MachineLearningArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update machine learning workspaces connections under the specified workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceConnections_Update</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Parameters for workspace connection update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<MachineLearningWorkspaceConnectionResource>> UpdateAsync(MachineLearningWorkspaceConnectionPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update machine learning workspaces connections under the specified workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceConnections_Update</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Parameters for workspace connection update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<MachineLearningWorkspaceConnectionResource> Update(MachineLearningWorkspaceConnectionPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -301,6 +262,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceConnections_ListSecrets</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,6 +300,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceConnections_ListSecrets</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkTapCollection
     {
-        // NetworkTaps_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NetworkTapsCreateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Create_MaximumSet_Gen.json
@@ -80,9 +77,8 @@ DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxx
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkTaps_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkTapsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Get_MaximumSet_Gen.json
@@ -114,9 +110,8 @@ DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxx
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkTaps_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_NetworkTapsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Get_MaximumSet_Gen.json
@@ -144,9 +139,8 @@ DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxx
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkTaps_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NetworkTapsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Get_MaximumSet_Gen.json
@@ -174,7 +168,7 @@ DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxx
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -186,9 +180,8 @@ DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxx
             }
         }
 
-        // NetworkTaps_ListByResourceGroup_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_NetworkTapsListByResourceGroupMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_ListByResourceGroup_MaximumSet_Gen.json
@@ -219,7 +212,7 @@ DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxx
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

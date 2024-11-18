@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageCache.Mocking;
 using Azure.ResourceManager.StorageCache.Models;
@@ -52,6 +50,25 @@ namespace Azure.ResourceManager.StorageCache
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageCacheArmClient(client).GetAmlFileSystemResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StorageCacheImportJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageCacheImportJobResource.CreateResourceIdentifier" /> to create a <see cref="StorageCacheImportJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheArmClient.GetStorageCacheImportJobResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StorageCacheImportJobResource"/> object. </returns>
+        public static StorageCacheImportJobResource GetStorageCacheImportJobResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableStorageCacheArmClient(client).GetStorageCacheImportJobResource(id);
         }
 
         /// <summary>
@@ -120,6 +137,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -149,6 +174,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AmlFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -197,6 +230,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -226,6 +267,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -257,6 +306,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -285,6 +342,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -311,7 +376,11 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>checkAmlFSSubnets</description>
+        /// <description>CheckAmlFSSubnets</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -339,7 +408,11 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>checkAmlFSSubnets</description>
+        /// <description>CheckAmlFSSubnets</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -367,7 +440,11 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>getRequiredAmlFSSubnetsSize</description>
+        /// <description>GetRequiredAmlFSSubnetsSize</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -395,7 +472,11 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>getRequiredAmlFSSubnetsSize</description>
+        /// <description>GetRequiredAmlFSSubnetsSize</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -425,6 +506,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -452,6 +537,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -481,6 +570,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>UsageModels_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -509,6 +602,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>UsageModels_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -536,6 +633,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AscUsages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -566,6 +667,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>AscUsages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -595,6 +700,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -622,6 +735,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
         /// </item>
         /// </list>
         /// <item>

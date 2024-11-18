@@ -5,23 +5,99 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeInstanceDataDisk
+    public partial class MachineLearningComputeInstanceDataDisk : IUtf8JsonSerializable, IJsonModel<MachineLearningComputeInstanceDataDisk>
     {
-        internal static MachineLearningComputeInstanceDataDisk DeserializeMachineLearningComputeInstanceDataDisk(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningComputeInstanceDataDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningComputeInstanceDataDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceDataDisk)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(Caching))
+            {
+                writer.WritePropertyName("caching"u8);
+                writer.WriteStringValue(Caching.Value.ToString());
+            }
+            if (Optional.IsDefined(DiskSizeGB))
+            {
+                writer.WritePropertyName("diskSizeGB"u8);
+                writer.WriteNumberValue(DiskSizeGB.Value);
+            }
+            if (Optional.IsDefined(Lun))
+            {
+                writer.WritePropertyName("lun"u8);
+                writer.WriteNumberValue(Lun.Value);
+            }
+            if (Optional.IsDefined(StorageAccountType))
+            {
+                writer.WritePropertyName("storageAccountType"u8);
+                writer.WriteStringValue(StorageAccountType.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        MachineLearningComputeInstanceDataDisk IJsonModel<MachineLearningComputeInstanceDataDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceDataDisk)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningComputeInstanceDataDisk(document.RootElement, options);
+        }
+
+        internal static MachineLearningComputeInstanceDataDisk DeserializeMachineLearningComputeInstanceDataDisk(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MachineLearningCachingType> caching = default;
-            Optional<int> diskSizeGB = default;
-            Optional<int> lun = default;
-            Optional<MachineLearningStorageAccountType> storageAccountType = default;
+            MachineLearningCachingType? caching = default;
+            int? diskSizeGB = default;
+            int? lun = default;
+            MachineLearningStorageAccountType? storageAccountType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("caching"u8))
@@ -60,8 +136,121 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     storageAccountType = new MachineLearningStorageAccountType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningComputeInstanceDataDisk(Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), Optional.ToNullable(lun), Optional.ToNullable(storageAccountType));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningComputeInstanceDataDisk(caching, diskSizeGB, lun, storageAccountType, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Caching), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  caching: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Caching))
+                {
+                    builder.Append("  caching: ");
+                    builder.AppendLine($"'{Caching.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskSizeGB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  diskSizeGB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DiskSizeGB))
+                {
+                    builder.Append("  diskSizeGB: ");
+                    builder.AppendLine($"{DiskSizeGB.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Lun), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lun: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Lun))
+                {
+                    builder.Append("  lun: ");
+                    builder.AppendLine($"{Lun.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageAccountType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageAccountType))
+                {
+                    builder.Append("  storageAccountType: ");
+                    builder.AppendLine($"'{StorageAccountType.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningComputeInstanceDataDisk>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceDataDisk)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningComputeInstanceDataDisk IPersistableModel<MachineLearningComputeInstanceDataDisk>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningComputeInstanceDataDisk(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceDataDisk)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningComputeInstanceDataDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

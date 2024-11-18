@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,11 +14,28 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ODataSource : IUtf8JsonSerializable
+    public partial class ODataSource : IUtf8JsonSerializable, IJsonModel<ODataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ODataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ODataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ODataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ODataSource)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
@@ -40,28 +58,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CopySourceType);
-            if (Optional.IsDefined(SourceRetryCount))
-            {
-                writer.WritePropertyName("sourceRetryCount"u8);
-                JsonSerializer.Serialize(writer, SourceRetryCount);
-            }
-            if (Optional.IsDefined(SourceRetryWait))
-            {
-                writer.WritePropertyName("sourceRetryWait"u8);
-                JsonSerializer.Serialize(writer, SourceRetryWait);
-            }
-            if (Optional.IsDefined(MaxConcurrentConnections))
-            {
-                writer.WritePropertyName("maxConcurrentConnections"u8);
-                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
-            }
-            if (Optional.IsDefined(DisableMetricsCollection))
-            {
-                writer.WritePropertyName("disableMetricsCollection"u8);
-                JsonSerializer.Serialize(writer, DisableMetricsCollection);
-            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -74,23 +70,36 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static ODataSource DeserializeODataSource(JsonElement element)
+        ODataSource IJsonModel<ODataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ODataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ODataSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeODataSource(document.RootElement, options);
+        }
+
+        internal static ODataSource DeserializeODataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> query = default;
-            Optional<DataFactoryElement<string>> httpRequestTimeout = default;
-            Optional<BinaryData> additionalColumns = default;
+            DataFactoryElement<string> query = default;
+            DataFactoryElement<string> httpRequestTimeout = default;
+            BinaryData additionalColumns = default;
             string type = default;
-            Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +175,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ODataSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, query.Value, httpRequestTimeout.Value, additionalColumns.Value);
+            return new ODataSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                query,
+                httpRequestTimeout,
+                additionalColumns);
         }
+
+        BinaryData IPersistableModel<ODataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ODataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ODataSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ODataSource IPersistableModel<ODataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ODataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeODataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ODataSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ODataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

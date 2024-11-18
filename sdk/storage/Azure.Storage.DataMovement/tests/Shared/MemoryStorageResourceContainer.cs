@@ -25,7 +25,7 @@ namespace Azure.Storage.DataMovement.Tests
             Uri = uri ?? new Uri($"memory://localhost/mycontainer/mypath-{Guid.NewGuid()}/resource-item-{Guid.NewGuid()}");
         }
 
-        protected internal override StorageResourceItem GetStorageResourceReference(string path)
+        protected internal override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
         {
             UriBuilder builder = new(Uri);
             builder.Path = string.Join("/", new List<string>()
@@ -46,6 +46,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         protected internal override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+            StorageResourceContainer destinationContainer = default,
             [EnumeratorCancellation]CancellationToken cancellationToken = default)
         {
             foreach (StorageResource storageResource in GetStorageResources(ReturnsContainersOnEnumeration))

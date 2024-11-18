@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -52,6 +51,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "DatabricksNotebook";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DatabricksNotebookActivity"/> for deserialization. </summary>
+        internal DatabricksNotebookActivity()
+        {
+        }
+
         /// <summary> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> NotebookPath { get; set; }
         /// <summary>
@@ -85,7 +89,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> BaseParameters { get; }
-        /// <summary> A list of libraries to be installed on the cluster that will execute the job. </summary>
+        /// <summary>
+        /// A list of libraries to be installed on the cluster that will execute the job.
+        /// <para>
+        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IList<IDictionary<string, BinaryData>> Libraries { get; }
     }
 }

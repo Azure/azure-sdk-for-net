@@ -9,18 +9,16 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DevCenter;
 using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevCenter.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // Get OperationStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDevCenterOperationStatus_GetOperationStatus()
         {
             // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/OperationStatus_Get.json
@@ -45,9 +43,8 @@ namespace Azure.ResourceManager.DevCenter.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // listUsages
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDevCenterUsagesByLocation_ListUsages()
         {
             // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Usages_ListByLocation.json
@@ -71,12 +68,11 @@ namespace Azure.ResourceManager.DevCenter.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // NameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckDevCenterNameAvailability_NameAvailability()
         {
             // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/CheckNameAvailability.json
@@ -104,9 +100,8 @@ namespace Azure.ResourceManager.DevCenter.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Skus_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDevCenterSkusBySubscription_SkusListBySubscription()
         {
             // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Skus_ListBySubscription.json
@@ -129,7 +124,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

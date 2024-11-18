@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
@@ -110,6 +108,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>JobRuns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobRunName"> The name of the Job Run resource. </param>
@@ -133,6 +139,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>JobRuns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobRunName"> The name of the Job Run resource. </param>
@@ -155,6 +169,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,6 +210,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>JobDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -219,6 +249,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobDefinitions_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -254,6 +292,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>JobDefinitions_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -287,6 +333,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobDefinitions_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,6 +376,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>JobDefinitions_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The <see cref="JobDefinitionPatch"/> to use. </param>
@@ -346,7 +408,7 @@ namespace Azure.ResourceManager.StorageMover
         }
 
         /// <summary>
-        /// Requests an Agent to start a new instance of this Job Definition, generating a new Job Run resource.
+        /// Creates a new Job Run resource for the specified Job Definition and passes it to the Agent for execution.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -355,6 +417,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobDefinitions_StartJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,7 +446,7 @@ namespace Azure.ResourceManager.StorageMover
         }
 
         /// <summary>
-        /// Requests an Agent to start a new instance of this Job Definition, generating a new Job Run resource.
+        /// Creates a new Job Run resource for the specified Job Definition and passes it to the Agent for execution.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -385,6 +455,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobDefinitions_StartJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,6 +494,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>JobDefinitions_StopJob</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -445,6 +531,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobDefinitions_StopJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

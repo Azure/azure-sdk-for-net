@@ -5,34 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ExternalInstallationSoftwareConfiguration : IUtf8JsonSerializable
+    public partial class ExternalInstallationSoftwareConfiguration : IUtf8JsonSerializable, IJsonModel<ExternalInstallationSoftwareConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExternalInstallationSoftwareConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ExternalInstallationSoftwareConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExternalInstallationSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExternalInstallationSoftwareConfiguration)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(CentralServerVmId))
             {
                 writer.WritePropertyName("centralServerVmId"u8);
                 writer.WriteStringValue(CentralServerVmId);
             }
-            writer.WritePropertyName("softwareInstallationType"u8);
-            writer.WriteStringValue(SoftwareInstallationType.ToString());
-            writer.WriteEndObject();
         }
 
-        internal static ExternalInstallationSoftwareConfiguration DeserializeExternalInstallationSoftwareConfiguration(JsonElement element)
+        ExternalInstallationSoftwareConfiguration IJsonModel<ExternalInstallationSoftwareConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExternalInstallationSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExternalInstallationSoftwareConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExternalInstallationSoftwareConfiguration(document.RootElement, options);
+        }
+
+        internal static ExternalInstallationSoftwareConfiguration DeserializeExternalInstallationSoftwareConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> centralServerVmId = default;
+            ResourceIdentifier centralServerVmId = default;
             SapSoftwareInstallationType softwareInstallationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("centralServerVmId"u8))
@@ -49,8 +82,44 @@ namespace Azure.ResourceManager.Workloads.Models
                     softwareInstallationType = new SapSoftwareInstallationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExternalInstallationSoftwareConfiguration(softwareInstallationType, centralServerVmId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExternalInstallationSoftwareConfiguration(softwareInstallationType, serializedAdditionalRawData, centralServerVmId);
         }
+
+        BinaryData IPersistableModel<ExternalInstallationSoftwareConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExternalInstallationSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExternalInstallationSoftwareConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExternalInstallationSoftwareConfiguration IPersistableModel<ExternalInstallationSoftwareConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExternalInstallationSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExternalInstallationSoftwareConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExternalInstallationSoftwareConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExternalInstallationSoftwareConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

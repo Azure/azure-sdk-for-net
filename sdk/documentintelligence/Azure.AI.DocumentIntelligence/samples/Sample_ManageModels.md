@@ -12,8 +12,8 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 
 ```C# Snippet:CreateDocumentIntelligenceAdministrationClient
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var credential = new DefaultAzureCredential();
+var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), credential);
 ```
 
 ## Model administration operations
@@ -40,8 +40,8 @@ string modelId = "<modelId>";
 DocumentModelDetails model = await client.GetModelAsync(modelId);
 
 Console.WriteLine($"Details about model with ID '{model.ModelId}':");
-Console.WriteLine($"  Created on: {model.CreatedDateTime}");
-Console.WriteLine($"  Expires on: {model.ExpirationDateTime}");
+Console.WriteLine($"  Created on: {model.CreatedOn}");
+Console.WriteLine($"  Expires on: {model.ExpiresOn}");
 
 // List up to 10 models currently stored in the resource.
 int count = 0;
@@ -51,8 +51,8 @@ await foreach (DocumentModelDetails modelItem in client.GetModelsAsync())
     Console.WriteLine($"Model details:");
     Console.WriteLine($"  Model ID: {modelItem.ModelId}");
     Console.WriteLine($"  Description: {modelItem.Description}");
-    Console.WriteLine($"  Created on: {modelItem.CreatedDateTime}");
-    Console.WriteLine($"  Expires on: {model.ExpirationDateTime}");
+    Console.WriteLine($"  Created on: {modelItem.CreatedOn}");
+    Console.WriteLine($"  Expires on: {model.ExpiresOn}");
 
     if (++count == 10)
     {

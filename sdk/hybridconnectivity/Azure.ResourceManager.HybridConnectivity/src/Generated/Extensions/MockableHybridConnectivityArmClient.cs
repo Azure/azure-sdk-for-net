@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Mocking
 {
@@ -59,6 +56,14 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <term>Operation Id</term>
         /// <description>Endpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-06-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -81,6 +86,14 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Endpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-06-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

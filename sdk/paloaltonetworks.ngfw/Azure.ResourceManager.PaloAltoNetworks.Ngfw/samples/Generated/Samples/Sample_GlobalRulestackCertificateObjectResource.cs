@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 {
     public partial class Sample_GlobalRulestackCertificateObjectResource
     {
-        // CertificateObjectGlobalRulestack_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CertificateObjectGlobalRulestackGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MaximumSet_Gen.json
@@ -48,9 +45,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CertificateObjectGlobalRulestack_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CertificateObjectGlobalRulestackGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MinimumSet_Gen.json
@@ -78,9 +74,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CertificateObjectGlobalRulestack_CreateOrUpdate_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CertificateObjectGlobalRulestackCreateOrUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_CreateOrUpdate_MaximumSet_Gen.json
@@ -116,9 +111,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CertificateObjectGlobalRulestack_CreateOrUpdate_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CertificateObjectGlobalRulestackCreateOrUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_CreateOrUpdate_MinimumSet_Gen.json
@@ -148,9 +142,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CertificateObjectGlobalRulestack_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_CertificateObjectGlobalRulestackDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Delete_MaximumSet_Gen.json
@@ -171,12 +164,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // invoke the operation
             await globalRulestackCertificateObject.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CertificateObjectGlobalRulestack_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_CertificateObjectGlobalRulestackDeleteMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Delete_MinimumSet_Gen.json
@@ -197,7 +189,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // invoke the operation
             await globalRulestackCertificateObject.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

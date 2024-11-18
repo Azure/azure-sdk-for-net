@@ -207,13 +207,13 @@ Semantic ranking enhances the quality of search results for text-based queries. 
 - It applies secondary ranking to the initial result set, promoting the most semantically relevant results to the top.
 - It extracts and returns captions and answers in the response, which can be displayed on a search page to enhance the user's search experience.
 
-To learn more about semantic ranking, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample08_SemanticSearch.md).
+To learn more about Semantic Search, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample08_SemanticSearch.md).
 
-Additionally, for more comprehensive information about semantic ranking, including its concepts and usage, you can refer to the [documentation](https://learn.microsoft.com/azure/search/semantic-search-overview). The documentation provides in-depth explanations and guidance on leveraging the power of semantic ranking in Azure AI Search.
+Additionally, for more comprehensive information about Semantic Search, including its concepts and usage, you can refer to the [documentation](https://learn.microsoft.com/azure/search/semantic-search-overview). The documentation provides in-depth explanations and guidance on leveraging the power of Semantic Search in Azure Cognitive Search.
 
 #### Vector search
 
-Vector search is an information retrieval technique that overcomes the limitations of traditional keyword-based search. Instead of relying solely on lexical analysis and matching individual query terms, vector search uses algorithms for similarity and concept search. It represents documents and queries as vectors in a high-dimensional space called an embedding. By searching on vector representations of content, a vector query can find relevant matches, even if the exact terms of the query are not present in the index. Moreover, vector search can be applied to various types of content, including images and videos and translated text, not just same-language text.
+**Vector search** is an information retrieval technique that uses numeric representations of searchable documents and query strings. By searching for numeric representations of content that are most similar to the numeric query, vector search can find relevant matches, even if the exact terms of the query are not present in the index. Moreover, vector search can be applied to various types of content, including images and videos and translated text, not just same-language text.
 
 To learn how to index vector fields and perform vector search, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md). This sample provides detailed guidance on indexing vector fields and demonstrates how to perform vector search.
 

@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StreamAnalytics;
 using Azure.ResourceManager.StreamAnalytics.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StreamAnalytics.Samples
 {
     public partial class Sample_StreamingJobOutputCollection
     {
-        // Create a DocumentDB output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateADocumentDBOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Create_DocumentDB.json
@@ -67,9 +64,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a Gateway Message Bus output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAGatewayMessageBusOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Create_GatewayMessageBus.json
@@ -110,9 +106,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a PostgreSQL output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAPostgreSQLOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Create_PostgreSQL.json
@@ -159,9 +154,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a Power BI output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAPowerBIOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Create_PowerBI.json
@@ -208,9 +202,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a Service Bus Queue output with Avro serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAServiceBusQueueOutputWithAvroSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Create_ServiceBusQueue_Avro.json
@@ -264,9 +257,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a Service Bus Topic output with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAServiceBusTopicOutputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Create_ServiceBusTopic_CSV.json
@@ -319,9 +311,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a blob output with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateABlobOutputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Create_Blob_CSV.json
@@ -380,9 +371,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create an Azure Data Lake Store output with JSON serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnAzureDataLakeStoreOutputWithJSONSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Create_AzureDataLakeStore_JSON.json
@@ -435,9 +425,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create an Azure Data Warehouse output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnAzureDataWarehouseOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Create_DataWarehouse.json
@@ -483,9 +472,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create an Azure Function output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnAzureFunctionOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Create_AzureFunction.json
@@ -530,9 +518,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create an Azure SQL database output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnAzureSQLDatabaseOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Create_AzureSQL.json
@@ -577,9 +564,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create an Azure Table output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnAzureTableOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Create_AzureTable.json
@@ -629,9 +615,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create an Event Hub output with JSON serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnEventHubOutputWithJSONSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Create_EventHub_JSON.json
@@ -686,9 +671,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a DocumentDB output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADocumentDBOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_DocumentDB.json
@@ -721,9 +705,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a DocumentDB output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetADocumentDBOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_DocumentDB.json
@@ -752,9 +735,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a DocumentDB output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetADocumentDBOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_DocumentDB.json
@@ -783,7 +765,7 @@ AccountKey = "accountKey==",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -795,9 +777,8 @@ AccountKey = "accountKey==",
             }
         }
 
-        // Get a Power BI output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPowerBIOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_PowerBI.json
@@ -830,9 +811,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a Power BI output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAPowerBIOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_PowerBI.json
@@ -861,9 +841,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a Power BI output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAPowerBIOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_PowerBI.json
@@ -892,7 +871,7 @@ AccountKey = "accountKey==",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -904,9 +883,8 @@ AccountKey = "accountKey==",
             }
         }
 
-        // Get a Service Bus Queue output with Avro serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServiceBusQueueOutputWithAvroSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_ServiceBusQueue_Avro.json
@@ -939,9 +917,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a Service Bus Queue output with Avro serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAServiceBusQueueOutputWithAvroSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_ServiceBusQueue_Avro.json
@@ -970,9 +947,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a Service Bus Queue output with Avro serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAServiceBusQueueOutputWithAvroSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_ServiceBusQueue_Avro.json
@@ -1001,7 +977,7 @@ AccountKey = "accountKey==",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1013,9 +989,8 @@ AccountKey = "accountKey==",
             }
         }
 
-        // Get a Service Bus Topic output with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServiceBusTopicOutputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_ServiceBusTopic_CSV.json
@@ -1048,9 +1023,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a Service Bus Topic output with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAServiceBusTopicOutputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_ServiceBusTopic_CSV.json
@@ -1079,9 +1053,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a Service Bus Topic output with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAServiceBusTopicOutputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_ServiceBusTopic_CSV.json
@@ -1110,7 +1083,7 @@ AccountKey = "accountKey==",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1122,9 +1095,8 @@ AccountKey = "accountKey==",
             }
         }
 
-        // Get a blob output with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetABlobOutputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_Blob_CSV.json
@@ -1157,9 +1129,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a blob output with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetABlobOutputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_Blob_CSV.json
@@ -1188,9 +1159,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a blob output with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetABlobOutputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_Blob_CSV.json
@@ -1219,7 +1189,7 @@ AccountKey = "accountKey==",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1231,9 +1201,8 @@ AccountKey = "accountKey==",
             }
         }
 
-        // Get an Azure Data Lake Store output with JSON serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAzureDataLakeStoreOutputWithJSONSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureDataLakeStore_JSON.json
@@ -1266,9 +1235,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Azure Data Lake Store output with JSON serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAzureDataLakeStoreOutputWithJSONSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureDataLakeStore_JSON.json
@@ -1297,9 +1265,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an Azure Data Lake Store output with JSON serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAzureDataLakeStoreOutputWithJSONSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureDataLakeStore_JSON.json
@@ -1328,7 +1295,7 @@ AccountKey = "accountKey==",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1340,9 +1307,8 @@ AccountKey = "accountKey==",
             }
         }
 
-        // Get an Azure Data Warehouse output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAzureDataWarehouseOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_DataWarehouse.json
@@ -1375,9 +1341,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Azure Data Warehouse output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAzureDataWarehouseOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_DataWarehouse.json
@@ -1406,9 +1371,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an Azure Data Warehouse output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAzureDataWarehouseOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_DataWarehouse.json
@@ -1437,7 +1401,7 @@ AccountKey = "accountKey==",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1449,9 +1413,8 @@ AccountKey = "accountKey==",
             }
         }
 
-        // Get an Azure Function output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAzureFunctionOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureFunction.json
@@ -1484,9 +1447,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Azure Function output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAzureFunctionOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureFunction.json
@@ -1515,9 +1477,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an Azure Function output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAzureFunctionOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureFunction.json
@@ -1546,7 +1507,7 @@ AccountKey = "accountKey==",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1558,9 +1519,8 @@ AccountKey = "accountKey==",
             }
         }
 
-        // Get an Azure SQL database output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAzureSQLDatabaseOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureSQL.json
@@ -1593,9 +1553,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Azure SQL database output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAzureSQLDatabaseOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureSQL.json
@@ -1624,9 +1583,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an Azure SQL database output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAzureSQLDatabaseOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureSQL.json
@@ -1655,7 +1613,7 @@ AccountKey = "accountKey==",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1667,9 +1625,8 @@ AccountKey = "accountKey==",
             }
         }
 
-        // Get an Azure Table output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAzureTableOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureTable.json
@@ -1702,9 +1659,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Azure Table output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAzureTableOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureTable.json
@@ -1733,9 +1689,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an Azure Table output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAzureTableOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureTable.json
@@ -1764,7 +1719,7 @@ AccountKey = "accountKey==",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1776,9 +1731,8 @@ AccountKey = "accountKey==",
             }
         }
 
-        // Get an Event Hub output with JSON serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnEventHubOutputWithJSONSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_EventHub_JSON.json
@@ -1811,9 +1765,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Event Hub output with JSON serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnEventHubOutputWithJSONSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_EventHub_JSON.json
@@ -1842,9 +1795,8 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an Event Hub output with JSON serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnEventHubOutputWithJSONSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_EventHub_JSON.json
@@ -1873,7 +1825,7 @@ AccountKey = "accountKey==",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1885,9 +1837,8 @@ AccountKey = "accountKey==",
             }
         }
 
-        // List all outputs in a streaming job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllOutputsInAStreamingJob()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_ListByStreamingJob.json
@@ -1919,7 +1870,7 @@ AccountKey = "accountKey==",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

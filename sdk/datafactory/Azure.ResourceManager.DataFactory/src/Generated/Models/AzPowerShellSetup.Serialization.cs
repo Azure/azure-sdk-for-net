@@ -5,34 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzPowerShellSetup : IUtf8JsonSerializable
+    public partial class AzPowerShellSetup : IUtf8JsonSerializable, IJsonModel<AzPowerShellSetup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzPowerShellSetup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AzPowerShellSetup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CustomSetupBaseType);
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzPowerShellSetup>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzPowerShellSetup)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version);
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static AzPowerShellSetup DeserializeAzPowerShellSetup(JsonElement element)
+        AzPowerShellSetup IJsonModel<AzPowerShellSetup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzPowerShellSetup>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzPowerShellSetup)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzPowerShellSetup(document.RootElement, options);
+        }
+
+        internal static AzPowerShellSetup DeserializeAzPowerShellSetup(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
             string version = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -57,8 +90,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzPowerShellSetup(type, version);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzPowerShellSetup(type, serializedAdditionalRawData, version);
         }
+
+        BinaryData IPersistableModel<AzPowerShellSetup>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzPowerShellSetup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzPowerShellSetup)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzPowerShellSetup IPersistableModel<AzPowerShellSetup>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzPowerShellSetup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzPowerShellSetup(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzPowerShellSetup)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzPowerShellSetup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

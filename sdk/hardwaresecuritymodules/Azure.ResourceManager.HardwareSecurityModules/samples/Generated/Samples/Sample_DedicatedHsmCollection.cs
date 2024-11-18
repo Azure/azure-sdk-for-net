@@ -7,24 +7,21 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HardwareSecurityModules;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 {
     public partial class Sample_DedicatedHsmCollection
     {
-        // Create a new or update an existing dedicated HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateANewOrUpdateAnExistingDedicatedHSM()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2021-11-30/examples/DedicatedHsm_CreateOrUpdate.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/DedicatedHsm_CreateOrUpdate.json
             // this example is just showing the usage of "DedicatedHsm_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -44,21 +41,25 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 
             // invoke the operation
             string name = "hsm1";
-            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"))
+            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new DedicatedHsmSku()
             {
-                NetworkProfile = new NetworkProfile()
+                Name = new DedicatedHsmSkuName("SafeNet Luna Network HSM A790"),
+            }, new DedicatedHsmProperties()
+            {
+                NetworkProfile = new DedicatedHsmNetworkProfile()
                 {
-                    SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
                     NetworkInterfaces =
 {
-new NetworkInterface()
+new DedicatedHsmNetworkInterface()
 {
 PrivateIPAddress = "1.0.0.1",
 }
 },
                 },
                 StampId = "stamp01",
-                SkuName = HardwareSecurityModulesSkuName.SafeNetLunaNetworkHSMA790,
+            })
+            {
                 Tags =
 {
 ["Dept"] = "hsm",
@@ -75,12 +76,11 @@ PrivateIPAddress = "1.0.0.1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a new or update an existing payment HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateANewOrUpdateAnExistingPaymentHSM()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2021-11-30/examples/PaymentHsm_CreateOrUpdate.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_CreateOrUpdate.json
             // this example is just showing the usage of "DedicatedHsm_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,21 +100,25 @@ PrivateIPAddress = "1.0.0.1",
 
             // invoke the operation
             string name = "hsm1";
-            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"))
+            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new DedicatedHsmSku()
             {
-                NetworkProfile = new NetworkProfile()
+                Name = DedicatedHsmSkuName.PayShield10KLmk1Cps60,
+            }, new DedicatedHsmProperties()
+            {
+                NetworkProfile = new DedicatedHsmNetworkProfile()
                 {
-                    SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
                     NetworkInterfaces =
 {
-new NetworkInterface()
+new DedicatedHsmNetworkInterface()
 {
 PrivateIPAddress = "1.0.0.1",
 }
 },
                 },
                 StampId = "stamp01",
-                SkuName = HardwareSecurityModulesSkuName.PayShield10KLMK1CPS60,
+            })
+            {
                 Tags =
 {
 ["Dept"] = "hsm",
@@ -131,12 +135,11 @@ PrivateIPAddress = "1.0.0.1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a new or update an existing payment HSM with management profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateANewOrUpdateAnExistingPaymentHSMWithManagementProfile()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2021-11-30/examples/PaymentHsm_CreateOrUpdate_WithManagementProfile.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_CreateOrUpdate_WithManagementProfile.json
             // this example is just showing the usage of "DedicatedHsm_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -156,32 +159,36 @@ PrivateIPAddress = "1.0.0.1",
 
             // invoke the operation
             string name = "hsm1";
-            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"))
+            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new DedicatedHsmSku()
             {
-                NetworkProfile = new NetworkProfile()
+                Name = DedicatedHsmSkuName.PayShield10KLmk1Cps60,
+            }, new DedicatedHsmProperties()
+            {
+                NetworkProfile = new DedicatedHsmNetworkProfile()
                 {
-                    SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
                     NetworkInterfaces =
 {
-new NetworkInterface()
+new DedicatedHsmNetworkInterface()
 {
 PrivateIPAddress = "1.0.0.1",
 }
 },
                 },
-                ManagementNetworkProfile = new NetworkProfile()
+                ManagementNetworkProfile = new DedicatedHsmNetworkProfile()
                 {
-                    SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
                     NetworkInterfaces =
 {
-new NetworkInterface()
+new DedicatedHsmNetworkInterface()
 {
 PrivateIPAddress = "1.0.0.2",
 }
 },
                 },
                 StampId = "stamp01",
-                SkuName = HardwareSecurityModulesSkuName.PayShield10KLMK1CPS60,
+            })
+            {
                 Tags =
 {
 ["Dept"] = "hsm",
@@ -198,12 +205,11 @@ PrivateIPAddress = "1.0.0.2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a dedicated HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADedicatedHSM()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2021-11-30/examples/DedicatedHsm_Get.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/DedicatedHsm_Get.json
             // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -232,12 +238,11 @@ PrivateIPAddress = "1.0.0.2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a dedicated HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetADedicatedHSM()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2021-11-30/examples/DedicatedHsm_Get.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/DedicatedHsm_Get.json
             // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -262,12 +267,11 @@ PrivateIPAddress = "1.0.0.2",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a dedicated HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetADedicatedHSM()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2021-11-30/examples/DedicatedHsm_Get.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/DedicatedHsm_Get.json
             // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -292,7 +296,7 @@ PrivateIPAddress = "1.0.0.2",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -304,12 +308,11 @@ PrivateIPAddress = "1.0.0.2",
             }
         }
 
-        // Get a payment HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPaymentHSM()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2021-11-30/examples/PaymentHsm_Get.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get.json
             // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -338,12 +341,11 @@ PrivateIPAddress = "1.0.0.2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a payment HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAPaymentHSM()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2021-11-30/examples/PaymentHsm_Get.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get.json
             // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -368,12 +370,11 @@ PrivateIPAddress = "1.0.0.2",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a payment HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAPaymentHSM()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2021-11-30/examples/PaymentHsm_Get.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get.json
             // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -398,7 +399,7 @@ PrivateIPAddress = "1.0.0.2",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -410,12 +411,11 @@ PrivateIPAddress = "1.0.0.2",
             }
         }
 
-        // Get a payment HSM with 2018-10-31Preview api version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPaymentHSMWith20181031PreviewApiVersion()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2021-11-30/examples/PaymentHsm_Get_With_2018-10-31Preview_Version.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get_With_2018-10-31Preview_Version.json
             // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -444,12 +444,11 @@ PrivateIPAddress = "1.0.0.2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a payment HSM with 2018-10-31Preview api version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAPaymentHSMWith20181031PreviewApiVersion()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2021-11-30/examples/PaymentHsm_Get_With_2018-10-31Preview_Version.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get_With_2018-10-31Preview_Version.json
             // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -474,12 +473,11 @@ PrivateIPAddress = "1.0.0.2",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a payment HSM with 2018-10-31Preview api version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAPaymentHSMWith20181031PreviewApiVersion()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2021-11-30/examples/PaymentHsm_Get_With_2018-10-31Preview_Version.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get_With_2018-10-31Preview_Version.json
             // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -504,7 +502,7 @@ PrivateIPAddress = "1.0.0.2",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -516,12 +514,11 @@ PrivateIPAddress = "1.0.0.2",
             }
         }
 
-        // List dedicated HSM devices in a resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDedicatedHSMDevicesInAResourceGroup()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2021-11-30/examples/DedicatedHsm_ListByResourceGroup.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/DedicatedHsm_ListByResourceGroup.json
             // this example is just showing the usage of "DedicatedHsm_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -549,15 +546,14 @@ PrivateIPAddress = "1.0.0.2",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List dedicated HSM devices in a resource group including payment HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDedicatedHSMDevicesInAResourceGroupIncludingPaymentHSM()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2021-11-30/examples/PaymentHsm_ListByResourceGroup.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_ListByResourceGroup.json
             // this example is just showing the usage of "DedicatedHsm_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -585,7 +581,7 @@ PrivateIPAddress = "1.0.0.2",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -24,11 +24,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workLoadType"> Type of workload for the backup management. </param>
         /// <param name="settings"> Common settings for the backup management. </param>
         /// <param name="subProtectionPolicy"> List of sub-protection policies which includes schedule and retention. </param>
         /// <param name="doesMakePolicyConsistent"> Fix the policy inconsistency. </param>
-        internal VmWorkloadProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, BackupWorkloadType? workLoadType, BackupCommonSettings settings, IList<SubProtectionPolicy> subProtectionPolicy, bool? doesMakePolicyConsistent) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
+        internal VmWorkloadProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData, BackupWorkloadType? workLoadType, BackupCommonSettings settings, IList<SubProtectionPolicy> subProtectionPolicy, bool? doesMakePolicyConsistent) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, serializedAdditionalRawData)
         {
             WorkLoadType = workLoadType;
             Settings = settings;

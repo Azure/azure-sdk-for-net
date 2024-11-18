@@ -14,8 +14,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task BuildCustomModelAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleBuildModel
             // For this sample, you can use the training documents found in the `trainingFiles` folder.
@@ -47,7 +46,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             DocumentModelDetails model = operation.Value;
 
             Console.WriteLine($"Model ID: {model.ModelId}");
-            Console.WriteLine($"Created on: {model.CreatedDateTime}");
+            Console.WriteLine($"Created on: {model.CreatedOn}");
 
             Console.WriteLine("Document types the model can recognize:");
             foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocTypes)

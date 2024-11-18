@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -44,7 +42,13 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="trustedOrigins"> List of Trusted Origin URLs for this site. This field is applicable only if isSecureSiteEnabled is True. </param>
         /// <param name="isWebChatSpeechEnabled"> Whether this site is enabled for Webchat Speech. </param>
         /// <param name="isWebchatPreviewEnabled"> Whether this site is enabled for preview versions of Webchat. </param>
-        internal WebChatSite(Guid? tenantId, string siteId, string siteName, string key, string key2, bool isEnabled, bool? isTokenEnabled, bool? isEndpointParametersEnabled, bool? isDetailedLoggingEnabled, bool? isBlockUserUploadEnabled, bool? isNoStorageEnabled, ETag? etag, string appId, bool? isV1Enabled, bool? isV3Enabled, bool? isSecureSiteEnabled, IList<string> trustedOrigins, bool? isWebChatSpeechEnabled, bool? isWebchatPreviewEnabled) : base(tenantId, siteId, siteName, key, key2, isEnabled, isTokenEnabled, isEndpointParametersEnabled, isDetailedLoggingEnabled, isBlockUserUploadEnabled, isNoStorageEnabled, etag, appId, isV1Enabled, isV3Enabled, isSecureSiteEnabled, trustedOrigins, isWebChatSpeechEnabled, isWebchatPreviewEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebChatSite(Guid? tenantId, string siteId, string siteName, string key, string key2, bool isEnabled, bool? isTokenEnabled, bool? isEndpointParametersEnabled, bool? isDetailedLoggingEnabled, bool? isBlockUserUploadEnabled, bool? isNoStorageEnabled, ETag? etag, string appId, bool? isV1Enabled, bool? isV3Enabled, bool? isSecureSiteEnabled, IList<string> trustedOrigins, bool? isWebChatSpeechEnabled, bool? isWebchatPreviewEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tenantId, siteId, siteName, key, key2, isEnabled, isTokenEnabled, isEndpointParametersEnabled, isDetailedLoggingEnabled, isBlockUserUploadEnabled, isNoStorageEnabled, etag, appId, isV1Enabled, isV3Enabled, isSecureSiteEnabled, trustedOrigins, isWebChatSpeechEnabled, isWebchatPreviewEnabled, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebChatSite"/> for deserialization. </summary>
+        internal WebChatSite()
         {
         }
     }

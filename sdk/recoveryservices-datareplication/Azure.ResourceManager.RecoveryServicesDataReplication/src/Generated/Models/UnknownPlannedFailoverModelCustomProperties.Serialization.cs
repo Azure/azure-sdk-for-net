@@ -5,28 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    internal partial class UnknownPlannedFailoverModelCustomProperties : IUtf8JsonSerializable
+    internal partial class UnknownPlannedFailoverModelCustomProperties : IUtf8JsonSerializable, IJsonModel<PlannedFailoverModelCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlannedFailoverModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PlannedFailoverModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static UnknownPlannedFailoverModelCustomProperties DeserializeUnknownPlannedFailoverModelCustomProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PlannedFailoverModelCustomProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        PlannedFailoverModelCustomProperties IJsonModel<PlannedFailoverModelCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PlannedFailoverModelCustomProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePlannedFailoverModelCustomProperties(document.RootElement, options);
+        }
+
+        internal static UnknownPlannedFailoverModelCustomProperties DeserializeUnknownPlannedFailoverModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string instanceType = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceType"u8))
@@ -34,8 +67,44 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownPlannedFailoverModelCustomProperties(instanceType);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownPlannedFailoverModelCustomProperties(instanceType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PlannedFailoverModelCustomProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PlannedFailoverModelCustomProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PlannedFailoverModelCustomProperties IPersistableModel<PlannedFailoverModelCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePlannedFailoverModelCustomProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PlannedFailoverModelCustomProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PlannedFailoverModelCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,24 +7,21 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_P2SVpnGatewayResource
     {
-        // P2SVpnGatewayGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_P2SVpnGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/P2SVpnGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/P2SVpnGatewayGet.json
             // this example is just showing the usage of "P2sVpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,12 +47,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // P2SVpnGatewayUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_P2SVpnGatewayUpdate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/P2SVpnGatewayUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/P2SVpnGatewayUpdateTags.json
             // this example is just showing the usage of "P2sVpnGateways_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,12 +86,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // P2SVpnGatewayDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_P2SVpnGatewayDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/P2SVpnGatewayDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/P2SVpnGatewayDelete.json
             // this example is just showing the usage of "P2sVpnGateways_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,15 +109,14 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             await p2sVpnGateway.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // P2SVpnGatewayListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetP2SVpnGateways_P2SVpnGatewayListBySubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/P2SVpnGatewayList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/P2SVpnGatewayList.json
             // this example is just showing the usage of "P2sVpnGateways_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,15 +140,14 @@ namespace Azure.ResourceManager.Network.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ResetP2SVpnGateway
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Reset_ResetP2SVpnGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/P2SVpnGatewayReset.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/P2SVpnGatewayReset.json
             // this example is just showing the usage of "P2SVpnGateways_Reset" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,12 +174,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GenerateP2SVpnGatewayVPNProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateVpnProfile_GenerateP2SVpnGatewayVPNProfile()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/P2SVpnGatewayGenerateVpnProfile.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/P2SVpnGatewayGenerateVpnProfile.json
             // this example is just showing the usage of "P2sVpnGateways_GenerateVpnProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -213,13 +205,12 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // P2SVpnGatewayGetConnectionHealth
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetP2SVpnConnectionHealth_P2SVpnGatewayGetConnectionHealth()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/P2SVpnGatewayGetConnectionHealth.json
-            // this example is just showing the usage of "P2sVpnGateways_GetP2sVpnConnectionHealth" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/P2SVpnGatewayGetConnectionHealth.json
+            // this example is just showing the usage of "P2sVpnGateways_GetP2SVpnConnectionHealth" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -245,13 +236,12 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // P2SVpnGatewayGetConnectionHealthDetailed
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetP2SVpnConnectionHealthDetailed_P2SVpnGatewayGetConnectionHealthDetailed()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/P2SVpnGatewayGetConnectionHealthDetailed.json
-            // this example is just showing the usage of "P2sVpnGateways_GetP2sVpnConnectionHealthDetailed" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/P2SVpnGatewayGetConnectionHealthDetailed.json
+            // this example is just showing the usage of "P2sVpnGateways_GetP2SVpnConnectionHealthDetailed" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -281,13 +271,12 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Disconnect VpnConnections from P2sVpn Gateway
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DisconnectP2SVpnConnections_DisconnectVpnConnectionsFromP2sVpnGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/P2sVpnGatewaysDisconnectP2sVpnConnections.json
-            // this example is just showing the usage of "P2sVpnGateways_DisconnectP2sVpnConnections" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/P2sVpnGatewaysDisconnectP2sVpnConnections.json
+            // this example is just showing the usage of "P2sVpnGateways_DisconnectP2SVpnConnections" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -312,7 +301,7 @@ namespace Azure.ResourceManager.Network.Samples
             };
             await p2sVpnGateway.DisconnectP2SVpnConnectionsAsync(WaitUntil.Completed, request);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

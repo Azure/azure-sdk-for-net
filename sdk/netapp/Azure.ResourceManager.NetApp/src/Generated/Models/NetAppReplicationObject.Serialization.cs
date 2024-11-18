@@ -5,16 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppReplicationObject : IUtf8JsonSerializable
+    public partial class NetAppReplicationObject : IUtf8JsonSerializable, IJsonModel<NetAppReplicationObject>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppReplicationObject>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<NetAppReplicationObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppReplicationObject>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(ReplicationId))
+            {
+                writer.WritePropertyName("replicationId"u8);
+                writer.WriteStringValue(ReplicationId);
+            }
             if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("endpointType"u8);
@@ -25,27 +49,66 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("replicationSchedule"u8);
                 writer.WriteStringValue(ReplicationSchedule.Value.ToString());
             }
-            writer.WritePropertyName("remoteVolumeResourceId"u8);
-            writer.WriteStringValue(RemoteVolumeResourceId);
+            if (Optional.IsDefined(RemoteVolumeResourceId))
+            {
+                writer.WritePropertyName("remoteVolumeResourceId"u8);
+                writer.WriteStringValue(RemoteVolumeResourceId);
+            }
+            if (Optional.IsDefined(RemotePath))
+            {
+                writer.WritePropertyName("remotePath"u8);
+                writer.WriteObjectValue(RemotePath, options);
+            }
             if (Optional.IsDefined(RemoteVolumeRegion))
             {
                 writer.WritePropertyName("remoteVolumeRegion"u8);
                 writer.WriteStringValue(RemoteVolumeRegion);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static NetAppReplicationObject DeserializeNetAppReplicationObject(JsonElement element)
+        NetAppReplicationObject IJsonModel<NetAppReplicationObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppReplicationObject>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppReplicationObject(document.RootElement, options);
+        }
+
+        internal static NetAppReplicationObject DeserializeNetAppReplicationObject(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> replicationId = default;
-            Optional<NetAppEndpointType> endpointType = default;
-            Optional<NetAppReplicationSchedule> replicationSchedule = default;
+            string replicationId = default;
+            NetAppEndpointType? endpointType = default;
+            NetAppReplicationSchedule? replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
-            Optional<string> remoteVolumeRegion = default;
+            RemotePath remotePath = default;
+            string remoteVolumeRegion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicationId"u8))
@@ -73,7 +136,20 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (property.NameEquals("remoteVolumeResourceId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     remoteVolumeResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("remotePath"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remotePath = RemotePath.DeserializeRemotePath(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("remoteVolumeRegion"u8))
@@ -81,8 +157,51 @@ namespace Azure.ResourceManager.NetApp.Models
                     remoteVolumeRegion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetAppReplicationObject(replicationId.Value, Optional.ToNullable(endpointType), Optional.ToNullable(replicationSchedule), remoteVolumeResourceId, remoteVolumeRegion.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetAppReplicationObject(
+                replicationId,
+                endpointType,
+                replicationSchedule,
+                remoteVolumeResourceId,
+                remotePath,
+                remoteVolumeRegion,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetAppReplicationObject>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppReplicationObject>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetAppReplicationObject IPersistableModel<NetAppReplicationObject>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppReplicationObject>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetAppReplicationObject(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetAppReplicationObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

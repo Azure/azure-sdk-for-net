@@ -5,21 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ServiceTagDestination : IUtf8JsonSerializable
+    public partial class ServiceTagDestination : IUtf8JsonSerializable, IJsonModel<ServiceTagDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceTagDestination>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ServiceTagDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceTagDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AddressPrefixes))
+            {
+                writer.WritePropertyName("addressPrefixes"u8);
+                writer.WriteStartArray();
+                foreach (var item in AddressPrefixes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(PortRanges))
             {
@@ -36,20 +66,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("serviceTag"u8);
                 writer.WriteStringValue(ServiceTag);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ServiceTagDestination DeserializeServiceTagDestination(JsonElement element)
+        ServiceTagDestination IJsonModel<ServiceTagDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceTagDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceTagDestination(document.RootElement, options);
+        }
+
+        internal static ServiceTagDestination DeserializeServiceTagDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<NetworkingRuleAction> action = default;
-            Optional<IReadOnlyList<string>> addressPrefixes = default;
-            Optional<string> portRanges = default;
-            Optional<string> protocol = default;
-            Optional<string> serviceTag = default;
+            NetworkingRuleAction? action = default;
+            IReadOnlyList<string> addressPrefixes = default;
+            string portRanges = default;
+            string protocol = default;
+            string serviceTag = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -90,8 +150,187 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     serviceTag = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceTagDestination(Optional.ToNullable(action), Optional.ToList(addressPrefixes), portRanges.Value, protocol.Value, serviceTag.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ServiceTagDestination(
+                action,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                portRanges,
+                protocol,
+                serviceTag,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Action), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  action: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Action))
+                {
+                    builder.Append("  action: ");
+                    builder.AppendLine($"'{Action.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AddressPrefixes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  addressPrefixes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AddressPrefixes))
+                {
+                    if (AddressPrefixes.Any())
+                    {
+                        builder.Append("  addressPrefixes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AddressPrefixes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PortRanges), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  portRanges: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PortRanges))
+                {
+                    builder.Append("  portRanges: ");
+                    if (PortRanges.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PortRanges}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PortRanges}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  protocol: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Protocol))
+                {
+                    builder.Append("  protocol: ");
+                    if (Protocol.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Protocol}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Protocol}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceTag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceTag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceTag))
+                {
+                    builder.Append("  serviceTag: ");
+                    if (ServiceTag.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceTag}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceTag}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ServiceTagDestination>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceTagDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServiceTagDestination IPersistableModel<ServiceTagDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceTagDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceTagDestination(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceTagDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

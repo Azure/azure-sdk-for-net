@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DeviceUpdate;
 using Azure.ResourceManager.DeviceUpdate.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DeviceUpdate.Samples
 {
     public partial class Sample_DeviceUpdateInstanceCollection
     {
-        // Gets list of Instances by Account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsListOfInstancesByAccount()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/Instances/Instances_ListByAccount.json
@@ -52,12 +49,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets list of Instances
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsListOfInstances()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/Instances/Instances_Get.json
@@ -90,9 +86,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets list of Instances
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsListOfInstances()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/Instances/Instances_Get.json
@@ -121,9 +116,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets list of Instances
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsListOfInstances()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/Instances/Instances_Get.json
@@ -152,7 +146,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -164,9 +158,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
             }
         }
 
-        // Creates or updates Instance
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesInstance()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/Instances/Instances_Create.json

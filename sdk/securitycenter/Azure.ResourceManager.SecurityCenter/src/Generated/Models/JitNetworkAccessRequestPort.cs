@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The JitNetworkAccessRequestPort. </summary>
     public partial class JitNetworkAccessRequestPort
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestPort"/>. </summary>
         /// <param name="number"></param>
         /// <param name="endOn"> The date &amp; time at which the request ends in UTC. </param>
@@ -36,7 +67,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="status"> The status of the port. </param>
         /// <param name="statusReason"> A description of why the `status` has its value. </param>
         /// <param name="mappedPort"> The port which is mapped to this port's `number` in the Azure Firewall, if applicable. </param>
-        internal JitNetworkAccessRequestPort(int number, string allowedSourceAddressPrefix, IList<string> allowedSourceAddressPrefixes, DateTimeOffset endOn, JitNetworkAccessPortStatus status, JitNetworkAccessPortStatusReason statusReason, int? mappedPort)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JitNetworkAccessRequestPort(int number, string allowedSourceAddressPrefix, IList<string> allowedSourceAddressPrefixes, DateTimeOffset endOn, JitNetworkAccessPortStatus status, JitNetworkAccessPortStatusReason statusReason, int? mappedPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Number = number;
             AllowedSourceAddressPrefix = allowedSourceAddressPrefix;
@@ -45,6 +77,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Status = status;
             StatusReason = statusReason;
             MappedPort = mappedPort;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestPort"/> for deserialization. </summary>
+        internal JitNetworkAccessRequestPort()
+        {
         }
 
         /// <summary> Gets or sets the number. </summary>

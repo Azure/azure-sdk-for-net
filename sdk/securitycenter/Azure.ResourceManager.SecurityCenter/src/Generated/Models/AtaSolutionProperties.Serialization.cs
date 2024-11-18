@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,30 +14,32 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AtaSolutionProperties : IUtf8JsonSerializable
+    public partial class AtaSolutionProperties : IUtf8JsonSerializable, IJsonModel<AtaSolutionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtaSolutionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AtaSolutionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AtaSolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AtaSolutionProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(LastEventReceived))
             {
                 writer.WritePropertyName("lastEventReceived"u8);
                 writer.WriteStringValue(LastEventReceived);
-            }
-            if (Optional.IsDefined(DeviceVendor))
-            {
-                writer.WritePropertyName("deviceVendor"u8);
-                writer.WriteStringValue(DeviceVendor);
-            }
-            if (Optional.IsDefined(DeviceType))
-            {
-                writer.WritePropertyName("deviceType"u8);
-                writer.WriteStringValue(DeviceType);
-            }
-            if (Optional.IsDefined(Workspace))
-            {
-                writer.WritePropertyName("workspace"u8);
-                JsonSerializer.Serialize(writer, Workspace);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -50,19 +53,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static AtaSolutionProperties DeserializeAtaSolutionProperties(JsonElement element)
+        AtaSolutionProperties IJsonModel<AtaSolutionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AtaSolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AtaSolutionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAtaSolutionProperties(document.RootElement, options);
+        }
+
+        internal static AtaSolutionProperties DeserializeAtaSolutionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> lastEventReceived = default;
-            Optional<string> deviceVendor = default;
-            Optional<string> deviceType = default;
-            Optional<WritableSubResource> workspace = default;
+            string lastEventReceived = default;
+            string deviceVendor = default;
+            string deviceType = default;
+            WritableSubResource workspace = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +110,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AtaSolutionProperties(deviceVendor.Value, deviceType.Value, workspace, additionalProperties, lastEventReceived.Value);
+            return new AtaSolutionProperties(deviceVendor, deviceType, workspace, additionalProperties, lastEventReceived);
         }
+
+        BinaryData IPersistableModel<AtaSolutionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AtaSolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AtaSolutionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AtaSolutionProperties IPersistableModel<AtaSolutionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AtaSolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAtaSolutionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AtaSolutionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AtaSolutionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

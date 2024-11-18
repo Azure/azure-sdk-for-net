@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Represents metrics values. </summary>
     public partial class CosmosDBMetricValue
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CosmosDBMetricValue"/>. </summary>
         internal CosmosDBMetricValue()
         {
@@ -24,7 +57,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="minimum"> The min value of the metric. </param>
         /// <param name="timestamp"> The metric timestamp (ISO-8601 format). </param>
         /// <param name="total"> The total value of the metric. </param>
-        internal CosmosDBMetricValue(int? count, double? average, double? maximum, double? minimum, DateTimeOffset? timestamp, double? total)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBMetricValue(int? count, double? average, double? maximum, double? minimum, DateTimeOffset? timestamp, double? total, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             Average = average;
@@ -32,19 +66,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Minimum = minimum;
             Timestamp = timestamp;
             Total = total;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of values for the metric. </summary>
+        [WirePath("_count")]
         public int? Count { get; }
         /// <summary> The average value of the metric. </summary>
+        [WirePath("average")]
         public double? Average { get; }
         /// <summary> The max value of the metric. </summary>
+        [WirePath("maximum")]
         public double? Maximum { get; }
         /// <summary> The min value of the metric. </summary>
+        [WirePath("minimum")]
         public double? Minimum { get; }
         /// <summary> The metric timestamp (ISO-8601 format). </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
         /// <summary> The total value of the metric. </summary>
+        [WirePath("total")]
         public double? Total { get; }
     }
 }

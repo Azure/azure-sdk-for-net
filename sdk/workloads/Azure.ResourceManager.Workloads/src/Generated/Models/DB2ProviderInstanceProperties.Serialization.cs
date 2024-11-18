@@ -6,16 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DB2ProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class DB2ProviderInstanceProperties : IUtf8JsonSerializable, IJsonModel<DB2ProviderInstanceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DB2ProviderInstanceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DB2ProviderInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DB2ProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DB2ProviderInstanceProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
@@ -61,27 +80,40 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
             }
-            writer.WritePropertyName("providerType"u8);
-            writer.WriteStringValue(ProviderType);
-            writer.WriteEndObject();
         }
 
-        internal static DB2ProviderInstanceProperties DeserializeDB2ProviderInstanceProperties(JsonElement element)
+        DB2ProviderInstanceProperties IJsonModel<DB2ProviderInstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DB2ProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DB2ProviderInstanceProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDB2ProviderInstanceProperties(document.RootElement, options);
+        }
+
+        internal static DB2ProviderInstanceProperties DeserializeDB2ProviderInstanceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> hostname = default;
-            Optional<string> dbName = default;
-            Optional<string> dbPort = default;
-            Optional<string> dbUsername = default;
-            Optional<string> dbPassword = default;
-            Optional<Uri> dbPasswordUri = default;
-            Optional<string> sapSid = default;
-            Optional<SapSslPreference> sslPreference = default;
-            Optional<Uri> sslCertificateUri = default;
+            string hostname = default;
+            string dbName = default;
+            string dbPort = default;
+            string dbUsername = default;
+            string dbPassword = default;
+            Uri dbPasswordUri = default;
+            string sapSid = default;
+            SapSslPreference? sslPreference = default;
+            Uri sslCertificateUri = default;
             string providerType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostname"u8))
@@ -146,8 +178,55 @@ namespace Azure.ResourceManager.Workloads.Models
                     providerType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DB2ProviderInstanceProperties(providerType, hostname.Value, dbName.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DB2ProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                hostname,
+                dbName,
+                dbPort,
+                dbUsername,
+                dbPassword,
+                dbPasswordUri,
+                sapSid,
+                sslPreference,
+                sslCertificateUri);
         }
+
+        BinaryData IPersistableModel<DB2ProviderInstanceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DB2ProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DB2ProviderInstanceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DB2ProviderInstanceProperties IPersistableModel<DB2ProviderInstanceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DB2ProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDB2ProviderInstanceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DB2ProviderInstanceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DB2ProviderInstanceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

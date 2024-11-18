@@ -1,6 +1,6 @@
 # Release History
 
-## 12.18.0-beta.2 (Unreleased)
+## 12.22.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,75 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.21.0 (2024-11-12)
+
+### Features Added
+- Includes all features from 12.21.0-beta.1 and 12.21.0-beta..
+
+## 12.21.0-beta.2 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.20.1 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.21.0-beta.1 (2024-10-08)
+
+### Features Added
+- Added support for service version 2025-01-05.
+- Added support for the provisioned V2 billing model.
+- Added support for specifying the binary file permission format for ShareFileClient.StartCopy() and .StartCopyAsync().
+- Added ShareAccessTier.Premium enum value.
+
+## 12.20.0 (2024-09-18)
+
+### Features Added
+- Includes all features from 12.20.0-beta.1.
+
+### Bugs Fixed
+- Fixed \[BUG\] Method overload ShareFileClient.OpenReadAsync()/OpenRead() to correctly handle the allowBlobModifications flag #45516
+- Fixed \[BUG\] Fixed Equality failures due to implicit cast on ShareErrorCode #44213
+
+## 12.20.0-beta.1 (2024-08-06)
+
+### Features Added
+- Added support for service version 2024-11-04.
+- Added support for token-based authentication for all APIs.
+- Added support for paid bursting on premium file share accounts.
+- Added support for binary format for file permissions.
+- Added ability to retrieve SAS string to sign for debugging purposes.
+
+## 12.19.1 (2024-07-25)
+
+### Bugs Fixed
+- Fixed \[BUG\] Azure Blob Storage Client SDK No Longer Supports Globalization Invariant Mode for Account Key Authentication #45052
+
+## 12.19.0 (2024-07-16)
+
+### Features Added
+- Includes all features from 12.19.0-beta.1.
+
+### Bugs Fixed
+- Fixed bug where storage clients when constructed with URLs with '#' character would truncate the path at the '#'.
+
+## 12.19.0-beta.1 (2024-06-11)
+- Added support for service version 2024-08-04.
+- Added more detailed messaging for authorization failure cases.
+- Added support for snapshot management on NFS shares.
+
+## 12.18.0 (2024-05-13)
+- Includes all features from 12.18.0-beta.1 and 12.18.0-beta.2.
+- Fixed bug where `ShareClient` and `ShareFileClient` did not throw an exception on empty/null share container names and file names, respectively, when constructing a client.
+
+## 12.18.0-beta.2 (2024-04-15)
+- Added support for service version 2024-05-04.
+- Added ability to retrieve file handle client name with ShareFile/DirectoryClient.GetHandles() and .GetHandlesAsync().
+- Added ability to call ShareFileClient.GetRangeListDiff() and .GetRangeListDiffAsync() on a file that has been renamed.
+- Fixed bug where on `ShareDirectoryClient` and `ShareFileClient`, calling `.Rename(..)` will throw a 403 Authentication Error, if the source storage client was instantiated with a SAS on the `Uri`, will not pass the SAS to the destination client, when the destination does not have any credentials.
 
 ## 12.18.0-beta.1 (2023-12-05)
 - Added support for service version 2024-02-04.

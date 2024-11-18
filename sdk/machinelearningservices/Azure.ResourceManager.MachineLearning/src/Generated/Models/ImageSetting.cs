@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ImageSetting. </summary>
+    /// <summary> Describes the Image Specifications. </summary>
     public partial class ImageSetting
     {
         /// <summary> Initializes a new instance of <see cref="ImageSetting"/>. </summary>
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="ImageSetting"/>. </summary>
         /// <param name="imageType"> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML images. </param>
-        /// <param name="reference"> Image reference URL. </param>
+        /// <param name="reference"> Image reference. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ImageSetting(ImageType? imageType, string reference, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -32,8 +31,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML images. </summary>
+        [WirePath("type")]
         public ImageType? ImageType { get; set; }
-        /// <summary> Image reference URL. </summary>
+        /// <summary> Image reference. </summary>
+        [WirePath("reference")]
         public string Reference { get; set; }
         /// <summary>
         /// Additional Properties
@@ -65,6 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

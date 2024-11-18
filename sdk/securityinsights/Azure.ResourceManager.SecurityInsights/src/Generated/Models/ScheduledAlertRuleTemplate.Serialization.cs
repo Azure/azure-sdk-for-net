@@ -6,26 +6,54 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ScheduledAlertRuleTemplate : IUtf8JsonSerializable
+    public partial class ScheduledAlertRuleTemplate : IUtf8JsonSerializable, IJsonModel<ScheduledAlertRuleTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledAlertRuleTemplate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ScheduledAlertRuleTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledAlertRuleTemplate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScheduledAlertRuleTemplate)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AlertRulesCreatedByTemplateCount))
             {
                 writer.WritePropertyName("alertRulesCreatedByTemplateCount"u8);
                 writer.WriteNumberValue(AlertRulesCreatedByTemplateCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedDateUTC))
+            {
+                writer.WritePropertyName("createdDateUTC"u8);
+                writer.WriteStringValue(CreatedDateUTC.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedDateUTC))
+            {
+                writer.WritePropertyName("lastUpdatedDateUTC"u8);
+                writer.WriteStringValue(LastUpdatedDateUTC.Value, "O");
             }
             if (Optional.IsDefined(Description))
             {
@@ -43,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredDataConnectors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,6 +130,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(SubTechniques))
+            {
+                writer.WritePropertyName("subTechniques"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubTechniques)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -110,7 +148,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(EventGroupingSettings))
             {
                 writer.WritePropertyName("eventGroupingSettings"u8);
-                writer.WriteObjectValue(EventGroupingSettings);
+                writer.WriteObjectValue(EventGroupingSettings, options);
             }
             if (Optional.IsCollectionDefined(CustomDetails))
             {
@@ -129,21 +167,44 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in EntityMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AlertDetailsOverride))
             {
                 writer.WritePropertyName("alertDetailsOverride"u8);
-                writer.WriteObjectValue(AlertDetailsOverride);
+                writer.WriteObjectValue(AlertDetailsOverride, options);
             }
-            writer.WriteEndObject();
+            if (Optional.IsCollectionDefined(SentinelEntitiesMappings))
+            {
+                writer.WritePropertyName("sentinelEntitiesMappings"u8);
+                writer.WriteStartArray();
+                foreach (var item in SentinelEntitiesMappings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScheduledAlertRuleTemplate DeserializeScheduledAlertRuleTemplate(JsonElement element)
+        ScheduledAlertRuleTemplate IJsonModel<ScheduledAlertRuleTemplate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledAlertRuleTemplate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScheduledAlertRuleTemplate)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScheduledAlertRuleTemplate(document.RootElement, options);
+        }
+
+        internal static ScheduledAlertRuleTemplate DeserializeScheduledAlertRuleTemplate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -152,27 +213,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> alertRulesCreatedByTemplateCount = default;
-            Optional<DateTimeOffset> createdDateUTC = default;
-            Optional<DateTimeOffset> lastUpdatedDateUTC = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<IList<AlertRuleTemplateDataSource>> requiredDataConnectors = default;
-            Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
-            Optional<string> query = default;
-            Optional<TimeSpan> queryFrequency = default;
-            Optional<TimeSpan> queryPeriod = default;
-            Optional<SecurityInsightsAlertSeverity> severity = default;
-            Optional<SecurityInsightsAlertRuleTriggerOperator> triggerOperator = default;
-            Optional<int> triggerThreshold = default;
-            Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
-            Optional<IList<string>> techniques = default;
-            Optional<string> version = default;
-            Optional<EventGroupingSettings> eventGroupingSettings = default;
-            Optional<IDictionary<string, string>> customDetails = default;
-            Optional<IList<SecurityInsightsAlertRuleEntityMapping>> entityMappings = default;
-            Optional<SecurityInsightsAlertDetailsOverride> alertDetailsOverride = default;
+            SystemData systemData = default;
+            int? alertRulesCreatedByTemplateCount = default;
+            DateTimeOffset? createdDateUTC = default;
+            DateTimeOffset? lastUpdatedDateUTC = default;
+            string description = default;
+            string displayName = default;
+            IList<AlertRuleTemplateDataSource> requiredDataConnectors = default;
+            SecurityInsightsAlertRuleTemplateStatus? status = default;
+            string query = default;
+            TimeSpan? queryFrequency = default;
+            TimeSpan? queryPeriod = default;
+            SecurityInsightsAlertSeverity? severity = default;
+            SecurityInsightsAlertRuleTriggerOperator? triggerOperator = default;
+            int? triggerThreshold = default;
+            IList<SecurityInsightsAttackTactic> tactics = default;
+            IList<string> techniques = default;
+            IList<string> subTechniques = default;
+            string version = default;
+            EventGroupingSettings eventGroupingSettings = default;
+            IDictionary<string, string> customDetails = default;
+            IList<SecurityInsightsAlertRuleEntityMapping> entityMappings = default;
+            SecurityInsightsAlertDetailsOverride alertDetailsOverride = default;
+            IList<SentinelEntityMapping> sentinelEntitiesMappings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -259,7 +324,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<AlertRuleTemplateDataSource> array = new List<AlertRuleTemplateDataSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AlertRuleTemplateDataSource.DeserializeAlertRuleTemplateDataSource(item));
+                                array.Add(AlertRuleTemplateDataSource.DeserializeAlertRuleTemplateDataSource(item, options));
                             }
                             requiredDataConnectors = array;
                             continue;
@@ -351,6 +416,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             techniques = array;
                             continue;
                         }
+                        if (property0.NameEquals("subTechniques"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            subTechniques = array;
+                            continue;
+                        }
                         if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
@@ -362,7 +441,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            eventGroupingSettings = EventGroupingSettings.DeserializeEventGroupingSettings(property0.Value);
+                            eventGroupingSettings = EventGroupingSettings.DeserializeEventGroupingSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customDetails"u8))
@@ -388,7 +467,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<SecurityInsightsAlertRuleEntityMapping> array = new List<SecurityInsightsAlertRuleEntityMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityInsightsAlertRuleEntityMapping.DeserializeSecurityInsightsAlertRuleEntityMapping(item));
+                                array.Add(SecurityInsightsAlertRuleEntityMapping.DeserializeSecurityInsightsAlertRuleEntityMapping(item, options));
                             }
                             entityMappings = array;
                             continue;
@@ -399,14 +478,644 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            alertDetailsOverride = SecurityInsightsAlertDetailsOverride.DeserializeSecurityInsightsAlertDetailsOverride(property0.Value);
+                            alertDetailsOverride = SecurityInsightsAlertDetailsOverride.DeserializeSecurityInsightsAlertDetailsOverride(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("sentinelEntitiesMappings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SentinelEntityMapping> array = new List<SentinelEntityMapping>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(SentinelEntityMapping.DeserializeSentinelEntityMapping(item, options));
+                            }
+                            sentinelEntitiesMappings = array;
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScheduledAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), query.Value, Optional.ToNullable(queryFrequency), Optional.ToNullable(queryPeriod), Optional.ToNullable(severity), Optional.ToNullable(triggerOperator), Optional.ToNullable(triggerThreshold), Optional.ToList(tactics), Optional.ToList(techniques), version.Value, eventGroupingSettings.Value, Optional.ToDictionary(customDetails), Optional.ToList(entityMappings), alertDetailsOverride.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ScheduledAlertRuleTemplate(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                alertRulesCreatedByTemplateCount,
+                createdDateUTC,
+                lastUpdatedDateUTC,
+                description,
+                displayName,
+                requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>(),
+                status,
+                query,
+                queryFrequency,
+                queryPeriod,
+                severity,
+                triggerOperator,
+                triggerThreshold,
+                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                techniques ?? new ChangeTrackingList<string>(),
+                subTechniques ?? new ChangeTrackingList<string>(),
+                version,
+                eventGroupingSettings,
+                customDetails ?? new ChangeTrackingDictionary<string, string>(),
+                entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>(),
+                alertDetailsOverride,
+                sentinelEntitiesMappings ?? new ChangeTrackingList<SentinelEntityMapping>());
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine($"'{Kind.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertRulesCreatedByTemplateCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    alertRulesCreatedByTemplateCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AlertRulesCreatedByTemplateCount))
+                {
+                    builder.Append("    alertRulesCreatedByTemplateCount: ");
+                    builder.AppendLine($"{AlertRulesCreatedByTemplateCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedDateUTC), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    createdDateUTC: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedDateUTC))
+                {
+                    builder.Append("    createdDateUTC: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedDateUTC.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdatedDateUTC), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastUpdatedDateUTC: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastUpdatedDateUTC))
+                {
+                    builder.Append("    lastUpdatedDateUTC: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedDateUTC.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("    description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    displayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    builder.Append("    displayName: ");
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiredDataConnectors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requiredDataConnectors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RequiredDataConnectors))
+                {
+                    if (RequiredDataConnectors.Any())
+                    {
+                        builder.Append("    requiredDataConnectors: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RequiredDataConnectors)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    requiredDataConnectors: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("    status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Query), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    query: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Query))
+                {
+                    builder.Append("    query: ");
+                    if (Query.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Query}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Query}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryFrequency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    queryFrequency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueryFrequency))
+                {
+                    builder.Append("    queryFrequency: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(QueryFrequency.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryPeriod), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    queryPeriod: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueryPeriod))
+                {
+                    builder.Append("    queryPeriod: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(QueryPeriod.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Severity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    severity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Severity))
+                {
+                    builder.Append("    severity: ");
+                    builder.AppendLine($"'{Severity.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TriggerOperator), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    triggerOperator: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TriggerOperator))
+                {
+                    builder.Append("    triggerOperator: ");
+                    builder.AppendLine($"'{TriggerOperator.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TriggerThreshold), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    triggerThreshold: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TriggerThreshold))
+                {
+                    builder.Append("    triggerThreshold: ");
+                    builder.AppendLine($"{TriggerThreshold.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tactics), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    tactics: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tactics))
+                {
+                    if (Tactics.Any())
+                    {
+                        builder.Append("    tactics: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Tactics)
+                        {
+                            builder.AppendLine($"      '{item.ToString()}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Techniques), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    techniques: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Techniques))
+                {
+                    if (Techniques.Any())
+                    {
+                        builder.Append("    techniques: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Techniques)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubTechniques), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    subTechniques: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SubTechniques))
+                {
+                    if (SubTechniques.Any())
+                    {
+                        builder.Append("    subTechniques: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SubTechniques)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    version: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    builder.Append("    version: ");
+                    if (Version.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Version}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Version}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("EventGroupingAggregationKind", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    eventGroupingSettings: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      eventGroupingSettings: {");
+                builder.Append("        aggregationKind: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(EventGroupingSettings))
+                {
+                    builder.Append("    eventGroupingSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, EventGroupingSettings, options, 4, false, "    eventGroupingSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    customDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CustomDetails))
+                {
+                    if (CustomDetails.Any())
+                    {
+                        builder.Append("    customDetails: ");
+                        builder.AppendLine("{");
+                        foreach (var item in CustomDetails)
+                        {
+                            builder.Append($"        '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("    }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EntityMappings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    entityMappings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EntityMappings))
+                {
+                    if (EntityMappings.Any())
+                    {
+                        builder.Append("    entityMappings: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EntityMappings)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    entityMappings: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertDetailsOverride), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    alertDetailsOverride: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AlertDetailsOverride))
+                {
+                    builder.Append("    alertDetailsOverride: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AlertDetailsOverride, options, 4, false, "    alertDetailsOverride: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SentinelEntitiesMappings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sentinelEntitiesMappings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SentinelEntitiesMappings))
+                {
+                    if (SentinelEntitiesMappings.Any())
+                    {
+                        builder.Append("    sentinelEntitiesMappings: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SentinelEntitiesMappings)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    sentinelEntitiesMappings: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ScheduledAlertRuleTemplate>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledAlertRuleTemplate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ScheduledAlertRuleTemplate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ScheduledAlertRuleTemplate IPersistableModel<ScheduledAlertRuleTemplate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledAlertRuleTemplate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeScheduledAlertRuleTemplate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScheduledAlertRuleTemplate)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ScheduledAlertRuleTemplate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

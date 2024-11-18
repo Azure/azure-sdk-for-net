@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -26,11 +26,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="ipConfigurations"> A list of ip configurations of the container network interface configuration. </param>
         /// <param name="containerNetworkInterfaces"> A list of container network interfaces created from this container network interface configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the container network interface configuration resource. </param>
-        internal ContainerNetworkInterfaceConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<NetworkIPConfigurationProfile> ipConfigurations, IList<WritableSubResource> containerNetworkInterfaces, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ContainerNetworkInterfaceConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<NetworkIPConfigurationProfile> ipConfigurations, IList<WritableSubResource> containerNetworkInterfaces, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             IPConfigurations = ipConfigurations;

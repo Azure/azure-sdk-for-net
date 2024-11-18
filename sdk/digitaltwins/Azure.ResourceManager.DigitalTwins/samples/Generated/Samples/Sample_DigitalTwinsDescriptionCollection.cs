@@ -7,22 +7,19 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DigitalTwins;
 using Azure.ResourceManager.DigitalTwins.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DigitalTwins.Samples
 {
     public partial class Sample_DigitalTwinsDescriptionCollection
     {
-        // Get a DigitalTwinsInstance resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADigitalTwinsInstanceResource()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsGet_example.json
@@ -54,9 +51,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a DigitalTwinsInstance resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetADigitalTwinsInstanceResource()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsGet_example.json
@@ -84,9 +80,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a DigitalTwinsInstance resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetADigitalTwinsInstanceResource()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsGet_example.json
@@ -114,7 +109,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -126,9 +121,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             }
         }
 
-        // Get a DigitalTwinsInstance resource with a private endpoint connection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADigitalTwinsInstanceResourceWithAPrivateEndpointConnection()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsGet_WithPrivateEndpointConnection_example.json
@@ -160,9 +154,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a DigitalTwinsInstance resource with a private endpoint connection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetADigitalTwinsInstanceResourceWithAPrivateEndpointConnection()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsGet_WithPrivateEndpointConnection_example.json
@@ -190,9 +183,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a DigitalTwinsInstance resource with a private endpoint connection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetADigitalTwinsInstanceResourceWithAPrivateEndpointConnection()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsGet_WithPrivateEndpointConnection_example.json
@@ -220,7 +212,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -232,9 +224,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             }
         }
 
-        // Get a DigitalTwinsInstance resource with identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADigitalTwinsInstanceResourceWithIdentity()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsGet_WithIdentity_example.json
@@ -266,9 +257,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a DigitalTwinsInstance resource with identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetADigitalTwinsInstanceResourceWithIdentity()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsGet_WithIdentity_example.json
@@ -296,9 +286,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a DigitalTwinsInstance resource with identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetADigitalTwinsInstanceResourceWithIdentity()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsGet_WithIdentity_example.json
@@ -326,7 +315,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -338,9 +327,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             }
         }
 
-        // Put a DigitalTwinsInstance resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutADigitalTwinsInstanceResource()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsPut_example.json
@@ -374,9 +362,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Put a DigitalTwinsInstance resource with identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutADigitalTwinsInstanceResourceWithIdentity()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsPut_WithIdentity_example.json
@@ -419,9 +406,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Put a DigitalTwinsInstance resource with publicNetworkAccess property
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutADigitalTwinsInstanceResourceWithPublicNetworkAccessProperty()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsPut_WithPublicNetworkAccess.json
@@ -458,9 +444,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get DigitalTwinsInstance resources by resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetDigitalTwinsInstanceResourcesByResourceGroup()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsListByResourceGroup_example.json
@@ -491,7 +476,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

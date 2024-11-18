@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Samples
 {
     public partial class Sample_MonitorPrivateEndpointConnectionResource
     {
-        // Gets private endpoint connection.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsPrivateEndpointConnection()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-07-01-preview/examples/PrivateEndpointConnectionGet.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Approve or reject a private endpoint connection with a given name.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApproveOrRejectAPrivateEndpointConnectionWithAGivenName()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-07-01-preview/examples/PrivateEndpointConnectionUpdate.json
@@ -91,9 +87,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes a private endpoint connection with a given name.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesAPrivateEndpointConnectionWithAGivenName()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-07-01-preview/examples/PrivateEndpointConnectionDelete.json
@@ -116,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Samples
             // invoke the operation
             await monitorPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

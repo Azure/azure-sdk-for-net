@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="SquareLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SquareLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> host, DataFactoryElement<string> clientId, DataFactorySecretBaseDefinition clientSecret, DataFactoryElement<string> redirectUri, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SquareLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> host, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> redirectUri, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionProperties = connectionProperties;
             Host = host;
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The client ID associated with your Square application. </summary>
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> The client secret associated with your Square application. </summary>
-        public DataFactorySecretBaseDefinition ClientSecret { get; set; }
+        public DataFactorySecret ClientSecret { get; set; }
         /// <summary> The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500). </summary>
         public DataFactoryElement<string> RedirectUri { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>

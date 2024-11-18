@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Media;
 using Azure.ResourceManager.Media.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Samples
 {
     public partial class Sample_MediaServicesAccountResource
     {
-        // Get a Media Services account by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAMediaServicesAccountByName()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Accounts/stable/2023-01-01/examples/accounts-get-by-name.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a Media Services account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAMediaServicesAccount()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Accounts/stable/2023-01-01/examples/accounts-delete.json
@@ -74,12 +70,11 @@ namespace Azure.ResourceManager.Media.Samples
             // invoke the operation
             await mediaServicesAccount.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update a Media Services accounts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAMediaServicesAccounts()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Accounts/stable/2023-01-01/examples/async-accounts-update.json
@@ -116,9 +111,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Synchronizes Storage Account Keys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SyncStorageKeys_SynchronizesStorageAccountKeys()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Accounts/stable/2023-01-01/examples/accounts-sync-storage-keys.json
@@ -144,12 +138,11 @@ namespace Azure.ResourceManager.Media.Samples
             };
             await mediaServicesAccount.SyncStorageKeysAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List the media edge policies.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetEdgePolicies_ListTheMediaEdgePolicies()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Accounts/stable/2023-01-01/examples/accounts-list-media-edge-policies.json
@@ -178,9 +171,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List all Media Services accounts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMediaServicesAccounts_ListAllMediaServicesAccounts()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Accounts/stable/2023-01-01/examples/accounts-subscription-list-all-accounts.json
@@ -207,7 +199,7 @@ namespace Azure.ResourceManager.Media.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -9,16 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DevCenter;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevCenter.Samples
 {
     public partial class Sample_ProjectAttachedNetworkConnectionResource
     {
-        // AttachedNetworks_GetByProject
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AttachedNetworksGetByProject()
         {
             // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/AttachedNetworks_GetByProject.json

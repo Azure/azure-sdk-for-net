@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -18,22 +19,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void VerifyNullConnectionString()
         {
-            Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", "InstrumentationKey=00000000-0000-0000-0000-000000000000;");
+            var factory = new TransmitterFactory();
+            var options = new AzureMonitorExporterOptions() { ConnectionString = null };
 
-            try
-            {
-                var factory = new TransmitterFactory();
-                var options = new AzureMonitorExporterOptions();
+            var mockPlatform = new MockPlatform();
+            mockPlatform.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", "InstrumentationKey=00000000-0000-0000-0000-000000000000;");
 
-                var transmitter = factory.Get(options);
+            var transmitter = factory.Get(options, mockPlatform);
 
-                Assert.Single(factory._transmitters);
-                Assert.True(factory._transmitters.ContainsKey(string.Empty));
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", null);
-            }
+            Assert.Single(factory._transmitters);
+            Assert.True(factory._transmitters.ContainsKey(string.Empty));
         }
 
         [Fact]

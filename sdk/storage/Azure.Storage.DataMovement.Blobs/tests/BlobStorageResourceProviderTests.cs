@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 extern alias DMBlobs;
+extern alias BaseBlobs;
+
 using System;
 using Azure.Core;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Specialized;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Tests;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
@@ -108,7 +110,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             const string containerName = "mycontainer";
             const string prefix = "my/prefix";
-            string uri = $"https://myaccount.blob.core.windows.net/{containerName}" + (withPrefix ? $"/{prefix}" : "");
+            Uri uri = new Uri($"https://myaccount.blob.core.windows.net/{containerName}" + (withPrefix ? $"/{prefix}" : ""));
             (Mock<StorageSharedKeyCredential> SharedKey, Mock<TokenCredential> Token, Mock<AzureSasCredential> Sas) mockCreds = GetMockCreds();
 
             BlobsStorageResourceProvider provider = credType switch
@@ -122,8 +124,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobStorageResourceContainer resource = provider.FromContainer(uri) as BlobStorageResourceContainer;
 
             Assert.IsNotNull(resource);
-            Assert.AreEqual(uri, resource.Uri.ToString());
-            Assert.AreEqual(uri, resource.BlobContainerClient.Uri.ToString());
+            Assert.AreEqual(uri, resource.Uri);
+            Assert.AreEqual(uri, resource.BlobContainerClient.Uri);
             AssertCredPresent(resource.BlobContainerClient.ClientConfiguration, credType);
         }
 
@@ -135,7 +137,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             const string containerName = "mycontainer";
             const string blobName = "my/blob.txt";
-            string uri = $"https://myaccount.blob.core.windows.net/{containerName}/{blobName}";
+            Uri uri = new Uri($"https://myaccount.blob.core.windows.net/{containerName}/{blobName}");
             (Mock<StorageSharedKeyCredential> SharedKey, Mock<TokenCredential> Token, Mock<AzureSasCredential> Sas) mockCreds = GetMockCreds();
 
             BlobsStorageResourceProvider provider = credType switch
@@ -158,8 +160,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Assert.IsNotNull(resource);
             AssertBlobStorageResourceType(resource, blobType, out BlobBaseClient underlyingClient);
-            Assert.AreEqual(uri, resource.Uri.ToString());
-            Assert.AreEqual(uri, underlyingClient.Uri.ToString());
+            Assert.AreEqual(uri, resource.Uri);
+            Assert.AreEqual(uri, underlyingClient.Uri);
             AssertCredPresent(underlyingClient.ClientConfiguration, credType);
         }
     }

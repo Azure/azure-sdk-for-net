@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataShare.Mocking;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Resources;
@@ -258,6 +256,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -287,6 +293,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -318,6 +332,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -346,6 +368,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -393,6 +423,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -422,6 +460,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -453,6 +499,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_RejectInvitation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -481,6 +535,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_RejectInvitation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -511,6 +573,10 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>EmailRegistrations_ActivateEmail</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -539,6 +605,10 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EmailRegistrations_ActivateEmail</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -569,6 +639,10 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>EmailRegistrations_RegisterEmail</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -596,6 +670,10 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EmailRegistrations_RegisterEmail</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
         /// </item>
         /// </list>
         /// <item>

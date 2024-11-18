@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,11 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleRemoteAddressCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleRemoteAddressCondition(MatchVariable name, RemoteAddressMatchCondition properties) : base(name)
+        internal DeliveryRuleRemoteAddressCondition(MatchVariable name, IDictionary<string, BinaryData> serializedAdditionalRawData, RemoteAddressMatchCondition properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleRemoteAddressCondition"/> for deserialization. </summary>
+        internal DeliveryRuleRemoteAddressCondition()
+        {
         }
 
         /// <summary> Defines the parameters for the condition. </summary>

@@ -12,19 +12,38 @@ using System.Runtime.InteropServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 #elif LIVE_METRICS_EXPORTER
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+#elif ASP_NET_CORE_DISTRO
+using Azure.Monitor.OpenTelemetry.AspNetCore;
 #endif
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 {
+#if ASP_NET_CORE_DISTRO
+#pragma warning disable SA1649 // File name should match first type name
+    internal class DefaultPlatformDistro : IPlatform
+#pragma warning restore SA1649 // File name should match first type name
+#else
     internal class DefaultPlatform : IPlatform
+#endif
     {
+        internal static readonly IPlatform Instance
+#if ASP_NET_CORE_DISTRO
+            = new DefaultPlatformDistro();
+#else
+            = new DefaultPlatform();
+#endif
+
         private readonly IDictionary _environmentVariables;
 
+#if ASP_NET_CORE_DISTRO
+        public DefaultPlatformDistro()
+#else
         public DefaultPlatform()
+#endif
         {
             try
             {
-                _environmentVariables = Environment.GetEnvironmentVariables();
+                _environmentVariables = LoadEnvironmentVariables();
             }
             catch (Exception ex)
             {
@@ -32,9 +51,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
                 AzureMonitorExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
 #elif LIVE_METRICS_EXPORTER
                 LiveMetricsExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
+#elif ASP_NET_CORE_DISTRO
+                AzureMonitorAspNetCoreEventSource.Log.FailedToReadEnvironmentVariables(ex);
 #endif
                 _environmentVariables = new Dictionary<string, object>();
             }
+        }
+
+        private static IDictionary LoadEnvironmentVariables()
+        {
+            var variables = new Dictionary<string, string?>();
+            foreach (var key in EnvironmentVariableConstants.HashSetDefinedEnvironmentVariables)
+            {
+                variables.Add(key, Environment.GetEnvironmentVariable(key));
+            }
+            return variables;
         }
 
         public string? GetEnvironmentVariable(string name) => _environmentVariables[name]?.ToString();

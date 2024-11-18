@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<int> delayInMinutes = default;
-            Optional<bool> enabled = default;
+            int? delayInMinutes = default;
+            bool? enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("delayInMinutes"u8))
@@ -60,7 +60,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new AutoPauseProperties(Optional.ToNullable(delayInMinutes), Optional.ToNullable(enabled));
+            return new AutoPauseProperties(delayInMinutes, enabled);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AutoPauseProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAutoPauseProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class AutoPausePropertiesConverter : JsonConverter<AutoPauseProperties>
@@ -69,6 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override AutoPauseProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.LabServices;
 using Azure.ResourceManager.LabServices.Models;
 
 namespace Azure.ResourceManager.LabServices.Mocking
@@ -66,6 +63,14 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>LabPlans_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
@@ -88,6 +93,14 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LabPlans_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,6 +125,14 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Labs_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
@@ -134,6 +155,14 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,6 +187,10 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
@@ -167,7 +200,7 @@ namespace Azure.ResourceManager.LabServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableLabServicesSku.DeserializeAvailableLabServicesSku, SkusClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableLabServicesSku.DeserializeAvailableLabServicesSku(e), SkusClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -181,6 +214,10 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
@@ -190,7 +227,7 @@ namespace Azure.ResourceManager.LabServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableLabServicesSku.DeserializeAvailableLabServicesSku, SkusClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableLabServicesSku.DeserializeAvailableLabServicesSku(e), SkusClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,6 +240,10 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Usages_ListByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,7 +255,7 @@ namespace Azure.ResourceManager.LabServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LabServicesUsage.DeserializeLabServicesUsage, UsagesClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LabServicesUsage.DeserializeLabServicesUsage(e), UsagesClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,6 +269,10 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
@@ -238,7 +283,7 @@ namespace Azure.ResourceManager.LabServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LabServicesUsage.DeserializeLabServicesUsage, UsagesClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LabServicesUsage.DeserializeLabServicesUsage(e), UsagesClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

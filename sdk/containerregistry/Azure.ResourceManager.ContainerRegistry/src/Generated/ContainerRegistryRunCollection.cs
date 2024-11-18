@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Runs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="runId"> The run ID. </param>
@@ -100,6 +106,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Runs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +152,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Runs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is 'contains'. All logical operators except 'Not', 'Has', 'All' are allowed. </param>
@@ -162,6 +184,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Runs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is 'contains'. All logical operators except 'Not', 'Has', 'All' are allowed. </param>
@@ -185,6 +215,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Runs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +259,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Runs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="runId"> The run ID. </param>
@@ -255,6 +301,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Runs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,6 +346,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Runs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

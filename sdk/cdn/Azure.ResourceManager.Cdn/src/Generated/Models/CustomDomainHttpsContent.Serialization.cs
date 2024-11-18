@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CustomDomainHttpsContent : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownCustomDomainHttpsParameters))]
+    public partial class CustomDomainHttpsContent : IUtf8JsonSerializable, IJsonModel<CustomDomainHttpsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomDomainHttpsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CustomDomainHttpsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("certificateSource"u8);
             writer.WriteStringValue(CertificateSource.ToString());
             writer.WritePropertyName("protocolType"u8);
@@ -24,11 +43,39 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static CustomDomainHttpsContent DeserializeCustomDomainHttpsContent(JsonElement element)
+        CustomDomainHttpsContent IJsonModel<CustomDomainHttpsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomDomainHttpsContent(document.RootElement, options);
+        }
+
+        internal static CustomDomainHttpsContent DeserializeCustomDomainHttpsContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,11 +84,42 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureKeyVault": return UserManagedHttpsContent.DeserializeUserManagedHttpsContent(element);
-                    case "Cdn": return CdnManagedHttpsContent.DeserializeCdnManagedHttpsContent(element);
+                    case "AzureKeyVault": return UserManagedHttpsContent.DeserializeUserManagedHttpsContent(element, options);
+                    case "Cdn": return CdnManagedHttpsContent.DeserializeCdnManagedHttpsContent(element, options);
                 }
             }
-            return UnknownCustomDomainHttpsParameters.DeserializeUnknownCustomDomainHttpsParameters(element);
+            return UnknownCustomDomainHttpsParameters.DeserializeUnknownCustomDomainHttpsParameters(element, options);
         }
+
+        BinaryData IPersistableModel<CustomDomainHttpsContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CustomDomainHttpsContent IPersistableModel<CustomDomainHttpsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomDomainHttpsContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomDomainHttpsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

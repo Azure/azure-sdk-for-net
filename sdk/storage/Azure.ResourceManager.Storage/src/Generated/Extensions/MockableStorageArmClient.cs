@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Mocking
 {
@@ -34,102 +32,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageAccountResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageAccountResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageAccountResource"/> object. </returns>
-        public virtual StorageAccountResource GetStorageAccountResource(ResourceIdentifier id)
-        {
-            StorageAccountResource.ValidateResourceId(id);
-            return new StorageAccountResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DeletedAccountResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeletedAccountResource.CreateResourceIdentifier" /> to create a <see cref="DeletedAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedAccountResource"/> object. </returns>
-        public virtual DeletedAccountResource GetDeletedAccountResource(ResourceIdentifier id)
-        {
-            DeletedAccountResource.ValidateResourceId(id);
-            return new DeletedAccountResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageAccountManagementPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageAccountManagementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountManagementPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource"/> object. </returns>
-        public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicyResource(ResourceIdentifier id)
-        {
-            StorageAccountManagementPolicyResource.ValidateResourceId(id);
-            return new StorageAccountManagementPolicyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="BlobInventoryPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BlobInventoryPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BlobInventoryPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BlobInventoryPolicyResource"/> object. </returns>
-        public virtual BlobInventoryPolicyResource GetBlobInventoryPolicyResource(ResourceIdentifier id)
-        {
-            BlobInventoryPolicyResource.ValidateResourceId(id);
-            return new BlobInventoryPolicyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StoragePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StoragePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StoragePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StoragePrivateEndpointConnectionResource"/> object. </returns>
-        public virtual StoragePrivateEndpointConnectionResource GetStoragePrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            StoragePrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new StoragePrivateEndpointConnectionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ObjectReplicationPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ObjectReplicationPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ObjectReplicationPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ObjectReplicationPolicyResource"/> object. </returns>
-        public virtual ObjectReplicationPolicyResource GetObjectReplicationPolicyResource(ResourceIdentifier id)
-        {
-            ObjectReplicationPolicyResource.ValidateResourceId(id);
-            return new ObjectReplicationPolicyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageAccountLocalUserResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageAccountLocalUserResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountLocalUserResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageAccountLocalUserResource"/> object. </returns>
-        public virtual StorageAccountLocalUserResource GetStorageAccountLocalUserResource(ResourceIdentifier id)
-        {
-            StorageAccountLocalUserResource.ValidateResourceId(id);
-            return new StorageAccountLocalUserResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EncryptionScopeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EncryptionScopeResource.CreateResourceIdentifier" /> to create an <see cref="EncryptionScopeResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EncryptionScopeResource"/> object. </returns>
-        public virtual EncryptionScopeResource GetEncryptionScopeResource(ResourceIdentifier id)
-        {
-            EncryptionScopeResource.ValidateResourceId(id);
-            return new EncryptionScopeResource(Client, id);
         }
 
         /// <summary>
@@ -217,6 +119,114 @@ namespace Azure.ResourceManager.Storage.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="StorageAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageAccountResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StorageAccountResource"/> object. </returns>
+        public virtual StorageAccountResource GetStorageAccountResource(ResourceIdentifier id)
+        {
+            StorageAccountResource.ValidateResourceId(id);
+            return new StorageAccountResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StorageAccountMigrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageAccountMigrationResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountMigrationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StorageAccountMigrationResource"/> object. </returns>
+        public virtual StorageAccountMigrationResource GetStorageAccountMigrationResource(ResourceIdentifier id)
+        {
+            StorageAccountMigrationResource.ValidateResourceId(id);
+            return new StorageAccountMigrationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DeletedAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedAccountResource.CreateResourceIdentifier" /> to create a <see cref="DeletedAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeletedAccountResource"/> object. </returns>
+        public virtual DeletedAccountResource GetDeletedAccountResource(ResourceIdentifier id)
+        {
+            DeletedAccountResource.ValidateResourceId(id);
+            return new DeletedAccountResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StorageAccountManagementPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageAccountManagementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountManagementPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource"/> object. </returns>
+        public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicyResource(ResourceIdentifier id)
+        {
+            StorageAccountManagementPolicyResource.ValidateResourceId(id);
+            return new StorageAccountManagementPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BlobInventoryPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BlobInventoryPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BlobInventoryPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BlobInventoryPolicyResource"/> object. </returns>
+        public virtual BlobInventoryPolicyResource GetBlobInventoryPolicyResource(ResourceIdentifier id)
+        {
+            BlobInventoryPolicyResource.ValidateResourceId(id);
+            return new BlobInventoryPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StoragePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StoragePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StoragePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StoragePrivateEndpointConnectionResource"/> object. </returns>
+        public virtual StoragePrivateEndpointConnectionResource GetStoragePrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            StoragePrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new StoragePrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ObjectReplicationPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ObjectReplicationPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ObjectReplicationPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ObjectReplicationPolicyResource"/> object. </returns>
+        public virtual ObjectReplicationPolicyResource GetObjectReplicationPolicyResource(ResourceIdentifier id)
+        {
+            ObjectReplicationPolicyResource.ValidateResourceId(id);
+            return new ObjectReplicationPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StorageAccountLocalUserResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageAccountLocalUserResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountLocalUserResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StorageAccountLocalUserResource"/> object. </returns>
+        public virtual StorageAccountLocalUserResource GetStorageAccountLocalUserResource(ResourceIdentifier id)
+        {
+            StorageAccountLocalUserResource.ValidateResourceId(id);
+            return new StorageAccountLocalUserResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EncryptionScopeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EncryptionScopeResource.CreateResourceIdentifier" /> to create an <see cref="EncryptionScopeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EncryptionScopeResource"/> object. </returns>
+        public virtual EncryptionScopeResource GetEncryptionScopeResource(ResourceIdentifier id)
+        {
+            EncryptionScopeResource.ValidateResourceId(id);
+            return new EncryptionScopeResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="TableServiceResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="TableServiceResource.CreateResourceIdentifier" /> to create a <see cref="TableServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -238,6 +248,30 @@ namespace Azure.ResourceManager.Storage.Mocking
         {
             TableResource.ValidateResourceId(id);
             return new TableResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterConfigurationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StorageTaskAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageTaskAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="StorageTaskAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StorageTaskAssignmentResource"/> object. </returns>
+        public virtual StorageTaskAssignmentResource GetStorageTaskAssignmentResource(ResourceIdentifier id)
+        {
+            StorageTaskAssignmentResource.ValidateResourceId(id);
+            return new StorageTaskAssignmentResource(Client, id);
         }
     }
 }

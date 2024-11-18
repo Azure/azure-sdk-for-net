@@ -12,8 +12,14 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     internal abstract class StorageResourceItemInternal : StorageResourceItem
     {
-        internal Task CompleteTransferInternalAsync(bool overwrite, CancellationToken cancellationToken = default)
-            => CompleteTransferAsync(overwrite, cancellationToken);
+        internal Task CompleteTransferInternalAsync(
+            bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions,
+            CancellationToken cancellationToken = default)
+            => CompleteTransferAsync(
+                overwrite,
+                completeTransferOptions,
+                cancellationToken);
 
         internal Task CopyBlockFromUriInternalAsync(
             StorageResourceItem sourceResource,
@@ -64,7 +70,7 @@ namespace Azure.Storage.DataMovement
         internal Task<HttpAuthorization> GetCopyAuthorizationHeaderInternalAsync(CancellationToken cancellationToken = default)
             => GetCopyAuthorizationHeaderAsync(cancellationToken);
 
-        internal Task<StorageResourceProperties> GetPropertiesInternalAsync(CancellationToken token = default)
+        internal Task<StorageResourceItemProperties> GetPropertiesInternalAsync(CancellationToken token = default)
             => GetPropertiesAsync(token);
 
         internal Task<StorageResourceReadStreamResult> ReadStreamInternalAsync(
@@ -72,5 +78,14 @@ namespace Azure.Storage.DataMovement
             long? length = null,
             CancellationToken cancellationToken = default)
             => ReadStreamAsync(position, length, cancellationToken);
+
+        internal StorageResourceItemProperties GetResourceProperties()
+            => ResourceProperties;
+
+        internal Task<string> GetPermissionsInternalAsync(StorageResourceItemProperties sourceProperties = default)
+            => GetPermissionsAsync(sourceProperties);
+
+        internal Task SetPermissionsInternalAsync(StorageResourceItem sourceResource, StorageResourceItemProperties sourceProperties)
+            => SetPermissionsAsync(sourceResource, sourceProperties);
     }
 }

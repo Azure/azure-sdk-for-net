@@ -23,12 +23,8 @@ namespace Azure.AI.Translation.Document.Tests
         /// <summary>The name of the environment variable from which the Document Translator Storage Account Name will be extracted for the live tests.</summary>
         private const string StorageAccountNameEnvironmentVariableName = "DOCUMENT_TRANSLATION_STORAGE_NAME";
 
-        /// <summary>The name of the environment variable from which the Document Translator Storage Primary key will be extracted for the live tests.</summary>
-        private const string StorageConnectionStringEnvironmentVariableName = "DOCUMENT_TRANSLATION_CONNECTION_STRING";
-
         public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName, options => options.IsSecret());
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
-        public string StorageConnectionString => GetRecordedVariable(StorageConnectionStringEnvironmentVariableName, options => options.HasSecretConnectionStringParameter("AccountKey", SanitizedValue.Base64));
         public string StorageAccountName => GetRecordedVariable(StorageAccountNameEnvironmentVariableName);
 
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
@@ -37,8 +33,8 @@ namespace Azure.AI.Translation.Document.Tests
             var client = new DocumentTranslationClient(new Uri(endpoint), Credential);
             try
             {
-                await client.GetSupportedDocumentFormatsAsync();
-                await client.GetSupportedGlossaryFormatsAsync();
+                await client.GetSupportedFormatsAsync("document");
+                await client.GetSupportedFormatsAsync("glossary");
                 client.GetTranslationStatuses().Take(2);
             }
             catch (RequestFailedException e) when (e.Status == 401)

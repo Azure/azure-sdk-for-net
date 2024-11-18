@@ -33,6 +33,7 @@ namespace Azure.Identity
         internal string Username { get; }
         internal MsalPublicClient Client { get; }
         internal TenantIdResolverBase TenantIdResolver { get; }
+        internal bool UseOperatingSystemAccount { get; }
 
         /// <summary>
         /// Creates a new <see cref="SharedTokenCacheCredential"/> which will authenticate users signed in through developer tools supporting Azure single sign on.
@@ -83,29 +84,34 @@ namespace Azure.Identity
                 options ?? s_DefaultCacheOptions);
             _accountAsyncLock = new AsyncLockWithValue<IAccount>();
             TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
+            UseOperatingSystemAccount = (options as IMsalPublicClientInitializerOptions)?.UseDefaultBrokerAccount ?? false;
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft
-        /// application participating in SSO through a shared MSAL cache. Acquired tokens are cached by the credential instance. Token
-        /// lifetime and refreshing is handled automatically. Where possible, reuse credential instances to optimize cache effectiveness.
+        /// Silently obtains an <see cref="AccessToken"/> for a user account if the user has already authenticated to another Microsoft application
+        /// participating in SSO through a shared MSAL cache. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see>
+        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to optimize
+        /// cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft
-        /// application participating in SSO through a shared MSAL cache. Acquired tokens are cached by the credential instance. Token
-        /// lifetime and refreshing is handled automatically. Where possible, reuse credential instances to optimize cache effectiveness.
+        /// Silently obtains an <see cref="AccessToken"/> for a user account if the user has already authenticated to another Microsoft application
+        /// participating in SSO through a shared MSAL cache. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see>
+        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to optimize
+        /// cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
@@ -118,9 +124,22 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, TenantIdResolverBase.AllTenants);
-                IAccount account = await GetAccountAsync(tenantId, requestContext.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
-                AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, account, tenantId, requestContext.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
-                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+
+                IAccount account = UseOperatingSystemAccount ?
+                    PublicClientApplication.OperatingSystemAccount :
+                    await GetAccountAsync(tenantId, requestContext.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
+
+                AuthenticationResult result = await Client.AcquireTokenSilentAsync(
+                    requestContext.Scopes,
+                    requestContext.Claims,
+                    account,
+                    tenantId,
+                    requestContext.IsCaeEnabled,
+                    requestContext,
+                    async,
+                    cancellationToken).ConfigureAwait(false);
+
+                return scope.Succeeded(result.ToAccessToken());
             }
             catch (MsalUiRequiredException ex)
             {

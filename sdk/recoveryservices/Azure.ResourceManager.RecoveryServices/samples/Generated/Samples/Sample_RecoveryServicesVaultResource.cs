@@ -7,22 +7,19 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.RecoveryServices;
 using Azure.ResourceManager.RecoveryServices.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServices.Samples
 {
     public partial class Sample_RecoveryServicesVaultResource
     {
-        // Download vault credential file
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateVaultCertificate_DownloadVaultCredentialFile()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/PUTVaultCred.json
@@ -56,9 +53,8 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Delete registered Identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteRegisteredIdentity_DeleteRegisteredIdentity()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/DeleteRegisteredIdentities.json
@@ -81,12 +77,11 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             string identityName = "dpmcontainer01";
             await recoveryServicesVault.DeleteRegisteredIdentityAsync(identityName);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets Replication usages of vault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReplicationUsages_GetsReplicationUsagesOfVault()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/ListReplicationUsages.json
@@ -111,12 +106,11 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List of Recovery Services Resources in SubscriptionId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRecoveryServicesVaults_ListOfRecoveryServicesResourcesInSubscriptionId()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/ListBySubscriptionIds.json
@@ -143,12 +137,11 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Recovery Services Resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRecoveryServicesResource()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/GETVault.json
@@ -177,9 +170,8 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Recovery Services Vault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteRecoveryServicesVault()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/DeleteVault.json
@@ -201,12 +193,11 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             // invoke the operation
             await recoveryServicesVault.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update Resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResource()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/PATCHVault.json
@@ -243,9 +234,8 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Resource With CustomerManagedKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResourceWithCustomerManagedKeys()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/PATCHVault_WithCMK.json
@@ -301,9 +291,8 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Resource With CustomerManagedKeys2
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResourceWithCustomerManagedKeys2()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/PatchVault_WithCMK2.json
@@ -351,9 +340,8 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Resource With CustomerManagedKeys3
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResourceWithCustomerManagedKeys3()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/PATCHVault_WithCMK3.json
@@ -404,9 +392,8 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Resource With User Assigned Identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResourceWithUserAssignedIdentity()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/PATCHVault_WithUserAssignedIdentity.json
@@ -450,9 +437,8 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Vault With Monitoring Setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateVaultWithMonitoringSetting()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/PATCHVault_WithMonitoringSettings.json
@@ -497,9 +483,8 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets vault usages
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUsagesByVaults_GetsVaultUsages()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/ListUsages.json
@@ -524,7 +509,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

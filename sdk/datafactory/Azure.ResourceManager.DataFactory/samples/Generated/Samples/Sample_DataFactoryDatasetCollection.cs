@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Samples
 {
     public partial class Sample_DataFactoryDatasetCollection
     {
-        // Datasets_ListByFactory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DatasetsListByFactory()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Datasets_ListByFactory.json
@@ -53,12 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Datasets_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DatasetsCreate()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Datasets_Create.json
@@ -103,9 +99,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Datasets_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DatasetsUpdate()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Datasets_Update.json
@@ -151,9 +146,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Datasets_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_DatasetsGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Datasets_Get.json
@@ -186,9 +180,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Datasets_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_DatasetsGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Datasets_Get.json
@@ -217,9 +210,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Datasets_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DatasetsGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Datasets_Get.json
@@ -248,7 +240,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

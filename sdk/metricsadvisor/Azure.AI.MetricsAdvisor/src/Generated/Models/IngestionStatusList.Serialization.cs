@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -19,8 +18,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DataFeedIngestionStatus>> value = default;
+            string nextLink = default;
+            IReadOnlyList<DataFeedIngestionStatus> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@nextLink"u8))
@@ -43,7 +42,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new IngestionStatusList(nextLink.Value, Optional.ToList(value));
+            return new IngestionStatusList(nextLink, value ?? new ChangeTrackingList<DataFeedIngestionStatus>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IngestionStatusList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIngestionStatusList(document.RootElement);
         }
     }
 }

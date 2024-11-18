@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataShare
 {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>DataSetMappings_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareDataSetMappingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -82,7 +88,9 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _shareDataSetMappingDataSetMappingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<ShareDataSetMappingResource>(Response.FromValue(new ShareDataSetMappingResource(Client, response), response.GetRawResponse()));
+                var uri = _shareDataSetMappingDataSetMappingsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataShareArmOperation<ShareDataSetMappingResource>(Response.FromValue(new ShareDataSetMappingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>DataSetMappings_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareDataSetMappingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -123,7 +139,9 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _shareDataSetMappingDataSetMappingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, data, cancellationToken);
-                var operation = new DataShareArmOperation<ShareDataSetMappingResource>(Response.FromValue(new ShareDataSetMappingResource(Client, response), response.GetRawResponse()));
+                var uri = _shareDataSetMappingDataSetMappingsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataShareArmOperation<ShareDataSetMappingResource>(Response.FromValue(new ShareDataSetMappingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -145,6 +163,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataSetMappings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareDataSetMappingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +209,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>DataSetMappings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareDataSetMappingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataSetMappingName"> The name of the dataSetMapping. </param>
@@ -220,6 +254,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>DataSetMappings_ListByShareSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareDataSetMappingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
@@ -245,6 +287,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>DataSetMappings_ListByShareSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareDataSetMappingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
@@ -269,6 +319,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataSetMappings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareDataSetMappingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +363,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>DataSetMappings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareDataSetMappingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataSetMappingName"> The name of the dataSetMapping. </param>
@@ -339,6 +405,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataSetMappings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareDataSetMappingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,6 +450,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataSetMappings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareDataSetMappingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

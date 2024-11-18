@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -66,6 +67,9 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <inheritdoc />
+#if NET8_0_OR_GREATER
+        [Obsolete(DiagnosticId = "SYSLIB0051")]
+#endif
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             Argument.AssertNotNull(info, nameof(info));

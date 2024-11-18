@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,27 +14,32 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureBlobFSLocation : IUtf8JsonSerializable
+    public partial class AzureBlobFSLocation : IUtf8JsonSerializable, IJsonModel<AzureBlobFSLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBlobFSLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AzureBlobFSLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobFSLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureBlobFSLocation)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
                 JsonSerializer.Serialize(writer, FileSystem);
-            }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(DatasetLocationType);
-            if (Optional.IsDefined(FolderPath))
-            {
-                writer.WritePropertyName("folderPath"u8);
-                JsonSerializer.Serialize(writer, FolderPath);
-            }
-            if (Optional.IsDefined(FileName))
-            {
-                writer.WritePropertyName("fileName"u8);
-                JsonSerializer.Serialize(writer, FileName);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -47,19 +53,32 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static AzureBlobFSLocation DeserializeAzureBlobFSLocation(JsonElement element)
+        AzureBlobFSLocation IJsonModel<AzureBlobFSLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobFSLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureBlobFSLocation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureBlobFSLocation(document.RootElement, options);
+        }
+
+        internal static AzureBlobFSLocation DeserializeAzureBlobFSLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> fileSystem = default;
+            DataFactoryElement<string> fileSystem = default;
             string type = default;
-            Optional<DataFactoryElement<string>> folderPath = default;
-            Optional<DataFactoryElement<string>> fileName = default;
+            DataFactoryElement<string> folderPath = default;
+            DataFactoryElement<string> fileName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +118,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobFSLocation(type, folderPath.Value, fileName.Value, additionalProperties, fileSystem.Value);
+            return new AzureBlobFSLocation(type, folderPath, fileName, additionalProperties, fileSystem);
         }
+
+        BinaryData IPersistableModel<AzureBlobFSLocation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobFSLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureBlobFSLocation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureBlobFSLocation IPersistableModel<AzureBlobFSLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobFSLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureBlobFSLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureBlobFSLocation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureBlobFSLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -20,9 +20,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="ValidateConfigurationResult"/>. </summary>
         /// <param name="error"> The error object. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="configurationState"> Gets the configuration state. </param>
         /// <param name="uri"> URL for the details of the response. </param>
-        internal ValidateConfigurationResult(ResponseError error, NetworkFabricConfigurationState? configurationState, Uri uri) : base(error)
+        internal ValidateConfigurationResult(ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricConfigurationState? configurationState, Uri uri) : base(error, serializedAdditionalRawData)
         {
             ConfigurationState = configurationState;
             Uri = uri;

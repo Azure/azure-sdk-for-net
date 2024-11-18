@@ -10,6 +10,18 @@
 
 ### Other Changes
 
+## 1.3.2 (2024-08-16)
+
+### Other Changes
+
+- Updated reference to `Azure.Security.KeyVault.Secrets` v4.6.0 to mitigate a reported SSRF vulnerability.
+
+## 1.3.1 (2024-02-12)
+
+### Bugs Fixed
+
+- Fix several issues related to ThreadPool starvation for synchronous scenarios
+
 ## 1.3.0 (2023-11-08)
 
 ### Acknowledgments

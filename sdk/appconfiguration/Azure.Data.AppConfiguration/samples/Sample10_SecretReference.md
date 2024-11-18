@@ -6,7 +6,7 @@ When App Configuration creates such keys, it stores the URIs of Key Vault values
 Your application is responsible for authenticating properly to both App Configuration and Key Vault and resolving values.
 The two services don't communicate directly.
 
-You can use the [configuration provider](https://github.com/Azure/AppConfiguration-DotnetProvider) to do resolve Secret references automatically;
+You can use the [configuration provider](https://github.com/Azure/AppConfiguration-DotnetProvider) to resolve Secret references automatically.
 
 Secret references are settings that follow specific JSON schema for the `Value`, and the `application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8` content type.
 The `Azure.Data.AppConfiguration` library provides a strongly-typed way of managing Secret references.

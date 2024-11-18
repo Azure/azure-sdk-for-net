@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(SecurityInsightsFileHashAlgorithm left, SecurityInsightsFileHashAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsFileHashAlgorithm"/> values are not the same. </summary>
         public static bool operator !=(SecurityInsightsFileHashAlgorithm left, SecurityInsightsFileHashAlgorithm right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityInsightsFileHashAlgorithm"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsFileHashAlgorithm"/>. </summary>
         public static implicit operator SecurityInsightsFileHashAlgorithm(string value) => new SecurityInsightsFileHashAlgorithm(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

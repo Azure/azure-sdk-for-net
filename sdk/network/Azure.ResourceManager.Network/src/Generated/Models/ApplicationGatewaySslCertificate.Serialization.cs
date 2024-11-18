@@ -6,26 +6,39 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewaySslCertificate : IUtf8JsonSerializable
+    public partial class ApplicationGatewaySslCertificate : IUtf8JsonSerializable, IJsonModel<ApplicationGatewaySslCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewaySslCertificate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ApplicationGatewaySslCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                throw new FormatException($"The model {nameof(ApplicationGatewaySslCertificate)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -46,30 +59,62 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
+            if (options.Format != "W" && Optional.IsDefined(PublicCertData))
+            {
+                writer.WritePropertyName("publicCertData"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PublicCertData);
+#else
+                using (JsonDocument document = JsonDocument.Parse(PublicCertData))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             if (Optional.IsDefined(KeyVaultSecretId))
             {
                 writer.WritePropertyName("keyVaultSecretId"u8);
                 writer.WriteStringValue(KeyVaultSecretId);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewaySslCertificate DeserializeApplicationGatewaySslCertificate(JsonElement element)
+        ApplicationGatewaySslCertificate IJsonModel<ApplicationGatewaySslCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewaySslCertificate)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewaySslCertificate(document.RootElement, options);
+        }
+
+        internal static ApplicationGatewaySslCertificate DeserializeApplicationGatewaySslCertificate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<BinaryData> data = default;
-            Optional<string> password = default;
-            Optional<BinaryData> publicCertData = default;
-            Optional<string> keyVaultSecretId = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            BinaryData data = default;
+            string password = default;
+            BinaryData publicCertData = default;
+            string keyVaultSecretId = default;
+            NetworkProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -153,8 +198,54 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationGatewaySslCertificate(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), data.Value, password.Value, publicCertData.Value, keyVaultSecretId.Value, Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewaySslCertificate(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                data,
+                password,
+                publicCertData,
+                keyVaultSecretId,
+                provisioningState);
         }
+
+        BinaryData IPersistableModel<ApplicationGatewaySslCertificate>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewaySslCertificate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApplicationGatewaySslCertificate IPersistableModel<ApplicationGatewaySslCertificate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationGatewaySslCertificate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewaySslCertificate)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationGatewaySslCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

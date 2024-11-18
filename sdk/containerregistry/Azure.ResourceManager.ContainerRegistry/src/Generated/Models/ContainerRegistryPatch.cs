@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for updating a container registry. </summary>
     public partial class ContainerRegistryPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPatch"/>. </summary>
         public ContainerRegistryPatch()
         {
@@ -31,7 +63,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="isDataEndpointEnabled"> Enable a single data endpoint per region for serving data. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the container registry. </param>
         /// <param name="networkRuleBypassOptions"> Whether to allow trusted Azure services to access a network restricted registry. </param>
-        internal ContainerRegistryPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ContainerRegistrySku sku, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ContainerRegistrySku sku, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Tags = tags;
@@ -43,27 +76,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             IsDataEndpointEnabled = isDataEndpointEnabled;
             PublicNetworkAccess = publicNetworkAccess;
             NetworkRuleBypassOptions = networkRuleBypassOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The identity of the container registry. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The tags for the container registry. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The SKU of the container registry. </summary>
+        [WirePath("sku")]
         public ContainerRegistrySku Sku { get; set; }
         /// <summary> The value that indicates whether the admin user is enabled. </summary>
+        [WirePath("properties.adminUserEnabled")]
         public bool? IsAdminUserEnabled { get; set; }
         /// <summary> The network rule set for a container registry. </summary>
+        [WirePath("properties.networkRuleSet")]
         public ContainerRegistryNetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary> The policies for a container registry. </summary>
+        [WirePath("properties.policies")]
         public ContainerRegistryPolicies Policies { get; set; }
         /// <summary> The encryption settings of container registry. </summary>
+        [WirePath("properties.encryption")]
         public ContainerRegistryEncryption Encryption { get; set; }
         /// <summary> Enable a single data endpoint per region for serving data. </summary>
+        [WirePath("properties.dataEndpointEnabled")]
         public bool? IsDataEndpointEnabled { get; set; }
         /// <summary> Whether or not public network access is allowed for the container registry. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public ContainerRegistryPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Whether to allow trusted Azure services to access a network restricted registry. </summary>
+        [WirePath("properties.networkRuleBypassOptions")]
         public ContainerRegistryNetworkRuleBypassOption? NetworkRuleBypassOptions { get; set; }
     }
 }

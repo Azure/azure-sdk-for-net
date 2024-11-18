@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -28,6 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftAccessLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userName"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password for Basic authentication. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal MicrosoftAccessLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> authenticationType, DataFactorySecretBaseDefinition credential, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal MicrosoftAccessLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> authenticationType, DataFactorySecret credential, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             AuthenticationType = authenticationType;
@@ -50,16 +50,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "MicrosoftAccess";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MicrosoftAccessLinkedService"/> for deserialization. </summary>
+        internal MicrosoftAccessLinkedService()
+        {
+        }
+
         /// <summary> The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, or SecureString, or AzureKeyVaultSecretReference, or Expression with resultType string. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> Type of authentication used to connect to the Microsoft Access as ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AuthenticationType { get; set; }
         /// <summary> The access credential portion of the connection string specified in driver-specific property-value format. </summary>
-        public DataFactorySecretBaseDefinition Credential { get; set; }
+        public DataFactorySecret Credential { get; set; }
         /// <summary> User name for Basic authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password for Basic authentication. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }

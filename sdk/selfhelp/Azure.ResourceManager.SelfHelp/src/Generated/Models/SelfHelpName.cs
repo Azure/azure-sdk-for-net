@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator ==(SelfHelpName left, SelfHelpName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SelfHelpName"/> values are not the same. </summary>
         public static bool operator !=(SelfHelpName left, SelfHelpName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SelfHelpName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SelfHelpName"/>. </summary>
         public static implicit operator SelfHelpName(string value) => new SelfHelpName(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -9,17 +9,15 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.SecurityCenter;
 using Azure.ResourceManager.SecurityCenter.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_SecurityCenterLocationResource
     {
-        // Get security data location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSecurityDataLocation()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2015-06-01-preview/examples/Locations/GetLocation_example.json
@@ -47,9 +45,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get allowed connections on a subscription from security data location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllowedConnectionsByHomeRegion_GetAllowedConnectionsOnASubscriptionFromSecurityDataLocation()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/AllowedConnections/GetAllowedConnectionsSubscriptionLocation_example.json
@@ -73,16 +70,15 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get topology on a subscription from security data location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetTopologiesByHomeRegion_GetTopologyOnASubscriptionFromSecurityDataLocation()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetDiscoveredSecuritySolutionsByHomeRegion_GetDiscoveredSecuritySolutionsFromASecurityDataLocation()
         {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/Topology/GetTopologySubscriptionLocation_example.json
-            // this example is just showing the usage of "Topology_ListByHomeRegion" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/DiscoveredSecuritySolutions/GetDiscoveredSecuritySolutionsSubscriptionLocation_example.json
+            // this example is just showing the usage of "DiscoveredSecuritySolutions_ListByHomeRegion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -91,23 +87,50 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityCenterLocationResource created on azure
             // for more information of creating SecurityCenterLocationResource, please refer to the document of SecurityCenterLocationResource
-            string subscriptionId = "3eeab341-f466-499c-a8be-85427e154bad";
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
             AzureLocation ascLocation = new AzureLocation("centralus");
             ResourceIdentifier securityCenterLocationResourceId = SecurityCenterLocationResource.CreateResourceIdentifier(subscriptionId, ascLocation);
             SecurityCenterLocationResource securityCenterLocation = client.GetSecurityCenterLocationResource(securityCenterLocationResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SecurityTopologyResource item in securityCenterLocation.GetTopologiesByHomeRegionAsync())
+            await foreach (DiscoveredSecuritySolution item in securityCenterLocation.GetDiscoveredSecuritySolutionsByHomeRegionAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get JIT network access policies on a subscription from a security data location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetExternalSecuritySolutionsByHomeRegion_GetExternalSecuritySolutionsOnASubscriptionFromSecurityDataLocation()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/ExternalSecuritySolutions/GetExternalSecuritySolutionsSubscriptionLocation_example.json
+            // this example is just showing the usage of "ExternalSecuritySolutions_ListByHomeRegion" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SecurityCenterLocationResource created on azure
+            // for more information of creating SecurityCenterLocationResource, please refer to the document of SecurityCenterLocationResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            AzureLocation ascLocation = new AzureLocation("centralus");
+            ResourceIdentifier securityCenterLocationResourceId = SecurityCenterLocationResource.CreateResourceIdentifier(subscriptionId, ascLocation);
+            SecurityCenterLocationResource securityCenterLocation = client.GetSecurityCenterLocationResource(securityCenterLocationResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (ExternalSecuritySolution item in securityCenterLocation.GetExternalSecuritySolutionsByHomeRegionAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetJitNetworkAccessPoliciesByRegion_GetJITNetworkAccessPoliciesOnASubscriptionFromASecurityDataLocation()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/JitNetworkAccessPolicies/GetJitNetworkAccessPoliciesSubscriptionLocation_example.json
@@ -135,41 +158,11 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get discovered security solutions from a security data location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetDiscoveredSecuritySolutionsByHomeRegion_GetDiscoveredSecuritySolutionsFromASecurityDataLocation()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/DiscoveredSecuritySolutions/GetDiscoveredSecuritySolutionsSubscriptionLocation_example.json
-            // this example is just showing the usage of "DiscoveredSecuritySolutions_ListByHomeRegion" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SecurityCenterLocationResource created on azure
-            // for more information of creating SecurityCenterLocationResource, please refer to the document of SecurityCenterLocationResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
-            AzureLocation ascLocation = new AzureLocation("centralus");
-            ResourceIdentifier securityCenterLocationResourceId = SecurityCenterLocationResource.CreateResourceIdentifier(subscriptionId, ascLocation);
-            SecurityCenterLocationResource securityCenterLocation = client.GetSecurityCenterLocationResource(securityCenterLocationResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (DiscoveredSecuritySolution item in securityCenterLocation.GetDiscoveredSecuritySolutionsByHomeRegionAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get security solutions from a security data location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllSecuritySolutionsReferenceDataByHomeRegion_GetSecuritySolutionsFromASecurityDataLocation()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/SecuritySolutionsReferenceData/GetSecuritySolutionsReferenceDataSubscriptionLocation_example.json
@@ -193,16 +186,15 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get external security solutions on a subscription from security data location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetExternalSecuritySolutionsByHomeRegion_GetExternalSecuritySolutionsOnASubscriptionFromSecurityDataLocation()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetTopologiesByHomeRegion_GetTopologyOnASubscriptionFromSecurityDataLocation()
         {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/ExternalSecuritySolutions/GetExternalSecuritySolutionsSubscriptionLocation_example.json
-            // this example is just showing the usage of "ExternalSecuritySolutions_ListByHomeRegion" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/Topology/GetTopologySubscriptionLocation_example.json
+            // this example is just showing the usage of "Topology_ListByHomeRegion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -211,18 +203,18 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityCenterLocationResource created on azure
             // for more information of creating SecurityCenterLocationResource, please refer to the document of SecurityCenterLocationResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "3eeab341-f466-499c-a8be-85427e154bad";
             AzureLocation ascLocation = new AzureLocation("centralus");
             ResourceIdentifier securityCenterLocationResourceId = SecurityCenterLocationResource.CreateResourceIdentifier(subscriptionId, ascLocation);
             SecurityCenterLocationResource securityCenterLocation = client.GetSecurityCenterLocationResource(securityCenterLocationResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ExternalSecuritySolution item in securityCenterLocation.GetExternalSecuritySolutionsByHomeRegionAsync())
+            await foreach (SecurityTopologyResource item in securityCenterLocation.GetTopologiesByHomeRegionAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

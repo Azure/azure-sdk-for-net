@@ -40,12 +40,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<PrivateEndpoint> privateEndpoint = default;
-            Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<string> provisioningState = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            PrivateEndpoint privateEndpoint = default;
+            PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            string provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -99,7 +99,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnection(id.Value, name.Value, type.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, provisioningState.Value);
+            return new PrivateEndpointConnection(
+                id,
+                name,
+                type,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PrivateEndpointConnection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePrivateEndpointConnection(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class PrivateEndpointConnectionConverter : JsonConverter<PrivateEndpointConnection>
@@ -108,6 +130,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override PrivateEndpointConnection Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

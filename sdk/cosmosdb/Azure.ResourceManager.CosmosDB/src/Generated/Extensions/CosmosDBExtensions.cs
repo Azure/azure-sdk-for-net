@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -686,41 +684,22 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MongoClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MongoClusterResource.CreateResourceIdentifier" /> to create a <see cref="MongoClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MongoClusterResource"/> object. </returns>
-        public static MongoClusterResource GetMongoClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public static NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCosmosDBArmClient(client).GetMongoClusterResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBFirewallRuleResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CosmosDBFirewallRuleResource"/> object. </returns>
-        public static CosmosDBFirewallRuleResource GetCosmosDBFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableCosmosDBArmClient(client).GetCosmosDBFirewallRuleResource(id);
+            return GetMockableCosmosDBArmClient(client).GetNetworkSecurityPerimeterConfigurationResource(id);
         }
 
         /// <summary>
@@ -800,6 +779,63 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="CosmosDBThroughputPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBThroughputPoolResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBThroughputPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBThroughputPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBThroughputPoolResource"/> object. </returns>
+        public static CosmosDBThroughputPoolResource GetCosmosDBThroughputPoolResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBThroughputPoolResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CosmosDBThroughputPoolAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBThroughputPoolAccountResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBThroughputPoolAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBThroughputPoolAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBThroughputPoolAccountResource"/> object. </returns>
+        public static CosmosDBThroughputPoolAccountResource GetCosmosDBThroughputPoolAccountResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBThroughputPoolAccountResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CosmosDBChaosFaultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBChaosFaultResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBChaosFaultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBChaosFaultResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBChaosFaultResource"/> object. </returns>
+        public static CosmosDBChaosFaultResource GetCosmosDBChaosFaultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBChaosFaultResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of CosmosDBAccountResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -826,6 +862,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -856,6 +900,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -904,6 +956,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>CassandraClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -934,6 +994,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>CassandraClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -954,80 +1022,96 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Gets a collection of MongoClusterResources in the ResourceGroupResource.
+        /// Gets a collection of CosmosDBThroughputPoolResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetMongoClusters()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCosmosDBThroughputPools()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of MongoClusterResources and their operations over a MongoClusterResource. </returns>
-        public static MongoClusterCollection GetMongoClusters(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of CosmosDBThroughputPoolResources and their operations over a CosmosDBThroughputPoolResource. </returns>
+        public static CosmosDBThroughputPoolCollection GetCosmosDBThroughputPools(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetMongoClusters();
+            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCosmosDBThroughputPools();
         }
 
         /// <summary>
-        /// Gets information about a mongo cluster.
+        /// Retrieves the properties of an existing Azure Cosmos DB Throughput Pool
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoClusters_Get</description>
+        /// <description>ThroughputPool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBThroughputPoolResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetMongoClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCosmosDBThroughputPoolAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
+        /// <param name="throughputPoolName"> Cosmos DB Throughput Pool name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="mongoClusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="throughputPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="throughputPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MongoClusterResource>> GetMongoClusterAsync(this ResourceGroupResource resourceGroupResource, string mongoClusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CosmosDBThroughputPoolResource>> GetCosmosDBThroughputPoolAsync(this ResourceGroupResource resourceGroupResource, string throughputPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetMongoClusterAsync(mongoClusterName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCosmosDBThroughputPoolAsync(throughputPoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets information about a mongo cluster.
+        /// Retrieves the properties of an existing Azure Cosmos DB Throughput Pool
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoClusters_Get</description>
+        /// <description>ThroughputPool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBThroughputPoolResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetMongoCluster(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCosmosDBThroughputPool(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
+        /// <param name="throughputPoolName"> Cosmos DB Throughput Pool name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="mongoClusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="throughputPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="throughputPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<MongoClusterResource> GetMongoCluster(this ResourceGroupResource resourceGroupResource, string mongoClusterName, CancellationToken cancellationToken = default)
+        public static Response<CosmosDBThroughputPoolResource> GetCosmosDBThroughputPool(this ResourceGroupResource resourceGroupResource, string throughputPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetMongoCluster(mongoClusterName, cancellationToken);
+            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCosmosDBThroughputPool(throughputPoolName, cancellationToken);
         }
 
         /// <summary>
@@ -1058,6 +1142,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1086,6 +1178,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -1116,6 +1216,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1143,6 +1251,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -1172,6 +1288,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>CassandraClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1200,6 +1324,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>CassandraClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1218,62 +1350,6 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// List all the mongo clusters in a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/mongoClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoClusters_List</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetMongoClusters(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MongoClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MongoClusterResource> GetMongoClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetMongoClustersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the mongo clusters in a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/mongoClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoClusters_List</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetMongoClusters(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MongoClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MongoClusterResource> GetMongoClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetMongoClusters(cancellationToken);
-        }
-
-        /// <summary>
         /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission.
         /// <list type="bullet">
         /// <item>
@@ -1283,6 +1359,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorableDatabaseAccounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableCosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -1312,6 +1396,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>RestorableDatabaseAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableCosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1330,6 +1422,78 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
+        /// Lists all the Azure Cosmos DB Throughput Pools available under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/throughputPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ThroughputPools_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBThroughputPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCosmosDBThroughputPools(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CosmosDBThroughputPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CosmosDBThroughputPoolResource> GetCosmosDBThroughputPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCosmosDBThroughputPoolsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the Azure Cosmos DB Throughput Pools available under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/throughputPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ThroughputPools_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBThroughputPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCosmosDBThroughputPools(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CosmosDBThroughputPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CosmosDBThroughputPoolResource> GetCosmosDBThroughputPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCosmosDBThroughputPools(cancellationToken);
+        }
+
+        /// <summary>
         /// Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the '-' character, and must be between 3 and 50 characters.
         /// <list type="bullet">
         /// <item>
@@ -1339,6 +1503,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_CheckNameExists</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -1368,6 +1540,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_CheckNameExists</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>

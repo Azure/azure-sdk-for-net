@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A reference to an Azure Virtual Machines Marketplace Image or a Shared
-    /// Image Gallery Image. To get the list of all Azure Marketplace Image
+    /// A reference to an Azure Virtual Machines Marketplace Image or a Azure
+    /// Compute Gallery Image. To get the list of all Azure Marketplace Image
     /// references verified by Azure Batch, see the 'List Supported Images'
     /// operation.
     /// </summary>
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="version">The version of the Azure Virtual Machines
         /// Marketplace Image.</param>
         /// <param name="virtualMachineImageId">The ARM resource identifier of
-        /// the Shared Image Gallery Image. Compute Nodes in the Pool will be
+        /// the Azure Compute Gallery Image. Compute Nodes in the Pool will be
         /// created using this Image Id. This is of the form
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{VersionId}
         /// or
@@ -51,7 +51,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// image or marketplace image used to create the node. This read-only
         /// field differs from 'version' only if the value specified for
         /// 'version' when the pool was created was 'latest'.</param>
-        public ImageReference(string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string), string virtualMachineImageId = default(string), string exactVersion = default(string))
+        /// <param name="sharedGalleryImageId">The shared gallery image unique
+        /// identifier</param>
+        /// <param name="communityGalleryImageId">The community gallery image
+        /// unique identifier</param>
+        public ImageReference(string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string), string virtualMachineImageId = default(string), string exactVersion = default(string), string sharedGalleryImageId = default(string), string communityGalleryImageId = default(string))
         {
             Publisher = publisher;
             Offer = offer;
@@ -59,6 +63,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             Version = version;
             VirtualMachineImageId = virtualMachineImageId;
             ExactVersion = exactVersion;
+            SharedGalleryImageId = sharedGalleryImageId;
+            CommunityGalleryImageId = communityGalleryImageId;
             CustomInit();
         }
 
@@ -109,7 +115,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string Version { get; set; }
 
         /// <summary>
-        /// Gets or sets the ARM resource identifier of the Shared Image
+        /// Gets or sets the ARM resource identifier of the Azure Compute
         /// Gallery Image. Compute Nodes in the Pool will be created using this
         /// Image Id. This is of the form
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{VersionId}
@@ -119,13 +125,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// This property is mutually exclusive with other ImageReference
-        /// properties. The Shared Image Gallery Image must have replicas in
+        /// properties. The Azure Compute Gallery Image must have replicas in
         /// the same region and must be in the same subscription as the Azure
         /// Batch account. If the image version is not specified in the
         /// imageId, the latest version will be used. For information about the
         /// firewall settings for the Batch Compute Node agent to communicate
         /// with the Batch service see
-        /// https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
+        /// https://docs.microsoft.com/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
         /// </remarks>
         [JsonProperty(PropertyName = "virtualMachineImageId")]
         public string VirtualMachineImageId { get; set; }
@@ -138,6 +144,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "exactVersion")]
         public string ExactVersion { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the shared gallery image unique identifier
+        /// </summary>
+        /// <remarks>
+        /// This property is mutually exclusive with other properties and can
+        /// be fetched from shared gallery image GET call.
+        /// </remarks>
+        [JsonProperty(PropertyName = "sharedGalleryImageId")]
+        public string SharedGalleryImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the community gallery image unique identifier
+        /// </summary>
+        /// <remarks>
+        /// This property is mutually exclusive with other properties and can
+        /// be fetched from community gallery image GET call.
+        /// </remarks>
+        [JsonProperty(PropertyName = "communityGalleryImageId")]
+        public string CommunityGalleryImageId { get; set; }
 
     }
 }

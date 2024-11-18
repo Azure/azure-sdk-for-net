@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ContainerService.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.ContainerService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-02-preview";
+            _apiVersion = apiVersion ?? "2023-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/privateEndpointConnections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceName)
@@ -59,7 +73,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,7 +102,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -116,6 +130,22 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
         {
             var message = _pipeline.CreateMessage();
@@ -139,7 +169,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
@@ -172,7 +202,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> To learn more about private clusters, see: https://docs.microsoft.com/azure/aks/private-clusters. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
@@ -204,6 +234,22 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string privateEndpointConnectionName, ContainerServicePrivateEndpointConnectionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string privateEndpointConnectionName, ContainerServicePrivateEndpointConnectionData data)
         {
             var message = _pipeline.CreateMessage();
@@ -224,14 +270,14 @@ namespace Azure.ResourceManager.ContainerService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Updates a private endpoint connection. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
@@ -252,6 +298,7 @@ namespace Azure.ResourceManager.ContainerService
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         ContainerServicePrivateEndpointConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -264,7 +311,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Updates a private endpoint connection. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
@@ -285,6 +332,7 @@ namespace Azure.ResourceManager.ContainerService
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         ContainerServicePrivateEndpointConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -294,6 +342,22 @@ namespace Azure.ResourceManager.ContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
@@ -319,7 +383,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Deletes a private endpoint connection. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
@@ -346,7 +410,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Deletes a private endpoint connection. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>

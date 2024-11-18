@@ -42,13 +42,46 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the Pool as metadata.</param>
         /// <param name="targetNodeCommunicationMode">The desired node
         /// communication mode for the pool.</param>
-        public PoolPatchParameter(StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<MetadataItem> metadata = default(IList<MetadataItem>), NodeCommunicationMode? targetNodeCommunicationMode = default(NodeCommunicationMode?))
+        /// <param name="displayName">The display name for the Pool.</param>
+        /// <param name="vmSize">The size of virtual machines in the Pool. All
+        /// VMs in a Pool are the same size.</param>
+        /// <param name="taskSlotsPerNode">The number of task slots that can be
+        /// used to run concurrent tasks on a single compute node in the
+        /// pool.</param>
+        /// <param name="taskSchedulingPolicy">How Tasks are distributed across
+        /// Compute Nodes in a Pool.</param>
+        /// <param name="enableInterNodeCommunication">Whether the Pool permits
+        /// direct communication between Compute Nodes.</param>
+        /// <param name="virtualMachineConfiguration">The virtual machine
+        /// configuration for the Pool.</param>
+        /// <param name="networkConfiguration">The network configuration for
+        /// the Pool.</param>
+        /// <param name="userAccounts">The list of user Accounts to be created
+        /// on each Compute Node in the Pool.</param>
+        /// <param name="mountConfiguration">Mount storage using specified file
+        /// system for the entire lifetime of the pool.</param>
+        /// <param name="upgradePolicy">The upgrade policy for the
+        /// Pool.</param>
+        /// <param name="resourceTags">The user-specified tags associated with
+        /// the pool.</param>
+        public PoolPatchParameter(StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<MetadataItem> metadata = default(IList<MetadataItem>), NodeCommunicationMode? targetNodeCommunicationMode = default(NodeCommunicationMode?), string displayName = default(string), string vmSize = default(string), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), bool? enableInterNodeCommunication = default(bool?), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), UpgradePolicy upgradePolicy = default(UpgradePolicy), IDictionary<string, string> resourceTags = default(IDictionary<string, string>))
         {
             StartTask = startTask;
             CertificateReferences = certificateReferences;
             ApplicationPackageReferences = applicationPackageReferences;
             Metadata = metadata;
             TargetNodeCommunicationMode = targetNodeCommunicationMode;
+            DisplayName = displayName;
+            VmSize = vmSize;
+            TaskSlotsPerNode = taskSlotsPerNode;
+            TaskSchedulingPolicy = taskSchedulingPolicy;
+            EnableInterNodeCommunication = enableInterNodeCommunication;
+            VirtualMachineConfiguration = virtualMachineConfiguration;
+            NetworkConfiguration = networkConfiguration;
+            UserAccounts = userAccounts;
+            MountConfiguration = mountConfiguration;
+            UpgradePolicy = upgradePolicy;
+            ResourceTags = resourceTags;
             CustomInit();
         }
 
@@ -133,6 +166,132 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "targetNodeCommunicationMode")]
         public NodeCommunicationMode? TargetNodeCommunicationMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the display name for the Pool.
+        /// </summary>
+        /// <remarks>
+        /// The display name need not be unique and can contain any Unicode
+        /// characters up to a maximum length of 1024.<br /><br />This field
+        /// can be updated only when the pool is empty.
+        /// </remarks>
+        [JsonProperty(PropertyName = "displayName")]
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the size of virtual machines in the Pool. All VMs in a
+        /// Pool are the same size.
+        /// </summary>
+        /// <remarks>
+        /// For information about available sizes of virtual machines in Pools,
+        /// see Choose a VM size for Compute Nodes in an Azure Batch Pool
+        /// (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes).<br
+        /// /><br />This field can be updated only when the pool is empty.
+        /// </remarks>
+        [JsonProperty(PropertyName = "vmSize")]
+        public string VmSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of task slots that can be used to run
+        /// concurrent tasks on a single compute node in the pool.
+        /// </summary>
+        /// <remarks>
+        /// The default value is 1. The maximum value is the smaller of 4 times
+        /// the number of cores of the vmSize of the pool or 256.<br /><br
+        /// />This field can be updated only when the pool is empty.
+        /// </remarks>
+        [JsonProperty(PropertyName = "taskSlotsPerNode")]
+        public int? TaskSlotsPerNode { get; set; }
+
+        /// <summary>
+        /// Gets or sets how Tasks are distributed across Compute Nodes in a
+        /// Pool.
+        /// </summary>
+        /// <remarks>
+        /// If not specified, the default is spread.<br /><br />This field can
+        /// be updated only when the pool is empty.
+        /// </remarks>
+        [JsonProperty(PropertyName = "taskSchedulingPolicy")]
+        public TaskSchedulingPolicy TaskSchedulingPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the Pool permits direct communication between
+        /// Compute Nodes.
+        /// </summary>
+        /// <remarks>
+        /// Enabling inter-node communication limits the maximum size of the
+        /// Pool due to deployment restrictions on the Compute Nodes of the
+        /// Pool. This may result in the Pool not reaching its desired size.
+        /// The default value is false.<br /><br />This field can be updated
+        /// only when the pool is empty.
+        /// </remarks>
+        [JsonProperty(PropertyName = "enableInterNodeCommunication")]
+        public bool? EnableInterNodeCommunication { get; set; }
+
+        /// <summary>
+        /// Gets or sets the virtual machine configuration for the Pool.
+        /// </summary>
+        /// <remarks>
+        /// This property must be specified.<br /><br />This field can be
+        /// updated only when the pool is empty.
+        /// </remarks>
+        [JsonProperty(PropertyName = "virtualMachineConfiguration")]
+        public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the network configuration for the Pool.
+        /// </summary>
+        /// <remarks>
+        /// This field can be updated only when the pool is empty.
+        /// </remarks>
+        [JsonProperty(PropertyName = "networkConfiguration")]
+        public NetworkConfiguration NetworkConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of user Accounts to be created on each
+        /// Compute Node in the Pool.
+        /// </summary>
+        /// <remarks>
+        /// This field can be updated only when the pool is empty.
+        /// </remarks>
+        [JsonProperty(PropertyName = "userAccounts")]
+        public IList<UserAccount> UserAccounts { get; set; }
+
+        /// <summary>
+        /// Gets or sets mount storage using specified file system for the
+        /// entire lifetime of the pool.
+        /// </summary>
+        /// <remarks>
+        /// Mount the storage using Azure fileshare, NFS, CIFS or Blobfuse
+        /// based file system.<br /><br />This field can be updated only when
+        /// the pool is empty.
+        /// </remarks>
+        [JsonProperty(PropertyName = "mountConfiguration")]
+        public IList<MountConfiguration> MountConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the upgrade policy for the Pool.
+        /// </summary>
+        /// <remarks>
+        /// Describes an upgrade policy - automatic, manual, or rolling.<br
+        /// /><br />This field can be updated only when the pool is empty.
+        /// </remarks>
+        [JsonProperty(PropertyName = "upgradePolicy")]
+        public UpgradePolicy UpgradePolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user-specified tags associated with the pool.
+        /// </summary>
+        /// <remarks>
+        /// The user-defined tags to be associated with the Azure Batch Pool.
+        /// When specified, these tags are propagated to the backing Azure
+        /// resources associated with the pool. This property can only be
+        /// specified when the Batch account was created with the
+        /// poolAllocationMode property set to 'UserSubscription'.<br /><br
+        /// />This field can be updated only when the pool is empty.
+        /// </remarks>
+        [JsonProperty(PropertyName = "resourceTags")]
+        public IDictionary<string, string> ResourceTags { get; set; }
 
     }
 }

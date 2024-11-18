@@ -5,23 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ManualActionTaskDetails
+    public partial class ManualActionTaskDetails : IUtf8JsonSerializable, IJsonModel<ManualActionTaskDetails>
     {
-        internal static ManualActionTaskDetails DeserializeManualActionTaskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManualActionTaskDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ManualActionTaskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManualActionTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManualActionTaskDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Instructions))
+            {
+                writer.WritePropertyName("instructions"u8);
+                writer.WriteStringValue(Instructions);
+            }
+            if (Optional.IsDefined(Observation))
+            {
+                writer.WritePropertyName("observation"u8);
+                writer.WriteStringValue(Observation);
+            }
+        }
+
+        ManualActionTaskDetails IJsonModel<ManualActionTaskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManualActionTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManualActionTaskDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManualActionTaskDetails(document.RootElement, options);
+        }
+
+        internal static ManualActionTaskDetails DeserializeManualActionTaskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> instructions = default;
-            Optional<string> observation = default;
+            string name = default;
+            string instructions = default;
+            string observation = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -44,8 +100,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManualActionTaskDetails(instanceType, name.Value, instructions.Value, observation.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManualActionTaskDetails(instanceType, serializedAdditionalRawData, name, instructions, observation);
         }
+
+        BinaryData IPersistableModel<ManualActionTaskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManualActionTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManualActionTaskDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManualActionTaskDetails IPersistableModel<ManualActionTaskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManualActionTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManualActionTaskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManualActionTaskDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManualActionTaskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

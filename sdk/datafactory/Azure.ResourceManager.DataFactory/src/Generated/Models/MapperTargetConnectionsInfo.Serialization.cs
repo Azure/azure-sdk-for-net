@@ -6,31 +6,48 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperTargetConnectionsInfo : IUtf8JsonSerializable
+    public partial class MapperTargetConnectionsInfo : IUtf8JsonSerializable, IJsonModel<MapperTargetConnectionsInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapperTargetConnectionsInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MapperTargetConnectionsInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapperTargetConnectionsInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MapperTargetConnectionsInfo)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(TargetEntities))
             {
                 writer.WritePropertyName("targetEntities"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetEntities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Connection))
             {
                 writer.WritePropertyName("connection"u8);
-                writer.WriteObjectValue(Connection);
+                writer.WriteObjectValue(Connection, options);
             }
             if (Optional.IsCollectionDefined(DataMapperMappings))
             {
@@ -38,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DataMapperMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,19 +81,49 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static MapperTargetConnectionsInfo DeserializeMapperTargetConnectionsInfo(JsonElement element)
+        MapperTargetConnectionsInfo IJsonModel<MapperTargetConnectionsInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MapperTargetConnectionsInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MapperTargetConnectionsInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapperTargetConnectionsInfo(document.RootElement, options);
+        }
+
+        internal static MapperTargetConnectionsInfo DeserializeMapperTargetConnectionsInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<MapperTable>> targetEntities = default;
-            Optional<MapperConnection> connection = default;
-            Optional<IList<DataMapperMapping>> dataMapperMappings = default;
-            Optional<IList<BinaryData>> relationships = default;
+            IList<MapperTable> targetEntities = default;
+            MapperConnection connection = default;
+            IList<DataMapperMapping> dataMapperMappings = default;
+            IList<BinaryData> relationships = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetEntities"u8))
@@ -88,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperTable> array = new List<MapperTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperTable.DeserializeMapperTable(item));
+                        array.Add(MapperTable.DeserializeMapperTable(item, options));
                     }
                     targetEntities = array;
                     continue;
@@ -99,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connection = MapperConnection.DeserializeMapperConnection(property.Value);
+                    connection = MapperConnection.DeserializeMapperConnection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataMapperMappings"u8))
@@ -111,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataMapperMapping> array = new List<DataMapperMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMapperMapping.DeserializeDataMapperMapping(item));
+                        array.Add(DataMapperMapping.DeserializeDataMapperMapping(item, options));
                     }
                     dataMapperMappings = array;
                     continue;
@@ -137,8 +184,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                     relationships = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MapperTargetConnectionsInfo(Optional.ToList(targetEntities), connection.Value, Optional.ToList(dataMapperMappings), Optional.ToList(relationships));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MapperTargetConnectionsInfo(targetEntities ?? new ChangeTrackingList<MapperTable>(), connection, dataMapperMappings ?? new ChangeTrackingList<DataMapperMapping>(), relationships ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MapperTargetConnectionsInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapperTargetConnectionsInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MapperTargetConnectionsInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MapperTargetConnectionsInfo IPersistableModel<MapperTargetConnectionsInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapperTargetConnectionsInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMapperTargetConnectionsInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MapperTargetConnectionsInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MapperTargetConnectionsInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,17 +6,39 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityTaskProperties : IUtf8JsonSerializable
+    public partial class SecurityTaskProperties : IUtf8JsonSerializable, IJsonModel<SecurityTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityTaskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SecurityTaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityTaskProperties)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -29,16 +51,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static SecurityTaskProperties DeserializeSecurityTaskProperties(JsonElement element)
+        SecurityTaskProperties IJsonModel<SecurityTaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityTaskProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityTaskProperties(document.RootElement, options);
+        }
+
+        internal static SecurityTaskProperties DeserializeSecurityTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -51,7 +86,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SecurityTaskProperties(name.Value, additionalProperties);
+            return new SecurityTaskProperties(name, additionalProperties);
         }
+
+        BinaryData IPersistableModel<SecurityTaskProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityTaskProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityTaskProperties IPersistableModel<SecurityTaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityTaskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityTaskProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityTaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

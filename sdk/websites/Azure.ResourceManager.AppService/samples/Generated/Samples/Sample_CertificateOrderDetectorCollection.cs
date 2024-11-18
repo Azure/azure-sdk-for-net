@@ -7,22 +7,19 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppService;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_CertificateOrderDetectorCollection
     {
-        // List app service certificate detector response
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAppServiceCertificateDetectorResponse()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2021-02-01/examples/Diagnostics_ListAppServiceCertificateOrderDetectorResponse.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/Diagnostics_ListAppServiceCertificateOrderDetectorResponse.json
             // this example is just showing the usage of "CertificateOrdersDiagnostics_ListAppServiceCertificateOrderDetectorResponse" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,15 +48,14 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get app service certificate order detector response
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAppServiceCertificateOrderDetectorResponse()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2021-02-01/examples/Diagnostics_GetAppServiceCertificateOrderDetectorResponse.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/Diagnostics_GetAppServiceCertificateOrderDetectorResponse.json
             // this example is just showing the usage of "CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,12 +85,11 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get app service certificate order detector response
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAppServiceCertificateOrderDetectorResponse()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2021-02-01/examples/Diagnostics_GetAppServiceCertificateOrderDetectorResponse.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/Diagnostics_GetAppServiceCertificateOrderDetectorResponse.json
             // this example is just showing the usage of "CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,12 +115,11 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get app service certificate order detector response
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAppServiceCertificateOrderDetectorResponse()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2021-02-01/examples/Diagnostics_GetAppServiceCertificateOrderDetectorResponse.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/Diagnostics_GetAppServiceCertificateOrderDetectorResponse.json
             // this example is just showing the usage of "CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

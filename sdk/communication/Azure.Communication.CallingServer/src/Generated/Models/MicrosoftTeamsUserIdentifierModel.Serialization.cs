@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.CallingServer;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -17,12 +18,12 @@ namespace Azure.Communication
             writer.WriteStartObject();
             writer.WritePropertyName("userId"u8);
             writer.WriteStringValue(UserId);
-            if (Optional.IsDefined(IsAnonymous))
+            if (CallingServer.Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous"u8);
                 writer.WriteBooleanValue(IsAnonymous.Value);
             }
-            if (Optional.IsDefined(Cloud))
+            if (CallingServer.Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud.Value.ToString());
@@ -37,8 +38,8 @@ namespace Azure.Communication
                 return null;
             }
             string userId = default;
-            Optional<bool> isAnonymous = default;
-            Optional<CommunicationCloudEnvironmentModel> cloud = default;
+            bool? isAnonymous = default;
+            CommunicationCloudEnvironmentModel? cloud = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userId"u8))
@@ -65,7 +66,23 @@ namespace Azure.Communication
                     continue;
                 }
             }
-            return new MicrosoftTeamsUserIdentifierModel(userId, Optional.ToNullable(isAnonymous), Optional.ToNullable(cloud));
+            return new MicrosoftTeamsUserIdentifierModel(userId, isAnonymous, cloud);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MicrosoftTeamsUserIdentifierModel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMicrosoftTeamsUserIdentifierModel(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new CallingServer.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

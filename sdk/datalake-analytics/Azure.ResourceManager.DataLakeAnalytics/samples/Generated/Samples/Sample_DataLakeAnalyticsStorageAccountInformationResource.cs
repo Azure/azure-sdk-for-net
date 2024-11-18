@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataLakeAnalytics;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 {
     public partial class Sample_DataLakeAnalyticsStorageAccountInformationResource
     {
-        // Gets the specified Azure Storage account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheSpecifiedAzureStorageAccount()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/StorageAccounts_Get.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Replaces Azure Storage blob account details
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ReplacesAzureStorageBlobAccountDetails()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/StorageAccounts_Update.json
@@ -80,12 +76,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             };
             await dataLakeAnalyticsStorageAccountInformation.UpdateAsync(patch);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Removes an Azure Storage account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RemovesAnAzureStorageAccount()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/StorageAccounts_Delete.json
@@ -108,7 +103,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             // invoke the operation
             await dataLakeAnalyticsStorageAccountInformation.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

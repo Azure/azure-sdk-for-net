@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Consumption.Mocking;
 using Azure.ResourceManager.Consumption.Models;
 using Azure.ResourceManager.ManagementGroups;
@@ -70,6 +68,14 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Budgets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConsumptionBudgetResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -101,6 +107,14 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Budgets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConsumptionBudgetResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -131,6 +145,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>UsageDetails_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -165,6 +183,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>UsageDetails_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -198,6 +220,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Marketplaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -228,6 +254,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Marketplaces_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -260,6 +290,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Tags_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -288,6 +322,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Tags_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -315,6 +353,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Charges_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -348,6 +390,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Charges_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -380,6 +426,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationsSummaries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -409,6 +459,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationsSummaries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -437,6 +491,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReservationsDetails_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -471,6 +529,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationsDetails_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -504,6 +566,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationRecommendations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -533,6 +599,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationRecommendations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -561,6 +631,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReservationRecommendationDetails_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -594,6 +668,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReservationRecommendationDetails_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -799,6 +877,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>AggregatedCost_GetByManagementGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -827,6 +909,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>AggregatedCost_GetByManagementGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -854,6 +940,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PriceSheet_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -884,6 +974,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PriceSheet_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>

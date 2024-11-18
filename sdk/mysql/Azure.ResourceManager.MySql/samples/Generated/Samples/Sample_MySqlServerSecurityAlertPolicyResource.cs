@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.MySql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MySql.Samples
 {
     public partial class Sample_MySqlServerSecurityAlertPolicyResource
     {
-        // Get a server's threat detection policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerSThreatDetectionPolicy()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerSecurityAlertsGet.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a server's threat detection policy with all parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServerSThreatDetectionPolicyWithAllParameters()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerSecurityAlertsCreateMax.json
@@ -99,9 +95,8 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a server's threat detection policy with minimal parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServerSThreatDetectionPolicyWithMinimalParameters()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerSecurityAlertsCreateMin.json

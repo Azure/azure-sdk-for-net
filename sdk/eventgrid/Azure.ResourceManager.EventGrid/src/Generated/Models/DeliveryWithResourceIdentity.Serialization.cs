@@ -5,37 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class DeliveryWithResourceIdentity : IUtf8JsonSerializable
+    public partial class DeliveryWithResourceIdentity : IUtf8JsonSerializable, IJsonModel<DeliveryWithResourceIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryWithResourceIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DeliveryWithResourceIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryWithResourceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeliveryWithResourceIdentity)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                writer.WriteObjectValue(Destination, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DeliveryWithResourceIdentity DeserializeDeliveryWithResourceIdentity(JsonElement element)
+        DeliveryWithResourceIdentity IJsonModel<DeliveryWithResourceIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryWithResourceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeliveryWithResourceIdentity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeliveryWithResourceIdentity(document.RootElement, options);
+        }
+
+        internal static DeliveryWithResourceIdentity DeserializeDeliveryWithResourceIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<EventSubscriptionIdentity> identity = default;
-            Optional<EventSubscriptionDestination> destination = default;
+            EventSubscriptionIdentity identity = default;
+            EventSubscriptionDestination destination = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -44,7 +94,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    identity = EventSubscriptionIdentity.DeserializeEventSubscriptionIdentity(property.Value);
+                    identity = EventSubscriptionIdentity.DeserializeEventSubscriptionIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("destination"u8))
@@ -53,11 +103,94 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    destination = EventSubscriptionDestination.DeserializeEventSubscriptionDestination(property.Value);
+                    destination = EventSubscriptionDestination.DeserializeEventSubscriptionDestination(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeliveryWithResourceIdentity(identity.Value, destination.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DeliveryWithResourceIdentity(identity, destination, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Destination), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  destination: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Destination))
+                {
+                    builder.Append("  destination: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Destination, options, 2, false, "  destination: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<DeliveryWithResourceIdentity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryWithResourceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(DeliveryWithResourceIdentity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DeliveryWithResourceIdentity IPersistableModel<DeliveryWithResourceIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryWithResourceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeliveryWithResourceIdentity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeliveryWithResourceIdentity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeliveryWithResourceIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

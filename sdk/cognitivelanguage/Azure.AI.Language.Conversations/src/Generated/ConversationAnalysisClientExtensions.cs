@@ -8,17 +8,16 @@
 using System;
 using Azure;
 using Azure.AI.Language.Conversations;
-using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="ConversationAnalysisClient"/>, <see cref="ConversationAuthoringClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="ConversationAnalysisClient"/> to client builder. </summary>
     public static partial class ConversationAnalysisClientExtensions
     {
         /// <summary> Registers a <see cref="ConversationAnalysisClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         public static IAzureClientBuilder<ConversationAnalysisClient, ConversationsClientOptions> AddConversationAnalysisClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
@@ -26,14 +25,13 @@ namespace Microsoft.Extensions.Azure
             return builder.RegisterClientFactory<ConversationAnalysisClient, ConversationsClientOptions>((options) => new ConversationAnalysisClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="ConversationAuthoringClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="ConversationAnalysisClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<ConversationAuthoringClient, ConversationsClientOptions> AddConversationAuthoringClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
-        where TBuilder : IAzureClientFactoryBuilder
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        public static IAzureClientBuilder<ConversationAnalysisClient, ConversationsClientOptions> AddConversationAnalysisClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<ConversationAuthoringClient, ConversationsClientOptions>((options) => new ConversationAuthoringClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<ConversationAnalysisClient, ConversationsClientOptions>((options, cred) => new ConversationAnalysisClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="ConversationAnalysisClient"/> instance. </summary>
@@ -43,14 +41,6 @@ namespace Microsoft.Extensions.Azure
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<ConversationAnalysisClient, ConversationsClientOptions>(configuration);
-        }
-        /// <summary> Registers a <see cref="ConversationAuthoringClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<ConversationAuthoringClient, ConversationsClientOptions> AddConversationAuthoringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
-        {
-            return builder.RegisterClientFactory<ConversationAuthoringClient, ConversationsClientOptions>(configuration);
         }
     }
 }

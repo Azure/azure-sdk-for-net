@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StreamAnalytics;
 using Azure.ResourceManager.StreamAnalytics.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StreamAnalytics.Samples
 {
     public partial class Sample_StreamingJobInputCollection
     {
-        // Create a Gateway Message Bus input
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAGatewayMessageBusInput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Create_GatewayMessageBus.json
@@ -64,9 +61,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a reference blob input with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAReferenceBlobInputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Create_Reference_Blob_CSV.json
@@ -131,9 +127,8 @@ AccountKey = "someAccountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a stream Event Hub input with JSON serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAStreamEventHubInputWithJSONSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Create_Stream_EventHub_JSON.json
@@ -186,9 +181,8 @@ AccountKey = "someAccountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a stream IoT Hub input with Avro serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAStreamIoTHubInputWithAvroSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Create_Stream_IoTHub_Avro.json
@@ -237,9 +231,8 @@ AccountKey = "someAccountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a stream blob input with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAStreamBlobInputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Create_Stream_Blob_CSV.json
@@ -300,9 +293,8 @@ AccountKey = "someAccountKey==",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create an Event Grid input
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnEventGridInput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Create_EventGrid.json
@@ -369,9 +361,8 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a reference blob input with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAReferenceBlobInputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Reference_Blob_CSV.json
@@ -404,9 +395,8 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a reference blob input with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAReferenceBlobInputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Reference_Blob_CSV.json
@@ -435,9 +425,8 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a reference blob input with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAReferenceBlobInputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Reference_Blob_CSV.json
@@ -466,7 +455,7 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -478,9 +467,8 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             }
         }
 
-        // Get a stream Event Hub input with JSON serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAStreamEventHubInputWithJSONSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_EventHub_JSON.json
@@ -513,9 +501,8 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a stream Event Hub input with JSON serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAStreamEventHubInputWithJSONSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_EventHub_JSON.json
@@ -544,9 +531,8 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a stream Event Hub input with JSON serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAStreamEventHubInputWithJSONSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_EventHub_JSON.json
@@ -575,7 +561,7 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -587,9 +573,8 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             }
         }
 
-        // Get a stream IoT Hub input with Avro serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAStreamIoTHubInputWithAvroSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_IoTHub_Avro.json
@@ -622,9 +607,8 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a stream IoT Hub input with Avro serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAStreamIoTHubInputWithAvroSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_IoTHub_Avro.json
@@ -653,9 +637,8 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a stream IoT Hub input with Avro serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAStreamIoTHubInputWithAvroSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_IoTHub_Avro.json
@@ -684,7 +667,7 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -696,9 +679,8 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             }
         }
 
-        // Get a stream blob input with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAStreamBlobInputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_Blob_CSV.json
@@ -731,9 +713,8 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a stream blob input with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAStreamBlobInputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_Blob_CSV.json
@@ -762,9 +743,8 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a stream blob input with CSV serialization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAStreamBlobInputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_Blob_CSV.json
@@ -793,7 +773,7 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -805,9 +785,8 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             }
         }
 
-        // List all inputs in a streaming job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllInputsInAStreamingJob()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_ListByStreamingJob.json
@@ -839,12 +818,11 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List all inputs in a streaming job and include diagnostic information using the $select OData query parameter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllInputsInAStreamingJobAndIncludeDiagnosticInformationUsingTheSelectODataQueryParameter()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_ListByStreamingJob_Diagnostics.json
@@ -877,7 +855,7 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

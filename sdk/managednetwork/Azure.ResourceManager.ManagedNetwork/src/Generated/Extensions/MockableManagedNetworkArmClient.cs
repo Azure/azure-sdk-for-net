@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetwork;
 
 namespace Azure.ResourceManager.ManagedNetwork.Mocking
 {
@@ -59,6 +56,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -82,6 +87,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

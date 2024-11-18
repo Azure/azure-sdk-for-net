@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class RulesEngineMatchCondition : IUtf8JsonSerializable
+    public partial class RulesEngineMatchCondition : IUtf8JsonSerializable, IJsonModel<RulesEngineMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RulesEngineMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RulesEngineMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RulesEngineMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RulesEngineMatchCondition)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("rulesEngineMatchVariable"u8);
             writer.WriteStringValue(RulesEngineMatchVariable.ToString());
             if (Optional.IsDefined(Selector))
@@ -47,21 +65,51 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static RulesEngineMatchCondition DeserializeRulesEngineMatchCondition(JsonElement element)
+        RulesEngineMatchCondition IJsonModel<RulesEngineMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RulesEngineMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RulesEngineMatchCondition)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRulesEngineMatchCondition(document.RootElement, options);
+        }
+
+        internal static RulesEngineMatchCondition DeserializeRulesEngineMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             RulesEngineMatchVariable rulesEngineMatchVariable = default;
-            Optional<string> selector = default;
+            string selector = default;
             RulesEngineOperator rulesEngineOperator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<string> rulesEngineMatchValue = default;
-            Optional<IList<RulesEngineMatchTransform>> transforms = default;
+            IList<RulesEngineMatchTransform> transforms = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rulesEngineMatchVariable"u8))
@@ -112,8 +160,51 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     transforms = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RulesEngineMatchCondition(rulesEngineMatchVariable, selector.Value, rulesEngineOperator, Optional.ToNullable(negateCondition), rulesEngineMatchValue, Optional.ToList(transforms));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RulesEngineMatchCondition(
+                rulesEngineMatchVariable,
+                selector,
+                rulesEngineOperator,
+                negateCondition,
+                rulesEngineMatchValue,
+                transforms ?? new ChangeTrackingList<RulesEngineMatchTransform>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RulesEngineMatchCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RulesEngineMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RulesEngineMatchCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RulesEngineMatchCondition IPersistableModel<RulesEngineMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RulesEngineMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRulesEngineMatchCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RulesEngineMatchCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RulesEngineMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

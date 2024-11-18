@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApiCenter.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -81,6 +79,14 @@ namespace Azure.ResourceManager.ApiCenter
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -110,6 +116,14 @@ namespace Azure.ResourceManager.ApiCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -141,6 +155,14 @@ namespace Azure.ResourceManager.ApiCenter
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -168,6 +190,14 @@ namespace Azure.ResourceManager.ApiCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>

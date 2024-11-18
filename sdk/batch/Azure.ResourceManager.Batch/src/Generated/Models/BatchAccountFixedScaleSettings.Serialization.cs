@@ -6,16 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountFixedScaleSettings : IUtf8JsonSerializable
+    public partial class BatchAccountFixedScaleSettings : IUtf8JsonSerializable, IJsonModel<BatchAccountFixedScaleSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountFixedScaleSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BatchAccountFixedScaleSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountFixedScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchAccountFixedScaleSettings)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ResizeTimeout))
             {
                 writer.WritePropertyName("resizeTimeout"u8);
@@ -36,19 +54,49 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("nodeDeallocationOption"u8);
                 writer.WriteStringValue(NodeDeallocationOption.Value.ToSerialString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static BatchAccountFixedScaleSettings DeserializeBatchAccountFixedScaleSettings(JsonElement element)
+        BatchAccountFixedScaleSettings IJsonModel<BatchAccountFixedScaleSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountFixedScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchAccountFixedScaleSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchAccountFixedScaleSettings(document.RootElement, options);
+        }
+
+        internal static BatchAccountFixedScaleSettings DeserializeBatchAccountFixedScaleSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<TimeSpan> resizeTimeout = default;
-            Optional<int> targetDedicatedNodes = default;
-            Optional<int> targetLowPriorityNodes = default;
-            Optional<BatchNodeDeallocationOption> nodeDeallocationOption = default;
+            TimeSpan? resizeTimeout = default;
+            int? targetDedicatedNodes = default;
+            int? targetLowPriorityNodes = default;
+            BatchNodeDeallocationOption? nodeDeallocationOption = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resizeTimeout"u8))
@@ -87,8 +135,44 @@ namespace Azure.ResourceManager.Batch.Models
                     nodeDeallocationOption = property.Value.GetString().ToBatchNodeDeallocationOption();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchAccountFixedScaleSettings(Optional.ToNullable(resizeTimeout), Optional.ToNullable(targetDedicatedNodes), Optional.ToNullable(targetLowPriorityNodes), Optional.ToNullable(nodeDeallocationOption));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchAccountFixedScaleSettings(resizeTimeout, targetDedicatedNodes, targetLowPriorityNodes, nodeDeallocationOption, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchAccountFixedScaleSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountFixedScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchAccountFixedScaleSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchAccountFixedScaleSettings IPersistableModel<BatchAccountFixedScaleSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountFixedScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchAccountFixedScaleSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchAccountFixedScaleSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchAccountFixedScaleSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

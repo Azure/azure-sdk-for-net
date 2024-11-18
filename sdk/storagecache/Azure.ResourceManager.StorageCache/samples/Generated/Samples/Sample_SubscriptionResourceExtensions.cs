@@ -9,22 +9,20 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.StorageCache;
 using Azure.ResourceManager.StorageCache.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageCache.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // checkAmlFSSubnets
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckAmlFSSubnets_CheckAmlFSSubnets()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-05-01/examples/checkAmlFSSubnets.json
-            // this example is just showing the usage of "checkAmlFSSubnets" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/checkAmlFSSubnets.json
+            // this example is just showing the usage of "CheckAmlFSSubnets" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -46,16 +44,15 @@ namespace Azure.ResourceManager.StorageCache.Samples
             };
             await subscriptionResource.CheckAmlFSSubnetsAsync(content: content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // getRequiredAmlFilesystemSubnetsSize
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRequiredAmlFSSubnetsSize_GetRequiredAmlFilesystemSubnetsSize()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-05-01/examples/getRequiredAmlFSSubnetsSize.json
-            // this example is just showing the usage of "getRequiredAmlFSSubnetsSize" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/getRequiredAmlFSSubnetsSize.json
+            // this example is just showing the usage of "GetRequiredAmlFSSubnetsSize" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -74,12 +71,11 @@ namespace Azure.ResourceManager.StorageCache.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Skus_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetStorageCacheSkus_SkusList()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-05-01/examples/Skus_List.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/Skus_List.json
             // this example is just showing the usage of "Skus_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,15 +95,14 @@ namespace Azure.ResourceManager.StorageCache.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // UsageModels_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUsageModels_UsageModelsList()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-05-01/examples/UsageModels_List.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/UsageModels_List.json
             // this example is just showing the usage of "UsageModels_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,15 +122,14 @@ namespace Azure.ResourceManager.StorageCache.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AscUsages_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetStorageCacheUsages_AscUsagesList()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-05-01/examples/AscResourceUsages_Get.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/AscResourceUsages_Get.json
             // this example is just showing the usage of "AscUsages_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -156,7 +150,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

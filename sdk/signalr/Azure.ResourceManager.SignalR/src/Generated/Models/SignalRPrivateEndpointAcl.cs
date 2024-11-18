@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -27,13 +26,20 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of <see cref="SignalRPrivateEndpointAcl"/>. </summary>
         /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the private endpoint connection. </param>
-        internal SignalRPrivateEndpointAcl(IList<SignalRRequestType> allow, IList<SignalRRequestType> deny, string name) : base(allow, deny)
+        internal SignalRPrivateEndpointAcl(IList<SignalRRequestType> allow, IList<SignalRRequestType> deny, IDictionary<string, BinaryData> serializedAdditionalRawData, string name) : base(allow, deny, serializedAdditionalRawData)
         {
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateEndpointAcl"/> for deserialization. </summary>
+        internal SignalRPrivateEndpointAcl()
+        {
+        }
+
         /// <summary> Name of the private endpoint connection. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

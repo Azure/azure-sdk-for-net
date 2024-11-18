@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator ==(ServiceFabricManagedServiceMoveCost left, ServiceFabricManagedServiceMoveCost right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedServiceMoveCost"/> values are not the same. </summary>
         public static bool operator !=(ServiceFabricManagedServiceMoveCost left, ServiceFabricManagedServiceMoveCost right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceFabricManagedServiceMoveCost"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedServiceMoveCost"/>. </summary>
         public static implicit operator ServiceFabricManagedServiceMoveCost(string value) => new ServiceFabricManagedServiceMoveCost(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

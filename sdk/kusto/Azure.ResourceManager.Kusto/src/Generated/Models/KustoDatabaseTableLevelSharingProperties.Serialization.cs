@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoDatabaseTableLevelSharingProperties : IUtf8JsonSerializable
+    public partial class KustoDatabaseTableLevelSharingProperties : IUtf8JsonSerializable, IJsonModel<KustoDatabaseTableLevelSharingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoDatabaseTableLevelSharingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KustoDatabaseTableLevelSharingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoDatabaseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KustoDatabaseTableLevelSharingProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(TablesToInclude))
             {
                 writer.WritePropertyName("tablesToInclude"u8);
@@ -96,23 +114,53 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static KustoDatabaseTableLevelSharingProperties DeserializeKustoDatabaseTableLevelSharingProperties(JsonElement element)
+        KustoDatabaseTableLevelSharingProperties IJsonModel<KustoDatabaseTableLevelSharingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoDatabaseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KustoDatabaseTableLevelSharingProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoDatabaseTableLevelSharingProperties(document.RootElement, options);
+        }
+
+        internal static KustoDatabaseTableLevelSharingProperties DeserializeKustoDatabaseTableLevelSharingProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> tablesToInclude = default;
-            Optional<IList<string>> tablesToExclude = default;
-            Optional<IList<string>> externalTablesToInclude = default;
-            Optional<IList<string>> externalTablesToExclude = default;
-            Optional<IList<string>> materializedViewsToInclude = default;
-            Optional<IList<string>> materializedViewsToExclude = default;
-            Optional<IList<string>> functionsToInclude = default;
-            Optional<IList<string>> functionsToExclude = default;
+            IList<string> tablesToInclude = default;
+            IList<string> tablesToExclude = default;
+            IList<string> externalTablesToInclude = default;
+            IList<string> externalTablesToExclude = default;
+            IList<string> materializedViewsToInclude = default;
+            IList<string> materializedViewsToExclude = default;
+            IList<string> functionsToInclude = default;
+            IList<string> functionsToExclude = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tablesToInclude"u8))
@@ -227,8 +275,53 @@ namespace Azure.ResourceManager.Kusto.Models
                     functionsToExclude = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KustoDatabaseTableLevelSharingProperties(Optional.ToList(tablesToInclude), Optional.ToList(tablesToExclude), Optional.ToList(externalTablesToInclude), Optional.ToList(externalTablesToExclude), Optional.ToList(materializedViewsToInclude), Optional.ToList(materializedViewsToExclude), Optional.ToList(functionsToInclude), Optional.ToList(functionsToExclude));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KustoDatabaseTableLevelSharingProperties(
+                tablesToInclude ?? new ChangeTrackingList<string>(),
+                tablesToExclude ?? new ChangeTrackingList<string>(),
+                externalTablesToInclude ?? new ChangeTrackingList<string>(),
+                externalTablesToExclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToInclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToExclude ?? new ChangeTrackingList<string>(),
+                functionsToInclude ?? new ChangeTrackingList<string>(),
+                functionsToExclude ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KustoDatabaseTableLevelSharingProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoDatabaseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KustoDatabaseTableLevelSharingProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KustoDatabaseTableLevelSharingProperties IPersistableModel<KustoDatabaseTableLevelSharingProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoDatabaseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKustoDatabaseTableLevelSharingProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoDatabaseTableLevelSharingProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KustoDatabaseTableLevelSharingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

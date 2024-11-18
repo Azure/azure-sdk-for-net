@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventSubscriptionRetryPolicy : IUtf8JsonSerializable
+    public partial class EventSubscriptionRetryPolicy : IUtf8JsonSerializable, IJsonModel<EventSubscriptionRetryPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventSubscriptionRetryPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<EventSubscriptionRetryPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(MaxDeliveryAttempts))
             {
                 writer.WritePropertyName("maxDeliveryAttempts"u8);
@@ -25,17 +45,47 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("eventTimeToLiveInMinutes"u8);
                 writer.WriteNumberValue(EventTimeToLiveInMinutes.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static EventSubscriptionRetryPolicy DeserializeEventSubscriptionRetryPolicy(JsonElement element)
+        EventSubscriptionRetryPolicy IJsonModel<EventSubscriptionRetryPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventSubscriptionRetryPolicy(document.RootElement, options);
+        }
+
+        internal static EventSubscriptionRetryPolicy DeserializeEventSubscriptionRetryPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> maxDeliveryAttempts = default;
-            Optional<int> eventTimeToLiveInMinutes = default;
+            int? maxDeliveryAttempts = default;
+            int? eventTimeToLiveInMinutes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxDeliveryAttempts"u8))
@@ -56,8 +106,91 @@ namespace Azure.ResourceManager.EventGrid.Models
                     eventTimeToLiveInMinutes = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventSubscriptionRetryPolicy(Optional.ToNullable(maxDeliveryAttempts), Optional.ToNullable(eventTimeToLiveInMinutes));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EventSubscriptionRetryPolicy(maxDeliveryAttempts, eventTimeToLiveInMinutes, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxDeliveryAttempts), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxDeliveryAttempts: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxDeliveryAttempts))
+                {
+                    builder.Append("  maxDeliveryAttempts: ");
+                    builder.AppendLine($"{MaxDeliveryAttempts.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventTimeToLiveInMinutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  eventTimeToLiveInMinutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EventTimeToLiveInMinutes))
+                {
+                    builder.Append("  eventTimeToLiveInMinutes: ");
+                    builder.AppendLine($"{EventTimeToLiveInMinutes.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<EventSubscriptionRetryPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EventSubscriptionRetryPolicy IPersistableModel<EventSubscriptionRetryPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEventSubscriptionRetryPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EventSubscriptionRetryPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

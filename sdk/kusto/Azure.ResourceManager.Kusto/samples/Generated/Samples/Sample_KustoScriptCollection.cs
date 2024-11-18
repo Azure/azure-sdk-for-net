@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Kusto;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Kusto.Samples
 {
     public partial class Sample_KustoScriptCollection
     {
-        // KustoScriptsList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_KustoScriptsList()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoScriptsListByDatabase.json
@@ -52,12 +49,11 @@ namespace Azure.ResourceManager.Kusto.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // KustoScriptsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_KustoScriptsGet()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoScriptsGet.json
@@ -91,9 +87,8 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // KustoScriptsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_KustoScriptsGet()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoScriptsGet.json
@@ -123,9 +118,8 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // KustoScriptsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_KustoScriptsGet()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoScriptsGet.json
@@ -155,7 +149,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -167,9 +161,8 @@ namespace Azure.ResourceManager.Kusto.Samples
             }
         }
 
-        // KustoScriptsCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_KustoScriptsCreateOrUpdate()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoScriptsCreateOrUpdate.json

@@ -5,6 +5,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\System.ClientModel.csproj" />
     <ProjectReference Include="..\client\System.ClientModel.Tests.Client.csproj" />
+    <ProjectReference Include="..\System.ClientModel.Tests.csproj" />
   </ItemGroup>
 
 </Project>

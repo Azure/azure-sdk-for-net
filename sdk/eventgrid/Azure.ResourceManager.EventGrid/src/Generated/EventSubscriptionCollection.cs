@@ -12,10 +12,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
@@ -56,10 +54,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. Event subscription names must be between 3 and 64 characters in length and should use alphanumeric letters only. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 64 characters in length and should use alphanumeric letters only. </param>
         /// <param name="data"> Event subscription properties containing the destination and filter information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -97,10 +103,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. Event subscription names must be between 3 and 64 characters in length and should use alphanumeric letters only. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 64 characters in length and should use alphanumeric letters only. </param>
         /// <param name="data"> Event subscription properties containing the destination and filter information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -138,9 +152,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
@@ -175,9 +197,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
@@ -213,12 +243,28 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>EventSubscriptions_ListGlobalBySubscription</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_ListGlobalByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
         /// </item>
         /// <item>
         /// <term>Request Path</term>
@@ -229,12 +275,28 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>EventSubscriptions_ListByResource</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_ListByDomainTopic</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,12 +344,28 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>EventSubscriptions_ListGlobalBySubscription</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_ListGlobalByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
         /// </item>
         /// <item>
         /// <term>Request Path</term>
@@ -298,12 +376,28 @@ namespace Azure.ResourceManager.EventGrid
         /// <description>EventSubscriptions_ListByResource</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_ListByDomainTopic</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -350,9 +444,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
@@ -385,9 +487,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
@@ -420,9 +530,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
@@ -457,9 +575,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>

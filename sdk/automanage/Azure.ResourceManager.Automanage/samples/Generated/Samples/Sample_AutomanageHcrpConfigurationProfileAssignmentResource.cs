@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Automanage;
 using Azure.ResourceManager.Automanage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automanage.Samples
 {
     public partial class Sample_AutomanageHcrpConfigurationProfileAssignmentResource
     {
-        // Create or update HCRP configuration profile assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateHCRPConfigurationProfileAssignment()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/createOrUpdateConfigurationProfileHCRPAssignment.json
@@ -58,9 +55,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a HCRP configuration profile assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAHCRPConfigurationProfileAssignment()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/getConfigurationProfileHCRPAssignment.json
@@ -90,9 +86,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a HCRP configuration profile assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAHCRPConfigurationProfileAssignment()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/deleteConfigurationProfileHCRPAssignment.json
@@ -115,7 +110,7 @@ namespace Azure.ResourceManager.Automanage.Samples
             // invoke the operation
             await automanageHcrpConfigurationProfileAssignment.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

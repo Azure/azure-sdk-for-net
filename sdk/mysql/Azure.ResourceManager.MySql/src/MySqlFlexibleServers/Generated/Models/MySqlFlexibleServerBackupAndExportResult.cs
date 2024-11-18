@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -15,6 +15,38 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Represents BackupAndExport API Response. </summary>
     public partial class MySqlFlexibleServerBackupAndExportResult : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupAndExportResult"/>. </summary>
         public MySqlFlexibleServerBackupAndExportResult()
         {
@@ -33,7 +65,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
         /// <param name="backupMetadata"> Metadata related to backup to be stored for restoring resource in key-value pairs. </param>
         /// <param name="error"> The error object. </param>
-        internal MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlFlexibleServerBackupAndExportOperationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupMetadata, ResponseError error) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlFlexibleServerBackupAndExportOperationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupMetadata, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartOn = startOn;
@@ -43,6 +76,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             DataTransferredInBytes = dataTransferredInBytes;
             BackupMetadata = backupMetadata;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The operation status. </summary>

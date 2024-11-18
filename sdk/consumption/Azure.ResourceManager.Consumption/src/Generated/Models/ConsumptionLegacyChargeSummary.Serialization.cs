@@ -5,50 +5,112 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionLegacyChargeSummary : IUtf8JsonSerializable
+    public partial class ConsumptionLegacyChargeSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionLegacyChargeSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionLegacyChargeSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConsumptionLegacyChargeSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WriteEndObject();
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ConsumptionLegacyChargeSummary DeserializeConsumptionLegacyChargeSummary(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLegacyChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionLegacyChargeSummary)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(BillingPeriodId))
+            {
+                writer.WritePropertyName("billingPeriodId"u8);
+                writer.WriteStringValue(BillingPeriodId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UsageStart))
+            {
+                writer.WritePropertyName("usageStart"u8);
+                writer.WriteStringValue(UsageStart);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UsageEnd))
+            {
+                writer.WritePropertyName("usageEnd"u8);
+                writer.WriteStringValue(UsageEnd);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AzureCharges))
+            {
+                writer.WritePropertyName("azureCharges"u8);
+                writer.WriteNumberValue(AzureCharges.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
+            {
+                writer.WritePropertyName("chargesBilledSeparately"u8);
+                writer.WriteNumberValue(ChargesBilledSeparately.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
+            {
+                writer.WritePropertyName("marketplaceCharges"u8);
+                writer.WriteNumberValue(MarketplaceCharges.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Currency))
+            {
+                writer.WritePropertyName("currency"u8);
+                writer.WriteStringValue(Currency);
+            }
+            writer.WriteEndObject();
+        }
+
+        ConsumptionLegacyChargeSummary IJsonModel<ConsumptionLegacyChargeSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLegacyChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionLegacyChargeSummary)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionLegacyChargeSummary(document.RootElement, options);
+        }
+
+        internal static ConsumptionLegacyChargeSummary DeserializeConsumptionLegacyChargeSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ChargeSummaryKind kind = default;
-            Optional<ETag> eTag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> billingPeriodId = default;
-            Optional<string> usageStart = default;
-            Optional<string> usageEnd = default;
-            Optional<decimal> azureCharges = default;
-            Optional<decimal> chargesBilledSeparately = default;
-            Optional<decimal> marketplaceCharges = default;
-            Optional<string> currency = default;
+            SystemData systemData = default;
+            string billingPeriodId = default;
+            string usageStart = default;
+            string usageEnd = default;
+            decimal? azureCharges = default;
+            decimal? chargesBilledSeparately = default;
+            decimal? marketplaceCharges = default;
+            string currency = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -62,7 +124,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -148,8 +210,58 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionLegacyChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag), billingPeriodId.Value, usageStart.Value, usageEnd.Value, Optional.ToNullable(azureCharges), Optional.ToNullable(chargesBilledSeparately), Optional.ToNullable(marketplaceCharges), currency.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionLegacyChargeSummary(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData,
+                billingPeriodId,
+                usageStart,
+                usageEnd,
+                azureCharges,
+                chargesBilledSeparately,
+                marketplaceCharges,
+                currency);
         }
+
+        BinaryData IPersistableModel<ConsumptionLegacyChargeSummary>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLegacyChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionLegacyChargeSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionLegacyChargeSummary IPersistableModel<ConsumptionLegacyChargeSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLegacyChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionLegacyChargeSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionLegacyChargeSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionLegacyChargeSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,22 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesAccountModel : IUtf8JsonSerializable
+    public partial class CognitiveServicesAccountModel : IUtf8JsonSerializable, IJsonModel<CognitiveServicesAccountModel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesAccountModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CognitiveServicesAccountModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountModel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(BaseModel))
             {
                 writer.WritePropertyName("baseModel"u8);
-                writer.WriteObjectValue(BaseModel);
+                writer.WriteObjectValue(BaseModel, options);
             }
             if (Optional.IsDefined(IsDefaultVersion))
             {
@@ -33,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Skus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,56 +88,58 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Deprecation))
             {
                 writer.WritePropertyName("deprecation"u8);
-                writer.WriteObjectValue(Deprecation);
+                writer.WriteObjectValue(Deprecation, options);
             }
             if (Optional.IsDefined(LifecycleStatus))
             {
                 writer.WritePropertyName("lifecycleStatus"u8);
                 writer.WriteStringValue(LifecycleStatus.Value.ToString());
             }
-            if (Optional.IsDefined(Format))
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
-                writer.WritePropertyName("format"u8);
-                writer.WriteStringValue(Format);
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
-            }
-            if (Optional.IsDefined(Source))
-            {
-                writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static CognitiveServicesAccountModel DeserializeCognitiveServicesAccountModel(JsonElement element)
+        CognitiveServicesAccountModel IJsonModel<CognitiveServicesAccountModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountModel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCognitiveServicesAccountModel(document.RootElement, options);
+        }
+
+        internal static CognitiveServicesAccountModel DeserializeCognitiveServicesAccountModel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<CognitiveServicesAccountDeploymentModel> baseModel = default;
-            Optional<bool> isDefaultVersion = default;
-            Optional<IList<CognitiveServicesModelSku>> skus = default;
-            Optional<int> maxCapacity = default;
-            Optional<IDictionary<string, string>> capabilities = default;
-            Optional<IDictionary<string, string>> finetuneCapabilities = default;
-            Optional<ServiceAccountModelDeprecationInfo> deprecation = default;
-            Optional<ModelLifecycleStatus> lifecycleStatus = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> format = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<string> source = default;
-            Optional<ServiceAccountCallRateLimit> callRateLimit = default;
+            CognitiveServicesAccountDeploymentModel baseModel = default;
+            bool? isDefaultVersion = default;
+            IList<CognitiveServicesModelSku> skus = default;
+            int? maxCapacity = default;
+            IDictionary<string, string> capabilities = default;
+            IDictionary<string, string> finetuneCapabilities = default;
+            ServiceAccountModelDeprecationInfo deprecation = default;
+            ModelLifecycleStatus? lifecycleStatus = default;
+            SystemData systemData = default;
+            string publisher = default;
+            string format = default;
+            string name = default;
+            string version = default;
+            string source = default;
+            ResourceIdentifier sourceAccount = default;
+            ServiceAccountCallRateLimit callRateLimit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseModel"u8))
@@ -125,7 +148,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    baseModel = DeserializeCognitiveServicesAccountDeploymentModel(property.Value);
+                    baseModel = DeserializeCognitiveServicesAccountDeploymentModel(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isDefaultVersion"u8))
@@ -146,7 +169,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesModelSku> array = new List<CognitiveServicesModelSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesModelSku.DeserializeCognitiveServicesModelSku(item));
+                        array.Add(CognitiveServicesModelSku.DeserializeCognitiveServicesModelSku(item, options));
                     }
                     skus = array;
                     continue;
@@ -194,7 +217,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    deprecation = ServiceAccountModelDeprecationInfo.DeserializeServiceAccountModelDeprecationInfo(property.Value);
+                    deprecation = ServiceAccountModelDeprecationInfo.DeserializeServiceAccountModelDeprecationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lifecycleStatus"u8))
@@ -213,6 +236,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("publisher"u8))
+                {
+                    publisher = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("format"u8))
@@ -235,17 +263,429 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     source = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("sourceAccount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceAccount = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("callRateLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
+                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value, baseModel.Value, Optional.ToNullable(isDefaultVersion), Optional.ToList(skus), Optional.ToNullable(maxCapacity), Optional.ToDictionary(capabilities), Optional.ToDictionary(finetuneCapabilities), deprecation.Value, Optional.ToNullable(lifecycleStatus), systemData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CognitiveServicesAccountModel(
+                publisher,
+                format,
+                name,
+                version,
+                source,
+                sourceAccount,
+                callRateLimit,
+                serializedAdditionalRawData,
+                baseModel,
+                isDefaultVersion,
+                skus ?? new ChangeTrackingList<CognitiveServicesModelSku>(),
+                maxCapacity,
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                finetuneCapabilities ?? new ChangeTrackingDictionary<string, string>(),
+                deprecation,
+                lifecycleStatus,
+                systemData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BaseModel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  baseModel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BaseModel))
+                {
+                    builder.Append("  baseModel: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BaseModel, options, 2, false, "  baseModel: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefaultVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isDefaultVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDefaultVersion))
+                {
+                    builder.Append("  isDefaultVersion: ");
+                    var boolValue = IsDefaultVersion.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Skus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  skus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Skus))
+                {
+                    if (Skus.Any())
+                    {
+                        builder.Append("  skus: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Skus)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  skus: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxCapacity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxCapacity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxCapacity))
+                {
+                    builder.Append("  maxCapacity: ");
+                    builder.AppendLine($"{MaxCapacity.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capabilities), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  capabilities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Capabilities))
+                {
+                    if (Capabilities.Any())
+                    {
+                        builder.Append("  capabilities: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Capabilities)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FinetuneCapabilities), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  finetuneCapabilities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FinetuneCapabilities))
+                {
+                    if (FinetuneCapabilities.Any())
+                    {
+                        builder.Append("  finetuneCapabilities: ");
+                        builder.AppendLine("{");
+                        foreach (var item in FinetuneCapabilities)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Deprecation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deprecation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Deprecation))
+                {
+                    builder.Append("  deprecation: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Deprecation, options, 2, false, "  deprecation: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LifecycleStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lifecycleStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LifecycleStatus))
+                {
+                    builder.Append("  lifecycleStatus: ");
+                    builder.AppendLine($"'{LifecycleStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SystemData, options, 2, false, "  systemData: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Publisher), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  publisher: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Publisher))
+                {
+                    builder.Append("  publisher: ");
+                    if (Publisher.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Publisher}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Publisher}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Format), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  format: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Format))
+                {
+                    builder.Append("  format: ");
+                    if (Format.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Format}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Format}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  version: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    builder.Append("  version: ");
+                    if (Version.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Version}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Version}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  source: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Source))
+                {
+                    builder.Append("  source: ");
+                    if (Source.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Source}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Source}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceAccount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sourceAccount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceAccount))
+                {
+                    builder.Append("  sourceAccount: ");
+                    builder.AppendLine($"'{SourceAccount.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CallRateLimit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  callRateLimit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CallRateLimit))
+                {
+                    builder.Append("  callRateLimit: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CallRateLimit, options, 2, false, "  callRateLimit: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<CognitiveServicesAccountModel>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountModel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CognitiveServicesAccountModel IPersistableModel<CognitiveServicesAccountModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountModel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCognitiveServicesAccountModel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CognitiveServicesAccountModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

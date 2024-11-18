@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ServiceBus;
 using Azure.ResourceManager.ServiceBus.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceBus.Samples
 {
     public partial class Sample_ServiceBusQueueAuthorizationRuleResource
     {
-        // QueueAuthorizationRuleCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_QueueAuthorizationRuleCreate()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Queues/SBQueueAuthorizationRuleCreate.json
@@ -59,9 +56,8 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QueueAuthorizationRuleDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_QueueAuthorizationRuleDelete()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Queues/SBQueueAuthorizationRuleDelete.json
@@ -85,12 +81,11 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
             // invoke the operation
             await serviceBusQueueAuthorizationRule.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // QueueAuthorizationRuleGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_QueueAuthorizationRuleGet()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Queues/SBQueueAuthorizationRuleGet.json
@@ -121,9 +116,8 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QueueAuthorizationRuleListKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_QueueAuthorizationRuleListKey()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Queues/SBQueueAuthorizationRuleListKey.json
@@ -150,9 +144,8 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // QueueAuthorizationRuleRegenerateKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKeys_QueueAuthorizationRuleRegenerateKey()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Queues/SBQueueAuthorizationRuleRegenerateKey.json

@@ -6,30 +6,134 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineAssessPatchesResult
+    public partial class MachineAssessPatchesResult : IUtf8JsonSerializable, IJsonModel<MachineAssessPatchesResult>
     {
-        internal static MachineAssessPatchesResult DeserializeMachineAssessPatchesResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineAssessPatchesResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineAssessPatchesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineAssessPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(AssessmentActivityId))
+            {
+                writer.WritePropertyName("assessmentActivityId"u8);
+                writer.WriteStringValue(AssessmentActivityId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsRebootPending))
+            {
+                writer.WritePropertyName("rebootPending"u8);
+                writer.WriteBooleanValue(IsRebootPending.Value);
+            }
+            if (Optional.IsDefined(AvailablePatchCountByClassification))
+            {
+                writer.WritePropertyName("availablePatchCountByClassification"u8);
+                writer.WriteObjectValue(AvailablePatchCountByClassification, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startDateTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            {
+                writer.WritePropertyName("lastModifiedDateTime"u8);
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartedBy))
+            {
+                writer.WritePropertyName("startedBy"u8);
+                writer.WriteStringValue(StartedBy.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PatchServiceUsed))
+            {
+                writer.WritePropertyName("patchServiceUsed"u8);
+                writer.WriteStringValue(PatchServiceUsed.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
+            {
+                writer.WritePropertyName("errorDetails"u8);
+                JsonSerializer.Serialize(writer, ErrorDetails);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        MachineAssessPatchesResult IJsonModel<MachineAssessPatchesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineAssessPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineAssessPatchesResult(document.RootElement, options);
+        }
+
+        internal static MachineAssessPatchesResult DeserializeMachineAssessPatchesResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<PatchOperationStatus> status = default;
-            Optional<Guid> assessmentActivityId = default;
-            Optional<bool> rebootPending = default;
-            Optional<AvailablePatchCountByClassification> availablePatchCountByClassification = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Optional<PatchOperationStartedBy> startedBy = default;
-            Optional<PatchServiceUsed> patchServiceUsed = default;
-            Optional<OSType> osType = default;
-            Optional<ResponseError> errorDetails = default;
+            MachineOperationStatus? status = default;
+            Guid? assessmentActivityId = default;
+            bool? rebootPending = default;
+            AvailablePatchCountByClassification availablePatchCountByClassification = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? lastModifiedDateTime = default;
+            PatchOperationStartedBy? startedBy = default;
+            PatchServiceUsed? patchServiceUsed = default;
+            HybridComputeOSType? osType = default;
+            ResponseError errorDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -38,7 +142,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    status = new PatchOperationStatus(property.Value.GetString());
+                    status = new MachineOperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("assessmentActivityId"u8))
@@ -65,7 +169,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    availablePatchCountByClassification = AvailablePatchCountByClassification.DeserializeAvailablePatchCountByClassification(property.Value);
+                    availablePatchCountByClassification = AvailablePatchCountByClassification.DeserializeAvailablePatchCountByClassification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startDateTime"u8))
@@ -110,7 +214,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    osType = new OSType(property.Value.GetString());
+                    osType = new HybridComputeOSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorDetails"u8))
@@ -122,8 +226,225 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     errorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineAssessPatchesResult(Optional.ToNullable(status), Optional.ToNullable(assessmentActivityId), Optional.ToNullable(rebootPending), availablePatchCountByClassification.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(startedBy), Optional.ToNullable(patchServiceUsed), Optional.ToNullable(osType), errorDetails.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineAssessPatchesResult(
+                status,
+                assessmentActivityId,
+                rebootPending,
+                availablePatchCountByClassification,
+                startDateTime,
+                lastModifiedDateTime,
+                startedBy,
+                patchServiceUsed,
+                osType,
+                errorDetails,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssessmentActivityId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  assessmentActivityId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AssessmentActivityId))
+                {
+                    builder.Append("  assessmentActivityId: ");
+                    builder.AppendLine($"'{AssessmentActivityId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRebootPending), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rebootPending: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRebootPending))
+                {
+                    builder.Append("  rebootPending: ");
+                    var boolValue = IsRebootPending.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AvailablePatchCountByClassification), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  availablePatchCountByClassification: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AvailablePatchCountByClassification))
+                {
+                    builder.Append("  availablePatchCountByClassification: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AvailablePatchCountByClassification, options, 2, false, "  availablePatchCountByClassification: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startDateTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    builder.Append("  startDateTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastModifiedDateTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastModifiedOn))
+                {
+                    builder.Append("  lastModifiedDateTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartedBy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startedBy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartedBy))
+                {
+                    builder.Append("  startedBy: ");
+                    builder.AppendLine($"'{StartedBy.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PatchServiceUsed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  patchServiceUsed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PatchServiceUsed))
+                {
+                    builder.Append("  patchServiceUsed: ");
+                    builder.AppendLine($"'{PatchServiceUsed.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  osType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OSType))
+                {
+                    builder.Append("  osType: ");
+                    builder.AppendLine($"'{OSType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  errorDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ErrorDetails))
+                {
+                    builder.Append("  errorDetails: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ErrorDetails, options, 2, false, "  errorDetails: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineAssessPatchesResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineAssessPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineAssessPatchesResult IPersistableModel<MachineAssessPatchesResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineAssessPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineAssessPatchesResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineAssessPatchesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

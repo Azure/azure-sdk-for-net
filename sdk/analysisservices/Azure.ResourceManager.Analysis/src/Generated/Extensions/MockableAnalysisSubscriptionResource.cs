@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Analysis;
 using Azure.ResourceManager.Analysis.Models;
 
 namespace Azure.ResourceManager.Analysis.Mocking
@@ -56,6 +53,14 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AnalysisServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AnalysisServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -98,6 +111,14 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_ListSkusForNew</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AnalysisServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -105,7 +126,7 @@ namespace Azure.ResourceManager.Analysis.Mocking
         public virtual AsyncPageable<AnalysisResourceSku> GetEligibleSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListSkusForNewRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AnalysisResourceSku.DeserializeAnalysisResourceSku, AnalysisServerServersClientDiagnostics, Pipeline, "MockableAnalysisSubscriptionResource.GetEligibleSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AnalysisResourceSku.DeserializeAnalysisResourceSku(e), AnalysisServerServersClientDiagnostics, Pipeline, "MockableAnalysisSubscriptionResource.GetEligibleSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -119,6 +140,14 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_ListSkusForNew</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AnalysisServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -126,7 +155,7 @@ namespace Azure.ResourceManager.Analysis.Mocking
         public virtual Pageable<AnalysisResourceSku> GetEligibleSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListSkusForNewRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AnalysisResourceSku.DeserializeAnalysisResourceSku, AnalysisServerServersClientDiagnostics, Pipeline, "MockableAnalysisSubscriptionResource.GetEligibleSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AnalysisResourceSku.DeserializeAnalysisResourceSku(e), AnalysisServerServersClientDiagnostics, Pipeline, "MockableAnalysisSubscriptionResource.GetEligibleSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -139,6 +168,14 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AnalysisServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,6 +211,14 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AnalysisServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

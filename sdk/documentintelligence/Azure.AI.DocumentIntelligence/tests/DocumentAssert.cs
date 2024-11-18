@@ -50,10 +50,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
         public static void AreEqual(DocumentClassifierDetails expected, DocumentClassifierDetails actual)
         {
             Assert.AreEqual(expected.ClassifierId, actual.ClassifierId);
+            Assert.AreEqual(expected.BaseClassifierId, actual.BaseClassifierId);
             Assert.AreEqual(expected.Description, actual.Description);
             Assert.AreEqual(expected.ApiVersion, actual.ApiVersion);
-            Assert.AreEqual(expected.CreatedDateTime, actual.CreatedDateTime);
-            Assert.AreEqual(expected.ExpirationDateTime, actual.ExpirationDateTime);
+            Assert.AreEqual(expected.CreatedOn, actual.CreatedOn);
+            Assert.AreEqual(expected.ExpiresOn, actual.ExpiresOn);
 
             AreEquivalent(expected.DocTypes, actual.DocTypes);
         }
@@ -81,8 +82,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(actual.ModelId, Is.EqualTo(expected.ModelId));
             Assert.That(actual.Description, Is.EqualTo(expected.Description));
             Assert.That(actual.ApiVersion, Is.EqualTo(expected.ApiVersion));
-            Assert.That(actual.CreatedDateTime, Is.EqualTo(expected.CreatedDateTime));
-            Assert.That(actual.ExpirationDateTime, Is.EqualTo(expected.ExpirationDateTime));
+            Assert.That(actual.CreatedOn, Is.EqualTo(expected.CreatedOn));
+            Assert.That(actual.ExpiresOn, Is.EqualTo(expected.ExpiresOn));
             Assert.That(actual.Tags, Is.EquivalentTo(expected.Tags));
 
             AreEqual(expected.AzureBlobSource, actual.AzureBlobSource);
@@ -119,7 +120,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             }
         }
 
-        public static void AreEquivalent(IReadOnlyDictionary<string, DocumentFieldSchema> expected, IReadOnlyDictionary<string, DocumentFieldSchema> actual)
+        public static void AreEquivalent(IDictionary<string, DocumentFieldSchema> expected, IDictionary<string, DocumentFieldSchema> actual)
         {
             Assert.That(actual.Count, Is.EqualTo(expected.Count));
 

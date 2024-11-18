@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventHubs.Samples
 {
     public partial class Sample_EventHubsApplicationGroupResource
     {
-        // ApplicationGroupCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApplicationGroupCreate()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-10-01-preview/examples/ApplicationGroup/ApplicationGroupCreate.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/ApplicationGroup/ApplicationGroupCreate.json
             // this example is just showing the usage of "ApplicationGroup_CreateOrUpdateApplicationGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
                 ClientAppGroupIdentifier = "SASKeyName=KeyName",
                 Policies =
 {
-new EventHubsThrottlingPolicy("ThrottlingPolicy1",7912,EventHubsMetricId.IncomingMessages),new EventHubsThrottlingPolicy("ThrottlingPolicy2",3951729,EventHubsMetricId.IncomingBytes),new EventHubsThrottlingPolicy("ThrottlingPolicy3",245175,EventHubsMetricId.OutgoingBytes)
+new EventHubsThrottlingPolicy("ThrottlingPolicy1",7912L,EventHubsMetricId.IncomingMessages),new EventHubsThrottlingPolicy("ThrottlingPolicy2",3951729L,EventHubsMetricId.IncomingBytes),new EventHubsThrottlingPolicy("ThrottlingPolicy3",245175L,EventHubsMetricId.OutgoingBytes)
 },
             };
             ArmOperation<EventHubsApplicationGroupResource> lro = await eventHubsApplicationGroup.UpdateAsync(WaitUntil.Completed, data);
@@ -60,12 +57,11 @@ new EventHubsThrottlingPolicy("ThrottlingPolicy1",7912,EventHubsMetricId.Incomin
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApplicationGroupDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApplicationGroupDelete()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-10-01-preview/examples/ApplicationGroup/ApplicationGroupDelete.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/ApplicationGroup/ApplicationGroupDelete.json
             // this example is just showing the usage of "ApplicationGroup_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,15 +81,14 @@ new EventHubsThrottlingPolicy("ThrottlingPolicy1",7912,EventHubsMetricId.Incomin
             // invoke the operation
             await eventHubsApplicationGroup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApplicationGroupGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApplicationGroupGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-10-01-preview/examples/ApplicationGroup/ApplicationGroupGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/ApplicationGroup/ApplicationGroupGet.json
             // this example is just showing the usage of "ApplicationGroup_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

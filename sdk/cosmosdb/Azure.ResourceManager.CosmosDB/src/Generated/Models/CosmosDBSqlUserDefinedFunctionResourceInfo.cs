@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB SQL userDefinedFunction resource object. </summary>
     public partial class CosmosDBSqlUserDefinedFunctionResourceInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionResourceInfo"/>. </summary>
         /// <param name="functionName"> Name of the Cosmos DB SQL userDefinedFunction. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
@@ -26,15 +58,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionResourceInfo"/>. </summary>
         /// <param name="functionName"> Name of the Cosmos DB SQL userDefinedFunction. </param>
         /// <param name="body"> Body of the User Defined Function. </param>
-        internal CosmosDBSqlUserDefinedFunctionResourceInfo(string functionName, string body)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlUserDefinedFunctionResourceInfo(string functionName, string body, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FunctionName = functionName;
             Body = body;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionResourceInfo"/> for deserialization. </summary>
+        internal CosmosDBSqlUserDefinedFunctionResourceInfo()
+        {
         }
 
         /// <summary> Name of the Cosmos DB SQL userDefinedFunction. </summary>
+        [WirePath("id")]
         public string FunctionName { get; set; }
         /// <summary> Body of the User Defined Function. </summary>
+        [WirePath("body")]
         public string Body { get; set; }
     }
 }

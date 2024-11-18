@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Communication;
 using Azure.ResourceManager.Communication.Models;
 
 namespace Azure.ResourceManager.Communication.Mocking
@@ -60,6 +57,14 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to the operation. </param>
@@ -93,6 +98,14 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +141,14 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,6 +170,14 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,6 +201,14 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>EmailServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EmailServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,6 +230,14 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EmailServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EmailServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +261,14 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>EmailServices_ListVerifiedExchangeOnlineDomains</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EmailServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -236,6 +289,14 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EmailServices_ListVerifiedExchangeOnlineDomains</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EmailServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

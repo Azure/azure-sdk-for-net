@@ -5,35 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderCspmAwsOffering : IUtf8JsonSerializable
+    public partial class DefenderCspmAwsOffering : IUtf8JsonSerializable, IJsonModel<DefenderCspmAwsOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderCspmAwsOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DefenderCspmAwsOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmScanners))
-            {
-                writer.WritePropertyName("vmScanners"u8);
-                writer.WriteObjectValue(VmScanners);
-            }
-            writer.WritePropertyName("offeringType"u8);
-            writer.WriteStringValue(OfferingType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DefenderCspmAwsOffering DeserializeDefenderCspmAwsOffering(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderCspmAwsOffering)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(VmScanners))
+            {
+                writer.WritePropertyName("vmScanners"u8);
+                writer.WriteObjectValue(VmScanners, options);
+            }
+            if (Optional.IsDefined(DataSensitivityDiscovery))
+            {
+                writer.WritePropertyName("dataSensitivityDiscovery"u8);
+                writer.WriteObjectValue(DataSensitivityDiscovery, options);
+            }
+            if (Optional.IsDefined(DatabasesDspm))
+            {
+                writer.WritePropertyName("databasesDspm"u8);
+                writer.WriteObjectValue(DatabasesDspm, options);
+            }
+            if (Optional.IsDefined(Ciem))
+            {
+                writer.WritePropertyName("ciem"u8);
+                writer.WriteObjectValue(Ciem, options);
+            }
+            if (Optional.IsDefined(MdcContainersImageAssessment))
+            {
+                writer.WritePropertyName("mdcContainersImageAssessment"u8);
+                writer.WriteObjectValue(MdcContainersImageAssessment, options);
+            }
+            if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
+            {
+                writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
+                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S, options);
+            }
+        }
+
+        DefenderCspmAwsOffering IJsonModel<DefenderCspmAwsOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderCspmAwsOffering)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderCspmAwsOffering(document.RootElement, options);
+        }
+
+        internal static DefenderCspmAwsOffering DeserializeDefenderCspmAwsOffering(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DefenderCspmAwsOfferingVmScanners> vmScanners = default;
+            DefenderCspmAwsOfferingVmScanners vmScanners = default;
+            DefenderCspmAwsOfferingDataSensitivityDiscovery dataSensitivityDiscovery = default;
+            DefenderCspmAwsOfferingDatabasesDspm databasesDspm = default;
+            DefenderCspmAwsOfferingCiem ciem = default;
+            DefenderCspmAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default;
+            DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmScanners"u8))
@@ -42,7 +105,52 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    vmScanners = DefenderCspmAwsOfferingVmScanners.DeserializeDefenderCspmAwsOfferingVmScanners(property.Value);
+                    vmScanners = DefenderCspmAwsOfferingVmScanners.DeserializeDefenderCspmAwsOfferingVmScanners(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("dataSensitivityDiscovery"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataSensitivityDiscovery = DefenderCspmAwsOfferingDataSensitivityDiscovery.DeserializeDefenderCspmAwsOfferingDataSensitivityDiscovery(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("databasesDspm"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    databasesDspm = DefenderCspmAwsOfferingDatabasesDspm.DeserializeDefenderCspmAwsOfferingDatabasesDspm(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("ciem"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ciem = DefenderCspmAwsOfferingCiem.DeserializeDefenderCspmAwsOfferingCiem(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("mdcContainersImageAssessment"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mdcContainersImageAssessment = DefenderCspmAwsOfferingMdcContainersImageAssessment.DeserializeDefenderCspmAwsOfferingMdcContainersImageAssessment(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("mdcContainersAgentlessDiscoveryK8s"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mdcContainersAgentlessDiscoveryK8S = DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))
@@ -55,8 +163,53 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefenderCspmAwsOffering(offeringType, description.Value, vmScanners.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DefenderCspmAwsOffering(
+                offeringType,
+                description,
+                serializedAdditionalRawData,
+                vmScanners,
+                dataSensitivityDiscovery,
+                databasesDspm,
+                ciem,
+                mdcContainersImageAssessment,
+                mdcContainersAgentlessDiscoveryK8S);
         }
+
+        BinaryData IPersistableModel<DefenderCspmAwsOffering>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DefenderCspmAwsOffering)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DefenderCspmAwsOffering IPersistableModel<DefenderCspmAwsOffering>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDefenderCspmAwsOffering(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefenderCspmAwsOffering)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DefenderCspmAwsOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

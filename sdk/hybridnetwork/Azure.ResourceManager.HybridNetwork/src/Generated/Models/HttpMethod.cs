@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static bool operator ==(HttpMethod left, HttpMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HttpMethod"/> values are not the same. </summary>
         public static bool operator !=(HttpMethod left, HttpMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HttpMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HttpMethod"/>. </summary>
         public static implicit operator HttpMethod(string value) => new HttpMethod(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

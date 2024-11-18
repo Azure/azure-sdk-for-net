@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
 {
@@ -34,6 +32,30 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceFabricManagedClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceFabricManagedClusterResource"/> object. </returns>
+        public virtual ServiceFabricManagedClusterResource GetServiceFabricManagedClusterResource(ResourceIdentifier id)
+        {
+            ServiceFabricManagedClusterResource.ValidateResourceId(id);
+            return new ServiceFabricManagedClusterResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceFabricManagedNodeTypeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedNodeTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedNodeTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceFabricManagedNodeTypeResource"/> object. </returns>
+        public virtual ServiceFabricManagedNodeTypeResource GetServiceFabricManagedNodeTypeResource(ResourceIdentifier id)
+        {
+            ServiceFabricManagedNodeTypeResource.ValidateResourceId(id);
+            return new ServiceFabricManagedNodeTypeResource(Client, id);
         }
 
         /// <summary>
@@ -82,30 +104,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         {
             ServiceFabricManagedServiceResource.ValidateResourceId(id);
             return new ServiceFabricManagedServiceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedClusterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceFabricManagedClusterResource"/> object. </returns>
-        public virtual ServiceFabricManagedClusterResource GetServiceFabricManagedClusterResource(ResourceIdentifier id)
-        {
-            ServiceFabricManagedClusterResource.ValidateResourceId(id);
-            return new ServiceFabricManagedClusterResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedNodeTypeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedNodeTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedNodeTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceFabricManagedNodeTypeResource"/> object. </returns>
-        public virtual ServiceFabricManagedNodeTypeResource GetServiceFabricManagedNodeTypeResource(ResourceIdentifier id)
-        {
-            ServiceFabricManagedNodeTypeResource.ValidateResourceId(id);
-            return new ServiceFabricManagedNodeTypeResource(Client, id);
         }
     }
 }

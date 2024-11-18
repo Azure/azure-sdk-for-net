@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataBoxEdge.Mocking;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Resources;
@@ -367,6 +365,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -396,6 +402,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -427,6 +441,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>AvailableSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -454,6 +472,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableSkus_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -483,6 +505,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -511,6 +541,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// <item>

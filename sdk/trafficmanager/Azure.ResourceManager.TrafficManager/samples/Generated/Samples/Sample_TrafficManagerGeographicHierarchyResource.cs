@@ -9,16 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.TrafficManager;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.TrafficManager.Samples
 {
     public partial class Sample_TrafficManagerGeographicHierarchyResource
     {
-        // GeographicHierarchy-GET-default
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GeographicHierarchyGETDefault()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/GeographicHierarchy-GET-default.json

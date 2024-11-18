@@ -6,16 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyFairPlayConfiguration : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyFairPlayConfiguration : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyFairPlayConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyFairPlayConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContentKeyPolicyFairPlayConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyFairPlayConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyFairPlayConfiguration)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (ApplicationSecretKey != null)
             {
                 writer.WritePropertyName("ask"u8);
@@ -50,15 +69,26 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(OfflineRentalConfiguration))
             {
                 writer.WritePropertyName("offlineRentalConfiguration"u8);
-                writer.WriteObjectValue(OfflineRentalConfiguration);
+                writer.WriteObjectValue(OfflineRentalConfiguration, options);
             }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
-            writer.WriteEndObject();
         }
 
-        internal static ContentKeyPolicyFairPlayConfiguration DeserializeContentKeyPolicyFairPlayConfiguration(JsonElement element)
+        ContentKeyPolicyFairPlayConfiguration IJsonModel<ContentKeyPolicyFairPlayConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyFairPlayConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyFairPlayConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentKeyPolicyFairPlayConfiguration(document.RootElement, options);
+        }
+
+        internal static ContentKeyPolicyFairPlayConfiguration DeserializeContentKeyPolicyFairPlayConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -68,8 +98,10 @@ namespace Azure.ResourceManager.Media.Models
             string fairPlayPfx = default;
             ContentKeyPolicyFairPlayRentalAndLeaseKeyType rentalAndLeaseKeyType = default;
             long rentalDuration = default;
-            Optional<ContentKeyPolicyFairPlayOfflineRentalConfiguration> offlineRentalConfiguration = default;
+            ContentKeyPolicyFairPlayOfflineRentalConfiguration offlineRentalConfiguration = default;
             string odataType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ask"u8))
@@ -118,7 +150,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    offlineRentalConfiguration = ContentKeyPolicyFairPlayOfflineRentalConfiguration.DeserializeContentKeyPolicyFairPlayOfflineRentalConfiguration(property.Value);
+                    offlineRentalConfiguration = ContentKeyPolicyFairPlayOfflineRentalConfiguration.DeserializeContentKeyPolicyFairPlayOfflineRentalConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -126,8 +158,52 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContentKeyPolicyFairPlayConfiguration(odataType, ask, fairPlayPfxPassword, fairPlayPfx, rentalAndLeaseKeyType, rentalDuration, offlineRentalConfiguration.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContentKeyPolicyFairPlayConfiguration(
+                odataType,
+                serializedAdditionalRawData,
+                ask,
+                fairPlayPfxPassword,
+                fairPlayPfx,
+                rentalAndLeaseKeyType,
+                rentalDuration,
+                offlineRentalConfiguration);
         }
+
+        BinaryData IPersistableModel<ContentKeyPolicyFairPlayConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyFairPlayConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyFairPlayConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContentKeyPolicyFairPlayConfiguration IPersistableModel<ContentKeyPolicyFairPlayConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyFairPlayConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContentKeyPolicyFairPlayConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyFairPlayConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContentKeyPolicyFairPlayConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

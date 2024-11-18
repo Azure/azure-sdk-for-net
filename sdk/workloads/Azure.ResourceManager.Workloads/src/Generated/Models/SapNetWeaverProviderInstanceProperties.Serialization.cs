@@ -6,17 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapNetWeaverProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class SapNetWeaverProviderInstanceProperties : IUtf8JsonSerializable, IJsonModel<SapNetWeaverProviderInstanceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapNetWeaverProviderInstanceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SapNetWeaverProviderInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapNetWeaverProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapNetWeaverProviderInstanceProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(SapSid))
             {
                 writer.WritePropertyName("sapSid"u8);
@@ -77,29 +95,42 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
             }
-            writer.WritePropertyName("providerType"u8);
-            writer.WriteStringValue(ProviderType);
-            writer.WriteEndObject();
         }
 
-        internal static SapNetWeaverProviderInstanceProperties DeserializeSapNetWeaverProviderInstanceProperties(JsonElement element)
+        SapNetWeaverProviderInstanceProperties IJsonModel<SapNetWeaverProviderInstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapNetWeaverProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapNetWeaverProviderInstanceProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapNetWeaverProviderInstanceProperties(document.RootElement, options);
+        }
+
+        internal static SapNetWeaverProviderInstanceProperties DeserializeSapNetWeaverProviderInstanceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> sapSid = default;
-            Optional<string> sapHostname = default;
-            Optional<string> sapInstanceNr = default;
-            Optional<IList<string>> sapHostFileEntries = default;
-            Optional<string> sapUsername = default;
-            Optional<string> sapPassword = default;
-            Optional<Uri> sapPasswordUri = default;
-            Optional<string> sapClientId = default;
-            Optional<string> sapPortNumber = default;
-            Optional<Uri> sslCertificateUri = default;
-            Optional<SapSslPreference> sslPreference = default;
+            string sapSid = default;
+            string sapHostname = default;
+            string sapInstanceNr = default;
+            IList<string> sapHostFileEntries = default;
+            string sapUsername = default;
+            string sapPassword = default;
+            Uri sapPasswordUri = default;
+            string sapClientId = default;
+            string sapPortNumber = default;
+            Uri sslCertificateUri = default;
+            SapSslPreference? sslPreference = default;
             string providerType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sapSid"u8))
@@ -183,8 +214,57 @@ namespace Azure.ResourceManager.Workloads.Models
                     providerType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SapNetWeaverProviderInstanceProperties(providerType, sapSid.Value, sapHostname.Value, sapInstanceNr.Value, Optional.ToList(sapHostFileEntries), sapUsername.Value, sapPassword.Value, sapPasswordUri.Value, sapClientId.Value, sapPortNumber.Value, sslCertificateUri.Value, Optional.ToNullable(sslPreference));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SapNetWeaverProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                sapSid,
+                sapHostname,
+                sapInstanceNr,
+                sapHostFileEntries ?? new ChangeTrackingList<string>(),
+                sapUsername,
+                sapPassword,
+                sapPasswordUri,
+                sapClientId,
+                sapPortNumber,
+                sslCertificateUri,
+                sslPreference);
         }
+
+        BinaryData IPersistableModel<SapNetWeaverProviderInstanceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapNetWeaverProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SapNetWeaverProviderInstanceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SapNetWeaverProviderInstanceProperties IPersistableModel<SapNetWeaverProviderInstanceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapNetWeaverProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSapNetWeaverProviderInstanceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapNetWeaverProviderInstanceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SapNetWeaverProviderInstanceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

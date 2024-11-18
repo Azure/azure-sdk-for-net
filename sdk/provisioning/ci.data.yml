@@ -1,0 +1,90 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/provisioning/ci.data.yml
+    - sdk/provisioning/Azure.Provisioning
+    - sdk/provisioning/Azure.Provisioning.AppConfiguration
+    - sdk/provisioning/Azure.Provisioning.CognitiveServices
+    - sdk/provisioning/Azure.Provisioning.CosmosDB
+    - sdk/provisioning/Azure.Provisioning.EventHubs
+    - sdk/provisioning/Azure.Provisioning.KeyVault
+    - sdk/provisioning/Azure.Provisioning.PostgreSql
+    - sdk/provisioning/Azure.Provisioning.Redis
+    - sdk/provisioning/Azure.Provisioning.Search
+    - sdk/provisioning/Azure.Provisioning.ServiceBus
+    - sdk/provisioning/Azure.Provisioning.SignalR
+    - sdk/provisioning/Azure.Provisioning.Sql
+    - sdk/provisioning/Azure.Provisioning.Storage
+    - sdk/provisioning/Azure.Provisioning.WebPubSub
+    exclude:
+    - sdk/provisioning/Generator/
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/provisioning/ci.data.yml
+    - sdk/provisioning/Azure.Provisioning
+    - sdk/provisioning/Azure.Provisioning.AppConfiguration
+    - sdk/provisioning/Azure.Provisioning.CognitiveServices
+    - sdk/provisioning/Azure.Provisioning.CosmosDB
+    - sdk/provisioning/Azure.Provisioning.EventHubs
+    - sdk/provisioning/Azure.Provisioning.KeyVault
+    - sdk/provisioning/Azure.Provisioning.PostgreSql
+    - sdk/provisioning/Azure.Provisioning.Redis
+    - sdk/provisioning/Azure.Provisioning.Search
+    - sdk/provisioning/Azure.Provisioning.ServiceBus
+    - sdk/provisioning/Azure.Provisioning.SignalR
+    - sdk/provisioning/Azure.Provisioning.Sql
+    - sdk/provisioning/Azure.Provisioning.Storage
+    - sdk/provisioning/Azure.Provisioning.WebPubSub
+    exclude:
+    - sdk/provisioning/Generator/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SdkType: data
+    ServiceDirectory: provisioning
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Provisioning
+      safeName: AzureProvisioning
+    - name: Azure.Provisioning.AppConfiguration
+      safeName: AzureProvisioningAppConfiguration
+    - name: Azure.Provisioning.CognitiveServices
+      safeName: AzureProvisioningCognitiveServices
+    - name: Azure.Provisioning.CosmosDB
+      safeName: AzureProvisioningCosmosDB
+    - name: Azure.Provisioning.EventHubs
+      safeName: AzureProvisioningEventHubs
+    - name: Azure.Provisioning.KeyVault
+      safeName: AzureProvisioningKeyVault
+    - name: Azure.Provisioning.PostgreSql
+      safeName: AzureProvisioningPostgreSql
+    - name: Azure.Provisioning.Redis
+      safeName: AzureProvisioningRedis
+    - name: Azure.Provisioning.Search
+      safeName: AzureProvisioningSearch
+    - name: Azure.Provisioning.ServiceBus
+      safeName: AzureProvisioningServiceBus
+    - name: Azure.Provisioning.SignalR
+      safeName: AzureProvisioningSignalR
+    - name: Azure.Provisioning.Sql
+      safeName: AzureProvisioningSql
+    - name: Azure.Provisioning.Storage
+      safeName: AzureProvisioningStorage
+    - name: Azure.Provisioning.WebPubSub
+      safeName: AzureProvisioningWebPubSub

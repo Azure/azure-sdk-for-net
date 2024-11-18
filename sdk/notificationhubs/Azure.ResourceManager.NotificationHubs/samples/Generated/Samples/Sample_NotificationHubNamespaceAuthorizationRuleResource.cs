@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NotificationHubs;
 using Azure.ResourceManager.NotificationHubs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NotificationHubs.Samples
 {
     public partial class Sample_NotificationHubNamespaceAuthorizationRuleResource
     {
-        // NameSpaceAuthorizationRuleCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_NameSpaceAuthorizationRuleCreate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_NamespacesCreateOrUpdateAuthorizationRule()
         {
-            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/stable/2017-04-01/examples/Namespaces/NHNameSpaceAuthorizationRuleCreate.json
+            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/AuthorizationRuleCreateOrUpdate.json
             // this example is just showing the usage of "Namespaces_CreateOrUpdateAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -41,14 +38,14 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             NotificationHubNamespaceAuthorizationRuleResource notificationHubNamespaceAuthorizationRule = client.GetNotificationHubNamespaceAuthorizationRuleResource(notificationHubNamespaceAuthorizationRuleResourceId);
 
             // invoke the operation
-            SharedAccessAuthorizationRuleCreateOrUpdateContent content = new SharedAccessAuthorizationRuleCreateOrUpdateContent(new SharedAccessAuthorizationRuleProperties()
+            NotificationHubAuthorizationRuleData data = new NotificationHubAuthorizationRuleData(new AzureLocation("placeholder"))
             {
-                Rights =
+                AccessRights =
 {
-AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
+AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
 },
-            });
-            ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> lro = await notificationHubNamespaceAuthorizationRule.UpdateAsync(WaitUntil.Completed, content);
+            };
+            ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> lro = await notificationHubNamespaceAuthorizationRule.UpdateAsync(WaitUntil.Completed, data);
             NotificationHubNamespaceAuthorizationRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -58,12 +55,11 @@ AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NameSpaceAuthorizationRuleDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_NameSpaceAuthorizationRuleDelete()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_NamespacesDeleteAuthorizationRule()
         {
-            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/stable/2017-04-01/examples/Namespaces/NHNameSpaceAuthorizationRuleDelete.json
+            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/AuthorizationRuleDelete.json
             // this example is just showing the usage of "Namespaces_DeleteAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,15 +79,14 @@ AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
             // invoke the operation
             await notificationHubNamespaceAuthorizationRule.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // NameSpaceAuthorizationRuleGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_NameSpaceAuthorizationRuleGet()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_NamespacesGetAuthorizationRule()
         {
-            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/stable/2017-04-01/examples/Namespaces/NHNameSpaceAuthorizationRuleGet.json
+            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/AuthorizationRuleGet.json
             // this example is just showing the usage of "Namespaces_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,12 +113,11 @@ AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NameSpaceAuthorizationRuleListKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetKeys_NameSpaceAuthorizationRuleListKey()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetKeys_NamespacesListKeys()
         {
-            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/stable/2017-04-01/examples/Namespaces/NHNameSpaceAuthorizationRuleListKey.json
+            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/AuthorizationRuleListKeys.json
             // this example is just showing the usage of "Namespaces_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,12 +140,11 @@ AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NameSpaceAuthorizationRuleRegenerateKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task RegenerateKeys_NameSpaceAuthorizationRuleRegenerateKey()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task RegenerateKeys_NamespacesRegenerateKeys()
         {
-            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/stable/2017-04-01/examples/Namespaces/NHNameSpaceAuthorizationRuleRegenrateKey.json
+            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/AuthorizationRuleRegenerateKey.json
             // this example is just showing the usage of "Namespaces_RegenerateKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,10 +162,7 @@ AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
             NotificationHubNamespaceAuthorizationRuleResource notificationHubNamespaceAuthorizationRule = client.GetNotificationHubNamespaceAuthorizationRuleResource(notificationHubNamespaceAuthorizationRuleResourceId);
 
             // invoke the operation
-            NotificationHubPolicyKey notificationHubPolicyKey = new NotificationHubPolicyKey()
-            {
-                PolicyKey = "PrimaryKey",
-            };
+            NotificationHubPolicyKey notificationHubPolicyKey = new NotificationHubPolicyKey("PrimaryKey");
             NotificationHubResourceKeys result = await notificationHubNamespaceAuthorizationRule.RegenerateKeysAsync(notificationHubPolicyKey);
 
             Console.WriteLine($"Succeeded: {result}");

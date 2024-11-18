@@ -1,11 +1,5 @@
 trigger: none
 
-parameters:
-- name: runOnlyPPE
-  displayName: "Run only the PPE stage"
-  type: boolean
-  default: false
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
@@ -14,20 +8,7 @@ extends:
     CloudConfig:
       Public:
         SubscriptionConfigurations:
-          - $(sub-config-azure-cloud-test-resources)
           - $(sub-config-communication-services-cloud-test-resources-common)
           - $(sub-config-communication-services-cloud-test-resources-net)
-      Int:
-        SubscriptionConfigurations:
-          - $(sub-config-communication-int-test-resources-common)
-          - $(sub-config-communication-int-test-resources-net)
-      PPE:
-        SubscriptionConfigurations:
-          - $(sub-config-communication-ppe-test-resources-common)
-          - $(sub-config-communication-ppe-test-resources-net)
-    ${{ if eq(parameters.runOnlyPPE, true) }}:
-      Clouds: PPE
-    ${{ if eq(parameters.runOnlyPPE, false) }}:
-      Clouds: Public,PPE,Int
     TestResourceDirectories:
       - communication/Azure.Communication.Email/

@@ -7,9 +7,6 @@
 
 using System;
 using System.Threading;
-using Azure;
-using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ChangeAnalysis.Mocking;
 using Azure.ResourceManager.ChangeAnalysis.Models;
 using Azure.ResourceManager.Resources;
@@ -45,6 +42,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <term>Operation Id</term>
         /// <description>Changes_ListChangesByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -75,6 +76,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Changes_ListChangesByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -107,6 +112,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <term>Operation Id</term>
         /// <description>Changes_ListChangesBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -138,6 +147,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <term>Operation Id</term>
         /// <description>Changes_ListChangesBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -168,6 +181,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceChanges_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -201,6 +218,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceChanges_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
         /// </item>
         /// </list>
         /// <item>

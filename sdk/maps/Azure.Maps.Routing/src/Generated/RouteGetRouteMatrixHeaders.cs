@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure;
 using Azure.Core;
 
 namespace Azure.Maps.Routing
@@ -17,7 +16,7 @@ namespace Azure.Maps.Routing
         {
             _response = response;
         }
-        /// <summary> New URL to check for the results of the long running process. </summary>
+        /// <summary> New URL to check for the results of the long-running operation. </summary>
         public string Location => _response.Headers.TryGetValue("Location", out string value) ? value : null;
     }
 }

@@ -88,7 +88,6 @@ namespace Azure.AI.ContentSafety.Tests
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Value.CategoriesAnalysis);
             Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Violence));
-            Assert.Greater(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Violence).Severity, 0);
             Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Hate));
             Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Sexual));
             Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.SelfHarm));

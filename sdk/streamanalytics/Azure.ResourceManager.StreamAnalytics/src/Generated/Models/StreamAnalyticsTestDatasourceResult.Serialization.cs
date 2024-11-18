@@ -5,25 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsTestDatasourceResult
+    public partial class StreamAnalyticsTestDatasourceResult : IUtf8JsonSerializable, IJsonModel<StreamAnalyticsTestDatasourceResult>
     {
-        internal static StreamAnalyticsTestDatasourceResult DeserializeStreamAnalyticsTestDatasourceResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamAnalyticsTestDatasourceResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<StreamAnalyticsTestDatasourceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsTestDatasourceResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsTestDatasourceResult)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+        }
+
+        StreamAnalyticsTestDatasourceResult IJsonModel<StreamAnalyticsTestDatasourceResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsTestDatasourceResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsTestDatasourceResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamAnalyticsTestDatasourceResult(document.RootElement, options);
+        }
+
+        internal static StreamAnalyticsTestDatasourceResult DeserializeStreamAnalyticsTestDatasourceResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<StreamAnalyticsTestDatasourceResultStatus> status = default;
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> target = default;
-            Optional<IReadOnlyList<StreamAnalyticsErrorDetails>> details = default;
+            StreamAnalyticsTestDatasourceResultStatus? status = default;
+            string code = default;
+            string message = default;
+            string target = default;
+            IReadOnlyList<StreamAnalyticsErrorDetails> details = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -68,7 +113,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<StreamAnalyticsErrorDetails> array = new List<StreamAnalyticsErrorDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamAnalyticsErrorDetails.DeserializeStreamAnalyticsErrorDetails(item));
+                                array.Add(StreamAnalyticsErrorDetails.DeserializeStreamAnalyticsErrorDetails(item, options));
                             }
                             details = array;
                             continue;
@@ -76,8 +121,50 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StreamAnalyticsTestDatasourceResult(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToNullable(status));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StreamAnalyticsTestDatasourceResult(
+                code,
+                message,
+                target,
+                details ?? new ChangeTrackingList<StreamAnalyticsErrorDetails>(),
+                serializedAdditionalRawData,
+                status);
         }
+
+        BinaryData IPersistableModel<StreamAnalyticsTestDatasourceResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsTestDatasourceResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StreamAnalyticsTestDatasourceResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StreamAnalyticsTestDatasourceResult IPersistableModel<StreamAnalyticsTestDatasourceResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsTestDatasourceResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStreamAnalyticsTestDatasourceResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StreamAnalyticsTestDatasourceResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StreamAnalyticsTestDatasourceResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

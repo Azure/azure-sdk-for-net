@@ -17,8 +17,8 @@ namespace Azure.Communication.Chat.Tests
         {
             JsonPathSanitizers.Add("$..token");
             SanitizedHeaders.Add("x-ms-content-sha256");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx, "/identities/Sanitized"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) {Value = "https://sanitized.communication.azure.com" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx) { Value = "/identities/Sanitized" });
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Azure.Communication.Chat.Tests
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicConnectionString,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2023_10_01))));
 
         /// <summary>
         /// Creates a <see cref="ChatClient" /> with a static token and instruments it to make use of

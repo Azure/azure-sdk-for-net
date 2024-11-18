@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkFabricIPExtendedCommunityResource
     {
-        // IpExtendedCommunities_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_IpExtendedCommunitiesGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpExtendedCommunities_Get_MaximumSet_Gen.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // IpExtendedCommunities_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_IpExtendedCommunitiesUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpExtendedCommunities_Update_MaximumSet_Gen.json
@@ -76,7 +72,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             {
                 IPExtendedCommunityRules =
 {
-new IPExtendedCommunityRule(CommunityActionType.Permit,4155123341,new string[]
+new IPExtendedCommunityRule(CommunityActionType.Permit,4155123341L,new string[]
 {
 "1234:2345"
 })
@@ -96,9 +92,8 @@ new IPExtendedCommunityRule(CommunityActionType.Permit,4155123341,new string[]
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // IpExtendedCommunities_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_IpExtendedCommunitiesDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpExtendedCommunities_Delete_MaximumSet_Gen.json
@@ -120,12 +115,11 @@ new IPExtendedCommunityRule(CommunityActionType.Permit,4155123341,new string[]
             // invoke the operation
             await networkFabricIPExtendedCommunity.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // IpExtendedCommunities_ListBySubscription_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkFabricIPExtendedCommunities_IpExtendedCommunitiesListBySubscriptionMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpExtendedCommunities_ListBySubscription_MaximumSet_Gen.json
@@ -152,7 +146,7 @@ new IPExtendedCommunityRule(CommunityActionType.Permit,4155123341,new string[]
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

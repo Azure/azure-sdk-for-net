@@ -15,8 +15,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task AnalyzeWithPrebuiltModelFromUriAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 #if SNIPPET
@@ -58,15 +57,15 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 }
 
                 if (document.Fields.TryGetValue("Items", out DocumentField itemsField)
-                    && itemsField.Type == DocumentFieldType.Array)
+                    && itemsField.Type == DocumentFieldType.List)
                 {
-                    foreach (DocumentField itemField in itemsField.ValueArray)
+                    foreach (DocumentField itemField in itemsField.ValueList)
                     {
                         Console.WriteLine("Item:");
 
-                        if (itemField.Type == DocumentFieldType.Object)
+                        if (itemField.Type == DocumentFieldType.Dictionary)
                         {
-                            IReadOnlyDictionary<string, DocumentField> itemFields = itemField.ValueObject;
+                            IReadOnlyDictionary<string, DocumentField> itemFields = itemField.ValueDictionary;
 
                             if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField)
                                 && itemDescriptionField.Type == DocumentFieldType.String)

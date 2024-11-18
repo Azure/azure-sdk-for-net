@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NetApp;
 using Azure.ResourceManager.NetApp.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Samples
 {
     public partial class Sample_NetAppSubvolumeInfoResource
     {
-        // Subvolumes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SubvolumesGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/Subvolumes_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Subvolumes_Get.json
             // this example is just showing the usage of "Subvolumes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,12 +49,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Subvolumes_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SubvolumesUpdate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/Subvolumes_Update.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Subvolumes_Update.json
             // this example is just showing the usage of "Subvolumes_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,12 +87,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Subvolumes_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SubvolumesDelete()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/Subvolumes_Delete.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Subvolumes_Delete.json
             // this example is just showing the usage of "Subvolumes_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,15 +113,14 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             await netAppSubvolumeInfo.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Subvolumes_Metadata
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMetadata_SubvolumesMetadata()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/Subvolumes_Metadata.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Subvolumes_Metadata.json
             // this example is just showing the usage of "Subvolumes_GetMetadata" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

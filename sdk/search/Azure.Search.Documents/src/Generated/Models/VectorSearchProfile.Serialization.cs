@@ -19,6 +19,16 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("algorithm"u8);
             writer.WriteStringValue(AlgorithmConfigurationName);
+            if (Optional.IsDefined(VectorizerName))
+            {
+                writer.WritePropertyName("vectorizer"u8);
+                writer.WriteStringValue(VectorizerName);
+            }
+            if (Optional.IsDefined(CompressionName))
+            {
+                writer.WritePropertyName("compression"u8);
+                writer.WriteStringValue(CompressionName);
+            }
             writer.WriteEndObject();
         }
 
@@ -30,6 +40,8 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             string algorithm = default;
+            string vectorizer = default;
+            string compression = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,8 +54,34 @@ namespace Azure.Search.Documents.Indexes.Models
                     algorithm = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("vectorizer"u8))
+                {
+                    vectorizer = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("compression"u8))
+                {
+                    compression = property.Value.GetString();
+                    continue;
+                }
             }
-            return new VectorSearchProfile(name, algorithm);
+            return new VectorSearchProfile(name, algorithm, vectorizer, compression);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VectorSearchProfile FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVectorSearchProfile(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -7,24 +7,22 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_VirtualMachineCollection
     {
-        // Create a Linux vm with a patch setting assessmentMode of ImageDefault.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateALinuxVmWithAPatchSettingAssessmentModeOfImageDefault()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_LinuxVmWithPatchSettingAssessmentModeOfImageDefault.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_LinuxVmWithPatchSettingAssessmentModeOfImageDefault.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,12 +103,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a Linux vm with a patch setting patchMode of AutomaticByPlatform and AutomaticByPlatformSettings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateALinuxVmWithAPatchSettingPatchModeOfAutomaticByPlatformAndAutomaticByPlatformSettings()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_LinuxVmWithAutomaticByPlatformSettings.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_LinuxVmWithAutomaticByPlatformSettings.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -197,12 +194,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a Linux vm with a patch setting patchMode of ImageDefault.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateALinuxVmWithAPatchSettingPatchModeOfImageDefault()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_LinuxVmWithPatchSettingModeOfImageDefault.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_LinuxVmWithPatchSettingModeOfImageDefault.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -283,12 +279,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a Linux vm with a patch settings patchMode and assessmentMode set to AutomaticByPlatform.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateALinuxVmWithAPatchSettingsPatchModeAndAssessmentModeSetToAutomaticByPlatform()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_LinuxVmWithPatchSettingModesOfAutomaticByPlatform.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_LinuxVmWithPatchSettingModesOfAutomaticByPlatform.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -370,12 +365,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a VM from a community gallery image
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMFromACommunityGalleryImage()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_FromACommunityGalleryImage.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_FromACommunityGalleryImage.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -445,12 +439,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a VM from a shared gallery image
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMFromASharedGalleryImage()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_FromASharedGalleryImage.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_FromASharedGalleryImage.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -520,12 +513,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a VM with Disk Controller Type
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMWithDiskControllerType()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithDiskControllerType.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithDiskControllerType.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -550,6 +542,15 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
                     VmSize = VirtualMachineSizeType.StandardD4V3,
+                },
+                ScheduledEventsPolicy = new ScheduledEventsPolicy()
+                {
+                    UserInitiatedRedeploy = new UserInitiatedRedeploy()
+                    {
+                        AutomaticallyApprove = true,
+                    },
+                    AutomaticallyApprove = true,
+                    Enable = true,
                 },
                 StorageProfile = new VirtualMachineStorageProfile()
                 {
@@ -605,12 +606,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a VM with HibernationEnabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMWithHibernationEnabled()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithHibernationEnabled.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithHibernationEnabled.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -692,12 +692,96 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a VM with Uefi Settings of secureBoot and vTPM.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAVMWithProxyAgentSettingsOfEnabledAndMode()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithProxyAgentSettings.json
+            // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineResource
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+
+            // invoke the operation
+            string vmName = "myVM";
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            {
+                HardwareProfile = new VirtualMachineHardwareProfile()
+                {
+                    VmSize = VirtualMachineSizeType.StandardD2SV3,
+                },
+                StorageProfile = new VirtualMachineStorageProfile()
+                {
+                    ImageReference = new ImageReference()
+                    {
+                        Publisher = "MicrosoftWindowsServer",
+                        Offer = "WindowsServer",
+                        Sku = "2019-Datacenter",
+                        Version = "latest",
+                    },
+                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                    {
+                        Name = "myVMosdisk",
+                        Caching = CachingType.ReadOnly,
+                        ManagedDisk = new VirtualMachineManagedDisk()
+                        {
+                            StorageAccountType = StorageAccountType.StandardSsdLrs,
+                        },
+                    },
+                },
+                OSProfile = new VirtualMachineOSProfile()
+                {
+                    ComputerName = "myVM",
+                    AdminUsername = "{your-username}",
+                    AdminPassword = "{your-password}",
+                },
+                NetworkProfile = new VirtualMachineNetworkProfile()
+                {
+                    NetworkInterfaces =
+{
+new VirtualMachineNetworkInterfaceReference()
+{
+Primary = true,
+Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+}
+},
+                },
+                SecurityProfile = new SecurityProfile()
+                {
+                    ProxyAgentSettings = new ProxyAgentSettings()
+                    {
+                        Enabled = true,
+                        Mode = Mode.Enforce,
+                    },
+                },
+            };
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMWithUefiSettingsOfSecureBootAndVTPM()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithUefiSettings.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithUefiSettings.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -779,12 +863,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a VM with UserData
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMWithUserData()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithUserData.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithUserData.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -863,12 +946,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a VM with VM Size Properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMWithVMSizeProperties()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithVMSizeProperties.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithVMSizeProperties.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -952,12 +1034,99 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a VM with network interface configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAVMWithEncryptionIdentity()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithEncryptionIdentity.json
+            // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineResource
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+
+            // invoke the operation
+            string vmName = "myVM";
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            {
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myIdentity")] = new UserAssignedIdentity(),
+},
+                },
+                HardwareProfile = new VirtualMachineHardwareProfile()
+                {
+                    VmSize = VirtualMachineSizeType.StandardD2SV3,
+                },
+                StorageProfile = new VirtualMachineStorageProfile()
+                {
+                    ImageReference = new ImageReference()
+                    {
+                        Publisher = "MicrosoftWindowsServer",
+                        Offer = "WindowsServer",
+                        Sku = "2019-Datacenter",
+                        Version = "latest",
+                    },
+                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                    {
+                        Name = "myVMosdisk",
+                        Caching = CachingType.ReadOnly,
+                        ManagedDisk = new VirtualMachineManagedDisk()
+                        {
+                            StorageAccountType = StorageAccountType.StandardSsdLrs,
+                        },
+                    },
+                },
+                OSProfile = new VirtualMachineOSProfile()
+                {
+                    ComputerName = "myVM",
+                    AdminUsername = "{your-username}",
+                    AdminPassword = "{your-password}",
+                },
+                NetworkProfile = new VirtualMachineNetworkProfile()
+                {
+                    NetworkInterfaces =
+{
+new VirtualMachineNetworkInterfaceReference()
+{
+Primary = true,
+Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+}
+},
+                },
+                SecurityProfile = new SecurityProfile()
+                {
+                    UserAssignedIdentityResourceId = "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myIdentity",
+                },
+            };
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMWithNetworkInterfaceConfiguration()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithNetworkInterfaceConfiguration.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithNetworkInterfaceConfiguration.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1048,12 +1217,11 @@ PublicIPAllocationMethod = PublicIPAllocationMethod.Static,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a VM with network interface configuration with public ip address dns settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMWithNetworkInterfaceConfigurationWithPublicIpAddressDnsSettings()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithNetworkInterfaceConfigurationDnsSettings.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithNetworkInterfaceConfigurationDnsSettings.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1148,12 +1316,11 @@ PublicIPAllocationMethod = PublicIPAllocationMethod.Static,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a VM with securityType ConfidentialVM with Customer Managed Keys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMWithSecurityTypeConfidentialVMWithCustomerManagedKeys()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithSecurityTypeConfidentialVMWithCustomerManagedKeys.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithSecurityTypeConfidentialVMWithCustomerManagedKeys.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1240,12 +1407,101 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a VM with securityType ConfidentialVM with Platform Managed Keys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAVMWithSecurityTypeConfidentialVMWithNonPersistedTPMSecurityEncryptionType()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithSecurityTypeConfidentialVMWithNonPersistedTPM.json
+            // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineResource
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+
+            // invoke the operation
+            string vmName = "myVM";
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            {
+                HardwareProfile = new VirtualMachineHardwareProfile()
+                {
+                    VmSize = new VirtualMachineSizeType("Standard_DC2es_v5"),
+                },
+                StorageProfile = new VirtualMachineStorageProfile()
+                {
+                    ImageReference = new ImageReference()
+                    {
+                        Publisher = "UbuntuServer",
+                        Offer = "2022-datacenter-cvm",
+                        Sku = "linux-cvm",
+                        Version = "17763.2183.2109130127",
+                    },
+                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                    {
+                        Name = "myVMosdisk",
+                        Caching = CachingType.ReadOnly,
+                        ManagedDisk = new VirtualMachineManagedDisk()
+                        {
+                            StorageAccountType = StorageAccountType.StandardSsdLrs,
+                            SecurityProfile = new VirtualMachineDiskSecurityProfile()
+                            {
+                                SecurityEncryptionType = SecurityEncryptionType.NonPersistedTPM,
+                            },
+                        },
+                    },
+                },
+                OSProfile = new VirtualMachineOSProfile()
+                {
+                    ComputerName = "myVM",
+                    AdminUsername = "{your-username}",
+                    AdminPassword = "{your-password}",
+                },
+                NetworkProfile = new VirtualMachineNetworkProfile()
+                {
+                    NetworkInterfaces =
+{
+new VirtualMachineNetworkInterfaceReference()
+{
+Primary = true,
+Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+}
+},
+                },
+                SecurityProfile = new SecurityProfile()
+                {
+                    UefiSettings = new UefiSettings()
+                    {
+                        IsSecureBootEnabled = false,
+                        IsVirtualTpmEnabled = true,
+                    },
+                    SecurityType = SecurityType.ConfidentialVm,
+                },
+            };
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMWithSecurityTypeConfidentialVMWithPlatformManagedKeys()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithSecurityTypeConfidentialVM.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithSecurityTypeConfidentialVM.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1331,12 +1587,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a Windows vm with a patch setting assessmentMode of ImageDefault.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAWindowsVmWithAPatchSettingAssessmentModeOfImageDefault()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WindowsVmWithPatchSettingAssessmentModeOfImageDefault.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WindowsVmWithPatchSettingAssessmentModeOfImageDefault.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1418,12 +1673,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a Windows vm with a patch setting patchMode of AutomaticByOS.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAWindowsVmWithAPatchSettingPatchModeOfAutomaticByOS()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WindowsVmWithPatchSettingModeOfAutomaticByOS.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WindowsVmWithPatchSettingModeOfAutomaticByOS.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1505,12 +1759,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a Windows vm with a patch setting patchMode of AutomaticByPlatform and AutomaticByPlatformSettings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAWindowsVmWithAPatchSettingPatchModeOfAutomaticByPlatformAndAutomaticByPlatformSettings()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WindowsVmWithAutomaticByPlatformSettings.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WindowsVmWithAutomaticByPlatformSettings.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1598,12 +1851,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a Windows vm with a patch setting patchMode of AutomaticByPlatform and enableHotpatching set to true.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAWindowsVmWithAPatchSettingPatchModeOfAutomaticByPlatformAndEnableHotpatchingSetToTrue()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WindowsVmWithPatchSettingModeOfAutomaticByPlatformAndEnableHotPatchingTrue.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WindowsVmWithPatchSettingModeOfAutomaticByPlatformAndEnableHotPatchingTrue.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1686,12 +1938,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a Windows vm with a patch setting patchMode of Manual.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAWindowsVmWithAPatchSettingPatchModeOfManual()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WindowsVmWithPatchSettingModeOfManual.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WindowsVmWithPatchSettingModeOfManual.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1773,12 +2024,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a Windows vm with patch settings patchMode and assessmentMode set to AutomaticByPlatform.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAWindowsVmWithPatchSettingsPatchModeAndAssessmentModeSetToAutomaticByPlatform()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WindowsVmWithPatchSettingModesOfAutomaticByPlatform.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WindowsVmWithPatchSettingModesOfAutomaticByPlatform.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1861,12 +2111,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a custom-image vm from an unmanaged generalized os image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateACustomImageVmFromAnUnmanagedGeneralizedOsImage()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_CustomImageVmFromAnUnmanagedGeneralizedOsImage.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_CustomImageVmFromAnUnmanagedGeneralizedOsImage.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1931,12 +2180,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a platform-image vm with unmanaged os and data disks.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAPlatformImageVmWithUnmanagedOsAndDataDisks()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_PlatformImageVmWithUnmanagedOsAndDataDisks.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_PlatformImageVmWithUnmanagedOsAndDataDisks.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2018,12 +2266,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm from a custom image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmFromACustomImage()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_FromACustomImage.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_FromACustomImage.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2093,12 +2340,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm from a generalized shared image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmFromAGeneralizedSharedImage()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_FromAGeneralizedSharedImage.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_FromAGeneralizedSharedImage.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2168,12 +2414,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm from a specialized shared image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmFromASpecializedSharedImage()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_FromASpecializedSharedImage.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_FromASpecializedSharedImage.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2237,12 +2482,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm in a Virtual Machine Scale Set with customer assigned platformFaultDomain.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmInAVirtualMachineScaleSetWithCustomerAssignedPlatformFaultDomain()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_InAVmssWithCustomerAssignedPlatformFaultDomain.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_InAVmssWithCustomerAssignedPlatformFaultDomain.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2317,12 +2561,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm in an availability set.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmInAnAvailabilitySet()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_InAnAvailabilitySet.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_InAnAvailabilitySet.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2396,12 +2639,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with Application Profile.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithApplicationProfile()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithApplicationProfile.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithApplicationProfile.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2485,12 +2727,11 @@ EnableAutomaticUpgrade = false,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with DiskEncryptionSet resource id in the os disk and data disk.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithDiskEncryptionSetResourceIdInTheOsDiskAndDataDisk()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithDiskEncryptionSetResource.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithDiskEncryptionSetResource.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2584,12 +2825,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with Host Encryption using encryptionAtHost property.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithHostEncryptionUsingEncryptionAtHostProperty()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithEncryptionAtHost.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithEncryptionAtHost.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2672,12 +2912,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with Scheduled Events Profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithScheduledEventsProfile()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithScheduledEventsProfile.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithScheduledEventsProfile.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2702,6 +2941,15 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                 HardwareProfile = new VirtualMachineHardwareProfile()
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
+                },
+                ScheduledEventsPolicy = new ScheduledEventsPolicy()
+                {
+                    UserInitiatedRedeploy = new UserInitiatedRedeploy()
+                    {
+                        AutomaticallyApprove = true,
+                    },
+                    AutomaticallyApprove = true,
+                    Enable = true,
                 },
                 StorageProfile = new VirtualMachineStorageProfile()
                 {
@@ -2768,12 +3016,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with a marketplace image plan.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithAMarketplaceImagePlan()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithAMarketplaceImagePlan.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithAMarketplaceImagePlan.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2852,12 +3099,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with an extensions time budget.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithAnExtensionsTimeBudget()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithExtensionsTimeBudget.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithExtensionsTimeBudget.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -2936,12 +3182,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with boot diagnostics.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithBootDiagnostics()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithBootDiagnostics.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithBootDiagnostics.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3019,12 +3264,104 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with empty data disks.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAVmWithDataDisksUsingCopyAndRestoreOptions()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithDataDisksFromSourceResource.json
+            // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineResource
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+
+            // invoke the operation
+            string vmName = "myVM";
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            {
+                HardwareProfile = new VirtualMachineHardwareProfile()
+                {
+                    VmSize = VirtualMachineSizeType.StandardD2V2,
+                },
+                StorageProfile = new VirtualMachineStorageProfile()
+                {
+                    ImageReference = new ImageReference()
+                    {
+                        Publisher = "MicrosoftWindowsServer",
+                        Offer = "WindowsServer",
+                        Sku = "2016-Datacenter",
+                        Version = "latest",
+                    },
+                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                    {
+                        Name = "myVMosdisk",
+                        Caching = CachingType.ReadWrite,
+                        ManagedDisk = new VirtualMachineManagedDisk()
+                        {
+                            StorageAccountType = StorageAccountType.StandardLrs,
+                        },
+                    },
+                    DataDisks =
+{
+new VirtualMachineDataDisk(0,DiskCreateOptionType.Copy)
+{
+DiskSizeGB = 1023,
+SourceResourceId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/{existing-snapshot-name}"),
+},new VirtualMachineDataDisk(1,DiskCreateOptionType.Copy)
+{
+DiskSizeGB = 1023,
+SourceResourceId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/{existing-disk-name}"),
+},new VirtualMachineDataDisk(2,DiskCreateOptionType.Restore)
+{
+DiskSizeGB = 1023,
+SourceResourceId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/{existing-rpc-name}/restorePoints/{existing-rp-name}/diskRestorePoints/{existing-disk-restore-point-name}"),
+}
+},
+                },
+                OSProfile = new VirtualMachineOSProfile()
+                {
+                    ComputerName = "myVM",
+                    AdminUsername = "{your-username}",
+                    AdminPassword = "{your-password}",
+                },
+                NetworkProfile = new VirtualMachineNetworkProfile()
+                {
+                    NetworkInterfaces =
+{
+new VirtualMachineNetworkInterfaceReference()
+{
+Primary = true,
+Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+}
+},
+                },
+            };
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithEmptyDataDisks()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithEmptyDataDisks.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithEmptyDataDisks.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3107,12 +3444,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with ephemeral os disk provisioning in Cache disk using placement property.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithEphemeralOsDiskProvisioningInCacheDiskUsingPlacementProperty()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithADiffOsDiskUsingDiffDiskPlacementAsCacheDisk.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithADiffOsDiskUsingDiffDiskPlacementAsCacheDisk.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3196,12 +3532,99 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with ephemeral os disk provisioning in Resource disk using placement property.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAVmWithEphemeralOsDiskProvisioningInNvmeDiskUsingPlacementProperty()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithADiffOsDiskUsingDiffDiskPlacementAsNvmeDisk.json
+            // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineResource
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+
+            // invoke the operation
+            string vmName = "myVM";
+            VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
+            {
+                Plan = new ComputePlan()
+                {
+                    Name = "windows2016",
+                    Publisher = "microsoft-ads",
+                    Product = "windows-data-science-vm",
+                },
+                HardwareProfile = new VirtualMachineHardwareProfile()
+                {
+                    VmSize = VirtualMachineSizeType.StandardDS1V2,
+                },
+                StorageProfile = new VirtualMachineStorageProfile()
+                {
+                    ImageReference = new ImageReference()
+                    {
+                        Publisher = "microsoft-ads",
+                        Offer = "windows-data-science-vm",
+                        Sku = "windows2016",
+                        Version = "latest",
+                    },
+                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                    {
+                        Name = "myVMosdisk",
+                        Caching = CachingType.ReadOnly,
+                        DiffDiskSettings = new DiffDiskSettings()
+                        {
+                            Option = DiffDiskOption.Local,
+                            Placement = DiffDiskPlacement.NvmeDisk,
+                        },
+                        ManagedDisk = new VirtualMachineManagedDisk()
+                        {
+                            StorageAccountType = StorageAccountType.StandardLrs,
+                        },
+                    },
+                },
+                OSProfile = new VirtualMachineOSProfile()
+                {
+                    ComputerName = "myVM",
+                    AdminUsername = "{your-username}",
+                    AdminPassword = "{your-password}",
+                },
+                NetworkProfile = new VirtualMachineNetworkProfile()
+                {
+                    NetworkInterfaces =
+{
+new VirtualMachineNetworkInterfaceReference()
+{
+Primary = true,
+Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+}
+},
+                },
+            };
+            ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
+            VirtualMachineResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithEphemeralOsDiskProvisioningInResourceDiskUsingPlacementProperty()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithADiffOsDiskUsingDiffDiskPlacementAsResourceDisk.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithADiffOsDiskUsingDiffDiskPlacementAsResourceDisk.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3285,12 +3708,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with ephemeral os disk.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithEphemeralOsDisk()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithADiffOsDisk.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithADiffOsDisk.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3373,12 +3795,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with managed boot diagnostics.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithManagedBootDiagnostics()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithManagedBootDiagnostics.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithManagedBootDiagnostics.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3455,12 +3876,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with password authentication.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithPasswordAuthentication()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithPasswordAuthentication.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithPasswordAuthentication.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3533,12 +3953,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with premium storage.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithPremiumStorage()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithPremiumStorage.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithPremiumStorage.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3611,12 +4030,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a vm with ssh authentication.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVmWithSshAuthentication()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithSshAuthentication.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithSshAuthentication.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3700,12 +4118,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a VM with capacity reservation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAVMWithCapacityReservation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithCapacityReservation.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Create_WithCapacityReservation.json
             // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3785,12 +4202,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a Virtual Machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3820,12 +4236,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a Virtual Machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3851,12 +4266,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a Virtual Machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3882,7 +4296,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -3894,12 +4308,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             }
         }
 
-        // Get a virtual machine placed on a dedicated host group through automatic placement
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3928,12 +4341,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a virtual machine placed on a dedicated host group through automatic placement
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3958,12 +4370,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a virtual machine placed on a dedicated host group through automatic placement
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -3988,7 +4399,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -4000,12 +4411,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             }
         }
 
-        // Get a virtual machine with Disk Controller Type Properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachineWithDiskControllerTypeProperties()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -4035,12 +4445,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a virtual machine with Disk Controller Type Properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAVirtualMachineWithDiskControllerTypeProperties()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -4066,12 +4475,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a virtual machine with Disk Controller Type Properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAVirtualMachineWithDiskControllerTypeProperties()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -4097,7 +4505,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -4109,12 +4517,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             }
         }
 
-        // Get a virtual machine with VM Size Properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachineWithVMSizeProperties()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -4143,12 +4550,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a virtual machine with VM Size Properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAVirtualMachineWithVMSizeProperties()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -4173,12 +4579,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a virtual machine with VM Size Properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAVirtualMachineWithVMSizeProperties()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -4203,7 +4608,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -4215,12 +4620,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             }
         }
 
-        // VirtualMachine_List_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VirtualMachineListMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_List_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_List_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -4249,15 +4653,14 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachine_List_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VirtualMachineListMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/virtualMachineExamples/VirtualMachine_List_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_List_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachines_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -4285,7 +4688,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

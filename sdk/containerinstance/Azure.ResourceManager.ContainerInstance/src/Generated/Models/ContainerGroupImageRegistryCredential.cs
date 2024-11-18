@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> Image registry credential. </summary>
     public partial class ContainerGroupImageRegistryCredential
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContainerGroupImageRegistryCredential"/>. </summary>
         /// <param name="server"> The Docker image registry server without a protocol such as "http" and "https". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> is null. </exception>
@@ -29,13 +61,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="password"> The password for the private registry. </param>
         /// <param name="identity"> The identity for the private registry. </param>
         /// <param name="identityUri"> The identity URL for the private registry. </param>
-        internal ContainerGroupImageRegistryCredential(string server, string username, string password, string identity, Uri identityUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupImageRegistryCredential(string server, string username, string password, string identity, Uri identityUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Server = server;
             Username = username;
             Password = password;
             Identity = identity;
             IdentityUri = identityUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupImageRegistryCredential"/> for deserialization. </summary>
+        internal ContainerGroupImageRegistryCredential()
+        {
         }
 
         /// <summary> The Docker image registry server without a protocol such as "http" and "https". </summary>

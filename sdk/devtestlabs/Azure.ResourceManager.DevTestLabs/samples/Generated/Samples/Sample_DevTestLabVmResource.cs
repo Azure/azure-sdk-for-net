@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DevTestLabs;
 using Azure.ResourceManager.DevTestLabs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
     public partial class Sample_DevTestLabVmResource
     {
-        // VirtualMachines_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VirtualMachinesGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Get.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualMachines_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_VirtualMachinesDelete()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Delete.json
@@ -75,12 +71,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // invoke the operation
             await devTestLabVm.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachines_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_VirtualMachinesUpdate()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Update.json
@@ -111,9 +106,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualMachines_AddDataDisk
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AddDataDisk_VirtualMachinesAddDataDisk()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_AddDataDisk.json
@@ -145,12 +139,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             };
             await devTestLabVm.AddDataDiskAsync(WaitUntil.Completed, dataDiskProperties);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachines_ApplyArtifacts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ApplyArtifacts_VirtualMachinesApplyArtifacts()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_ApplyArtifacts.json
@@ -183,12 +176,11 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             };
             await devTestLabVm.ApplyArtifactsAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachines_Claim
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Claim_VirtualMachinesClaim()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Claim.json
@@ -211,12 +203,11 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // invoke the operation
             await devTestLabVm.ClaimAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachines_DetachDataDisk
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DetachDataDisk_VirtualMachinesDetachDataDisk()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_DetachDataDisk.json
@@ -243,12 +234,11 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             };
             await devTestLabVm.DetachDataDiskAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachines_GetRdpFileContents
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRdpFileContents_VirtualMachinesGetRdpFileContents()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_GetRdpFileContents.json
@@ -274,9 +264,8 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualMachines_ListApplicableSchedules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetApplicableSchedules_VirtualMachinesListApplicableSchedules()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_ListApplicableSchedules.json
@@ -302,9 +291,8 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualMachines_Redeploy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Redeploy_VirtualMachinesRedeploy()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Redeploy.json
@@ -327,12 +315,11 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // invoke the operation
             await devTestLabVm.RedeployAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachines_Resize
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Resize_VirtualMachinesResize()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Resize.json
@@ -359,12 +346,11 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             };
             await devTestLabVm.ResizeAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachines_Restart
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Restart_VirtualMachinesRestart()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Restart.json
@@ -387,12 +373,11 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // invoke the operation
             await devTestLabVm.RestartAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachines_Start
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Start_VirtualMachinesStart()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Start.json
@@ -415,12 +400,11 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // invoke the operation
             await devTestLabVm.StartAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachines_Stop
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Stop_VirtualMachinesStop()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Stop.json
@@ -443,12 +427,11 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // invoke the operation
             await devTestLabVm.StopAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachines_TransferDisks
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TransferDisks_VirtualMachinesTransferDisks()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_TransferDisks.json
@@ -471,12 +454,11 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // invoke the operation
             await devTestLabVm.TransferDisksAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachines_UnClaim
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UnClaim_VirtualMachinesUnClaim()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_UnClaim.json
@@ -499,7 +481,7 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // invoke the operation
             await devTestLabVm.UnClaimAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

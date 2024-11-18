@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,11 +14,28 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SqlSource : IUtf8JsonSerializable
+    public partial class SqlSource : IUtf8JsonSerializable, IJsonModel<SqlSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SqlSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlSource)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(SqlReaderQuery))
             {
                 writer.WritePropertyName("sqlReaderQuery"u8);
@@ -48,58 +66,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionOption);
-#else
-                using (JsonDocument document = JsonDocument.Parse(PartitionOption))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, PartitionOption);
             }
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
-            }
-            if (Optional.IsDefined(QueryTimeout))
-            {
-                writer.WritePropertyName("queryTimeout"u8);
-                JsonSerializer.Serialize(writer, QueryTimeout);
-            }
-            if (Optional.IsDefined(AdditionalColumns))
-            {
-                writer.WritePropertyName("additionalColumns"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AdditionalColumns);
-#else
-                using (JsonDocument document = JsonDocument.Parse(AdditionalColumns))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CopySourceType);
-            if (Optional.IsDefined(SourceRetryCount))
-            {
-                writer.WritePropertyName("sourceRetryCount"u8);
-                JsonSerializer.Serialize(writer, SourceRetryCount);
-            }
-            if (Optional.IsDefined(SourceRetryWait))
-            {
-                writer.WritePropertyName("sourceRetryWait"u8);
-                JsonSerializer.Serialize(writer, SourceRetryWait);
-            }
-            if (Optional.IsDefined(MaxConcurrentConnections))
-            {
-                writer.WritePropertyName("maxConcurrentConnections"u8);
-                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
-            }
-            if (Optional.IsDefined(DisableMetricsCollection))
-            {
-                writer.WritePropertyName("disableMetricsCollection"u8);
-                JsonSerializer.Serialize(writer, DisableMetricsCollection);
+                writer.WriteObjectValue(PartitionSettings, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -113,28 +85,41 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static SqlSource DeserializeSqlSource(JsonElement element)
+        SqlSource IJsonModel<SqlSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlSource(document.RootElement, options);
+        }
+
+        internal static SqlSource DeserializeSqlSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> sqlReaderQuery = default;
-            Optional<DataFactoryElement<string>> sqlReaderStoredProcedureName = default;
-            Optional<BinaryData> storedProcedureParameters = default;
-            Optional<DataFactoryElement<string>> isolationLevel = default;
-            Optional<BinaryData> partitionOption = default;
-            Optional<SqlPartitionSettings> partitionSettings = default;
-            Optional<DataFactoryElement<string>> queryTimeout = default;
-            Optional<BinaryData> additionalColumns = default;
+            DataFactoryElement<string> sqlReaderQuery = default;
+            DataFactoryElement<string> sqlReaderStoredProcedureName = default;
+            BinaryData storedProcedureParameters = default;
+            DataFactoryElement<string> isolationLevel = default;
+            DataFactoryElement<string> partitionOption = default;
+            SqlPartitionSettings partitionSettings = default;
+            DataFactoryElement<string> queryTimeout = default;
+            BinaryData additionalColumns = default;
             string type = default;
-            Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionOption = BinaryData.FromString(property.Value.GetRawText());
+                    partitionOption = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionSettings"u8))
@@ -190,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionSettings = SqlPartitionSettings.DeserializeSqlPartitionSettings(property.Value);
+                    partitionSettings = SqlPartitionSettings.DeserializeSqlPartitionSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))
@@ -255,7 +240,52 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, sqlReaderQuery.Value, sqlReaderStoredProcedureName.Value, storedProcedureParameters.Value, isolationLevel.Value, partitionOption.Value, partitionSettings.Value);
+            return new SqlSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                queryTimeout,
+                additionalColumns,
+                sqlReaderQuery,
+                sqlReaderStoredProcedureName,
+                storedProcedureParameters,
+                isolationLevel,
+                partitionOption,
+                partitionSettings);
         }
+
+        BinaryData IPersistableModel<SqlSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SqlSource IPersistableModel<SqlSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

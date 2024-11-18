@@ -13,6 +13,8 @@ trigger:
     exclude:
     - eng/mgmt/
     - eng/common/
+    - eng/packages/
+    - eng/scripts/typespec/
 
 pr:
   branches:
@@ -30,6 +32,8 @@ pr:
     exclude:
     - eng/mgmt/
     - eng/common/
+    - eng/packages/
+    - eng/scripts/typespec/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -54,6 +58,12 @@ extends:
       safeName: AzureCoreAmqp
     - name: System.ClientModel
       safeName: SystemClientModel
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.Core
+      ExpectedWarningsFilepath: /Azure.Core/tests/compatibility/ExpectedAotWarnings.txt
+    - ArtifactName: System.ClientModel
+      ExpectedWarningsFilepath: None
 
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

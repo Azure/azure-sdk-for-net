@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -532,7 +531,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            if (piiCategories != null && Optional.IsCollectionDefined(piiCategories))
+            if (piiCategories != null && !(piiCategories is ChangeTrackingList<PiiEntityLegacyCategory> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("piiCategories", piiCategories, ",", true);
             }

@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string AzureDataLakeGen1Value = "AzureDataLakeGen1";
         private const string AzureDataLakeGen2Value = "AzureDataLakeGen2";
         private const string AzureFileValue = "AzureFile";
-        private const string HdfsValue = "Hdfs";
         private const string OneLakeValue = "OneLake";
 
         /// <summary> AzureBlob. </summary>
@@ -37,15 +36,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static DatastoreType AzureDataLakeGen2 { get; } = new DatastoreType(AzureDataLakeGen2Value);
         /// <summary> AzureFile. </summary>
         public static DatastoreType AzureFile { get; } = new DatastoreType(AzureFileValue);
-        /// <summary> Hdfs. </summary>
-        public static DatastoreType Hdfs { get; } = new DatastoreType(HdfsValue);
         /// <summary> OneLake. </summary>
         public static DatastoreType OneLake { get; } = new DatastoreType(OneLakeValue);
         /// <summary> Determines if two <see cref="DatastoreType"/> values are the same. </summary>
         public static bool operator ==(DatastoreType left, DatastoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatastoreType"/> values are not the same. </summary>
         public static bool operator !=(DatastoreType left, DatastoreType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DatastoreType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DatastoreType"/>. </summary>
         public static implicit operator DatastoreType(string value) => new DatastoreType(value);
 
         /// <inheritdoc />
@@ -56,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

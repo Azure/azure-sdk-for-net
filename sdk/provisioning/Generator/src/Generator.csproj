@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0</TargetFrameworks>
+    <Version>1.0.0-beta.1</Version>
+    <OutputType>Exe</OutputType>
+    <Nullable>enable</Nullable>
+    <LangVersion>12</LangVersion>
+    <NoWarn>IDE0130;$(NoWarn)</NoWarn> <!-- Ignore namespace not matching folder structure --> 
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
+  
+  <!-- Packages we're generating from -->
+  <ItemGroup>
+    <!-- Baseline -->
+    <PackageReference Include="Azure.ResourceManager" />
+    <PackageReference Include="Azure.ResourceManager.Resources" />
+    <PackageReference Include="Azure.ResourceManager.Authorization" />
+    <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" />
+
+    <!-- Existing -->
+    <PackageReference Include="Azure.ResourceManager.AppConfiguration" />
+    <PackageReference Include="Azure.ResourceManager.ApplicationInsights" />
+    <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
+    <PackageReference Include="Azure.ResourceManager.CosmosDB" />
+    <PackageReference Include="Azure.ResourceManager.EventHubs" />
+    <PackageReference Include="Azure.ResourceManager.KeyVault" />
+    <PackageReference Include="Azure.ResourceManager.OperationalInsights" />
+    <PackageReference Include="Azure.ResourceManager.PostgreSql" />
+    <PackageReference Include="Azure.ResourceManager.Redis" />
+    <PackageReference Include="Azure.ResourceManager.Search" />
+    <PackageReference Include="Azure.ResourceManager.ServiceBus" />
+    <PackageReference Include="Azure.ResourceManager.SignalR" />
+    <PackageReference Include="Azure.ResourceManager.Sql" />
+    <PackageReference Include="Azure.ResourceManager.Storage" />
+    <PackageReference Include="Azure.ResourceManager.WebPubSub" />
+
+    <!-- Others -->
+    <ProjectReference Include="..\..\..\communication\Azure.ResourceManager.Communication\src\Azure.ResourceManager.Communication.csproj" />
+    <ProjectReference Include="..\..\..\containerapps\Azure.ResourceManager.AppContainers\src\Azure.ResourceManager.AppContainers.csproj" />
+    <ProjectReference Include="..\..\..\containerregistry\Azure.ResourceManager.ContainerRegistry\src\Azure.ResourceManager.ContainerRegistry.csproj" />
+    <ProjectReference Include="..\..\..\containerservice\Azure.ResourceManager.ContainerService\src\Azure.ResourceManager.ContainerService.csproj" />
+    <ProjectReference Include="..\..\..\eventgrid\Azure.ResourceManager.EventGrid\src\Azure.ResourceManager.EventGrid.csproj" />
+    <ProjectReference Include="..\..\..\hybridkubernetes\Azure.ResourceManager.Kubernetes\src\Azure.ResourceManager.Kubernetes.csproj" />
+    <ProjectReference Include="..\..\..\kubernetesconfiguration\Azure.ResourceManager.KubernetesConfiguration\src\Azure.ResourceManager.KubernetesConfiguration.csproj" />
+    <PackageReference Include="Azure.ResourceManager.AppService" Version="1.2.0" />
+  </ItemGroup>
+
+  <!-- We're not using all of our standard infrastructure, but we want to
+       at least force everything to the "blessed" versions of each package -->
+  <PropertyGroup>
+    <!-- We're not a client library, but I want the same versions used by client libraries -->
+    <IsClientLibrary>true</IsClientLibrary>
+  </PropertyGroup>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove(.gitignore))\..\eng\Packages.Data.props" />
+
+  <!-- Copy XML generated docs into our bin dir -->
+  <Target Name="_ResolveCopyLocalNuGetPkgXmls" AfterTargets="ResolveReferences">
+    <ItemGroup>
+      <ReferenceCopyLocalPaths
+        Include="@(ReferenceCopyLocalPaths -> '%(RootDir)%(Directory)%(Filename).xml')"
+        Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' != '' and Exists('%(RootDir)%(Directory)%(Filename).xml')" />
+    </ItemGroup>
+  </Target>
+</Project>

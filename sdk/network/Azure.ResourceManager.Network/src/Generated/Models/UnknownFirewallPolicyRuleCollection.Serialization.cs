@@ -5,40 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class UnknownFirewallPolicyRuleCollection : IUtf8JsonSerializable
+    internal partial class UnknownFirewallPolicyRuleCollection : IUtf8JsonSerializable, IJsonModel<FirewallPolicyRuleCollectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyRuleCollectionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FirewallPolicyRuleCollectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ruleCollectionType"u8);
-            writer.WriteStringValue(RuleCollectionType.ToString());
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Priority))
-            {
-                writer.WritePropertyName("priority"u8);
-                writer.WriteNumberValue(Priority.Value);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static UnknownFirewallPolicyRuleCollection DeserializeUnknownFirewallPolicyRuleCollection(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyRuleCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FirewallPolicyRuleCollectionInfo)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        FirewallPolicyRuleCollectionInfo IJsonModel<FirewallPolicyRuleCollectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyRuleCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FirewallPolicyRuleCollectionInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallPolicyRuleCollectionInfo(document.RootElement, options);
+        }
+
+        internal static UnknownFirewallPolicyRuleCollection DeserializeUnknownFirewallPolicyRuleCollection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             FirewallPolicyRuleCollectionType ruleCollectionType = "Unknown";
-            Optional<string> name = default;
-            Optional<int> priority = default;
+            string name = default;
+            int? priority = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleCollectionType"u8))
@@ -60,8 +83,44 @@ namespace Azure.ResourceManager.Network.Models
                     priority = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownFirewallPolicyRuleCollection(ruleCollectionType, name.Value, Optional.ToNullable(priority));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownFirewallPolicyRuleCollection(ruleCollectionType, name, priority, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FirewallPolicyRuleCollectionInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyRuleCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FirewallPolicyRuleCollectionInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FirewallPolicyRuleCollectionInfo IPersistableModel<FirewallPolicyRuleCollectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyRuleCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFirewallPolicyRuleCollectionInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FirewallPolicyRuleCollectionInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FirewallPolicyRuleCollectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

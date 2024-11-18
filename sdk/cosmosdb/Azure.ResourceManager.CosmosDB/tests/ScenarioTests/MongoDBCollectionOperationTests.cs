@@ -42,8 +42,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public async Task GlobalTeardown()
         {
-            await _mongoDBDatabase.DeleteAsync(WaitUntil.Completed);
-            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await _mongoDBDatabase.DeleteAsync(WaitUntil.Completed);
+                await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         [SetUp]
@@ -55,12 +58,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await MongoDBCollectionCollection.ExistsAsync(_collectionName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = MongoDBCollectionCollection.Id;
-                id = MongoDBCollectionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _collectionName);
-                MongoDBCollectionResource collection = this.ArmClient.GetMongoDBCollectionResource(id);
-                await collection.DeleteAsync(WaitUntil.Completed);
+                if (await MongoDBCollectionCollection.ExistsAsync(_collectionName))
+                {
+                    var id = MongoDBCollectionCollection.Id;
+                    id = MongoDBCollectionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _collectionName);
+                    MongoDBCollectionResource collection = this.ArmClient.GetMongoDBCollectionResource(id);
+                    await collection.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var updateOptions = new MongoDBCollectionCreateOrUpdateContent(collection.Id, _collectionName, collection.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, collection.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, default(ManagedServiceIdentity));
+                AzureLocation.WestUS, collection.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, default(ManagedServiceIdentity), null);
 
             collection = await (await MongoDBCollectionCollection.CreateOrUpdateAsync(WaitUntil.Started, _collectionName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_collectionName, collection.Data.Resource.CollectionName);
@@ -135,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var updateOptions = new MongoDBCollectionCreateOrUpdateContent(collection.Id, _collectionName, collection.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, default(ManagedServiceIdentity));
+                AzureLocation.WestUS, resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, default(ManagedServiceIdentity), null);
 
             var collection2 = await (await MongoDBCollectionCollection.CreateOrUpdateAsync(WaitUntil.Started, _collectionName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_collectionName, collection.Data.Resource.CollectionName);
@@ -171,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
             MongoDBCollectionThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
-                new ThroughputSettingsResourceInfo(TestThroughput2, null, null, null, null, null)))).Value;
+                new ThroughputSettingsResourceInfo(TestThroughput2, null, null, null, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }

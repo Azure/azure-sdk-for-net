@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Marketplace.Models;
 
 namespace Azure.ResourceManager.Marketplace
@@ -117,6 +115,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollectionOffer_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreOfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="offerId"> The offer ID to update or delete. </param>
@@ -140,6 +146,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollectionOffer_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreOfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="offerId"> The offer ID to update or delete. </param>
@@ -162,6 +176,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +217,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -227,6 +257,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -238,7 +276,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.DeleteAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateDeleteRequestUri(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -261,6 +301,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -272,7 +320,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.Delete(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateDeleteRequestUri(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -295,6 +345,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -310,7 +368,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateOrUpdateAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), info, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), info);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -333,6 +393,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -348,7 +416,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateOrUpdate(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), info, cancellationToken);
-                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), info);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -370,6 +440,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SetCollectionRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,6 +476,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>SetCollectionRules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The <see cref="SetRulesContent"/> to use. </param>
@@ -433,6 +511,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>QueryRules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -440,7 +522,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual AsyncPageable<MarketplaceRule> QueryRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryRulesRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MarketplaceRule.DeserializeMarketplaceRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MarketplaceRule.DeserializeMarketplaceRule(e), _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -454,6 +536,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>QueryRules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -461,7 +547,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Pageable<MarketplaceRule> QueryRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryRulesRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MarketplaceRule.DeserializeMarketplaceRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MarketplaceRule.DeserializeMarketplaceRule(e), _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -474,6 +560,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_TransferOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,6 +600,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_TransferOffers</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The <see cref="TransferOffersContent"/> to use. </param>
@@ -537,6 +639,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_ApproveAllItems</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -566,6 +676,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_ApproveAllItems</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -597,6 +715,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_DisableApproveAllItems</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -626,6 +752,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_DisableApproveAllItems</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -657,6 +791,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollectionOffer_ListByContexts</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreOfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="payload"> The <see cref="CollectionOffersByAllContextsPayload"/> to use. </param>
@@ -666,7 +808,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsNextPageRequest(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CollectionOffersByContext.DeserializeCollectionOffersByContext, _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CollectionOffersByContext.DeserializeCollectionOffersByContext(e), _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -680,6 +822,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollectionOffer_ListByContexts</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreOfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="payload"> The <see cref="CollectionOffersByAllContextsPayload"/> to use. </param>
@@ -689,7 +839,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsNextPageRequest(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CollectionOffersByContext.DeserializeCollectionOffersByContext, _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CollectionOffersByContext.DeserializeCollectionOffersByContext(e), _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -702,6 +852,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -733,6 +891,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

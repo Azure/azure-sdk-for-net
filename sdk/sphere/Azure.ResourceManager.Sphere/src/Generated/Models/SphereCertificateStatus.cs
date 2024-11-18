@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// Certificate status values.
-    /// Serialized Name: CertificateStatus
-    /// </summary>
+    /// <summary> Certificate status values. </summary>
     public readonly partial struct SphereCertificateStatus : IEquatable<SphereCertificateStatus>
     {
         private readonly string _value;
@@ -30,31 +27,19 @@ namespace Azure.ResourceManager.Sphere.Models
         private const string ExpiredValue = "Expired";
         private const string RevokedValue = "Revoked";
 
-        /// <summary>
-        /// Certificate is active
-        /// Serialized Name: CertificateStatus.Active
-        /// </summary>
+        /// <summary> Certificate is active. </summary>
         public static SphereCertificateStatus Active { get; } = new SphereCertificateStatus(ActiveValue);
-        /// <summary>
-        /// Certificate is inactive
-        /// Serialized Name: CertificateStatus.Inactive
-        /// </summary>
+        /// <summary> Certificate is inactive. </summary>
         public static SphereCertificateStatus Inactive { get; } = new SphereCertificateStatus(InactiveValue);
-        /// <summary>
-        /// Certificate has expired
-        /// Serialized Name: CertificateStatus.Expired
-        /// </summary>
+        /// <summary> Certificate has expired. </summary>
         public static SphereCertificateStatus Expired { get; } = new SphereCertificateStatus(ExpiredValue);
-        /// <summary>
-        /// Certificate has been revoked
-        /// Serialized Name: CertificateStatus.Revoked
-        /// </summary>
+        /// <summary> Certificate has been revoked. </summary>
         public static SphereCertificateStatus Revoked { get; } = new SphereCertificateStatus(RevokedValue);
         /// <summary> Determines if two <see cref="SphereCertificateStatus"/> values are the same. </summary>
         public static bool operator ==(SphereCertificateStatus left, SphereCertificateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SphereCertificateStatus"/> values are not the same. </summary>
         public static bool operator !=(SphereCertificateStatus left, SphereCertificateStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SphereCertificateStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SphereCertificateStatus"/>. </summary>
         public static implicit operator SphereCertificateStatus(string value) => new SphereCertificateStatus(value);
 
         /// <inheritdoc />
@@ -65,7 +50,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

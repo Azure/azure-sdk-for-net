@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static bool operator ==(VMwareDiskMode left, VMwareDiskMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VMwareDiskMode"/> values are not the same. </summary>
         public static bool operator !=(VMwareDiskMode left, VMwareDiskMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VMwareDiskMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VMwareDiskMode"/>. </summary>
         public static implicit operator VMwareDiskMode(string value) => new VMwareDiskMode(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

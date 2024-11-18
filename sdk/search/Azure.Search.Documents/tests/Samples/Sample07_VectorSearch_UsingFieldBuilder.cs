@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Indexes;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {

@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ServiceBus;
 using Azure.ResourceManager.ServiceBus.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceBus.Samples
 {
     public partial class Sample_ServiceBusRuleResource
     {
-        // RulesCreateCorrelationFilter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RulesCreateCorrelationFilter()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Rules/RuleCreate_CorrelationFilter.json
@@ -64,9 +61,8 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RulesCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RulesCreateOrUpdate()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Rules/RuleCreate.json
@@ -100,9 +96,8 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RulesCreateSqlFilter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RulesCreateSqlFilter()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Rules/RuleCreate_SqlFilter.json
@@ -143,9 +138,8 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RulesDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RulesDelete()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Rules/RuleDelete.json
@@ -170,12 +164,11 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // invoke the operation
             await serviceBusRule.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RulesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RulesGet()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Rules/RuleGet.json

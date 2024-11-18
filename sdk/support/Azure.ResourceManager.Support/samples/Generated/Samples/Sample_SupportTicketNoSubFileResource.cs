@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Support;
 using Azure.ResourceManager.Support.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Support.Samples
 {
     public partial class Sample_SupportTicketNoSubFileResource
     {
-        // Get details of a subscription file
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDetailsOfASubscriptionFile()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/GetFileDetails.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetFileDetails.json
             // this example is just showing the usage of "FilesNoSubscription_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,12 +45,11 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a file workspace
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAFileWorkspace()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateFile.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateFile.json
             // this example is just showing the usage of "FilesNoSubscription_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,12 +81,11 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UploadFile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Upload_UploadFile()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/UploadFile.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/UploadFile.json
             // this example is just showing the usage of "FilesNoSubscription_Upload" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,7 +108,7 @@ namespace Azure.ResourceManager.Support.Samples
             };
             await supportTicketNoSubFile.UploadAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

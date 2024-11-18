@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.AppPlatform.Models;
 
 namespace Azure.ResourceManager.AppPlatform.Mocking
@@ -60,6 +57,14 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> the region. </param>
@@ -94,6 +99,14 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,6 +143,14 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,6 +172,14 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,6 +203,10 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -182,7 +215,7 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableAppPlatformSku.DeserializeAvailableAppPlatformSku, SkusClientDiagnostics, Pipeline, "MockableAppPlatformSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableAppPlatformSku.DeserializeAvailableAppPlatformSku(e), SkusClientDiagnostics, Pipeline, "MockableAppPlatformSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -196,6 +229,10 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -204,7 +241,7 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableAppPlatformSku.DeserializeAvailableAppPlatformSku, SkusClientDiagnostics, Pipeline, "MockableAppPlatformSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableAppPlatformSku.DeserializeAvailableAppPlatformSku(e), SkusClientDiagnostics, Pipeline, "MockableAppPlatformSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
         }
     }
 }

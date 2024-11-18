@@ -21,6 +21,7 @@ namespace Azure.Communication.CallingServer
         private static readonly Uri _callBackUri = new Uri("https://somecallbackurl");
 
         [TestCaseSource(nameof(TestData_OperationsWithStatus))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RecordingOperations_WithRecordingStatus_Success(Func<CallRecording, RecordingStateResult> operation)
         {
             CallRecording callRecording = getMockCallRecording(200, responseContent: DummyRecordingStatusResponse);
@@ -31,6 +32,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_OperationsAsyncWithStatus))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task RecordingOperationsAsync_WithRecordingStatus_Success(Func<CallRecording, Task<Response<RecordingStateResult>>> operation)
         {
             CallRecording callRecording = getMockCallRecording(200, responseContent: DummyRecordingStatusResponse);
@@ -41,6 +43,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_OperationsSuccess))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RecordingOperations_ReturnsSuccess(int expectedStatusCode, HttpStatusCode httpStatusCode, Func<CallRecording, Response> operation)
         {
             CallRecording callRecording = getMockCallRecording(expectedStatusCode);
@@ -50,6 +53,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_OperationsAsyncSuccess))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task RecordingOperationsAsync_ReturnsSuccess(int expectedStatusCode, HttpStatusCode httpStatusCode, Func<CallRecording, Task<Response>> operation)
         {
             CallRecording callRecording = getMockCallRecording(expectedStatusCode);
@@ -59,6 +63,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_Operations404))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RecordingOperation_Returns404NotFound(Func<CallRecording, TestDelegate> operation)
         {
             CallRecording callRecording = getMockCallRecording(404);
@@ -68,6 +73,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_OperationsAsync404))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RecordingOperationAsync_Returns404NotFound(Func<CallRecording, AsyncTestDelegate> operation)
         {
             CallRecording callRecording = getMockCallRecording(404);

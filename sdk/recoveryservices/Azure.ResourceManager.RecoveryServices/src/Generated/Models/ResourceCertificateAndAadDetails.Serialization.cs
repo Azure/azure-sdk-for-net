@@ -6,15 +6,73 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class ResourceCertificateAndAadDetails
+    public partial class ResourceCertificateAndAadDetails : IUtf8JsonSerializable, IJsonModel<ResourceCertificateAndAadDetails>
     {
-        internal static ResourceCertificateAndAadDetails DeserializeResourceCertificateAndAadDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceCertificateAndAadDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ResourceCertificateAndAadDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAadDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("aadAuthority"u8);
+            writer.WriteStringValue(AadAuthority);
+            writer.WritePropertyName("aadTenantId"u8);
+            writer.WriteStringValue(AadTenantId);
+            writer.WritePropertyName("servicePrincipalClientId"u8);
+            writer.WriteStringValue(ServicePrincipalClientId);
+            writer.WritePropertyName("servicePrincipalObjectId"u8);
+            writer.WriteStringValue(ServicePrincipalObjectId);
+            writer.WritePropertyName("azureManagementEndpointAudience"u8);
+            writer.WriteStringValue(AzureManagementEndpointAudience);
+            if (Optional.IsDefined(ServiceResourceId))
+            {
+                writer.WritePropertyName("serviceResourceId"u8);
+                writer.WriteStringValue(ServiceResourceId);
+            }
+            if (Optional.IsDefined(AadAudience))
+            {
+                writer.WritePropertyName("aadAudience"u8);
+                writer.WriteStringValue(AadAudience);
+            }
+        }
+
+        ResourceCertificateAndAadDetails IJsonModel<ResourceCertificateAndAadDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAadDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceCertificateAndAadDetails(document.RootElement, options);
+        }
+
+        internal static ResourceCertificateAndAadDetails DeserializeResourceCertificateAndAadDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,17 +82,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             string servicePrincipalClientId = default;
             string servicePrincipalObjectId = default;
             string azureManagementEndpointAudience = default;
-            Optional<ResourceIdentifier> serviceResourceId = default;
-            Optional<string> aadAudience = default;
+            ResourceIdentifier serviceResourceId = default;
+            string aadAudience = default;
             string authType = default;
-            Optional<byte[]> certificate = default;
-            Optional<string> friendlyName = default;
-            Optional<string> issuer = default;
-            Optional<long> resourceId = default;
-            Optional<string> subject = default;
-            Optional<BinaryData> thumbprint = default;
-            Optional<DateTimeOffset> validFrom = default;
-            Optional<DateTimeOffset> validTo = default;
+            byte[] certificate = default;
+            string friendlyName = default;
+            string issuer = default;
+            long? resourceId = default;
+            string subject = default;
+            BinaryData thumbprint = default;
+            DateTimeOffset? validFrom = default;
+            DateTimeOffset? validTo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aadAuthority"u8))
@@ -141,8 +201,61 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     validTo = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceCertificateAndAadDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo), aadAuthority, aadTenantId, servicePrincipalClientId, servicePrincipalObjectId, azureManagementEndpointAudience, serviceResourceId.Value, aadAudience.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResourceCertificateAndAadDetails(
+                authType,
+                certificate,
+                friendlyName,
+                issuer,
+                resourceId,
+                subject,
+                thumbprint,
+                validFrom,
+                validTo,
+                serializedAdditionalRawData,
+                aadAuthority,
+                aadTenantId,
+                servicePrincipalClientId,
+                servicePrincipalObjectId,
+                azureManagementEndpointAudience,
+                serviceResourceId,
+                aadAudience);
         }
+
+        BinaryData IPersistableModel<ResourceCertificateAndAadDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAadDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResourceCertificateAndAadDetails IPersistableModel<ResourceCertificateAndAadDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAadDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceCertificateAndAadDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceCertificateAndAadDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

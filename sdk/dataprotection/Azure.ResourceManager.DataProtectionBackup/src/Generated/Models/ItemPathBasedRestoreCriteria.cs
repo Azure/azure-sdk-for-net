@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -30,15 +29,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="ItemPathBasedRestoreCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemPath"> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </param>
         /// <param name="isPathRelativeToBackupItem"> Flag to specify if the path is relative to backup item or full path. </param>
         /// <param name="subItemPathPrefix"> The list of prefix strings to be used as filter criteria during restore. These are relative to the item path specified. </param>
-        internal ItemPathBasedRestoreCriteria(string objectType, string itemPath, bool isPathRelativeToBackupItem, IList<string> subItemPathPrefix) : base(objectType)
+        internal ItemPathBasedRestoreCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemPath, bool isPathRelativeToBackupItem, IList<string> subItemPathPrefix) : base(objectType, serializedAdditionalRawData)
         {
             ItemPath = itemPath;
             IsPathRelativeToBackupItem = isPathRelativeToBackupItem;
             SubItemPathPrefix = subItemPathPrefix;
             ObjectType = objectType ?? "ItemPathBasedRestoreCriteria";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ItemPathBasedRestoreCriteria"/> for deserialization. </summary>
+        internal ItemPathBasedRestoreCriteria()
+        {
         }
 
         /// <summary> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </summary>

@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Mocking
 {
@@ -26,6 +23,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         private ApplicationGroupsRestOperations _virtualApplicationGroupApplicationGroupsRestClient;
         private ClientDiagnostics _hostPoolClientDiagnostics;
         private HostPoolsRestOperations _hostPoolRestClient;
+        private ClientDiagnostics _appAttachPackageClientDiagnostics;
+        private AppAttachPackageRestOperations _appAttachPackageRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableDesktopVirtualizationSubscriptionResource"/> class for mocking. </summary>
         protected MockableDesktopVirtualizationSubscriptionResource()
@@ -47,6 +46,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         private ApplicationGroupsRestOperations VirtualApplicationGroupApplicationGroupsRestClient => _virtualApplicationGroupApplicationGroupsRestClient ??= new ApplicationGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualApplicationGroupResource.ResourceType));
         private ClientDiagnostics HostPoolClientDiagnostics => _hostPoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, Diagnostics);
         private HostPoolsRestOperations HostPoolRestClient => _hostPoolRestClient ??= new HostPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HostPoolResource.ResourceType));
+        private ClientDiagnostics AppAttachPackageClientDiagnostics => _appAttachPackageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", AppAttachPackageResource.ResourceType.Namespace, Diagnostics);
+        private AppAttachPackageRestOperations AppAttachPackageRestClient => _appAttachPackageRestClient ??= new AppAttachPackageRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppAttachPackageResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -64,6 +65,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,6 +96,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -108,6 +125,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,6 +159,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -159,6 +192,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualApplicationGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
@@ -182,6 +223,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualApplicationGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
@@ -204,6 +253,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HostPools_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,6 +287,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>HostPools_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -242,6 +307,68 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => HostPoolRestClient.CreateListRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HostPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HostPoolResource(Client, HostPoolData.DeserializeHostPoolData(e)), HostPoolClientDiagnostics, Pipeline, "MockableDesktopVirtualizationSubscriptionResource.GetHostPools", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List App Attach packages in subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/appAttachPackages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppAttachPackage_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppAttachPackageResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> OData filter expression. Valid properties for filtering are package name, host pool, and resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AppAttachPackageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppAttachPackageResource> GetAppAttachPackagesAsync(string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AppAttachPackageRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppAttachPackageRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppAttachPackageResource(Client, AppAttachPackageData.DeserializeAppAttachPackageData(e)), AppAttachPackageClientDiagnostics, Pipeline, "MockableDesktopVirtualizationSubscriptionResource.GetAppAttachPackages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List App Attach packages in subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/appAttachPackages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppAttachPackage_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppAttachPackageResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> OData filter expression. Valid properties for filtering are package name, host pool, and resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AppAttachPackageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppAttachPackageResource> GetAppAttachPackages(string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AppAttachPackageRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppAttachPackageRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppAttachPackageResource(Client, AppAttachPackageData.DeserializeAppAttachPackageData(e)), AppAttachPackageClientDiagnostics, Pipeline, "MockableDesktopVirtualizationSubscriptionResource.GetAppAttachPackages", "value", "nextLink", cancellationToken);
         }
     }
 }

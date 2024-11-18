@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -23,6 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeMachineExtensionPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="machineExtensionUpdatePropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
-        internal HybridComputeMachineExtensionPatch(IDictionary<string, string> tags, string forceUpdateTag, string publisher, string machineExtensionUpdatePropertiesType, string typeHandlerVersion, bool? enableAutomaticUpgrade, bool? autoUpgradeMinorVersion, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> protectedSettings) : base(tags)
+        internal HybridComputeMachineExtensionPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string forceUpdateTag, string publisher, string machineExtensionUpdatePropertiesType, string typeHandlerVersion, bool? enableAutomaticUpgrade, bool? autoUpgradeMinorVersion, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> protectedSettings) : base(tags, serializedAdditionalRawData)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
@@ -44,16 +44,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
+        [WirePath("properties.forceUpdateTag")]
         public string ForceUpdateTag { get; set; }
         /// <summary> The name of the extension handler publisher. </summary>
+        [WirePath("properties.publisher")]
         public string Publisher { get; set; }
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
+        [WirePath("properties.type")]
         public string MachineExtensionUpdatePropertiesType { get; set; }
         /// <summary> Specifies the version of the script handler. </summary>
+        [WirePath("properties.typeHandlerVersion")]
         public string TypeHandlerVersion { get; set; }
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </summary>
+        [WirePath("properties.enableAutomaticUpgrade")]
         public bool? EnableAutomaticUpgrade { get; set; }
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
+        [WirePath("properties.autoUpgradeMinorVersion")]
         public bool? AutoUpgradeMinorVersion { get; set; }
         /// <summary>
         /// Json formatted public settings for the extension.
@@ -85,6 +91,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.settings")]
         public IDictionary<string, BinaryData> Settings { get; }
         /// <summary>
         /// The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
@@ -116,6 +123,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.protectedSettings")]
         public IDictionary<string, BinaryData> ProtectedSettings { get; }
     }
 }

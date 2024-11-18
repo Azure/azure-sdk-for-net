@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
 {
@@ -57,6 +54,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -78,6 +83,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,6 +114,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -122,6 +143,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

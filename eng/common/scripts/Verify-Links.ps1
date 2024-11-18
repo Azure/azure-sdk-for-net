@@ -78,6 +78,71 @@ param (
 Set-StrictMode -Version 3.0
 
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
+
+function ProcessLink([System.Uri]$linkUri) {
+  if ($linkUri -match '^https?://?github\.com/(?<account>)[^/]+/(?<repo>)[^/]+/wiki/.+') {
+    # in an unauthenticated session, urls for missing pages will redirect to the wiki root
+    return ProcessRedirectLink $linkUri -invalidStatusCodes 302
+  }
+  elseif ($linkUri -match '^https?://aka.ms/.+') {
+    # aka.ms links are handled by a redirect service. Valid links return a 301
+    # and invalid links return a 302 redirecting the user to a Bing search 
+    return ProcessRedirectLink $linkUri -invalidStatusCodes 302
+  }
+  elseif ($linkUri -match '^https?://crates\.io/(?<path>(crates|users|teams)/.+)') {
+    return ProcessCratesIoLink $linkUri $matches.path
+  }
+  else {
+    return ProcessStandardLink $linkUri
+  }
+}
+
+function ProcessRedirectLink([System.Uri]$linkUri, [int[]]$invalidStatusCodes) {
+  # ProcessRedirectLink checks the status code of the initial response.
+  $response = Invoke-WebRequest -Uri $linkUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec -MaximumRedirection 0 -SkipHttpErrorCheck -ErrorAction SilentlyContinue
+  $statusCode = $response.StatusCode
+
+  if ($statusCode -in $invalidStatusCodes) {
+    Write-Host "[$statusCode] while requesting $linkUri"
+    return $false
+  }
+
+  # Because we've only tested the initial request for specific invalid status codes, we should still check that the
+  # final destination is valid.
+  return ProcessStandardLink $linkUri
+}
+
+function ProcessCratesIoLink([System.Uri]$linkUri, $path) {
+  # Crates.io links are handled by a SPA. Even for missing pages, the response will be a 200, and the spa will only
+  # show a 404 page after it makes a request to the api. We can check the api to see if the page exists.
+  $apiUri = "https://crates.io/api/v1/$path"
+
+  # Invoke-WebRequest will throw an exception for invalid status codes. They are handled in CheckLink
+  Invoke-WebRequest -Uri $apiUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec | Out-Null
+  
+  return $true
+}
+
+function ProcessStandardLink([System.Uri]$linkUri) {
+  $headRequestSucceeded = $true
+  try {
+    # Attempt HEAD request first
+    $response = Invoke-WebRequest -Uri $linkUri -Method HEAD -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
+  }
+  catch {
+    $headRequestSucceeded = $false
+  }
+  if (!$headRequestSucceeded) {
+    # Attempt a GET request if the HEAD request failed.
+    $response = Invoke-WebRequest -Uri $linkUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
+  }
+  $statusCode = $response.StatusCode
+  if ($statusCode -ne 200) {
+    Write-Host "[$statusCode] while requesting $linkUri"
+  }
+  return $true
+}
+
 # Regex of the locale keywords.
 $locale = "/en-us/"
 $emptyLinkMessage = "There is at least one empty link in the page. Please replace with absolute link. Check here for more information: https://aka.ms/azsdk/guideline/links"
@@ -228,22 +293,7 @@ function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
   }
   elseif ($linkUri.IsAbsoluteUri) {
     try {
-      $headRequestSucceeded = $true
-      try {
-        # Attempt HEAD request first
-        $response = Invoke-WebRequest -Uri $linkUri -Method HEAD -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
-      }
-      catch {
-        $headRequestSucceeded = $false
-      }
-      if (!$headRequestSucceeded) {
-        # Attempt a GET request if the HEAD request failed.
-        $response = Invoke-WebRequest -Uri $linkUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
-      }
-      $statusCode = $response.StatusCode
-      if ($statusCode -ne 200) {
-        Write-Host "[$statusCode] while requesting $linkUri"
-      }
+      $linkValid = ProcessLink $linkUri
     }
     catch {
       
@@ -260,7 +310,7 @@ function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
         $innerExceptionPresent = $_.Exception.psobject.Properties.name -contains "InnerException"
         
         $errorCodePresent = $false
-        if ($innerExceptionPresent) {
+        if ($innerExceptionPresent -and $_.Exception.InnerException) {
           $errorCodePresent = $_.Exception.InnerException.psobject.Properties.name -contains "ErrorCode"
         }
 

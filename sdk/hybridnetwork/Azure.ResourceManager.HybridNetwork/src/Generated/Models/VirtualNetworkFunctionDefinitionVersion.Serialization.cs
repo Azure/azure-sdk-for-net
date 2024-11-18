@@ -5,48 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class VirtualNetworkFunctionDefinitionVersion : IUtf8JsonSerializable
+    public partial class VirtualNetworkFunctionDefinitionVersion : IUtf8JsonSerializable, IJsonModel<VirtualNetworkFunctionDefinitionVersion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkFunctionDefinitionVersion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VirtualNetworkFunctionDefinitionVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkFunctionTemplate))
-            {
-                writer.WritePropertyName("networkFunctionTemplate"u8);
-                writer.WriteObjectValue(NetworkFunctionTemplate);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(DeployParameters))
-            {
-                writer.WritePropertyName("deployParameters"u8);
-                writer.WriteStringValue(DeployParameters);
-            }
-            writer.WritePropertyName("networkFunctionType"u8);
-            writer.WriteStringValue(NetworkFunctionType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkFunctionDefinitionVersion DeserializeVirtualNetworkFunctionDefinitionVersion(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkFunctionDefinitionVersion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(NetworkFunctionTemplate))
+            {
+                writer.WritePropertyName("networkFunctionTemplate"u8);
+                writer.WriteObjectValue(NetworkFunctionTemplate, options);
+            }
+        }
+
+        VirtualNetworkFunctionDefinitionVersion IJsonModel<VirtualNetworkFunctionDefinitionVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkFunctionDefinitionVersion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworkFunctionDefinitionVersion(document.RootElement, options);
+        }
+
+        internal static VirtualNetworkFunctionDefinitionVersion DeserializeVirtualNetworkFunctionDefinitionVersion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<VirtualNetworkFunctionTemplate> networkFunctionTemplate = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<VersionState> versionState = default;
-            Optional<string> description = default;
-            Optional<string> deployParameters = default;
+            VirtualNetworkFunctionTemplate networkFunctionTemplate = default;
+            ProvisioningState? provisioningState = default;
+            VersionState? versionState = default;
+            string description = default;
+            string deployParameters = default;
             NetworkFunctionType networkFunctionType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkFunctionTemplate"u8))
@@ -55,7 +78,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    networkFunctionTemplate = VirtualNetworkFunctionTemplate.DeserializeVirtualNetworkFunctionTemplate(property.Value);
+                    networkFunctionTemplate = VirtualNetworkFunctionTemplate.DeserializeVirtualNetworkFunctionTemplate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -91,8 +114,51 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     networkFunctionType = new NetworkFunctionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualNetworkFunctionDefinitionVersion(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, deployParameters.Value, networkFunctionType, networkFunctionTemplate.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualNetworkFunctionDefinitionVersion(
+                provisioningState,
+                versionState,
+                description,
+                deployParameters,
+                networkFunctionType,
+                serializedAdditionalRawData,
+                networkFunctionTemplate);
         }
+
+        BinaryData IPersistableModel<VirtualNetworkFunctionDefinitionVersion>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkFunctionDefinitionVersion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VirtualNetworkFunctionDefinitionVersion IPersistableModel<VirtualNetworkFunctionDefinitionVersion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkFunctionDefinitionVersion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualNetworkFunctionDefinitionVersion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualNetworkFunctionDefinitionVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

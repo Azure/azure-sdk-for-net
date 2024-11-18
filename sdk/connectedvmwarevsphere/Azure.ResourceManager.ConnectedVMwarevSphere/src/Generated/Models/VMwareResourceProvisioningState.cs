@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static bool operator ==(VMwareResourceProvisioningState left, VMwareResourceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VMwareResourceProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(VMwareResourceProvisioningState left, VMwareResourceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VMwareResourceProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VMwareResourceProvisioningState"/>. </summary>
         public static implicit operator VMwareResourceProvisioningState(string value) => new VMwareResourceProvisioningState(value);
 
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -6,12 +6,12 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> A CosmosDB Cassandra API data source/sink. </summary>
-    public partial class CosmosCassandraDataTransferDataSourceSink : DataTransferDataSourceSink
+    public partial class CosmosCassandraDataTransferDataSourceSink : BaseCosmosDataTransferDataSourceSink
     {
         /// <summary> Initializes a new instance of <see cref="CosmosCassandraDataTransferDataSourceSink"/>. </summary>
         /// <param name="keyspaceName"></param>
@@ -29,22 +29,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="CosmosCassandraDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="remoteAccountName"></param>
         /// <param name="keyspaceName"></param>
         /// <param name="tableName"></param>
-        /// <param name="remoteAccountName"></param>
-        internal CosmosCassandraDataTransferDataSourceSink(DataTransferComponent component, string keyspaceName, string tableName, string remoteAccountName) : base(component)
+        internal CosmosCassandraDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData, string remoteAccountName, string keyspaceName, string tableName) : base(component, serializedAdditionalRawData, remoteAccountName)
         {
             KeyspaceName = keyspaceName;
             TableName = tableName;
-            RemoteAccountName = remoteAccountName;
             Component = component;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CosmosCassandraDataTransferDataSourceSink"/> for deserialization. </summary>
+        internal CosmosCassandraDataTransferDataSourceSink()
+        {
+        }
+
         /// <summary> Gets or sets the keyspace name. </summary>
+        [WirePath("keyspaceName")]
         public string KeyspaceName { get; set; }
         /// <summary> Gets or sets the table name. </summary>
+        [WirePath("tableName")]
         public string TableName { get; set; }
-        /// <summary> Gets or sets the remote account name. </summary>
-        public string RemoteAccountName { get; set; }
     }
 }

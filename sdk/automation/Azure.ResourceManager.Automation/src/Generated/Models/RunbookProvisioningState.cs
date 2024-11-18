@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator ==(RunbookProvisioningState left, RunbookProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunbookProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(RunbookProvisioningState left, RunbookProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RunbookProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RunbookProvisioningState"/>. </summary>
         public static implicit operator RunbookProvisioningState(string value) => new RunbookProvisioningState(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

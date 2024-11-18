@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Abstract class to share properties between concrete selectors. </summary>
-    public abstract partial class KnowledgeStoreStorageProjectionSelector : KnowledgeStoreProjectionSelector
+    public partial class KnowledgeStoreStorageProjectionSelector : KnowledgeStoreProjectionSelector
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeStoreStorageProjectionSelector"/>. </summary>
         /// <param name="storageContainer"> Blob container to store projections in. </param>

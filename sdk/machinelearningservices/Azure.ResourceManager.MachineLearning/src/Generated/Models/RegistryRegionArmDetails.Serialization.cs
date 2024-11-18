@@ -5,17 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class RegistryRegionArmDetails : IUtf8JsonSerializable
+    public partial class RegistryRegionArmDetails : IUtf8JsonSerializable, IJsonModel<RegistryRegionArmDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegistryRegionArmDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RegistryRegionArmDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegistryRegionArmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(AcrDetails))
             {
                 if (AcrDetails != null)
@@ -24,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in AcrDetails)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -53,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in StorageAccountDetails)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -62,18 +82,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("storageAccountDetails");
                 }
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static RegistryRegionArmDetails DeserializeRegistryRegionArmDetails(JsonElement element)
+        RegistryRegionArmDetails IJsonModel<RegistryRegionArmDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RegistryRegionArmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegistryRegionArmDetails(document.RootElement, options);
+        }
+
+        internal static RegistryRegionArmDetails DeserializeRegistryRegionArmDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<RegistryAcrDetails>> acrDetails = default;
-            Optional<AzureLocation?> location = default;
-            Optional<IList<StorageAccountDetails>> storageAccountDetails = default;
+            IList<RegistryAcrDetails> acrDetails = default;
+            AzureLocation? location = default;
+            IList<StorageAccountDetails> storageAccountDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("acrDetails"u8))
@@ -86,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<RegistryAcrDetails> array = new List<RegistryAcrDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegistryAcrDetails.DeserializeRegistryAcrDetails(item));
+                        array.Add(RegistryAcrDetails.DeserializeRegistryAcrDetails(item, options));
                     }
                     acrDetails = array;
                     continue;
@@ -111,13 +161,127 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<StorageAccountDetails> array = new List<StorageAccountDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.StorageAccountDetails.DeserializeStorageAccountDetails(item));
+                        array.Add(Models.StorageAccountDetails.DeserializeStorageAccountDetails(item, options));
                     }
                     storageAccountDetails = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RegistryRegionArmDetails(Optional.ToList(acrDetails), Optional.ToNullable(location), Optional.ToList(storageAccountDetails));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RegistryRegionArmDetails(acrDetails ?? new ChangeTrackingList<RegistryAcrDetails>(), location, storageAccountDetails ?? new ChangeTrackingList<StorageAccountDetails>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AcrDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  acrDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AcrDetails))
+                {
+                    if (AcrDetails.Any())
+                    {
+                        builder.Append("  acrDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AcrDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  acrDetails: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageAccountDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(StorageAccountDetails))
+                {
+                    if (StorageAccountDetails.Any())
+                    {
+                        builder.Append("  storageAccountDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in StorageAccountDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  storageAccountDetails: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<RegistryRegionArmDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegistryRegionArmDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RegistryRegionArmDetails IPersistableModel<RegistryRegionArmDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegistryRegionArmDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRegistryRegionArmDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RegistryRegionArmDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

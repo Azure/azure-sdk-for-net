@@ -5,18 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkSliceConfiguration : IUtf8JsonSerializable
+    public partial class MobileNetworkSliceConfiguration : IUtf8JsonSerializable, IJsonModel<MobileNetworkSliceConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkSliceConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MobileNetworkSliceConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSliceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MobileNetworkSliceConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("slice"u8);
             JsonSerializer.Serialize(writer, Slice);
             writer.WritePropertyName("defaultDataNetwork"u8);
@@ -25,14 +45,42 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartArray();
             foreach (var item in DataNetworkConfigurations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static MobileNetworkSliceConfiguration DeserializeMobileNetworkSliceConfiguration(JsonElement element)
+        MobileNetworkSliceConfiguration IJsonModel<MobileNetworkSliceConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSliceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MobileNetworkSliceConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileNetworkSliceConfiguration(document.RootElement, options);
+        }
+
+        internal static MobileNetworkSliceConfiguration DeserializeMobileNetworkSliceConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +88,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             WritableSubResource slice = default;
             WritableSubResource defaultDataNetwork = default;
             IList<DataNetworkConfiguration> dataNetworkConfigurations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("slice"u8))
@@ -57,13 +107,125 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<DataNetworkConfiguration> array = new List<DataNetworkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataNetworkConfiguration.DeserializeDataNetworkConfiguration(item));
+                        array.Add(DataNetworkConfiguration.DeserializeDataNetworkConfiguration(item, options));
                     }
                     dataNetworkConfigurations = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MobileNetworkSliceConfiguration(slice, defaultDataNetwork, dataNetworkConfigurations);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MobileNetworkSliceConfiguration(slice, defaultDataNetwork, dataNetworkConfigurations, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SliceId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  slice: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Slice))
+                {
+                    builder.Append("  slice: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Slice, options, 2, false, "  slice: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DefaultDataNetworkId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defaultDataNetwork: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultDataNetwork))
+                {
+                    builder.Append("  defaultDataNetwork: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DefaultDataNetwork, options, 2, false, "  defaultDataNetwork: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataNetworkConfigurations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataNetworkConfigurations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DataNetworkConfigurations))
+                {
+                    if (DataNetworkConfigurations.Any())
+                    {
+                        builder.Append("  dataNetworkConfigurations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DataNetworkConfigurations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  dataNetworkConfigurations: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MobileNetworkSliceConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSliceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MobileNetworkSliceConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MobileNetworkSliceConfiguration IPersistableModel<MobileNetworkSliceConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSliceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMobileNetworkSliceConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MobileNetworkSliceConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MobileNetworkSliceConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

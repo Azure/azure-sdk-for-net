@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.FluidRelay;
 
 namespace Azure.ResourceManager.FluidRelay.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fluidRelayServerName"> The Fluid Relay server resource name. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Reservations;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Reservations.Samples
 {
     public partial class Sample_QuotaRequestDetailCollection
     {
-        // QuotaRequestFailed
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_QuotaRequestFailed()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getQuotaRequestStatusFailed.json
@@ -53,9 +50,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QuotaRequestFailed
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_QuotaRequestFailed()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getQuotaRequestStatusFailed.json
@@ -84,9 +80,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // QuotaRequestFailed
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_QuotaRequestFailed()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getQuotaRequestStatusFailed.json
@@ -115,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -127,9 +122,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             }
         }
 
-        // QuotaRequestInProgress
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_QuotaRequestInProgress()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getQuotaRequestStatusInProgress.json
@@ -162,9 +156,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QuotaRequestInProgress
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_QuotaRequestInProgress()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getQuotaRequestStatusInProgress.json
@@ -193,9 +186,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // QuotaRequestInProgress
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_QuotaRequestInProgress()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getQuotaRequestStatusInProgress.json
@@ -224,7 +216,7 @@ namespace Azure.ResourceManager.Reservations.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -236,9 +228,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             }
         }
 
-        // QuotaRequestStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_QuotaRequestStatus()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getQuotaRequestStatusById.json
@@ -271,9 +262,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QuotaRequestStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_QuotaRequestStatus()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getQuotaRequestStatusById.json
@@ -302,9 +292,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // QuotaRequestStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_QuotaRequestStatus()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getQuotaRequestStatusById.json
@@ -333,7 +322,7 @@ namespace Azure.ResourceManager.Reservations.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -345,9 +334,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             }
         }
 
-        // QuotaRequestHistory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_QuotaRequestHistory()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2020-10-25/examples/getQuotaRequestsHistory.json
@@ -379,7 +367,7 @@ namespace Azure.ResourceManager.Reservations.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

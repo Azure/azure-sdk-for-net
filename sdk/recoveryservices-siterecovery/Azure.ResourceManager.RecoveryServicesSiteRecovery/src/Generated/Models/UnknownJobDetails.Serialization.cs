@@ -5,22 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class UnknownJobDetails
+    internal partial class UnknownJobDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoveryJobDetails>
     {
-        internal static UnknownJobDetails DeserializeUnknownJobDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryJobDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SiteRecoveryJobDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryJobDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        SiteRecoveryJobDetails IJsonModel<SiteRecoveryJobDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryJobDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryJobDetails(document.RootElement, options);
+        }
+
+        internal static UnknownJobDetails DeserializeUnknownJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string instanceType = "Unknown";
-            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            IReadOnlyDictionary<string, string> affectedObjectDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceType"u8))
@@ -42,8 +82,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     affectedObjectDetails = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownJobDetails(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryJobDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SiteRecoveryJobDetails IPersistableModel<SiteRecoveryJobDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteRecoveryJobDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteRecoveryJobDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

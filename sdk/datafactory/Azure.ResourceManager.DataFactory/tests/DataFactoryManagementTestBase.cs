@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
 
         protected async Task<DataFactoryDatasetResource> CreateAzureDBDataSet(DataFactoryResource dataFactory, string dataSetName, string linkedServiceName, string tableName)
         {
-            DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName);
+            DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName);
             DataFactoryDatasetData dataFactoryDatasetData = new DataFactoryDatasetData(new AzureSqlTableDataset(dataFactoryLinkedServiceReference)
             {
                 Table = tableName,
@@ -116,17 +116,13 @@ namespace Azure.ResourceManager.DataFactory.Tests
             {
                 Activities =
                 {
-                    new CopyActivity("TestAzureSQL",new CopyActivitySource(),new CopySink())
-                    {
-                        State = PipelineActivityState.Active,
-                        Source = new AzureSqlSource()
+                    new CopyActivity("TestAzureSQL",new AzureSqlSource()
                         {
                             SourceRetryCount = 10,
                             QueryTimeout = "02:00:00"
-                        },
-                        Sink = new AzureSqlSink()
-                        {
-                        },
+                        }, new AzureSqlSink())
+                    {
+                        State = PipelineActivityState.Active,
                         Inputs =
                         {
                             new DatasetReference(DatasetReferenceType.DatasetReference,dataSetAzureSqlSource)
@@ -136,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
                             new DatasetReference(DatasetReferenceType.DatasetReference,dataSetAzureSqlSink)
                         }
                     },
-                    new CopyActivity("TestAzureBlob",new CopyActivitySource(),new CopySink())
+                    new CopyActivity("TestAzureBlob",new DelimitedTextSource(), new DelimitedTextSink())
                     {
                         State = PipelineActivityState.Active,
                         Inputs =
@@ -146,15 +142,9 @@ namespace Azure.ResourceManager.DataFactory.Tests
                         Outputs =
                         {
                             new DatasetReference(DatasetReferenceType.DatasetReference,dataSetAzureStorageSink)
-                        },
-                        Source = new DelimitedTextSource()
-                        {
-                        },
-                        Sink = new DelimitedTextSink()
-                        {
                         }
                     },
-                    new CopyActivity("TestAzureGen2",new CopyActivitySource(),new CopySink())
+                    new CopyActivity("TestAzureGen2",new DelimitedTextSource(), new DelimitedTextSink())
                     {
                         State = PipelineActivityState.Active,
                         Inputs =
@@ -164,17 +154,11 @@ namespace Azure.ResourceManager.DataFactory.Tests
                         Outputs =
                         {
                             new DatasetReference(DatasetReferenceType.DatasetReference,dataSetAzureGen2Sink)
-                        },
-                        Source = new DelimitedTextSource()
-                        {
-                        },
-                        Sink = new DelimitedTextSink()
-                        {
                         }
                     }
                 }
             };
-            var pipeline = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(Azure.WaitUntil.Completed, pipelineName, pipelineData);
+            var pipeline = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, pipelineData);
             return pipeline.Value;
         }
 
@@ -203,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
 
         protected async Task<DataFactoryDatasetResource> CreateAzureBlobStorageDataSet(DataFactoryResource dataFactory, string dataSetName, string linkedServiceName)
         {
-            DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName);
+            DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName);
             DataFactoryDatasetData dataFactoryDatasetData = new DataFactoryDatasetData(new DelimitedTextDataset(dataFactoryLinkedServiceReference)
             {
                 Schema = new List<DatasetSchemaDataElement>()
@@ -226,7 +210,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
 
         protected async Task<DataFactoryDatasetResource> CreateAzureDataLakeGen2DataSet(DataFactoryResource dataFactory, string dataSetName, string linkedServiceName)
         {
-            DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName);
+            DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName);
             DataFactoryDatasetData dataFactoryDatasetData = new DataFactoryDatasetData(new DelimitedTextDataset(dataFactoryLinkedServiceReference)
             {
                 Schema = new List<DatasetSchemaDataElement>()

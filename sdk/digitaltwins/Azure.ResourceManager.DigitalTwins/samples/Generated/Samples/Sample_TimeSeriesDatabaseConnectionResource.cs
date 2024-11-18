@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DigitalTwins;
 using Azure.ResourceManager.DigitalTwins.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DigitalTwins.Samples
 {
     public partial class Sample_TimeSeriesDatabaseConnectionResource
     {
-        // Get time series database connection for a DigitalTwins instance.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTimeSeriesDatabaseConnectionForADigitalTwinsInstance()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/TimeSeriesDatabaseConnectionsGet_example.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or replace a time series database connection for a DigitalTwins instance with user assigned identity.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrReplaceATimeSeriesDatabaseConnectionForADigitalTwinsInstanceWithUserAssignedIdentity()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/TimeSeriesDatabaseConnectionsPut_WithUserIdentity_example.json
@@ -95,9 +91,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or replace a time series database connection for a DigitalTwins instance.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrReplaceATimeSeriesDatabaseConnectionForADigitalTwinsInstance()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/TimeSeriesDatabaseConnectionsPut_example.json
@@ -138,9 +133,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a time series database connection for a DigitalTwins instance.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteATimeSeriesDatabaseConnectionForADigitalTwinsInstance()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/TimeSeriesDatabaseConnectionsDelete_example.json

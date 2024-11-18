@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FormatWriteSettings : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownFormatWriteSettings))]
+    public partial class FormatWriteSettings : IUtf8JsonSerializable, IJsonModel<FormatWriteSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FormatWriteSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FormatWriteSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FormatWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatWriteSettingsType);
             foreach (var item in AdditionalProperties)
@@ -29,11 +48,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static FormatWriteSettings DeserializeFormatWriteSettings(JsonElement element)
+        FormatWriteSettings IJsonModel<FormatWriteSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FormatWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFormatWriteSettings(document.RootElement, options);
+        }
+
+        internal static FormatWriteSettings DeserializeFormatWriteSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,14 +74,46 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AvroWriteSettings": return AvroWriteSettings.DeserializeAvroWriteSettings(element);
-                    case "JsonWriteSettings": return JsonWriteSettings.DeserializeJsonWriteSettings(element);
-                    case "OrcWriteSettings": return OrcWriteSettings.DeserializeOrcWriteSettings(element);
-                    case "ParquetWriteSettings": return ParquetWriteSettings.DeserializeParquetWriteSettings(element);
-                    case "DelimitedTextWriteSettings": return DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(element);
+                    case "AvroWriteSettings": return AvroWriteSettings.DeserializeAvroWriteSettings(element, options);
+                    case "DelimitedTextWriteSettings": return DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(element, options);
+                    case "IcebergWriteSettings": return IcebergWriteSettings.DeserializeIcebergWriteSettings(element, options);
+                    case "JsonWriteSettings": return JsonWriteSettings.DeserializeJsonWriteSettings(element, options);
+                    case "OrcWriteSettings": return OrcWriteSettings.DeserializeOrcWriteSettings(element, options);
+                    case "ParquetWriteSettings": return ParquetWriteSettings.DeserializeParquetWriteSettings(element, options);
                 }
             }
-            return UnknownFormatWriteSettings.DeserializeUnknownFormatWriteSettings(element);
+            return UnknownFormatWriteSettings.DeserializeUnknownFormatWriteSettings(element, options);
         }
+
+        BinaryData IPersistableModel<FormatWriteSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FormatWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FormatWriteSettings IPersistableModel<FormatWriteSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FormatWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFormatWriteSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FormatWriteSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

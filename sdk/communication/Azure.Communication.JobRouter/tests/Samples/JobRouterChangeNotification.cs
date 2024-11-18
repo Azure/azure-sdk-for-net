@@ -62,10 +62,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 switch (egEvent.EventType)
                 {
                     case "Microsoft.Communication.WorkerOfferIssued":
-                        AcsRouterWorkerOfferIssuedEventData deserializedEventData =
+                        AcsRouterWorkerOfferIssuedEventData? deserializedEventData =
                             egEvent.Data.ToObjectFromJson<AcsRouterWorkerOfferIssuedEventData>();
-                        Console.Write(deserializedEventData.OfferId); // Offer Id
-                        offerId = deserializedEventData.OfferId;
+                        Console.Write(deserializedEventData?.OfferId); // Offer Id
+                        offerId = deserializedEventData?.OfferId ?? string.Empty;
                         break;
                     // Handle any other custom event type
                     default:

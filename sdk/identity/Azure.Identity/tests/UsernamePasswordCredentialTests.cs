@@ -35,10 +35,19 @@ namespace Azure.Identity.Tests
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
             };
             if (config.Transport != null)
             {
                 options.Transport = config.Transport;
+            }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
+            if (config.AuthenticationRecord != null)
+            {
+                options.AuthenticationRecord = config.AuthenticationRecord;
             }
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new UsernamePasswordCredential("user", "password", config.TenantId, ClientId, options, pipeline, config.MockPublicMsalClient));

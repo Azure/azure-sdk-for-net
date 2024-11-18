@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DevTestLabs;
 using Azure.ResourceManager.DevTestLabs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
     public partial class Sample_DevTestLabDiskResource
     {
-        // Disks_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_DisksGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Disks_Get.json
@@ -51,9 +48,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Disks_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DisksDelete()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Disks_Delete.json
@@ -77,12 +73,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // invoke the operation
             await devTestLabDisk.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Disks_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_DisksUpdate()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Disks_Update.json
@@ -120,9 +115,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Disks_Attach
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Attach_DisksAttach()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Disks_Attach.json
@@ -150,12 +144,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             };
             await devTestLabDisk.AttachAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Disks_Detach
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Detach_DisksDetach()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Disks_Detach.json
@@ -183,7 +176,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             };
             await devTestLabDisk.DetachAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

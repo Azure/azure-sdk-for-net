@@ -13,7 +13,7 @@ The scenarios in this directory provide a suite of stress tests that test the Se
 
 ### Prerequisites
 
-When tests are run locally, Azure resources need to be created prior to running the test. This can be done through the Azure CLI, an ARM pr bicep file, or the Azure Portal. The bicep file included in this directory can be used to [deploy all resources](https://docs.microsoft.com/azure/azure-resource-manager/bicep/deploy-to-resource-group?tabs=azure-cli) aside from the application insights portal.
+When tests are run locally, Azure resources need to be created prior to running the test. This can be done through the Azure CLI, an ARM pr bicep file, or the Azure Portal. The bicep file included in this directory can be used to [deploy all resources](https://learn.microsoft.com/azure/azure-resource-manager/bicep/deploy-to-resource-group?tabs=azure-cli) aside from the application insights portal.
 
 To run the compiled .dll file, navigate to the `<git root>/artifacts/bin/Azure.Messaging.ServiceBus.Stress/Release/net7.0` directory.
 

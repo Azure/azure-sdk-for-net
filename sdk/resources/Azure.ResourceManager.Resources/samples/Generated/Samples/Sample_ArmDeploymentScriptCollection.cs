@@ -8,21 +8,18 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_ArmDeploymentScriptCollection
     {
-        // DeploymentScriptsCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DeploymentScriptsCreate()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Create.json
@@ -74,9 +71,8 @@ new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeploymentScriptsCreateNoUserManagedIdentity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DeploymentScriptsCreateNoUserManagedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Create_No_UserManagedIdentity.json
@@ -120,9 +116,8 @@ new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeploymentScriptsCreate_MinCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DeploymentScriptsCreateMinCreate()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Min_Create.json
@@ -168,9 +163,8 @@ new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeploymentScriptsCreate_UsingCustomACIName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DeploymentScriptsCreateUsingCustomACIName()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Create_Using_Custom_Aci_Name.json
@@ -223,9 +217,8 @@ new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeploymentScriptsCreate_UsingExistingStorageAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DeploymentScriptsCreateUsingExistingStorageAccount()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Create_Using_Existing_StorageAccount.json
@@ -282,9 +275,8 @@ new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeploymentScriptsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_DeploymentScriptsGet()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Get.json
@@ -316,9 +308,8 @@ new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeploymentScriptsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_DeploymentScriptsGet()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Get.json
@@ -346,9 +337,8 @@ new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // DeploymentScriptsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DeploymentScriptsGet()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Get.json
@@ -376,7 +366,7 @@ new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -388,9 +378,8 @@ new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting
             }
         }
 
-        // DeploymentScriptsList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DeploymentScriptsList()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_ListByResourceGroup.json
@@ -421,7 +410,7 @@ new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

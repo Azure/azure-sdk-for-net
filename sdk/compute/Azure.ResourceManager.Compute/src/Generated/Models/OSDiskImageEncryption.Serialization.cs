@@ -5,37 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class OSDiskImageEncryption : IUtf8JsonSerializable
+    public partial class OSDiskImageEncryption : IUtf8JsonSerializable, IJsonModel<OSDiskImageEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSDiskImageEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<OSDiskImageEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecurityProfile))
-            {
-                writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
-            }
-            if (Optional.IsDefined(DiskEncryptionSetId))
-            {
-                writer.WritePropertyName("diskEncryptionSetId"u8);
-                writer.WriteStringValue(DiskEncryptionSetId);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static OSDiskImageEncryption DeserializeOSDiskImageEncryption(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OSDiskImageEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OSDiskImageEncryption)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile"u8);
+                writer.WriteObjectValue(SecurityProfile, options);
+            }
+        }
+
+        OSDiskImageEncryption IJsonModel<OSDiskImageEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OSDiskImageEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OSDiskImageEncryption)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOSDiskImageEncryption(document.RootElement, options);
+        }
+
+        internal static OSDiskImageEncryption DeserializeOSDiskImageEncryption(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<OSDiskImageSecurityProfile> securityProfile = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            OSDiskImageSecurityProfile securityProfile = default;
+            ResourceIdentifier diskEncryptionSetId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("securityProfile"u8))
@@ -44,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityProfile = OSDiskImageSecurityProfile.DeserializeOSDiskImageSecurityProfile(property.Value);
+                    securityProfile = OSDiskImageSecurityProfile.DeserializeOSDiskImageSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionSetId"u8))
@@ -56,8 +86,44 @@ namespace Azure.ResourceManager.Compute.Models
                     diskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OSDiskImageEncryption(diskEncryptionSetId.Value, securityProfile.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OSDiskImageEncryption(diskEncryptionSetId, serializedAdditionalRawData, securityProfile);
         }
+
+        BinaryData IPersistableModel<OSDiskImageEncryption>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OSDiskImageEncryption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OSDiskImageEncryption)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OSDiskImageEncryption IPersistableModel<OSDiskImageEncryption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OSDiskImageEncryption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOSDiskImageEncryption(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OSDiskImageEncryption)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OSDiskImageEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

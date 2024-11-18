@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Datadog;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Datadog.Samples
 {
     public partial class Sample_MonitoringTagRuleResource
     {
-        // TagRules_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_TagRulesCreateOrUpdate()
         {
             // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/TagRules_CreateOrUpdate.json
@@ -51,9 +48,8 @@ namespace Azure.ResourceManager.Datadog.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TagRules_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TagRulesGet()
         {
             // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/TagRules_Get.json

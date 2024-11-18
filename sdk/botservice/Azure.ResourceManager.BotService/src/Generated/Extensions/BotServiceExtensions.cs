@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.BotService.Mocking;
 using Azure.ResourceManager.BotService.Models;
 using Azure.ResourceManager.Resources;
@@ -144,6 +142,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -173,6 +179,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -204,6 +218,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Bots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -231,6 +253,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -260,6 +290,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>BotConnection_ListServiceProviders</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -287,6 +325,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BotConnection_ListServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotConnectionSettingResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -316,6 +362,10 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>QnAMakerEndpointKeys_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -343,6 +393,10 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QnAMakerEndpointKeys_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
         /// </item>
         /// </list>
         /// <item>
@@ -372,6 +426,10 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>HostSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -398,6 +456,10 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HostSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
         /// </item>
         /// </list>
         /// <item>
@@ -426,6 +488,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Bots_GetCheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -453,6 +523,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_GetCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// <item>

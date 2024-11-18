@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Resources;
 
@@ -103,6 +101,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +140,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,6 +181,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>Snapshots_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -178,7 +200,9 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _agentPoolSnapshotSnapshotsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(response);
+                var uri = _agentPoolSnapshotSnapshotsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ContainerServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -201,6 +225,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>Snapshots_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -212,7 +244,9 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _agentPoolSnapshotSnapshotsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ContainerServiceArmOperation(response);
+                var uri = _agentPoolSnapshotSnapshotsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ContainerServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -234,6 +268,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_UpdateTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +311,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>Snapshots_UpdateTags</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerServiceTagsObject"> Parameters supplied to the Update snapshot Tags operation. </param>
@@ -302,6 +352,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,6 +415,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -411,6 +477,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -460,6 +534,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -508,6 +590,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -560,6 +650,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

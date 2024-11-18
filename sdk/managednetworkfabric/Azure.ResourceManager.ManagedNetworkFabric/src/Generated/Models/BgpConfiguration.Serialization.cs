@@ -5,21 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class BgpConfiguration : IUtf8JsonSerializable
+    public partial class BgpConfiguration : IUtf8JsonSerializable, IJsonModel<BgpConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BgpConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BgpConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BgpConfiguration)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration);
+                writer.WriteObjectValue(BfdConfiguration, options);
             }
             if (Optional.IsDefined(DefaultRouteOriginate))
             {
@@ -35,6 +54,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("allowASOverride"u8);
                 writer.WriteStringValue(AllowASOverride.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(FabricAsn))
+            {
+                writer.WritePropertyName("fabricASN"u8);
+                writer.WriteNumberValue(FabricAsn.Value);
             }
             if (Optional.IsDefined(PeerAsn))
             {
@@ -67,7 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv4NeighborAddress)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,35 +101,45 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv6NeighborAddress)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Annotation))
-            {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static BgpConfiguration DeserializeBgpConfiguration(JsonElement element)
+        BgpConfiguration IJsonModel<BgpConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BgpConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBgpConfiguration(document.RootElement, options);
+        }
+
+        internal static BgpConfiguration DeserializeBgpConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BfdConfiguration> bfdConfiguration = default;
-            Optional<NetworkFabricBooleanValue> defaultRouteOriginate = default;
-            Optional<int> allowAS = default;
-            Optional<AllowASOverride> allowASOverride = default;
-            Optional<long> fabricAsn = default;
-            Optional<long> peerAsn = default;
-            Optional<IList<string>> ipv4ListenRangePrefixes = default;
-            Optional<IList<string>> ipv6ListenRangePrefixes = default;
-            Optional<IList<NeighborAddress>> ipv4NeighborAddress = default;
-            Optional<IList<NeighborAddress>> ipv6NeighborAddress = default;
-            Optional<string> annotation = default;
+            BfdConfiguration bfdConfiguration = default;
+            NetworkFabricBooleanValue? defaultRouteOriginate = default;
+            int? allowAS = default;
+            AllowASOverride? allowASOverride = default;
+            long? fabricAsn = default;
+            long? peerAsn = default;
+            IList<string> ipv4ListenRangePrefixes = default;
+            IList<string> ipv6ListenRangePrefixes = default;
+            IList<NeighborAddress> ipv4NeighborAddress = default;
+            IList<NeighborAddress> ipv6NeighborAddress = default;
+            string annotation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bfdConfiguration"u8))
@@ -114,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value);
+                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defaultRouteOriginate"u8))
@@ -199,7 +233,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NeighborAddress> array = new List<NeighborAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NeighborAddress.DeserializeNeighborAddress(item));
+                        array.Add(NeighborAddress.DeserializeNeighborAddress(item, options));
                     }
                     ipv4NeighborAddress = array;
                     continue;
@@ -213,7 +247,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NeighborAddress> array = new List<NeighborAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NeighborAddress.DeserializeNeighborAddress(item));
+                        array.Add(NeighborAddress.DeserializeNeighborAddress(item, options));
                     }
                     ipv6NeighborAddress = array;
                     continue;
@@ -223,8 +257,56 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BgpConfiguration(annotation.Value, bfdConfiguration.Value, Optional.ToNullable(defaultRouteOriginate), Optional.ToNullable(allowAS), Optional.ToNullable(allowASOverride), Optional.ToNullable(fabricAsn), Optional.ToNullable(peerAsn), Optional.ToList(ipv4ListenRangePrefixes), Optional.ToList(ipv6ListenRangePrefixes), Optional.ToList(ipv4NeighborAddress), Optional.ToList(ipv6NeighborAddress));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BgpConfiguration(
+                annotation,
+                serializedAdditionalRawData,
+                bfdConfiguration,
+                defaultRouteOriginate,
+                allowAS,
+                allowASOverride,
+                fabricAsn,
+                peerAsn,
+                ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>(),
+                ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>(),
+                ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),
+                ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>());
         }
+
+        BinaryData IPersistableModel<BgpConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BgpConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BgpConfiguration IPersistableModel<BgpConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBgpConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BgpConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BgpConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

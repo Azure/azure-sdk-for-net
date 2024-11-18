@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -24,10 +24,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="stepType"> The type of the step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="encodedTaskContent"> Base64 encoded value of the template/definition file content. </param>
         /// <param name="encodedValuesContent"> Base64 encoded value of the parameters/values file content. </param>
         /// <param name="values"> The collection of overridable values that can be passed when running a task. </param>
-        internal ContainerRegistryEncodedTaskStepUpdateContent(ContainerRegistryTaskStepType stepType, string contextPath, string contextAccessToken, string encodedTaskContent, string encodedValuesContent, IList<ContainerRegistryTaskOverridableValue> values) : base(stepType, contextPath, contextAccessToken)
+        internal ContainerRegistryEncodedTaskStepUpdateContent(ContainerRegistryTaskStepType stepType, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> serializedAdditionalRawData, string encodedTaskContent, string encodedValuesContent, IList<ContainerRegistryTaskOverridableValue> values) : base(stepType, contextPath, contextAccessToken, serializedAdditionalRawData)
         {
             EncodedTaskContent = encodedTaskContent;
             EncodedValuesContent = encodedValuesContent;
@@ -36,10 +37,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Base64 encoded value of the template/definition file content. </summary>
+        [WirePath("encodedTaskContent")]
         public string EncodedTaskContent { get; set; }
         /// <summary> Base64 encoded value of the parameters/values file content. </summary>
+        [WirePath("encodedValuesContent")]
         public string EncodedValuesContent { get; set; }
         /// <summary> The collection of overridable values that can be passed when running a task. </summary>
+        [WirePath("values")]
         public IList<ContainerRegistryTaskOverridableValue> Values { get; }
     }
 }

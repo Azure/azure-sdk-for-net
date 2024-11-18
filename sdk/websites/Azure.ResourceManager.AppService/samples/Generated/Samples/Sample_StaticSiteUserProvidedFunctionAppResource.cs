@@ -7,22 +7,19 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppService;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_StaticSiteUserProvidedFunctionAppResource
     {
-        // Get details of the user provided function app registered with a static site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDetailsOfTheUserProvidedFunctionAppRegisteredWithAStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/GetUserProvidedFunctionAppForStaticSite.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetUserProvidedFunctionAppForStaticSite.json
             // this example is just showing the usage of "StaticSites_GetUserProvidedFunctionAppForStaticSite" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,12 +46,11 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Register a user provided function app with a static site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RegisterAUserProvidedFunctionAppWithAStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/RegisterUserProvidedFunctionAppWithStaticSite.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/RegisterUserProvidedFunctionAppWithStaticSite.json
             // this example is just showing the usage of "StaticSites_RegisterUserProvidedFunctionAppWithStaticSite" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,12 +84,11 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Detach the user provided function app from the static site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DetachTheUserProvidedFunctionAppFromTheStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/DetachUserProvidedFunctionAppFromStaticSite.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/DetachUserProvidedFunctionAppFromStaticSite.json
             // this example is just showing the usage of "StaticSites_DetachUserProvidedFunctionAppFromStaticSite" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Samples
             // invoke the operation
             await staticSiteUserProvidedFunctionApp.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

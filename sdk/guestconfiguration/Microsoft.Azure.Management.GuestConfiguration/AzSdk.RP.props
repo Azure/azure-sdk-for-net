@@ -1,7 +1,0 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!--This file and it's contents are updated at build time moving or editing might result in build failure. Take due deligence while editing this file-->
-  <PropertyGroup>
-    <AzureApiTag>Compute_2018-11-20;GuestConfiguration_2018-11-20;GuestConfiguration_2020-06-25;GuestConfiguration_2021-01-25</AzureApiTag>
-    <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
-  </PropertyGroup>
-</Project>

@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         private const string AutoMLValue = "AutoML";
         private const string CommandValue = "Command";
-        private const string LabelingValue = "Labeling";
         private const string SweepValue = "Sweep";
         private const string PipelineValue = "Pipeline";
         private const string SparkValue = "Spark";
@@ -33,8 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static JobType AutoML { get; } = new JobType(AutoMLValue);
         /// <summary> Command. </summary>
         public static JobType Command { get; } = new JobType(CommandValue);
-        /// <summary> Labeling. </summary>
-        public static JobType Labeling { get; } = new JobType(LabelingValue);
         /// <summary> Sweep. </summary>
         public static JobType Sweep { get; } = new JobType(SweepValue);
         /// <summary> Pipeline. </summary>
@@ -45,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(JobType left, JobType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobType"/> values are not the same. </summary>
         public static bool operator !=(JobType left, JobType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobType"/>. </summary>
         public static implicit operator JobType(string value) => new JobType(value);
 
         /// <inheritdoc />
@@ -56,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

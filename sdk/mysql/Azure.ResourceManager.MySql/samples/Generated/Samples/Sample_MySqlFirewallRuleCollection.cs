@@ -8,19 +8,16 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MySql;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MySql.Samples
 {
     public partial class Sample_MySqlFirewallRuleCollection
     {
-        // FirewallRuleCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_FirewallRuleCreate()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/FirewallRuleCreate.json
@@ -55,9 +52,8 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // FirewallRuleGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FirewallRuleGet()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/FirewallRuleGet.json
@@ -90,9 +86,8 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // FirewallRuleGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_FirewallRuleGet()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/FirewallRuleGet.json
@@ -121,9 +116,8 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // FirewallRuleGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_FirewallRuleGet()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/FirewallRuleGet.json
@@ -152,7 +146,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -164,9 +158,8 @@ namespace Azure.ResourceManager.MySql.Samples
             }
         }
 
-        // FirewallRuleList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_FirewallRuleList()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/FirewallRuleListByServer.json
@@ -198,7 +191,7 @@ namespace Azure.ResourceManager.MySql.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

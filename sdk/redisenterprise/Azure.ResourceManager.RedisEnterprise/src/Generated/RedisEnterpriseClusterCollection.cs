@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RedisEnterprise
@@ -65,11 +63,19 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
-        /// <param name="data"> Parameters supplied to the Create RedisEnterprise operation. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="data"> Parameters supplied to the Create Redis Enterprise operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
@@ -106,11 +112,19 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
-        /// <param name="data"> Parameters supplied to the Create RedisEnterprise operation. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="data"> Parameters supplied to the Create Redis Enterprise operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
@@ -137,7 +151,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Gets information about a RedisEnterprise cluster
+        /// Gets information about a Redis Enterprise cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -147,9 +161,17 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -174,7 +196,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Gets information about a RedisEnterprise cluster
+        /// Gets information about a Redis Enterprise cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -184,9 +206,17 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -211,7 +241,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Lists all RedisEnterprise clusters in a resource group.
+        /// Lists all Redis Enterprise clusters in a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -220,6 +250,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +271,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Lists all RedisEnterprise clusters in a resource group.
+        /// Lists all Redis Enterprise clusters in a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -242,6 +280,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,9 +311,17 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -300,9 +354,17 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -335,9 +397,17 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -372,9 +442,17 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>

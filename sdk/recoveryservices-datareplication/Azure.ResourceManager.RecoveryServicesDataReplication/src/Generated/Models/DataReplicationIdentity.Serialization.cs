@@ -6,16 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class DataReplicationIdentity : IUtf8JsonSerializable
+    public partial class DataReplicationIdentity : IUtf8JsonSerializable, IJsonModel<DataReplicationIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataReplicationIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataReplicationIdentity)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("applicationId"u8);
@@ -26,11 +44,39 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(Audience);
             writer.WritePropertyName("aadAuthority"u8);
             writer.WriteStringValue(AadAuthority);
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DataReplicationIdentity DeserializeDataReplicationIdentity(JsonElement element)
+        DataReplicationIdentity IJsonModel<DataReplicationIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataReplicationIdentity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataReplicationIdentity(document.RootElement, options);
+        }
+
+        internal static DataReplicationIdentity DeserializeDataReplicationIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +86,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string objectId = default;
             string audience = default;
             string aadAuthority = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -67,8 +115,50 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     aadAuthority = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataReplicationIdentity(tenantId, applicationId, objectId, audience, aadAuthority);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataReplicationIdentity(
+                tenantId,
+                applicationId,
+                objectId,
+                audience,
+                aadAuthority,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataReplicationIdentity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataReplicationIdentity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataReplicationIdentity IPersistableModel<DataReplicationIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataReplicationIdentity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataReplicationIdentity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataReplicationIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

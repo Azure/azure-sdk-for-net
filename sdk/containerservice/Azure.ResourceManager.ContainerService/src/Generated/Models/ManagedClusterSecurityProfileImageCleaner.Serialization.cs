@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterSecurityProfileImageCleaner : IUtf8JsonSerializable
+    public partial class ManagedClusterSecurityProfileImageCleaner : IUtf8JsonSerializable, IJsonModel<ManagedClusterSecurityProfileImageCleaner>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterSecurityProfileImageCleaner>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ManagedClusterSecurityProfileImageCleaner>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileImageCleaner>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileImageCleaner)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
@@ -25,17 +45,47 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("intervalHours"u8);
                 writer.WriteNumberValue(IntervalHours.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ManagedClusterSecurityProfileImageCleaner DeserializeManagedClusterSecurityProfileImageCleaner(JsonElement element)
+        ManagedClusterSecurityProfileImageCleaner IJsonModel<ManagedClusterSecurityProfileImageCleaner>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileImageCleaner>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileImageCleaner)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterSecurityProfileImageCleaner(document.RootElement, options);
+        }
+
+        internal static ManagedClusterSecurityProfileImageCleaner DeserializeManagedClusterSecurityProfileImageCleaner(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<int> intervalHours = default;
+            bool? enabled = default;
+            int? intervalHours = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -56,8 +106,92 @@ namespace Azure.ResourceManager.ContainerService.Models
                     intervalHours = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedClusterSecurityProfileImageCleaner(Optional.ToNullable(enabled), Optional.ToNullable(intervalHours));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedClusterSecurityProfileImageCleaner(enabled, intervalHours, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsEnabled))
+                {
+                    builder.Append("  enabled: ");
+                    var boolValue = IsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalHours), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  intervalHours: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IntervalHours))
+                {
+                    builder.Append("  intervalHours: ");
+                    builder.AppendLine($"{IntervalHours.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ManagedClusterSecurityProfileImageCleaner>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileImageCleaner>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileImageCleaner)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedClusterSecurityProfileImageCleaner IPersistableModel<ManagedClusterSecurityProfileImageCleaner>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileImageCleaner>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedClusterSecurityProfileImageCleaner(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileImageCleaner)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedClusterSecurityProfileImageCleaner>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_PolicyAssignmentResource
     {
-        // Delete a policy assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAPolicyAssignment()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/deletePolicyAssignment.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignment()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
@@ -80,9 +76,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy assignment with a system assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
@@ -110,9 +105,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy assignment with a user assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
@@ -140,9 +134,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy assignment with overrides
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignmentWithOverrides()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
@@ -170,9 +163,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy assignment with resource selectors
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyAssignmentWithResourceSelectors()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
@@ -200,9 +192,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a policy assignment with a system assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAPolicyAssignmentWithASystemAssignedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/updatePolicyAssignmentWithIdentity.json
@@ -235,9 +226,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a policy assignment with a user assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAPolicyAssignmentWithAUserAssignedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/updatePolicyAssignmentWithUserAssignedIdentity.json
@@ -276,9 +266,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a policy assignment with overrides
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAPolicyAssignmentWithOverrides()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/updatePolicyAssignmentWithOverrides.json
@@ -328,9 +317,8 @@ In =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a policy assignment with resource selectors
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAPolicyAssignmentWithResourceSelectors()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/updatePolicyAssignmentWithResourceSelectors.json

@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.StorageSync;
 using Azure.ResourceManager.StorageSync.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageSync.Samples
 {
     public partial class Sample_StorageSyncServiceResource
     {
-        // StorageSyncServiceCheckNameAvailability_AlreadyExists
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckStorageSyncNameAvailability_StorageSyncServiceCheckNameAvailabilityAlreadyExists()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServiceCheckNameAvailability_AlreadyExists.json
@@ -46,9 +43,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageSyncServiceCheckNameAvailability_Available
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckStorageSyncNameAvailability_StorageSyncServiceCheckNameAvailabilityAvailable()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServiceCheckNameAvailability_Available.json
@@ -73,9 +69,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageSyncServices_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageSyncServicesGet()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServices_Get.json
@@ -104,9 +99,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageSyncServices_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageSyncServicesUpdate()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServices_Update.json
@@ -146,9 +140,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageSyncServices_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_StorageSyncServicesDelete()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServices_Delete.json
@@ -170,12 +163,11 @@ namespace Azure.ResourceManager.StorageSync.Samples
             // invoke the operation
             await storageSyncService.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageSyncServices_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetStorageSyncServices_StorageSyncServicesListBySubscription()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServices_ListBySubscription.json
@@ -202,12 +194,11 @@ namespace Azure.ResourceManager.StorageSync.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PrivateLinkResources_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResources_PrivateLinkResourcesList()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/PrivateLinkResources_List.json
@@ -232,7 +223,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

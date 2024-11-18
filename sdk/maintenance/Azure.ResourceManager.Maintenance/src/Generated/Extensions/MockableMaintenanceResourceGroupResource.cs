@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Maintenance;
 using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
@@ -21,6 +18,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableMaintenanceResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _scheduledEventClientDiagnostics;
+        private ScheduledEventRestOperations _scheduledEventRestClient;
         private ClientDiagnostics _maintenanceApplyUpdateApplyUpdatesClientDiagnostics;
         private ApplyUpdatesRestOperations _maintenanceApplyUpdateApplyUpdatesRestClient;
         private ClientDiagnostics _configurationAssignmentsClientDiagnostics;
@@ -44,6 +43,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         {
         }
 
+        private ClientDiagnostics ScheduledEventClientDiagnostics => _scheduledEventClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ScheduledEventRestOperations ScheduledEventRestClient => _scheduledEventRestClient ??= new ScheduledEventRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics MaintenanceApplyUpdateApplyUpdatesClientDiagnostics => _maintenanceApplyUpdateApplyUpdatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceApplyUpdateResource.ResourceType.Namespace, Diagnostics);
         private ApplyUpdatesRestOperations MaintenanceApplyUpdateApplyUpdatesRestClient => _maintenanceApplyUpdateApplyUpdatesRestClient ??= new ApplyUpdatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MaintenanceApplyUpdateResource.ResourceType));
         private ClientDiagnostics ConfigurationAssignmentsClientDiagnostics => _configurationAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -78,6 +79,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Maintenance Configuration Name. </param>
@@ -100,6 +109,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,6 +148,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Resource provider name. </param>
@@ -157,6 +182,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Resource provider name. </param>
@@ -173,6 +206,92 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         }
 
         /// <summary>
+        /// Post Scheduled Event Acknowledgement
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/scheduledevents/{scheduledEventId}/acknowledge</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledEvent_Acknowledge</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource Name. </param>
+        /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is null. </exception>
+        public virtual async Task<Response<ScheduledEventApproveResult>> AcknowledgeScheduledEventAsync(string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(scheduledEventId, nameof(scheduledEventId));
+
+            using var scope = ScheduledEventClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.AcknowledgeScheduledEvent");
+            scope.Start();
+            try
+            {
+                var response = await ScheduledEventRestClient.AcknowledgeAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceType, resourceName, scheduledEventId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Post Scheduled Event Acknowledgement
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/scheduledevents/{scheduledEventId}/acknowledge</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledEvent_Acknowledge</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource Name. </param>
+        /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is null. </exception>
+        public virtual Response<ScheduledEventApproveResult> AcknowledgeScheduledEvent(string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(scheduledEventId, nameof(scheduledEventId));
+
+            using var scope = ScheduledEventClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.AcknowledgeScheduledEvent");
+            scope.Start();
+            try
+            {
+                var response = ScheduledEventRestClient.Acknowledge(Id.SubscriptionId, Id.ResourceGroupName, resourceType, resourceName, scheduledEventId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Track maintenance updates to resource with parent
         /// <list type="bullet">
         /// <item>
@@ -182,6 +301,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_GetParent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +344,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_GetParent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -250,6 +385,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdateParent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,6 +437,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdateParent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Resource provider name. </param>
@@ -337,6 +488,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Resource provider name. </param>
@@ -375,6 +534,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -415,6 +582,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_GetParent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -448,6 +619,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_GetParent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -483,6 +658,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_CreateOrUpdateParent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -516,6 +695,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_CreateOrUpdateParent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -551,6 +734,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_DeleteParent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -585,6 +772,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_DeleteParent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -618,6 +809,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -660,6 +855,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Resource provider name. </param>
@@ -700,6 +899,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -744,6 +947,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Resource provider name. </param>
@@ -787,6 +994,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Resource provider name. </param>
@@ -827,6 +1038,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -869,6 +1084,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_ListParent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Resource provider name. </param>
@@ -889,7 +1108,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(e), ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -902,6 +1121,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_ListParent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -923,7 +1146,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(e), ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -936,6 +1159,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -953,7 +1180,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(e), ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -966,6 +1193,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignments_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -983,7 +1214,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(e), ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -996,6 +1227,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdateForResourceGroup_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1018,6 +1253,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdateForResourceGroup_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1038,6 +1277,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForResourceGroup_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1074,6 +1317,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForResourceGroup_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
@@ -1108,6 +1355,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForResourceGroup_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1146,6 +1397,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForResourceGroup_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
@@ -1182,6 +1437,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForResourceGroup_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1220,6 +1479,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForResourceGroup_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
@@ -1257,6 +1520,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForResourceGroup_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
@@ -1291,6 +1558,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationAssignmentsForResourceGroup_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1327,6 +1598,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>Updates_ListParent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Resource provider name. </param>
@@ -1347,7 +1622,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdatesByParent", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MaintenanceUpdate.DeserializeMaintenanceUpdate(e), UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdatesByParent", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1360,6 +1635,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Updates_ListParent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1381,7 +1660,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdatesByParent", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MaintenanceUpdate.DeserializeMaintenanceUpdate(e), UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdatesByParent", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1394,6 +1673,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Updates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1411,7 +1694,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MaintenanceUpdate.DeserializeMaintenanceUpdate(e), UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1424,6 +1707,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Updates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1441,7 +1728,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MaintenanceUpdate.DeserializeMaintenanceUpdate(e), UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdates", "value", null, cancellationToken);
         }
     }
 }

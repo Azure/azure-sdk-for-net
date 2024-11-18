@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Mocking
 {
@@ -130,6 +128,18 @@ namespace Azure.ResourceManager.Batch.Mocking
         {
             BatchAccountPoolResource.ValidateResourceId(id);
             return new BatchAccountPoolResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterConfigurationResource(Client, id);
         }
     }
 }

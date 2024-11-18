@@ -6,8 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -44,13 +44,14 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="containerName"> Container that has the file path. </param>
         /// <param name="dataSetId"> Unique id for identifying a data set resource. </param>
         /// <param name="prefix"> Prefix for blob folder. </param>
         /// <param name="resourceGroup"> Resource group of storage account. </param>
         /// <param name="storageAccountName"> Storage account name of the source data set. </param>
         /// <param name="subscriptionId"> Subscription id of storage account. </param>
-        internal BlobFolderDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string containerName, Guid? dataSetId, string prefix, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        internal BlobFolderDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string containerName, Guid? dataSetId, string prefix, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             ContainerName = containerName;
             DataSetId = dataSetId;
@@ -59,6 +60,11 @@ namespace Azure.ResourceManager.DataShare.Models
             StorageAccountName = storageAccountName;
             SubscriptionId = subscriptionId;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobFolderDataSet"/> for deserialization. </summary>
+        internal BlobFolderDataSet()
+        {
         }
 
         /// <summary> Container that has the file path. </summary>

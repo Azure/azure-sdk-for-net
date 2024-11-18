@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StoragePool;
 using Azure.ResourceManager.StoragePool.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StoragePool.Samples
 {
     public partial class Sample_DiskPoolIscsiTargetResource
     {
-        // Update iSCSI Target
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateISCSITarget()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/IscsiTargets_Patch.json
@@ -65,9 +62,8 @@ new ManagedDiskIscsiLun("lun0",new ResourceIdentifier("/subscriptions/11111111-1
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete iSCSI Target
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteISCSITarget()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/IscsiTargets_Delete.json
@@ -90,12 +86,11 @@ new ManagedDiskIscsiLun("lun0",new ResourceIdentifier("/subscriptions/11111111-1
             // invoke the operation
             await diskPoolIscsiTarget.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get iSCSI Target
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetISCSITarget()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/IscsiTargets_Get.json

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
@@ -65,6 +63,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>ModelVersions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -83,7 +89,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningModelVersionModelVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningModelVersionResource>(Response.FromValue(new MachineLearningModelVersionResource(Client, response), response.GetRawResponse()));
+                var uri = _machineLearningModelVersionModelVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MachineLearningArmOperation<MachineLearningModelVersionResource>(Response.FromValue(new MachineLearningModelVersionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>ModelVersions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -124,7 +140,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningModelVersionModelVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningModelVersionResource>(Response.FromValue(new MachineLearningModelVersionResource(Client, response), response.GetRawResponse()));
+                var uri = _machineLearningModelVersionModelVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MachineLearningArmOperation<MachineLearningModelVersionResource>(Response.FromValue(new MachineLearningModelVersionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -146,6 +164,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ModelVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,6 +210,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>ModelVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
@@ -221,6 +255,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>ModelVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -230,8 +272,8 @@ namespace Azure.ResourceManager.MachineLearning
         {
             options ??= new MachineLearningModelVersionCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningModelVersionModelVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType, options.Stage);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningModelVersionModelVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType, options.Stage);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningModelVersionModelVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningModelVersionModelVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningModelVersionResource(Client, MachineLearningModelVersionData.DeserializeMachineLearningModelVersionData(e)), _machineLearningModelVersionModelVersionsClientDiagnostics, Pipeline, "MachineLearningModelVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -246,6 +288,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>ModelVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -255,8 +305,8 @@ namespace Azure.ResourceManager.MachineLearning
         {
             options ??= new MachineLearningModelVersionCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningModelVersionModelVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType, options.Stage);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningModelVersionModelVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType, options.Stage);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningModelVersionModelVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningModelVersionModelVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningModelVersionResource(Client, MachineLearningModelVersionData.DeserializeMachineLearningModelVersionData(e)), _machineLearningModelVersionModelVersionsClientDiagnostics, Pipeline, "MachineLearningModelVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -270,6 +320,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ModelVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,6 +364,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>ModelVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
@@ -340,6 +406,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ModelVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,6 +451,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ModelVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

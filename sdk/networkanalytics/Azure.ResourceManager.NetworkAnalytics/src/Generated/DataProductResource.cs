@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NetworkAnalytics.Models;
 using Azure.ResourceManager.Resources;
 
@@ -108,6 +106,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProducts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -140,6 +146,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProducts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -171,6 +185,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProducts_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +228,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProducts_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -239,6 +269,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProducts_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,6 +316,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProducts_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -316,6 +362,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProducts_AddUserRole</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> The content of the action request. </param>
@@ -349,6 +403,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProducts_AddUserRole</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -384,6 +446,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProducts_GenerateStorageAccountSasToken</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content of the action request. </param>
@@ -417,6 +487,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProducts_GenerateStorageAccountSasToken</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,6 +530,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProducts_ListRolesAssignments</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> The content of the action request. </param>
@@ -485,6 +571,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProducts_ListRolesAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -520,6 +614,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProducts_RemoveUserRole</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> The content of the action request. </param>
@@ -553,6 +655,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProducts_RemoveUserRole</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -588,6 +698,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProducts_RotateKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content of the action request. </param>
@@ -621,6 +739,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProducts_RotateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -656,6 +782,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataTypes_ListByDataProduct</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -664,7 +794,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataTypesRestClient.CreateListByDataProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataTypesRestClient.CreateListByDataProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataProductDataType.DeserializeDataProductDataType, _dataTypesClientDiagnostics, Pipeline, "DataProductResource.GetDataTypes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataProductDataType.DeserializeDataProductDataType(e), _dataTypesClientDiagnostics, Pipeline, "DataProductResource.GetDataTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -678,6 +808,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataTypes_ListByDataProduct</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -686,7 +820,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataTypesRestClient.CreateListByDataProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataTypesRestClient.CreateListByDataProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataProductDataType.DeserializeDataProductDataType, _dataTypesClientDiagnostics, Pipeline, "DataProductResource.GetDataTypes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataProductDataType.DeserializeDataProductDataType(e), _dataTypesClientDiagnostics, Pipeline, "DataProductResource.GetDataTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -699,6 +833,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProducts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -754,6 +896,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProducts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -808,6 +958,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProducts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -857,6 +1015,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProducts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -905,6 +1071,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProducts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -957,6 +1131,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProducts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

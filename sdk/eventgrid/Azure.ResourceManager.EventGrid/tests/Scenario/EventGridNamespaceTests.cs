@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventGrid.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -162,6 +163,195 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
+        public async Task NamespaceCustomDomainsCreateGetUpdateDelete()
+        {
+            await SetCollection();
+            var namespaceName = Recording.GenerateAssetName("sdk-Namespace-");
+            var namespaceSkuName = "Standard";
+            var namespaceSku = new NamespaceSku()
+            {
+                Name = namespaceSkuName,
+                Capacity = 1,
+            };
+            AzureLocation location = new AzureLocation("centraluseuap", "centraluseuap");
+            UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
+            var nameSpace = new EventGridNamespaceData(location)
+            {
+                Tags = {
+                    {"originalTag1", "originalValue1"},
+                    {"originalTag2", "originalValue2"}
+                },
+                Sku = namespaceSku,
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned),
+                IsZoneRedundant = false
+            };
+            nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_centraleaup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
+
+            var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
+            Assert.NotNull(createNamespaceResponse);
+            Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
+
+            // Get the created namespace
+            var getNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
+            Assert.NotNull(getNamespaceResponse);
+            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespaceResponse.Data.ProvisioningState);
+            Assert.IsTrue(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag1"));
+            Assert.AreEqual(getNamespaceResponse.Data.Tags["originalTag1"], "originalValue1");
+            Assert.IsTrue(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag2"));
+            Assert.AreEqual(getNamespaceResponse.Data.Tags["originalTag2"], "originalValue2");
+            Assert.AreEqual(getNamespaceResponse.Data.Sku.Name.Value.ToString(), namespaceSkuName);
+            Assert.AreEqual(getNamespaceResponse.Data.Sku.Capacity.Value, 1);
+            Assert.IsFalse(getNamespaceResponse.Data.IsZoneRedundant.Value);
+
+            // update the tags and capacity
+            namespaceSku = new NamespaceSku()
+            {
+                Name = namespaceSkuName,
+                Capacity = 2,
+            };
+
+            EventGridNamespacePatch namespacePatch = new EventGridNamespacePatch()
+            {
+                Tags = {
+                    {"updatedTag1", "updatedValue1"},
+                    {"updatedTag2", "updatedValue2"}
+                },
+                Sku = namespaceSku,
+                TopicsConfiguration = new UpdateTopicsConfigurationInfo(),
+            };
+
+            namespacePatch.TopicsConfiguration.CustomDomains.Add(new CustomDomainConfiguration()
+            {
+                FullyQualifiedDomainName = "www.contoso.com",
+                Identity = new CustomDomainIdentity()
+                {
+                    IdentityType = CustomDomainIdentityType.UserAssigned,
+                    UserAssignedIdentity = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_centraleaup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"
+                },
+                CertificateUri = new Uri("https://sdk-centraleuap-testakv.vault.azure.net/certificates/test-custom-domain/"),
+            });
+            var updateNamespaceResponse = (await getNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
+            Assert.NotNull(updateNamespaceResponse);
+            Assert.AreEqual(updateNamespaceResponse.Data.Name, namespaceName);
+
+            // Get the updated namespace
+            var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
+            Assert.NotNull(getUpdatedNamespaceResponse);
+            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getUpdatedNamespaceResponse.Data.ProvisioningState);
+            Assert.IsTrue(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag1"));
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Tags["updatedTag1"], "updatedValue1");
+            Assert.IsTrue(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag2"));
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Tags["updatedTag2"], "updatedValue2");
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Sku.Name.Value.ToString(), namespaceSkuName);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Sku.Capacity.Value, 2);
+            // verify custom domain
+            Assert.NotNull(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains.Count, 1);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains.FirstOrDefault().FullyQualifiedDomainName, "www.contoso.com");
+
+            // Delete 1st custom domain
+            namespacePatch.TopicsConfiguration.CustomDomains.RemoveAt(0);
+            var updateNamespaceResponse2 = (await getUpdatedNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
+            Assert.NotNull(updateNamespaceResponse2);
+            Assert.AreEqual(NamespaceProvisioningState.Succeeded, updateNamespaceResponse2.Data.ProvisioningState);
+
+            var getUpdatedNamespaceResponse2 = (await NamespaceCollection.GetAsync(namespaceName)).Value;
+            // verify 1st custom domain is deleted
+            Assert.NotNull(getUpdatedNamespaceResponse2.Data.TopicsConfiguration.CustomDomains);
+            Assert.AreEqual(getUpdatedNamespaceResponse2.Data.TopicsConfiguration.CustomDomains.Count, 0);
+
+            // Delete all namespaces
+            await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);
+            var namespace1Exists = await NamespaceCollection.ExistsAsync(namespaceName);
+            Assert.False(namespace1Exists);
+
+            await ResourceGroup.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        public async Task NamespaceCustomJwtAuthCreateGetUpdateDelete()
+        {
+            await SetCollection();
+            var namespaceName = Recording.GenerateAssetName("sdk-Namespace-");
+            var namespaceSkuName = "Standard";
+            var namespaceSku = new NamespaceSku()
+            {
+                Name = namespaceSkuName,
+                Capacity = 1,
+            };
+            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            var nameSpace = new EventGridNamespaceData(location)
+            {
+                Tags = {
+                    {"originalTag1", "originalValue1"},
+                    {"originalTag2", "originalValue2"}
+                },
+                Sku = namespaceSku,
+                IsZoneRedundant = true
+            };
+
+            var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
+            Assert.NotNull(createNamespaceResponse);
+            Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
+
+            // Get the created namespace
+            var getNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
+            Assert.NotNull(getNamespaceResponse);
+            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespaceResponse.Data.ProvisioningState);
+
+            // update the tags and capacity
+            namespaceSku = new NamespaceSku()
+            {
+                Name = namespaceSkuName,
+                Capacity = 2,
+            };
+
+            EventGridNamespacePatch namespacePatch = new EventGridNamespacePatch()
+            {
+                Tags = {
+                    {"updatedTag1", "updatedValue1"},
+                    {"updatedTag2", "updatedValue2"}
+                },
+                Sku = namespaceSku,
+                TopicSpacesConfiguration = new UpdateTopicSpacesConfigurationInfo(),
+            };
+            namespacePatch.TopicSpacesConfiguration.ClientAuthentication = new ClientAuthenticationSettings();
+            namespacePatch.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication = new CustomJwtAuthenticationSettings()
+            {
+                TokenIssuer = "sts.windows.net",
+            };
+
+            // Add custom jwt auth
+            namespacePatch.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.Add(new IssuerCertificateInfo()
+            {
+                CertificateUri = new Uri("https://nokjwttest.vault.azure.net/certificates/jwtcert1/11c1bd6003b24e81b6a9d72f0dd1bf70"),
+                Identity = new CustomJwtAuthenticationManagedIdentity(CustomJwtAuthenticationManagedIdentityType.SystemAssigned),
+            });
+
+            var updateNamespaceResponse = (await getNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
+            Assert.NotNull(updateNamespaceResponse);
+            Assert.AreEqual(updateNamespaceResponse.Data.Name, namespaceName);
+
+            // Get the updated namespace
+            var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
+            Assert.NotNull(getUpdatedNamespaceResponse);
+            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getUpdatedNamespaceResponse.Data.ProvisioningState);
+            // verify custom jwt auth
+            Assert.NotNull(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.Count, 1);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().CertificateUri.AbsoluteUri, "https://nokjwttest.vault.azure.net/certificates/jwtcert1/11c1bd6003b24e81b6a9d72f0dd1bf70");
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.TokenIssuer, "sts.windows.net");
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().Identity.IdentityType, CustomJwtAuthenticationManagedIdentityType.SystemAssigned);
+
+            // Delete all namespaces
+            await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);
+            var namespace1Exists = await NamespaceCollection.ExistsAsync(namespaceName);
+            Assert.False(namespace1Exists);
+
+            await ResourceGroup.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
         public async Task NamespaceTopicsCreateUpdateDelete()
         {
             await SetCollection();
@@ -268,6 +458,141 @@ namespace Azure.ResourceManager.EventGrid.Tests
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
         }
 
+        // Please run this test in live mode if you make any change, this doesn't work in playback mode due to expiry date field
+        /*[Test]
+        public async Task NamespaceTopicsSubscriptionWithDeadletterCreateUpdateDelete()
+        {
+            await SetCollection();
+            var topicCollection = ResourceGroup.GetEventGridTopics();
+
+            var namespaceName = Recording.GenerateAssetName("sdk-Namespace-");
+            var namespaceTopicName = Recording.GenerateAssetName("sdk-Namespace-Topic");
+            var namespaceTopicSubscriptionName1 = Recording.GenerateAssetName("sdk-Namespace-Topic-Subscription");
+            var namespaceSkuName = "Standard";
+            var namespaceSku = new NamespaceSku()
+            {
+                Name = namespaceSkuName,
+                Capacity = 1,
+            };
+            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
+            var nameSpace = new EventGridNamespaceData(location)
+            {
+                Tags = {
+                    { "originalTag1", "originalValue1" },
+                    { "originalTag2", "originalValue2" }
+                },
+                Sku = namespaceSku,
+                IsZoneRedundant = true,
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
+            };
+
+            nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
+            var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
+            Assert.NotNull(createNamespaceResponse);
+            Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
+
+            // create namespace topics
+            var namespaceTopicsCollection = createNamespaceResponse.GetNamespaceTopics();
+            Assert.NotNull(namespaceTopicsCollection);
+            var namespaceTopic = new NamespaceTopicData()
+            {
+                EventRetentionInDays = 1
+            };
+            var namespaceTopicsResponse1 = (await namespaceTopicsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicName, namespaceTopic)).Value;
+            Assert.NotNull(namespaceTopicsResponse1);
+            Assert.AreEqual(namespaceTopicsResponse1.Data.ProvisioningState, NamespaceTopicProvisioningState.Succeeded);
+            Assert.AreEqual(namespaceTopicsResponse1.Data.EventRetentionInDays, 1);
+
+            // create subscriptions
+            var subscriptionsCollection = namespaceTopicsResponse1.GetNamespaceTopicEventSubscriptions();
+            var deadLetterDestination = new DeadLetterWithResourceIdentity()
+            {
+                Identity = new EventSubscriptionIdentity()
+                {
+                    IdentityType = EventSubscriptionIdentityType.UserAssigned,
+                },
+                DeadLetterDestination = new StorageBlobDeadLetterDestination()
+                {
+                    ResourceId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk_test_easteuap/providers/Microsoft.Storage/storageAccounts/testcontosso2"),
+                    BlobContainerName = "contosocontainer",
+                }
+            };
+            deadLetterDestination.Identity.UserAssignedIdentity = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity";
+
+            DeliveryConfiguration deliveryConfiguration = new DeliveryConfiguration()
+            {
+                DeliveryMode = DeliveryMode.Queue.ToString(),
+                // instead of queue info create push info with event hub destination
+                Queue = new QueueInfo()
+                {
+                    EventTimeToLive = TimeSpan.FromDays(1),
+                    MaxDeliveryCount = 5,
+                    ReceiveLockDurationInSeconds = 120,
+                    DeadLetterDestinationWithResourceIdentity = deadLetterDestination
+                }
+            };
+            DateTimeOffset expirationTime = DateTime.UtcNow.AddHours(8);
+            NamespaceTopicEventSubscriptionData subscriptionData = new NamespaceTopicEventSubscriptionData()
+            {
+                DeliveryConfiguration = deliveryConfiguration,
+                ExpirationTimeUtc = expirationTime,
+            };
+            var createEventsubscription1 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName1, subscriptionData)).Value;
+            Assert.NotNull(createEventsubscription1);
+            Assert.AreEqual(createEventsubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+
+            // Validate get event subscription
+            var getEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
+            Assert.NotNull(getEventSubscription1);
+            Assert.AreEqual(getEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
+            Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Queue.ToString());
+            Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.Queue.EventTimeToLive, TimeSpan.FromDays(1));
+            Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount, 5);
+
+            //update event subscription
+            DeliveryConfiguration deliveryConfiguration2 = new DeliveryConfiguration()
+            {
+                DeliveryMode = DeliveryMode.Queue.ToString(),
+                Queue = new QueueInfo()
+                {
+                    EventTimeToLive = TimeSpan.FromDays(0.5),
+                    MaxDeliveryCount = 6,
+                    ReceiveLockDurationInSeconds = 120
+                }
+            };
+            NamespaceTopicEventSubscriptionPatch subscriptionPatch = new NamespaceTopicEventSubscriptionPatch()
+            {
+                DeliveryConfiguration = deliveryConfiguration2
+            };
+            var updateEventSubscription1 = (await createEventsubscription1.UpdateAsync(WaitUntil.Completed, subscriptionPatch)).Value;
+            Assert.NotNull(updateEventSubscription1);
+            Assert.AreEqual(updateEventSubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+
+            var getUpdatedEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
+            Assert.NotNull(getUpdatedEventSubscription1);
+            Assert.AreEqual(getUpdatedEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
+            Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Queue.ToString());
+            Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.Queue.EventTimeToLive, TimeSpan.FromDays(0.5));
+            Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount, 6);
+
+            // List all event subscriptions
+            var listAllSubscriptionsBefore = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.NotNull(listAllSubscriptionsBefore);
+            Assert.AreEqual(listAllSubscriptionsBefore.Count, 1);
+
+            // Delete event subscriptions
+            await getUpdatedEventSubscription1.DeleteAsync(WaitUntil.Completed);
+            var listAllSubscriptionsAfter = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.NotNull(listAllSubscriptionsAfter);
+            Assert.AreEqual(listAllSubscriptionsAfter.Count, 0);
+
+            // delete all resources
+            await namespaceTopicsResponse1.DeleteAsync(WaitUntil.Completed);
+            await createNamespaceResponse.DeleteAsync(WaitUntil.Completed);
+            await ResourceGroup.DeleteAsync(WaitUntil.Completed);
+        }*/
+
         [Test]
         public async Task NamespaceTopicsSubscriptionCreateUpdateDelete()
         {
@@ -371,6 +696,296 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Queue.ToString());
             Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.Queue.EventTimeToLive, TimeSpan.FromDays(0.5));
             Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount, 6);
+
+            // List all event subscriptions
+            var listAllSubscriptionsBefore = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.NotNull(listAllSubscriptionsBefore);
+            Assert.AreEqual(listAllSubscriptionsBefore.Count, 3);
+
+            // Delete event subscriptions
+            await getUpdatedEventSubscription1.DeleteAsync(WaitUntil.Completed);
+            var listAllSubscriptionsAfter = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.NotNull(listAllSubscriptionsAfter);
+            Assert.AreEqual(listAllSubscriptionsAfter.Count, 2);
+
+            // delete all resources
+            await createEventsubscription2.DeleteAsync(WaitUntil.Completed);
+            await createEventsubscription3.DeleteAsync(WaitUntil.Completed);
+            var listAllSubscriptionsAfterAllDeleted = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.NotNull(listAllSubscriptionsAfterAllDeleted);
+            Assert.AreEqual(listAllSubscriptionsAfterAllDeleted.Count, 0);
+            await namespaceTopicsResponse1.DeleteAsync(WaitUntil.Completed);
+            await createNamespaceResponse.DeleteAsync(WaitUntil.Completed);
+            await ResourceGroup.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        public async Task NamespaceSubscriptionToEventHubCRUD()
+        {
+            await SetCollection();
+            var namespaceName = Recording.GenerateAssetName("sdk-Namespace-");
+            var namespaceTopicName = Recording.GenerateAssetName("sdk-Namespace-Topic");
+            var namespaceTopicSubscriptionName1 = Recording.GenerateAssetName("sdk-Namespace-Topic-Subscription");
+            var namespaceTopicSubscriptionName2 = Recording.GenerateAssetName("sdk-Namespace-Topic-Subscription");
+            var namespaceTopicSubscriptionName3 = Recording.GenerateAssetName("sdk-Namespace-Topic-Subscription");
+            var namespaceSkuName = "Standard";
+            var namespaceSku = new NamespaceSku()
+            {
+                Name = namespaceSkuName,
+                Capacity = 1,
+            };
+            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
+            var nameSpace = new EventGridNamespaceData(location)
+            {
+                Tags = {
+                {"originalTag1", "originalValue1"},
+                {"originalTag2", "originalValue2"}
+            },
+                Sku = namespaceSku,
+                IsZoneRedundant = true,
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
+            };
+            nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
+
+            var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
+            Assert.NotNull(createNamespaceResponse);
+            Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
+
+            // create namespace topics
+            var namespaceTopicsCollection = createNamespaceResponse.GetNamespaceTopics();
+            Assert.NotNull(namespaceTopicsCollection);
+            var namespaceTopic = new NamespaceTopicData()
+            {
+                EventRetentionInDays = 1
+            };
+            var namespaceTopicsResponse1 = (await namespaceTopicsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicName, namespaceTopic)).Value;
+            Assert.NotNull(namespaceTopicsResponse1);
+            Assert.AreEqual(namespaceTopicsResponse1.Data.ProvisioningState, NamespaceTopicProvisioningState.Succeeded);
+            Assert.AreEqual(namespaceTopicsResponse1.Data.EventRetentionInDays, 1);
+
+            // create subscriptions
+            var subscriptionsCollection = namespaceTopicsResponse1.GetNamespaceTopicEventSubscriptions();
+
+            DeliveryConfiguration deliveryConfiguration = new DeliveryConfiguration()
+            {
+                DeliveryMode = DeliveryMode.Push.ToString(),
+                Push = new PushInfo()
+                {
+                    DeliveryWithResourceIdentity = new DeliveryWithResourceIdentity()
+                    {
+                        Identity = new EventSubscriptionIdentity
+                        {
+                            IdentityType = EventSubscriptionIdentityType.UserAssigned,
+                            UserAssignedIdentity = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity",
+                        },
+                        Destination = new EventHubEventSubscriptionDestination()
+                        {
+                            ResourceId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk_test_easteuap/providers/Microsoft.EventHub/namespaces/testsdk-eh-namespace/eventhubs/eh1"),
+                        },
+                    }
+                }
+            };
+
+            NamespaceTopicEventSubscriptionData subscriptionData = new NamespaceTopicEventSubscriptionData()
+            {
+                DeliveryConfiguration = deliveryConfiguration
+            };
+            var createEventsubscription1 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName1, subscriptionData)).Value;
+            Assert.NotNull(createEventsubscription1);
+            Assert.AreEqual(createEventsubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+
+            var createEventsubscription2 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName2, subscriptionData)).Value;
+            Assert.NotNull(createEventsubscription2);
+            Assert.AreEqual(createEventsubscription2.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+
+            var createEventsubscription3 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName3, subscriptionData)).Value;
+            Assert.NotNull(createEventsubscription3);
+            Assert.AreEqual(createEventsubscription3.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+
+            // Validate get event subscription
+            var getEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
+            Assert.NotNull(getEventSubscription1);
+            Assert.AreEqual(getEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
+            Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Push.ToString());
+            // test for full uri of event subscription
+            // var eventSubscription1FullUri = (await getEventSubscription1.GetFullUriAsync());
+            // Assert.NotNull(eventSubscription1FullUri);
+
+            //update event subscription
+            DeliveryConfiguration deliveryConfiguration2 = new DeliveryConfiguration()
+            {
+                DeliveryMode = DeliveryMode.Push.ToString(),
+                Push = new PushInfo()
+                {
+                    DeliveryWithResourceIdentity = new DeliveryWithResourceIdentity()
+                    {
+                        Identity = new EventSubscriptionIdentity
+                        {
+                            IdentityType = EventSubscriptionIdentityType.UserAssigned,
+                            UserAssignedIdentity = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity",
+                        },
+                        Destination = new EventHubEventSubscriptionDestination()
+                        {
+                            ResourceId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk_test_easteuap/providers/Microsoft.EventHub/namespaces/testsdk-eh-namespace/eventhubs/eh1"),
+                        },
+                    }
+                }
+            };
+            NamespaceTopicEventSubscriptionPatch subscriptionPatch = new NamespaceTopicEventSubscriptionPatch()
+            {
+                DeliveryConfiguration = deliveryConfiguration2
+            };
+            var updateEventSubscription1 = (await createEventsubscription1.UpdateAsync(WaitUntil.Completed, subscriptionPatch)).Value;
+            Assert.NotNull(updateEventSubscription1);
+            Assert.AreEqual(updateEventSubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+
+            var getUpdatedEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
+            Assert.NotNull(getUpdatedEventSubscription1);
+            Assert.AreEqual(getUpdatedEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
+            Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Push.ToString());
+
+            // List all event subscriptions
+            var listAllSubscriptionsBefore = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.NotNull(listAllSubscriptionsBefore);
+            Assert.AreEqual(listAllSubscriptionsBefore.Count, 3);
+
+            // Delete event subscriptions
+            await getUpdatedEventSubscription1.DeleteAsync(WaitUntil.Completed);
+            var listAllSubscriptionsAfter = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.NotNull(listAllSubscriptionsAfter);
+            Assert.AreEqual(listAllSubscriptionsAfter.Count, 2);
+
+            // delete all resources
+            await createEventsubscription2.DeleteAsync(WaitUntil.Completed);
+            await createEventsubscription3.DeleteAsync(WaitUntil.Completed);
+            var listAllSubscriptionsAfterAllDeleted = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.NotNull(listAllSubscriptionsAfterAllDeleted);
+            Assert.AreEqual(listAllSubscriptionsAfterAllDeleted.Count, 0);
+            await namespaceTopicsResponse1.DeleteAsync(WaitUntil.Completed);
+            await createNamespaceResponse.DeleteAsync(WaitUntil.Completed);
+            await ResourceGroup.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        public async Task NamespaceSubscriptionToWebhook()
+        {
+            await SetCollection();
+            var namespaceName = Recording.GenerateAssetName("sdk-Namespace-");
+            var namespaceTopicName = Recording.GenerateAssetName("sdk-Namespace-Topic");
+            var namespaceTopicSubscriptionName1 = Recording.GenerateAssetName("sdk-Namespace-Topic-Subscription");
+            var namespaceTopicSubscriptionName2 = Recording.GenerateAssetName("sdk-Namespace-Topic-Subscription");
+            var namespaceTopicSubscriptionName3 = Recording.GenerateAssetName("sdk-Namespace-Topic-Subscription");
+            var namespaceSkuName = "Standard";
+            var namespaceSku = new NamespaceSku()
+            {
+                Name = namespaceSkuName,
+                Capacity = 1,
+            };
+            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
+            var nameSpace = new EventGridNamespaceData(location)
+            {
+                Tags = {
+                {"originalTag1", "originalValue1"},
+                {"originalTag2", "originalValue2"}
+            },
+                Sku = namespaceSku,
+                IsZoneRedundant = true,
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
+            };
+            nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
+
+            var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
+            Assert.NotNull(createNamespaceResponse);
+            Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
+
+            // create namespace topics
+            var namespaceTopicsCollection = createNamespaceResponse.GetNamespaceTopics();
+            Assert.NotNull(namespaceTopicsCollection);
+            var namespaceTopic = new NamespaceTopicData()
+            {
+                EventRetentionInDays = 1
+            };
+            var namespaceTopicsResponse1 = (await namespaceTopicsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicName, namespaceTopic)).Value;
+            Assert.NotNull(namespaceTopicsResponse1);
+            Assert.AreEqual(namespaceTopicsResponse1.Data.ProvisioningState, NamespaceTopicProvisioningState.Succeeded);
+            Assert.AreEqual(namespaceTopicsResponse1.Data.EventRetentionInDays, 1);
+
+            // create subscriptions
+            var subscriptionsCollection = namespaceTopicsResponse1.GetNamespaceTopicEventSubscriptions();
+
+            DeliveryConfiguration deliveryConfiguration = new DeliveryConfiguration()
+            {
+                DeliveryMode = DeliveryMode.Push.ToString(),
+                Push = new PushInfo()
+                {
+                    //replace HIDDEN with actual value
+                    Destination = new WebHookEventSubscriptionDestination()
+                    {
+                        Endpoint = new Uri("https://prod-29.eastus.logic.azure.com:443/workflows/e3b43dc73eb244b78a1cd55996703378/triggers/request/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=Sanitized&sig=Sanitized"),
+                    },
+                }
+            };
+
+            NamespaceTopicEventSubscriptionData subscriptionData = new NamespaceTopicEventSubscriptionData()
+            {
+                DeliveryConfiguration = deliveryConfiguration,
+                EventDeliverySchema = DeliverySchema.CloudEventSchemaV10,
+            };
+            var createEventsubscription1 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName1, subscriptionData)).Value;
+            Assert.NotNull(createEventsubscription1);
+            Assert.AreEqual(createEventsubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+
+            var createEventsubscription2 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName2, subscriptionData)).Value;
+            Assert.NotNull(createEventsubscription2);
+            Assert.AreEqual(createEventsubscription2.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+
+            var createEventsubscription3 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName3, subscriptionData)).Value;
+            Assert.NotNull(createEventsubscription3);
+            Assert.AreEqual(createEventsubscription3.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+
+            // Validate get event subscription
+            var getEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
+            Assert.NotNull(getEventSubscription1);
+            Assert.AreEqual(getEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
+            Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Push.ToString());
+            // test for full uri of event subscription
+             var eventSubscription1FullUri = (await getEventSubscription1.GetFullUriAsync());
+             Assert.NotNull(eventSubscription1FullUri);
+
+            //update event subscription
+            DeliveryConfiguration deliveryConfiguration2 = new DeliveryConfiguration()
+            {
+                DeliveryMode = DeliveryMode.Push.ToString(),
+                Push = new PushInfo()
+                {
+                    DeliveryWithResourceIdentity = new DeliveryWithResourceIdentity()
+                    {
+                        Identity = new EventSubscriptionIdentity
+                        {
+                            IdentityType = EventSubscriptionIdentityType.UserAssigned,
+                            UserAssignedIdentity = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity",
+                        },
+                        Destination = new EventHubEventSubscriptionDestination()
+                        {
+                            ResourceId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk_test_easteuap/providers/Microsoft.EventHub/namespaces/testsdk-eh-namespace/eventhubs/eh1"),
+                        },
+                    }
+                }
+            };
+            NamespaceTopicEventSubscriptionPatch subscriptionPatch = new NamespaceTopicEventSubscriptionPatch()
+            {
+                DeliveryConfiguration = deliveryConfiguration2
+            };
+            var updateEventSubscription1 = (await createEventsubscription1.UpdateAsync(WaitUntil.Completed, subscriptionPatch)).Value;
+            Assert.NotNull(updateEventSubscription1);
+            Assert.AreEqual(updateEventSubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+
+            var getUpdatedEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
+            Assert.NotNull(getUpdatedEventSubscription1);
+            Assert.AreEqual(getUpdatedEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
+            Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Push.ToString());
 
             // List all event subscriptions
             var listAllSubscriptionsBefore = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();

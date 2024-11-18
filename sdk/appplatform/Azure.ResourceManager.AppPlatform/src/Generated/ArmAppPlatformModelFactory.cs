@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Azure.Core;
-using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform.Models
@@ -32,7 +31,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AppPlatformServiceData(id, name, resourceType, systemData, tags, location, properties, sku);
+            return new AppPlatformServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                sku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformServiceProperties"/>. </summary>
@@ -47,7 +55,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformServiceProperties"/> instance for mocking. </returns>
         public static AppPlatformServiceProperties AppPlatformServiceProperties(AppPlatformServiceProvisioningState? provisioningState = null, AppPlatformServiceNetworkProfile networkProfile = null, bool? isLogStreamPublicEndpoint = null, int? version = null, string serviceInstanceId = null, AppPlatformServicePowerState? powerState = null, bool? isZoneRedundant = null, string fqdn = null)
         {
-            return new AppPlatformServiceProperties(provisioningState, networkProfile, isLogStreamPublicEndpoint != null ? new ServiceVnetAddons(isLogStreamPublicEndpoint) : null, version, serviceInstanceId, powerState, isZoneRedundant, fqdn);
+            return new AppPlatformServiceProperties(
+                provisioningState,
+                networkProfile,
+                isLogStreamPublicEndpoint != null ? new ServiceVnetAddons(isLogStreamPublicEndpoint, serializedAdditionalRawData: null) : null,
+                version,
+                serviceInstanceId,
+                powerState,
+                isZoneRedundant,
+                fqdn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformServiceNetworkProfile"/>. </summary>
@@ -66,7 +83,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             outboundPublicIPs ??= new List<IPAddress>();
             requiredTraffics ??= new List<AppPlatformServiceRequiredTraffic>();
 
-            return new AppPlatformServiceNetworkProfile(serviceRuntimeSubnetId, appSubnetId, serviceCidr, serviceRuntimeNetworkResourceGroup, appNetworkResourceGroup, outboundPublicIPs != null ? new NetworkProfileOutboundIPs(outboundPublicIPs?.ToList()) : null, requiredTraffics?.ToList(), ingressConfigReadTimeoutInSeconds != null ? new IngressConfig(ingressConfigReadTimeoutInSeconds) : null, outboundType);
+            return new AppPlatformServiceNetworkProfile(
+                serviceRuntimeSubnetId,
+                appSubnetId,
+                serviceCidr,
+                serviceRuntimeNetworkResourceGroup,
+                appNetworkResourceGroup,
+                outboundPublicIPs != null ? new NetworkProfileOutboundIPs(outboundPublicIPs?.ToList(), serializedAdditionalRawData: null) : null,
+                requiredTraffics?.ToList(),
+                ingressConfigReadTimeoutInSeconds != null ? new IngressConfig(ingressConfigReadTimeoutInSeconds, serializedAdditionalRawData: null) : null,
+                outboundType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformServiceRequiredTraffic"/>. </summary>
@@ -81,7 +108,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             ips ??= new List<IPAddress>();
             fqdns ??= new List<string>();
 
-            return new AppPlatformServiceRequiredTraffic(protocol, port, ips?.ToList(), fqdns?.ToList(), direction);
+            return new AppPlatformServiceRequiredTraffic(
+                protocol,
+                port,
+                ips?.ToList(),
+                fqdns?.ToList(),
+                direction,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformServiceTestKeys"/>. </summary>
@@ -93,7 +126,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformServiceTestKeys"/> instance for mocking. </returns>
         public static AppPlatformServiceTestKeys AppPlatformServiceTestKeys(string primaryKey = null, string secondaryKey = null, string primaryTestEndpoint = null, string secondaryTestEndpoint = null, bool? isEnabled = null)
         {
-            return new AppPlatformServiceTestKeys(primaryKey, secondaryKey, primaryTestEndpoint, secondaryTestEndpoint, isEnabled);
+            return new AppPlatformServiceTestKeys(
+                primaryKey,
+                secondaryKey,
+                primaryTestEndpoint,
+                secondaryTestEndpoint,
+                isEnabled,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformConfigServerData"/>. </summary>
@@ -105,7 +144,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformConfigServerData"/> instance for mocking. </returns>
         public static AppPlatformConfigServerData AppPlatformConfigServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformConfigServerProperties properties = null)
         {
-            return new AppPlatformConfigServerData(id, name, resourceType, systemData, properties);
+            return new AppPlatformConfigServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformConfigServerProperties"/>. </summary>
@@ -115,7 +160,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformConfigServerProperties"/> instance for mocking. </returns>
         public static AppPlatformConfigServerProperties AppPlatformConfigServerProperties(AppPlatformConfigServerState? provisioningState = null, AppPlatformErrorInfo error = null, AppPlatformConfigServerGitProperty configServerGitProperty = null)
         {
-            return new AppPlatformConfigServerProperties(provisioningState, error, configServerGitProperty != null ? new ConfigServerSettings(configServerGitProperty) : null);
+            return new AppPlatformConfigServerProperties(provisioningState, error, configServerGitProperty != null ? new ConfigServerSettings(configServerGitProperty, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigServerSettingsValidateResult"/>. </summary>
@@ -126,7 +171,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             details ??= new List<ConfigServerSettingsErrorRecord>();
 
-            return new ConfigServerSettingsValidateResult(isValid, details?.ToList());
+            return new ConfigServerSettingsValidateResult(isValid, details?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigServerSettingsErrorRecord"/>. </summary>
@@ -138,7 +183,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             messages ??= new List<string>();
 
-            return new ConfigServerSettingsErrorRecord(name, uri, messages?.ToList());
+            return new ConfigServerSettingsErrorRecord(name, uri, messages?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformConfigurationServiceData"/>. </summary>
@@ -150,7 +195,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformConfigurationServiceData"/> instance for mocking. </returns>
         public static AppPlatformConfigurationServiceData AppPlatformConfigurationServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformConfigurationServiceProperties properties = null)
         {
-            return new AppPlatformConfigurationServiceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformConfigurationServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformConfigurationServiceProperties"/>. </summary>
@@ -164,7 +215,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             instances ??= new List<AppPlatformConfigurationServiceInstance>();
             configurationServiceGitRepositories ??= new List<AppPlatformConfigurationServiceGitRepository>();
 
-            return new AppPlatformConfigurationServiceProperties(provisioningState, resourceRequests, instances?.ToList(), configurationServiceGitRepositories != null ? new AppPlatformConfigurationServiceSettings(new ConfigurationServiceGitProperty(configurationServiceGitRepositories?.ToList())) : null);
+            return new AppPlatformConfigurationServiceProperties(provisioningState, resourceRequests, instances?.ToList(), configurationServiceGitRepositories != null ? new AppPlatformConfigurationServiceSettings(new ConfigurationServiceGitProperty(configurationServiceGitRepositories?.ToList(), serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformConfigurationServiceRequirements"/>. </summary>
@@ -174,7 +225,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceRequirements"/> instance for mocking. </returns>
         public static AppPlatformConfigurationServiceRequirements AppPlatformConfigurationServiceRequirements(string cpu = null, string memory = null, int? instanceCount = null)
         {
-            return new AppPlatformConfigurationServiceRequirements(cpu, memory, instanceCount);
+            return new AppPlatformConfigurationServiceRequirements(cpu, memory, instanceCount, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformConfigurationServiceInstance"/>. </summary>
@@ -183,7 +234,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceInstance"/> instance for mocking. </returns>
         public static AppPlatformConfigurationServiceInstance AppPlatformConfigurationServiceInstance(string name = null, string status = null)
         {
-            return new AppPlatformConfigurationServiceInstance(name, status);
+            return new AppPlatformConfigurationServiceInstance(name, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformConfigurationServiceSettingsValidateResult"/>. </summary>
@@ -191,7 +242,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceSettingsValidateResult"/> instance for mocking. </returns>
         public static AppPlatformConfigurationServiceSettingsValidateResult AppPlatformConfigurationServiceSettingsValidateResult(AppPlatformConfigurationServiceGitValidateResult gitPropertyValidationResult = null)
         {
-            return new AppPlatformConfigurationServiceSettingsValidateResult(gitPropertyValidationResult);
+            return new AppPlatformConfigurationServiceSettingsValidateResult(gitPropertyValidationResult, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformConfigurationServiceGitValidateResult"/>. </summary>
@@ -202,7 +253,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             gitReposValidationResult ??= new List<AppPlatformConfigurationServiceGitReposValidationMessages>();
 
-            return new AppPlatformConfigurationServiceGitValidateResult(isValid, gitReposValidationResult?.ToList());
+            return new AppPlatformConfigurationServiceGitValidateResult(isValid, gitReposValidationResult?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformConfigurationServiceGitReposValidationMessages"/>. </summary>
@@ -213,7 +264,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             messages ??= new List<string>();
 
-            return new AppPlatformConfigurationServiceGitReposValidationMessages(name, messages?.ToList());
+            return new AppPlatformConfigurationServiceGitReposValidationMessages(name, messages?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformServiceRegistryData"/>. </summary>
@@ -225,7 +276,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformServiceRegistryData"/> instance for mocking. </returns>
         public static AppPlatformServiceRegistryData AppPlatformServiceRegistryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformServiceRegistryProperties properties = null)
         {
-            return new AppPlatformServiceRegistryData(id, name, resourceType, systemData, properties);
+            return new AppPlatformServiceRegistryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformServiceRegistryProperties"/>. </summary>
@@ -237,7 +294,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             instances ??= new List<AppPlatformServiceRegistryInstance>();
 
-            return new AppPlatformServiceRegistryProperties(provisioningState, resourceRequests, instances?.ToList());
+            return new AppPlatformServiceRegistryProperties(provisioningState, resourceRequests, instances?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformServiceRegistryResourceRequirements"/>. </summary>
@@ -247,7 +304,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformServiceRegistryResourceRequirements"/> instance for mocking. </returns>
         public static AppPlatformServiceRegistryResourceRequirements AppPlatformServiceRegistryResourceRequirements(string cpu = null, string memory = null, int? instanceCount = null)
         {
-            return new AppPlatformServiceRegistryResourceRequirements(cpu, memory, instanceCount);
+            return new AppPlatformServiceRegistryResourceRequirements(cpu, memory, instanceCount, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformServiceRegistryInstance"/>. </summary>
@@ -256,7 +313,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformServiceRegistryInstance"/> instance for mocking. </returns>
         public static AppPlatformServiceRegistryInstance AppPlatformServiceRegistryInstance(string name = null, string status = null)
         {
-            return new AppPlatformServiceRegistryInstance(name, status);
+            return new AppPlatformServiceRegistryInstance(name, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformBuildServiceData"/>. </summary>
@@ -268,7 +325,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformBuildServiceData"/> instance for mocking. </returns>
         public static AppPlatformBuildServiceData AppPlatformBuildServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformBuildServiceProperties properties = null)
         {
-            return new AppPlatformBuildServiceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformBuildServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildServiceProperties"/>. </summary>
@@ -278,7 +341,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformBuildServiceProperties"/> instance for mocking. </returns>
         public static AppPlatformBuildServiceProperties AppPlatformBuildServiceProperties(string kPackVersion = null, AppPlatformBuildServiceProvisioningState? provisioningState = null, AppPlatformBuildServiceResourceRequirements resourceRequests = null)
         {
-            return new AppPlatformBuildServiceProperties(kPackVersion, provisioningState, resourceRequests);
+            return new AppPlatformBuildServiceProperties(kPackVersion, provisioningState, resourceRequests, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildServiceResourceRequirements"/>. </summary>
@@ -287,7 +350,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformBuildServiceResourceRequirements"/> instance for mocking. </returns>
         public static AppPlatformBuildServiceResourceRequirements AppPlatformBuildServiceResourceRequirements(string cpu = null, string memory = null)
         {
-            return new AppPlatformBuildServiceResourceRequirements(cpu, memory);
+            return new AppPlatformBuildServiceResourceRequirements(cpu, memory, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformBuildData"/>. </summary>
@@ -299,7 +362,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformBuildData"/> instance for mocking. </returns>
         public static AppPlatformBuildData AppPlatformBuildData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformBuildProperties properties = null)
         {
-            return new AppPlatformBuildData(id, name, resourceType, systemData, properties);
+            return new AppPlatformBuildData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildProperties"/>. </summary>
@@ -315,7 +384,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             env ??= new Dictionary<string, string>();
 
-            return new AppPlatformBuildProperties(relativePath, builder, agentPool, provisioningState, env, triggeredBuildResultId != null ? ResourceManagerModelFactory.SubResource(triggeredBuildResultId) : null, resourceRequests);
+            return new AppPlatformBuildProperties(
+                relativePath,
+                builder,
+                agentPool,
+                provisioningState,
+                env,
+                triggeredBuildResultId != null ? ResourceManagerModelFactory.SubResource(triggeredBuildResultId) : null,
+                resourceRequests,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformBuildpackBindingData"/>. </summary>
@@ -327,7 +404,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformBuildpackBindingData"/> instance for mocking. </returns>
         public static AppPlatformBuildpackBindingData AppPlatformBuildpackBindingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformBuildpackBindingProperties properties = null)
         {
-            return new AppPlatformBuildpackBindingData(id, name, resourceType, systemData, properties);
+            return new AppPlatformBuildpackBindingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildpackBindingProperties"/>. </summary>
@@ -337,7 +420,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformBuildpackBindingProperties"/> instance for mocking. </returns>
         public static AppPlatformBuildpackBindingProperties AppPlatformBuildpackBindingProperties(BuildpackBindingType? bindingType = null, BuildpackBindingProvisioningState? provisioningState = null, BuildpackBindingLaunchProperties launchProperties = null)
         {
-            return new AppPlatformBuildpackBindingProperties(bindingType, provisioningState, launchProperties);
+            return new AppPlatformBuildpackBindingProperties(bindingType, provisioningState, launchProperties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformBuildResultData"/>. </summary>
@@ -349,7 +432,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformBuildResultData"/> instance for mocking. </returns>
         public static AppPlatformBuildResultData AppPlatformBuildResultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformBuildResultProperties properties = null)
         {
-            return new AppPlatformBuildResultData(id, name, resourceType, systemData, properties);
+            return new AppPlatformBuildResultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildResultProperties"/>. </summary>
@@ -362,7 +451,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             buildStages ??= new List<AppPlatformBuildStageProperties>();
 
-            return new AppPlatformBuildResultProperties(name, provisioningState, buildPodName, buildStages?.ToList());
+            return new AppPlatformBuildResultProperties(name, provisioningState, buildPodName, buildStages?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildStageProperties"/>. </summary>
@@ -371,7 +460,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformBuildStageProperties"/> instance for mocking. </returns>
         public static AppPlatformBuildStageProperties AppPlatformBuildStageProperties(string name = null, KPackBuildStageProvisioningState? status = null)
         {
-            return new AppPlatformBuildStageProperties(name, status);
+            return new AppPlatformBuildStageProperties(name, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildResultLog"/>. </summary>
@@ -379,7 +468,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformBuildResultLog"/> instance for mocking. </returns>
         public static AppPlatformBuildResultLog AppPlatformBuildResultLog(Uri blobUri = null)
         {
-            return new AppPlatformBuildResultLog(blobUri);
+            return new AppPlatformBuildResultLog(blobUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformBuilderData"/>. </summary>
@@ -391,7 +480,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformBuilderData"/> instance for mocking. </returns>
         public static AppPlatformBuilderData AppPlatformBuilderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformBuilderProperties properties = null)
         {
-            return new AppPlatformBuilderData(id, name, resourceType, systemData, properties);
+            return new AppPlatformBuilderData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuilderProperties"/>. </summary>
@@ -403,7 +498,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             buildpackGroups ??= new List<BuildpacksGroupProperties>();
 
-            return new AppPlatformBuilderProperties(provisioningState, stack, buildpackGroups?.ToList());
+            return new AppPlatformBuilderProperties(provisioningState, stack, buildpackGroups?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformResourceUploadResult"/>. </summary>
@@ -412,7 +507,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformResourceUploadResult"/> instance for mocking. </returns>
         public static AppPlatformResourceUploadResult AppPlatformResourceUploadResult(string relativePath = null, Uri uploadUri = null)
         {
-            return new AppPlatformResourceUploadResult(relativePath, uploadUri);
+            return new AppPlatformResourceUploadResult(relativePath, uploadUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformSupportedBuildpackData"/>. </summary>
@@ -424,7 +519,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformSupportedBuildpackData"/> instance for mocking. </returns>
         public static AppPlatformSupportedBuildpackData AppPlatformSupportedBuildpackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string supportedBuildpackId = null)
         {
-            return new AppPlatformSupportedBuildpackData(id, name, resourceType, systemData, supportedBuildpackId != null ? new SupportedBuildpackResourceProperties(supportedBuildpackId) : null);
+            return new AppPlatformSupportedBuildpackData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                supportedBuildpackId != null ? new SupportedBuildpackResourceProperties(supportedBuildpackId, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformSupportedStackData"/>. </summary>
@@ -436,7 +537,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformSupportedStackData"/> instance for mocking. </returns>
         public static AppPlatformSupportedStackData AppPlatformSupportedStackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformSupportedStackProperties properties = null)
         {
-            return new AppPlatformSupportedStackData(id, name, resourceType, systemData, properties);
+            return new AppPlatformSupportedStackData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformBuildServiceAgentPoolData"/>. </summary>
@@ -448,7 +555,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformBuildServiceAgentPoolData"/> instance for mocking. </returns>
         public static AppPlatformBuildServiceAgentPoolData AppPlatformBuildServiceAgentPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformBuildServiceAgentPoolProperties properties = null)
         {
-            return new AppPlatformBuildServiceAgentPoolData(id, name, resourceType, systemData, properties);
+            return new AppPlatformBuildServiceAgentPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBuildServiceAgentPoolProperties"/>. </summary>
@@ -457,7 +570,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformBuildServiceAgentPoolProperties"/> instance for mocking. </returns>
         public static AppPlatformBuildServiceAgentPoolProperties AppPlatformBuildServiceAgentPoolProperties(string provisioningState = null, BuildServiceAgentPoolSizeProperties poolSize = null)
         {
-            return new AppPlatformBuildServiceAgentPoolProperties(provisioningState, poolSize);
+            return new AppPlatformBuildServiceAgentPoolProperties(provisioningState, poolSize, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BuildServiceAgentPoolSizeProperties"/>. </summary>
@@ -467,7 +580,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.BuildServiceAgentPoolSizeProperties"/> instance for mocking. </returns>
         public static BuildServiceAgentPoolSizeProperties BuildServiceAgentPoolSizeProperties(string name = null, string cpu = null, string memory = null)
         {
-            return new BuildServiceAgentPoolSizeProperties(name, cpu, memory);
+            return new BuildServiceAgentPoolSizeProperties(name, cpu, memory, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformMonitoringSettingData"/>. </summary>
@@ -479,7 +592,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformMonitoringSettingData"/> instance for mocking. </returns>
         public static AppPlatformMonitoringSettingData AppPlatformMonitoringSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformMonitoringSettingProperties properties = null)
         {
-            return new AppPlatformMonitoringSettingData(id, name, resourceType, systemData, properties);
+            return new AppPlatformMonitoringSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformMonitoringSettingProperties"/>. </summary>
@@ -492,7 +611,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformMonitoringSettingProperties"/> instance for mocking. </returns>
         public static AppPlatformMonitoringSettingProperties AppPlatformMonitoringSettingProperties(AppPlatformMonitoringSettingState? provisioningState = null, AppPlatformErrorInfo error = null, bool? isTraceEnabled = null, string appInsightsInstrumentationKey = null, double? appInsightsSamplingRate = null, string appInsightsJavaAgentVersion = null)
         {
-            return new AppPlatformMonitoringSettingProperties(provisioningState, error, isTraceEnabled, appInsightsInstrumentationKey, appInsightsSamplingRate, appInsightsJavaAgentVersion != null ? new ApplicationInsightsAgentVersions(appInsightsJavaAgentVersion) : null);
+            return new AppPlatformMonitoringSettingProperties(
+                provisioningState,
+                error,
+                isTraceEnabled,
+                appInsightsInstrumentationKey,
+                appInsightsSamplingRate,
+                appInsightsJavaAgentVersion != null ? new ApplicationInsightsAgentVersions(appInsightsJavaAgentVersion, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformAppData"/>. </summary>
@@ -506,7 +632,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformAppData"/> instance for mocking. </returns>
         public static AppPlatformAppData AppPlatformAppData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformAppProperties properties = null, ManagedServiceIdentity identity = null, AzureLocation? location = null)
         {
-            return new AppPlatformAppData(id, name, resourceType, systemData, properties, identity, location);
+            return new AppPlatformAppData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                identity,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformAppProperties"/>. </summary>
@@ -530,7 +664,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
             customPersistentDisks ??= new List<AppCustomPersistentDisk>();
             loadedCertificates ??= new List<AppLoadedCertificate>();
 
-            return new AppPlatformAppProperties(isPublic, uriString, addonConfigs, provisioningState, fqdn, isHttpsOnly, temporaryDisk, persistentDisk, customPersistentDisks?.ToList(), isEndToEndTlsEnabled, loadedCertificates?.ToList(), vnetAddons, ingressSettings);
+            return new AppPlatformAppProperties(
+                isPublic,
+                uriString,
+                addonConfigs,
+                provisioningState,
+                fqdn,
+                isHttpsOnly,
+                temporaryDisk,
+                persistentDisk,
+                customPersistentDisks?.ToList(),
+                isEndToEndTlsEnabled,
+                loadedCertificates?.ToList(),
+                vnetAddons,
+                ingressSettings,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPersistentDisk"/>. </summary>
@@ -540,7 +688,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPersistentDisk"/> instance for mocking. </returns>
         public static AppPersistentDisk AppPersistentDisk(int? sizeInGB = null, int? usedInGB = null, string mountPath = null)
         {
-            return new AppPersistentDisk(sizeInGB, usedInGB, mountPath);
+            return new AppPersistentDisk(sizeInGB, usedInGB, mountPath, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppVnetAddons"/>. </summary>
@@ -549,7 +697,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppVnetAddons"/> instance for mocking. </returns>
         public static AppVnetAddons AppVnetAddons(bool? isPublicEndpoint = null, Uri publicEndpointUri = null)
         {
-            return new AppVnetAddons(isPublicEndpoint, publicEndpointUri);
+            return new AppVnetAddons(isPublicEndpoint, publicEndpointUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformBindingData"/>. </summary>
@@ -561,7 +709,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformBindingData"/> instance for mocking. </returns>
         public static AppPlatformBindingData AppPlatformBindingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformBindingProperties properties = null)
         {
-            return new AppPlatformBindingData(id, name, resourceType, systemData, properties);
+            return new AppPlatformBindingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformBindingProperties"/>. </summary>
@@ -578,7 +732,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             bindingParameters ??= new Dictionary<string, BinaryData>();
 
-            return new AppPlatformBindingProperties(resourceName, resourceType, resourceId, key, bindingParameters, generatedProperties, createdOn, updatedOn);
+            return new AppPlatformBindingProperties(
+                resourceName,
+                resourceType,
+                resourceId,
+                key,
+                bindingParameters,
+                generatedProperties,
+                createdOn,
+                updatedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformStorageData"/>. </summary>
@@ -594,7 +757,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformStorageData"/> instance for mocking. </returns>
         public static AppPlatformStorageData AppPlatformStorageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformStorageProperties properties = null)
         {
-            return new AppPlatformStorageData(id, name, resourceType, systemData, properties);
+            return new AppPlatformStorageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformCertificateData"/>. </summary>
@@ -610,7 +779,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformCertificateData"/> instance for mocking. </returns>
         public static AppPlatformCertificateData AppPlatformCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformCertificateProperties properties = null)
         {
-            return new AppPlatformCertificateData(id, name, resourceType, systemData, properties);
+            return new AppPlatformCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformCertificateProperties"/>. </summary>
@@ -628,7 +803,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             dnsNames ??= new List<string>();
 
-            return new UnknownCertificateProperties(certificatePropertiesType, thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState);
+            return new UnknownCertificateProperties(
+                certificatePropertiesType,
+                thumbprint,
+                issuer,
+                issuedOn,
+                expireOn,
+                activateOn,
+                subjectName,
+                dnsNames?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformNameAvailabilityResult"/>. </summary>
@@ -638,7 +823,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformNameAvailabilityResult"/> instance for mocking. </returns>
         public static AppPlatformNameAvailabilityResult AppPlatformNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new AppPlatformNameAvailabilityResult(isNameAvailable, reason, message);
+            return new AppPlatformNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformCustomDomainData"/>. </summary>
@@ -650,7 +835,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformCustomDomainData"/> instance for mocking. </returns>
         public static AppPlatformCustomDomainData AppPlatformCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformCustomDomainProperties properties = null)
         {
-            return new AppPlatformCustomDomainData(id, name, resourceType, systemData, properties);
+            return new AppPlatformCustomDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformCustomDomainProperties"/>. </summary>
@@ -661,7 +852,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformCustomDomainProperties"/> instance for mocking. </returns>
         public static AppPlatformCustomDomainProperties AppPlatformCustomDomainProperties(string thumbprint = null, string appName = null, string certName = null, AppPlatformCustomDomainProvisioningState? provisioningState = null)
         {
-            return new AppPlatformCustomDomainProperties(thumbprint, appName, certName, provisioningState);
+            return new AppPlatformCustomDomainProperties(thumbprint, appName, certName, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformCustomDomainValidateResult"/>. </summary>
@@ -670,7 +861,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformCustomDomainValidateResult"/> instance for mocking. </returns>
         public static AppPlatformCustomDomainValidateResult AppPlatformCustomDomainValidateResult(bool? isValid = null, string message = null)
         {
-            return new AppPlatformCustomDomainValidateResult(isValid, message);
+            return new AppPlatformCustomDomainValidateResult(isValid, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformDeploymentData"/>. </summary>
@@ -683,7 +874,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformDeploymentData"/> instance for mocking. </returns>
         public static AppPlatformDeploymentData AppPlatformDeploymentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformDeploymentProperties properties = null, AppPlatformSku sku = null)
         {
-            return new AppPlatformDeploymentData(id, name, resourceType, systemData, properties, sku);
+            return new AppPlatformDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                sku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformDeploymentProperties"/>. </summary>
@@ -702,7 +900,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             instances ??= new List<AppPlatformDeploymentInstance>();
 
-            return new AppPlatformDeploymentProperties(source, deploymentSettings, provisioningState, status, isActive, instances?.ToList());
+            return new AppPlatformDeploymentProperties(
+                source,
+                deploymentSettings,
+                provisioningState,
+                status,
+                isActive,
+                instances?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformDeploymentInstance"/>. </summary>
@@ -715,7 +920,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformDeploymentInstance"/> instance for mocking. </returns>
         public static AppPlatformDeploymentInstance AppPlatformDeploymentInstance(string name = null, string status = null, string reason = null, string discoveryStatus = null, DateTimeOffset? startedOn = null, string zone = null)
         {
-            return new AppPlatformDeploymentInstance(name, status, reason, discoveryStatus, startedOn, zone);
+            return new AppPlatformDeploymentInstance(
+                name,
+                status,
+                reason,
+                discoveryStatus,
+                startedOn,
+                zone,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationRemoteDebuggingConfig"/>. </summary>
@@ -724,21 +936,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.ApplicationRemoteDebuggingConfig"/> instance for mocking. </returns>
         public static ApplicationRemoteDebuggingConfig ApplicationRemoteDebuggingConfig(int? port = null, bool? isEnabled = null)
         {
-            return new ApplicationRemoteDebuggingConfig(port, isEnabled);
+            return new ApplicationRemoteDebuggingConfig(port, isEnabled, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformLogFileUriResult"/>. </summary>
         /// <param name="uri"> URL of the log file. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         /// <returns> A new <see cref="Models.AppPlatformLogFileUriResult"/> instance for mocking. </returns>
         public static AppPlatformLogFileUriResult AppPlatformLogFileUriResult(Uri uri = null)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-
-            return new AppPlatformLogFileUriResult(uri);
+            return new AppPlatformLogFileUriResult(uri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformSupportedRuntimeVersion"/>. </summary>
@@ -748,7 +954,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformSupportedRuntimeVersion"/> instance for mocking. </returns>
         public static AppPlatformSupportedRuntimeVersion AppPlatformSupportedRuntimeVersion(AppPlatformSupportedRuntimeValue? value = null, AppPlatformSupportedRuntimePlatform? platform = null, string version = null)
         {
-            return new AppPlatformSupportedRuntimeVersion(value, platform, version);
+            return new AppPlatformSupportedRuntimeVersion(value, platform, version, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailableAppPlatformSku"/>. </summary>
@@ -769,7 +975,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             locationInfo ??= new List<AppPlatformSkuLocationInfo>();
             restrictions ??= new List<AppPlatformSkuRestrictions>();
 
-            return new AvailableAppPlatformSku(resourceType, name, tier, capacity, locations?.ToList(), locationInfo?.ToList(), restrictions?.ToList());
+            return new AvailableAppPlatformSku(
+                resourceType,
+                name,
+                tier,
+                capacity,
+                locations?.ToList(),
+                locationInfo?.ToList(),
+                restrictions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformSkuCapacity"/>. </summary>
@@ -780,7 +994,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformSkuCapacity"/> instance for mocking. </returns>
         public static AppPlatformSkuCapacity AppPlatformSkuCapacity(int minimum = default, int? maximum = null, int? @default = null, AppPlatformSkuScaleType? scaleType = null)
         {
-            return new AppPlatformSkuCapacity(minimum, maximum, @default, scaleType);
+            return new AppPlatformSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformSkuLocationInfo"/>. </summary>
@@ -793,7 +1007,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             zones ??= new List<string>();
             zoneDetails ??= new List<AppPlatformSkuZoneDetails>();
 
-            return new AppPlatformSkuLocationInfo(location, zones?.ToList(), zoneDetails?.ToList());
+            return new AppPlatformSkuLocationInfo(location, zones?.ToList(), zoneDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformSkuZoneDetails"/>. </summary>
@@ -811,7 +1025,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             name ??= new List<string>();
             capabilities ??= new List<AppPlatformSkuCapabilities>();
 
-            return new AppPlatformSkuZoneDetails(name?.ToList(), capabilities?.ToList());
+            return new AppPlatformSkuZoneDetails(name?.ToList(), capabilities?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformSkuCapabilities"/>. </summary>
@@ -820,7 +1034,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformSkuCapabilities"/> instance for mocking. </returns>
         public static AppPlatformSkuCapabilities AppPlatformSkuCapabilities(string name = null, string value = null)
         {
-            return new AppPlatformSkuCapabilities(name, value);
+            return new AppPlatformSkuCapabilities(name, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformSkuRestrictions"/>. </summary>
@@ -836,7 +1050,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             values ??= new List<string>();
 
-            return new AppPlatformSkuRestrictions(restrictionsType, values?.ToList(), restrictionInfo, reasonCode);
+            return new AppPlatformSkuRestrictions(restrictionsType, values?.ToList(), restrictionInfo, reasonCode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformSkuRestrictionInfo"/>. </summary>
@@ -848,7 +1062,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             locations ??= new List<AzureLocation>();
             zones ??= new List<string>();
 
-            return new AppPlatformSkuRestrictionInfo(locations?.ToList(), zones?.ToList());
+            return new AppPlatformSkuRestrictionInfo(locations?.ToList(), zones?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformGatewayData"/>. </summary>
@@ -861,7 +1075,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformGatewayData"/> instance for mocking. </returns>
         public static AppPlatformGatewayData AppPlatformGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformGatewayProperties properties = null, AppPlatformSku sku = null)
         {
-            return new AppPlatformGatewayData(id, name, resourceType, systemData, properties, sku);
+            return new AppPlatformGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                sku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformGatewayProperties"/>. </summary>
@@ -880,7 +1101,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             instances ??= new List<AppPlatformGatewayInstance>();
 
-            return new AppPlatformGatewayProperties(provisioningState, isPublic, uri, isHttpsOnly, ssoProperties, apiMetadataProperties, corsProperties, resourceRequests, instances?.ToList(), operatorProperties);
+            return new AppPlatformGatewayProperties(
+                provisioningState,
+                isPublic,
+                uri,
+                isHttpsOnly,
+                ssoProperties,
+                apiMetadataProperties,
+                corsProperties,
+                resourceRequests,
+                instances?.ToList(),
+                operatorProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformGatewayInstance"/>. </summary>
@@ -889,7 +1121,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformGatewayInstance"/> instance for mocking. </returns>
         public static AppPlatformGatewayInstance AppPlatformGatewayInstance(string name = null, string status = null)
         {
-            return new AppPlatformGatewayInstance(name, status);
+            return new AppPlatformGatewayInstance(name, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformGatewayOperatorProperties"/>. </summary>
@@ -900,7 +1132,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             instances ??= new List<AppPlatformGatewayInstance>();
 
-            return new AppPlatformGatewayOperatorProperties(resourceRequests, instances?.ToList());
+            return new AppPlatformGatewayOperatorProperties(resourceRequests, instances?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformGatewayOperatorResourceRequirements"/>. </summary>
@@ -910,7 +1142,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformGatewayOperatorResourceRequirements"/> instance for mocking. </returns>
         public static AppPlatformGatewayOperatorResourceRequirements AppPlatformGatewayOperatorResourceRequirements(string cpu = null, string memory = null, int? instanceCount = null)
         {
-            return new AppPlatformGatewayOperatorResourceRequirements(cpu, memory, instanceCount);
+            return new AppPlatformGatewayOperatorResourceRequirements(cpu, memory, instanceCount, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformGatewayRouteConfigData"/>. </summary>
@@ -922,7 +1154,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformGatewayRouteConfigData"/> instance for mocking. </returns>
         public static AppPlatformGatewayRouteConfigData AppPlatformGatewayRouteConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformGatewayRouteConfigProperties properties = null)
         {
-            return new AppPlatformGatewayRouteConfigData(id, name, resourceType, systemData, properties);
+            return new AppPlatformGatewayRouteConfigData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformGatewayRouteConfigProperties"/>. </summary>
@@ -936,7 +1174,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             routes ??= new List<AppPlatformGatewayApiRoute>();
 
-            return new AppPlatformGatewayRouteConfigProperties(provisioningState, appResourceId, openApiUri != null ? new GatewayRouteConfigOpenApiProperties(openApiUri) : null, protocol, routes?.ToList());
+            return new AppPlatformGatewayRouteConfigProperties(
+                provisioningState,
+                appResourceId,
+                openApiUri != null ? new GatewayRouteConfigOpenApiProperties(openApiUri, serializedAdditionalRawData: null) : null,
+                protocol,
+                routes?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformGatewayCustomDomainData"/>. </summary>
@@ -948,7 +1192,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformGatewayCustomDomainData"/> instance for mocking. </returns>
         public static AppPlatformGatewayCustomDomainData AppPlatformGatewayCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string gatewayCustomDomainThumbprint = null)
         {
-            return new AppPlatformGatewayCustomDomainData(id, name, resourceType, systemData, gatewayCustomDomainThumbprint != null ? new GatewayCustomDomainProperties(gatewayCustomDomainThumbprint) : null);
+            return new AppPlatformGatewayCustomDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                gatewayCustomDomainThumbprint != null ? new GatewayCustomDomainProperties(gatewayCustomDomainThumbprint, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformApiPortalData"/>. </summary>
@@ -961,7 +1211,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformApiPortalData"/> instance for mocking. </returns>
         public static AppPlatformApiPortalData AppPlatformApiPortalData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformApiPortalProperties properties = null, AppPlatformSku sku = null)
         {
-            return new AppPlatformApiPortalData(id, name, resourceType, systemData, properties, sku);
+            return new AppPlatformApiPortalData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                sku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformApiPortalProperties"/>. </summary>
@@ -981,7 +1238,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             sourceUris ??= new List<Uri>();
             instances ??= new List<AppPlatformApiPortalInstance>();
 
-            return new AppPlatformApiPortalProperties(provisioningState, isPublic, uri, isHttpsOnly, gatewayIds?.ToList(), sourceUris?.ToList(), ssoProperties, resourceRequests, instances?.ToList());
+            return new AppPlatformApiPortalProperties(
+                provisioningState,
+                isPublic,
+                uri,
+                isHttpsOnly,
+                gatewayIds?.ToList(),
+                sourceUris?.ToList(),
+                ssoProperties,
+                resourceRequests,
+                instances?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformApiPortalResourceRequirements"/>. </summary>
@@ -990,7 +1257,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformApiPortalResourceRequirements"/> instance for mocking. </returns>
         public static AppPlatformApiPortalResourceRequirements AppPlatformApiPortalResourceRequirements(string cpu = null, string memory = null)
         {
-            return new AppPlatformApiPortalResourceRequirements(cpu, memory);
+            return new AppPlatformApiPortalResourceRequirements(cpu, memory, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformApiPortalInstance"/>. </summary>
@@ -999,7 +1266,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformApiPortalInstance"/> instance for mocking. </returns>
         public static AppPlatformApiPortalInstance AppPlatformApiPortalInstance(string name = null, string status = null)
         {
-            return new AppPlatformApiPortalInstance(name, status);
+            return new AppPlatformApiPortalInstance(name, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformApiPortalCustomDomainData"/>. </summary>
@@ -1011,7 +1278,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="AppPlatform.AppPlatformApiPortalCustomDomainData"/> instance for mocking. </returns>
         public static AppPlatformApiPortalCustomDomainData AppPlatformApiPortalCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string apiPortalCustomDomainThumbprint = null)
         {
-            return new AppPlatformApiPortalCustomDomainData(id, name, resourceType, systemData, apiPortalCustomDomainThumbprint != null ? new ApiPortalCustomDomainProperties(apiPortalCustomDomainThumbprint) : null);
+            return new AppPlatformApiPortalCustomDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                apiPortalCustomDomainThumbprint != null ? new ApiPortalCustomDomainProperties(apiPortalCustomDomainThumbprint, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformKeyVaultCertificateProperties"/>. </summary>
@@ -1032,7 +1305,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             dnsNames ??= new List<string>();
 
-            return new AppPlatformKeyVaultCertificateProperties("KeyVaultCertificate", thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState, vaultUri, keyVaultCertName, certVersion, isPrivateKeyExcluded);
+            return new AppPlatformKeyVaultCertificateProperties(
+                "KeyVaultCertificate",
+                thumbprint,
+                issuer,
+                issuedOn,
+                expireOn,
+                activateOn,
+                subjectName,
+                dnsNames?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null,
+                vaultUri,
+                keyVaultCertName,
+                certVersion,
+                isPrivateKeyExcluded);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformContentCertificateProperties"/>. </summary>
@@ -1050,7 +1337,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             dnsNames ??= new List<string>();
 
-            return new AppPlatformContentCertificateProperties("ContentCertificate", thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState, content);
+            return new AppPlatformContentCertificateProperties(
+                "ContentCertificate",
+                thumbprint,
+                issuer,
+                issuedOn,
+                expireOn,
+                activateOn,
+                subjectName,
+                dnsNames?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null,
+                content);
         }
     }
 }

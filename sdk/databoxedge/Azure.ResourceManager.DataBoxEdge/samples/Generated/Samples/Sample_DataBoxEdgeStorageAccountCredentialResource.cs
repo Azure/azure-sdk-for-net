@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.DataBoxEdge.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataBoxEdge.Samples
 {
     public partial class Sample_DataBoxEdgeStorageAccountCredentialResource
     {
-        // SACGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SACGet()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/SACGet.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SACPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SACPut()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/SACPut.json
@@ -91,9 +87,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SACDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SACDelete()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/SACDelete.json
@@ -116,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             // invoke the operation
             await dataBoxEdgeStorageAccountCredential.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

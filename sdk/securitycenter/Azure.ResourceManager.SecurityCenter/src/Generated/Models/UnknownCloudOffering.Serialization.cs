@@ -5,29 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownCloudOffering : IUtf8JsonSerializable
+    internal partial class UnknownCloudOffering : IUtf8JsonSerializable, IJsonModel<SecurityCenterCloudOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCenterCloudOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SecurityCenterCloudOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("offeringType"u8);
-            writer.WriteStringValue(OfferingType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static UnknownCloudOffering DeserializeUnknownCloudOffering(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterCloudOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        SecurityCenterCloudOffering IJsonModel<SecurityCenterCloudOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterCloudOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityCenterCloudOffering(document.RootElement, options);
+        }
+
+        internal static UnknownCloudOffering DeserializeUnknownCloudOffering(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             OfferingType offeringType = "Unknown";
-            Optional<string> description = default;
+            string description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offeringType"u8))
@@ -40,8 +73,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownCloudOffering(offeringType, description.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownCloudOffering(offeringType, description, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityCenterCloudOffering>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterCloudOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityCenterCloudOffering IPersistableModel<SecurityCenterCloudOffering>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterCloudOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityCenterCloudOffering(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityCenterCloudOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

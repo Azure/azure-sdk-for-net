@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.SignalR.Protocol;
+using Newtonsoft.Json.Linq;
 using InvocationMessage = Microsoft.Azure.SignalR.Serverless.Protocols.InvocationMessage;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
@@ -52,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 else
                 {
                     var result = await tcs.Task.ConfigureAwait(false);
-                    completionMessage = CompletionMessage.WithResult(message.InvocationId, result);
+                    completionMessage = CompletionMessage.WithResult(message.InvocationId, ToSafeSerializationType(result));
                     response = new HttpResponseMessage(HttpStatusCode.OK);
                 }
             }
@@ -66,6 +67,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 response.Content = new ByteArrayContent(protocol.GetMessageBytes(completionMessage).ToArray());
             }
             return response;
+        }
+
+        private static object ToSafeSerializationType(object result)
+        {
+            if (result is JToken jtoken)
+            {
+                return new JTokenWrapper(jtoken);
+            }
+            else
+            {
+                return result;
+            }
         }
 
         private static void AssertConsistency(InvocationContext context, InvocationMessage message)

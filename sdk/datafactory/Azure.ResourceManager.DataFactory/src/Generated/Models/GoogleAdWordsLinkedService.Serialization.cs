@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,56 +14,28 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class GoogleAdWordsLinkedService : IUtf8JsonSerializable
+    public partial class GoogleAdWordsLinkedService : IUtf8JsonSerializable, IJsonModel<GoogleAdWordsLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GoogleAdWordsLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<GoogleAdWordsLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleAdWordsLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                throw new FormatException($"The model {nameof(GoogleAdWordsLinkedService)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteStartObject();
-                foreach (var item in Parameters)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Annotations))
-            {
-                writer.WritePropertyName("annotations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Annotations)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndArray();
-            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectionProperties))
@@ -165,36 +138,50 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static GoogleAdWordsLinkedService DeserializeGoogleAdWordsLinkedService(JsonElement element)
+        GoogleAdWordsLinkedService IJsonModel<GoogleAdWordsLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleAdWordsLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GoogleAdWordsLinkedService)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGoogleAdWordsLinkedService(document.RootElement, options);
+        }
+
+        internal static GoogleAdWordsLinkedService DeserializeGoogleAdWordsLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<BinaryData> connectionProperties = default;
-            Optional<DataFactoryElement<string>> clientCustomerId = default;
-            Optional<DataFactorySecretBaseDefinition> developerToken = default;
-            Optional<GoogleAdWordsAuthenticationType> authenticationType = default;
-            Optional<DataFactorySecretBaseDefinition> refreshToken = default;
-            Optional<DataFactoryElement<string>> clientId = default;
-            Optional<DataFactorySecretBaseDefinition> clientSecret = default;
-            Optional<DataFactoryElement<string>> email = default;
-            Optional<DataFactoryElement<string>> keyFilePath = default;
-            Optional<DataFactoryElement<string>> trustedCertPath = default;
-            Optional<DataFactoryElement<bool>> useSystemTrustStore = default;
-            Optional<DataFactorySecretBaseDefinition> privateKey = default;
-            Optional<DataFactoryElement<string>> loginCustomerId = default;
-            Optional<DataFactoryElement<string>> googleAdsApiVersion = default;
-            Optional<DataFactoryElement<bool>> supportLegacyDataTypes = default;
-            Optional<string> encryptedCredential = default;
+            string version = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
+            BinaryData connectionProperties = default;
+            DataFactoryElement<string> clientCustomerId = default;
+            DataFactorySecret developerToken = default;
+            GoogleAdWordsAuthenticationType? authenticationType = default;
+            DataFactorySecret refreshToken = default;
+            DataFactoryElement<string> clientId = default;
+            DataFactorySecret clientSecret = default;
+            DataFactoryElement<string> email = default;
+            DataFactoryElement<string> keyFilePath = default;
+            DataFactoryElement<string> trustedCertPath = default;
+            DataFactoryElement<bool> useSystemTrustStore = default;
+            DataFactorySecret privateKey = default;
+            DataFactoryElement<string> loginCustomerId = default;
+            DataFactoryElement<string> googleAdsApiVersion = default;
+            DataFactoryElement<bool> supportLegacyDataTypes = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,13 +191,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("connectVia"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -227,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -286,7 +278,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            developerToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            developerToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -304,7 +296,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            refreshToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            refreshToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
@@ -322,7 +314,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            clientSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("email"u8))
@@ -367,7 +359,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            privateKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            privateKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("loginCustomerID"u8))
@@ -408,7 +400,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GoogleAdWordsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionProperties.Value, clientCustomerId.Value, developerToken, Optional.ToNullable(authenticationType), refreshToken, clientId.Value, clientSecret, email.Value, keyFilePath.Value, trustedCertPath.Value, useSystemTrustStore.Value, privateKey, loginCustomerId.Value, googleAdsApiVersion.Value, supportLegacyDataTypes.Value, encryptedCredential.Value);
+            return new GoogleAdWordsLinkedService(
+                type,
+                version,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                connectionProperties,
+                clientCustomerId,
+                developerToken,
+                authenticationType,
+                refreshToken,
+                clientId,
+                clientSecret,
+                email,
+                keyFilePath,
+                trustedCertPath,
+                useSystemTrustStore,
+                privateKey,
+                loginCustomerId,
+                googleAdsApiVersion,
+                supportLegacyDataTypes,
+                encryptedCredential);
         }
+
+        BinaryData IPersistableModel<GoogleAdWordsLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleAdWordsLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GoogleAdWordsLinkedService)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GoogleAdWordsLinkedService IPersistableModel<GoogleAdWordsLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleAdWordsLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGoogleAdWordsLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GoogleAdWordsLinkedService)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GoogleAdWordsLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

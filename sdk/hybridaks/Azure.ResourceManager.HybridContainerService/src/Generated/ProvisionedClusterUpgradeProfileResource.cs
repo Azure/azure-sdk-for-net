@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
@@ -25,21 +23,19 @@ namespace Azure.ResourceManager.HybridContainerService
     public partial class ProvisionedClusterUpgradeProfileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProvisionedClusterUpgradeProfileResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="resourceName"> The resourceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
+        /// <param name="connectedClusterResourceUri"> The connectedClusterResourceUri. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string connectedClusterResourceUri)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/upgradeProfiles/default";
+            var resourceId = $"{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/upgradeProfiles/default";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _provisionedClusterUpgradeProfileProvisionedClustersClientDiagnostics;
-        private readonly ProvisionedClustersRestOperations _provisionedClusterUpgradeProfileProvisionedClustersRestClient;
+        private readonly ClientDiagnostics _provisionedClusterUpgradeProfileprovisionedClusterInstancesClientDiagnostics;
+        private readonly ProvisionedClusterInstancesRestOperations _provisionedClusterUpgradeProfileprovisionedClusterInstancesRestClient;
         private readonly ProvisionedClusterUpgradeProfileData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusters/upgradeProfiles";
+        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusterInstances/upgradeProfiles";
 
         /// <summary> Initializes a new instance of the <see cref="ProvisionedClusterUpgradeProfileResource"/> class for mocking. </summary>
         protected ProvisionedClusterUpgradeProfileResource()
@@ -60,9 +56,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ProvisionedClusterUpgradeProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _provisionedClusterUpgradeProfileProvisionedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string provisionedClusterUpgradeProfileProvisionedClustersApiVersion);
-            _provisionedClusterUpgradeProfileProvisionedClustersRestClient = new ProvisionedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, provisionedClusterUpgradeProfileProvisionedClustersApiVersion);
+            _provisionedClusterUpgradeProfileprovisionedClusterInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string provisionedClusterUpgradeProfileprovisionedClusterInstancesApiVersion);
+            _provisionedClusterUpgradeProfileprovisionedClusterInstancesRestClient = new ProvisionedClusterInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, provisionedClusterUpgradeProfileprovisionedClusterInstancesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,26 +86,34 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the upgrade profile of a provisioned cluster.
+        /// Gets the upgrade profile of a provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/upgradeProfiles/default</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/upgradeProfiles/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProvisionedClusters_GetUpgradeProfile</description>
+        /// <description>provisionedClusterInstances_GetUpgradeProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProvisionedClusterUpgradeProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ProvisionedClusterUpgradeProfileResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _provisionedClusterUpgradeProfileProvisionedClustersClientDiagnostics.CreateScope("ProvisionedClusterUpgradeProfileResource.Get");
+            using var scope = _provisionedClusterUpgradeProfileprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterUpgradeProfileResource.Get");
             scope.Start();
             try
             {
-                var response = await _provisionedClusterUpgradeProfileProvisionedClustersRestClient.GetUpgradeProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _provisionedClusterUpgradeProfileprovisionedClusterInstancesRestClient.GetUpgradeProfileAsync(Id.Parent.Parent, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ProvisionedClusterUpgradeProfileResource(Client, response.Value), response.GetRawResponse());
@@ -122,26 +126,34 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the upgrade profile of a provisioned cluster.
+        /// Gets the upgrade profile of a provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/upgradeProfiles/default</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/upgradeProfiles/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProvisionedClusters_GetUpgradeProfile</description>
+        /// <description>provisionedClusterInstances_GetUpgradeProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProvisionedClusterUpgradeProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ProvisionedClusterUpgradeProfileResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _provisionedClusterUpgradeProfileProvisionedClustersClientDiagnostics.CreateScope("ProvisionedClusterUpgradeProfileResource.Get");
+            using var scope = _provisionedClusterUpgradeProfileprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterUpgradeProfileResource.Get");
             scope.Start();
             try
             {
-                var response = _provisionedClusterUpgradeProfileProvisionedClustersRestClient.GetUpgradeProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _provisionedClusterUpgradeProfileprovisionedClusterInstancesRestClient.GetUpgradeProfile(Id.Parent.Parent, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ProvisionedClusterUpgradeProfileResource(Client, response.Value), response.GetRawResponse());

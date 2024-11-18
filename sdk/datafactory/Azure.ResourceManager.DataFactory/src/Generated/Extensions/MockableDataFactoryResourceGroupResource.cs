@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="factoryName"> The factory name. </param>
@@ -77,6 +82,14 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

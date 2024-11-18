@@ -19,6 +19,11 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStringValue(IncomingCallContext);
             writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
+            if (Optional.IsDefined(CustomCallingContext))
+            {
+                writer.WritePropertyName("customCallingContext"u8);
+                writer.WriteObjectValue(CustomCallingContext);
+            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
@@ -45,6 +50,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteObjectValue(AnsweredBy);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

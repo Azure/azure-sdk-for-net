@@ -6,18 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class RawReferenceInputDataSource : IUtf8JsonSerializable
+    public partial class RawReferenceInputDataSource : IUtf8JsonSerializable, IJsonModel<RawReferenceInputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RawReferenceInputDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RawReferenceInputDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ReferenceInputDataSourceType);
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RawReferenceInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RawReferenceInputDataSource)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Payload))
@@ -38,18 +55,33 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStringValue(PayloadUri.AbsoluteUri);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static RawReferenceInputDataSource DeserializeRawReferenceInputDataSource(JsonElement element)
+        RawReferenceInputDataSource IJsonModel<RawReferenceInputDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RawReferenceInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RawReferenceInputDataSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRawReferenceInputDataSource(document.RootElement, options);
+        }
+
+        internal static RawReferenceInputDataSource DeserializeRawReferenceInputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<BinaryData> payload = default;
-            Optional<Uri> payloadUri = default;
+            BinaryData payload = default;
+            Uri payloadUri = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -87,8 +119,44 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RawReferenceInputDataSource(type, payload.Value, payloadUri.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RawReferenceInputDataSource(type, serializedAdditionalRawData, payload, payloadUri);
         }
+
+        BinaryData IPersistableModel<RawReferenceInputDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RawReferenceInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RawReferenceInputDataSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RawReferenceInputDataSource IPersistableModel<RawReferenceInputDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RawReferenceInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRawReferenceInputDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RawReferenceInputDataSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RawReferenceInputDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A class representing a collection of <see cref="WorkloadNetworkGatewayResource"/> and their operations.
-    /// Each <see cref="WorkloadNetworkGatewayResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
-    /// To get a <see cref="WorkloadNetworkGatewayCollection"/> instance call the GetWorkloadNetworkGateways method from an instance of <see cref="AvsPrivateCloudResource"/>.
+    /// Each <see cref="WorkloadNetworkGatewayResource"/> in the collection will belong to the same instance of <see cref="WorkloadNetworkResource"/>.
+    /// To get a <see cref="WorkloadNetworkGatewayCollection"/> instance call the GetWorkloadNetworkGateways method from an instance of <see cref="WorkloadNetworkResource"/>.
     /// </summary>
     public partial class WorkloadNetworkGatewayCollection : ArmCollection, IEnumerable<WorkloadNetworkGatewayResource>, IAsyncEnumerable<WorkloadNetworkGatewayResource>
     {
@@ -49,12 +47,12 @@ namespace Azure.ResourceManager.Avs
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
+            if (id.ResourceType != WorkloadNetworkResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkloadNetworkResource.ResourceType), nameof(id));
         }
 
         /// <summary>
-        /// Get a gateway by id in a private cloud workload network.
+        /// Get a WorkloadNetworkGateway
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -64,9 +62,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
+        /// <param name="gatewayId"> The ID of the NSX Gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -78,7 +84,7 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _workloadNetworkGatewayWorkloadNetworksRestClient.GetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayId, cancellationToken).ConfigureAwait(false);
+                var response = await _workloadNetworkGatewayWorkloadNetworksRestClient.GetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, gatewayId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WorkloadNetworkGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -91,7 +97,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a gateway by id in a private cloud workload network.
+        /// Get a WorkloadNetworkGateway
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -101,9 +107,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
+        /// <param name="gatewayId"> The ID of the NSX Gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -115,7 +129,7 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _workloadNetworkGatewayWorkloadNetworksRestClient.GetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayId, cancellationToken);
+                var response = _workloadNetworkGatewayWorkloadNetworksRestClient.GetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, gatewayId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WorkloadNetworkGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -128,7 +142,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// List of gateways in a private cloud workload network.
+        /// List WorkloadNetworkGateway resources by WorkloadNetwork
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -137,6 +151,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_ListGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,13 +166,13 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An async collection of <see cref="WorkloadNetworkGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadNetworkGatewayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkGatewayResource(Client, WorkloadNetworkGatewayData.DeserializeWorkloadNetworkGatewayData(e)), _workloadNetworkGatewayWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// List of gateways in a private cloud workload network.
+        /// List WorkloadNetworkGateway resources by WorkloadNetwork
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -160,14 +182,22 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_ListGateways</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WorkloadNetworkGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadNetworkGatewayResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkGatewayResource(Client, WorkloadNetworkGatewayData.DeserializeWorkloadNetworkGatewayData(e)), _workloadNetworkGatewayWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -182,9 +212,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
+        /// <param name="gatewayId"> The ID of the NSX Gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -196,7 +234,7 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _workloadNetworkGatewayWorkloadNetworksRestClient.GetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _workloadNetworkGatewayWorkloadNetworksRestClient.GetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, gatewayId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,9 +255,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
+        /// <param name="gatewayId"> The ID of the NSX Gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -231,7 +277,7 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _workloadNetworkGatewayWorkloadNetworksRestClient.GetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayId, cancellationToken: cancellationToken);
+                var response = _workloadNetworkGatewayWorkloadNetworksRestClient.GetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, gatewayId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -252,9 +298,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
+        /// <param name="gatewayId"> The ID of the NSX Gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -266,7 +320,7 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _workloadNetworkGatewayWorkloadNetworksRestClient.GetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _workloadNetworkGatewayWorkloadNetworksRestClient.GetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, gatewayId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<WorkloadNetworkGatewayResource>(response.GetRawResponse());
                 return Response.FromValue(new WorkloadNetworkGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -289,9 +343,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
+        /// <param name="gatewayId"> The ID of the NSX Gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -303,7 +365,7 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _workloadNetworkGatewayWorkloadNetworksRestClient.GetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayId, cancellationToken: cancellationToken);
+                var response = _workloadNetworkGatewayWorkloadNetworksRestClient.GetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, gatewayId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<WorkloadNetworkGatewayResource>(response.GetRawResponse());
                 return Response.FromValue(new WorkloadNetworkGatewayResource(Client, response.Value), response.GetRawResponse());

@@ -6,17 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabTargetCost : IUtf8JsonSerializable
+    public partial class DevTestLabTargetCost : IUtf8JsonSerializable, IJsonModel<DevTestLabTargetCost>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabTargetCost>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DevTestLabTargetCost>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabTargetCost>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabTargetCost)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -33,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in CostThresholds)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,21 +69,51 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("cycleType"u8);
                 writer.WriteStringValue(CycleType.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DevTestLabTargetCost DeserializeDevTestLabTargetCost(JsonElement element)
+        DevTestLabTargetCost IJsonModel<DevTestLabTargetCost>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabTargetCost>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabTargetCost)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabTargetCost(document.RootElement, options);
+        }
+
+        internal static DevTestLabTargetCost DeserializeDevTestLabTargetCost(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DevTestLabTargetCostStatus> status = default;
-            Optional<int> target = default;
-            Optional<IList<DevTestLabCostThreshold>> costThresholds = default;
-            Optional<DateTimeOffset> cycleStartDateTime = default;
-            Optional<DateTimeOffset> cycleEndDateTime = default;
-            Optional<DevTestLabReportingCycleType> cycleType = default;
+            DevTestLabTargetCostStatus? status = default;
+            int? target = default;
+            IList<DevTestLabCostThreshold> costThresholds = default;
+            DateTimeOffset? cycleStartDateTime = default;
+            DateTimeOffset? cycleEndDateTime = default;
+            DevTestLabReportingCycleType? cycleType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -96,7 +143,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabCostThreshold> array = new List<DevTestLabCostThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabCostThreshold.DeserializeDevTestLabCostThreshold(item));
+                        array.Add(DevTestLabCostThreshold.DeserializeDevTestLabCostThreshold(item, options));
                     }
                     costThresholds = array;
                     continue;
@@ -128,8 +175,51 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     cycleType = new DevTestLabReportingCycleType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevTestLabTargetCost(Optional.ToNullable(status), Optional.ToNullable(target), Optional.ToList(costThresholds), Optional.ToNullable(cycleStartDateTime), Optional.ToNullable(cycleEndDateTime), Optional.ToNullable(cycleType));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevTestLabTargetCost(
+                status,
+                target,
+                costThresholds ?? new ChangeTrackingList<DevTestLabCostThreshold>(),
+                cycleStartDateTime,
+                cycleEndDateTime,
+                cycleType,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevTestLabTargetCost>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabTargetCost>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabTargetCost)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DevTestLabTargetCost IPersistableModel<DevTestLabTargetCost>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabTargetCost>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevTestLabTargetCost(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabTargetCost)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevTestLabTargetCost>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

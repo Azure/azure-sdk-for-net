@@ -127,6 +127,21 @@ namespace Azure.Core.GeoJson
 
             if (element.TryGetProperty(BBoxProperty, out JsonElement bboxElement))
             {
+                // According to RFC 7946, the bbox member is optional. If one is provided, it MUST
+                // be an array and cannot be null.
+                // The code below is intentionally lenient and allows a null value to be treated
+                // as if the bbox member was omitted. The GeoObject.BoundingBox property is already
+                // set to null when there is no bbox, so setting it to null when the GeoJSON data has
+                // a null bbox does not impact the behavior of the GeoObject class.
+                // This was done to be compatible with third-party GeoJSON serializers. There are some
+                // GeoJSON serializer packages in the broader community that either don't follow this
+                // part of the spec, or interpret optional as being equal to nullable.
+                // Note: The Azure.Core serializer follows the spec and never writes "bbox": null
+                if (bboxElement.ValueKind == JsonValueKind.Null)
+                {
+                    return null;
+                }
+
                 var arrayLength = bboxElement.GetArrayLength();
 
                 switch (arrayLength)

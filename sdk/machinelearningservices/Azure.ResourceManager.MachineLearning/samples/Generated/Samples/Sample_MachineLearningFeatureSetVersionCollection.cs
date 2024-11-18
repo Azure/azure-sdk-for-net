@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearning;
 using Azure.ResourceManager.MachineLearning.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearning.Samples
 {
     public partial class Sample_MachineLearningFeatureSetVersionCollection
     {
-        // List Workspace Featureset Version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListWorkspaceFeaturesetVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/FeaturesetVersion/list.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/FeaturesetVersion/list.json
             // this example is just showing the usage of "FeaturesetVersions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,15 +51,14 @@ namespace Azure.ResourceManager.MachineLearning.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Workspace Featureset Version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWorkspaceFeaturesetVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/FeaturesetVersion/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/FeaturesetVersion/get.json
             // this example is just showing the usage of "FeaturesetVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,12 +89,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Workspace Featureset Version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetWorkspaceFeaturesetVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/FeaturesetVersion/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/FeaturesetVersion/get.json
             // this example is just showing the usage of "FeaturesetVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,12 +120,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Workspace Featureset Version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetWorkspaceFeaturesetVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/FeaturesetVersion/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/FeaturesetVersion/get.json
             // this example is just showing the usage of "FeaturesetVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -157,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -169,12 +163,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             }
         }
 
-        // CreateOrUpdate Workspace Featureset Version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateWorkspaceFeaturesetVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/FeaturesetVersion/createOrUpdate.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/FeaturesetVersion/createOrUpdate.json
             // this example is just showing the usage of "FeaturesetVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -198,24 +191,10 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             string version = "string";
             MachineLearningFeatureSetVersionData data = new MachineLearningFeatureSetVersionData(new MachineLearningFeatureSetVersionProperties()
             {
-                Entities =
-{
-"string"
-},
+                SpecificationPath = "string",
                 MaterializationSettings = new MaterializationSettings()
                 {
-                    Notification = new NotificationSetting()
-                    {
-                        EmailOn =
-{
-EmailNotificationEnableType.JobFailed
-},
-                        Emails =
-{
-"string"
-},
-                    },
-                    ResourceInstanceType = "string",
+                    StoreType = MaterializationStoreType.Online,
                     Schedule = new MachineLearningRecurrenceTrigger(MachineLearningRecurrenceFrequency.Day, 1)
                     {
                         Schedule = new MachineLearningRecurrenceSchedule(new int[]
@@ -226,35 +205,49 @@ EmailNotificationEnableType.JobFailed
 1
             })
                         {
-                            MonthDays =
-{
-1
-},
                             WeekDays =
 {
 MachineLearningDayOfWeek.Monday
+},
+                            MonthDays =
+{
+1
 },
                         },
                         EndTime = "string",
                         StartTime = "string",
                         TimeZone = "string",
                     },
+                    Notification = new NotificationSetting()
+                    {
+                        Emails =
+{
+"string"
+},
+                        EmailOn =
+{
+EmailNotificationEnableType.JobFailed
+},
+                    },
+                    ResourceInstanceType = "string",
                     SparkConfiguration =
 {
 ["string"] = "string",
 },
-                    StoreType = MaterializationStoreType.Online,
                 },
-                SpecificationPath = "string",
                 Stage = "string",
-                IsAnonymous = false,
+                Entities =
+{
+"string"
+},
                 IsArchived = false,
+                IsAnonymous = false,
                 Description = "string",
-                Properties =
+                Tags =
 {
 ["string"] = "string",
 },
-                Tags =
+                Properties =
 {
 ["string"] = "string",
 },

@@ -6,17 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryRecurrenceSchedule : IUtf8JsonSerializable
+    public partial class DataFactoryRecurrenceSchedule : IUtf8JsonSerializable, IJsonModel<DataFactoryRecurrenceSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryRecurrenceSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataFactoryRecurrenceSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryRecurrenceSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryRecurrenceSchedule)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(Minutes))
             {
                 writer.WritePropertyName("minutes"u8);
@@ -63,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in MonthlyOccurrences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,20 +96,33 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static DataFactoryRecurrenceSchedule DeserializeDataFactoryRecurrenceSchedule(JsonElement element)
+        DataFactoryRecurrenceSchedule IJsonModel<DataFactoryRecurrenceSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryRecurrenceSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryRecurrenceSchedule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryRecurrenceSchedule(document.RootElement, options);
+        }
+
+        internal static DataFactoryRecurrenceSchedule DeserializeDataFactoryRecurrenceSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<int>> minutes = default;
-            Optional<IList<int>> hours = default;
-            Optional<IList<DataFactoryDayOfWeek>> weekDays = default;
-            Optional<IList<int>> monthDays = default;
-            Optional<IList<DataFactoryRecurrenceScheduleOccurrence>> monthlyOccurrences = default;
+            IList<int> minutes = default;
+            IList<int> hours = default;
+            IList<DataFactoryDayOfWeek> weekDays = default;
+            IList<int> monthDays = default;
+            IList<DataFactoryRecurrenceScheduleOccurrence> monthlyOccurrences = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryRecurrenceScheduleOccurrence> array = new List<DataFactoryRecurrenceScheduleOccurrence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryRecurrenceScheduleOccurrence.DeserializeDataFactoryRecurrenceScheduleOccurrence(item));
+                        array.Add(DataFactoryRecurrenceScheduleOccurrence.DeserializeDataFactoryRecurrenceScheduleOccurrence(item, options));
                     }
                     monthlyOccurrences = array;
                     continue;
@@ -170,7 +200,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryRecurrenceSchedule(Optional.ToList(minutes), Optional.ToList(hours), Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences), additionalProperties);
+            return new DataFactoryRecurrenceSchedule(
+                minutes ?? new ChangeTrackingList<int>(),
+                hours ?? new ChangeTrackingList<int>(),
+                weekDays ?? new ChangeTrackingList<DataFactoryDayOfWeek>(),
+                monthDays ?? new ChangeTrackingList<int>(),
+                monthlyOccurrences ?? new ChangeTrackingList<DataFactoryRecurrenceScheduleOccurrence>(),
+                additionalProperties);
         }
+
+        BinaryData IPersistableModel<DataFactoryRecurrenceSchedule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryRecurrenceSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryRecurrenceSchedule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataFactoryRecurrenceSchedule IPersistableModel<DataFactoryRecurrenceSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryRecurrenceSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFactoryRecurrenceSchedule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryRecurrenceSchedule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFactoryRecurrenceSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

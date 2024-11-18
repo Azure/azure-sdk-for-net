@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class VpnConfigurationPatchableOptionAProperties : IUtf8JsonSerializable
+    public partial class VpnConfigurationPatchableOptionAProperties : IUtf8JsonSerializable, IJsonModel<VpnConfigurationPatchableOptionAProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnConfigurationPatchableOptionAProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VpnConfigurationPatchableOptionAProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnConfigurationPatchableOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VpnConfigurationPatchableOptionAProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
@@ -35,43 +55,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
             }
-            if (Optional.IsDefined(Mtu))
-            {
-                writer.WritePropertyName("mtu"u8);
-                writer.WriteNumberValue(Mtu.Value);
-            }
-            if (Optional.IsDefined(VlanId))
-            {
-                writer.WritePropertyName("vlanId"u8);
-                writer.WriteNumberValue(VlanId.Value);
-            }
-            if (Optional.IsDefined(PeerAsn))
-            {
-                writer.WritePropertyName("peerASN"u8);
-                writer.WriteNumberValue(PeerAsn.Value);
-            }
-            if (Optional.IsDefined(BfdConfiguration))
-            {
-                writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static VpnConfigurationPatchableOptionAProperties DeserializeVpnConfigurationPatchableOptionAProperties(JsonElement element)
+        VpnConfigurationPatchableOptionAProperties IJsonModel<VpnConfigurationPatchableOptionAProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnConfigurationPatchableOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VpnConfigurationPatchableOptionAProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnConfigurationPatchableOptionAProperties(document.RootElement, options);
+        }
+
+        internal static VpnConfigurationPatchableOptionAProperties DeserializeVpnConfigurationPatchableOptionAProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> primaryIPv4Prefix = default;
-            Optional<string> primaryIPv6Prefix = default;
-            Optional<string> secondaryIPv4Prefix = default;
-            Optional<string> secondaryIPv6Prefix = default;
-            Optional<int> mtu = default;
-            Optional<int> vlanId = default;
-            Optional<long> peerAsn = default;
-            Optional<BfdConfiguration> bfdConfiguration = default;
+            string primaryIPv4Prefix = default;
+            string primaryIPv6Prefix = default;
+            string secondaryIPv4Prefix = default;
+            string secondaryIPv6Prefix = default;
+            int? mtu = default;
+            int? vlanId = default;
+            long? peerAsn = default;
+            BfdConfiguration bfdConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryIpv4Prefix"u8))
@@ -127,11 +142,56 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value);
+                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VpnConfigurationPatchableOptionAProperties(Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(peerAsn), bfdConfiguration.Value, primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VpnConfigurationPatchableOptionAProperties(
+                mtu,
+                vlanId,
+                peerAsn,
+                bfdConfiguration,
+                serializedAdditionalRawData,
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix);
         }
+
+        BinaryData IPersistableModel<VpnConfigurationPatchableOptionAProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnConfigurationPatchableOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VpnConfigurationPatchableOptionAProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VpnConfigurationPatchableOptionAProperties IPersistableModel<VpnConfigurationPatchableOptionAProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnConfigurationPatchableOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVpnConfigurationPatchableOptionAProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VpnConfigurationPatchableOptionAProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VpnConfigurationPatchableOptionAProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

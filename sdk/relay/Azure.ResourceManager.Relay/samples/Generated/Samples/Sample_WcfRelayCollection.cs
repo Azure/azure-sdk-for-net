@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Relay;
 using Azure.ResourceManager.Relay.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Relay.Samples
 {
     public partial class Sample_WcfRelayCollection
     {
-        // RelayListAll
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_RelayListAll()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayListAll.json
@@ -52,12 +49,11 @@ namespace Azure.ResourceManager.Relay.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RelayCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RelayCreate()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayCreate.json
@@ -97,9 +93,8 @@ namespace Azure.ResourceManager.Relay.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RelayGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RelayGet()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayGet.json
@@ -132,9 +127,8 @@ namespace Azure.ResourceManager.Relay.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RelayGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RelayGet()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayGet.json
@@ -163,9 +157,8 @@ namespace Azure.ResourceManager.Relay.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RelayGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RelayGet()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayGet.json
@@ -194,7 +187,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

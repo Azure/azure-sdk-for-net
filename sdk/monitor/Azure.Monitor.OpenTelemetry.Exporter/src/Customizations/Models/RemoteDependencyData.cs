@@ -1,11 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
@@ -13,9 +10,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class RemoteDependencyData
     {
-        // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/database.md#connection-level-attributes
-        internal static readonly HashSet<string?> s_sqlDbs = new HashSet<string?>() { "mssql" };
-
         public RemoteDependencyData(int version, Activity activity, ref ActivityTagsProcessor activityTagsProcessor) : base(version)
         {
             string? dependencyName = null;
@@ -36,9 +30,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     break;
                 case OperationType.Db:
                     SetDbDependencyProperties(ref activityTagsProcessor.MappedTags);
-                    break;
-                case OperationType.Rpc:
-                    SetRpcDependencyProperties(ref activityTagsProcessor.MappedTags);
                     break;
                 case OperationType.Messaging:
                     SetMessagingDependencyProperties(activity, ref activityTagsProcessor.MappedTags);
@@ -99,7 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Data = dbAttributeTagObjects[0]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
             var (DbName, DbTarget) = dbTagObjects.GetDbDependencyTargetAndName();
             Target = DbTarget?.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
-            Type = s_sqlDbs.Contains(dbAttributeTagObjects[1]?.ToString()) ? "SQL" : dbAttributeTagObjects[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
+            Type = AzMonListExtensions.s_dbSystems.Contains(dbAttributeTagObjects[1]?.ToString()) ? "SQL" : dbAttributeTagObjects[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
 
             // special case for db.name
             var sanitizedDbName = DbName?.Truncate(SchemaConstants.KVP_MaxValueLength);
@@ -107,14 +98,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 Properties.Add(SemanticConventions.AttributeDbName, sanitizedDbName);
             }
-        }
-
-        private void SetRpcDependencyProperties(ref AzMonList rpcTagObjects)
-        {
-            var rpcAttributeTagObjects = AzMonList.GetTagValues(ref rpcTagObjects, SemanticConventions.AttributeRpcService, SemanticConventions.AttributeRpcSystem, SemanticConventions.AttributeRpcStatus);
-            Data = rpcAttributeTagObjects[0]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
-            Type = rpcAttributeTagObjects[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
-            ResultCode = rpcAttributeTagObjects[2]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength);
         }
 
         private void SetMessagingDependencyProperties(Activity activity, ref AzMonList messagingTagObjects)

@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
 {
@@ -37,27 +35,63 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReportResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReportResource.CreateResourceIdentifier" /> to create a <see cref="ReportResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AppComplianceReportResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppComplianceReportResource.CreateResourceIdentifier" /> to create an <see cref="AppComplianceReportResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReportResource"/> object. </returns>
-        public virtual ReportResource GetReportResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppComplianceReportResource"/> object. </returns>
+        public virtual AppComplianceReportResource GetAppComplianceReportResource(ResourceIdentifier id)
         {
-            ReportResource.ValidateResourceId(id);
-            return new ReportResource(Client, id);
+            AppComplianceReportResource.ValidateResourceId(id);
+            return new AppComplianceReportResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SnapshotResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AppComplianceReportEvidenceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppComplianceReportEvidenceResource.CreateResourceIdentifier" /> to create an <see cref="AppComplianceReportEvidenceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SnapshotResource"/> object. </returns>
-        public virtual SnapshotResource GetSnapshotResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppComplianceReportEvidenceResource"/> object. </returns>
+        public virtual AppComplianceReportEvidenceResource GetAppComplianceReportEvidenceResource(ResourceIdentifier id)
         {
-            SnapshotResource.ValidateResourceId(id);
-            return new SnapshotResource(Client, id);
+            AppComplianceReportEvidenceResource.ValidateResourceId(id);
+            return new AppComplianceReportEvidenceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AppComplianceReportScopingConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppComplianceReportScopingConfigurationResource.CreateResourceIdentifier" /> to create an <see cref="AppComplianceReportScopingConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AppComplianceReportScopingConfigurationResource"/> object. </returns>
+        public virtual AppComplianceReportScopingConfigurationResource GetAppComplianceReportScopingConfigurationResource(ResourceIdentifier id)
+        {
+            AppComplianceReportScopingConfigurationResource.ValidateResourceId(id);
+            return new AppComplianceReportScopingConfigurationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AppComplianceReportSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppComplianceReportSnapshotResource.CreateResourceIdentifier" /> to create an <see cref="AppComplianceReportSnapshotResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AppComplianceReportSnapshotResource"/> object. </returns>
+        public virtual AppComplianceReportSnapshotResource GetAppComplianceReportSnapshotResource(ResourceIdentifier id)
+        {
+            AppComplianceReportSnapshotResource.ValidateResourceId(id);
+            return new AppComplianceReportSnapshotResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AppComplianceReportWebhookResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppComplianceReportWebhookResource.CreateResourceIdentifier" /> to create an <see cref="AppComplianceReportWebhookResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AppComplianceReportWebhookResource"/> object. </returns>
+        public virtual AppComplianceReportWebhookResource GetAppComplianceReportWebhookResource(ResourceIdentifier id)
+        {
+            AppComplianceReportWebhookResource.ValidateResourceId(id);
+            return new AppComplianceReportWebhookResource(Client, id);
         }
     }
 }

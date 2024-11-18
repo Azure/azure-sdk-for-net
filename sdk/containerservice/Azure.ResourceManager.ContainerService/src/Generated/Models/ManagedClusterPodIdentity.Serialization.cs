@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterPodIdentity : IUtf8JsonSerializable
+    public partial class ManagedClusterPodIdentity : IUtf8JsonSerializable, IJsonModel<ManagedClusterPodIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterPodIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ManagedClusterPodIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterPodIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("namespace"u8);
@@ -25,22 +45,62 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStringValue(BindingSelector);
             }
             writer.WritePropertyName("identity"u8);
-            writer.WriteObjectValue(Identity);
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Identity, options);
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningInfo))
+            {
+                writer.WritePropertyName("provisioningInfo"u8);
+                writer.WriteObjectValue(ProvisioningInfo, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ManagedClusterPodIdentity DeserializeManagedClusterPodIdentity(JsonElement element)
+        ManagedClusterPodIdentity IJsonModel<ManagedClusterPodIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterPodIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterPodIdentity(document.RootElement, options);
+        }
+
+        internal static ManagedClusterPodIdentity DeserializeManagedClusterPodIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             string @namespace = default;
-            Optional<string> bindingSelector = default;
+            string bindingSelector = default;
             ContainerServiceUserAssignedIdentity identity = default;
-            Optional<ManagedClusterPodIdentityProvisioningState> provisioningState = default;
-            Optional<ManagedClusterPodIdentityProvisioningInfo> provisioningInfo = default;
+            ManagedClusterPodIdentityProvisioningState? provisioningState = default;
+            ManagedClusterPodIdentityProvisioningInfo provisioningInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -60,7 +120,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("identity"u8))
                 {
-                    identity = ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(property.Value);
+                    identity = ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -78,11 +138,190 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    provisioningInfo = ManagedClusterPodIdentityProvisioningInfo.DeserializeManagedClusterPodIdentityProvisioningInfo(property.Value);
+                    provisioningInfo = ManagedClusterPodIdentityProvisioningInfo.DeserializeManagedClusterPodIdentityProvisioningInfo(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedClusterPodIdentity(name, @namespace, bindingSelector.Value, identity, Optional.ToNullable(provisioningState), provisioningInfo.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedClusterPodIdentity(
+                name,
+                @namespace,
+                bindingSelector,
+                identity,
+                provisioningState,
+                provisioningInfo,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Namespace), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  namespace: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Namespace))
+                {
+                    builder.Append("  namespace: ");
+                    if (Namespace.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Namespace}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Namespace}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BindingSelector), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bindingSelector: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BindingSelector))
+                {
+                    builder.Append("  bindingSelector: ");
+                    if (BindingSelector.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BindingSelector}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BindingSelector}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ErrorDetail", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningInfo: ");
+                builder.AppendLine("{");
+                builder.AppendLine("    error: {");
+                builder.Append("      error: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("    }");
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningInfo))
+                {
+                    builder.Append("  provisioningInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ProvisioningInfo, options, 2, false, "  provisioningInfo: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ManagedClusterPodIdentity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterPodIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedClusterPodIdentity IPersistableModel<ManagedClusterPodIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterPodIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedClusterPodIdentity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedClusterPodIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

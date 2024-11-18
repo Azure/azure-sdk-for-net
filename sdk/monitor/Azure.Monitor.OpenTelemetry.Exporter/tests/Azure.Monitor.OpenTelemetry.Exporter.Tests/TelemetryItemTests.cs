@@ -6,8 +6,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using OpenTelemetry;
 using OpenTelemetry.Resources;
 using Xunit;
@@ -33,6 +36,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             ActivitySource.AddActivityListener(listener);
         }
 
+        private static MockPlatform GetMockPlatform(string? enableResourceMetric = null)
+        {
+            var mockPlatform = new MockPlatform();
+            mockPlatform.SetEnvironmentVariable(EnvironmentVariableConstants.EXPORT_RESOURCE_METRIC, enableResourceMetric);
+            return mockPlatform;
+        }
+
         [Fact]
         public void ValidateTelemetryItem_DefaultActivity_DefaultResource()
         {
@@ -47,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resource = CreateTestResource();
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var traceResource = resource.CreateAzureMonitorResource();
+            var traceResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
@@ -74,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var traceResource = resource.CreateAzureMonitorResource();
+            var traceResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
@@ -100,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resource = CreateTestResource();
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var traceResource = resource.CreateAzureMonitorResource();
+            var traceResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
@@ -271,7 +281,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
             var telemetryItem = telemetryItems.FirstOrDefault();
 
-            Assert.False(telemetryItem?.Tags.TryGetValue(ContextTagKeys.AiLocationIp.ToString(),out _));
+            Assert.False(telemetryItem?.Tags.TryGetValue(ContextTagKeys.AiLocationIp.ToString(), out _));
         }
 
         [Fact]
@@ -305,7 +315,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resource = CreateTestResource();
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var traceResource = resource.CreateAzureMonitorResource();
+            var traceResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
 
             Assert.Equal(Dns.GetHostName(), telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
@@ -325,7 +335,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resource = CreateTestResource(null, null, "serviceinstance");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var traceResource = resource.CreateAzureMonitorResource();
+            var traceResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
 
             Assert.Equal("serviceinstance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
@@ -406,6 +416,109 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(requestData);
             Assert.Equal("displayname", requestData.Name);
             Assert.Equal(requestData.Name, telemetryItem?.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void OTelResourceMetricTelemetryHasAllResourceAttributes()
+        {
+            var instrumentationKey = "00000000-0000-0000-0000-000000000000";
+
+            var testAttributes = new Dictionary<string, object>
+                {
+                    {SemanticConventions.AttributeServiceName, "my-service" },
+                    {SemanticConventions.AttributeServiceNamespace, "my-namespace" },
+                    {SemanticConventions.AttributeServiceInstance, "my-instance" },
+                    {SemanticConventions.AttributeK8sDeployment, "my-deployment" },
+                    {SemanticConventions.AttributeK8sPod, "my-pod" },
+                    { "foo", "bar" }
+                };
+
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+
+            var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
+            var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform("true"), instrumentationKey: instrumentationKey);
+
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), azMonResource, instrumentationKey, 1.0f);
+            var telemetryItem = telemetryItems.First(x => x.Name == "Metric"); // Collect the "_OTELRESOURCE_" metric.
+
+            var monitorBase = telemetryItem?.Data;
+            var metricsData = monitorBase?.BaseData as MetricsData;
+
+            Assert.NotNull(metricsData?.Metrics);
+
+            var metricDataPoint = metricsData?.Metrics[0];
+            Assert.Equal("_OTELRESOURCE_", metricDataPoint?.Name);
+            Assert.Equal(0, metricDataPoint?.Value);
+
+            Assert.Equal(6, metricsData?.Properties.Count);
+
+            Assert.Equal("my-service", metricsData?.Properties[SemanticConventions.AttributeServiceName]);
+            Assert.Equal("my-namespace", metricsData?.Properties[SemanticConventions.AttributeServiceNamespace]);
+            Assert.Equal("my-instance", metricsData?.Properties[SemanticConventions.AttributeServiceInstance]);
+            Assert.Equal("my-deployment", metricsData?.Properties[SemanticConventions.AttributeK8sDeployment]);
+            Assert.Equal("my-pod", metricsData?.Properties[SemanticConventions.AttributeK8sPod]);
+            Assert.Equal("bar", metricsData?.Properties["foo"]);
+        }
+
+        [Fact]
+        public void OTelResourceMetricTimesAreDifferent()
+        {
+            var instrumentationKey = "00000000-0000-0000-0000-000000000000";
+
+            var testAttributes = new Dictionary<string, object>
+                {
+                    { "foo", "bar" }
+                };
+
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity1 = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity1);
+
+            var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
+            var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform("true"), instrumentationKey: instrumentationKey);
+
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity1 }, 1), azMonResource, instrumentationKey, 1.0f);
+            var telemetryItem1 = telemetryItems.First(x => x.Name == "Metric"); // Collect the "_OTELRESOURCE_" metric.
+
+            var monitorBase = telemetryItem1?.Data;
+            var metricsData = monitorBase?.BaseData as MetricsData;
+
+            Assert.NotNull(metricsData?.Metrics);
+
+            var metricDataPoint = metricsData?.Metrics[0];
+            Assert.Equal("_OTELRESOURCE_", metricDataPoint?.Name);
+            Assert.Equal(1, metricsData?.Properties.Count);
+            Assert.Equal("bar", metricsData?.Properties["foo"]);
+
+            // This test will simulate exporting a second batch of telemetry items.
+            // The timestamp on the second batch MUST NOT match the timestamp on the first batch.
+            // Here we force a 1 millisecond delay and evaulate that the timestamps are unique.
+            Task.Delay(1).Wait();
+
+            using var activity2 = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity2);
+
+            telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity2 }, 1), azMonResource, instrumentationKey, 1.0f);
+            var telemetryItem2 = telemetryItems.First(x => x.Name == "Metric"); // Collect the "_OTELRESOURCE_" metric.
+
+            Assert.NotEqual(telemetryItem1?.Time, telemetryItem2?.Time);
         }
 
         /// <summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,18 +14,34 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CloudServiceNetworkProfile : IUtf8JsonSerializable
+    public partial class CloudServiceNetworkProfile : IUtf8JsonSerializable, IJsonModel<CloudServiceNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudServiceNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CloudServiceNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudServiceNetworkProfile)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(LoadBalancerConfigurations))
             {
                 writer.WritePropertyName("loadBalancerConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -37,18 +55,48 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("swappableCloudService"u8);
                 JsonSerializer.Serialize(writer, SwappableCloudService);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static CloudServiceNetworkProfile DeserializeCloudServiceNetworkProfile(JsonElement element)
+        CloudServiceNetworkProfile IJsonModel<CloudServiceNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudServiceNetworkProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudServiceNetworkProfile(document.RootElement, options);
+        }
+
+        internal static CloudServiceNetworkProfile DeserializeCloudServiceNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<CloudServiceLoadBalancerConfiguration>> loadBalancerConfigurations = default;
-            Optional<CloudServiceSlotType> slotType = default;
-            Optional<WritableSubResource> swappableCloudService = default;
+            IList<CloudServiceLoadBalancerConfiguration> loadBalancerConfigurations = default;
+            CloudServiceSlotType? slotType = default;
+            WritableSubResource swappableCloudService = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loadBalancerConfigurations"u8))
@@ -60,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceLoadBalancerConfiguration> array = new List<CloudServiceLoadBalancerConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceLoadBalancerConfiguration.DeserializeCloudServiceLoadBalancerConfiguration(item));
+                        array.Add(CloudServiceLoadBalancerConfiguration.DeserializeCloudServiceLoadBalancerConfiguration(item, options));
                     }
                     loadBalancerConfigurations = array;
                     continue;
@@ -83,8 +131,44 @@ namespace Azure.ResourceManager.Compute.Models
                     swappableCloudService = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudServiceNetworkProfile(Optional.ToList(loadBalancerConfigurations), Optional.ToNullable(slotType), swappableCloudService);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CloudServiceNetworkProfile(loadBalancerConfigurations ?? new ChangeTrackingList<CloudServiceLoadBalancerConfiguration>(), slotType, swappableCloudService, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudServiceNetworkProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CloudServiceNetworkProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CloudServiceNetworkProfile IPersistableModel<CloudServiceNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudServiceNetworkProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudServiceNetworkProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudServiceNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

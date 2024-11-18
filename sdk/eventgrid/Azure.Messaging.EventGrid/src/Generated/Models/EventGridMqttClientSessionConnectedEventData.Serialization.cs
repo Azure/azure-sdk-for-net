@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,11 +20,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> clientSessionName = default;
-            Optional<long> sequenceNumber = default;
-            Optional<string> clientAuthenticationName = default;
-            Optional<string> clientName = default;
-            Optional<string> namespaceName = default;
+            string clientSessionName = default;
+            long? sequenceNumber = default;
+            string clientAuthenticationName = default;
+            string clientName = default;
+            string namespaceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientSessionName"u8))
@@ -58,7 +57,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new EventGridMqttClientSessionConnectedEventData(clientAuthenticationName.Value, clientName.Value, namespaceName.Value, clientSessionName.Value, Optional.ToNullable(sequenceNumber));
+            return new EventGridMqttClientSessionConnectedEventData(clientAuthenticationName, clientName, namespaceName, clientSessionName, sequenceNumber);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new EventGridMqttClientSessionConnectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEventGridMqttClientSessionConnectedEventData(document.RootElement);
         }
 
         internal partial class EventGridMqttClientSessionConnectedEventDataConverter : JsonConverter<EventGridMqttClientSessionConnectedEventData>
@@ -67,6 +74,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override EventGridMqttClientSessionConnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

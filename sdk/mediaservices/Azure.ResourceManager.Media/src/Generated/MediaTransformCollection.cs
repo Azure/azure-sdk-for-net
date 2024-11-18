@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Media
 {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -82,7 +88,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaTransformTransformsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response), response.GetRawResponse()));
+                var uri = _mediaTransformTransformsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -123,7 +139,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaTransformTransformsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response), response.GetRawResponse()));
+                var uri = _mediaTransformTransformsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -145,6 +163,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Transforms_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +209,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="transformName"> The Transform name. </param>
@@ -220,6 +254,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Restricts the set of items returned. </param>
@@ -244,6 +286,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Restricts the set of items returned. </param>
@@ -267,6 +317,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Transforms_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,6 +361,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="transformName"> The Transform name. </param>
@@ -337,6 +403,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Transforms_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -374,6 +448,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Transforms_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

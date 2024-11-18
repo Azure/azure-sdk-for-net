@@ -37,6 +37,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
+            if (Optional.IsDefined(OpsSource))
+            {
+                writer.WritePropertyName("opsSource"u8);
+                writer.WriteObjectValue(OpsSource);
+            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
@@ -65,6 +70,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteObjectValue(CustomCallingContext);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

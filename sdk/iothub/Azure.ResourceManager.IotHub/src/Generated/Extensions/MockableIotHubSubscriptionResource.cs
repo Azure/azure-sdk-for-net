@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.IotHub;
 using Azure.ResourceManager.IotHub.Models;
 
 namespace Azure.ResourceManager.IotHub.Mocking
@@ -60,6 +57,14 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,6 +87,14 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,6 +116,14 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +159,14 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <term>Operation Id</term>
         /// <description>IotHubResource_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
@@ -172,6 +201,10 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceProviderCommon_GetSubscriptionQuota</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,7 +212,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         public virtual AsyncPageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuotaAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceProviderCommonRestClient.CreateGetSubscriptionQuotaRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota, ResourceProviderCommonClientDiagnostics, Pipeline, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota(e), ResourceProviderCommonClientDiagnostics, Pipeline, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -193,6 +226,10 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceProviderCommon_GetSubscriptionQuota</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -200,7 +237,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         public virtual Pageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuota(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceProviderCommonRestClient.CreateGetSubscriptionQuotaRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota, ResourceProviderCommonClientDiagnostics, Pipeline, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota(e), ResourceProviderCommonClientDiagnostics, Pipeline, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
         }
     }
 }

@@ -57,7 +57,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static bool operator ==(ClinicalTrialPurpose left, ClinicalTrialPurpose right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClinicalTrialPurpose"/> values are not the same. </summary>
         public static bool operator !=(ClinicalTrialPurpose left, ClinicalTrialPurpose right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClinicalTrialPurpose"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClinicalTrialPurpose"/>. </summary>
         public static implicit operator ClinicalTrialPurpose(string value) => new ClinicalTrialPurpose(value);
 
         /// <inheritdoc />
@@ -68,7 +68,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

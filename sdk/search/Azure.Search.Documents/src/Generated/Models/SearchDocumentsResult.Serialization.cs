@@ -7,8 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -20,15 +18,15 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<long> odataCount = default;
-            Optional<double> searchCoverage = default;
-            Optional<IReadOnlyDictionary<string, IList<FacetResult>>> searchFacets = default;
-            Optional<IReadOnlyList<QueryAnswerResult>> searchAnswers = default;
-            Optional<SearchOptions> searchNextPageParameters = default;
+            long? odataCount = default;
+            double? searchCoverage = default;
+            IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
+            IReadOnlyList<QueryAnswerResult> searchAnswers = default;
+            SearchOptions searchNextPageParameters = default;
             IReadOnlyList<SearchResult> value = default;
-            Optional<string> odataNextLink = default;
-            Optional<SemanticErrorReason> searchSemanticPartialResponseReason = default;
-            Optional<SemanticSearchResultsType> searchSemanticPartialResponseType = default;
+            string odataNextLink = default;
+            SemanticErrorReason? searchSemanticPartialResponseReason = default;
+            SemanticSearchResultsType? searchSemanticPartialResponseType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.count"u8))
@@ -133,7 +131,24 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), Optional.ToList(searchAnswers), searchNextPageParameters.Value, value, odataNextLink.Value, Optional.ToNullable(searchSemanticPartialResponseReason), Optional.ToNullable(searchSemanticPartialResponseType));
+            return new SearchDocumentsResult(
+                odataCount,
+                searchCoverage,
+                searchFacets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(),
+                searchAnswers ?? new ChangeTrackingList<QueryAnswerResult>(),
+                searchNextPageParameters,
+                value,
+                odataNextLink,
+                searchSemanticPartialResponseReason,
+                searchSemanticPartialResponseType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchDocumentsResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchDocumentsResult(document.RootElement);
         }
     }
 }

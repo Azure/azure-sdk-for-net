@@ -5,36 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningJobScheduleAction : IUtf8JsonSerializable
+    public partial class MachineLearningJobScheduleAction : IUtf8JsonSerializable, IJsonModel<MachineLearningJobScheduleAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningJobScheduleAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningJobScheduleAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("jobDefinition"u8);
-            writer.WriteObjectValue(JobDefinition);
-            writer.WritePropertyName("actionType"u8);
-            writer.WriteStringValue(ActionType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningJobScheduleAction DeserializeMachineLearningJobScheduleAction(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobScheduleAction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningJobScheduleAction)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("jobDefinition"u8);
+            writer.WriteObjectValue(JobDefinition, options);
+        }
+
+        MachineLearningJobScheduleAction IJsonModel<MachineLearningJobScheduleAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobScheduleAction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningJobScheduleAction)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningJobScheduleAction(document.RootElement, options);
+        }
+
+        internal static MachineLearningJobScheduleAction DeserializeMachineLearningJobScheduleAction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             MachineLearningJobProperties jobDefinition = default;
             ScheduleActionType actionType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobDefinition"u8))
                 {
-                    jobDefinition = MachineLearningJobProperties.DeserializeMachineLearningJobProperties(property.Value);
+                    jobDefinition = MachineLearningJobProperties.DeserializeMachineLearningJobProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actionType"u8))
@@ -42,8 +76,88 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     actionType = new ScheduleActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningJobScheduleAction(actionType, jobDefinition);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningJobScheduleAction(actionType, serializedAdditionalRawData, jobDefinition);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobDefinition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobDefinition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JobDefinition))
+                {
+                    builder.Append("  jobDefinition: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, JobDefinition, options, 2, false, "  jobDefinition: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actionType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  actionType: ");
+                builder.AppendLine($"'{ActionType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningJobScheduleAction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobScheduleAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningJobScheduleAction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningJobScheduleAction IPersistableModel<MachineLearningJobScheduleAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobScheduleAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningJobScheduleAction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningJobScheduleAction)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningJobScheduleAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

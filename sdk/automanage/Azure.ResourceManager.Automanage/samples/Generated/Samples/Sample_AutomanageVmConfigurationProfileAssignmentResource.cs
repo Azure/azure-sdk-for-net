@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Automanage;
 using Azure.ResourceManager.Automanage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automanage.Samples
 {
     public partial class Sample_AutomanageVmConfigurationProfileAssignmentResource
     {
-        // Create or update configuration profile assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateConfigurationProfileAssignment()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/createOrUpdateConfigurationProfileAssignment.json
@@ -58,9 +55,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a configuration profile assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAConfigurationProfileAssignment()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/getConfigurationProfileAssignment.json
@@ -90,9 +86,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete an configuration profile assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnConfigurationProfileAssignment()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/deleteConfigurationProfileAssignment.json
@@ -115,7 +110,7 @@ namespace Azure.ResourceManager.Automanage.Samples
             // invoke the operation
             await automanageVmConfigurationProfileAssignment.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

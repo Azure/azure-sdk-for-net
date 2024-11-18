@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.IotHub.Mocking;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Resources;
@@ -158,6 +156,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -187,6 +193,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -218,6 +232,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -245,6 +267,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -274,6 +304,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -301,6 +339,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -330,6 +376,10 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>ResourceProviderCommon_GetSubscriptionQuota</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -357,6 +407,10 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceProviderCommon_GetSubscriptionQuota</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
         /// </item>
         /// </list>
         /// <item>

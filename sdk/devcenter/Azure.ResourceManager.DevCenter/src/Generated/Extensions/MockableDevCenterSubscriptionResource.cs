@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DevCenter;
 using Azure.ResourceManager.DevCenter.Models;
 
 namespace Azure.ResourceManager.DevCenter.Mocking
@@ -80,6 +77,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>DevCenters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -102,6 +107,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DevCenters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,6 +139,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Projects_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -149,6 +170,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Projects_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -171,6 +200,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OperationStatuses_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,6 +241,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>OperationStatuses_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure region. </param>
@@ -244,6 +281,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure region. </param>
@@ -253,7 +294,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevCenterUsage.DeserializeDevCenterUsage, UsagesClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterUsagesByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevCenterUsage.DeserializeDevCenterUsage(e), UsagesClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterUsagesByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -267,6 +308,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure region. </param>
@@ -276,7 +321,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevCenterUsage.DeserializeDevCenterUsage, UsagesClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterUsagesByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevCenterUsage.DeserializeDevCenterUsage(e), UsagesClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterUsagesByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -289,6 +334,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,6 +373,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability_Execute</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
@@ -358,6 +411,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -367,7 +424,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevCenterSkuDetails.DeserializeDevCenterSkuDetails, SkusClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterSkusBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevCenterSkuDetails.DeserializeDevCenterSkuDetails(e), SkusClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterSkusBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -381,6 +438,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -390,7 +451,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevCenterSkuDetails.DeserializeDevCenterSkuDetails, SkusClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterSkusBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevCenterSkuDetails.DeserializeDevCenterSkuDetails(e), SkusClientDiagnostics, Pipeline, "MockableDevCenterSubscriptionResource.GetDevCenterSkusBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -403,6 +464,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkConnections_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -426,6 +495,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkConnections_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
 {
@@ -54,9 +51,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -77,9 +82,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -107,9 +120,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the dedicated HSM. </param>
+        /// <param name="name"> Name of the dedicated Hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -130,9 +151,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the dedicated HSM. </param>
+        /// <param name="name"> Name of the dedicated Hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>

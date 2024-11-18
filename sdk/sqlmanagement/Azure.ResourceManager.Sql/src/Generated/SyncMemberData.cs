@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SyncMemberData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SyncMemberData"/>. </summary>
         public SyncMemberData()
         {
@@ -40,7 +73,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="password"> Password of the member database in the sync member. </param>
         /// <param name="syncDirection"> Sync direction of the sync member. </param>
         /// <param name="syncState"> Sync state of the sync member. </param>
-        internal SyncMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, ResourceIdentifier syncAgentId, Guid? sqlServerDatabaseId, ResourceIdentifier syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, ResourceIdentifier syncAgentId, Guid? sqlServerDatabaseId, ResourceIdentifier syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DatabaseType = databaseType;
             SyncAgentId = syncAgentId;
@@ -54,31 +88,44 @@ namespace Azure.ResourceManager.Sql
             Password = password;
             SyncDirection = syncDirection;
             SyncState = syncState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Database type of the sync member. </summary>
+        [WirePath("properties.databaseType")]
         public SyncMemberDbType? DatabaseType { get; set; }
         /// <summary> ARM resource id of the sync agent in the sync member. </summary>
+        [WirePath("properties.syncAgentId")]
         public ResourceIdentifier SyncAgentId { get; set; }
         /// <summary> SQL Server database id of the sync member. </summary>
+        [WirePath("properties.sqlServerDatabaseId")]
         public Guid? SqlServerDatabaseId { get; set; }
         /// <summary> ARM resource id of the sync member logical database, for sync members in Azure. </summary>
+        [WirePath("properties.syncMemberAzureDatabaseResourceId")]
         public ResourceIdentifier SyncMemberAzureDatabaseResourceId { get; set; }
         /// <summary> Whether to use private link connection. </summary>
+        [WirePath("properties.usePrivateLinkConnection")]
         public bool? UsePrivateLinkConnection { get; set; }
         /// <summary> Private endpoint name of the sync member if use private link connection is enabled, for sync members in Azure. </summary>
+        [WirePath("properties.privateEndpointName")]
         public string PrivateEndpointName { get; }
         /// <summary> Server name of the member database in the sync member. </summary>
+        [WirePath("properties.serverName")]
         public string ServerName { get; set; }
         /// <summary> Database name of the member database in the sync member. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> User name of the member database in the sync member. </summary>
+        [WirePath("properties.userName")]
         public string UserName { get; set; }
         /// <summary> Password of the member database in the sync member. </summary>
+        [WirePath("properties.password")]
         public string Password { get; set; }
         /// <summary> Sync direction of the sync member. </summary>
+        [WirePath("properties.syncDirection")]
         public SyncDirection? SyncDirection { get; set; }
         /// <summary> Sync state of the sync member. </summary>
+        [WirePath("properties.syncState")]
         public SyncMemberState? SyncState { get; }
     }
 }

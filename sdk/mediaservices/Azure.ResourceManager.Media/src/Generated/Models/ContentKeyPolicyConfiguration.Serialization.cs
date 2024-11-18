@@ -5,23 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyConfiguration : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownContentKeyPolicyConfiguration))]
+    public partial class ContentKeyPolicyConfiguration : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContentKeyPolicyConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ContentKeyPolicyConfiguration DeserializeContentKeyPolicyConfiguration(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyConfiguration)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("@odata.type"u8);
+            writer.WriteStringValue(OdataType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ContentKeyPolicyConfiguration IJsonModel<ContentKeyPolicyConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentKeyPolicyConfiguration(document.RootElement, options);
+        }
+
+        internal static ContentKeyPolicyConfiguration DeserializeContentKeyPolicyConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,14 +77,45 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.ContentKeyPolicyClearKeyConfiguration": return ContentKeyPolicyClearKeyConfiguration.DeserializeContentKeyPolicyClearKeyConfiguration(element);
-                    case "#Microsoft.Media.ContentKeyPolicyFairPlayConfiguration": return ContentKeyPolicyFairPlayConfiguration.DeserializeContentKeyPolicyFairPlayConfiguration(element);
-                    case "#Microsoft.Media.ContentKeyPolicyPlayReadyConfiguration": return ContentKeyPolicyPlayReadyConfiguration.DeserializeContentKeyPolicyPlayReadyConfiguration(element);
-                    case "#Microsoft.Media.ContentKeyPolicyUnknownConfiguration": return ContentKeyPolicyUnknownConfiguration.DeserializeContentKeyPolicyUnknownConfiguration(element);
-                    case "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration": return ContentKeyPolicyWidevineConfiguration.DeserializeContentKeyPolicyWidevineConfiguration(element);
+                    case "#Microsoft.Media.ContentKeyPolicyClearKeyConfiguration": return ContentKeyPolicyClearKeyConfiguration.DeserializeContentKeyPolicyClearKeyConfiguration(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyFairPlayConfiguration": return ContentKeyPolicyFairPlayConfiguration.DeserializeContentKeyPolicyFairPlayConfiguration(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyPlayReadyConfiguration": return ContentKeyPolicyPlayReadyConfiguration.DeserializeContentKeyPolicyPlayReadyConfiguration(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyUnknownConfiguration": return ContentKeyPolicyUnknownConfiguration.DeserializeContentKeyPolicyUnknownConfiguration(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration": return ContentKeyPolicyWidevineConfiguration.DeserializeContentKeyPolicyWidevineConfiguration(element, options);
                 }
             }
-            return UnknownContentKeyPolicyConfiguration.DeserializeUnknownContentKeyPolicyConfiguration(element);
+            return UnknownContentKeyPolicyConfiguration.DeserializeUnknownContentKeyPolicyConfiguration(element, options);
         }
+
+        BinaryData IPersistableModel<ContentKeyPolicyConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContentKeyPolicyConfiguration IPersistableModel<ContentKeyPolicyConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContentKeyPolicyConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContentKeyPolicyConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

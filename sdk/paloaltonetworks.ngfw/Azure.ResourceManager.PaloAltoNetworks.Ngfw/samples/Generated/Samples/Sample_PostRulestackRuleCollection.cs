@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 {
     public partial class Sample_PostRulestackRuleCollection
     {
-        // PostRules_List_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_PostRulesListMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_List_MaximumSet_Gen.json
@@ -50,12 +47,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PostRules_List_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_PostRulesListMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_List_MinimumSet_Gen.json
@@ -85,12 +81,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PostRules_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PostRulesGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_Get_MaximumSet_Gen.json
@@ -121,9 +116,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PostRules_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_PostRulesGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_Get_MaximumSet_Gen.json
@@ -150,9 +144,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PostRules_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PostRulesGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_Get_MaximumSet_Gen.json
@@ -179,7 +172,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -191,9 +184,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             }
         }
 
-        // PostRules_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PostRulesGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_Get_MinimumSet_Gen.json
@@ -224,9 +216,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PostRules_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_PostRulesGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_Get_MinimumSet_Gen.json
@@ -253,9 +244,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PostRules_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PostRulesGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_Get_MinimumSet_Gen.json
@@ -282,7 +272,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -294,9 +284,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             }
         }
 
-        // PostRules_CreateOrUpdate_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PostRulesCreateOrUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_CreateOrUpdate_MaximumSet_Gen.json
@@ -403,9 +392,8 @@ new RulestackTagInfo("keyName","value")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PostRules_CreateOrUpdate_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PostRulesCreateOrUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PostRules_CreateOrUpdate_MinimumSet_Gen.json

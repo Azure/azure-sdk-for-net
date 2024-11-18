@@ -29,6 +29,8 @@ namespace Azure.Storage.DataMovement.Tests
     {
         private const long DefaultObjectSize = Constants.KB;
 
+        private bool IsPageBlob;
+
         //private readonly string _generatedResourceNamePrefix;
         //private readonly string _expectedOverwriteExceptionMessage;
 
@@ -36,9 +38,11 @@ namespace Azure.Storage.DataMovement.Tests
 
         public LocalFilesStorageResourceProvider LocalResourceProvider { get; } = new();
 
-        public StartTransferUploadDirectoryTestBase(bool async, RecordedTestMode? mode = null)
+        public StartTransferUploadDirectoryTestBase(bool async, RecordedTestMode? mode = null, bool isPageBlob = false)
             : base(async, mode)
-        { }
+        {
+            IsPageBlob = isPageBlob;
+        }
 
         protected string GetNewObjectName(int? maxChars = 8)
         {
@@ -165,6 +169,11 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(12345, 10)]
         public async Task Upload(long objectSize, int waitTimeInSec)
         {
+            if (IsPageBlob && objectSize % (Constants.KB / 2) != 0)
+            {
+                Assert.Inconclusive("Cannot upload a page that has a Content-Length not an increment of 512");
+            }
+
             // Arrange
             using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
@@ -230,7 +239,10 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer destinationResource = GetStorageResourceContainer(test.Container);
             DataTransfer transfer = await new TransferManager(transferManagerOptions)
                 .StartTransferAsync(sourceResource, destinationResource, options, cancellationToken);
-            await transfer.WaitForCompletionAsync(cancellationToken);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationToken);
 
             // check if expected files exist, but not necessarily for contents
             if (errorMode == DataTransferErrorMode.ContinueOnFailure)
@@ -296,7 +308,10 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer destinationResource = GetStorageResourceContainer(test.Container);
             DataTransfer transfer = await new TransferManager(transferManagerOptions)
                 .StartTransferAsync(sourceResource, destinationResource, options, cancellationToken);
-            await transfer.WaitForCompletionAsync(cancellationToken);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationToken);
 
             // check if expected files exist, but not necessarily for contents
             await testEventsRaised.AssertContainerCompletedWithSkippedCheck(preexistingFileCount);

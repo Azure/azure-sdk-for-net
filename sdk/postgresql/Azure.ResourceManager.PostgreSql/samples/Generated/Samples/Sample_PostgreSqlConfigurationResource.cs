@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PostgreSql;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.Samples
 {
     public partial class Sample_PostgreSqlConfigurationResource
     {
-        // ConfigurationCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ConfigurationCreateOrUpdate()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2017-12-01/examples/ConfigurationCreateOrUpdate.json
@@ -55,9 +52,8 @@ namespace Azure.ResourceManager.PostgreSql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ConfigurationGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfigurationGet()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2017-12-01/examples/ConfigurationGet.json

@@ -75,17 +75,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
-                writer.WriteObjectValue(Runtime);
+                writer.WriteObjectValue<object>(Runtime);
             }
             if (Optional.IsDefined(LoggingLevel))
             {
                 writer.WritePropertyName("loggingLevel"u8);
-                writer.WriteObjectValue(LoggingLevel);
+                writer.WriteObjectValue<object>(LoggingLevel);
             }
             if (Optional.IsDefined(EnvironmentPath))
             {
                 writer.WritePropertyName("environmentPath"u8);
-                writer.WriteObjectValue(EnvironmentPath);
+                writer.WriteObjectValue<object>(EnvironmentPath);
             }
             if (Optional.IsDefined(ExecutionCredential))
             {
@@ -180,7 +180,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -191,27 +191,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
             SsisPackageLocation packageLocation = default;
-            Optional<object> runtime = default;
-            Optional<object> loggingLevel = default;
-            Optional<object> environmentPath = default;
-            Optional<SsisExecutionCredential> executionCredential = default;
+            object runtime = default;
+            object loggingLevel = default;
+            object environmentPath = default;
+            SsisExecutionCredential executionCredential = default;
             IntegrationRuntimeReference connectVia = default;
-            Optional<IDictionary<string, SsisExecutionParameter>> projectParameters = default;
-            Optional<IDictionary<string, SsisExecutionParameter>> packageParameters = default;
-            Optional<IDictionary<string, IDictionary<string, SsisExecutionParameter>>> projectConnectionManagers = default;
-            Optional<IDictionary<string, IDictionary<string, SsisExecutionParameter>>> packageConnectionManagers = default;
-            Optional<IDictionary<string, SsisPropertyOverride>> propertyOverrides = default;
-            Optional<SsisLogLocation> logLocation = default;
+            IDictionary<string, SsisExecutionParameter> projectParameters = default;
+            IDictionary<string, SsisExecutionParameter> packageParameters = default;
+            IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers = default;
+            IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers = default;
+            IDictionary<string, SsisPropertyOverride> propertyOverrides = default;
+            SsisLogLocation logLocation = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -459,7 +459,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteSsisPackageActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, packageLocation, runtime.Value, loggingLevel.Value, environmentPath.Value, executionCredential.Value, connectVia, Optional.ToDictionary(projectParameters), Optional.ToDictionary(packageParameters), Optional.ToDictionary(projectConnectionManagers), Optional.ToDictionary(packageConnectionManagers), Optional.ToDictionary(propertyOverrides), logLocation.Value);
+            return new ExecuteSsisPackageActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                packageLocation,
+                runtime,
+                loggingLevel,
+                environmentPath,
+                executionCredential,
+                connectVia,
+                projectParameters ?? new ChangeTrackingDictionary<string, SsisExecutionParameter>(),
+                packageParameters ?? new ChangeTrackingDictionary<string, SsisExecutionParameter>(),
+                projectConnectionManagers ?? new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>(),
+                packageConnectionManagers ?? new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>(),
+                propertyOverrides ?? new ChangeTrackingDictionary<string, SsisPropertyOverride>(),
+                logLocation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExecuteSsisPackageActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExecuteSsisPackageActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class ExecuteSsisPackageActivityConverter : JsonConverter<ExecuteSsisPackageActivity>
@@ -468,6 +506,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override ExecuteSsisPackageActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

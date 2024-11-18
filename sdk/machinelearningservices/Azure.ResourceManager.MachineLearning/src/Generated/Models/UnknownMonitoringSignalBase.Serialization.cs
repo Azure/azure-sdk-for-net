@@ -5,63 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownMonitoringSignalBase : IUtf8JsonSerializable
+    internal partial class UnknownMonitoringSignalBase : IUtf8JsonSerializable, IJsonModel<MonitoringSignalBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringSignalBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MonitoringSignalBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
-            {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Properties))
-            {
-                if (Properties != null)
-                {
-                    writer.WritePropertyName("properties"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Properties)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("properties");
-                }
-            }
-            writer.WritePropertyName("signalType"u8);
-            writer.WriteStringValue(SignalType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static UnknownMonitoringSignalBase DeserializeUnknownMonitoringSignalBase(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringSignalBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitoringSignalBase)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        MonitoringSignalBase IJsonModel<MonitoringSignalBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringSignalBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitoringSignalBase)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitoringSignalBase(document.RootElement, options);
+        }
+
+        internal static UnknownMonitoringSignalBase DeserializeUnknownMonitoringSignalBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
             MonitoringSignalType signalType = "Unknown";
+            IList<MonitoringNotificationType> notificationTypes = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mode"u8))
+                if (property.NameEquals("signalType"u8))
+                {
+                    signalType = new MonitoringSignalType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("notificationTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        notificationTypes = null;
                         continue;
                     }
-                    mode = new MonitoringNotificationMode(property.Value.GetString());
+                    List<MonitoringNotificationType> array = new List<MonitoringNotificationType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new MonitoringNotificationType(item.GetString()));
+                    }
+                    notificationTypes = array;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -79,13 +101,133 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("signalType"u8))
+                if (options.Format != "W")
                 {
-                    signalType = new MonitoringSignalType(property.Value.GetString());
-                    continue;
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new UnknownMonitoringSignalBase(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownMonitoringSignalBase(signalType, notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(), properties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignalType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  signalType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  signalType: ");
+                builder.AppendLine($"'{SignalType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  notificationTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotificationTypes))
+                {
+                    if (NotificationTypes.Any())
+                    {
+                        builder.Append("  notificationTypes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in NotificationTypes)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Properties))
+                {
+                    if (Properties.Any())
+                    {
+                        builder.Append("  properties: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Properties)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MonitoringSignalBase>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringSignalBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MonitoringSignalBase)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MonitoringSignalBase IPersistableModel<MonitoringSignalBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringSignalBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitoringSignalBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitoringSignalBase)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitoringSignalBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

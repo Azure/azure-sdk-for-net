@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.HealthBot;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthBot.Models
@@ -31,7 +30,17 @@ namespace Azure.ResourceManager.HealthBot.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HealthBotData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new HealthBotSku(skuName.Value) : null, identity, properties);
+            return new HealthBotData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                skuName.HasValue ? new HealthBotSku(skuName.Value, serializedAdditionalRawData: null) : null,
+                identity,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HealthBotProperties"/>. </summary>
@@ -41,7 +50,7 @@ namespace Azure.ResourceManager.HealthBot.Models
         /// <returns> A new <see cref="Models.HealthBotProperties"/> instance for mocking. </returns>
         public static HealthBotProperties HealthBotProperties(string provisioningState = null, Uri botManagementPortalLink = null, HealthBotKeyVaultProperties keyVaultProperties = null)
         {
-            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties);
+            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, serializedAdditionalRawData: null);
         }
     }
 }

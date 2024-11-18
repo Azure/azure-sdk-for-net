@@ -5,37 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MonitorDefinition : IUtf8JsonSerializable
+    public partial class MonitorDefinition : IUtf8JsonSerializable, IJsonModel<MonitorDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MonitorDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlertNotificationSetting))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                if (AlertNotificationSetting != null)
-                {
-                    writer.WritePropertyName("alertNotificationSetting"u8);
-                    writer.WriteObjectValue(AlertNotificationSetting);
-                }
-                else
-                {
-                    writer.WriteNull("alertNotificationSetting");
-                }
+                throw new FormatException($"The model {nameof(MonitorDefinition)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("computeConfiguration"u8);
-            writer.WriteObjectValue(ComputeConfiguration);
+
             if (Optional.IsDefined(MonitoringTarget))
             {
                 if (MonitoringTarget != null)
                 {
                     writer.WritePropertyName("monitoringTarget"u8);
-                    writer.WriteObjectValue(MonitoringTarget);
+                    writer.WriteObjectValue(MonitoringTarget, options);
                 }
                 else
                 {
@@ -47,39 +53,68 @@ namespace Azure.ResourceManager.MachineLearning.Models
             foreach (var item in Signals)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
+            writer.WritePropertyName("computeConfiguration"u8);
+            writer.WriteObjectValue(ComputeConfiguration, options);
+            if (Optional.IsDefined(AlertNotificationSettings))
+            {
+                if (AlertNotificationSettings != null)
+                {
+                    writer.WritePropertyName("alertNotificationSettings"u8);
+                    writer.WriteObjectValue(AlertNotificationSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("alertNotificationSettings");
+                }
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static MonitorDefinition DeserializeMonitorDefinition(JsonElement element)
+        MonitorDefinition IJsonModel<MonitorDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorDefinition)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorDefinition(document.RootElement, options);
+        }
+
+        internal static MonitorDefinition DeserializeMonitorDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MonitoringAlertNotificationSettingsBase> alertNotificationSetting = default;
-            MonitorComputeConfigurationBase computeConfiguration = default;
-            Optional<MonitoringTarget> monitoringTarget = default;
+            MonitoringTarget monitoringTarget = default;
             IDictionary<string, MonitoringSignalBase> signals = default;
+            MonitorComputeConfigurationBase computeConfiguration = default;
+            MonitorNotificationSettings alertNotificationSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("alertNotificationSetting"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        alertNotificationSetting = null;
-                        continue;
-                    }
-                    alertNotificationSetting = MonitoringAlertNotificationSettingsBase.DeserializeMonitoringAlertNotificationSettingsBase(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("computeConfiguration"u8))
-                {
-                    computeConfiguration = MonitorComputeConfigurationBase.DeserializeMonitorComputeConfigurationBase(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("monitoringTarget"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -87,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         monitoringTarget = null;
                         continue;
                     }
-                    monitoringTarget = MonitoringTarget.DeserializeMonitoringTarget(property.Value);
+                    monitoringTarget = MonitoringTarget.DeserializeMonitoringTarget(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("signals"u8))
@@ -95,13 +130,155 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MonitoringSignalBase> dictionary = new Dictionary<string, MonitoringSignalBase>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MonitoringSignalBase.DeserializeMonitoringSignalBase(property0.Value));
+                        dictionary.Add(property0.Name, MonitoringSignalBase.DeserializeMonitoringSignalBase(property0.Value, options));
                     }
                     signals = dictionary;
                     continue;
                 }
+                if (property.NameEquals("computeConfiguration"u8))
+                {
+                    computeConfiguration = MonitorComputeConfigurationBase.DeserializeMonitorComputeConfigurationBase(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("alertNotificationSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        alertNotificationSettings = null;
+                        continue;
+                    }
+                    alertNotificationSettings = MonitorNotificationSettings.DeserializeMonitorNotificationSettings(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitorDefinition(alertNotificationSetting.Value, computeConfiguration, monitoringTarget.Value, signals);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MonitorDefinition(monitoringTarget, signals, computeConfiguration, alertNotificationSettings, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MonitoringTarget), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  monitoringTarget: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MonitoringTarget))
+                {
+                    builder.Append("  monitoringTarget: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, MonitoringTarget, options, 2, false, "  monitoringTarget: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Signals), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  signals: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Signals))
+                {
+                    if (Signals.Any())
+                    {
+                        builder.Append("  signals: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Signals)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  signals: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  computeConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ComputeConfiguration))
+                {
+                    builder.Append("  computeConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ComputeConfiguration, options, 2, false, "  computeConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("Emails", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  alertNotificationSettings: ");
+                builder.AppendLine("{");
+                builder.AppendLine("    emailNotificationSettings: {");
+                builder.Append("      emails: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("    }");
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AlertNotificationSettings))
+                {
+                    builder.Append("  alertNotificationSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AlertNotificationSettings, options, 2, false, "  alertNotificationSettings: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MonitorDefinition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MonitorDefinition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MonitorDefinition IPersistableModel<MonitorDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitorDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitorDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitorDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

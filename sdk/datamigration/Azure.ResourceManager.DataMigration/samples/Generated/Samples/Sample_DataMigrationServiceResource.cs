@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataMigration;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataMigration.Samples
 {
     public partial class Sample_DataMigrationServiceResource
     {
-        // Services_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ServicesCreateOrUpdate()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Services_Get.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Services_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ServicesCreateOrUpdate()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Services_Delete.json
@@ -74,12 +70,11 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // invoke the operation
             await dataMigrationService.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Services_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ServicesCreateOrUpdate()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Services_Update.json
@@ -113,9 +108,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Services_CheckStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckStatus_ServicesCheckStatus()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Services_CheckStatus.json
@@ -140,9 +134,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Services_Start
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Start_ServicesStart()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Services_Start.json
@@ -164,12 +157,11 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // invoke the operation
             await dataMigrationService.StartAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Services_Stop
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Stop_ServicesStop()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Services_Stop.json
@@ -191,12 +183,11 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // invoke the operation
             await dataMigrationService.StopAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Services_ListSkus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSkus_ServicesListSkus()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Services_ListSkus.json
@@ -221,12 +212,11 @@ namespace Azure.ResourceManager.DataMigration.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Services_CheckChildrenNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckChildrenNameAvailability_ServicesCheckChildrenNameAvailability()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Services_CheckChildrenNameAvailability.json
@@ -256,9 +246,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Services_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDataMigrationServices_ServicesList()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Services_List.json
@@ -285,12 +274,11 @@ namespace Azure.ResourceManager.DataMigration.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Services_CheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckNameAvailabilityService_ServicesCheckNameAvailability()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Services_CheckNameAvailability.json

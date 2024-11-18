@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Connectivity group item. </summary>
     public partial class ConnectivityGroupItem
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ConnectivityGroupItem"/>. </summary>
         /// <param name="networkGroupId"> Network group Id. </param>
         /// <param name="groupConnectivity"> Group connectivity type. </param>
@@ -30,12 +62,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="useHubGateway"> Flag if need to use hub gateway. </param>
         /// <param name="isGlobal"> Flag if global is supported. </param>
         /// <param name="groupConnectivity"> Group connectivity type. </param>
-        internal ConnectivityGroupItem(string networkGroupId, HubGatewayUsageFlag? useHubGateway, GlobalMeshSupportFlag? isGlobal, GroupConnectivity groupConnectivity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivityGroupItem(string networkGroupId, HubGatewayUsageFlag? useHubGateway, GlobalMeshSupportFlag? isGlobal, GroupConnectivity groupConnectivity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkGroupId = networkGroupId;
             UseHubGateway = useHubGateway;
             IsGlobal = isGlobal;
             GroupConnectivity = groupConnectivity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityGroupItem"/> for deserialization. </summary>
+        internal ConnectivityGroupItem()
+        {
         }
 
         /// <summary> Network group Id. </summary>

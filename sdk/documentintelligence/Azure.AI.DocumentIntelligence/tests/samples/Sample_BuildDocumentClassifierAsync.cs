@@ -14,8 +14,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task BuildDocumentClassifierAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleBuildClassifier
             // For this sample, you can use the training documents found in the `classifierTrainingFiles` folder.
@@ -49,7 +48,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             DocumentClassifierDetails classifier = operation.Value;
 
             Console.WriteLine($"Classifier ID: {classifier.ClassifierId}");
-            Console.WriteLine($"Created on: {classifier.CreatedDateTime}");
+            Console.WriteLine($"Created on: {classifier.CreatedOn}");
 
             Console.WriteLine("Document types the classifier can recognize:");
             foreach (KeyValuePair<string, ClassifierDocumentTypeDetails> docType in classifier.DocTypes)

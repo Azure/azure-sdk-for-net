@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute.Mocking
@@ -151,6 +148,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineExtensionImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineExtensionImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
@@ -176,6 +181,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineExtensionImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineExtensionImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,6 +224,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>SharedGalleries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedGalleryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -234,6 +255,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SharedGalleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedGalleryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +295,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>CommunityGalleries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -289,6 +326,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunityGalleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,6 +367,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceOSVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
@@ -345,6 +398,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceOSVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,6 +439,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_GetOSFamily</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceOSFamilyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
@@ -401,6 +470,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_GetOSFamily</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceOSFamilyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -426,6 +503,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>Usage_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
@@ -435,7 +516,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ComputeUsage.DeserializeComputeUsage, UsageClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ComputeUsage.DeserializeComputeUsage(e), UsageClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -449,6 +530,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>Usage_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
@@ -458,7 +543,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ComputeUsage.DeserializeComputeUsage, UsageClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ComputeUsage.DeserializeComputeUsage(e), UsageClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -471,6 +556,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineSizes_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -480,7 +569,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, VirtualMachineSizesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineSize.DeserializeVirtualMachineSize(e), VirtualMachineSizesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -494,6 +583,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineSizes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
@@ -502,7 +595,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual Pageable<VirtualMachineSize> GetVirtualMachineSizes(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, VirtualMachineSizesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineSize.DeserializeVirtualMachineSize(e), VirtualMachineSizesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -515,6 +608,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSets_ListByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -539,6 +640,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSets_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
@@ -562,6 +671,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSets_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -584,6 +701,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSets_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -605,6 +730,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -629,6 +762,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
@@ -651,6 +792,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -677,6 +826,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
@@ -701,6 +858,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -744,6 +905,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
@@ -786,6 +951,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -797,7 +966,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImages", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImages", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -811,6 +980,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -822,7 +995,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImages", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImages", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -835,6 +1008,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImages_ListOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -849,7 +1026,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListOffersRequest(Id.SubscriptionId, location, publisherName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -862,6 +1039,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImages_ListOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -876,7 +1057,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListOffersRequest(Id.SubscriptionId, location, publisherName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -889,6 +1070,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImages_ListPublishers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -898,7 +1083,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagePublishersAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListPublishersRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -912,6 +1097,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImages_ListPublishers</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
@@ -920,7 +1109,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagePublishers(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListPublishersRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -933,6 +1122,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImages_ListSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -949,7 +1142,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListSkusRequest(Id.SubscriptionId, location, publisherName, offer);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -962,6 +1155,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImages_ListSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -978,7 +1175,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListSkusRequest(Id.SubscriptionId, location, publisherName, offer);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -991,6 +1188,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImages_ListByEdgeZone</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1005,7 +1206,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListByEdgeZoneRequest(Id.SubscriptionId, location, edgeZone);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1018,6 +1219,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImages_ListByEdgeZone</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1032,7 +1237,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListByEdgeZoneRequest(Id.SubscriptionId, location, edgeZone);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1045,6 +1250,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImagesEdgeZone_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1080,6 +1289,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImagesEdgeZone_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -1114,6 +1327,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImagesEdgeZone_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -1125,7 +1342,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1139,6 +1356,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImagesEdgeZone_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -1150,7 +1371,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1163,6 +1384,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImagesEdgeZone_ListOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1179,7 +1404,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListOffersRequest(Id.SubscriptionId, location, edgeZone, publisherName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1192,6 +1417,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImagesEdgeZone_ListOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1208,7 +1437,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListOffersRequest(Id.SubscriptionId, location, edgeZone, publisherName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1221,6 +1450,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImagesEdgeZone_ListPublishers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1235,7 +1468,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListPublishersRequest(Id.SubscriptionId, location, edgeZone);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1248,6 +1481,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImagesEdgeZone_ListPublishers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1262,7 +1499,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListPublishersRequest(Id.SubscriptionId, location, edgeZone);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1275,6 +1512,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImagesEdgeZone_ListSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1293,7 +1534,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListSkusRequest(Id.SubscriptionId, location, edgeZone, publisherName, offer);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1306,6 +1547,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineImagesEdgeZone_ListSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1324,7 +1569,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListSkusRequest(Id.SubscriptionId, location, edgeZone, publisherName, offer);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1337,6 +1582,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailabilitySetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1361,6 +1614,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailabilitySetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'instanceView'. </param>
@@ -1384,6 +1645,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>ProximityPlacementGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProximityPlacementGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1405,6 +1674,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProximityPlacementGroups_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProximityPlacementGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1428,6 +1705,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>DedicatedHostGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHostGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1449,6 +1734,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DedicatedHostGroups_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHostGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1472,6 +1765,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>SshPublicKeys_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SshPublicKeyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1493,6 +1794,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SshPublicKeys_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SshPublicKeyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1516,6 +1825,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>Images_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1537,6 +1854,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Images_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1560,6 +1885,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>RestorePointCollections_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorePointGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1581,6 +1914,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorePointCollections_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorePointGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1604,15 +1945,24 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>CapacityReservationGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
+        /// <param name="resourceIdsOnly"> The query option to fetch Capacity Reservation Group Resource Ids. &lt;br&gt; 'CreatedInSubscription' enables fetching Resource Ids for all capacity reservation group resources created in the subscription. &lt;br&gt; 'SharedWithSubscription' enables fetching Resource Ids for all capacity reservation group resources shared with the subscription. &lt;br&gt; 'All' enables fetching Resource Ids for all capacity reservation group resources shared with the subscription and created in the subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CapacityReservationGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(CapacityReservationGroupGetExpand? expand = null, ResourceIdOptionsForGetCapacityReservationGroup? resourceIdsOnly = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CapacityReservationGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CapacityReservationGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CapacityReservationGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand, resourceIdsOnly);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CapacityReservationGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand, resourceIdsOnly);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationGroupResource(Client, CapacityReservationGroupData.DeserializeCapacityReservationGroupData(e)), CapacityReservationGroupClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetCapacityReservationGroups", "value", "nextLink", cancellationToken);
         }
 
@@ -1627,15 +1977,24 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>CapacityReservationGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
+        /// <param name="resourceIdsOnly"> The query option to fetch Capacity Reservation Group Resource Ids. &lt;br&gt; 'CreatedInSubscription' enables fetching Resource Ids for all capacity reservation group resources created in the subscription. &lt;br&gt; 'SharedWithSubscription' enables fetching Resource Ids for all capacity reservation group resources shared with the subscription. &lt;br&gt; 'All' enables fetching Resource Ids for all capacity reservation group resources shared with the subscription and created in the subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CapacityReservationGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CapacityReservationGroupResource> GetCapacityReservationGroups(CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<CapacityReservationGroupResource> GetCapacityReservationGroups(CapacityReservationGroupGetExpand? expand = null, ResourceIdOptionsForGetCapacityReservationGroup? resourceIdsOnly = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CapacityReservationGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CapacityReservationGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CapacityReservationGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand, resourceIdsOnly);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CapacityReservationGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand, resourceIdsOnly);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationGroupResource(Client, CapacityReservationGroupData.DeserializeCapacityReservationGroupData(e)), CapacityReservationGroupClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetCapacityReservationGroups", "value", "nextLink", cancellationToken);
         }
 
@@ -1649,6 +2008,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LogAnalytics_ExportRequestRateByInterval</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1689,6 +2052,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>LogAnalytics_ExportRequestRateByInterval</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1727,6 +2094,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LogAnalytics_ExportThrottledRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1767,6 +2138,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>LogAnalytics_ExportThrottledRequests</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1806,6 +2181,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineRunCommands_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineRunCommandResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
@@ -1815,7 +2198,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRunCommandRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRunCommandRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RunCommandDocumentBase.DeserializeRunCommandDocumentBase, VirtualMachineRunCommandClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineRunCommands", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RunCommandDocumentBase.DeserializeRunCommandDocumentBase(e), VirtualMachineRunCommandClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineRunCommands", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1829,6 +2212,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineRunCommands_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineRunCommandResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
@@ -1838,7 +2229,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRunCommandRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRunCommandRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RunCommandDocumentBase.DeserializeRunCommandDocumentBase, VirtualMachineRunCommandClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineRunCommands", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RunCommandDocumentBase.DeserializeRunCommandDocumentBase(e), VirtualMachineRunCommandClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineRunCommands", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1851,6 +2242,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineRunCommands_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineRunCommandResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1888,6 +2287,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineRunCommands_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineRunCommandResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
@@ -1924,6 +2331,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>Disks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDiskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1945,6 +2360,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Disks_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDiskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1968,6 +2391,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>DiskAccesses_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskAccessResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1989,6 +2420,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskAccesses_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskAccessResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2012,6 +2451,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>DiskEncryptionSets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskEncryptionSetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2033,6 +2480,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskEncryptionSets_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskEncryptionSetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2056,6 +2511,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>Snapshots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2077,6 +2540,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2100,6 +2571,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
@@ -2110,7 +2585,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, filter, includeExtendedLocations);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, includeExtendedLocations);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ComputeResourceSku.DeserializeComputeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ComputeResourceSku.DeserializeComputeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2124,6 +2599,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
@@ -2134,7 +2613,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, filter, includeExtendedLocations);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, includeExtendedLocations);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ComputeResourceSku.DeserializeComputeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ComputeResourceSku.DeserializeComputeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2147,6 +2626,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Galleries_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2170,6 +2657,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>Galleries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2192,6 +2687,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>CloudServices_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2213,6 +2716,14 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServices_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Properties that define a web test location available to an Application Insights Component. </summary>
     public partial class ApplicationInsightsComponentWebTestLocation
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentWebTestLocation"/>. </summary>
         internal ApplicationInsightsComponentWebTestLocation()
         {
@@ -18,15 +53,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentWebTestLocation"/>. </summary>
         /// <param name="displayName"> The display name of the web test location. </param>
         /// <param name="tag"> Internally defined geographic location tag. </param>
-        internal ApplicationInsightsComponentWebTestLocation(string displayName, string tag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentWebTestLocation(string displayName, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Tag = tag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The display name of the web test location. </summary>
+        [WirePath("DisplayName")]
         public string DisplayName { get; }
         /// <summary> Internally defined geographic location tag. </summary>
+        [WirePath("Tag")]
         public string Tag { get; }
     }
 }

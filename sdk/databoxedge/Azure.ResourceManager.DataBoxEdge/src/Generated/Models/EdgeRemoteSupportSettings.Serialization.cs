@@ -6,16 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeRemoteSupportSettings : IUtf8JsonSerializable
+    public partial class EdgeRemoteSupportSettings : IUtf8JsonSerializable, IJsonModel<EdgeRemoteSupportSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeRemoteSupportSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<EdgeRemoteSupportSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeRemoteSupportSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeRemoteSupportSettings)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(RemoteApplicationType))
             {
                 writer.WritePropertyName("remoteApplicationType"u8);
@@ -31,18 +49,48 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("expirationTimeStampInUTC"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static EdgeRemoteSupportSettings DeserializeEdgeRemoteSupportSettings(JsonElement element)
+        EdgeRemoteSupportSettings IJsonModel<EdgeRemoteSupportSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeRemoteSupportSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeRemoteSupportSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeRemoteSupportSettings(document.RootElement, options);
+        }
+
+        internal static EdgeRemoteSupportSettings DeserializeEdgeRemoteSupportSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<EdgeRemoteApplicationType> remoteApplicationType = default;
-            Optional<EdgeRemoteApplicationAccessLevel> accessLevel = default;
-            Optional<DateTimeOffset> expirationTimeStampInUtc = default;
+            EdgeRemoteApplicationType? remoteApplicationType = default;
+            EdgeRemoteApplicationAccessLevel? accessLevel = default;
+            DateTimeOffset? expirationTimeStampInUtc = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("remoteApplicationType"u8))
@@ -72,8 +120,44 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     expirationTimeStampInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeRemoteSupportSettings(Optional.ToNullable(remoteApplicationType), Optional.ToNullable(accessLevel), Optional.ToNullable(expirationTimeStampInUtc));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdgeRemoteSupportSettings(remoteApplicationType, accessLevel, expirationTimeStampInUtc, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeRemoteSupportSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeRemoteSupportSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeRemoteSupportSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EdgeRemoteSupportSettings IPersistableModel<EdgeRemoteSupportSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeRemoteSupportSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEdgeRemoteSupportSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeRemoteSupportSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeRemoteSupportSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

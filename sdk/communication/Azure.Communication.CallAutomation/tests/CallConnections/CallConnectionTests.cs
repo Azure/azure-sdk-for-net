@@ -396,7 +396,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
-        public void MuteParticipant_200OK(CommunicationIdentifier participant)
+        public void MuteParticipant_200Ok(CommunicationIdentifier participant)
         {
             var callConnection = CreateMockCallConnection(200, OperationContextPayload);
 
@@ -414,7 +414,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
-        public void MuteParticipant_WithOptions_200OK(CommunicationIdentifier participant)
+        public void MuteParticipant_WithOptions_200Ok(CommunicationIdentifier participant)
         {
             var callConnection = CreateMockCallConnection(200, OperationContextPayload);
             var options = new MuteParticipantOptions(participant)
@@ -441,7 +441,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
-        public async Task MuteParticipantAsync_200OK(CommunicationIdentifier participant)
+        public async Task MuteParticipantAsync_200Accepted(CommunicationIdentifier participant)
         {
             var callConnection = CreateMockCallConnection(200, OperationContextPayload);
 

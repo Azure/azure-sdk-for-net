@@ -1,10 +1,22 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
-- Support AAD Authentication
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2023-12-15)
+
+### Features Added
+
+- Support Microsoft Entra ID Authentication
 - Support 8 severity level for AnalyzeText
 
 ### Breaking Changes
@@ -14,17 +26,17 @@ Contract change for AnalyzeText, AnalyzeImage, Blocklist management related meth
 #### AnalyzeText
 
 - AnalyzeTextOptions
-  - Renamed breakByBlocklists to haltOnBlocklistHit
-  - Add AnalyzeTextOutputType
+  - Renamed BreakByBlocklists to HaltOnBlocklistHit
+  - Added AnalyzeTextOutputType
 - AnalyzeTextResult
-  - Renamed blocklistsMatchResults to blocklistsMatch
+  - Renamed BlocklistsMatchResults to BlocklistsMatch
   - Replaced TextAnalyzeSeverityResult by TextCategoriesAnalysis
 
 #### AnalyzeImage
 
 - AnalyzeImageOptions
   - Replaced ImageData by ContentSafetyImageData
-  - Add AnalyzeImageOutputType
+  - Added AnalyzeImageOutputType
 - AnalyzeImageResult
   - Replaced ImageAnalyzeSeverityResult by ImageCategoriesAnalysis
 

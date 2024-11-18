@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -17,6 +19,38 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class HostNameBindingData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HostNameBindingData"/>. </summary>
         public HostNameBindingData()
         {
@@ -37,7 +71,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="thumbprintString"> SSL certificate thumbprint. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string siteName, string domainId, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, HostNameBindingSslState? sslState, string thumbprintString, string virtualIP, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string siteName, string domainId, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, HostNameBindingSslState? sslState, string thumbprintString, string virtualIP, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SiteName = siteName;
             DomainId = domainId;
@@ -49,27 +84,38 @@ namespace Azure.ResourceManager.AppService
             ThumbprintString = thumbprintString;
             VirtualIP = virtualIP;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> App Service app name. </summary>
+        [WirePath("properties.siteName")]
         public string SiteName { get; set; }
         /// <summary> Fully qualified ARM domain resource URI. </summary>
+        [WirePath("properties.domainId")]
         public string DomainId { get; set; }
         /// <summary> Azure resource name. </summary>
+        [WirePath("properties.azureResourceName")]
         public string AzureResourceName { get; set; }
         /// <summary> Azure resource type. </summary>
+        [WirePath("properties.azureResourceType")]
         public AppServiceResourceType? AzureResourceType { get; set; }
         /// <summary> Custom DNS record type. </summary>
+        [WirePath("properties.customHostNameDnsRecordType")]
         public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get; set; }
         /// <summary> Hostname type. </summary>
+        [WirePath("properties.hostNameType")]
         public AppServiceHostNameType? HostNameType { get; set; }
         /// <summary> SSL type. </summary>
+        [WirePath("properties.sslState")]
         public HostNameBindingSslState? SslState { get; set; }
         /// <summary> SSL certificate thumbprint. </summary>
+        [WirePath("properties.thumbprint")]
         public string ThumbprintString { get; set; }
         /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
+        [WirePath("properties.virtualIP")]
         public string VirtualIP { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

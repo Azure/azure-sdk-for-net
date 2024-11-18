@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataMigration
 {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Tasks_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -82,7 +88,9 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _serviceProjectTaskTasksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation<ServiceProjectTaskResource>(Response.FromValue(new ServiceProjectTaskResource(Client, response), response.GetRawResponse()));
+                var uri = _serviceProjectTaskTasksRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataMigrationArmOperation<ServiceProjectTaskResource>(Response.FromValue(new ServiceProjectTaskResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Tasks_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -123,7 +139,9 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _serviceProjectTaskTasksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, data, cancellationToken);
-                var operation = new DataMigrationArmOperation<ServiceProjectTaskResource>(Response.FromValue(new ServiceProjectTaskResource(Client, response), response.GetRawResponse()));
+                var uri = _serviceProjectTaskTasksRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataMigrationArmOperation<ServiceProjectTaskResource>(Response.FromValue(new ServiceProjectTaskResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -145,6 +163,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,6 +210,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Tasks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the Task. </param>
@@ -222,6 +256,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Tasks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskType"> Filter tasks by task type. </param>
@@ -245,6 +287,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Tasks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskType"> Filter tasks by task type. </param>
@@ -267,6 +317,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +362,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Tasks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the Task. </param>
@@ -339,6 +405,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,6 +451,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

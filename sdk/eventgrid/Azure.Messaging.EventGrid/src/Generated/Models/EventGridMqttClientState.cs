@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator ==(EventGridMqttClientState left, EventGridMqttClientState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventGridMqttClientState"/> values are not the same. </summary>
         public static bool operator !=(EventGridMqttClientState left, EventGridMqttClientState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventGridMqttClientState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventGridMqttClientState"/>. </summary>
         public static implicit operator EventGridMqttClientState(string value) => new EventGridMqttClientState(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The X12 envelope override settings. </summary>
     public partial class X12EnvelopeOverride
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="X12EnvelopeOverride"/>. </summary>
         /// <param name="targetNamespace"> The target namespace on which this envelope settings has to be applied. </param>
         /// <param name="protocolVersion"> The protocol version on which this envelope settings has to be applied. </param>
@@ -56,7 +88,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="functionalIdentifierCode"> The functional identifier code. </param>
         /// <param name="dateFormat"> The date format. </param>
         /// <param name="timeFormat"> The time format. </param>
-        internal X12EnvelopeOverride(string targetNamespace, string protocolVersion, string messageId, string responsibleAgencyCode, string headerVersion, string senderApplicationId, string receiverApplicationId, string functionalIdentifierCode, X12DateFormat dateFormat, X12TimeFormat timeFormat)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal X12EnvelopeOverride(string targetNamespace, string protocolVersion, string messageId, string responsibleAgencyCode, string headerVersion, string senderApplicationId, string receiverApplicationId, string functionalIdentifierCode, X12DateFormat dateFormat, X12TimeFormat timeFormat, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetNamespace = targetNamespace;
             ProtocolVersion = protocolVersion;
@@ -68,6 +101,12 @@ namespace Azure.ResourceManager.Logic.Models
             FunctionalIdentifierCode = functionalIdentifierCode;
             DateFormat = dateFormat;
             TimeFormat = timeFormat;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12EnvelopeOverride"/> for deserialization. </summary>
+        internal X12EnvelopeOverride()
+        {
         }
 
         /// <summary> The target namespace on which this envelope settings has to be applied. </summary>

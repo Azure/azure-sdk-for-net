@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> Resource extended location. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="plan"> The plan of the resource. </param>
         /// <param name="properties"> The resource properties. </param>
         /// <param name="kind"> The kind of the resource. </param>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="createdOn"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="changedOn"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
-        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ArmPlan plan, BinaryData properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string provisioningState) : base(id, name, resourceType, systemData, tags, location, extendedLocation)
+        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmPlan plan, BinaryData properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string provisioningState) : base(id, name, resourceType, systemData, tags, location, extendedLocation, serializedAdditionalRawData)
         {
             Plan = plan;
             Properties = properties;
@@ -55,7 +56,13 @@ namespace Azure.ResourceManager.Resources
             ProvisioningState = provisioningState;
         }
 
+        /// <summary> Initializes a new instance of <see cref="GenericResourceData"/> for deserialization. </summary>
+        internal GenericResourceData()
+        {
+        }
+
         /// <summary> The plan of the resource. </summary>
+        [WirePath("plan")]
         public ArmPlan Plan { get; set; }
         /// <summary>
         /// The resource properties.
@@ -87,20 +94,28 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public BinaryData Properties { get; set; }
         /// <summary> The kind of the resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
         /// <summary> ID of the resource that manages this resource. </summary>
+        [WirePath("managedBy")]
         public string ManagedBy { get; set; }
         /// <summary> The SKU of the resource. </summary>
+        [WirePath("sku")]
         public ResourcesSku Sku { get; set; }
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The created time of the resource. This is only present if requested via the $expand query parameter. </summary>
+        [WirePath("createdTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The changed time of the resource. This is only present if requested via the $expand query parameter. </summary>
+        [WirePath("changedTime")]
         public DateTimeOffset? ChangedOn { get; }
         /// <summary> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

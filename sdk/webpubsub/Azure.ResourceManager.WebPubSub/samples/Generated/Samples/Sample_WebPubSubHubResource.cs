@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.WebPubSub;
 using Azure.ResourceManager.WebPubSub.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.WebPubSub.Samples
 {
     public partial class Sample_WebPubSubHubResource
     {
-        // WebPubSubHubs_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_WebPubSubHubsGet()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubHubs_Get.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // WebPubSubHubs_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_WebPubSubHubsCreateOrUpdate()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubHubs_CreateOrUpdate.json
@@ -102,9 +98,8 @@ ManagedIdentityResource = "abc",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // WebPubSubHubs_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_WebPubSubHubsDelete()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubHubs_Delete.json
@@ -127,7 +122,7 @@ ManagedIdentityResource = "abc",
             // invoke the operation
             await webPubSubHub.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -6,35 +6,85 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBDatabaseProgress
+    public partial class MongoDBDatabaseProgress : IUtf8JsonSerializable, IJsonModel<MongoDBDatabaseProgress>
     {
-        internal static MongoDBDatabaseProgress DeserializeMongoDBDatabaseProgress(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBDatabaseProgress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MongoDBDatabaseProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBDatabaseProgress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBDatabaseProgress)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(Collections))
+            {
+                writer.WritePropertyName("collections"u8);
+                writer.WriteStartObject();
+                foreach (var item in Collections)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
+        }
+
+        MongoDBDatabaseProgress IJsonModel<MongoDBDatabaseProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBDatabaseProgress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBDatabaseProgress)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBDatabaseProgress(document.RootElement, options);
+        }
+
+        internal static MongoDBDatabaseProgress DeserializeMongoDBDatabaseProgress(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, MongoDBCollectionProgress>> collections = default;
+            IReadOnlyDictionary<string, MongoDBCollectionProgress> collections = default;
             long bytesCopied = default;
             long documentsCopied = default;
             string elapsedTime = default;
             IReadOnlyDictionary<string, MongoDBError> errors = default;
             long eventsPending = default;
             long eventsReplayed = default;
-            Optional<DateTimeOffset> lastEventTime = default;
-            Optional<DateTimeOffset> lastReplayTime = default;
-            Optional<string> name = default;
-            Optional<string> qualifiedName = default;
+            DateTimeOffset? lastEventTime = default;
+            DateTimeOffset? lastReplayTime = default;
+            string name = default;
+            string qualifiedName = default;
             MongoDBProgressResultType resultType = default;
             MongoDBMigrationState state = default;
             long totalBytes = default;
             long totalDocuments = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("collections"u8))
@@ -46,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, MongoDBCollectionProgress> dictionary = new Dictionary<string, MongoDBCollectionProgress>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MongoDBCollectionProgress.DeserializeMongoDBCollectionProgress(property0.Value));
+                        dictionary.Add(property0.Name, MongoDBCollectionProgress.DeserializeMongoDBCollectionProgress(property0.Value, options));
                     }
                     collections = dictionary;
                     continue;
@@ -71,7 +121,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, MongoDBError> dictionary = new Dictionary<string, MongoDBError>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MongoDBError.DeserializeMongoDBError(property0.Value));
+                        dictionary.Add(property0.Name, MongoDBError.DeserializeMongoDBError(property0.Value, options));
                     }
                     errors = dictionary;
                     continue;
@@ -134,8 +184,60 @@ namespace Azure.ResourceManager.DataMigration.Models
                     totalDocuments = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MongoDBDatabaseProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, Optional.ToNullable(lastEventTime), Optional.ToNullable(lastReplayTime), name.Value, qualifiedName.Value, resultType, state, totalBytes, totalDocuments, Optional.ToDictionary(collections));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MongoDBDatabaseProgress(
+                bytesCopied,
+                documentsCopied,
+                elapsedTime,
+                errors,
+                eventsPending,
+                eventsReplayed,
+                lastEventTime,
+                lastReplayTime,
+                name,
+                qualifiedName,
+                resultType,
+                state,
+                totalBytes,
+                totalDocuments,
+                serializedAdditionalRawData,
+                collections ?? new ChangeTrackingDictionary<string, MongoDBCollectionProgress>());
         }
+
+        BinaryData IPersistableModel<MongoDBDatabaseProgress>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBDatabaseProgress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBDatabaseProgress)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MongoDBDatabaseProgress IPersistableModel<MongoDBDatabaseProgress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBDatabaseProgress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMongoDBDatabaseProgress(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBDatabaseProgress)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MongoDBDatabaseProgress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

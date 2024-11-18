@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(FrontDoorNameAvailabilityState left, FrontDoorNameAvailabilityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorNameAvailabilityState"/> values are not the same. </summary>
         public static bool operator !=(FrontDoorNameAvailabilityState left, FrontDoorNameAvailabilityState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FrontDoorNameAvailabilityState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorNameAvailabilityState"/>. </summary>
         public static implicit operator FrontDoorNameAvailabilityState(string value) => new FrontDoorNameAvailabilityState(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

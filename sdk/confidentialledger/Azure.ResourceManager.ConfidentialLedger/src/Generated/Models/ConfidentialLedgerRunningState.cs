@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static bool operator ==(ConfidentialLedgerRunningState left, ConfidentialLedgerRunningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfidentialLedgerRunningState"/> values are not the same. </summary>
         public static bool operator !=(ConfidentialLedgerRunningState left, ConfidentialLedgerRunningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConfidentialLedgerRunningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfidentialLedgerRunningState"/>. </summary>
         public static implicit operator ConfidentialLedgerRunningState(string value) => new ConfidentialLedgerRunningState(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

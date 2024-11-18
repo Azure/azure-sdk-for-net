@@ -107,7 +107,7 @@ namespace Azure.Messaging.EventGrid
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyList<AcsChatThreadParticipantProperties> participants)
         {
-            return AcsChatThreadCreatedEventData(transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, (IEnumerable<AcsChatThreadParticipantProperties>) participants);
+            return AcsChatThreadCreatedEventData(transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, new Dictionary<string, string>(), (IEnumerable<AcsChatThreadParticipantProperties>) participants);
         }
 
         /// <summary> Initializes a new instance of AcsChatThreadCreatedWithUserEventData. </summary>
@@ -172,6 +172,24 @@ namespace Azure.Messaging.EventGrid
             properties ??= new Dictionary<string, object>();
 
             return new AcsChatThreadPropertiesUpdatedEventData(transactionId, threadId, createTime, version, editedByCommunicationIdentifier, editTime, properties, new Dictionary<string, string>());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadCreatedEventData"/>. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="createTime"> The original creation time of the thread. </param>
+        /// <param name="version"> The version of the thread. </param>
+        /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
+        /// <param name="properties"> The thread properties. </param>
+        /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel createdByCommunicationIdentifier = null, IReadOnlyDictionary<string, object> properties = null, IEnumerable<AcsChatThreadParticipantProperties> participants = null)
+        {
+            properties ??= new Dictionary<string, object>();
+            participants ??= new List<AcsChatThreadParticipantProperties>();
+
+            return new AcsChatThreadCreatedEventData(transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, new Dictionary<string, string>(), participants?.ToList());
         }
 
         /// <summary> Initializes new instance of AcsSmsDeliveryReportReceivedEventData class. </summary>
@@ -676,6 +694,29 @@ namespace Azure.Messaging.EventGrid
             return new AcsRouterJobReceivedEventData(jobId, channelReference, channelId, queueId, labels, tags, status, classificationPolicyId, priority, requestedWorkerSelectors?.ToList(), scheduledOn, unavailableForMatching);
         }
 
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsIncomingCallEventData"/>. </summary>
+        /// <param name="toCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="fromCommunicationIdentifier"> The communication identifier of the user who initiated the call. </param>
+        /// <param name="serverCallId"> The Id of the server call. </param>
+        /// <param name="callerDisplayName"> Display name of caller. </param>
+        /// <param name="customContext"> Custom Context of Incoming Call. </param>
+        /// <param name="incomingCallContext"> Signed incoming call context. </param>
+        /// <param name="correlationId"> CorrelationId (CallId). </param>
+        /// <returns> A new <see cref="SystemEvents.AcsIncomingCallEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsIncomingCallEventData AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, string correlationId)
+        {
+            return new AcsIncomingCallEventData(
+                toCommunicationIdentifier,
+                fromCommunicationIdentifier,
+                serverCallId,
+                callerDisplayName,
+                customContext,
+                incomingCallContext,
+                default,
+                correlationId);
+        }
+
         /// <summary> Initializes a new instance of ResourceNotificationsResourceUpdatedDetails. </summary>
         /// <param name="id"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
@@ -695,6 +736,106 @@ namespace Azure.Messaging.EventGrid
             {
                 Tags = tags
             };
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.CommunicationIdentifierModel"/>. </summary>
+        /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
+        /// <param name="communicationUser"> The communication user. </param>
+        /// <param name="phoneNumber"> The phone number. </param>
+        /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
+        /// <returns> A new <see cref="SystemEvents.CommunicationIdentifierModel"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunicationIdentifierModel CommunicationIdentifierModel(string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
+        {
+            return new CommunicationIdentifierModel(default, rawId, communicationUser, phoneNumber, microsoftTeamsUser, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageBlobCreatedEventData"/>. </summary>
+        /// <param name="api"> The name of the API/operation that triggered this event. </param>
+        /// <param name="clientRequestId"> A request id provided by the client of the storage API operation that triggered this event. </param>
+        /// <param name="requestId"> The request id generated by the Storage service for the storage API operation that triggered this event. </param>
+        /// <param name="eTag"> The etag of the blob at the time this event was triggered. </param>
+        /// <param name="contentType"> The content type of the blob. This is the same as what would be returned in the Content-Type header from the blob. </param>
+        /// <param name="contentLength"> The size of the blob in bytes. This is the same as what would be returned in the Content-Length header from the blob. </param>
+        /// <param name="contentOffset"> The offset of the blob in bytes. </param>
+        /// <param name="blobType"> The type of blob. </param>
+        /// <param name="url"> The path to the blob. </param>
+        /// <param name="sequencer"> An opaque string value representing the logical sequence of events for any particular blob name. Users can use standard string comparison to understand the relative sequence of two events on the same blob name. </param>
+        /// <param name="identity"> The identity of the requester that triggered this event. </param>
+        /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
+        /// <returns> A new <see cref="SystemEvents.StorageBlobCreatedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageBlobCreatedEventData StorageBlobCreatedEventData(
+            string api = null,
+            string clientRequestId = null,
+            string requestId = null,
+            string eTag = null,
+            string contentType = null,
+            long? contentLength = null,
+            long? contentOffset = null,
+            string blobType = null,
+            string url = null,
+            string sequencer = null,
+            string identity = null,
+            object storageDiagnostics = null)
+        {
+            return StorageBlobCreatedEventData(api, clientRequestId, requestId, eTag, contentType, contentLength,
+                contentOffset, blobType, null, url, sequencer, identity, storageDiagnostics);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageBlobTierChangedEventData"/>. </summary>
+        /// <param name="api"> The name of the API/operation that triggered this event. </param>
+        /// <param name="clientRequestId"> A request id provided by the client of the storage API operation that triggered this event. </param>
+        /// <param name="requestId"> The request id generated by the Storage service for the storage API operation that triggered this event. </param>
+        /// <param name="contentType"> The content type of the blob. This is the same as what would be returned in the Content-Type header from the blob. </param>
+        /// <param name="contentLength"> The size of the blob in bytes. This is the same as what would be returned in the Content-Length header from the blob. </param>
+        /// <param name="blobType"> The type of blob. </param>
+        /// <param name="url"> The path to the blob. </param>
+        /// <param name="sequencer"> An opaque string value representing the logical sequence of events for any particular blob name. Users can use standard string comparison to understand the relative sequence of two events on the same blob name. </param>
+        /// <param name="identity"> The identity of the requester that triggered this event. </param>
+        /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
+        /// <returns> A new <see cref="SystemEvents.StorageBlobTierChangedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageBlobTierChangedEventData StorageBlobTierChangedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = null, string blobType = null, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
+        {
+            return StorageBlobTierChangedEventData(
+                api,
+                clientRequestId,
+                requestId,
+                contentType,
+                contentLength,
+                blobType,
+                null,
+                null,
+                url,
+                sequencer,
+                identity,
+                storageDiagnostics);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/>. </summary>
+        /// <param name="scheduleTime"> The time the policy task was scheduled. </param>
+        /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <param name="tierToCoolSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <param name="tierToArchiveSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <returns> A new <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary)
+        {
+            return StorageLifecyclePolicyCompletedEventData(scheduleTime, null, deleteSummary, tierToCoolSummary, default, tierToArchiveSummary);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/>. </summary>
+        /// <param name="scheduleTime"> The time the policy task was scheduled. </param>
+        /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <param name="tierToCoolSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <param name="tierToColdSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <param name="tierToArchiveSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <returns> A new <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToColdSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary)
+        {
+            return new StorageLifecyclePolicyCompletedEventData(scheduleTime, null, deleteSummary, tierToCoolSummary, tierToColdSummary, tierToArchiveSummary);
         }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings

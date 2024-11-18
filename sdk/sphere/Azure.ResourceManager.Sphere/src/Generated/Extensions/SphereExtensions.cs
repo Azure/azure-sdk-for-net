@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sphere.Mocking;
 
@@ -195,6 +193,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Catalogs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -224,6 +230,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Catalogs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -255,6 +269,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Catalogs_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -282,6 +304,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Catalogs_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
         /// </item>
         /// </list>
         /// <item>

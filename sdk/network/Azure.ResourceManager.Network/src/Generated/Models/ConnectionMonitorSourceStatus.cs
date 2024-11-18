@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ConnectionMonitorSourceStatus left, ConnectionMonitorSourceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionMonitorSourceStatus"/> values are not the same. </summary>
         public static bool operator !=(ConnectionMonitorSourceStatus left, ConnectionMonitorSourceStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectionMonitorSourceStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionMonitorSourceStatus"/>. </summary>
         public static implicit operator ConnectionMonitorSourceStatus(string value) => new ConnectionMonitorSourceStatus(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

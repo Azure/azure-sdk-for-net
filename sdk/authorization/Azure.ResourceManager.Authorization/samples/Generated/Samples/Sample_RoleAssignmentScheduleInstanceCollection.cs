@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Authorization;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Authorization.Samples
 {
     public partial class Sample_RoleAssignmentScheduleInstanceCollection
     {
-        // GetRoleAssignmentScheduleInstancesByScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetRoleAssignmentScheduleInstancesByScope()
         {
             // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleAssignmentScheduleInstancesByScope.json
@@ -49,12 +46,11 @@ namespace Azure.ResourceManager.Authorization.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GetRoleAssignmentScheduleInstanceByName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRoleAssignmentScheduleInstanceByName()
         {
             // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleAssignmentScheduleInstanceByName.json
@@ -84,9 +80,8 @@ namespace Azure.ResourceManager.Authorization.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetRoleAssignmentScheduleInstanceByName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetRoleAssignmentScheduleInstanceByName()
         {
             // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleAssignmentScheduleInstanceByName.json
@@ -112,9 +107,8 @@ namespace Azure.ResourceManager.Authorization.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetRoleAssignmentScheduleInstanceByName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetRoleAssignmentScheduleInstanceByName()
         {
             // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleAssignmentScheduleInstanceByName.json
@@ -140,7 +134,7 @@ namespace Azure.ResourceManager.Authorization.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Storage.Common;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -49,7 +50,14 @@ namespace Azure.Storage.DataMovement.Tests
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null) : base(async, mode)
         {
-            Argument.CheckNotNullOrEmpty(expectedOverwriteExceptionMessage, nameof(expectedOverwriteExceptionMessage));
+            if (expectedOverwriteExceptionMessage is null)
+            {
+                throw new ArgumentNullException(expectedOverwriteExceptionMessage);
+            }
+            if (expectedOverwriteExceptionMessage.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", expectedOverwriteExceptionMessage);
+            }
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
             _expectedOverwriteExceptionMessage = expectedOverwriteExceptionMessage;
         }
@@ -109,7 +117,7 @@ namespace Azure.Storage.DataMovement.Tests
             int concurrency,
             bool createFailedCondition = false,
             DataTransferOptions options = default,
-            int size = Constants.KB)
+            int size = DataMovementTestConstants.KB)
         {
             // Arrange
             // Create source local file for checking, and source object
@@ -166,7 +174,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                failureTransferHolder,
+                cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             failureTransferHolder.AssertUnexpectedFailureCheck();
@@ -198,7 +209,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -234,7 +248,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -299,7 +316,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -334,7 +354,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertSingleSkippedCheck();
@@ -379,7 +402,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <returns></returns>
         private async Task DownloadObjectsAndVerify(
             TContainerClient container,
-            long size = Constants.KB,
+            long size = DataMovementTestConstants.KB,
             int waitTimeInSec = 30,
             int objectCount = 1,
             TransferManagerOptions transferManagerOptions = default,
@@ -461,7 +484,10 @@ namespace Azure.Storage.DataMovement.Tests
                 // Assert
                 Assert.NotNull(downloadedObjectInfo[i].DataTransfer);
                 CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
-                await downloadedObjectInfo[i].DataTransfer.WaitForCompletionAsync(tokenSource.Token);
+                await TestTransferWithTimeout.WaitForCompletionAsync(
+                    downloadedObjectInfo[i].DataTransfer,
+                    downloadedObjectInfo[i].EventsRaised,
+                    tokenSource.Token);
                 Assert.IsTrue(downloadedObjectInfo[i].DataTransfer.HasCompleted);
 
                 // Verify Download
@@ -483,7 +509,7 @@ namespace Azure.Storage.DataMovement.Tests
             await DownloadObjectsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: 10,
-                size: Constants.KB,
+                size: DataMovementTestConstants.KB,
                 objectCount: 1).ConfigureAwait(false);
         }
 
@@ -495,7 +521,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> testContainer = await GetDisposingContainerAsync();
             string objectName = GetNewObjectName();
             string localSourceFile = Path.GetTempFileName();
-            int size = Constants.KB;
+            int size = DataMovementTestConstants.KB;
             TObjectClient sourceClient = await GetObjectClientAsync(
                 container: testContainer.Container,
                 objectLength: size,
@@ -515,7 +541,7 @@ namespace Azure.Storage.DataMovement.Tests
             await DownloadObjectsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: 10,
-                size: Constants.KB,
+                size: DataMovementTestConstants.KB,
                 objectCount: 1,
                 options: optionsList).ConfigureAwait(false);
         }
@@ -537,7 +563,7 @@ namespace Azure.Storage.DataMovement.Tests
             await DownloadObjectsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: 10,
-                size: Constants.KB,
+                size: DataMovementTestConstants.KB,
                 objectCount: 1,
                 options: optionsList).ConfigureAwait(false);
         }
@@ -552,7 +578,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> testContainer = await GetDisposingContainerAsync();
             string objectName = GetNewObjectName();
             string localSourceFile = Path.GetTempFileName();
-            int size = Constants.KB;
+            int size = DataMovementTestConstants.KB;
             bool skippedSeen = false;
             TObjectClient sourceClient = await GetObjectClientAsync(
                 container: testContainer.Container,
@@ -579,6 +605,7 @@ namespace Azure.Storage.DataMovement.Tests
                 }
                 return Task.CompletedTask;
             };
+            TestEventsRaised testEventsRaised = new(options);
             TransferManager transferManager = new TransferManager();
 
             LocalFilesStorageResourceProvider files = new();
@@ -590,7 +617,10 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource,
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -610,7 +640,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> testContainer = await GetDisposingContainerAsync();
             string objectName = GetNewObjectName();
             string localSourceFile = Path.GetTempFileName();
-            int size = Constants.KB;
+            int size = DataMovementTestConstants.KB;
             TObjectClient sourceClient = await GetObjectClientAsync(
                 container: testContainer.Container,
                 objectLength: size,
@@ -639,7 +669,10 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource,
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -656,7 +689,7 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         public async Task RemoteObjectToLocal_SmallChunk()
         {
-            long size = Constants.KB;
+            long size = DataMovementTestConstants.KB;
             int waitTimeInSec = 25;
             DataTransferOptions options = new DataTransferOptions()
             {
@@ -677,9 +710,9 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(0, 10)]
-        [TestCase(100, 10)]
-        [TestCase(Constants.KB, 10)]
-        [TestCase(4 * Constants.KB, 10)]
+        [TestCase(512, 10)]
+        [TestCase(DataMovementTestConstants.KB, 10)]
+        [TestCase(4 * DataMovementTestConstants.KB, 10)]
         public async Task RemoteObjectToLocal_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -694,9 +727,9 @@ namespace Azure.Storage.DataMovement.Tests
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
         [LiveOnly]
-        [TestCase(Constants.MB, 20)]
-        [TestCase(257 * Constants.MB, 200)]
-        [TestCase(Constants.GB, 1500)]
+        [TestCase(DataMovementTestConstants.MB, 20)]
+        [TestCase(257 * DataMovementTestConstants.MB, 200)]
+        [TestCase(DataMovementTestConstants.GB, 1500)]
         public async Task RemoteObjectToLocal_LargeSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -710,10 +743,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(2, 0, 30)]
-        [TestCase(2, Constants.KB, 60)]
-        [TestCase(6, Constants.KB, 60)]
-        [TestCase(2, 4 * Constants.KB, 60)]
-        [TestCase(6, 4 * Constants.KB, 60)]
+        [TestCase(2, DataMovementTestConstants.KB, 60)]
+        [TestCase(6, DataMovementTestConstants.KB, 60)]
+        [TestCase(2, 4 * DataMovementTestConstants.KB, 60)]
+        [TestCase(6, 4 * DataMovementTestConstants.KB, 60)]
         public async Task RemoteObjectToLocal_SmallMultiple(int count, long size, int waitTimeInSec)
         {
             // Arrange
@@ -729,9 +762,9 @@ namespace Azure.Storage.DataMovement.Tests
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
         [LiveOnly]
-        [TestCase(2, 257 * Constants.MB, 400)]
-        [TestCase(6, 257 * Constants.MB, 600)]
-        [TestCase(2, Constants.GB, 2000)]
+        [TestCase(2, 257 * DataMovementTestConstants.MB, 400)]
+        [TestCase(6, 257 * DataMovementTestConstants.MB, 600)]
+        [TestCase(2, DataMovementTestConstants.GB, 2000)]
         public async Task RemoteObjectToLocal_LargeMultiple(int count, long size, int waitTimeInSec)
         {
             // Arrange
@@ -746,9 +779,9 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(2, 0, 30)]
-        [TestCase(2, Constants.KB, 60)]
-        [TestCase(6, Constants.KB, 60)]
-        [TestCase(6, 4 * Constants.KB, 60)]
+        [TestCase(2, DataMovementTestConstants.KB, 60)]
+        [TestCase(6, DataMovementTestConstants.KB, 60)]
+        [TestCase(6, 4 * DataMovementTestConstants.KB, 60)]
         public async Task RemoteObjectToLocal_SmallConcurrency(int concurrency, int size, int waitTimeInSec)
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
@@ -777,11 +810,11 @@ namespace Azure.Storage.DataMovement.Tests
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
         [LiveOnly]
-        [TestCase(2, Constants.MB, 300)]
-        [TestCase(6, Constants.MB, 300)]
-        [TestCase(2, 257 * Constants.MB, 400)]
-        [TestCase(6, 257 * Constants.MB, 400)]
-        [TestCase(2, Constants.GB, 1000)]
+        [TestCase(2, DataMovementTestConstants.MB, 300)]
+        [TestCase(6, DataMovementTestConstants.MB, 300)]
+        [TestCase(2, 257 * DataMovementTestConstants.MB, 400)]
+        [TestCase(6, 257 * DataMovementTestConstants.MB, 400)]
+        [TestCase(2, DataMovementTestConstants.GB, 1000)]
         public async Task RemoteObjectToLocal_LargeConcurrency(int concurrency, int size, int waitTimeInSec)
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()

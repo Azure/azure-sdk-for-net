@@ -4,22 +4,20 @@
     <AssemblyTitle>Microsoft Azure Schema Registry Apache Avro SDK</AssemblyTitle>
     <Version>1.1.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <ApiCompatVersion>1.0.1</ApiCompatVersion>
     <PackageTags>Azure;Schema Registry;SchemaRegistry;.NET;Data;Apache;Avro;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Apache.Avro" />
-    <!-- <PackageReference Include="Azure.Data.SchemaRegistry" /> -->
+     <!--<PackageReference Include="Azure.Data.SchemaRegistry" />--> 
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Data.SchemaRegistry\src\Azure.Data.SchemaRegistry.csproj" />
-		<!-- Temporary, until we move SchemaValidator and LruCache into core.-->
-		<ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Azure.Data.SchemaRegistry\src\Azure.Data.SchemaRegistry.csproj" />
+	</ItemGroup>
 
   <!-- Shared source from Azure.Core -->
     <ItemGroup>

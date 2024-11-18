@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Role definition properties. </summary>
     public partial class AzureRoleDefinition
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AzureRoleDefinition"/>. </summary>
         internal AzureRoleDefinition()
         {
@@ -26,24 +58,31 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="isServiceRole"> If this is a service role. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="scopes"> Role definition assignable scopes. </param>
-        internal AzureRoleDefinition(string id, string name, bool? isServiceRole, IReadOnlyList<Permission> permissions, IReadOnlyList<string> scopes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureRoleDefinition(string id, string name, bool? isServiceRole, IReadOnlyList<Permission> permissions, IReadOnlyList<string> scopes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             IsServiceRole = isServiceRole;
             Permissions = permissions;
             Scopes = scopes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The role definition ID. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The role definition name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> If this is a service role. </summary>
+        [WirePath("isServiceRole")]
         public bool? IsServiceRole { get; }
         /// <summary> Role definition permissions. </summary>
+        [WirePath("permissions")]
         public IReadOnlyList<Permission> Permissions { get; }
         /// <summary> Role definition assignable scopes. </summary>
+        [WirePath("scopes")]
         public IReadOnlyList<string> Scopes { get; }
     }
 }

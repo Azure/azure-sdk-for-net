@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -12,6 +13,10 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 {
     public class PrivateDnsManagementTestBase : ManagementRecordedTestBase<PrivateDnsManagementTestEnvironment>
     {
+        private const string DefaultVnetAddressPrefix = "10.0.0.0/16";
+        private const string DefaultVnetSubnetName = "DefaultSubnet";
+        private const string DefaultSubnetAddressPrefix = "10.0.0.0/24";
+
         protected ArmClient Client { get; private set; }
         protected AzureLocation DefaultLocation = AzureLocation.EastUS;
         protected const string DefaultResourceGroupName = "PrivateDnsRG";
@@ -48,6 +53,32 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             };
             var privateZone = await resourceGroup.GetPrivateDnsZones().CreateOrUpdateAsync(WaitUntil.Completed,zoneName,data);
             return privateZone.Value;
+        }
+
+        protected async Task<VirtualNetworkResource> CreateVirtualNetwork(ResourceGroupResource resourceGroup, string vnetName)
+        {
+            var virtualNetworkData = new VirtualNetworkData
+            {
+                Location = DefaultLocation,
+                AddressPrefixes = { DefaultVnetAddressPrefix },
+                Subnets =
+                {
+                    new SubnetData
+                    {
+                        Name = DefaultVnetSubnetName,
+                        AddressPrefix = DefaultSubnetAddressPrefix,
+                    }
+                }
+            };
+
+            var virtualNetwork = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, virtualNetworkData);
+            return virtualNetwork.Value;
+        }
+
+        protected async Task<VirtualNetworkLinkResource> CreateOrUpdateVirtualNetworkLink(PrivateDnsZoneResource privateZone, string linkName, VirtualNetworkLinkData vnetLinkData)
+        {
+            var vnetLinkResponse = await privateZone.GetVirtualNetworkLinks().CreateOrUpdateAsync(WaitUntil.Completed, linkName, vnetLinkData);
+            return vnetLinkResponse.Value;
         }
     }
 }

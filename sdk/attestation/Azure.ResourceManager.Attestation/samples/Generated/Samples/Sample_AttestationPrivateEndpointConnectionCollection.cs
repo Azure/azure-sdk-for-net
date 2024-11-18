@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Attestation;
 using Azure.ResourceManager.Attestation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Attestation.Samples
 {
     public partial class Sample_AttestationPrivateEndpointConnectionCollection
     {
-        // AttestationProviderListPrivateEndpointConnections
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AttestationProviderListPrivateEndpointConnections()
         {
             // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/AttestationProviderListPrivateEndpointConnections.json
@@ -52,12 +49,11 @@ namespace Azure.ResourceManager.Attestation.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AttestationProviderGetPrivateEndpointConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AttestationProviderGetPrivateEndpointConnection()
         {
             // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/AttestationProviderGetPrivateEndpointConnection.json
@@ -90,9 +86,8 @@ namespace Azure.ResourceManager.Attestation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AttestationProviderGetPrivateEndpointConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_AttestationProviderGetPrivateEndpointConnection()
         {
             // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/AttestationProviderGetPrivateEndpointConnection.json
@@ -121,9 +116,8 @@ namespace Azure.ResourceManager.Attestation.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AttestationProviderGetPrivateEndpointConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AttestationProviderGetPrivateEndpointConnection()
         {
             // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/AttestationProviderGetPrivateEndpointConnection.json
@@ -152,7 +146,7 @@ namespace Azure.ResourceManager.Attestation.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -164,9 +158,8 @@ namespace Azure.ResourceManager.Attestation.Samples
             }
         }
 
-        // AttestationProviderPutPrivateEndpointConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AttestationProviderPutPrivateEndpointConnection()
         {
             // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/AttestationProviderPutPrivateEndpointConnection.json

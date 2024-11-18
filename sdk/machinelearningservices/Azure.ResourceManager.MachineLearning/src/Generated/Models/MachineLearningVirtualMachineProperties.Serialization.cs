@@ -5,17 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningVirtualMachineProperties : IUtf8JsonSerializable
+    public partial class MachineLearningVirtualMachineProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningVirtualMachineProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningVirtualMachineProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningVirtualMachineProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(VirtualMachineSize))
             {
                 writer.WritePropertyName("virtualMachineSize"u8);
@@ -41,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AdministratorAccount != null)
                 {
                     writer.WritePropertyName("administratorAccount"u8);
-                    writer.WriteObjectValue(AdministratorAccount);
+                    writer.WriteObjectValue(AdministratorAccount, options);
                 }
                 else
                 {
@@ -53,21 +73,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("isNotebookInstanceCompute"u8);
                 writer.WriteBooleanValue(IsNotebookInstanceCompute.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static MachineLearningVirtualMachineProperties DeserializeMachineLearningVirtualMachineProperties(JsonElement element)
+        MachineLearningVirtualMachineProperties IJsonModel<MachineLearningVirtualMachineProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningVirtualMachineProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningVirtualMachineProperties DeserializeMachineLearningVirtualMachineProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> virtualMachineSize = default;
-            Optional<int> sshPort = default;
-            Optional<int> notebookServerPort = default;
-            Optional<IPAddress> address = default;
-            Optional<MachineLearningVmSshCredentials> administratorAccount = default;
-            Optional<bool> isNotebookInstanceCompute = default;
+            string virtualMachineSize = default;
+            int? sshPort = default;
+            int? notebookServerPort = default;
+            IPAddress address = default;
+            MachineLearningVmSshCredentials administratorAccount = default;
+            bool? isNotebookInstanceCompute = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachineSize"u8))
@@ -109,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         administratorAccount = null;
                         continue;
                     }
-                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value);
+                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isNotebookInstanceCompute"u8))
@@ -121,8 +171,167 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isNotebookInstanceCompute = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningVirtualMachineProperties(virtualMachineSize.Value, Optional.ToNullable(sshPort), Optional.ToNullable(notebookServerPort), address.Value, administratorAccount.Value, Optional.ToNullable(isNotebookInstanceCompute));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningVirtualMachineProperties(
+                virtualMachineSize,
+                sshPort,
+                notebookServerPort,
+                address,
+                administratorAccount,
+                isNotebookInstanceCompute,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualMachineSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  virtualMachineSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VirtualMachineSize))
+                {
+                    builder.Append("  virtualMachineSize: ");
+                    if (VirtualMachineSize.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{VirtualMachineSize}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{VirtualMachineSize}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SshPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sshPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SshPort))
+                {
+                    builder.Append("  sshPort: ");
+                    builder.AppendLine($"{SshPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotebookServerPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  notebookServerPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NotebookServerPort))
+                {
+                    builder.Append("  notebookServerPort: ");
+                    builder.AppendLine($"{NotebookServerPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Address), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  address: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Address))
+                {
+                    builder.Append("  address: ");
+                    builder.AppendLine($"'{Address.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdministratorAccount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  administratorAccount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdministratorAccount))
+                {
+                    builder.Append("  administratorAccount: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AdministratorAccount, options, 2, false, "  administratorAccount: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsNotebookInstanceCompute), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isNotebookInstanceCompute: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsNotebookInstanceCompute))
+                {
+                    builder.Append("  isNotebookInstanceCompute: ");
+                    var boolValue = IsNotebookInstanceCompute.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningVirtualMachineProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningVirtualMachineProperties IPersistableModel<MachineLearningVirtualMachineProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningVirtualMachineProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningVirtualMachineProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

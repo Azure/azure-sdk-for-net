@@ -6,17 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VaultBackupJob : IUtf8JsonSerializable
+    public partial class VaultBackupJob : IUtf8JsonSerializable, IJsonModel<VaultBackupJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultBackupJob>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VaultBackupJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VaultBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VaultBackupJob)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
@@ -38,73 +56,51 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue(ExtendedInfo, options);
             }
-            if (Optional.IsDefined(EntityFriendlyName))
-            {
-                writer.WritePropertyName("entityFriendlyName"u8);
-                writer.WriteStringValue(EntityFriendlyName);
-            }
-            if (Optional.IsDefined(BackupManagementType))
-            {
-                writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
-            }
-            if (Optional.IsDefined(Operation))
-            {
-                writer.WritePropertyName("operation"u8);
-                writer.WriteStringValue(Operation);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
-            }
-            if (Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
-            }
-            if (Optional.IsDefined(EndOn))
-            {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
-            }
-            if (Optional.IsDefined(ActivityId))
-            {
-                writer.WritePropertyName("activityId"u8);
-                writer.WriteStringValue(ActivityId);
-            }
-            writer.WritePropertyName("jobType"u8);
-            writer.WriteStringValue(JobType);
-            writer.WriteEndObject();
         }
 
-        internal static VaultBackupJob DeserializeVaultBackupJob(JsonElement element)
+        VaultBackupJob IJsonModel<VaultBackupJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VaultBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VaultBackupJob)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVaultBackupJob(document.RootElement, options);
+        }
+
+        internal static VaultBackupJob DeserializeVaultBackupJob(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<TimeSpan> duration = default;
-            Optional<IList<JobSupportedAction>> actionsInfo = default;
-            Optional<IList<VaultBackupJobErrorInfo>> errorDetails = default;
-            Optional<VaultBackupJobExtendedInfo> extendedInfo = default;
-            Optional<string> entityFriendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> operation = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> activityId = default;
+            TimeSpan? duration = default;
+            IList<JobSupportedAction> actionsInfo = default;
+            IList<VaultBackupJobErrorInfo> errorDetails = default;
+            VaultBackupJobExtendedInfo extendedInfo = default;
+            string entityFriendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string operation = default;
+            string status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string activityId = default;
             string jobType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("duration"u8))
@@ -139,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<VaultBackupJobErrorInfo> array = new List<VaultBackupJobErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultBackupJobErrorInfo.DeserializeVaultBackupJobErrorInfo(item));
+                        array.Add(VaultBackupJobErrorInfo.DeserializeVaultBackupJobErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -150,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = VaultBackupJobExtendedInfo.DeserializeVaultBackupJobExtendedInfo(property.Value);
+                    extendedInfo = VaultBackupJobExtendedInfo.DeserializeVaultBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("entityFriendlyName"u8))
@@ -205,8 +201,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     jobType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VaultBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, Optional.ToNullable(duration), Optional.ToList(actionsInfo), Optional.ToList(errorDetails), extendedInfo.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VaultBackupJob(
+                entityFriendlyName,
+                backupManagementType,
+                operation,
+                status,
+                startTime,
+                endTime,
+                activityId,
+                jobType,
+                serializedAdditionalRawData,
+                duration,
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                errorDetails ?? new ChangeTrackingList<VaultBackupJobErrorInfo>(),
+                extendedInfo);
         }
+
+        BinaryData IPersistableModel<VaultBackupJob>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VaultBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VaultBackupJob)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VaultBackupJob IPersistableModel<VaultBackupJob>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VaultBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVaultBackupJob(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VaultBackupJob)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VaultBackupJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

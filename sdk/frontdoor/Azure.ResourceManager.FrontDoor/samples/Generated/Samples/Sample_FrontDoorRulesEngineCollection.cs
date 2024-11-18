@@ -8,20 +8,17 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.FrontDoor.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.FrontDoor.Samples
 {
     public partial class Sample_FrontDoorRulesEngineCollection
     {
-        // List Rules Engine Configurations in a Front Door
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListRulesEngineConfigurationsInAFrontDoor()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorRulesEngineList.json
@@ -53,12 +50,11 @@ namespace Azure.ResourceManager.FrontDoor.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Rules Engine Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRulesEngineConfiguration()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorRulesEngineGet.json
@@ -91,9 +87,8 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Rules Engine Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetRulesEngineConfiguration()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorRulesEngineGet.json
@@ -122,9 +117,8 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Rules Engine Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetRulesEngineConfiguration()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorRulesEngineGet.json
@@ -153,7 +147,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -165,9 +159,8 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             }
         }
 
-        // Create or update a specific Rules Engine Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateASpecificRulesEngineConfiguration()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorRulesEngineCreate.json

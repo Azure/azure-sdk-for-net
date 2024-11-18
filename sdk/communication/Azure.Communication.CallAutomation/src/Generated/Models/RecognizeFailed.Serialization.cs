@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,11 +17,12 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
+            int? failedPlaySourceIndex = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationContext"u8))
@@ -37,6 +37,15 @@ namespace Azure.Communication.CallAutomation
                         continue;
                     }
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("failedPlaySourceIndex"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failedPlaySourceIndex = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("callConnectionId"u8))
@@ -55,7 +64,21 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecognizeFailed(operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new RecognizeFailed(
+                operationContext,
+                resultInformation,
+                failedPlaySourceIndex,
+                callConnectionId,
+                serverCallId,
+                correlationId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RecognizeFailed FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRecognizeFailed(document.RootElement);
         }
     }
 }

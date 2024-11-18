@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.SecurityCenter;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Mocking
@@ -45,6 +42,13 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets an object representing a SensitivitySettingResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <returns> Returns a <see cref="SensitivitySettingResource"/> object. </returns>
+        public virtual SensitivitySettingResource GetSensitivitySetting()
+        {
+            return new SensitivitySettingResource(Client, Id.AppendProviderResource("Microsoft.Security", "sensitivitySettings", "current"));
+        }
+
         /// <summary> Gets a collection of TenantAssessmentMetadataResources in the TenantResource. </summary>
         /// <returns> An object representing collection of TenantAssessmentMetadataResources and their operations over a TenantAssessmentMetadataResource. </returns>
         public virtual TenantAssessmentMetadataCollection GetAllTenantAssessmentMetadata()
@@ -62,6 +66,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AssessmentsMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantAssessmentMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -86,6 +98,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>AssessmentsMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantAssessmentMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
@@ -109,6 +129,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>SecureScoreControlDefinitions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -117,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecureScoreControlDefinitionsRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecureScoreControlDefinitionsRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem, SecureScoreControlDefinitionsClientDiagnostics, Pipeline, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(e), SecureScoreControlDefinitionsClientDiagnostics, Pipeline, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -131,6 +155,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>SecureScoreControlDefinitions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,7 +167,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecureScoreControlDefinitionsRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecureScoreControlDefinitionsRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem, SecureScoreControlDefinitionsClientDiagnostics, Pipeline, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(e), SecureScoreControlDefinitionsClientDiagnostics, Pipeline, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions", "value", "nextLink", cancellationToken);
         }
     }
 }

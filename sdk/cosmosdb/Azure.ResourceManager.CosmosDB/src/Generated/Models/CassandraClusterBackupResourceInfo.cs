@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> A restorable backup of a Cassandra cluster. </summary>
     public partial class CassandraClusterBackupResourceInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CassandraClusterBackupResourceInfo"/>. </summary>
         internal CassandraClusterBackupResourceInfo()
         {
@@ -23,24 +56,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="backupStartTimestamp"> The time at which the backup process begins. </param>
         /// <param name="backupStopTimestamp"> The time at which the backup process ends. </param>
         /// <param name="backupExpiryTimestamp"> The time at which the backup will expire. </param>
-        internal CassandraClusterBackupResourceInfo(string backupId, CassandraClusterBackupState? backupState, DateTimeOffset? backupStartTimestamp, DateTimeOffset? backupStopTimestamp, DateTimeOffset? backupExpiryTimestamp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraClusterBackupResourceInfo(string backupId, CassandraClusterBackupState? backupState, DateTimeOffset? backupStartTimestamp, DateTimeOffset? backupStopTimestamp, DateTimeOffset? backupExpiryTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BackupId = backupId;
             BackupState = backupState;
             BackupStartTimestamp = backupStartTimestamp;
             BackupStopTimestamp = backupStopTimestamp;
             BackupExpiryTimestamp = backupExpiryTimestamp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier of backup. </summary>
+        [WirePath("backupId")]
         public string BackupId { get; }
         /// <summary> The current state of the backup. </summary>
+        [WirePath("backupState")]
         public CassandraClusterBackupState? BackupState { get; }
         /// <summary> The time at which the backup process begins. </summary>
+        [WirePath("backupStartTimestamp")]
         public DateTimeOffset? BackupStartTimestamp { get; }
         /// <summary> The time at which the backup process ends. </summary>
+        [WirePath("backupStopTimestamp")]
         public DateTimeOffset? BackupStopTimestamp { get; }
         /// <summary> The time at which the backup will expire. </summary>
+        [WirePath("backupExpiryTimestamp")]
         public DateTimeOffset? BackupExpiryTimestamp { get; }
     }
 }

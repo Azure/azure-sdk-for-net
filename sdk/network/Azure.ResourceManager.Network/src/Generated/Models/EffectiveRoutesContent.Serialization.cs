@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EffectiveRoutesContent : IUtf8JsonSerializable
+    public partial class EffectiveRoutesContent : IUtf8JsonSerializable, IJsonModel<EffectiveRoutesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveRoutesContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<EffectiveRoutesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EffectiveRoutesContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
@@ -25,7 +44,101 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("virtualWanResourceType"u8);
                 writer.WriteStringValue(VirtualWanResourceType);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
+
+        EffectiveRoutesContent IJsonModel<EffectiveRoutesContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EffectiveRoutesContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEffectiveRoutesContent(document.RootElement, options);
+        }
+
+        internal static EffectiveRoutesContent DeserializeEffectiveRoutesContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier resourceId = default;
+            string virtualWanResourceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("resourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("virtualWanResourceType"u8))
+                {
+                    virtualWanResourceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EffectiveRoutesContent(resourceId, virtualWanResourceType, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<EffectiveRoutesContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EffectiveRoutesContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EffectiveRoutesContent IPersistableModel<EffectiveRoutesContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EffectiveRoutesContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEffectiveRoutesContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EffectiveRoutesContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

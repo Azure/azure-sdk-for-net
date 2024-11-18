@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Mocking
 {
@@ -337,18 +335,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InstancePoolResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InstancePoolResource.CreateResourceIdentifier" /> to create an <see cref="InstancePoolResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InstancePoolResource"/> object. </returns>
-        public virtual InstancePoolResource GetInstancePoolResource(ResourceIdentifier id)
-        {
-            InstancePoolResource.ValidateResourceId(id);
-            return new InstancePoolResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SqlServerJobAgentResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlServerJobAgentResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerJobAgentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -466,18 +452,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             SqlServerJobVersionResource.ValidateResourceId(id);
             return new SqlServerJobVersionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="LongTermRetentionPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LongTermRetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="LongTermRetentionPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LongTermRetentionPolicyResource"/> object. </returns>
-        public virtual LongTermRetentionPolicyResource GetLongTermRetentionPolicyResource(ResourceIdentifier id)
-        {
-            LongTermRetentionPolicyResource.ValidateResourceId(id);
-            return new LongTermRetentionPolicyResource(Client, id);
         }
 
         /// <summary>
@@ -973,30 +947,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionLongTermRetentionBackupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionLongTermRetentionBackupResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionLongTermRetentionBackupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackupResource"/> object. </returns>
-        public virtual SubscriptionLongTermRetentionBackupResource GetSubscriptionLongTermRetentionBackupResource(ResourceIdentifier id)
-        {
-            SubscriptionLongTermRetentionBackupResource.ValidateResourceId(id);
-            return new SubscriptionLongTermRetentionBackupResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGroupLongTermRetentionBackupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGroupLongTermRetentionBackupResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupLongTermRetentionBackupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackupResource"/> object. </returns>
-        public virtual ResourceGroupLongTermRetentionBackupResource GetResourceGroupLongTermRetentionBackupResource(ResourceIdentifier id)
-        {
-            ResourceGroupLongTermRetentionBackupResource.ValidateResourceId(id);
-            return new ResourceGroupLongTermRetentionBackupResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -1210,18 +1160,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             ManagedInstanceAdvancedThreatProtectionResource.ValidateResourceId(id);
             return new ManagedInstanceAdvancedThreatProtectionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlServerDatabaseReplicationLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerDatabaseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerDatabaseReplicationLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlServerDatabaseReplicationLinkResource"/> object. </returns>
-        public virtual SqlServerDatabaseReplicationLinkResource GetSqlServerDatabaseReplicationLinkResource(ResourceIdentifier id)
-        {
-            SqlServerDatabaseReplicationLinkResource.ValidateResourceId(id);
-            return new SqlServerDatabaseReplicationLinkResource(Client, id);
         }
 
         /// <summary>
@@ -1525,6 +1463,66 @@ namespace Azure.ResourceManager.Sql.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="FailoverGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FailoverGroupResource.CreateResourceIdentifier" /> to create a <see cref="FailoverGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FailoverGroupResource"/> object. </returns>
+        public virtual FailoverGroupResource GetFailoverGroupResource(ResourceIdentifier id)
+        {
+            FailoverGroupResource.ValidateResourceId(id);
+            return new FailoverGroupResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="InstancePoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InstancePoolResource.CreateResourceIdentifier" /> to create an <see cref="InstancePoolResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="InstancePoolResource"/> object. </returns>
+        public virtual InstancePoolResource GetInstancePoolResource(ResourceIdentifier id)
+        {
+            InstancePoolResource.ValidateResourceId(id);
+            return new InstancePoolResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionLongTermRetentionBackupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionLongTermRetentionBackupResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionLongTermRetentionBackupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackupResource"/> object. </returns>
+        public virtual SubscriptionLongTermRetentionBackupResource GetSubscriptionLongTermRetentionBackupResource(ResourceIdentifier id)
+        {
+            SubscriptionLongTermRetentionBackupResource.ValidateResourceId(id);
+            return new SubscriptionLongTermRetentionBackupResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceGroupLongTermRetentionBackupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceGroupLongTermRetentionBackupResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupLongTermRetentionBackupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackupResource"/> object. </returns>
+        public virtual ResourceGroupLongTermRetentionBackupResource GetResourceGroupLongTermRetentionBackupResource(ResourceIdentifier id)
+        {
+            ResourceGroupLongTermRetentionBackupResource.ValidateResourceId(id);
+            return new ResourceGroupLongTermRetentionBackupResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LongTermRetentionPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LongTermRetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="LongTermRetentionPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LongTermRetentionPolicyResource"/> object. </returns>
+        public virtual LongTermRetentionPolicyResource GetLongTermRetentionPolicyResource(ResourceIdentifier id)
+        {
+            LongTermRetentionPolicyResource.ValidateResourceId(id);
+            return new LongTermRetentionPolicyResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="SqlServerResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlServerResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -1537,15 +1535,15 @@ namespace Azure.ResourceManager.Sql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FailoverGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FailoverGroupResource.CreateResourceIdentifier" /> to create a <see cref="FailoverGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SqlServerDatabaseReplicationLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerDatabaseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerDatabaseReplicationLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FailoverGroupResource"/> object. </returns>
-        public virtual FailoverGroupResource GetFailoverGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerDatabaseReplicationLinkResource"/> object. </returns>
+        public virtual SqlServerDatabaseReplicationLinkResource GetSqlServerDatabaseReplicationLinkResource(ResourceIdentifier id)
         {
-            FailoverGroupResource.ValidateResourceId(id);
-            return new FailoverGroupResource(Client, id);
+            SqlServerDatabaseReplicationLinkResource.ValidateResourceId(id);
+            return new SqlServerDatabaseReplicationLinkResource(Client, id);
         }
     }
 }

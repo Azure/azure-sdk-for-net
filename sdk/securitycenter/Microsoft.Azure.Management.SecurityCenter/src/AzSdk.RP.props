@@ -1,7 +1,0 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!--This file and it's contents are updated at build time moving or editing might result in build failure. Take due deligence while editing this file-->
-  <PropertyGroup>
-    <AzureApiTag>Security_2015-06-01-preview;Security_2019-01-01;Security_2019-01-01-preview;Security_2017-08-01-preview;Security_2017-08-01;Security_2019-08-01;Security_2018-06-01;Security_2020-01-01-preview;Security_2020-01-01;Security_2021-01-01;Security_2021-06-01</AzureApiTag>
-    <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
-  </PropertyGroup>
-</Project>

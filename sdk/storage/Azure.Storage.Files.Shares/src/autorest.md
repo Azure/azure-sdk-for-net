@@ -4,12 +4,14 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ef99caaf8f0de4f9a7898f486edb462a994b19b1/specification/storage/data-plane/Microsoft.FileStorage/preview/2024-02-04/file.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ae95eb6a4701d844bada7d1c4f5ecf4a7444e5b8/specification/storage/data-plane/Microsoft.FileStorage/stable/2025-01-05/file.json
 generation1-convenience-client: true
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
 modelerfour:
     seal-single-value-enum-by-default: true
+
+helper-namespace: Azure.Storage.Common
 ```
 
 ### Don't include share name, directory, or file name in path - we have direct URIs.

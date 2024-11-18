@@ -5,21 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageAzureV2RecoveryPointDetails
+    public partial class InMageAzureV2RecoveryPointDetails : IUtf8JsonSerializable, IJsonModel<InMageAzureV2RecoveryPointDetails>
     {
-        internal static InMageAzureV2RecoveryPointDetails DeserializeInMageAzureV2RecoveryPointDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageAzureV2RecoveryPointDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<InMageAzureV2RecoveryPointDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2RecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageAzureV2RecoveryPointDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(IsMultiVmSyncPoint))
+            {
+                writer.WritePropertyName("isMultiVmSyncPoint"u8);
+                writer.WriteStringValue(IsMultiVmSyncPoint);
+            }
+        }
+
+        InMageAzureV2RecoveryPointDetails IJsonModel<InMageAzureV2RecoveryPointDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2RecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageAzureV2RecoveryPointDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageAzureV2RecoveryPointDetails(document.RootElement, options);
+        }
+
+        internal static InMageAzureV2RecoveryPointDetails DeserializeInMageAzureV2RecoveryPointDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> isMultiVmSyncPoint = default;
+            string isMultiVmSyncPoint = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isMultiVmSyncPoint"u8))
@@ -32,8 +78,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageAzureV2RecoveryPointDetails(instanceType, isMultiVmSyncPoint.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InMageAzureV2RecoveryPointDetails(instanceType, serializedAdditionalRawData, isMultiVmSyncPoint);
         }
+
+        BinaryData IPersistableModel<InMageAzureV2RecoveryPointDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2RecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InMageAzureV2RecoveryPointDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        InMageAzureV2RecoveryPointDetails IPersistableModel<InMageAzureV2RecoveryPointDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2RecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInMageAzureV2RecoveryPointDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageAzureV2RecoveryPointDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InMageAzureV2RecoveryPointDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

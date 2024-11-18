@@ -12,8 +12,8 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 
 ```C# Snippet:CreateDocumentIntelligenceAdministrationClient
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var credential = new DefaultAzureCredential();
+var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), credential);
 ```
 
 ## Get and List Document Model Operations
@@ -77,8 +77,8 @@ await foreach (OperationDetails operationItem in client.GetOperationsAsync())
     Console.WriteLine($"  Operation ID: {operationItem.OperationId}");
     Console.WriteLine($"  Status: {operationItem.Status}");
     Console.WriteLine($"  Completion: {operationItem.PercentCompleted}%");
-    Console.WriteLine($"  Created on: {operationItem.CreatedDateTime}");
-    Console.WriteLine($"  Last updated on: {operationItem.LastUpdatedDateTime}");
+    Console.WriteLine($"  Created on: {operationItem.CreatedOn}");
+    Console.WriteLine($"  Last updated on: {operationItem.LastUpdatedOn}");
     Console.WriteLine($"  Resource location: {operationItem.ResourceLocation}");
 
     if (++count == 10)

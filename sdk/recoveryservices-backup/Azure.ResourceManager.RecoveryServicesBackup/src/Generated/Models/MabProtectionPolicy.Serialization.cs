@@ -5,58 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabProtectionPolicy : IUtf8JsonSerializable
+    public partial class MabProtectionPolicy : IUtf8JsonSerializable, IJsonModel<MabProtectionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MabProtectionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MabProtectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MabProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MabProtectionPolicy)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(SchedulePolicy))
             {
                 writer.WritePropertyName("schedulePolicy"u8);
-                writer.WriteObjectValue(SchedulePolicy);
+                writer.WriteObjectValue(SchedulePolicy, options);
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                writer.WriteObjectValue(RetentionPolicy, options);
             }
-            if (Optional.IsDefined(ProtectedItemsCount))
-            {
-                writer.WritePropertyName("protectedItemsCount"u8);
-                writer.WriteNumberValue(ProtectedItemsCount.Value);
-            }
-            writer.WritePropertyName("backupManagementType"u8);
-            writer.WriteStringValue(BackupManagementType);
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
-            {
-                writer.WritePropertyName("resourceGuardOperationRequests"u8);
-                writer.WriteStartArray();
-                foreach (var item in ResourceGuardOperationRequests)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
-        internal static MabProtectionPolicy DeserializeMabProtectionPolicy(JsonElement element)
+        MabProtectionPolicy IJsonModel<MabProtectionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MabProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MabProtectionPolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMabProtectionPolicy(document.RootElement, options);
+        }
+
+        internal static MabProtectionPolicy DeserializeMabProtectionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BackupSchedulePolicy> schedulePolicy = default;
-            Optional<BackupRetentionPolicy> retentionPolicy = default;
-            Optional<int> protectedItemsCount = default;
+            BackupSchedulePolicy schedulePolicy = default;
+            BackupRetentionPolicy retentionPolicy = default;
+            int? protectedItemsCount = default;
             string backupManagementType = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
+            IList<string> resourceGuardOperationRequests = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schedulePolicy"u8))
@@ -65,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(property.Value);
+                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retentionPolicy"u8))
@@ -74,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value);
+                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectedItemsCount"u8))
@@ -105,8 +122,50 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     resourceGuardOperationRequests = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MabProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), schedulePolicy.Value, retentionPolicy.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MabProtectionPolicy(
+                protectedItemsCount,
+                backupManagementType,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                schedulePolicy,
+                retentionPolicy);
         }
+
+        BinaryData IPersistableModel<MabProtectionPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MabProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MabProtectionPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MabProtectionPolicy IPersistableModel<MabProtectionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MabProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMabProtectionPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MabProtectionPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MabProtectionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

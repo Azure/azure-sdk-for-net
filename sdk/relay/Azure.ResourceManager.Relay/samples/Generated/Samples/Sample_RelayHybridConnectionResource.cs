@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Relay;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Relay.Samples
 {
     public partial class Sample_RelayHybridConnectionResource
     {
-        // RelayHybridConnectionCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RelayHybridConnectionCreate()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/HybridConnection/RelayHybridConnectionCreate.json
@@ -54,9 +51,8 @@ namespace Azure.ResourceManager.Relay.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RelayHybridconnectionDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RelayHybridconnectionDelete()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/HybridConnection/RelayHybridconnectionDelete.json
@@ -79,12 +75,11 @@ namespace Azure.ResourceManager.Relay.Samples
             // invoke the operation
             await relayHybridConnection.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RelayHybridConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RelayHybridConnectionGet()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/HybridConnection/RelayHybridConnectionGet.json

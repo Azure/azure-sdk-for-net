@@ -6,8 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -35,15 +35,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Trigger Kind. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceInfo"> File event source details. </param>
         /// <param name="sinkInfo"> Role sink info. </param>
         /// <param name="customContextTag"> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </param>
-        internal EdgeFileEventTrigger(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggerEventType kind, EdgeFileSourceInfo sourceInfo, DataBoxEdgeRoleSinkInfo sinkInfo, string customContextTag) : base(id, name, resourceType, systemData, kind)
+        internal EdgeFileEventTrigger(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggerEventType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, EdgeFileSourceInfo sourceInfo, DataBoxEdgeRoleSinkInfo sinkInfo, string customContextTag) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             SourceInfo = sourceInfo;
             SinkInfo = sinkInfo;
             CustomContextTag = customContextTag;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeFileEventTrigger"/> for deserialization. </summary>
+        internal EdgeFileEventTrigger()
+        {
         }
 
         /// <summary> File event source details. </summary>

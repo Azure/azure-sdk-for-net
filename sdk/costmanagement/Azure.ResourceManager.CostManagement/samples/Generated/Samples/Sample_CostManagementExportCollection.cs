@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.CostManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CostManagement.Samples
 {
     public partial class Sample_CostManagementExportCollection
     {
-        // ExportsGetByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ExportsGetByBillingAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportsGetByBillingAccount.json
@@ -49,12 +46,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ExportsGetByDepartment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ExportsGetByDepartment()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportsGetByDepartment.json
@@ -83,12 +79,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ExportsGetByEnrollmentAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ExportsGetByEnrollmentAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportsGetByEnrollmentAccount.json
@@ -117,12 +112,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ExportsGetByManagementGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ExportsGetByManagementGroup()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportsGetByManagementGroup.json
@@ -151,12 +145,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ExportsGetByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ExportsGetByResourceGroup()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportsGetByResourceGroup.json
@@ -185,12 +178,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ExportsGetBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ExportsGetBySubscription()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportsGetBySubscription.json
@@ -219,12 +211,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ExportGetByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ExportGetByBillingAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByBillingAccount.json
@@ -254,9 +245,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExportGetByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ExportGetByBillingAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByBillingAccount.json
@@ -282,9 +272,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExportGetByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ExportGetByBillingAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByBillingAccount.json
@@ -310,7 +299,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -322,9 +311,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             }
         }
 
-        // ExportGetByDepartment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ExportGetByDepartment()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByDepartment.json
@@ -354,9 +342,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExportGetByDepartment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ExportGetByDepartment()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByDepartment.json
@@ -382,9 +369,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExportGetByDepartment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ExportGetByDepartment()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByDepartment.json
@@ -410,7 +396,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -422,9 +408,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             }
         }
 
-        // ExportGetByEnrollmentAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ExportGetByEnrollmentAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByEnrollmentAccount.json
@@ -454,9 +439,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExportGetByEnrollmentAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ExportGetByEnrollmentAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByEnrollmentAccount.json
@@ -482,9 +466,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExportGetByEnrollmentAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ExportGetByEnrollmentAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByEnrollmentAccount.json
@@ -510,7 +493,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -522,9 +505,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             }
         }
 
-        // ExportGetByManagementGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ExportGetByManagementGroup()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByManagementGroup.json
@@ -554,9 +536,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExportGetByManagementGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ExportGetByManagementGroup()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByManagementGroup.json
@@ -582,9 +563,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExportGetByManagementGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ExportGetByManagementGroup()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByManagementGroup.json
@@ -610,7 +590,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -622,9 +602,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             }
         }
 
-        // ExportGetByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ExportGetByResourceGroup()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByResourceGroup.json
@@ -654,9 +633,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExportGetByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ExportGetByResourceGroup()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByResourceGroup.json
@@ -682,9 +660,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExportGetByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ExportGetByResourceGroup()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByResourceGroup.json
@@ -710,7 +687,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -722,9 +699,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             }
         }
 
-        // ExportGetBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ExportGetBySubscription()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetBySubscription.json
@@ -754,9 +730,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExportGetBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ExportGetBySubscription()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetBySubscription.json
@@ -782,9 +757,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExportGetBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ExportGetBySubscription()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetBySubscription.json
@@ -810,7 +784,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -822,9 +796,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             }
         }
 
-        // ExportCreateOrUpdateByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ExportCreateOrUpdateByBillingAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportCreateOrUpdateByBillingAccount.json
@@ -884,9 +857,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExportCreateOrUpdateByDepartment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ExportCreateOrUpdateByDepartment()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportCreateOrUpdateByDepartment.json
@@ -946,9 +918,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExportCreateOrUpdateByEnrollmentAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ExportCreateOrUpdateByEnrollmentAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportCreateOrUpdateByEnrollmentAccount.json
@@ -1008,9 +979,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExportCreateOrUpdateByManagementGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ExportCreateOrUpdateByManagementGroup()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportCreateOrUpdateByManagementGroup.json
@@ -1070,9 +1040,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExportCreateOrUpdateByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ExportCreateOrUpdateByResourceGroup()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportCreateOrUpdateByResourceGroup.json
@@ -1132,9 +1101,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExportCreateOrUpdateBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ExportCreateOrUpdateBySubscription()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportCreateOrUpdateBySubscription.json

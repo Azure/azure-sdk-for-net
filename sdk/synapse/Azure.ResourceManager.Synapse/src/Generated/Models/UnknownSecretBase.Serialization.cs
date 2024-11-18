@@ -5,28 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    internal partial class UnknownSecretBase : IUtf8JsonSerializable
+    internal partial class UnknownSecretBase : IUtf8JsonSerializable, IJsonModel<SynapseSecretBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSecretBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SynapseSecretBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(SecretBaseType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static UnknownSecretBase DeserializeUnknownSecretBase(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSecretBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseSecretBase)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        SynapseSecretBase IJsonModel<SynapseSecretBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSecretBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseSecretBase)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSecretBase(document.RootElement, options);
+        }
+
+        internal static UnknownSecretBase DeserializeUnknownSecretBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -34,8 +67,44 @@ namespace Azure.ResourceManager.Synapse.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownSecretBase(type);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownSecretBase(type, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SynapseSecretBase>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSecretBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseSecretBase)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SynapseSecretBase IPersistableModel<SynapseSecretBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSecretBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseSecretBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseSecretBase)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseSecretBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

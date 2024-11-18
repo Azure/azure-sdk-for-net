@@ -5,57 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMISyncTaskProperties : IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlMISyncTaskProperties : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlMISyncTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlMISyncTaskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MigrateSqlServerSqlMISyncTaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
+                writer.WriteObjectValue(Input, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Output))
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteStartArray();
+                foreach (var item in Output)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn);
             }
-            writer.WritePropertyName("taskType"u8);
-            writer.WriteStringValue(TaskType.ToString());
-            if (Optional.IsCollectionDefined(ClientData))
-            {
-                writer.WritePropertyName("clientData"u8);
-                writer.WriteStartObject();
-                foreach (var item in ClientData)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WriteEndObject();
         }
 
-        internal static MigrateSqlServerSqlMISyncTaskProperties DeserializeMigrateSqlServerSqlMISyncTaskProperties(JsonElement element)
+        MigrateSqlServerSqlMISyncTaskProperties IJsonModel<MigrateSqlServerSqlMISyncTaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSqlServerSqlMISyncTaskProperties(document.RootElement, options);
+        }
+
+        internal static MigrateSqlServerSqlMISyncTaskProperties DeserializeMigrateSqlServerSqlMISyncTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MigrateSqlServerSqlMISyncTaskInput> input = default;
-            Optional<IReadOnlyList<MigrateSqlServerSqlMISyncTaskOutput>> output = default;
-            Optional<string> createdOn = default;
+            MigrateSqlServerSqlMISyncTaskInput input = default;
+            IReadOnlyList<MigrateSqlServerSqlMISyncTaskOutput> output = default;
+            string createdOn = default;
             TaskType taskType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            IReadOnlyList<ODataError> errors = default;
+            TaskState? state = default;
+            IReadOnlyList<CommandProperties> commands = default;
+            IDictionary<string, string> clientData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -64,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = MigrateSqlServerSqlMISyncTaskInput.DeserializeMigrateSqlServerSqlMISyncTaskInput(property.Value);
+                    input = MigrateSqlServerSqlMISyncTaskInput.DeserializeMigrateSqlServerSqlMISyncTaskInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -76,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateSqlServerSqlMISyncTaskOutput> array = new List<MigrateSqlServerSqlMISyncTaskOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateSqlServerSqlMISyncTaskOutput.DeserializeMigrateSqlServerSqlMISyncTaskOutput(item));
+                        array.Add(MigrateSqlServerSqlMISyncTaskOutput.DeserializeMigrateSqlServerSqlMISyncTaskOutput(item, options));
                     }
                     output = array;
                     continue;
@@ -100,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -123,7 +154,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CommandProperties> array = new List<CommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
@@ -142,8 +173,53 @@ namespace Azure.ResourceManager.DataMigration.Models
                     clientData = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateSqlServerSqlMISyncTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), input.Value, Optional.ToList(output), createdOn.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateSqlServerSqlMISyncTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input,
+                output ?? new ChangeTrackingList<MigrateSqlServerSqlMISyncTaskOutput>(),
+                createdOn);
         }
+
+        BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MigrateSqlServerSqlMISyncTaskProperties IPersistableModel<MigrateSqlServerSqlMISyncTaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMigrateSqlServerSqlMISyncTaskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MigrateSqlServerSqlMISyncTaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

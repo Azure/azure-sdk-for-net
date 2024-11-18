@@ -97,7 +97,7 @@ Authenticate with Active Directory:
 ```C# Snippet:ServiceBusAuthAAD
 // Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
-await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
 
 Authenticate with connection string:
@@ -105,7 +105,7 @@ Authenticate with connection string:
 ```C# Snippet:ServiceBusAuthConnString
 // Create a ServiceBusClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(connectionString);
 ```
 
 #### Administration client
@@ -118,7 +118,7 @@ Authenticate with Active Directory:
 ```C# Snippet:ServiceBusAdministrationClientAAD
 // Create a ServiceBusAdministrationClient that will authenticate using default credentials
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
-ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+ServiceBusAdministrationClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
 
 Authenticate with connection string:
@@ -126,7 +126,7 @@ Authenticate with connection string:
 ```C# Snippet:ServiceBusAdministrationClientConnectionString
 // Create a ServiceBusAdministrationClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
-ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(connectionString);
+ServiceBusAdministrationClient client = new(connectionString);
 ```
 
 ### Sending messages
@@ -151,16 +151,16 @@ In `Azure.Messaging.ServiceBus`, all of the send-related features are combined i
 We continue to support sending bytes in the message. Though, if you are working with strings, you can now create a message directly without having to convert it to bytes explicitly.
 
 ```C# Snippet:ServiceBusSendSingleMessage
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
-// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
 
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send. UTF-8 encoding is used when providing a string.
-ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+ServiceBusMessage message = new("Hello world!");
 
 // send the message
 await sender.SendMessageAsync(message);
@@ -172,7 +172,7 @@ While we continue to support this feature, it had the potential to fail unexpect
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
 // add the messages that we plan to send to a local queue
-Queue<ServiceBusMessage> messages = new Queue<ServiceBusMessage>();
+Queue<ServiceBusMessage> messages = new();
 messages.Enqueue(new ServiceBusMessage("First message"));
 messages.Enqueue(new ServiceBusMessage("Second message"));
 messages.Enqueue(new ServiceBusMessage("Third message"));
@@ -258,10 +258,10 @@ Another notable difference from `Microsoft.Azure.ServiceBus` when it comes to re
 
 ```C# Snippet:ServiceBusConfigureProcessor
 // create the options to use for configuring the processor
-var options = new ServiceBusProcessorOptions
+ServiceBusProcessorOptions options = new()
 {
     // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
-    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
+    // Set AutoCompleteMessages to false to [settle messages](https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
     // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
     AutoCompleteMessages = false,
 
@@ -364,7 +364,7 @@ var options = new ServiceBusSessionProcessorOptions
     MaxConcurrentSessions = 5,
 
     // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
-    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
+    // Set AutoCompleteMessages to false to [settle messages](https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
     // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
     MaxConcurrentCallsPerSession = 2,
 
@@ -375,9 +375,19 @@ var options = new ServiceBusSessionProcessorOptions
 // create a session processor that we can use to process the messages
 await using ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, options);
 
-// configure the message and error handler to use
+// configure the message and error event handler to use - these event handlers are required
 processor.ProcessMessageAsync += MessageHandler;
 processor.ProcessErrorAsync += ErrorHandler;
+
+// configure optional event handlers that will be executed when a session starts processing and stops processing
+// NOTE: The SessionInitializingAsync event is raised when the processor obtains a lock for a session. This does not mean the session was
+// never processed before by this or any other ServiceBusSessionProcessor instances. Similarly, the SessionClosingAsync
+// event is raised when no more messages are available for the session being processed subject to the SessionIdleTimeout
+// in the ServiceBusSessionProcessorOptions. If additional messages are sent for that session later, the SessionInitializingAsync and SessionClosingAsync
+// events would be raised again.
+
+processor.SessionInitializingAsync += SessionInitializingHandler;
+processor.SessionClosingAsync += SessionClosingHandler;
 
 async Task MessageHandler(ProcessSessionMessageEventArgs args)
 {
@@ -388,7 +398,7 @@ async Task MessageHandler(ProcessSessionMessageEventArgs args)
 
     // we can also set arbitrary session state using this receiver
     // the state is specific to the session, and not any particular message
-    await args.SetSessionStateAsync(new BinaryData("some state"));
+    await args.SetSessionStateAsync(new BinaryData("Some state specific to this session when processing a message."));
 }
 
 Task ErrorHandler(ProcessErrorEventArgs args)
@@ -403,10 +413,27 @@ Task ErrorHandler(ProcessErrorEventArgs args)
     return Task.CompletedTask;
 }
 
+async Task SessionInitializingHandler(ProcessSessionEventArgs args)
+{
+    await args.SetSessionStateAsync(new BinaryData("Some state specific to this session when the session is opened for processing."));
+}
+
+async Task SessionClosingHandler(ProcessSessionEventArgs args)
+{
+    // We may want to clear the session state when no more messages are available for the session or when some known terminal message
+    // has been received. This is entirely dependent on the application scenario.
+    BinaryData sessionState = await args.GetSessionStateAsync();
+    if (sessionState.ToString() ==
+        "Some state that indicates the final message was received for the session")
+    {
+        await args.SetSessionStateAsync(null);
+    }
+}
+
 // start processing
 await processor.StartProcessingAsync();
 
-// since the processing happens in the background, we add a Conole.ReadKey to allow the processing to continue until a key is pressed.
+// since the processing happens in the background, we add a Console.ReadKey to allow the processing to continue until a key is pressed.
 Console.ReadKey();
 ```
 
@@ -442,9 +469,9 @@ In `Azure.Messaging.ServiceBus`, the `EnableCrossEntityTransactions` property on
 The below code snippet shows you how to perform cross-entity transactions.
 
 ```C# Snippet:ServiceBusCrossEntityTransaction
-string connectionString = "<connection_string>";
-var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
-await using var client = new ServiceBusClient(connectionString, options);
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+ServiceBusClientOptions options = new(){ EnableCrossEntityTransactions = true };
+await using ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential(), options);
 
 ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
 ServiceBusSender senderB = client.CreateSender("queueB");
@@ -469,7 +496,7 @@ In `Azure.Messaging.ServiceBus`, activity baggage is not currently flowed throug
 
 ## Plugins
  
-In the previous library, `Microsoft.Azure.ServiceBus`, users could [register plugins](https://docs.microsoft.com/dotnet/api/microsoft.azure.servicebus.queueclient.registerplugin?view=azure-dotnet) that would alter an outgoing message before serialization, or alter an incoming message after being deserialized. These extension points allowed users of the Service Bus library to use common OSS extensions to enhance their applications without having to implement their own logic, and without having to wait for the SDK to explicitly support the needed feature. For instance, one use of the plugin functionality is to implement the [claim-check pattern](https://www.nuget.org/packages/ServiceBus.AttachmentPlugin/) to send and receive messages that exceed the Service Bus message size limits. 
+In the previous library, `Microsoft.Azure.ServiceBus`, users could [register plugins](https://learn.microsoft.com/dotnet/api/microsoft.azure.servicebus.queueclient.registerplugin?view=azure-dotnet) that would alter an outgoing message before serialization, or alter an incoming message after being deserialized. These extension points allowed users of the Service Bus library to use common OSS extensions to enhance their applications without having to implement their own logic, and without having to wait for the SDK to explicitly support the needed feature. For instance, one use of the plugin functionality is to implement the [claim-check pattern](https://www.nuget.org/packages/ServiceBus.AttachmentPlugin/) to send and receive messages that exceed the Service Bus message size limits. 
 
 To achieve similar functionality with `Azure.Messaging.ServiceBus`, you can extend the various types as demonstrated in the [extensibility sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample09_Extensibility.md). We also have a [dedicated sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample10_ClaimCheck.md) that demonstrates using the claim check pattern in the new library.
 

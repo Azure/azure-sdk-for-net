@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ResourceHealth;
 using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth.Mocking
@@ -63,6 +60,14 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <term>Operation Id</term>
         /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthEventResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
@@ -87,6 +92,14 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,6 +126,10 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailabilityStatuses_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
@@ -123,7 +140,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilityStatusesRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailabilityStatusesRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId, filter, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, AvailabilityStatusesClientDiagnostics, Pipeline, "MockableResourceHealthSubscriptionResource.GetAvailabilityStatusesBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(e), AvailabilityStatusesClientDiagnostics, Pipeline, "MockableResourceHealthSubscriptionResource.GetAvailabilityStatusesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -137,6 +154,10 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailabilityStatuses_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
@@ -147,7 +168,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilityStatusesRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailabilityStatusesRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId, filter, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, AvailabilityStatusesClientDiagnostics, Pipeline, "MockableResourceHealthSubscriptionResource.GetAvailabilityStatusesBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(e), AvailabilityStatusesClientDiagnostics, Pipeline, "MockableResourceHealthSubscriptionResource.GetAvailabilityStatusesBySubscription", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Resources;
 
@@ -112,6 +110,75 @@ namespace Azure.ResourceManager.ContainerService
             return new ManagedClusterUpgradeProfileResource(Client, Id.AppendChildResource("upgradeProfiles", "default"));
         }
 
+        /// <summary> Gets a collection of MeshUpgradeProfileResources in the ContainerServiceManagedCluster. </summary>
+        /// <returns> An object representing collection of MeshUpgradeProfileResources and their operations over a MeshUpgradeProfileResource. </returns>
+        public virtual MeshUpgradeProfileCollection GetMeshUpgradeProfiles()
+        {
+            return GetCachedClient(client => new MeshUpgradeProfileCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets available upgrades for a service mesh in a cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/meshUpgradeProfiles/{mode}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_GetMeshUpgradeProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MeshUpgradeProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mode"> The mode of the mesh. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MeshUpgradeProfileResource>> GetMeshUpgradeProfileAsync(string mode, CancellationToken cancellationToken = default)
+        {
+            return await GetMeshUpgradeProfiles().GetAsync(mode, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets available upgrades for a service mesh in a cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/meshUpgradeProfiles/{mode}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_GetMeshUpgradeProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MeshUpgradeProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mode"> The mode of the mesh. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MeshUpgradeProfileResource> GetMeshUpgradeProfile(string mode, CancellationToken cancellationToken = default)
+        {
+            return GetMeshUpgradeProfiles().Get(mode, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ContainerServiceMaintenanceConfigurationResources in the ContainerServiceManagedCluster. </summary>
         /// <returns> An object representing collection of ContainerServiceMaintenanceConfigurationResources and their operations over a ContainerServiceMaintenanceConfigurationResource. </returns>
         public virtual ContainerServiceMaintenanceConfigurationCollection GetContainerServiceMaintenanceConfigurations()
@@ -129,6 +196,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,6 +227,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +266,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>AgentPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceAgentPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="agentPoolName"> The name of the agent pool. </param>
@@ -205,6 +296,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AgentPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,6 +335,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServicePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
@@ -258,6 +365,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServicePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,6 +404,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoleBindings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="trustedAccessRoleBindingName"> The name of trusted access role binding. </param>
@@ -312,6 +435,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoleBindings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="trustedAccessRoleBindingName"> The name of trusted access role binding. </param>
@@ -334,6 +465,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -367,6 +506,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -389,76 +536,6 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Deletes a managed cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ignorePodDisruptionBudget"> ignore-pod-disruption-budget=true to delete those pods on a node without considering Pod Disruption Budget. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? ignorePodDisruptionBudget = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _containerServiceManagedClusterManagedClustersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ignorePodDisruptionBudget, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ignorePodDisruptionBudget).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a managed cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ignorePodDisruptionBudget"> ignore-pod-disruption-budget=true to delete those pods on a node without considering Pod Disruption Budget. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? ignorePodDisruptionBudget = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _containerServiceManagedClusterManagedClustersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ignorePodDisruptionBudget, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ignorePodDisruptionBudget).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Updates tags on a managed cluster.
         /// <list type="bullet">
         /// <item>
@@ -468,6 +545,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_UpdateTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -484,7 +569,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceManagedClusterManagedClustersRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServiceTagsObject, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ContainerServiceManagedClusterResource>(new ContainerServiceManagedClusterOperationSource(Client), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServiceTagsObject).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation<ContainerServiceManagedClusterResource>(new ContainerServiceManagedClusterOperationSource(Client), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServiceTagsObject).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -507,6 +592,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_UpdateTags</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -522,7 +615,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServiceTagsObject, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ContainerServiceManagedClusterResource>(new ContainerServiceManagedClusterOperationSource(Client), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServiceTagsObject).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation<ContainerServiceManagedClusterResource>(new ContainerServiceManagedClusterOperationSource(Client), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServiceTagsObject).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -544,6 +637,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_GetAccessProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -580,6 +677,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_GetAccessProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleName"> The name of the role for managed cluster accessProfile resource. </param>
@@ -615,6 +716,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListClusterAdminCredentials</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
@@ -646,6 +755,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListClusterAdminCredentials</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
@@ -676,6 +793,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListClusterUserCredentials</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -709,6 +834,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListClusterUserCredentials</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
@@ -741,6 +874,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListClusterMonitoringUserCredentials</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
@@ -771,6 +912,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListClusterMonitoringUserCredentials</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -803,6 +952,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ResetServicePrincipalProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -818,7 +975,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceManagedClusterManagedClustersRestClient.ResetServicePrincipalProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterServicePrincipalProfile, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetServicePrincipalProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterServicePrincipalProfile).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetServicePrincipalProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterServicePrincipalProfile).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -841,6 +998,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ResetServicePrincipalProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -856,7 +1021,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.ResetServicePrincipalProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterServicePrincipalProfile, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetServicePrincipalProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterServicePrincipalProfile).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetServicePrincipalProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterServicePrincipalProfile).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -869,7 +1034,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Reset the AAD Profile of a managed cluster.
+        /// **WARNING**: This API will be deprecated. Please see [AKS-managed Azure Active Directory integration](https://aka.ms/aks-managed-aad) to update your cluster with AKS-managed Azure AD.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -877,7 +1042,15 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedClusters_ResetAADProfile</description>
+        /// <description>ManagedClusters_ResetAadProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -894,7 +1067,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceManagedClusterManagedClustersRestClient.ResetAadProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetAadProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetAadProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -907,7 +1080,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Reset the AAD Profile of a managed cluster.
+        /// **WARNING**: This API will be deprecated. Please see [AKS-managed Azure Active Directory integration](https://aka.ms/aks-managed-aad) to update your cluster with AKS-managed Azure AD.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -915,7 +1088,15 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedClusters_ResetAADProfile</description>
+        /// <description>ManagedClusters_ResetAadProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -932,7 +1113,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.ResetAadProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetAadProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetAadProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -945,7 +1126,91 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Aborts the currently running operation on the managed cluster. The Managed Cluster will be moved to a Canceling state and eventually to a Canceled state when cancellation finishes. If the operation completes before cancellation can take place, an error is returned.
+        /// See [Certificate rotation](https://docs.microsoft.com/azure/aks/certificate-rotation) for more details about rotating managed cluster certificates.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/rotateClusterCertificates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_RotateClusterCertificates</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> RotateClusterCertificatesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.RotateClusterCertificates");
+            scope.Start();
+            try
+            {
+                var response = await _containerServiceManagedClusterManagedClustersRestClient.RotateClusterCertificatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRotateClusterCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// See [Certificate rotation](https://docs.microsoft.com/azure/aks/certificate-rotation) for more details about rotating managed cluster certificates.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/rotateClusterCertificates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_RotateClusterCertificates</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation RotateClusterCertificates(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.RotateClusterCertificates");
+            scope.Start();
+            try
+            {
+                var response = _containerServiceManagedClusterManagedClustersRestClient.RotateClusterCertificates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRotateClusterCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Aborts the currently running operation on the managed cluster. The Managed Cluster will be moved to a Canceling state and eventually to a Canceled state when cancellation finishes. If the operation completes before cancellation can take place, a 409 error code is returned.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -954,6 +1219,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_AbortLatestOperation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -979,7 +1252,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Aborts the currently running operation on the managed cluster. The Managed Cluster will be moved to a Canceling state and eventually to a Canceled state when cancellation finishes. If the operation completes before cancellation can take place, an error is returned.
+        /// Aborts the currently running operation on the managed cluster. The Managed Cluster will be moved to a Canceling state and eventually to a Canceled state when cancellation finishes. If the operation completes before cancellation can take place, a 409 error code is returned.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -988,6 +1261,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_AbortLatestOperation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1013,74 +1294,6 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// See [Certificate rotation](https://docs.microsoft.com/azure/aks/certificate-rotation) for more details about rotating managed cluster certificates.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/rotateClusterCertificates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_RotateClusterCertificates</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RotateClusterCertificatesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.RotateClusterCertificates");
-            scope.Start();
-            try
-            {
-                var response = await _containerServiceManagedClusterManagedClustersRestClient.RotateClusterCertificatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRotateClusterCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// See [Certificate rotation](https://docs.microsoft.com/azure/aks/certificate-rotation) for more details about rotating managed cluster certificates.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/rotateClusterCertificates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_RotateClusterCertificates</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation RotateClusterCertificates(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.RotateClusterCertificates");
-            scope.Start();
-            try
-            {
-                var response = _containerServiceManagedClusterManagedClustersRestClient.RotateClusterCertificates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRotateClusterCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Rotates the service account signing keys of a managed cluster.
         /// <list type="bullet">
         /// <item>
@@ -1090,6 +1303,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_RotateServiceAccountSigningKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1125,6 +1346,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_RotateServiceAccountSigningKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1159,6 +1388,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1170,7 +1407,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceManagedClusterManagedClustersRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1193,6 +1430,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1204,7 +1449,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1227,6 +1472,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1238,7 +1491,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceManagedClusterManagedClustersRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1261,6 +1514,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1272,7 +1533,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1295,6 +1556,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_RunCommand</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1310,7 +1579,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceManagedClusterManagedClustersRestClient.RunCommandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ManagedClusterRunCommandResult>(new ManagedClusterRunCommandResultOperationSource(), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation<ManagedClusterRunCommandResult>(new ManagedClusterRunCommandResultOperationSource(), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1333,6 +1602,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_RunCommand</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1348,7 +1625,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.RunCommand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ManagedClusterRunCommandResult>(new ManagedClusterRunCommandResultOperationSource(), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                var operation = new ContainerServiceArmOperation<ManagedClusterRunCommandResult>(new ManagedClusterRunCommandResultOperationSource(), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1370,6 +1647,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_GetCommandResult</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1406,6 +1687,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_GetCommandResult</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="commandId"> Id of the command. </param>
@@ -1441,6 +1726,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListOutboundNetworkDependenciesEndpoints</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1449,7 +1742,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceManagedClusterManagedClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceManagedClusterManagedClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint, _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint(e), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1463,6 +1756,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListOutboundNetworkDependenciesEndpoints</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1471,7 +1772,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceManagedClusterManagedClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceManagedClusterManagedClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint, _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint(e), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1484,6 +1785,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AgentPools_GetAvailableAgentPoolVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1515,6 +1820,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>AgentPools_GetAvailableAgentPoolVersions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1545,6 +1854,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1552,7 +1865,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual AsyncPageable<ContainerServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1566,6 +1879,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1573,7 +1890,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual Pageable<ContainerServicePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1585,7 +1902,11 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResolvePrivateLinkServiceId_POST</description>
+        /// <description>ResolvePrivateLinkServiceId_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1619,7 +1940,11 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResolvePrivateLinkServiceId_POST</description>
+        /// <description>ResolvePrivateLinkServiceId_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1654,6 +1979,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1709,6 +2042,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1763,6 +2104,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1812,6 +2161,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1860,6 +2217,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1912,6 +2277,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -19,15 +18,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FilterInfo>> filters = default;
+            IReadOnlyList<FilterInfo> filters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Filters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<FilterInfo> array = new List<FilterInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -37,7 +32,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new FilterConjunctionGroupInfo(Optional.ToList(filters));
+            return new FilterConjunctionGroupInfo(filters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static FilterConjunctionGroupInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFilterConjunctionGroupInfo(document.RootElement);
         }
     }
 }

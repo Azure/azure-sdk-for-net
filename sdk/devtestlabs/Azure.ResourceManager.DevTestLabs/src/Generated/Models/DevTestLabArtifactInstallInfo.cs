@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties of an artifact. </summary>
     public partial class DevTestLabArtifactInstallInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactInstallInfo"/>. </summary>
         public DevTestLabArtifactInstallInfo()
         {
@@ -28,7 +59,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="deploymentStatusMessage"> The status message from the deployment. </param>
         /// <param name="vmExtensionStatusMessage"> The status message from the virtual machine extension. </param>
         /// <param name="installOn"> The time that the artifact starts to install on the virtual machine. </param>
-        internal DevTestLabArtifactInstallInfo(string artifactId, string artifactTitle, IList<DevTestLabArtifactParameter> parameters, string status, string deploymentStatusMessage, string vmExtensionStatusMessage, DateTimeOffset? installOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabArtifactInstallInfo(string artifactId, string artifactTitle, IList<DevTestLabArtifactParameter> parameters, string status, string deploymentStatusMessage, string vmExtensionStatusMessage, DateTimeOffset? installOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ArtifactId = artifactId;
             ArtifactTitle = artifactTitle;
@@ -37,6 +69,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             DeploymentStatusMessage = deploymentStatusMessage;
             VmExtensionStatusMessage = vmExtensionStatusMessage;
             InstallOn = installOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The artifact's identifier. </summary>

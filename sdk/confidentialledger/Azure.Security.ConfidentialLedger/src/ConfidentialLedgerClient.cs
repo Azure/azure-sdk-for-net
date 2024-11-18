@@ -64,7 +64,7 @@ namespace Azure.Security.ConfidentialLedger
             var actualOptions = ledgerOptions ?? new ConfidentialLedgerClientOptions();
             X509Certificate2 serviceCert = identityServiceCert ?? GetIdentityServerTlsCert(ledgerEndpoint, certificateClientOptions ?? new ConfidentialLedgerCertificateClientOptions(), ledgerOptions: ledgerOptions).Cert;
 
-            var transportOptions = GetIdentityServerTlsCertAndTrust(serviceCert);
+            var transportOptions = GetIdentityServerTlsCertAndTrust(serviceCert, ledgerOptions?.VerifyConnection ?? true);
             if (clientCertificate != null)
             {
                 transportOptions.ClientCertificates.Add(clientCertificate);
@@ -201,7 +201,7 @@ namespace Azure.Security.ConfidentialLedger
             return (GetCertFromPEM(eccPem), eccPem);
         }
 
-        private static HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(X509Certificate2 identityServiceCert = null)
+        private static HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(X509Certificate2 identityServiceCert = null, bool verifyConnection = true)
         {
             X509Chain certificateChain = new();
             // Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unnecessarily.
@@ -219,6 +219,11 @@ namespace Azure.Security.ConfidentialLedger
             // they are trusted by the ledger identity TLS certificate.
             bool CertValidationCheck(X509Certificate2 cert)
             {
+                if (!verifyConnection)
+                {
+                    return true;
+                }
+
                 // Validate the presented certificate chain, using the ChainPolicy defined above.
                 // Note: this check will allow certificates signed by standard CAs as well as those signed by the ledger identity TLS certificate.
                 bool isChainValid = certificateChain.Build(cert);

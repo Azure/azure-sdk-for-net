@@ -5,33 +5,56 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class AzureArcKubernetesNetworkFunctionApplication : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownAzureArcKubernetesNetworkFunctionApplication))]
+    public partial class AzureArcKubernetesNetworkFunctionApplication : IUtf8JsonSerializable, IJsonModel<AzureArcKubernetesNetworkFunctionApplication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureArcKubernetesNetworkFunctionApplication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AzureArcKubernetesNetworkFunctionApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("artifactType"u8);
-            writer.WriteStringValue(ArtifactType.ToString());
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(DependsOnProfile))
-            {
-                writer.WritePropertyName("dependsOnProfile"u8);
-                writer.WriteObjectValue(DependsOnProfile);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static AzureArcKubernetesNetworkFunctionApplication DeserializeAzureArcKubernetesNetworkFunctionApplication(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionApplication)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("artifactType"u8);
+            writer.WriteStringValue(ArtifactType.ToString());
+        }
+
+        AzureArcKubernetesNetworkFunctionApplication IJsonModel<AzureArcKubernetesNetworkFunctionApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionApplication)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureArcKubernetesNetworkFunctionApplication(document.RootElement, options);
+        }
+
+        internal static AzureArcKubernetesNetworkFunctionApplication DeserializeAzureArcKubernetesNetworkFunctionApplication(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,35 +63,41 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HelmPackage": return AzureArcKubernetesHelmApplication.DeserializeAzureArcKubernetesHelmApplication(element);
+                    case "HelmPackage": return AzureArcKubernetesHelmApplication.DeserializeAzureArcKubernetesHelmApplication(element, options);
                 }
             }
-            AzureArcKubernetesArtifactType artifactType = default;
-            Optional<string> name = default;
-            Optional<DependsOnProfile> dependsOnProfile = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("artifactType"u8))
-                {
-                    artifactType = new AzureArcKubernetesArtifactType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dependsOnProfile"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value);
-                    continue;
-                }
-            }
-            return new AzureArcKubernetesNetworkFunctionApplication(name.Value, dependsOnProfile.Value, artifactType);
+            return UnknownAzureArcKubernetesNetworkFunctionApplication.DeserializeUnknownAzureArcKubernetesNetworkFunctionApplication(element, options);
         }
+
+        BinaryData IPersistableModel<AzureArcKubernetesNetworkFunctionApplication>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionApplication)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureArcKubernetesNetworkFunctionApplication IPersistableModel<AzureArcKubernetesNetworkFunctionApplication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureArcKubernetesNetworkFunctionApplication(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionApplication)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureArcKubernetesNetworkFunctionApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

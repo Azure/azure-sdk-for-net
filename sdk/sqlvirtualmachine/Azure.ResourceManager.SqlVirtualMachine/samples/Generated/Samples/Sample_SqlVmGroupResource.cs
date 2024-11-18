@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.SqlVirtualMachine;
 using Azure.ResourceManager.SqlVirtualMachine.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Samples
 {
     public partial class Sample_SqlVmGroupResource
     {
-        // Gets a SQL virtual machine group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsASQLVirtualMachineGroup()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/GetSqlVirtualMachineGroup.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes a SQL virtual machine group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesASQLVirtualMachineGroup()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/DeleteSqlVirtualMachineGroup.json
@@ -74,12 +70,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             // invoke the operation
             await sqlVmGroup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Updates a SQL virtual machine group tags.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesASQLVirtualMachineGroupTags()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/UpdateSqlVirtualMachineGroup.json
@@ -116,9 +111,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets all SQL virtual machine groups in a subscription.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSqlVmGroups_GetsAllSQLVirtualMachineGroupsInASubscription()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/ListSubscriptionSqlVirtualMachineGroup.json
@@ -145,12 +139,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets the list of sql virtual machines in a SQL virtual machine group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSqlVmsBySqlVmGroup_GetsTheListOfSqlVirtualMachinesInASQLVirtualMachineGroup()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/ListBySqlVirtualMachineGroupSqlVirtualMachine.json
@@ -179,7 +172,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -6,16 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class MsSqlServerProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class MsSqlServerProviderInstanceProperties : IUtf8JsonSerializable, IJsonModel<MsSqlServerProviderInstanceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MsSqlServerProviderInstanceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MsSqlServerProviderInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MsSqlServerProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MsSqlServerProviderInstanceProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
@@ -56,26 +75,39 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
             }
-            writer.WritePropertyName("providerType"u8);
-            writer.WriteStringValue(ProviderType);
-            writer.WriteEndObject();
         }
 
-        internal static MsSqlServerProviderInstanceProperties DeserializeMsSqlServerProviderInstanceProperties(JsonElement element)
+        MsSqlServerProviderInstanceProperties IJsonModel<MsSqlServerProviderInstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MsSqlServerProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MsSqlServerProviderInstanceProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMsSqlServerProviderInstanceProperties(document.RootElement, options);
+        }
+
+        internal static MsSqlServerProviderInstanceProperties DeserializeMsSqlServerProviderInstanceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> hostname = default;
-            Optional<string> dbPort = default;
-            Optional<string> dbUsername = default;
-            Optional<string> dbPassword = default;
-            Optional<Uri> dbPasswordUri = default;
-            Optional<string> sapSid = default;
-            Optional<SapSslPreference> sslPreference = default;
-            Optional<Uri> sslCertificateUri = default;
+            string hostname = default;
+            string dbPort = default;
+            string dbUsername = default;
+            string dbPassword = default;
+            Uri dbPasswordUri = default;
+            string sapSid = default;
+            SapSslPreference? sslPreference = default;
+            Uri sslCertificateUri = default;
             string providerType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostname"u8))
@@ -135,8 +167,54 @@ namespace Azure.ResourceManager.Workloads.Models
                     providerType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MsSqlServerProviderInstanceProperties(providerType, hostname.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MsSqlServerProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                hostname,
+                dbPort,
+                dbUsername,
+                dbPassword,
+                dbPasswordUri,
+                sapSid,
+                sslPreference,
+                sslCertificateUri);
         }
+
+        BinaryData IPersistableModel<MsSqlServerProviderInstanceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MsSqlServerProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MsSqlServerProviderInstanceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MsSqlServerProviderInstanceProperties IPersistableModel<MsSqlServerProviderInstanceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MsSqlServerProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMsSqlServerProviderInstanceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MsSqlServerProviderInstanceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MsSqlServerProviderInstanceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

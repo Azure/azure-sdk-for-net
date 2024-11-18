@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,54 +14,32 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SetVariableActivity : IUtf8JsonSerializable
+    public partial class SetVariableActivity : IUtf8JsonSerializable, IJsonModel<SetVariableActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SetVariableActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SetVariableActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SetVariableActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SetVariableActivity)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
-            }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (Optional.IsDefined(OnInactiveMarkAs))
-            {
-                writer.WritePropertyName("onInactiveMarkAs"u8);
-                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(DependsOn))
-            {
-                writer.WritePropertyName("dependsOn"u8);
-                writer.WriteStartArray();
-                foreach (var item in DependsOn)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(UserProperties))
-            {
-                writer.WritePropertyName("userProperties"u8);
-                writer.WriteStartArray();
-                foreach (var item in UserProperties)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(Policy, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
@@ -92,26 +71,39 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static SetVariableActivity DeserializeSetVariableActivity(JsonElement element)
+        SetVariableActivity IJsonModel<SetVariableActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SetVariableActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SetVariableActivity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSetVariableActivity(document.RootElement, options);
+        }
+
+        internal static SetVariableActivity DeserializeSetVariableActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<SecureInputOutputPolicy> policy = default;
+            SecureInputOutputPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
-            Optional<string> variableName = default;
-            Optional<DataFactoryElement<BinaryData>> value = default;
-            Optional<bool> setSystemVariable = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
+            string variableName = default;
+            DataFactoryElement<BinaryData> value = default;
+            bool? setSystemVariable = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = SecureInputOutputPolicy.DeserializeSecureInputOutputPolicy(property.Value);
+                    policy = SecureInputOutputPolicy.DeserializeSecureInputOutputPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -167,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -181,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -224,7 +216,50 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SetVariableActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, policy.Value, variableName.Value, value.Value, Optional.ToNullable(setSystemVariable));
+            return new SetVariableActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                policy,
+                variableName,
+                value,
+                setSystemVariable);
         }
+
+        BinaryData IPersistableModel<SetVariableActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SetVariableActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SetVariableActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SetVariableActivity IPersistableModel<SetVariableActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SetVariableActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSetVariableActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SetVariableActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SetVariableActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

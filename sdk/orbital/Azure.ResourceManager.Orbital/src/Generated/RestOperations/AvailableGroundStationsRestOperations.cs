@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Orbital.Models;
@@ -35,6 +34,18 @@ namespace Azure.ResourceManager.Orbital
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByCapabilityRequestUri(string subscriptionId, GroundStationCapability capability)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/availableGroundStations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("capability", capability.ToString(), true);
+            return uri;
         }
 
         internal HttpMessage CreateListByCapabilityRequest(string subscriptionId, GroundStationCapability capability)
@@ -105,6 +116,18 @@ namespace Azure.ResourceManager.Orbital
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string groundStationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/availableGroundStations/", false);
+            uri.AppendPath(groundStationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string groundStationName)
@@ -181,6 +204,14 @@ namespace Azure.ResourceManager.Orbital
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByCapabilityNextPageRequestUri(string nextLink, string subscriptionId, GroundStationCapability capability)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByCapabilityNextPageRequest(string nextLink, string subscriptionId, GroundStationCapability capability)

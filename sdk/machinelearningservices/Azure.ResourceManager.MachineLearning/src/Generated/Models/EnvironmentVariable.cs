@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The EnvironmentVariable. </summary>
+    /// <summary> Environment Variables for the container. </summary>
     public partial class EnvironmentVariable
     {
         /// <summary> Initializes a new instance of <see cref="EnvironmentVariable"/>. </summary>
@@ -32,8 +31,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Type of the Environment Variable. Possible values are: local - For local variable. </summary>
+        [WirePath("type")]
         public EnvironmentVariableType? VariableType { get; set; }
         /// <summary> Value of the Environment variable. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary>
         /// Additional Properties
@@ -65,6 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

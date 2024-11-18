@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -18,30 +17,30 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            Optional<DocumentFilterConjunctionGroupInfoTelemetryType> telemetryType = default;
-            Optional<FilterConjunctionGroupInfo> filters = default;
+            TelemetryType telemetryType = default;
+            FilterConjunctionGroupInfo filters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("TelemetryType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    telemetryType = new DocumentFilterConjunctionGroupInfoTelemetryType(property.Value.GetString());
+                    telemetryType = new TelemetryType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("Filters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     filters = FilterConjunctionGroupInfo.DeserializeFilterConjunctionGroupInfo(property.Value);
                     continue;
                 }
             }
-            return new DocumentFilterConjunctionGroupInfo(Optional.ToNullable(telemetryType), filters.Value);
+            return new DocumentFilterConjunctionGroupInfo(telemetryType, filters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentFilterConjunctionGroupInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentFilterConjunctionGroupInfo(document.RootElement);
         }
     }
 }

@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataMigration;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataMigration.Samples
 {
     public partial class Sample_SqlMigrationServiceCollection
     {
-        // Get Migration Service.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMigrationService()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/GetMigrationService.json
@@ -52,9 +49,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Migration Service.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetMigrationService()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/GetMigrationService.json
@@ -82,9 +78,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Migration Service.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetMigrationService()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/GetMigrationService.json
@@ -112,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -124,9 +119,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             }
         }
 
-        // Create or Update SQL Migration Service with maximum parameters.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateSQLMigrationServiceWithMaximumParameters()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/CreateOrUpdateMigrationServiceMAX.json
@@ -160,9 +154,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or Update SQL Migration Service with minimum parameters.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateSQLMigrationServiceWithMinimumParameters()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/CreateOrUpdateMigrationServiceMIN.json
@@ -196,9 +189,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Migration Services in the Resource Group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetMigrationServicesInTheResourceGroup()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/ListByResourceGroupMigrationService.json
@@ -229,7 +221,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

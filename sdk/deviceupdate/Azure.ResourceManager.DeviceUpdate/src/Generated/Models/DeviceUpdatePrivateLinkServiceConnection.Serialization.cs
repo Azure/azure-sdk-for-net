@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class DeviceUpdatePrivateLinkServiceConnection : IUtf8JsonSerializable
+    public partial class DeviceUpdatePrivateLinkServiceConnection : IUtf8JsonSerializable, IJsonModel<DeviceUpdatePrivateLinkServiceConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdatePrivateLinkServiceConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DeviceUpdatePrivateLinkServiceConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateLinkServiceConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceConnection)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -36,18 +54,48 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DeviceUpdatePrivateLinkServiceConnection DeserializeDeviceUpdatePrivateLinkServiceConnection(JsonElement element)
+        DeviceUpdatePrivateLinkServiceConnection IJsonModel<DeviceUpdatePrivateLinkServiceConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateLinkServiceConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceConnection)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceUpdatePrivateLinkServiceConnection(document.RootElement, options);
+        }
+
+        internal static DeviceUpdatePrivateLinkServiceConnection DeserializeDeviceUpdatePrivateLinkServiceConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IList<string>> groupIds = default;
-            Optional<string> requestMessage = default;
+            string name = default;
+            IList<string> groupIds = default;
+            string requestMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -74,8 +122,44 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     requestMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeviceUpdatePrivateLinkServiceConnection(name.Value, Optional.ToList(groupIds), requestMessage.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DeviceUpdatePrivateLinkServiceConnection(name, groupIds ?? new ChangeTrackingList<string>(), requestMessage, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeviceUpdatePrivateLinkServiceConnection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateLinkServiceConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceConnection)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DeviceUpdatePrivateLinkServiceConnection IPersistableModel<DeviceUpdatePrivateLinkServiceConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateLinkServiceConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeviceUpdatePrivateLinkServiceConnection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceConnection)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeviceUpdatePrivateLinkServiceConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

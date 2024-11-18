@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the service instance. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +120,14 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of workspace resource. </param>
@@ -129,6 +150,14 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

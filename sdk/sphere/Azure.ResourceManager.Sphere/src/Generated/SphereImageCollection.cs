@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sphere
 {
@@ -64,10 +62,18 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Images_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -105,10 +111,18 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Images_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -146,9 +160,17 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
@@ -183,9 +205,17 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
@@ -220,6 +250,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Images_ListByCatalog</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter the result list using the given expression. </param>
@@ -245,6 +283,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Images_ListByCatalog</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -272,9 +318,17 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
@@ -307,9 +361,17 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
@@ -342,9 +404,17 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
@@ -379,9 +449,17 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>

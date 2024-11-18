@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ForecastingModel SGD { get; } = new ForecastingModel(SGDValue);
         /// <summary>
         /// Random forest is a supervised learning algorithm.
-        /// The "forest" it builds, is an ensemble of decision trees, usually trained with the bagging method.
+        /// The "forest" it builds, is an ensemble of decision trees, usually trained with the “bagging” method.
         /// The general idea of the bagging method is that a combination of learning models increases the overall result.
         /// </summary>
         public static ForecastingModel RandomForest { get; } = new ForecastingModel(RandomForestValue);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ForecastingModel left, ForecastingModel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ForecastingModel"/> values are not the same. </summary>
         public static bool operator !=(ForecastingModel left, ForecastingModel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ForecastingModel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ForecastingModel"/>. </summary>
         public static implicit operator ForecastingModel(string value) => new ForecastingModel(value);
 
         /// <inheritdoc />
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

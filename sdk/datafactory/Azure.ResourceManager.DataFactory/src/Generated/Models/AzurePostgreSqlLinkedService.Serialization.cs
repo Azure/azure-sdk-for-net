@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,62 +14,89 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzurePostgreSqlLinkedService : IUtf8JsonSerializable
+    public partial class AzurePostgreSqlLinkedService : IUtf8JsonSerializable, IJsonModel<AzurePostgreSqlLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzurePostgreSqlLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AzurePostgreSqlLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzurePostgreSqlLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                throw new FormatException($"The model {nameof(AzurePostgreSqlLinkedService)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteStartObject();
-                foreach (var item in Parameters)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Annotations))
-            {
-                writer.WritePropertyName("annotations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Annotations)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndArray();
-            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 JsonSerializer.Serialize(writer, ConnectionString);
+            }
+            if (Optional.IsDefined(Server))
+            {
+                writer.WritePropertyName("server"u8);
+                JsonSerializer.Serialize(writer, Server);
+            }
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                JsonSerializer.Serialize(writer, Port);
+            }
+            if (Optional.IsDefined(Username))
+            {
+                writer.WritePropertyName("username"u8);
+                JsonSerializer.Serialize(writer, Username);
+            }
+            if (Optional.IsDefined(Database))
+            {
+                writer.WritePropertyName("database"u8);
+                JsonSerializer.Serialize(writer, Database);
+            }
+            if (Optional.IsDefined(SslMode))
+            {
+                writer.WritePropertyName("sslMode"u8);
+                JsonSerializer.Serialize(writer, SslMode);
+            }
+            if (Optional.IsDefined(Timeout))
+            {
+                writer.WritePropertyName("timeout"u8);
+                JsonSerializer.Serialize(writer, Timeout);
+            }
+            if (Optional.IsDefined(CommandTimeout))
+            {
+                writer.WritePropertyName("commandTimeout"u8);
+                JsonSerializer.Serialize(writer, CommandTimeout);
+            }
+            if (Optional.IsDefined(TrustServerCertificate))
+            {
+                writer.WritePropertyName("trustServerCertificate"u8);
+                JsonSerializer.Serialize(writer, TrustServerCertificate);
+            }
+            if (Optional.IsDefined(ReadBufferSize))
+            {
+                writer.WritePropertyName("readBufferSize"u8);
+                JsonSerializer.Serialize(writer, ReadBufferSize);
+            }
+            if (Optional.IsDefined(Timezone))
+            {
+                writer.WritePropertyName("timezone"u8);
+                JsonSerializer.Serialize(writer, Timezone);
+            }
+            if (Optional.IsDefined(Encoding))
+            {
+                writer.WritePropertyName("encoding"u8);
+                JsonSerializer.Serialize(writer, Encoding);
             }
             if (Optional.IsDefined(Password))
             {
@@ -93,23 +121,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static AzurePostgreSqlLinkedService DeserializeAzurePostgreSqlLinkedService(JsonElement element)
+        AzurePostgreSqlLinkedService IJsonModel<AzurePostgreSqlLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzurePostgreSqlLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzurePostgreSqlLinkedService)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzurePostgreSqlLinkedService(document.RootElement, options);
+        }
+
+        internal static AzurePostgreSqlLinkedService DeserializeAzurePostgreSqlLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DataFactoryElement<string>> connectionString = default;
-            Optional<DataFactoryKeyVaultSecretReference> password = default;
-            Optional<string> encryptedCredential = default;
+            string version = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
+            DataFactoryElement<string> connectionString = default;
+            DataFactoryElement<string> server = default;
+            DataFactoryElement<int> port = default;
+            DataFactoryElement<string> username = default;
+            DataFactoryElement<string> database = default;
+            DataFactoryElement<int> sslMode = default;
+            DataFactoryElement<int> timeout = default;
+            DataFactoryElement<int> commandTimeout = default;
+            DataFactoryElement<bool> trustServerCertificate = default;
+            DataFactoryElement<int> readBufferSize = default;
+            DataFactoryElement<string> timezone = default;
+            DataFactoryElement<string> encoding = default;
+            DataFactoryKeyVaultSecret password = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,13 +172,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("connectVia"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -142,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -186,13 +244,112 @@ namespace Azure.ResourceManager.DataFactory.Models
                             connectionString = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("server"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("port"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            port = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("username"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("database"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("sslMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sslMode = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("timeout"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            timeout = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("commandTimeout"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            commandTimeout = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("trustServerCertificate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            trustServerCertificate = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("readBufferSize"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            readBufferSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("timezone"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            timezone = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("encoding"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encoding = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("password"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactoryKeyVaultSecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
@@ -206,7 +363,59 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzurePostgreSqlLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, password, encryptedCredential.Value);
+            return new AzurePostgreSqlLinkedService(
+                type,
+                version,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                connectionString,
+                server,
+                port,
+                username,
+                database,
+                sslMode,
+                timeout,
+                commandTimeout,
+                trustServerCertificate,
+                readBufferSize,
+                timezone,
+                encoding,
+                password,
+                encryptedCredential);
         }
+
+        BinaryData IPersistableModel<AzurePostgreSqlLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzurePostgreSqlLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzurePostgreSqlLinkedService)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzurePostgreSqlLinkedService IPersistableModel<AzurePostgreSqlLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzurePostgreSqlLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzurePostgreSqlLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzurePostgreSqlLinkedService)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzurePostgreSqlLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

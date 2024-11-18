@@ -5,7 +5,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 tag: package-composite-v5
-require: https://github.com/Azure/azure-rest-api-specs/blob/fb1e2c65b2dd52ebb18bb835a3d0f0289875858e/specification/sql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/f45a76fc39f033947ed12faf4b6416e1e19724cd/specification/sql/resource-manager/readme.md
+#package-composite-v5
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -24,6 +25,15 @@ modelerfour:
 model-namespace: false
 public-clients: false
 head-as-boolean: false
+use-model-reader-writer: true
+enable-bicep-serialization: true
+
+#mgmt-debug: 
+#  show-serialized-names: true
+
+# this is temporary, to be removed when we find the owner of this feature
+operation-groups-to-omit:
+- JobPrivateEndpoints
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -341,12 +351,16 @@ rename-mapping:
   ManagedInstance.properties.dnsZonePartner: ManagedDnsZonePartner
   ManagedInstanceUpdate.properties.dnsZonePartner: ManagedDnsZonePartner
   FailoverGroupUpdate.properties.databases: FailoverDatabases
-
-# mgmt-debug: 
-#  show-serialized-names: true
+  Server.properties.minimalTlsVersion: minTlsVersion
+  ServerUpdate.properties.minimalTlsVersion: minTlsVersion
+  MinimalTlsVersion: SqlMinimalTlsVersion
+  BackupStorageAccessTier: SqlBackupStorageAccessTier
+  Phase: DatabaseOperationPhase
+  PhaseDetails: DatabaseOperationPhaseDetails
 
 prompted-enum-values:
   - Default
+
 directive:
     - remove-operation: ManagedDatabaseMoveOperations_ListByLocation
     - remove-operation: ManagedDatabaseMoveOperations_Get

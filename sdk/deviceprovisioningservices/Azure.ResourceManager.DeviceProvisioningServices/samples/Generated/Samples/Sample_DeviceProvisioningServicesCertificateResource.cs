@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DeviceProvisioningServices;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
 {
     public partial class Sample_DeviceProvisioningServicesCertificateResource
     {
-        // DPSGetCertificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_DPSGetCertificate()
         {
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSGetCertificate.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DPSCreateOrUpdateCertificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_DPSCreateOrUpdateCertificate()
         {
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSCertificateCreateOrUpdate.json
@@ -90,9 +86,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DPSDeleteCertificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DPSDeleteCertificate()
         {
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSDeleteCertificate.json
@@ -116,12 +111,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             DeviceProvisioningServicesCertificateResourceDeleteOptions options = new DeviceProvisioningServicesCertificateResourceDeleteOptions(ifMatch: "AAAAAAAADGk=") { };
             await deviceProvisioningServicesCertificate.DeleteAsync(WaitUntil.Completed, options);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // DPSGenerateVerificationCode
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateVerificationCode_DPSGenerateVerificationCode()
         {
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSGenerateVerificationCode.json
@@ -148,9 +142,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // DPSVerifyCertificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task VerifyCertificate_DPSVerifyCertificate()
         {
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSVerifyCertificate.json

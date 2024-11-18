@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.OperationalInsights;
 using Azure.ResourceManager.OperationalInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OperationalInsights.Samples
 {
     public partial class Sample_OperationalInsightsSavedSearchCollection
     {
-        // SavedSearchCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SavedSearchCreateOrUpdate()
         {
             // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/WorkspacesSavedSearchesCreateOrUpdate.json
@@ -48,7 +45,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             {
                 FunctionAlias = "heartbeat_func",
                 FunctionParameters = "a:int=1",
-                Version = 2,
+                Version = 2L,
                 Tags =
 {
 new OperationalInsightsTag("Group","Computer")
@@ -64,9 +61,8 @@ new OperationalInsightsTag("Group","Computer")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SavedSearchesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SavedSearchesGet()
         {
             // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/WorkspacesSavedSearchesGet.json
@@ -99,9 +95,8 @@ new OperationalInsightsTag("Group","Computer")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SavedSearchesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_SavedSearchesGet()
         {
             // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/WorkspacesSavedSearchesGet.json
@@ -130,9 +125,8 @@ new OperationalInsightsTag("Group","Computer")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SavedSearchesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SavedSearchesGet()
         {
             // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/WorkspacesSavedSearchesGet.json
@@ -161,7 +155,7 @@ new OperationalInsightsTag("Group","Computer")
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -173,9 +167,8 @@ new OperationalInsightsTag("Group","Computer")
             }
         }
 
-        // SavedSearchesList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SavedSearchesList()
         {
             // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/SavedSearchesListByWorkspace.json
@@ -207,7 +200,7 @@ new OperationalInsightsTag("Group","Computer")
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

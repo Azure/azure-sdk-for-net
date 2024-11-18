@@ -8,8 +8,14 @@ azure-arm: true
 csharp: true
 library-name: ServiceFabricManagedClusters
 namespace: Azure.ResourceManager.ServiceFabricManagedClusters
-require:  https://github.com/Azure/azure-rest-api-specs/blob/da459cd725e11aa72e7fbc3b65d523b6e2b6453b/specification/servicefabricmanagedclusters/resource-manager/readme.md
-# tag: package-2023-03-preview
+require:  https://github.com/Azure/azure-rest-api-specs/blob/e79d9ef3e065f2dcb6bd1db51e29c62a99dff5cb/specification/servicefabricmanagedclusters/resource-manager/readme.md
+
+input-file:
+- https://github.com/Azure/azure-rest-api-specs/blob/e79d9ef3e065f2dcb6bd1db51e29c62a99dff5cb/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/managedcluster.json
+- https://github.com/Azure/azure-rest-api-specs/blob/e79d9ef3e065f2dcb6bd1db51e29c62a99dff5cb/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/nodetype.json
+- https://github.com/Azure/azure-rest-api-specs/blob/e79d9ef3e065f2dcb6bd1db51e29c62a99dff5cb/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/managedapplication.json
+
+tag: package-2024-06-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -18,6 +24,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -94,6 +101,8 @@ rename-mapping:
   ManagedCluster.properties.ipv4Address: -|ip-address
   ManagedCluster.properties.ipv6Address: -|ip-address
   ManagedCluster.properties.zonalResiliency: HasZoneResiliency
+  ManagedCluster.properties.enableHttpGatewayExclusiveAuthMode: IsHttpGatewayExclusiveAuthModeEnabled
+  
   Subnet: ManagedClusterSubnet
   Subnet.enableIpv6: IsIPv6Enabled
   Subnet.networkSecurityGroupId: -|arm-id
@@ -106,7 +115,7 @@ rename-mapping:
   ClusterUpgradeMode: ManagedClusterUpgradeMode
   SettingsSectionDescription: ClusterFabricSettingsSection
   SettingsParameterDescription: ClusterFabricSettingsParameterDescription
-  IPTag: ManagedClusterIPTag
+  IpTag: ManagedClusterIPTag
   LoadBalancingRule: ManagedClusterLoadBalancingRule
   NetworkSecurityRule: ServiceFabricManagedNetworkSecurityRule
   Direction: ServiceFabricManagedNetworkSecurityRuleDirection
@@ -120,6 +129,8 @@ rename-mapping:
   NodeType.properties.enableEncryptionAtHost: IsEncryptionAtHostEnabled
   NodeType.properties.enableOverProvisioning: IsOverProvisioningEnabled
   NodeType.properties.multiplePlacementGroups: HasMultiplePlacementGroups
+  NodeType.properties.enableNodePublicIPv6: IsNodePublicIPv6Enabled
+  VmApplication : ServiceFabricManagedVmApplication
   VmssDataDisk: NodeTypeVmssDataDisk
   VmssDataDisk.diskSizeGB: DiskSizeInGB
   VmssExtension: NodeTypeVmssExtension
@@ -166,6 +177,20 @@ rename-mapping:
   ResourceAzStatus.resourceType: -|resource-type
   SecurityType: ServiceFabricManagedClusterSecurityType
   UpdateType: ServiceFabricManagedClusterUpdateType
+  ClusterHealthPolicy: ManagedClusterHealthPolicy
+  ClusterUpgradePolicy: ManagedClusterUpgradePolicy
+  ClusterUpgradeDeltaHealthPolicy: ManagedClusterUpgradeDeltaHealthPolicy
+  ClusterMonitoringPolicy: ManagedClusterMonitoringPolicy
+  PrivateIPAddressVersion: ServiceFabricManagedClusterPrivateIPAddressVersion
+  PublicIPAddressVersion: ServiceFabricManagedClusterPublicIPAddressVersion
+  IpConfiguration: ServiceFabricManagedClusterIPConfiguration
+  IpConfigurationPublicIPAddressConfiguration: ServiceFabricManagedClusterPublicIPAddressConfiguration
+  ManagedMaintenanceWindowStatus.lastWindowStatusUpdateAtUTC: LastWindowStatusUpdatedOn
+  ManagedMaintenanceWindowStatus.lastWindowStartTimeUTC: LastWindowStartOn
+  ManagedMaintenanceWindowStatus.lastWindowEndTimeUTC: LastWindowEndOn
+
+suppress-abstract-base-class:
+- ManagedServiceProperties
 
 directive:
   - remove-operation: OperationStatus_Get

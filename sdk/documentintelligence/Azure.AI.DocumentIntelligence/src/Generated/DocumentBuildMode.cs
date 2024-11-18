@@ -24,16 +24,19 @@ namespace Azure.AI.DocumentIntelligence
 
         private const string TemplateValue = "template";
         private const string NeuralValue = "neural";
+        private const string GenerativeValue = "generative";
 
         /// <summary> Target documents with similar visual templates. </summary>
         public static DocumentBuildMode Template { get; } = new DocumentBuildMode(TemplateValue);
         /// <summary> Support documents with diverse visual templates. </summary>
         public static DocumentBuildMode Neural { get; } = new DocumentBuildMode(NeuralValue);
+        /// <summary> Enable documents of all types using generative AI techniques. </summary>
+        public static DocumentBuildMode Generative { get; } = new DocumentBuildMode(GenerativeValue);
         /// <summary> Determines if two <see cref="DocumentBuildMode"/> values are the same. </summary>
         public static bool operator ==(DocumentBuildMode left, DocumentBuildMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentBuildMode"/> values are not the same. </summary>
         public static bool operator !=(DocumentBuildMode left, DocumentBuildMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DocumentBuildMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentBuildMode"/>. </summary>
         public static implicit operator DocumentBuildMode(string value) => new DocumentBuildMode(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

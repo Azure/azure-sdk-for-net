@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MonitorServerlessSparkCompute"/>. </summary>
         /// <param name="computeType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="computeIdentity">
         /// [Required] The identity scheme leveraged to by the spark jobs running on serverless Spark.
         /// Please note <see cref="MonitorComputeIdentityBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="instanceType"> [Required] The instance type running the Spark job. </param>
         /// <param name="runtimeVersion"> [Required] The Spark runtime version. </param>
-        internal MonitorServerlessSparkCompute(MonitorComputeType computeType, MonitorComputeIdentityBase computeIdentity, string instanceType, string runtimeVersion) : base(computeType)
+        internal MonitorServerlessSparkCompute(MonitorComputeType computeType, IDictionary<string, BinaryData> serializedAdditionalRawData, MonitorComputeIdentityBase computeIdentity, string instanceType, string runtimeVersion) : base(computeType, serializedAdditionalRawData)
         {
             ComputeIdentity = computeIdentity;
             InstanceType = instanceType;
@@ -51,15 +52,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ComputeType = computeType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MonitorServerlessSparkCompute"/> for deserialization. </summary>
+        internal MonitorServerlessSparkCompute()
+        {
+        }
+
         /// <summary>
         /// [Required] The identity scheme leveraged to by the spark jobs running on serverless Spark.
         /// Please note <see cref="MonitorComputeIdentityBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmlTokenComputeIdentity"/> and <see cref="ManagedComputeIdentity"/>.
         /// </summary>
+        [WirePath("computeIdentity")]
         public MonitorComputeIdentityBase ComputeIdentity { get; set; }
         /// <summary> [Required] The instance type running the Spark job. </summary>
+        [WirePath("instanceType")]
         public string InstanceType { get; set; }
         /// <summary> [Required] The Spark runtime version. </summary>
+        [WirePath("runtimeVersion")]
         public string RuntimeVersion { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch
             string offer,
             string publisher,
             string sku,
-            string version = default(string))
+            string version = default(string)) : this()
         {
             this.Offer = offer;
             this.Publisher = publisher;
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Batch
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{versionId}.
         /// </param>
         public ImageReference(
-            string virtualMachineImageId)
+            string virtualMachineImageId) : this()
         {
             this.VirtualMachineImageId = virtualMachineImageId;
         }

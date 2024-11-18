@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Purview;
 using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview.Mocking
@@ -23,6 +20,10 @@ namespace Azure.ResourceManager.Purview.Mocking
     {
         private ClientDiagnostics _purviewAccountAccountsClientDiagnostics;
         private AccountsRestOperations _purviewAccountAccountsRestClient;
+        private ClientDiagnostics _featuresClientDiagnostics;
+        private FeaturesRestOperations _featuresRestClient;
+        private ClientDiagnostics _usagesClientDiagnostics;
+        private UsagesRestOperations _usagesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockablePurviewSubscriptionResource"/> class for mocking. </summary>
         protected MockablePurviewSubscriptionResource()
@@ -38,6 +39,10 @@ namespace Azure.ResourceManager.Purview.Mocking
 
         private ClientDiagnostics PurviewAccountAccountsClientDiagnostics => _purviewAccountAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview", PurviewAccountResource.ResourceType.Namespace, Diagnostics);
         private AccountsRestOperations PurviewAccountAccountsRestClient => _purviewAccountAccountsRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PurviewAccountResource.ResourceType));
+        private ClientDiagnostics FeaturesClientDiagnostics => _featuresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private FeaturesRestOperations FeaturesRestClient => _featuresRestClient ??= new FeaturesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -55,6 +60,14 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,6 +92,14 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
@@ -101,6 +122,14 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,6 +165,14 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The check name availability request. </param>
@@ -157,6 +194,142 @@ namespace Azure.ResourceManager.Purview.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets details from a list of feature names.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/locations/{locations}/listFeatures</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Features_SubscriptionGet</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locations"> Location of feature. </param>
+        /// <param name="content"> Request body with feature names. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<PurviewBatchFeatureStatus>> SubscriptionGetFeatureAsync(string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(locations, nameof(locations));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = FeaturesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.SubscriptionGetFeature");
+            scope.Start();
+            try
+            {
+                var response = await FeaturesRestClient.SubscriptionGetAsync(Id.SubscriptionId, locations, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets details from a list of feature names.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/locations/{locations}/listFeatures</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Features_SubscriptionGet</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locations"> Location of feature. </param>
+        /// <param name="content"> Request body with feature names. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
+        public virtual Response<PurviewBatchFeatureStatus> SubscriptionGetFeature(string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(locations, nameof(locations));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = FeaturesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.SubscriptionGetFeature");
+            scope.Start();
+            try
+            {
+                var response = FeaturesRestClient.SubscriptionGet(Id.SubscriptionId, locations, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the usage quota configuration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The region. </param>
+        /// <param name="filter"> The filter, currently unused. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PurviewUsage> GetUsagesAsync(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateGetRequest(Id.SubscriptionId, location, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PurviewUsage.DeserializePurviewUsage(e), UsagesClientDiagnostics, Pipeline, "MockablePurviewSubscriptionResource.GetUsages", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the usage quota configuration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The region. </param>
+        /// <param name="filter"> The filter, currently unused. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PurviewUsage> GetUsages(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateGetRequest(Id.SubscriptionId, location, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PurviewUsage.DeserializePurviewUsage(e), UsagesClientDiagnostics, Pipeline, "MockablePurviewSubscriptionResource.GetUsages", "value", null, cancellationToken);
         }
     }
 }

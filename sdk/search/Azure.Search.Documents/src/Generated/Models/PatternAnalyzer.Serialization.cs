@@ -54,10 +54,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<bool> lowercase = default;
-            Optional<string> pattern = default;
-            Optional<string> flags = default;
-            Optional<IList<string>> stopwords = default;
+            bool? lowercase = default;
+            string pattern = default;
+            string flags = default;
+            IList<string> stopwords = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,29 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PatternAnalyzer(odataType, name, Optional.ToNullable(lowercase), pattern.Value, flags.Value, Optional.ToList(stopwords));
+            return new PatternAnalyzer(
+                odataType,
+                name,
+                lowercase,
+                pattern,
+                flags,
+                stopwords ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PatternAnalyzer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePatternAnalyzer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -19,11 +18,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> telemetryType = default;
-            Optional<IReadOnlyList<FilterConjunctionGroupInfo>> filterGroups = default;
-            Optional<string> projection = default;
-            Optional<DerivedMetricInfoAggregation> aggregation = default;
+            string id = default;
+            string telemetryType = default;
+            IReadOnlyList<FilterConjunctionGroupInfo> filterGroups = default;
+            string projection = default;
+            AggregationType aggregation = default;
+            AggregationType backEndAggregation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Id"u8))
@@ -38,10 +38,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 if (property.NameEquals("FilterGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<FilterConjunctionGroupInfo> array = new List<FilterConjunctionGroupInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -57,15 +53,30 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 if (property.NameEquals("Aggregation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    aggregation = new DerivedMetricInfoAggregation(property.Value.GetString());
+                    aggregation = new AggregationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("BackEndAggregation"u8))
+                {
+                    backEndAggregation = new AggregationType(property.Value.GetString());
                     continue;
                 }
             }
-            return new DerivedMetricInfo(id.Value, telemetryType.Value, Optional.ToList(filterGroups), projection.Value, Optional.ToNullable(aggregation));
+            return new DerivedMetricInfo(
+                id,
+                telemetryType,
+                filterGroups,
+                projection,
+                aggregation,
+                backEndAggregation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DerivedMetricInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDerivedMetricInfo(document.RootElement);
         }
     }
 }

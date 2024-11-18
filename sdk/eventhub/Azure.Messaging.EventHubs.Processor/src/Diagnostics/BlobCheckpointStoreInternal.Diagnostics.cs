@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Primitives
@@ -105,9 +106,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string eventHubName,
                                            string consumerGroup,
                                            string clientIdentifier,
-                                           long sequenceNumber,
-                                           int replicationSegment,
-                                           long offset,
+                                           string sequenceNumber,
+                                           string replicationSegment,
+                                           string offset,
                                            Exception exception) =>
             Logger.UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, exception.Message, sequenceNumber, replicationSegment, offset);
 
@@ -129,9 +130,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                                               string eventHubName,
                                               string consumerGroup,
                                               string clientIdentifier,
-                                              long sequenceNumber,
-                                              int replicationSegment,
-                                              long offset) =>
+                                              string sequenceNumber,
+                                              string replicationSegment,
+                                              string offset) =>
             Logger.UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, replicationSegment, offset);
 
         /// <summary>
@@ -152,9 +153,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string eventHubName,
                                            string consumerGroup,
                                            string clientIdentifier,
-                                           long sequenceNumber,
-                                           int replicationSegment,
-                                           long offset) =>
+                                           string sequenceNumber,
+                                           string replicationSegment,
+                                           string offset) =>
             Logger.UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, replicationSegment, offset);
 
         /// <summary>
@@ -291,7 +292,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string partitionId,
                                            string clientIdentifier,
                                            DateTimeOffset lastModified) =>
-            Logger.GetCheckpointComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier, lastModified);
+            Logger.GetCheckpointComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier, lastModified.ToString("yyyy-mm-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture));
 
         /// <summary>
         ///   Indicates that an unhandled exception was encountered while retrieving a checkpoint.

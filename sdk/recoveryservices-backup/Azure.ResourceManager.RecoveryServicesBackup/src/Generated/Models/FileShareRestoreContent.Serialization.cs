@@ -5,17 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class FileShareRestoreContent : IUtf8JsonSerializable
+    public partial class FileShareRestoreContent : IUtf8JsonSerializable, IJsonModel<FileShareRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileShareRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FileShareRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FileShareRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FileShareRestoreContent)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(RecoveryType))
             {
                 writer.WritePropertyName("recoveryType"u8);
@@ -42,33 +61,46 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreFileSpecs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TargetDetails))
             {
                 writer.WritePropertyName("targetDetails"u8);
-                writer.WriteObjectValue(TargetDetails);
+                writer.WriteObjectValue(TargetDetails, options);
             }
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
-            writer.WriteEndObject();
         }
 
-        internal static FileShareRestoreContent DeserializeFileShareRestoreContent(JsonElement element)
+        FileShareRestoreContent IJsonModel<FileShareRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FileShareRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FileShareRestoreContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFileShareRestoreContent(document.RootElement, options);
+        }
+
+        internal static FileShareRestoreContent DeserializeFileShareRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<FileShareRecoveryType> recoveryType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<FileShareCopyOption> copyOptions = default;
-            Optional<FileShareRestoreType> restoreRequestType = default;
-            Optional<IList<RestoreFileSpecs>> restoreFileSpecs = default;
-            Optional<TargetAfsRestoreInfo> targetDetails = default;
+            FileShareRecoveryType? recoveryType = default;
+            ResourceIdentifier sourceResourceId = default;
+            FileShareCopyOption? copyOptions = default;
+            FileShareRestoreType? restoreRequestType = default;
+            IList<RestoreFileSpecs> restoreFileSpecs = default;
+            TargetAfsRestoreInfo targetDetails = default;
             string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryType"u8))
@@ -116,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<RestoreFileSpecs> array = new List<RestoreFileSpecs>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.RestoreFileSpecs.DeserializeRestoreFileSpecs(item));
+                        array.Add(Models.RestoreFileSpecs.DeserializeRestoreFileSpecs(item, options));
                     }
                     restoreFileSpecs = array;
                     continue;
@@ -127,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    targetDetails = TargetAfsRestoreInfo.DeserializeTargetAfsRestoreInfo(property.Value);
+                    targetDetails = TargetAfsRestoreInfo.DeserializeTargetAfsRestoreInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))
@@ -135,8 +167,52 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FileShareRestoreContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToNullable(copyOptions), Optional.ToNullable(restoreRequestType), Optional.ToList(restoreFileSpecs), targetDetails.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FileShareRestoreContent(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryType,
+                sourceResourceId,
+                copyOptions,
+                restoreRequestType,
+                restoreFileSpecs ?? new ChangeTrackingList<RestoreFileSpecs>(),
+                targetDetails);
         }
+
+        BinaryData IPersistableModel<FileShareRestoreContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FileShareRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FileShareRestoreContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FileShareRestoreContent IPersistableModel<FileShareRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FileShareRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFileShareRestoreContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FileShareRestoreContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FileShareRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

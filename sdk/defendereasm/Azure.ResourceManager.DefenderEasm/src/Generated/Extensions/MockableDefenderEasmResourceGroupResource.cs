@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DefenderEasm;
 
 namespace Azure.ResourceManager.DefenderEasm.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.DefenderEasm.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the Workspace. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.DefenderEasm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

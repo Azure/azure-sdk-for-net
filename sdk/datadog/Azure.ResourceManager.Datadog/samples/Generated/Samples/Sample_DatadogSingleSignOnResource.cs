@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Datadog;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Datadog.Samples
 {
     public partial class Sample_DatadogSingleSignOnResource
     {
-        // SingleSignOnConfigurations_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SingleSignOnConfigurationsCreateOrUpdate()
         {
             // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/SingleSignOnConfigurations_CreateOrUpdate.json
@@ -51,9 +48,8 @@ namespace Azure.ResourceManager.Datadog.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SingleSignOnConfigurations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SingleSignOnConfigurationsGet()
         {
             // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/SingleSignOnConfigurations_Get.json

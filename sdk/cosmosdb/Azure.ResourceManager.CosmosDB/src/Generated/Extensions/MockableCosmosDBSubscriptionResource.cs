@@ -8,11 +8,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Mocking
 {
@@ -23,10 +20,10 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         private DatabaseAccountsRestOperations _cosmosDBAccountDatabaseAccountsRestClient;
         private ClientDiagnostics _cassandraClusterClientDiagnostics;
         private CassandraClustersRestOperations _cassandraClusterRestClient;
-        private ClientDiagnostics _mongoClusterClientDiagnostics;
-        private MongoClustersRestOperations _mongoClusterRestClient;
         private ClientDiagnostics _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics;
         private RestorableDatabaseAccountsRestOperations _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient;
+        private ClientDiagnostics _cosmosDBThroughputPoolThroughputPoolsClientDiagnostics;
+        private ThroughputPoolsRestOperations _cosmosDBThroughputPoolThroughputPoolsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBSubscriptionResource"/> class for mocking. </summary>
         protected MockableCosmosDBSubscriptionResource()
@@ -44,10 +41,10 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         private DatabaseAccountsRestOperations CosmosDBAccountDatabaseAccountsRestClient => _cosmosDBAccountDatabaseAccountsRestClient ??= new DatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CosmosDBAccountResource.ResourceType));
         private ClientDiagnostics CassandraClusterClientDiagnostics => _cassandraClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CassandraClusterResource.ResourceType.Namespace, Diagnostics);
         private CassandraClustersRestOperations CassandraClusterRestClient => _cassandraClusterRestClient ??= new CassandraClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CassandraClusterResource.ResourceType));
-        private ClientDiagnostics MongoClusterClientDiagnostics => _mongoClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", MongoClusterResource.ResourceType.Namespace, Diagnostics);
-        private MongoClustersRestOperations MongoClusterRestClient => _mongoClusterRestClient ??= new MongoClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MongoClusterResource.ResourceType));
         private ClientDiagnostics RestorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics => _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", RestorableCosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
         private RestorableDatabaseAccountsRestOperations RestorableCosmosDBAccountRestorableDatabaseAccountsRestClient => _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient ??= new RestorableDatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RestorableCosmosDBAccountResource.ResourceType));
+        private ClientDiagnostics CosmosDBThroughputPoolThroughputPoolsClientDiagnostics => _cosmosDBThroughputPoolThroughputPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBThroughputPoolResource.ResourceType.Namespace, Diagnostics);
+        private ThroughputPoolsRestOperations CosmosDBThroughputPoolThroughputPoolsRestClient => _cosmosDBThroughputPoolThroughputPoolsRestClient ??= new ThroughputPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CosmosDBThroughputPoolResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -73,6 +70,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
@@ -93,6 +98,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +128,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,6 +156,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,6 +186,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>CassandraClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -178,6 +215,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>CassandraClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,50 +231,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CassandraClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CassandraClusterResource(Client, CassandraClusterData.DeserializeCassandraClusterData(e)), CassandraClusterClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetCassandraClusters", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the mongo clusters in a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/mongoClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoClusters_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MongoClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MongoClusterResource> GetMongoClustersAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MongoClusterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MongoClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MongoClusterResource(Client, MongoClusterData.DeserializeMongoClusterData(e)), MongoClusterClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetMongoClusters", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the mongo clusters in a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/mongoClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoClusters_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MongoClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MongoClusterResource> GetMongoClusters(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MongoClusterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MongoClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MongoClusterResource(Client, MongoClusterData.DeserializeMongoClusterData(e)), MongoClusterClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetMongoClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,6 +243,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorableDatabaseAccounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableCosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,6 +273,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>RestorableDatabaseAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableCosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -272,6 +289,66 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListRequest(Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), RestorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetRestorableCosmosDBAccounts", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the Azure Cosmos DB Throughput Pools available under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/throughputPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ThroughputPools_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBThroughputPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CosmosDBThroughputPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CosmosDBThroughputPoolResource> GetCosmosDBThroughputPoolsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBThroughputPoolThroughputPoolsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CosmosDBThroughputPoolThroughputPoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CosmosDBThroughputPoolResource(Client, CosmosDBThroughputPoolData.DeserializeCosmosDBThroughputPoolData(e)), CosmosDBThroughputPoolThroughputPoolsClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetCosmosDBThroughputPools", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the Azure Cosmos DB Throughput Pools available under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/throughputPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ThroughputPools_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBThroughputPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CosmosDBThroughputPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CosmosDBThroughputPoolResource> GetCosmosDBThroughputPools(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBThroughputPoolThroughputPoolsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CosmosDBThroughputPoolThroughputPoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CosmosDBThroughputPoolResource(Client, CosmosDBThroughputPoolData.DeserializeCosmosDBThroughputPoolData(e)), CosmosDBThroughputPoolThroughputPoolsClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetCosmosDBThroughputPools", "value", "nextLink", cancellationToken);
         }
     }
 }

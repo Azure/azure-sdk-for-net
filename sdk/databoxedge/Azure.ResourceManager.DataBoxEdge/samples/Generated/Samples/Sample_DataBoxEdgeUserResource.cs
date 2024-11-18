@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.DataBoxEdge.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataBoxEdge.Samples
 {
     public partial class Sample_DataBoxEdgeUserResource
     {
-        // UserGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_UserGet()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/UserGet.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UserPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UserPut()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/UserPut.json
@@ -90,9 +86,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UserDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_UserDelete()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/UserDelete.json
@@ -115,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             // invoke the operation
             await dataBoxEdgeUser.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

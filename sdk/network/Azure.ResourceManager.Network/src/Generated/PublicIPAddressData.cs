@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -33,6 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="extendedLocation"> The extended location of the public ip address. </param>
         /// <param name="sku"> The public IP address SKU. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="migrationPhase"> Migration phase of Public IP Address. </param>
         /// <param name="linkedPublicIPAddress"> The linked public IP address of the public IP address resource. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP address when the VM using it is deleted. </param>
-        internal PublicIPAddressData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PublicIPAddressSku sku, ETag? etag, IList<string> zones, NetworkIPAllocationMethod? publicIPAllocationMethod, NetworkIPVersion? publicIPAddressVersion, NetworkIPConfiguration ipConfiguration, PublicIPAddressDnsSettings dnsSettings, DdosSettings ddosSettings, IList<IPTag> ipTags, string ipAddress, WritableSubResource publicIPPrefix, int? idleTimeoutInMinutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, PublicIPAddressData servicePublicIPAddress, NatGatewayData natGateway, PublicIPAddressMigrationPhase? migrationPhase, PublicIPAddressData linkedPublicIPAddress, IPAddressDeleteOption? deleteOption) : base(id, name, resourceType, location, tags)
+        internal PublicIPAddressData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, PublicIPAddressSku sku, ETag? etag, IList<string> zones, NetworkIPAllocationMethod? publicIPAllocationMethod, NetworkIPVersion? publicIPAddressVersion, NetworkIPConfiguration ipConfiguration, PublicIPAddressDnsSettings dnsSettings, DdosSettings ddosSettings, IList<IPTag> ipTags, string ipAddress, WritableSubResource publicIPPrefix, int? idleTimeoutInMinutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, PublicIPAddressData servicePublicIPAddress, NatGatewayData natGateway, PublicIPAddressMigrationPhase? migrationPhase, PublicIPAddressData linkedPublicIPAddress, IPAddressDeleteOption? deleteOption) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;

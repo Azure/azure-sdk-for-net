@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Azure.Core;
 
@@ -52,22 +53,22 @@ namespace Azure.Identity
             get => _tenantId.Value;
             set
             {
-                if (_interactiveBrowserTenantId.Updated && value != _interactiveBrowserTenantId.Value)
+                if (_interactiveBrowserTenantId.Updated && _tenantId.Value != _interactiveBrowserTenantId.Value)
                 {
                     throw new InvalidOperationException("Applications should not set both TenantId and InteractiveBrowserTenantId. TenantId is preferred, and is functionally equivalent. InteractiveBrowserTenantId exists only to provide backwards compatibility.");
                 }
 
-                if (_sharedTokenCacheTenantId.Updated && value != _sharedTokenCacheTenantId.Value)
+                if (_sharedTokenCacheTenantId.Updated && _tenantId.Value != _sharedTokenCacheTenantId.Value)
                 {
                     throw new InvalidOperationException("Applications should not set both TenantId and SharedTokenCacheTenantId. TenantId is preferred, and is functionally equivalent. SharedTokenCacheTenantId exists only to provide backwards compatibility.");
                 }
 
-                if (_visualStudioTenantId.Updated && value != _visualStudioTenantId.Value)
+                if (_visualStudioTenantId.Updated && _tenantId.Value != _visualStudioTenantId.Value)
                 {
                     throw new InvalidOperationException("Applications should not set both TenantId and VisualStudioTenantId. TenantId is preferred, and is functionally equivalent. VisualStudioTenantId exists only to provide backwards compatibility.");
                 }
 
-                if (_visualStudioCodeTenantId.Updated && value != _visualStudioCodeTenantId.Value)
+                if (_visualStudioCodeTenantId.Updated && _tenantId.Value != _visualStudioCodeTenantId.Value)
                 {
                     throw new InvalidOperationException("Applications should not set both TenantId and VisualStudioCodeTenantId. TenantId is preferred, and is functionally equivalent. VisualStudioCodeTenantId exists only to provide backwards compatibility.");
                 }
@@ -191,17 +192,23 @@ namespace Azure.Identity
         public string WorkloadIdentityClientId { get; set; } = EnvironmentVariables.ClientId;
 
         /// <summary>
-        /// Specifies the client id of a user assigned ManagedIdentity. If this value is configured, then <see cref="ManagedIdentityResourceId"/> should not be configured.
+        /// Specifies the client ID of a user-assigned managed identity. If this value is configured, then <see cref="ManagedIdentityResourceId"/> should not be configured.
         /// </summary>
+        /// <remarks>
+        /// If neither the <see cref="ManagedIdentityClientId"/> nor the <see cref="ManagedIdentityResourceId"/> property is set, then a system-assigned managed identity is used.
+        /// </remarks>
         public string ManagedIdentityClientId { get; set; } = EnvironmentVariables.ClientId;
 
         /// <summary>
-        /// Specifies the resource id of a user assigned ManagedIdentity. If this value is configured, then <see cref="ManagedIdentityClientId"/> should not be configured.
+        /// Specifies the resource ID of a user-assigned managed identity. If this value is configured, then <see cref="ManagedIdentityClientId"/> should not be configured.
         /// </summary>
+        /// <remarks>
+        /// If neither the <see cref="ManagedIdentityClientId"/> nor the <see cref="ManagedIdentityResourceId"/> property is set, then a system-assigned managed identity is used.
+        /// </remarks>
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
         /// <summary>
-        /// Specifies timeout for credentials invoked via sub-process. e.g. Visual Studio, Azure CLI, Azure Powershell.
+        /// Specifies timeout for credentials invoked via sub-process. e.g. Visual Studio, Azure CLI, Azure PowerShell.
         /// </summary>
         public TimeSpan? CredentialProcessTimeout { get; set; } = TimeSpan.FromSeconds(30);
 
@@ -266,7 +273,9 @@ namespace Azure.Identity
         /// <inheriteddoc/>
         public bool DisableInstanceDiscovery { get; set; }
 
-        internal override T Clone<T>()
+        internal bool IsForceRefreshEnabled { get; set; }
+
+        internal override T Clone<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
         {
             var clone = base.Clone<T>();
 
@@ -293,6 +302,7 @@ namespace Azure.Identity
                 dacClone.ExcludeVisualStudioCredential = ExcludeVisualStudioCredential;
                 dacClone.ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential;
                 dacClone.ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential;
+                dacClone.IsForceRefreshEnabled = IsForceRefreshEnabled;
             }
 
             return clone;

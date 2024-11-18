@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -18,6 +20,38 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningPrivateEndpointConnectionData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpointConnectionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MachineLearningPrivateEndpointConnectionData(AzureLocation location) : base(location)
@@ -31,29 +65,47 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="sku"> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </param>
-        /// <param name="privateEndpoint"> The Private Endpoint resource. </param>
-        /// <param name="connectionState"> The connection state. </param>
-        /// <param name="provisioningState"> The current provisioning state. </param>
-        internal MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, MachineLearningPrivateEndpoint privateEndpoint, MachineLearningPrivateLinkServiceConnectionState connectionState, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="sku"> The sku of the workspace. </param>
+        /// <param name="subResource"> The resource of private end point. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, SubResource subResource, MachineLearningPrivateLinkServiceConnectionState connectionState, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
-            PrivateEndpoint = privateEndpoint;
+            SubResource = subResource;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpointConnectionData"/> for deserialization. </summary>
+        internal MachineLearningPrivateEndpointConnectionData()
+        {
+        }
+
+        /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </summary>
+        /// <summary> The sku of the workspace. </summary>
+        [WirePath("sku")]
         public MachineLearningSku Sku { get; set; }
-        /// <summary> The Private Endpoint resource. </summary>
-        public MachineLearningPrivateEndpoint PrivateEndpoint { get; set; }
-        /// <summary> The connection state. </summary>
+        /// <summary> The resource of private end point. </summary>
+        internal SubResource SubResource { get; set; }
+        /// <summary> Gets Id. </summary>
+        [WirePath("properties.privateEndpoint.id")]
+        public ResourceIdentifier SubResourceId
+        {
+            get => SubResource is null ? default : SubResource.Id;
+        }
+
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public MachineLearningPrivateLinkServiceConnectionState ConnectionState { get; set; }
-        /// <summary> The current provisioning state. </summary>
+        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        [WirePath("properties.provisioningState")]
         public MachineLearningPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

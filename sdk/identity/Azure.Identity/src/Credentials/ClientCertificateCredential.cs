@@ -13,9 +13,9 @@ using System.Threading.Tasks;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication of a service principal to Microsoft Entra ID using a X509 certificate that is assigned to it's App Registration. More information
-    /// on how to configure certificate authentication can be found here:
-    /// https://learn.microsoft.com/azure/active-directory/develop/active-directory-certificate-credentials#register-your-certificate-with-azure-ad
+    /// Enables authentication of a service principal to Microsoft Entra ID using a X509 certificate that is assigned to its App Registration. More information
+    /// on how to configure certificate authentication can be found at
+    /// <see href="https://learn.microsoft.com/entra/identity-platform/certificate-credentials#register-your-certificate-with-microsoft-identity-platform"/>.
     /// </summary>
     public class ClientCertificateCredential : TokenCredential
     {
@@ -41,7 +41,7 @@ namespace Azure.Identity
         internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
-        /// Protected constructor for mocking.
+        /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         protected ClientCertificateCredential()
         { }
@@ -174,12 +174,13 @@ namespace Azure.Identity
 
         /// <summary>
         /// Obtains a token from Microsoft Entra ID, using the specified X509 certificate to authenticate. Acquired tokens are
-        /// cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
-        /// instances to optimize cache effectiveness.
+        /// <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential instance. Token lifetime
+        /// and refreshing is handled automatically. Where possible, reuse credential instances to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("ClientCertificateCredential.GetToken", requestContext);
@@ -189,7 +190,7 @@ namespace Azure.Identity
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
 
-                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                return scope.Succeeded(result.ToAccessToken());
             }
             catch (Exception e)
             {
@@ -199,12 +200,13 @@ namespace Azure.Identity
 
         /// <summary>
         /// Obtains a token from Microsoft Entra ID, using the specified X509 certificate to authenticate. Acquired tokens are
-        /// cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
-        /// instances to optimize cache effectiveness.
+        /// <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential instance. Token lifetime
+        /// and refreshing is handled automatically. Where possible, reuse credential instances to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("ClientCertificateCredential.GetToken", requestContext);
@@ -216,7 +218,7 @@ namespace Azure.Identity
                     .AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, true, cancellationToken)
                     .ConfigureAwait(false);
 
-                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                return scope.Succeeded(result.ToAccessToken());
             }
             catch (Exception e)
             {

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetSupportedLanguagesAsync(string,string,string,ETag?,CancellationToken)">
+      <example>
+This sample shows how to call GetSupportedLanguagesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync();
+]]></code>
+This sample shows how to call GetSupportedLanguagesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync();
+]]></code></example>
+    </member>
+    <member name="GetSupportedLanguages(string,string,string,ETag?,CancellationToken)">
+      <example>
+This sample shows how to call GetSupportedLanguages.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages();
+]]></code>
+This sample shows how to call GetSupportedLanguages.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages();
+]]></code></example>
+    </member>
+    <member name="GetSupportedLanguagesAsync(string,string,string,ETag?,RequestContext)">
+      <example>
+This sample shows how to call GetSupportedLanguagesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response response = await client.GetSupportedLanguagesAsync("kayfnugjec", "translation,transliteration,dictionary", "en", new ETag("fpnhruttllvc"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSupportedLanguagesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response response = await client.GetSupportedLanguagesAsync(null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetSupportedLanguages(string,string,string,ETag?,RequestContext)">
+      <example>
+This sample shows how to call GetSupportedLanguages and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response response = client.GetSupportedLanguages("kayfnugjec", "translation,transliteration,dictionary", "en", new ETag("fpnhruttllvc"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSupportedLanguages and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response response = client.GetSupportedLanguages(null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

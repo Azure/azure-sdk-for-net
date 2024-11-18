@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryManagedIdentityCredentialProperties : IUtf8JsonSerializable
+    public partial class DataFactoryManagedIdentityCredentialProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryManagedIdentityCredentialProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryManagedIdentityCredentialProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataFactoryManagedIdentityCredentialProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CredentialType);
-            if (Optional.IsDefined(Description))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryManagedIdentityCredentialProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                throw new FormatException($"The model {nameof(DataFactoryManagedIdentityCredentialProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Annotations))
-            {
-                writer.WritePropertyName("annotations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Annotations)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndArray();
-            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
@@ -66,19 +55,32 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static DataFactoryManagedIdentityCredentialProperties DeserializeDataFactoryManagedIdentityCredentialProperties(JsonElement element)
+        DataFactoryManagedIdentityCredentialProperties IJsonModel<DataFactoryManagedIdentityCredentialProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryManagedIdentityCredentialProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryManagedIdentityCredentialProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryManagedIdentityCredentialProperties(document.RootElement, options);
+        }
+
+        internal static DataFactoryManagedIdentityCredentialProperties DeserializeDataFactoryManagedIdentityCredentialProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            string description = default;
+            IList<BinaryData> annotations = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +140,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryManagedIdentityCredentialProperties(type, description.Value, Optional.ToList(annotations), additionalProperties, resourceId.Value);
+            return new DataFactoryManagedIdentityCredentialProperties(type, description, annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, resourceId);
         }
+
+        BinaryData IPersistableModel<DataFactoryManagedIdentityCredentialProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryManagedIdentityCredentialProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryManagedIdentityCredentialProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataFactoryManagedIdentityCredentialProperties IPersistableModel<DataFactoryManagedIdentityCredentialProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryManagedIdentityCredentialProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFactoryManagedIdentityCredentialProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryManagedIdentityCredentialProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFactoryManagedIdentityCredentialProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,22 +7,19 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Maps;
 using Azure.ResourceManager.Maps.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Maps.Samples
 {
     public partial class Sample_MapsAccountResource
     {
-        // Update Account Managed Identities
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAccountManagedIdentities()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/UpdateAccountManagedIdentity.json
@@ -67,9 +64,8 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Account Tags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAccountTags()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/UpdateAccount.json
@@ -105,9 +101,8 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update to Gen1 Account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateToGen1Account()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/UpdateAccountGen1.json
@@ -141,9 +136,8 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update to Gen2 Account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateToGen2Account()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/UpdateAccountGen2.json
@@ -177,9 +171,8 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAccount()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/DeleteAccount.json
@@ -201,12 +194,11 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
             // invoke the operation
             await mapsAccount.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GetAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAccount()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/GetAccount.json
@@ -235,9 +227,8 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List Accounts By Subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMapsAccounts_ListAccountsBySubscription()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/ListAccountsBySubscription.json
@@ -264,12 +255,11 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List Account Sas
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSas_ListAccountSas()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/AccountListSAS.json
@@ -301,9 +291,8 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List Keys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_ListKeys()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/ListKeys.json
@@ -328,9 +317,8 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Regenerate Key
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKeys_RegenerateKey()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/RegenerateKey.json

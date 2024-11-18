@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_TemplateSpecVersionResource
     {
-        // TemplateSpecsPatch
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_TemplateSpecsPatch()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/examples/TemplateSpecVersionsPatch.json
@@ -57,9 +54,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TemplateSpecVersionsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TemplateSpecVersionsGet()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/examples/TemplateSpecVersionsGet.json
@@ -89,9 +85,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TemplateSpecVersionsDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_TemplateSpecVersionsDelete()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/examples/TemplateSpecVersionsDelete.json
@@ -114,7 +109,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // invoke the operation
             await templateSpecVersion0.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

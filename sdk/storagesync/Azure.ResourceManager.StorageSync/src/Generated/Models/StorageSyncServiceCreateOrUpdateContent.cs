@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,6 +15,38 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> The parameters used when creating a storage sync service. </summary>
     public partial class StorageSyncServiceCreateOrUpdateContent : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="StorageSyncServiceCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location. </param>
         public StorageSyncServiceCreateOrUpdateContent(AzureLocation location) : base(location)
@@ -29,12 +62,26 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="location"> The location. </param>
         /// <param name="identity"> managed identities for the Storage Sync to interact with other Azure services without maintaining any secrets or credentials in code. </param>
         /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
+<<<<<<< HEAD
         /// <param name="useIdentity"> Use Identity authorization when customer have finished setup RBAC permissions. </param>
         internal StorageSyncServiceCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IncomingTrafficPolicy? incomingTrafficPolicy, bool? useIdentity) : base(id, name, resourceType, systemData, tags, location)
+=======
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncServiceCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, IncomingTrafficPolicy? incomingTrafficPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+>>>>>>> upstream/main
         {
             Identity = identity;
             IncomingTrafficPolicy = incomingTrafficPolicy;
+<<<<<<< HEAD
             UseIdentity = useIdentity;
+=======
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServiceCreateOrUpdateContent"/> for deserialization. </summary>
+        internal StorageSyncServiceCreateOrUpdateContent()
+        {
+>>>>>>> upstream/main
         }
 
         /// <summary> managed identities for the Storage Sync to interact with other Azure services without maintaining any secrets or credentials in code. </summary>

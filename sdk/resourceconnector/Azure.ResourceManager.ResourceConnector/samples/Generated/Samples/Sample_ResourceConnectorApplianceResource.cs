@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ResourceConnector;
 using Azure.ResourceManager.ResourceConnector.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ResourceConnector.Samples
 {
     public partial class Sample_ResourceConnectorApplianceResource
     {
-        // List Appliances by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResourceConnectorAppliances_ListAppliancesBySubscription()
         {
             // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/AppliancesListBySubscription.json
@@ -48,12 +45,11 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GetTelemetryConfig Appliance
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTelemetryConfigAppliance_GetTelemetryConfigAppliance()
         {
             // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/TelemetryConfig.json
@@ -76,9 +72,8 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Appliance
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAppliance()
         {
             // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/AppliancesGet.json
@@ -107,9 +102,8 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Appliance
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAppliance()
         {
             // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/AppliancesDelete.json
@@ -131,12 +125,11 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             // invoke the operation
             await resourceConnectorAppliance.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update Appliance
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAppliance()
         {
             // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/AppliancesPatch.json
@@ -172,9 +165,8 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ListClusterUserCredentialAppliance
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterUserCredential_ListClusterUserCredentialAppliance()
         {
             // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/AppliancesListClusterUserCredential.json
@@ -199,9 +191,8 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListKeys Appliance
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_ListKeysAppliance()
         {
             // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/AppliancesListKeys.json
@@ -226,9 +217,8 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Appliance Upgrade Graph
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUpgradeGraph_GetApplianceUpgradeGraph()
         {
             // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/UpgradeGraph.json

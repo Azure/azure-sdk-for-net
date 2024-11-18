@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> AgentPoolPatchParameters represents the body of the request to patch the Kubernetes cluster agent pool. </summary>
     public partial class NetworkCloudAgentPoolPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentPoolPatch"/>. </summary>
         public NetworkCloudAgentPoolPatch()
         {
@@ -21,31 +53,37 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentPoolPatch"/>. </summary>
         /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="administratorConfiguration"> The configuration of administrator credentials for the control plane nodes. </param>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>
         /// <param name="upgradeSettings"> The configuration of the agent pool. </param>
-        internal NetworkCloudAgentPoolPatch(IDictionary<string, string> tags, long? count, AgentPoolUpgradeSettings upgradeSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudAgentPoolPatch(IDictionary<string, string> tags, NodePoolAdministratorConfigurationPatch administratorConfiguration, long? count, AgentPoolUpgradeSettings upgradeSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
+            AdministratorConfiguration = administratorConfiguration;
             Count = count;
             UpgradeSettings = upgradeSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> The configuration of administrator credentials for the control plane nodes. </summary>
+        internal NodePoolAdministratorConfigurationPatch AdministratorConfiguration { get; set; }
+        /// <summary> SshPublicKey represents the public key used to authenticate with a resource through SSH. </summary>
+        public IList<NetworkCloudSshPublicKey> AdministratorSshPublicKeys
+        {
+            get
+            {
+                if (AdministratorConfiguration is null)
+                    AdministratorConfiguration = new NodePoolAdministratorConfigurationPatch();
+                return AdministratorConfiguration.SshPublicKeys;
+            }
+        }
+
         /// <summary> The number of virtual machines that use this configuration. </summary>
         public long? Count { get; set; }
         /// <summary> The configuration of the agent pool. </summary>
-        internal AgentPoolUpgradeSettings UpgradeSettings { get; set; }
-        /// <summary> The maximum number or percentage of nodes that are surged during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified, the default is 1. </summary>
-        public string UpgradeMaxSurge
-        {
-            get => UpgradeSettings is null ? default : UpgradeSettings.MaxSurge;
-            set
-            {
-                if (UpgradeSettings is null)
-                    UpgradeSettings = new AgentPoolUpgradeSettings();
-                UpgradeSettings.MaxSurge = value;
-            }
-        }
+        public AgentPoolUpgradeSettings UpgradeSettings { get; set; }
     }
 }

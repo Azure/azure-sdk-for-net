@@ -6,31 +6,53 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AmqpC2DMessagesNotInAllowedRange : IUtf8JsonSerializable
+    public partial class AmqpC2DMessagesNotInAllowedRange : IUtf8JsonSerializable, IJsonModel<AmqpC2DMessagesNotInAllowedRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmqpC2DMessagesNotInAllowedRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AmqpC2DMessagesNotInAllowedRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("timeWindowSize"u8);
-            writer.WriteStringValue(TimeWindowSize, "P");
-            writer.WritePropertyName("minThreshold"u8);
-            writer.WriteNumberValue(MinThreshold);
-            writer.WritePropertyName("maxThreshold"u8);
-            writer.WriteNumberValue(MaxThreshold);
-            writer.WritePropertyName("isEnabled"u8);
-            writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static AmqpC2DMessagesNotInAllowedRange DeserializeAmqpC2DMessagesNotInAllowedRange(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AmqpC2DMessagesNotInAllowedRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AmqpC2DMessagesNotInAllowedRange)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        AmqpC2DMessagesNotInAllowedRange IJsonModel<AmqpC2DMessagesNotInAllowedRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmqpC2DMessagesNotInAllowedRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AmqpC2DMessagesNotInAllowedRange)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmqpC2DMessagesNotInAllowedRange(document.RootElement, options);
+        }
+
+        internal static AmqpC2DMessagesNotInAllowedRange DeserializeAmqpC2DMessagesNotInAllowedRange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,10 +60,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             TimeSpan timeWindowSize = default;
             int minThreshold = default;
             int maxThreshold = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeWindowSize"u8))
@@ -79,8 +103,52 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ruleType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AmqpC2DMessagesNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AmqpC2DMessagesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
         }
+
+        BinaryData IPersistableModel<AmqpC2DMessagesNotInAllowedRange>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmqpC2DMessagesNotInAllowedRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AmqpC2DMessagesNotInAllowedRange)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AmqpC2DMessagesNotInAllowedRange IPersistableModel<AmqpC2DMessagesNotInAllowedRange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmqpC2DMessagesNotInAllowedRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAmqpC2DMessagesNotInAllowedRange(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AmqpC2DMessagesNotInAllowedRange)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AmqpC2DMessagesNotInAllowedRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

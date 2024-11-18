@@ -7,24 +7,21 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 {
     public partial class Sample_ServiceFabricManagedClusterCollection
     {
-        // List cluster by resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListClusterByResourceGroup()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2023-03-01-preview/examples/ManagedClusterListByResourceGroupOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/examples/ManagedClusterListByResourceGroupOperation_example.json
             // this example is just showing the usage of "ManagedClusters_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,15 +49,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACluster()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2023-03-01-preview/examples/ManagedClusterGetOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/examples/ManagedClusterGetOperation_example.json
             // this example is just showing the usage of "ManagedClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,12 +85,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetACluster()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2023-03-01-preview/examples/ManagedClusterGetOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/examples/ManagedClusterGetOperation_example.json
             // this example is just showing the usage of "ManagedClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,12 +114,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetACluster()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2023-03-01-preview/examples/ManagedClusterGetOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/examples/ManagedClusterGetOperation_example.json
             // this example is just showing the usage of "ManagedClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -161,12 +155,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             }
         }
 
-        // Put a cluster with maximum parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAClusterWithMaximumParameters()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2023-03-01-preview/examples/ManagedClusterPutOperation_example_max.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/examples/ManagedClusterPutOperation_example_max.json
             // this example is just showing the usage of "ManagedClusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,10 +178,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedClusterCollection collection = resourceGroupResource.GetServiceFabricManagedClusters();
 
             // invoke the operation
-            string clusterName = "myCluster";
+            string clusterName = "mycluster";
             ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(new AzureLocation("eastus"), new ServiceFabricManagedClustersSku(ServiceFabricManagedClustersSkuName.Basic))
             {
-                DnsName = "myCluster",
+                DnsName = "mycluster",
                 ClientConnectionPort = 19000,
                 HttpGatewayConnectionPort = 19080,
                 AdminUserName = "vmadmin",
@@ -281,6 +274,22 @@ new AzureLocation("eastus2"),new AzureLocation("usnorth")
                 ZonalUpdateMode = ZonalUpdateMode.Fast,
                 UseCustomVnet = true,
                 PublicIPPrefixId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/resRg/providers/Microsoft.Network/publicIPPrefixes/myPublicIPPrefix"),
+                PublicIPv6PrefixId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/resRg/providers/Microsoft.Network/publicIPPrefixes/myPublicIPv6Prefix"),
+                DdosProtectionPlanId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/ddosProtectionPlans/myDDoSProtectionPlan"),
+                UpgradeDescription = new ManagedClusterUpgradePolicy()
+                {
+                    ForceRestart = false,
+                    HealthPolicy = new ManagedClusterHealthPolicy(10, 30),
+                    DeltaHealthPolicy = new ManagedClusterUpgradeDeltaHealthPolicy(20)
+                    {
+                        MaxPercentUpgradeDomainDeltaUnhealthyNodes = 40,
+                        MaxPercentDeltaUnhealthyApplications = 40,
+                    },
+                    MonitoringPolicy = new ManagedClusterMonitoringPolicy(TimeSpan.Parse("00:05:00"), TimeSpan.Parse("00:45:00"), "00:55:00", "12:00:00", "03:00:00"),
+                },
+                HttpGatewayTokenAuthConnectionPort = 19081,
+                IsHttpGatewayExclusiveAuthModeEnabled = true,
+                AutoGeneratedDomainNameLabelScope = AutoGeneratedDomainNameLabelScope.SubscriptionReuse,
                 Tags =
 {
 },
@@ -295,12 +304,11 @@ new AzureLocation("eastus2"),new AzureLocation("usnorth")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Put a cluster with minimum parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAClusterWithMinimumParameters()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2023-03-01-preview/examples/ManagedClusterPutOperation_example_min.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/examples/ManagedClusterPutOperation_example_min.json
             // this example is just showing the usage of "ManagedClusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

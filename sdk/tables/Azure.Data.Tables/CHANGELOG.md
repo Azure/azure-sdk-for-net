@@ -1,14 +1,41 @@
 # Release History
 
-## 12.9.0-beta.1 (Unreleased)
+## 12.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Calling `TableClient.Query`, `TableClient.QueryAsync`, or `TableClient.CreateQueryFilter` with a filter expression that uses `string.Equals` or `string.Compare` with a `StringComparison` parameter will now throw an exception. This is because the Azure Table service does not support these methods in query filters. Previously the `StringComparison` argument was silently ignored, which can lead to subtle bugs in client code.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.9.1 (2024-09-17)
+
+### Bugs Fixed
+- Fixed an issue that prevented use of stored access policy based SaS Uris by adding a parameterless constructor to `TableSasBuilder`. The resulting builder can then be modified to include the stored access policy identifier or any other details.
+
+### Other Changes
+- Cosmos Table endpoints now support Entra ID authentication.
+
+## 12.9.0 (2024-07-22)
+
+### Features Added
+- Overload the `DeleteEntity` method to allow an `ITableEntity` object as parameter.
+
+### Bugs Fixed
+- Fixed an issue where custom models decorated with the `DataMemberAttribute` that didn't explicitly set a name caused the query filter to be malformed.
+
+### Other Changes
+- Reduce List allocations when uploading batches to table storage
+
+## 12.8.3 (2024-02-06)
+
+### Bugs Fixed
+- `TableEntity` string properties will correctly handle type coercion from `DateTime` and `DateTimeOffset` types. ([#40775](https://github.com/Azure/azure-sdk-for-net/issues/40775))
+- Fixed an error handling bug that could result in an `ArgumentNullException` when calling `CreateIfNotExistsAsync`. ([#41463](https://github.com/Azure/azure-sdk-for-net/issues/41463))
 
 ## 12.8.2 (2023-11-13)
 

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .hidden {
+        visibility: hidden
+    }
+
+    .modal {
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+        .modal-content input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 80%;
+        }
+
+        .modal-content button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .modal-content button:hover {
+                background-color: #0056b3;
+            }
+
+    .chat-container {
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        max-width: 600px;
+        height: 700px; /* Fixed height for the chat container */
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        border-radius: 10px 10px 0 0;
+        text-align: center;
+    }
+
+    .message {
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 10px;
+        max-width: 60%;
+        display: inline-block; /* Ensure messages do not expand to full width */
+    }
+
+        .message.sent {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end; /* Align sent messages to the right */
+        }
+
+        .message.received {
+            background-color: #f1f1f1;
+            color: black;
+            align-self: flex-start; /* Align received messages to the left */
+        }
+
+    .chat-messages {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column; /* Ensure messages stack vertically */
+        padding: 10px;
+        overflow-y: auto; /* Enable scrollbar when content overflows */
+        background-color: #f9f9f9;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .chat-input {
+        display: flex;
+        padding: 10px;
+    }
+
+        .chat-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .chat-input button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+            .chat-input button:hover {
+                background-color: #0056b3;
+            }
+</style>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Chat</title>
+</head>
+<body>
+    <!-- Prompt for User Name -->
+    <div id="namePrompt" class="modal">
+        <div class="modal-content">
+            <h2>Welcome!</h2>
+            <p>Please enter your name:</p>
+            <input type="text" id="userName" placeholder="Your Name">
+            <button onclick="submitName()">Continue</button>
+        </div>
+    </div>
+
+    <!-- Chat Page -->
+    <div id="chatPage" class="chat-container hidden">
+        <header>
+            <h2 id="chatGroupName">Group Chat</h2>
+        </header>
+        <div id="chatMessages" class="chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type your message here... Use @gpt to involve in a chatgpt robot">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script>
+        let socket;
+        let realUserName;
+
+        document.getElementById('userName').addEventListener('keydown', function (event) {
+            if (!realUserName && event.key === 'Enter') {
+                submitName();
+            }
+        });
+
+        function submitName() {
+            const userName = document.getElementById('userName').value;
+            if (userName) {
+                document.getElementById('namePrompt').classList.add('hidden');
+                document.getElementById('chatPage').classList.remove('hidden');
+
+                realUserName = userName;
+                initializeSocket(realUserName);
+            } else {
+                alert('Please enter your name');
+            }
+        }
+
+        function appendMessage(isSender, message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageElement = createMessageElement(message, isSender, null)
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function createMessageElement(message, isSender, id) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', isSender ? 'sent' : 'received');
+            messageElement.innerText = message;
+            if (id) {
+                messageElement.id = id;
+            }
+            return messageElement;
+        }
+
+        function sendMessage() {
+            const message = document.getElementById('chatInput').value;
+            if (message) {
+                appendMessage(true, message);
+                document.getElementById('chatInput').value = '';
+                socket.emit('chat', message);
+            }
+        }
+
+        async function initializeSocket(userId) {
+            const negotiateResponse = await fetch(`/api/negotiate?userId=${userId}`);
+            if (!negotiateResponse.ok) {
+                console.log("Failed to negotiate, status code =", negotiateResponse.status);
+                return;
+            }
+            const negotiateJson = await negotiateResponse.json();
+            socket = io(negotiateJson.endpoint, {
+                path: negotiateJson.path,
+                query: { access_token: negotiateJson.token}
+            });
+
+            socket.on('disconnect', () => {
+                console.log('you have been disconnected');
+            });
+
+            socket.io.on('reconnect', () => {
+                console.log('you have been reconnected');
+            });
+
+            socket.io.on('reconnect_error', () => {
+                console.log('attempt to reconnect has failed');
+            });
+
+            socket.on('new message', (userId, message) => {
+                appendMessage(false, userId + ": " + message);
+            })
+        }
+    </script>
+</body>
+</html>

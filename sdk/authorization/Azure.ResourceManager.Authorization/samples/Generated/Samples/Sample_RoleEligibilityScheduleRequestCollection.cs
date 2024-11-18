@@ -8,20 +8,17 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Authorization.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Authorization.Samples
 {
     public partial class Sample_RoleEligibilityScheduleRequestCollection
     {
-        // PutRoleEligibilityScheduleRequest
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutRoleEligibilityScheduleRequest()
         {
             // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/PutRoleEligibilityScheduleRequest.json
@@ -64,9 +61,8 @@ namespace Azure.ResourceManager.Authorization.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetRoleEligibilityScheduleRequestByName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRoleEligibilityScheduleRequestByName()
         {
             // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleEligibilityScheduleRequestByName.json
@@ -96,9 +92,8 @@ namespace Azure.ResourceManager.Authorization.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetRoleEligibilityScheduleRequestByName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetRoleEligibilityScheduleRequestByName()
         {
             // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleEligibilityScheduleRequestByName.json
@@ -124,9 +119,8 @@ namespace Azure.ResourceManager.Authorization.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetRoleEligibilityScheduleRequestByName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetRoleEligibilityScheduleRequestByName()
         {
             // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleEligibilityScheduleRequestByName.json
@@ -152,7 +146,7 @@ namespace Azure.ResourceManager.Authorization.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -164,9 +158,8 @@ namespace Azure.ResourceManager.Authorization.Samples
             }
         }
 
-        // GetRoleEligibilityScheduleRequestByScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetRoleEligibilityScheduleRequestByScope()
         {
             // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleEligibilityScheduleRequestByScope.json
@@ -196,7 +189,7 @@ namespace Azure.ResourceManager.Authorization.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

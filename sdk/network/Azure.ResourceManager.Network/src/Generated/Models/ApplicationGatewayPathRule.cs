@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="paths"> Path rules of URL path map. </param>
         /// <param name="backendAddressPool"> Backend address pool resource of URL path map path rule. </param>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="loadDistributionPolicy"> Load Distribution Policy resource of URL path map path rule. </param>
         /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, name, resourceType)
+        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Paths = paths;

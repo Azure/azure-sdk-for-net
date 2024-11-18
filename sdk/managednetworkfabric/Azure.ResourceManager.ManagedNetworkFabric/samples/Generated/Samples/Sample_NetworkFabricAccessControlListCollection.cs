@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkFabricAccessControlListCollection
     {
-        // AccessControlLists_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AccessControlListsCreateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_Create_MaximumSet_Gen.json
@@ -55,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 new AccessControlListMatchConfiguration()
 {
 MatchConfigurationName = "example-match",
-SequenceNumber = 123,
+SequenceNumber = 123L,
 IPAddressType = NetworkFabricIPAddressType.IPv4,
 MatchConditions =
 {
@@ -196,9 +193,8 @@ Ports =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AccessControlLists_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AccessControlListsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_Get_MaximumSet_Gen.json
@@ -230,9 +226,8 @@ Ports =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AccessControlLists_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_AccessControlListsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_Get_MaximumSet_Gen.json
@@ -260,9 +255,8 @@ Ports =
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AccessControlLists_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AccessControlListsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_Get_MaximumSet_Gen.json
@@ -290,7 +284,7 @@ Ports =
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -302,9 +296,8 @@ Ports =
             }
         }
 
-        // AccessControlLists_ListByResourceGroup_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AccessControlListsListByResourceGroupMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_ListByResourceGroup_MaximumSet_Gen.json
@@ -335,7 +328,7 @@ Ports =
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

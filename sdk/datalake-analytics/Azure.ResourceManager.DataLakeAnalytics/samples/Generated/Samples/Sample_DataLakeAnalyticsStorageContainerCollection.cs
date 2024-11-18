@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataLakeAnalytics;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 {
     public partial class Sample_DataLakeAnalyticsStorageContainerCollection
     {
-        // Lists the Azure Storage containers
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListsTheAzureStorageContainers()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/StorageAccounts_ListStorageContainers.json
@@ -52,12 +49,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets the specified Azure Storage container
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheSpecifiedAzureStorageContainer()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/StorageAccounts_GetStorageContainer.json
@@ -91,9 +87,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets the specified Azure Storage container
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsTheSpecifiedAzureStorageContainer()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/StorageAccounts_GetStorageContainer.json
@@ -123,9 +118,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets the specified Azure Storage container
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsTheSpecifiedAzureStorageContainer()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/StorageAccounts_GetStorageContainer.json
@@ -155,7 +149,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

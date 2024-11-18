@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DeviceProvisioningServices;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
@@ -56,6 +53,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -78,6 +83,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -99,6 +112,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_CheckProvisioningServiceNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,6 +154,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_CheckProvisioningServiceNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

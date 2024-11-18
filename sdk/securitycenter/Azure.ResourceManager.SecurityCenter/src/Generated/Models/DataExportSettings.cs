@@ -5,9 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,8 +27,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> the kind of the settings string. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isEnabled"> Is the data export setting enabled. </param>
-        internal DataExportSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, bool? isEnabled) : base(id, name, resourceType, systemData, kind)
+        internal DataExportSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isEnabled) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             Kind = kind;

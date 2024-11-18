@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -37,6 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="markings"> List of markings to be used in the configuration. </param>
         /// <param name="sourceIPRanges"> Source IP ranges. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="associatedNetworkInterfaces"> Associated Network Interfaces to the DSCP Configuration. </param>
         /// <param name="resourceGuid"> The resource GUID property of the DSCP Configuration resource. </param>
         /// <param name="provisioningState"> The provisioning state of the DSCP Configuration resource. </param>
-        internal DscpConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IList<int> markings, IList<QosIPRange> sourceIPRanges, IList<QosIPRange> destinationIPRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, IList<DscpQosDefinition> qosDefinitionCollection, string qosCollectionId, IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal DscpConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<int> markings, IList<QosIPRange> sourceIPRanges, IList<QosIPRange> destinationIPRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, IList<DscpQosDefinition> qosDefinitionCollection, string qosCollectionId, IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             Markings = markings;

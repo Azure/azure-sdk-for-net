@@ -9,18 +9,16 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataBox;
 using Azure.ResourceManager.DataBox.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataBox.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // ValidateAddressPost
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateAddress_ValidateAddressPost()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/ValidateAddressPost.json
@@ -52,9 +50,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ValidateInputs
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateInputs_ValidateInputs()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/ValidateInputs.json
@@ -104,9 +101,8 @@ TransportPreferences = new TransportPreferences(TransportShipmentType.MicrosoftM
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RegionConfiguration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRegionConfiguration_RegionConfiguration()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/RegionConfiguration.json

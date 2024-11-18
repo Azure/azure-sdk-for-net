@@ -5,17 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class AccessControlListMatchCondition : IUtf8JsonSerializable
+    public partial class AccessControlListMatchCondition : IUtf8JsonSerializable, IJsonModel<AccessControlListMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessControlListMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AccessControlListMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(EtherTypes))
             {
                 writer.WritePropertyName("etherTypes"u8);
@@ -69,46 +88,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(PortCondition))
             {
                 writer.WritePropertyName("portCondition"u8);
-                writer.WriteObjectValue(PortCondition);
+                writer.WriteObjectValue(PortCondition, options);
             }
-            if (Optional.IsCollectionDefined(ProtocolTypes))
-            {
-                writer.WritePropertyName("protocolTypes"u8);
-                writer.WriteStartArray();
-                foreach (var item in ProtocolTypes)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(VlanMatchCondition))
-            {
-                writer.WritePropertyName("vlanMatchCondition"u8);
-                writer.WriteObjectValue(VlanMatchCondition);
-            }
-            if (Optional.IsDefined(IPCondition))
-            {
-                writer.WritePropertyName("ipCondition"u8);
-                writer.WriteObjectValue(IPCondition);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static AccessControlListMatchCondition DeserializeAccessControlListMatchCondition(JsonElement element)
+        AccessControlListMatchCondition IJsonModel<AccessControlListMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAccessControlListMatchCondition(document.RootElement, options);
+        }
+
+        internal static AccessControlListMatchCondition DeserializeAccessControlListMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> etherTypes = default;
-            Optional<IList<string>> fragments = default;
-            Optional<IList<string>> ipLengths = default;
-            Optional<IList<string>> ttlValues = default;
-            Optional<IList<string>> dscpMarkings = default;
-            Optional<AccessControlListPortCondition> portCondition = default;
-            Optional<IList<string>> protocolTypes = default;
-            Optional<VlanMatchCondition> vlanMatchCondition = default;
-            Optional<IPMatchCondition> ipCondition = default;
+            IList<string> etherTypes = default;
+            IList<string> fragments = default;
+            IList<string> ipLengths = default;
+            IList<string> ttlValues = default;
+            IList<string> dscpMarkings = default;
+            AccessControlListPortCondition portCondition = default;
+            IList<string> protocolTypes = default;
+            VlanMatchCondition vlanMatchCondition = default;
+            IPMatchCondition ipCondition = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etherTypes"u8))
@@ -187,7 +201,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    portCondition = AccessControlListPortCondition.DeserializeAccessControlListPortCondition(property.Value);
+                    portCondition = AccessControlListPortCondition.DeserializeAccessControlListPortCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protocolTypes"u8))
@@ -210,7 +224,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value);
+                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipCondition"u8))
@@ -219,11 +233,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value);
+                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AccessControlListMatchCondition(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, Optional.ToList(etherTypes), Optional.ToList(fragments), Optional.ToList(ipLengths), Optional.ToList(ttlValues), Optional.ToList(dscpMarkings), portCondition.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AccessControlListMatchCondition(
+                protocolTypes ?? new ChangeTrackingList<string>(),
+                vlanMatchCondition,
+                ipCondition,
+                serializedAdditionalRawData,
+                etherTypes ?? new ChangeTrackingList<string>(),
+                fragments ?? new ChangeTrackingList<string>(),
+                ipLengths ?? new ChangeTrackingList<string>(),
+                ttlValues ?? new ChangeTrackingList<string>(),
+                dscpMarkings ?? new ChangeTrackingList<string>(),
+                portCondition);
         }
+
+        BinaryData IPersistableModel<AccessControlListMatchCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AccessControlListMatchCondition IPersistableModel<AccessControlListMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAccessControlListMatchCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AccessControlListMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

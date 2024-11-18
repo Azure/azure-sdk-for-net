@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -63,6 +62,11 @@ namespace Azure.ResourceManager.DataFactory
             Status = status;
             ETag = eTag;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryChangeDataCaptureData"/> for deserialization. </summary>
+        internal DataFactoryChangeDataCaptureData()
+        {
         }
 
         /// <summary> The folder that this CDC is in. If not specified, CDC will appear at the root level. </summary>

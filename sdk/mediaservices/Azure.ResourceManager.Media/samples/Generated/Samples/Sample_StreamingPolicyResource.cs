@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Media;
 using Azure.ResourceManager.Media.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Samples
 {
     public partial class Sample_StreamingPolicyResource
     {
-        // Get a Streaming Policy by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAStreamingPolicyByName()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policy-get-by-name.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a Streaming Policy with ClearKey encryption in commonEncryptionCbcs.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesAStreamingPolicyWithClearKeyEncryptionInCommonEncryptionCbcs()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-create-commonEncryptionCbcs-clearKeyEncryption.json
@@ -99,9 +95,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a Streaming Policy with ClearKey encryption in commonEncryptionCenc.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesAStreamingPolicyWithClearKeyEncryptionInCommonEncryptionCenc()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-create-commonEncryptionCenc-clearKeyEncryption.json
@@ -161,9 +156,8 @@ Value = "hev1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a Streaming Policy with clear streaming
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesAStreamingPolicyWithClearStreaming()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-create-clear.json
@@ -198,9 +192,8 @@ Value = "hev1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a Streaming Policy with commonEncryptionCbcs only
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesAStreamingPolicyWithCommonEncryptionCbcsOnly()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-create-commonEncryptionCbcs-only.json
@@ -253,9 +246,8 @@ Value = "hev1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a Streaming Policy with commonEncryptionCenc only
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesAStreamingPolicyWithCommonEncryptionCencOnly()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-create-commonEncryptionCenc-only.json
@@ -323,9 +315,8 @@ Value = "hev1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a Streaming Policy with envelopeEncryption only
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesAStreamingPolicyWithEnvelopeEncryptionOnly()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-create-envelopeEncryption-only.json
@@ -372,9 +363,8 @@ Value = "hev1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates a Streaming Policy with secure streaming
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesAStreamingPolicyWithSecureStreaming()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-create-secure-streaming.json
@@ -472,9 +462,8 @@ Value = "hev1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a Streaming Policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAStreamingPolicy()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-delete.json
@@ -497,7 +486,7 @@ Value = "hev1",
             // invoke the operation
             await streamingPolicy.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

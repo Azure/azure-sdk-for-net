@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Batch.Models;
 
 namespace Azure.ResourceManager.Batch.Mocking
@@ -60,6 +57,14 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <term>Operation Id</term>
         /// <description>BatchAccount_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,6 +87,14 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <term>Operation Id</term>
         /// <description>BatchAccount_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,6 +116,10 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Location_GetQuotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +152,10 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <term>Operation Id</term>
         /// <description>Location_GetQuotas</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
@@ -166,6 +187,10 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <term>Operation Id</term>
         /// <description>Location_ListSupportedVirtualMachineSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The region for which to retrieve Batch service supported SKUs. </param>
@@ -177,7 +202,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListSupportedVirtualMachineSkusRequest(Id.SubscriptionId, locationName, maxresults, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListSupportedVirtualMachineSkusNextPageRequest(nextLink, Id.SubscriptionId, locationName, maxresults, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchSupportedSku.DeserializeBatchSupportedSku, LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchSupportedSku.DeserializeBatchSupportedSku(e), LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -191,6 +216,10 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <term>Operation Id</term>
         /// <description>Location_ListSupportedVirtualMachineSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The region for which to retrieve Batch service supported SKUs. </param>
@@ -202,57 +231,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListSupportedVirtualMachineSkusRequest(Id.SubscriptionId, locationName, maxresults, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListSupportedVirtualMachineSkusNextPageRequest(nextLink, Id.SubscriptionId, locationName, maxresults, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchSupportedSku.DeserializeBatchSupportedSku, LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkus", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of Batch supported Cloud Service VM sizes available at the given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/cloudServiceSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Location_ListSupportedCloudServiceSkus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The region for which to retrieve Batch service supported SKUs. </param>
-        /// <param name="maxresults"> The maximum number of items to return in the response. </param>
-        /// <param name="filter"> OData filter expression. Valid properties for filtering are "familyName". </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchSupportedSku> GetBatchSupportedCloudServiceSkusAsync(AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListSupportedCloudServiceSkusRequest(Id.SubscriptionId, locationName, maxresults, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListSupportedCloudServiceSkusNextPageRequest(nextLink, Id.SubscriptionId, locationName, maxresults, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchSupportedSku.DeserializeBatchSupportedSku, LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedCloudServiceSkus", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of Batch supported Cloud Service VM sizes available at the given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/cloudServiceSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Location_ListSupportedCloudServiceSkus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The region for which to retrieve Batch service supported SKUs. </param>
-        /// <param name="maxresults"> The maximum number of items to return in the response. </param>
-        /// <param name="filter"> OData filter expression. Valid properties for filtering are "familyName". </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BatchSupportedSku> GetBatchSupportedCloudServiceSkus(AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListSupportedCloudServiceSkusRequest(Id.SubscriptionId, locationName, maxresults, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListSupportedCloudServiceSkusNextPageRequest(nextLink, Id.SubscriptionId, locationName, maxresults, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchSupportedSku.DeserializeBatchSupportedSku, LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedCloudServiceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchSupportedSku.DeserializeBatchSupportedSku(e), LocationClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -265,6 +244,10 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Location_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +283,10 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Location_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>

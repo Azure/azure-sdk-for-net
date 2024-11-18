@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownTrigger. </summary>
+    /// <summary> Unknown version of Trigger. </summary>
     internal partial class UnknownTrigger : DataFactoryTriggerProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTrigger"/>. </summary>
@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal UnknownTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             TriggerType = triggerType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownTrigger"/> for deserialization. </summary>
+        internal UnknownTrigger()
+        {
         }
     }
 }

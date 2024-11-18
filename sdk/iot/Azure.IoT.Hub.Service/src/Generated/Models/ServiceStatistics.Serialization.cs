@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<long> connectedDeviceCount = default;
+            long? connectedDeviceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectedDeviceCount"u8))
@@ -31,7 +30,15 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new ServiceStatistics(Optional.ToNullable(connectedDeviceCount));
+            return new ServiceStatistics(connectedDeviceCount);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ServiceStatistics FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeServiceStatistics(document.RootElement);
         }
     }
 }

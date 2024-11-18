@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         [Test]
-        public void CurentReturnsAnInstance()
+        public void CurrentReturnsAnInstance()
         {
             Assert.That(ClientLibraryInformation.Current, Is.Not.Null);
         }

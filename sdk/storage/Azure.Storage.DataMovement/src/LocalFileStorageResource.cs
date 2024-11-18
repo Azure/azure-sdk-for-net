@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
@@ -22,22 +23,12 @@ namespace Azure.Storage.DataMovement
 
         public override string ProviderId => "local";
 
-        /// <summary>
-        /// Defines the recommended Transfer Type of the resource
-        /// </summary>
         protected internal override DataTransferOrder TransferType => DataTransferOrder.Sequential;
 
-        /// <summary>
-        /// Defines the maximum chunk size for the storage resource.
-        /// </summary>
-        /// TODO: consider changing this.
+        protected internal override long MaxSupportedSingleTransferSize => Constants.Blob.Block.MaxStageBytes;
+
         protected internal override long MaxSupportedChunkSize => Constants.Blob.Block.MaxStageBytes;
 
-        /// <summary>
-        /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
-        ///
-        /// Will return default if the length was not set by a GetStorageResources API call.
-        /// </summary>
         protected internal override long? Length => default;
 
         /// <summary>
@@ -83,6 +74,7 @@ namespace Azure.Storage.DataMovement
             long? length = default,
             CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             FileStream stream = new FileStream(_uri.LocalPath, FileMode.Open, FileAccess.Read);
             stream.Position = position;
             return Task.FromResult(new StorageResourceReadStreamResult(stream));
@@ -92,8 +84,7 @@ namespace Azure.Storage.DataMovement
         /// Creates the local file.
         /// </summary>
         /// <param name="overwrite"></param>
-        /// <returns></returns>
-        internal Task CreateAsync(bool overwrite)
+        internal void Create(bool overwrite)
         {
             if (overwrite || !File.Exists(_uri.LocalPath))
             {
@@ -101,9 +92,11 @@ namespace Azure.Storage.DataMovement
                 File.Create(_uri.LocalPath).Close();
                 FileAttributes attributes = File.GetAttributes(_uri.LocalPath);
                 File.SetAttributes(_uri.LocalPath, attributes | FileAttributes.Temporary);
-                return Task.CompletedTask;
             }
-            throw Errors.LocalFileAlreadyExists(_uri.LocalPath);
+            else
+            {
+                throw Errors.LocalFileAlreadyExists(_uri.LocalPath);
+            }
         }
 
         /// <summary>
@@ -135,7 +128,7 @@ namespace Azure.Storage.DataMovement
             long position = options?.Position != default ? options.Position.Value : 0;
             if (position == 0)
             {
-                await CreateAsync(overwrite).ConfigureAwait(false);
+                Create(overwrite);
             }
             if (streamLength > 0)
             {
@@ -149,11 +142,9 @@ namespace Azure.Storage.DataMovement
                     {
                         fileStream.Seek(position, SeekOrigin.Begin);
                     }
-                    await stream.CopyToAsync(
-                        fileStream,
-                        (int)streamLength,
-                        cancellationToken)
-                        .ConfigureAwait(false);
+
+                    int bufferSize = Math.Min((int)streamLength, DataMovementConstants.DefaultStreamCopyBufferSize);
+                    await stream.CopyToAsync(fileStream, bufferSize, cancellationToken).ConfigureAwait(false);
                 }
             }
         }
@@ -209,10 +200,10 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Get properties of the resource.
         ///
-        /// See <see cref="StorageResourceProperties"/>.
+        /// See <see cref="StorageResourceItemProperties"/>.
         /// </summary>
-        /// <returns>Returns the properties of the Local File Storage Resource. See <see cref="StorageResourceProperties"/></returns>
-        protected internal override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        /// <returns>Returns the properties of the Local File Storage Resource. See <see cref="StorageResourceItemProperties"/></returns>
+        protected internal override Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             FileInfo fileInfo = new FileInfo(_uri.LocalPath);
             if (fileInfo.Exists)
@@ -244,7 +235,10 @@ namespace Azure.Storage.DataMovement
         /// If the transfer requires client-side encryption, necessary
         /// operations will occur here.
         /// </summary>
-        protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected internal override Task CompleteTransferAsync(
+            bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
+            CancellationToken cancellationToken = default)
         {
             if (File.Exists(_uri.LocalPath))
             {
@@ -285,5 +279,18 @@ namespace Azure.Storage.DataMovement
         {
             return new LocalDestinationCheckpointData();
         }
+
+        // no-op for get permissions
+        protected internal override Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult((string)default);
+
+        // no-op for set permissions
+        protected internal override Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
     }
 }

@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Automanage;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automanage.Samples
 {
     public partial class Sample_AutomanageHcrpConfigurationProfileAssignmentReportCollection
     {
-        // Get a report for a HCRP configuration profile assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAReportForAHCRPConfigurationProfileAssignment()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/getHCRPReport.json
@@ -53,9 +50,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a report for a HCRP configuration profile assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAReportForAHCRPConfigurationProfileAssignment()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/getHCRPReport.json
@@ -85,9 +81,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a report for a HCRP configuration profile assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAReportForAHCRPConfigurationProfileAssignment()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/getHCRPReport.json
@@ -117,7 +112,7 @@ namespace Azure.ResourceManager.Automanage.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -129,9 +124,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             }
         }
 
-        // List reports by HCRP configuration profiles assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListReportsByHCRPConfigurationProfilesAssignment()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/listReportsByconfigurationProfileHCRPAssignment.json
@@ -164,7 +158,7 @@ namespace Azure.ResourceManager.Automanage.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

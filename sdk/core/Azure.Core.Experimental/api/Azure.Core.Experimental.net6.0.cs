@@ -1,19 +1,5 @@
 namespace Azure
 {
-    public partial class CloudMachine
-    {
-        public CloudMachine(System.IO.Stream configurationContent) { }
-        public CloudMachine(string? configurationFile = null) { }
-        public string DisplayName { get { throw null; } set { } }
-        public string Id { get { throw null; } }
-        public string Region { get { throw null; } }
-        public string SubscriptionId { get { throw null; } }
-        public static Azure.CloudMachine Create(string subscriptionId, string region) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public void Save(System.IO.Stream stream) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public void Save(string filepath) { }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Variant
     {
@@ -127,27 +113,10 @@ namespace Azure
 }
 namespace Azure.Core
 {
-    public partial class LruCache<TKey, TValue> : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.IEnumerable where TKey : notnull
-    {
-        public LruCache(int capacity) { }
-        public int Count { get { throw null; } }
-        public int TotalLength { get { throw null; } }
-        public void AddOrUpdate(TKey key, TValue? val, int length) { }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>> GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGet(TKey key, out TValue? value) { throw null; }
-    }
     [System.AttributeUsageAttribute(System.AttributeTargets.Assembly | System.AttributeTargets.Class, Inherited=false, AllowMultiple=true)]
     public partial class ProvisionableTemplateAttribute : System.Attribute
     {
         public ProvisionableTemplateAttribute(string resourceName) { }
         public string ResourceName { get { throw null; } }
-    }
-    public abstract partial class SchemaValidator
-    {
-        protected SchemaValidator() { }
-        public abstract string GenerateSchema(System.Type dataType);
-        public abstract bool TryValidate(object data, System.Type dataType, string schemaDefinition, out System.Collections.Generic.IEnumerable<System.Exception> validationErrors);
-        public virtual void Validate(object data, System.Type dataType, string schemaDefinition) { }
     }
 }

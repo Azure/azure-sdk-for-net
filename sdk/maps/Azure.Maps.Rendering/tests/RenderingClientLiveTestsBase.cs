@@ -14,8 +14,7 @@ namespace Azure.Maps.Rendering.Tests
         protected MapsRenderingClient CreateClient()
         {
             return InstrumentClient(new MapsRenderingClient(
-                credential: TestEnvironment.Credential,
-                clientId: TestEnvironment.MapAccountClientId,
+                credential: new AzureKeyCredential("<My Subscription Key>"),
                 options: InstrumentClientOptions(new MapsRenderingClientOptions())
             ));
         }

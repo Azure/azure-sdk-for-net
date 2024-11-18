@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
 {
@@ -109,6 +107,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="PostgreSqlLtrServerBackupOperationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlLtrServerBackupOperationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlLtrServerBackupOperationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PostgreSqlLtrServerBackupOperationResource"/> object. </returns>
+        public virtual PostgreSqlLtrServerBackupOperationResource GetPostgreSqlLtrServerBackupOperationResource(ResourceIdentifier id)
+        {
+            PostgreSqlLtrServerBackupOperationResource.ValidateResourceId(id);
+            return new PostgreSqlLtrServerBackupOperationResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="PostgreSqlMigrationResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PostgreSqlMigrationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlMigrationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -121,15 +131,51 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlLtrServerBackupOperationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlLtrServerBackupOperationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlLtrServerBackupOperationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlLtrServerBackupOperationResource"/> object. </returns>
-        public virtual PostgreSqlLtrServerBackupOperationResource GetPostgreSqlLtrServerBackupOperationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual PostgreSqlFlexibleServersPrivateEndpointConnectionResource GetPostgreSqlFlexibleServersPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PostgreSqlLtrServerBackupOperationResource.ValidateResourceId(id);
-            return new PostgreSqlLtrServerBackupOperationResource(Client, id);
+            PostgreSqlFlexibleServersPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new PostgreSqlFlexibleServersPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServersPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServersPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServersPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServersPrivateLinkResource"/> object. </returns>
+        public virtual PostgreSqlFlexibleServersPrivateLinkResource GetPostgreSqlFlexibleServersPrivateLinkResource(ResourceIdentifier id)
+        {
+            PostgreSqlFlexibleServersPrivateLinkResource.ValidateResourceId(id);
+            return new PostgreSqlFlexibleServersPrivateLinkResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerThreatProtectionSettingsModelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerThreatProtectionSettingsModelResource.CreateResourceIdentifier" /> to create a <see cref="ServerThreatProtectionSettingsModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServerThreatProtectionSettingsModelResource"/> object. </returns>
+        public virtual ServerThreatProtectionSettingsModelResource GetServerThreatProtectionSettingsModelResource(ResourceIdentifier id)
+        {
+            ServerThreatProtectionSettingsModelResource.ValidateResourceId(id);
+            return new ServerThreatProtectionSettingsModelResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualEndpointResource.CreateResourceIdentifier" /> to create a <see cref="VirtualEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualEndpointResource"/> object. </returns>
+        public virtual VirtualEndpointResource GetVirtualEndpointResource(ResourceIdentifier id)
+        {
+            VirtualEndpointResource.ValidateResourceId(id);
+            return new VirtualEndpointResource(Client, id);
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static bool operator ==(DigitalTwinsEndpointProvisioningState left, DigitalTwinsEndpointProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DigitalTwinsEndpointProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(DigitalTwinsEndpointProvisioningState left, DigitalTwinsEndpointProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DigitalTwinsEndpointProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DigitalTwinsEndpointProvisioningState"/>. </summary>
         public static implicit operator DigitalTwinsEndpointProvisioningState(string value) => new DigitalTwinsEndpointProvisioningState(value);
 
         /// <inheritdoc />
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

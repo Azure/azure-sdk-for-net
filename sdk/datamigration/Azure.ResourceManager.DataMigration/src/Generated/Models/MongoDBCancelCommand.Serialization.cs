@@ -5,37 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBCancelCommand : IUtf8JsonSerializable
+    public partial class MongoDBCancelCommand : IUtf8JsonSerializable, IJsonModel<MongoDBCancelCommand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBCancelCommand>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MongoDBCancelCommand>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Input))
-            {
-                writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
-            }
-            writer.WritePropertyName("commandType"u8);
-            writer.WriteStringValue(CommandType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static MongoDBCancelCommand DeserializeMongoDBCancelCommand(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCancelCommand>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBCancelCommand)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Input))
+            {
+                writer.WritePropertyName("input"u8);
+                writer.WriteObjectValue(Input, options);
+            }
+        }
+
+        MongoDBCancelCommand IJsonModel<MongoDBCancelCommand>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCancelCommand>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBCancelCommand)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBCancelCommand(document.RootElement, options);
+        }
+
+        internal static MongoDBCancelCommand DeserializeMongoDBCancelCommand(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MongoDBCommandInput> input = default;
+            MongoDBCommandInput input = default;
             CommandType commandType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<CommandState> state = default;
+            IReadOnlyList<ODataError> errors = default;
+            CommandState? state = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -44,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = MongoDBCommandInput.DeserializeMongoDBCommandInput(property.Value);
+                    input = MongoDBCommandInput.DeserializeMongoDBCommandInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("commandType"u8))
@@ -61,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -75,8 +107,44 @@ namespace Azure.ResourceManager.DataMigration.Models
                     state = new CommandState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MongoDBCancelCommand(commandType, Optional.ToList(errors), Optional.ToNullable(state), input.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MongoDBCancelCommand(commandType, errors ?? new ChangeTrackingList<ODataError>(), state, serializedAdditionalRawData, input);
         }
+
+        BinaryData IPersistableModel<MongoDBCancelCommand>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCancelCommand>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBCancelCommand)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MongoDBCancelCommand IPersistableModel<MongoDBCancelCommand>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCancelCommand>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMongoDBCancelCommand(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBCancelCommand)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MongoDBCancelCommand>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.FrontDoor.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.FrontDoor.Samples
 {
     public partial class Sample_FrontDoorExperimentResource
     {
-        // Gets an Experiment by ExperimentName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAnExperimentByExperimentName()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2019-11-01/examples/NetworkExperimentGetExperiment.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Updates an Experiment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesAnExperiment()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2019-11-01/examples/NetworkExperimentUpdateExperiment.json
@@ -88,9 +84,8 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes an Experiment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesAnExperiment()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2019-11-01/examples/NetworkExperimentDeleteExperiment.json
@@ -113,12 +108,11 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             // invoke the operation
             await frontDoorExperiment.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets a Latency Scorecard for a given Experiment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLatencyScorecardsReport_GetsALatencyScorecardForAGivenExperiment()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2019-11-01/examples/NetworkExperimentGetLatencyScorecard.json
@@ -145,13 +139,12 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets a Timeseries for a given Experiment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTimeSeriesReport_GetsATimeseriesForAGivenExperiment()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2019-11-01/examples/NetworkExperimentGetTimeseries.json
-            // this example is just showing the usage of "Reports_GetTimeseries" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Reports_GetTimeSeries" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

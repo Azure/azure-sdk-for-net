@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_TopLevelDomainCollection
     {
-        // List Top Level Domains
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListTopLevelDomains()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2021-02-01/examples/ListTopLevelDomains.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/ListTopLevelDomains.json
             // this example is just showing the usage of "TopLevelDomains_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,15 +47,14 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Top Level Domain
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTopLevelDomain()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2021-02-01/examples/GetTopLevelDomain.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/GetTopLevelDomain.json
             // this example is just showing the usage of "TopLevelDomains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,12 +82,11 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Top Level Domain
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetTopLevelDomain()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2021-02-01/examples/GetTopLevelDomain.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/GetTopLevelDomain.json
             // this example is just showing the usage of "TopLevelDomains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,12 +110,11 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Top Level Domain
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetTopLevelDomain()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2021-02-01/examples/GetTopLevelDomain.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/GetTopLevelDomain.json
             // this example is just showing the usage of "TopLevelDomains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +138,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

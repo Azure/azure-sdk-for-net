@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
@@ -54,6 +52,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -72,7 +78,9 @@ namespace Azure.ResourceManager.ManagedNetwork
             try
             {
                 var response = await _scopeAssignmentRestClient.CreateOrUpdateAsync(Id, scopeAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _scopeAssignmentRestClient.CreateCreateOrUpdateRequestUri(Id, scopeAssignmentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,6 +103,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -113,7 +129,9 @@ namespace Azure.ResourceManager.ManagedNetwork
             try
             {
                 var response = _scopeAssignmentRestClient.CreateOrUpdate(Id, scopeAssignmentName, data, cancellationToken);
-                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _scopeAssignmentRestClient.CreateCreateOrUpdateRequestUri(Id, scopeAssignmentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -135,6 +153,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,6 +199,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeAssignmentName"> The name of the scope assignment to get. </param>
@@ -210,6 +244,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -232,6 +274,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -253,6 +303,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,6 +347,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeAssignmentName"> The name of the scope assignment to get. </param>
@@ -323,6 +389,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,6 +434,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

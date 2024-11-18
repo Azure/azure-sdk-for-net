@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FormatReadSettings : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownFormatReadSettings))]
+    public partial class FormatReadSettings : IUtf8JsonSerializable, IJsonModel<FormatReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FormatReadSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FormatReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FormatReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FormatReadSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatReadSettingsType);
             foreach (var item in AdditionalProperties)
@@ -29,11 +48,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static FormatReadSettings DeserializeFormatReadSettings(JsonElement element)
+        FormatReadSettings IJsonModel<FormatReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FormatReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FormatReadSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFormatReadSettings(document.RootElement, options);
+        }
+
+        internal static FormatReadSettings DeserializeFormatReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,14 +74,45 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "BinaryReadSettings": return BinaryReadSettings.DeserializeBinaryReadSettings(element);
-                    case "DelimitedTextReadSettings": return DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(element);
-                    case "JsonReadSettings": return JsonReadSettings.DeserializeJsonReadSettings(element);
-                    case "XmlReadSettings": return XmlReadSettings.DeserializeXmlReadSettings(element);
-                    case "ParquetReadSettings": return ParquetReadSettings.DeserializeParquetReadSettings(element);
+                    case "BinaryReadSettings": return BinaryReadSettings.DeserializeBinaryReadSettings(element, options);
+                    case "DelimitedTextReadSettings": return DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(element, options);
+                    case "JsonReadSettings": return JsonReadSettings.DeserializeJsonReadSettings(element, options);
+                    case "ParquetReadSettings": return ParquetReadSettings.DeserializeParquetReadSettings(element, options);
+                    case "XmlReadSettings": return XmlReadSettings.DeserializeXmlReadSettings(element, options);
                 }
             }
-            return UnknownFormatReadSettings.DeserializeUnknownFormatReadSettings(element);
+            return UnknownFormatReadSettings.DeserializeUnknownFormatReadSettings(element, options);
         }
+
+        BinaryData IPersistableModel<FormatReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FormatReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FormatReadSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FormatReadSettings IPersistableModel<FormatReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FormatReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFormatReadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FormatReadSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FormatReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

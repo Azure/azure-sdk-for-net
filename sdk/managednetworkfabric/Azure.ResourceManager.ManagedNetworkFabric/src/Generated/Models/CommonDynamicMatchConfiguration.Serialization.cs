@@ -5,24 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class CommonDynamicMatchConfiguration : IUtf8JsonSerializable
+    public partial class CommonDynamicMatchConfiguration : IUtf8JsonSerializable, IJsonModel<CommonDynamicMatchConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonDynamicMatchConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CommonDynamicMatchConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonDynamicMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(IPGroups))
             {
                 writer.WritePropertyName("ipGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -32,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in VlanGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,22 +60,52 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in PortGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static CommonDynamicMatchConfiguration DeserializeCommonDynamicMatchConfiguration(JsonElement element)
+        CommonDynamicMatchConfiguration IJsonModel<CommonDynamicMatchConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonDynamicMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommonDynamicMatchConfiguration(document.RootElement, options);
+        }
+
+        internal static CommonDynamicMatchConfiguration DeserializeCommonDynamicMatchConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<MatchConfigurationIPGroupProperties>> ipGroups = default;
-            Optional<IList<VlanGroupProperties>> vlanGroups = default;
-            Optional<IList<PortGroupProperties>> portGroups = default;
+            IList<MatchConfigurationIPGroupProperties> ipGroups = default;
+            IList<VlanGroupProperties> vlanGroups = default;
+            IList<PortGroupProperties> portGroups = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipGroups"u8))
@@ -69,7 +117,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<MatchConfigurationIPGroupProperties> array = new List<MatchConfigurationIPGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchConfigurationIPGroupProperties.DeserializeMatchConfigurationIPGroupProperties(item));
+                        array.Add(MatchConfigurationIPGroupProperties.DeserializeMatchConfigurationIPGroupProperties(item, options));
                     }
                     ipGroups = array;
                     continue;
@@ -83,7 +131,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<VlanGroupProperties> array = new List<VlanGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VlanGroupProperties.DeserializeVlanGroupProperties(item));
+                        array.Add(VlanGroupProperties.DeserializeVlanGroupProperties(item, options));
                     }
                     vlanGroups = array;
                     continue;
@@ -97,13 +145,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<PortGroupProperties> array = new List<PortGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PortGroupProperties.DeserializePortGroupProperties(item));
+                        array.Add(PortGroupProperties.DeserializePortGroupProperties(item, options));
                     }
                     portGroups = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CommonDynamicMatchConfiguration(Optional.ToList(ipGroups), Optional.ToList(vlanGroups), Optional.ToList(portGroups));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CommonDynamicMatchConfiguration(ipGroups ?? new ChangeTrackingList<MatchConfigurationIPGroupProperties>(), vlanGroups ?? new ChangeTrackingList<VlanGroupProperties>(), portGroups ?? new ChangeTrackingList<PortGroupProperties>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CommonDynamicMatchConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonDynamicMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CommonDynamicMatchConfiguration IPersistableModel<CommonDynamicMatchConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonDynamicMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCommonDynamicMatchConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CommonDynamicMatchConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

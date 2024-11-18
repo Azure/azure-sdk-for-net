@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,8 +20,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<ResourceNotificationsResourceDeletedDetails> resourceInfo = default;
-            Optional<ResourceNotificationsOperationalDetails> operationalInfo = default;
+            ResourceNotificationsResourceDeletedDetails resourceInfo = default;
+            ResourceNotificationsOperationalDetails operationalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceInfo"u8))
@@ -44,7 +43,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ResourceNotificationsResourceDeletedEventData(resourceInfo.Value, operationalInfo.Value);
+            return new ResourceNotificationsResourceDeletedEventData(resourceInfo, operationalInfo);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ResourceNotificationsResourceDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeResourceNotificationsResourceDeletedEventData(document.RootElement);
         }
 
         internal partial class ResourceNotificationsResourceDeletedEventDataConverter : JsonConverter<ResourceNotificationsResourceDeletedEventData>
@@ -53,6 +60,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override ResourceNotificationsResourceDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

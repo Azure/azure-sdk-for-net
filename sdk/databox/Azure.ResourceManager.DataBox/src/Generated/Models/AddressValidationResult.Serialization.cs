@@ -5,25 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class AddressValidationResult
+    public partial class AddressValidationResult : IUtf8JsonSerializable, IJsonModel<AddressValidationResult>
     {
-        internal static AddressValidationResult DeserializeAddressValidationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddressValidationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AddressValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddressValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AddressValidationResult)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ValidationStatus))
+            {
+                writer.WritePropertyName("validationStatus"u8);
+                writer.WriteStringValue(ValidationStatus.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AlternateAddresses))
+            {
+                writer.WritePropertyName("alternateAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in AlternateAddresses)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+        }
+
+        AddressValidationResult IJsonModel<AddressValidationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddressValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AddressValidationResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAddressValidationResult(document.RootElement, options);
+        }
+
+        internal static AddressValidationResult DeserializeAddressValidationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AddressValidationStatus> validationStatus = default;
-            Optional<IReadOnlyList<DataBoxShippingAddress>> alternateAddresses = default;
+            AddressValidationStatus? validationStatus = default;
+            IReadOnlyList<DataBoxShippingAddress> alternateAddresses = default;
             DataBoxValidationInputDiscriminator validationType = default;
-            Optional<ResponseError> error = default;
+            ResponseError error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationStatus"u8))
@@ -44,7 +98,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxShippingAddress> array = new List<DataBoxShippingAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxShippingAddress.DeserializeDataBoxShippingAddress(item));
+                        array.Add(DataBoxShippingAddress.DeserializeDataBoxShippingAddress(item, options));
                     }
                     alternateAddresses = array;
                     continue;
@@ -63,8 +117,44 @@ namespace Azure.ResourceManager.DataBox.Models
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AddressValidationResult(validationType, error.Value, Optional.ToNullable(validationStatus), Optional.ToList(alternateAddresses));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AddressValidationResult(validationType, error, serializedAdditionalRawData, validationStatus, alternateAddresses ?? new ChangeTrackingList<DataBoxShippingAddress>());
         }
+
+        BinaryData IPersistableModel<AddressValidationResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddressValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AddressValidationResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AddressValidationResult IPersistableModel<AddressValidationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddressValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAddressValidationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AddressValidationResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AddressValidationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

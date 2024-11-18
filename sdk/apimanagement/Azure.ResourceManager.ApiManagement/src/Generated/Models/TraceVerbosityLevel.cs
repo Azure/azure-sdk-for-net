@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(TraceVerbosityLevel left, TraceVerbosityLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TraceVerbosityLevel"/> values are not the same. </summary>
         public static bool operator !=(TraceVerbosityLevel left, TraceVerbosityLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TraceVerbosityLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TraceVerbosityLevel"/>. </summary>
         public static implicit operator TraceVerbosityLevel(string value) => new TraceVerbosityLevel(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

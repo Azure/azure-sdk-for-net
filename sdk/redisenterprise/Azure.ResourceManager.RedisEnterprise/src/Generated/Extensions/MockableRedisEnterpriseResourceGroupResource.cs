@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Mocking
 {
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         }
 
         /// <summary>
-        /// Gets information about a RedisEnterprise cluster
+        /// Gets information about a Redis Enterprise cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -54,9 +51,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -67,7 +72,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         }
 
         /// <summary>
-        /// Gets information about a RedisEnterprise cluster
+        /// Gets information about a Redis Enterprise cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -77,9 +82,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>

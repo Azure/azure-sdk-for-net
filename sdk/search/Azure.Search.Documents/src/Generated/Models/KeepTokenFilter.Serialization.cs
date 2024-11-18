@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> keepWords = default;
-            Optional<bool> keepWordsCase = default;
+            bool? keepWordsCase = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -77,7 +77,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KeepTokenFilter(odataType, name, keepWords, Optional.ToNullable(keepWordsCase));
+            return new KeepTokenFilter(odataType, name, keepWords, keepWordsCase);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new KeepTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeepTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

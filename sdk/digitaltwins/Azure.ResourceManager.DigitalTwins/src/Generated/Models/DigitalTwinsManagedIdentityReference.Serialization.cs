@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsManagedIdentityReference : IUtf8JsonSerializable
+    public partial class DigitalTwinsManagedIdentityReference : IUtf8JsonSerializable, IJsonModel<DigitalTwinsManagedIdentityReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsManagedIdentityReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DigitalTwinsManagedIdentityReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsManagedIdentityReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsManagedIdentityReference)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
@@ -32,17 +51,47 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("userAssignedIdentity");
                 }
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DigitalTwinsManagedIdentityReference DeserializeDigitalTwinsManagedIdentityReference(JsonElement element)
+        DigitalTwinsManagedIdentityReference IJsonModel<DigitalTwinsManagedIdentityReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsManagedIdentityReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsManagedIdentityReference)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDigitalTwinsManagedIdentityReference(document.RootElement, options);
+        }
+
+        internal static DigitalTwinsManagedIdentityReference DeserializeDigitalTwinsManagedIdentityReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DigitalTwinsManagedIdentityType> type = default;
-            Optional<string> userAssignedIdentity = default;
+            DigitalTwinsManagedIdentityType? type = default;
+            string userAssignedIdentity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -64,8 +113,44 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     userAssignedIdentity = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DigitalTwinsManagedIdentityReference(Optional.ToNullable(type), userAssignedIdentity.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DigitalTwinsManagedIdentityReference(type, userAssignedIdentity, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DigitalTwinsManagedIdentityReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsManagedIdentityReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DigitalTwinsManagedIdentityReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DigitalTwinsManagedIdentityReference IPersistableModel<DigitalTwinsManagedIdentityReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsManagedIdentityReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDigitalTwinsManagedIdentityReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DigitalTwinsManagedIdentityReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DigitalTwinsManagedIdentityReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

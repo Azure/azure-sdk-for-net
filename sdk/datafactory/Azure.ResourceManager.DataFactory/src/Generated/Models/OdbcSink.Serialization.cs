@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,47 +14,32 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class OdbcSink : IUtf8JsonSerializable
+    public partial class OdbcSink : IUtf8JsonSerializable, IJsonModel<OdbcSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OdbcSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<OdbcSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OdbcSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OdbcSink)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
                 JsonSerializer.Serialize(writer, PreCopyScript);
-            }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
-            {
-                writer.WritePropertyName("writeBatchSize"u8);
-                JsonSerializer.Serialize(writer, WriteBatchSize);
-            }
-            if (Optional.IsDefined(WriteBatchTimeout))
-            {
-                writer.WritePropertyName("writeBatchTimeout"u8);
-                JsonSerializer.Serialize(writer, WriteBatchTimeout);
-            }
-            if (Optional.IsDefined(SinkRetryCount))
-            {
-                writer.WritePropertyName("sinkRetryCount"u8);
-                JsonSerializer.Serialize(writer, SinkRetryCount);
-            }
-            if (Optional.IsDefined(SinkRetryWait))
-            {
-                writer.WritePropertyName("sinkRetryWait"u8);
-                JsonSerializer.Serialize(writer, SinkRetryWait);
-            }
-            if (Optional.IsDefined(MaxConcurrentConnections))
-            {
-                writer.WritePropertyName("maxConcurrentConnections"u8);
-                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
-            }
-            if (Optional.IsDefined(DisableMetricsCollection))
-            {
-                writer.WritePropertyName("disableMetricsCollection"u8);
-                JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -67,23 +53,36 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static OdbcSink DeserializeOdbcSink(JsonElement element)
+        OdbcSink IJsonModel<OdbcSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OdbcSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OdbcSink)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOdbcSink(document.RootElement, options);
+        }
+
+        internal static OdbcSink DeserializeOdbcSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> preCopyScript = default;
+            DataFactoryElement<string> preCopyScript = default;
             string type = default;
-            Optional<DataFactoryElement<int>> writeBatchSize = default;
-            Optional<DataFactoryElement<string>> writeBatchTimeout = default;
-            Optional<DataFactoryElement<int>> sinkRetryCount = default;
-            Optional<DataFactoryElement<string>> sinkRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> writeBatchSize = default;
+            DataFactoryElement<string> writeBatchTimeout = default;
+            DataFactoryElement<int> sinkRetryCount = default;
+            DataFactoryElement<string> sinkRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +158,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OdbcSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, preCopyScript.Value);
+            return new OdbcSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                preCopyScript);
         }
+
+        BinaryData IPersistableModel<OdbcSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OdbcSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OdbcSink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OdbcSink IPersistableModel<OdbcSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OdbcSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOdbcSink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OdbcSink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OdbcSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

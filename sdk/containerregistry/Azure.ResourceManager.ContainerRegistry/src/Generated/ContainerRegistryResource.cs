@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Resources;
 
@@ -119,6 +117,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_GetPrivateLinkResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
@@ -141,6 +147,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_GetPrivateLinkResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,6 +186,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
@@ -194,6 +216,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,6 +255,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Replications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryReplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="replicationName"> The name of the replication. </param>
@@ -247,6 +285,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Replications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryReplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,6 +324,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>ScopeMaps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeMapResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeMapName"> The name of the scope map. </param>
@@ -300,6 +354,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeMaps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,6 +393,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Tokens_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryTokenResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tokenName"> The name of the token. </param>
@@ -353,6 +423,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tokens_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryTokenResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -384,6 +462,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Webhooks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryWebhookResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="webhookName"> The name of the webhook. </param>
@@ -406,6 +492,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Webhooks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryWebhookResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -437,6 +531,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>AgentPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryAgentPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="agentPoolName"> The name of the agent pool. </param>
@@ -459,6 +561,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AgentPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -490,6 +600,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Runs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="runId"> The run ID. </param>
@@ -512,6 +630,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Runs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -543,6 +669,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>TaskRuns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryTaskRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskRunName"> The name of the task run. </param>
@@ -565,6 +699,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TaskRuns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryTaskRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -596,6 +738,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Tasks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskName"> The name of the container registry task. </param>
@@ -619,6 +769,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Tasks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskName"> The name of the container registry task. </param>
@@ -641,6 +799,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -674,6 +840,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -705,6 +879,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -740,6 +922,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -773,6 +963,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -812,6 +1010,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -849,6 +1055,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_ImportImage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -888,6 +1102,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_ImportImage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -926,6 +1148,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_ListUsages</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -933,7 +1163,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         public virtual AsyncPageable<ContainerRegistryUsage> GetUsagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryRegistriesRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerRegistryUsage.DeserializeContainerRegistryUsage, _containerRegistryRegistriesClientDiagnostics, Pipeline, "ContainerRegistryResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ContainerRegistryUsage.DeserializeContainerRegistryUsage(e), _containerRegistryRegistriesClientDiagnostics, Pipeline, "ContainerRegistryResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -947,6 +1177,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_ListUsages</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -954,7 +1192,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         public virtual Pageable<ContainerRegistryUsage> GetUsages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryRegistriesRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ContainerRegistryUsage.DeserializeContainerRegistryUsage, _containerRegistryRegistriesClientDiagnostics, Pipeline, "ContainerRegistryResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ContainerRegistryUsage.DeserializeContainerRegistryUsage(e), _containerRegistryRegistriesClientDiagnostics, Pipeline, "ContainerRegistryResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -967,6 +1205,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_ListCredentials</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -998,6 +1244,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_ListCredentials</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1027,6 +1281,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_RegenerateCredential</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1062,6 +1324,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_RegenerateCredential</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Specifies name of the password which should be regenerated -- password or password2. </param>
@@ -1095,6 +1365,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_GenerateCredentials</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1134,6 +1412,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_GenerateCredentials</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1171,6 +1457,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Schedules_ScheduleRun</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1210,6 +1500,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Schedules_ScheduleRun</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1248,6 +1542,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Builds_GetBuildSourceUploadUrl</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1278,6 +1576,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Builds_GetBuildSourceUploadUrl</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1307,6 +1609,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1362,6 +1672,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1416,6 +1734,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1465,6 +1791,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1513,6 +1847,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1565,6 +1907,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -23,6 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHostPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sku"> [List all available dedicated host sizes for resizing] (https://docs.microsoft.com/rest/api/compute/dedicated-hosts/listavailablesizes). Resizing can be only used to scale up DedicatedHost. Only name is required to be set. </param>
         /// <param name="platformFaultDomain"> Fault domain of the dedicated host within a dedicated host group. </param>
         /// <param name="autoReplaceOnFailure"> Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to 'true' when not provided. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The dedicated host instance view. </param>
         /// <param name="timeCreated"> Specifies the time at which the Dedicated Host resource was created. Minimum api-version: 2021-11-01. </param>
-        internal DedicatedHostPatch(IDictionary<string, string> tags, ComputeSku sku, int? platformFaultDomain, bool? autoReplaceOnFailure, string hostId, IReadOnlyList<SubResource> virtualMachines, DedicatedHostLicenseType? licenseType, DateTimeOffset? provisioningOn, string provisioningState, DedicatedHostInstanceView instanceView, DateTimeOffset? timeCreated) : base(tags)
+        internal DedicatedHostPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ComputeSku sku, int? platformFaultDomain, bool? autoReplaceOnFailure, string hostId, IReadOnlyList<SubResource> virtualMachines, DedicatedHostLicenseType? licenseType, DateTimeOffset? provisioningOn, string provisioningState, DedicatedHostInstanceView instanceView, DateTimeOffset? timeCreated) : base(tags, serializedAdditionalRawData)
         {
             Sku = sku;
             PlatformFaultDomain = platformFaultDomain;

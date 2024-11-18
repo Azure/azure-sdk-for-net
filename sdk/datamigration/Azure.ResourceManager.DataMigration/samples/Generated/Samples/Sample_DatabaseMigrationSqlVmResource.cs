@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataMigration;
 using Azure.ResourceManager.DataMigration.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataMigration.Samples
 {
     public partial class Sample_DatabaseMigrationSqlVmResource
     {
-        // Get Sql VM database Migration with the expand parameter.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlVMDatabaseMigrationWithTheExpandParameter()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigrationExpanded.json
@@ -51,9 +48,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Sql VM database Migration without the expand parameter.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlVMDatabaseMigrationWithoutTheExpandParameter()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigration.json
@@ -83,9 +79,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or Update Database Migration resource with Maximum parameters.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateDatabaseMigrationResourceWithMaximumParameters()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmCreateOrUpdateDatabaseMigrationMAX.json
@@ -156,9 +151,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or Update Database Migration resource with Minimum parameters.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateDatabaseMigrationResourceWithMinimumParameters()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmCreateOrUpdateDatabaseMigrationMIN.json
@@ -224,13 +218,12 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Stop ongoing migration for the database.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Cancel_StopOngoingMigrationForTheDatabase()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmCancelDatabaseMigration.json
-            // this example is just showing the usage of "DatabaseMigrationsSqlVm_cancel" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DatabaseMigrationsSqlVm_Cancel" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -253,16 +246,15 @@ namespace Azure.ResourceManager.DataMigration.Samples
             };
             await databaseMigrationSqlVm.CancelAsync(WaitUntil.Completed, input);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Cutover online migration operation for the database.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Cutover_CutoverOnlineMigrationOperationForTheDatabase()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmCutoverDatabaseMigration.json
-            // this example is just showing the usage of "DatabaseMigrationsSqlVm_cutover" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DatabaseMigrationsSqlVm_Cutover" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -285,7 +277,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             };
             await databaseMigrationSqlVm.CutoverAsync(WaitUntil.Completed, input);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

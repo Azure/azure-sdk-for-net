@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Resources;
 
@@ -110,6 +108,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetAssociation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
@@ -133,6 +139,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetAssociation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
@@ -155,6 +169,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetPlan</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,6 +210,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetPlan</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -219,6 +249,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_DeletePlan</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -254,6 +292,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_DeletePlan</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -288,22 +334,30 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_UpdatePlan</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The parameters to provide for the created commitment plan. </param>
+        /// <param name="commitmentPlan"> The parameters to provide for the created commitment plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<CognitiveServicesCommitmentPlanResource>> UpdateAsync(WaitUntil waitUntil, CognitiveServicesCommitmentPlanPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlan"/> is null. </exception>
+        public virtual async Task<ArmOperation<CognitiveServicesCommitmentPlanResource>> UpdateAsync(WaitUntil waitUntil, PatchResourceTagsAndSku commitmentPlan, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(commitmentPlan, nameof(commitmentPlan));
 
             using var scope = _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.Update");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.UpdatePlanAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(new CognitiveServicesCommitmentPlanOperationSource(Client), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.UpdatePlanAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlan, cancellationToken).ConfigureAwait(false);
+                var operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(new CognitiveServicesCommitmentPlanOperationSource(Client), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlan).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -326,22 +380,30 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_UpdatePlan</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The parameters to provide for the created commitment plan. </param>
+        /// <param name="commitmentPlan"> The parameters to provide for the created commitment plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<CognitiveServicesCommitmentPlanResource> Update(WaitUntil waitUntil, CognitiveServicesCommitmentPlanPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlan"/> is null. </exception>
+        public virtual ArmOperation<CognitiveServicesCommitmentPlanResource> Update(WaitUntil waitUntil, PatchResourceTagsAndSku commitmentPlan, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(commitmentPlan, nameof(commitmentPlan));
 
             using var scope = _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics.CreateScope("CognitiveServicesCommitmentPlanResource.Update");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.UpdatePlan(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(new CognitiveServicesCommitmentPlanOperationSource(Client), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.UpdatePlan(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlan, cancellationToken);
+                var operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(new CognitiveServicesCommitmentPlanOperationSource(Client), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlan).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -363,6 +425,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetPlan</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -390,7 +460,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new CognitiveServicesCommitmentPlanPatch();
+                    var patch = new PatchResourceTagsAndSku();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -418,6 +488,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetPlan</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -444,7 +522,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new CognitiveServicesCommitmentPlanPatch();
+                    var patch = new PatchResourceTagsAndSku();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -472,6 +550,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetPlan</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -497,7 +583,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new CognitiveServicesCommitmentPlanPatch();
+                    var patch = new PatchResourceTagsAndSku();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -520,6 +606,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetPlan</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -546,7 +640,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new CognitiveServicesCommitmentPlanPatch();
+                    var patch = new PatchResourceTagsAndSku();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -569,6 +663,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetPlan</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -594,7 +696,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new CognitiveServicesCommitmentPlanPatch();
+                    var patch = new PatchResourceTagsAndSku();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -622,6 +724,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetPlan</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesCommitmentPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -646,7 +756,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new CognitiveServicesCommitmentPlanPatch();
+                    var patch = new PatchResourceTagsAndSku();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

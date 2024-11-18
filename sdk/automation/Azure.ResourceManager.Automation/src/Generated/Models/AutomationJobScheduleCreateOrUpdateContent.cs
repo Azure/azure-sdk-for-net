@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the create job schedule operation. </summary>
     public partial class AutomationJobScheduleCreateOrUpdateContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AutomationJobScheduleCreateOrUpdateContent"/>. </summary>
         /// <param name="schedule"> Gets or sets the schedule. </param>
         /// <param name="runbook"> Gets or sets the runbook. </param>
@@ -33,12 +64,19 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="runbook"> Gets or sets the runbook. </param>
         /// <param name="runOn"> Gets or sets the hybrid worker group that the scheduled job should run on. </param>
         /// <param name="parameters"> Gets or sets a list of job properties. </param>
-        internal AutomationJobScheduleCreateOrUpdateContent(ScheduleAssociationProperty schedule, RunbookAssociationProperty runbook, string runOn, IDictionary<string, string> parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationJobScheduleCreateOrUpdateContent(ScheduleAssociationProperty schedule, RunbookAssociationProperty runbook, string runOn, IDictionary<string, string> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Schedule = schedule;
             Runbook = runbook;
             RunOn = runOn;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationJobScheduleCreateOrUpdateContent"/> for deserialization. </summary>
+        internal AutomationJobScheduleCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Gets or sets the schedule. </summary>

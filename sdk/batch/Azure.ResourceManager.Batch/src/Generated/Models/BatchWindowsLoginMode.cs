@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> Specifies login mode for the user. The default value for VirtualMachineConfiguration pools is interactive mode and for CloudServiceConfiguration pools is batch mode. </summary>
+    /// <summary> Specifies login mode for the user. The default value is Interactive. </summary>
     public enum BatchWindowsLoginMode
     {
         /// <summary> The LOGON32_LOGON_BATCH Win32 login mode. The batch login mode is recommended for long running parallel processes. </summary>

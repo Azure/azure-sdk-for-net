@@ -7,24 +7,21 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NetApp;
 using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // CheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckNetAppNameAvailability_CheckNameAvailability()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/CheckNameAvailability.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/CheckNameAvailability.json
             // this example is just showing the usage of "NetAppResource_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -40,18 +37,17 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("eastus");
-            NetAppNameAvailabilityContent content = new NetAppNameAvailabilityContent("accName", new NetAppNameAvailabilityResourceType("netAppAccount"), "myRG");
+            NetAppNameAvailabilityContent content = new NetAppNameAvailabilityContent("accName", NetAppNameAvailabilityResourceType.MicrosoftNetAppNetAppAccounts, "myRG");
             NetAppCheckAvailabilityResult result = await subscriptionResource.CheckNetAppNameAvailabilityAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CheckFilePathAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckNetAppFilePathAvailability_CheckFilePathAvailability()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/CheckFilePathAvailability.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/CheckFilePathAvailability.json
             // this example is just showing the usage of "NetAppResource_CheckFilePathAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,12 +69,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CheckQuotaAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckNetAppQuotaAvailability_CheckQuotaAvailability()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/CheckQuotaAvailability.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/CheckQuotaAvailability.json
             // this example is just showing the usage of "NetAppResource_CheckQuotaAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,12 +95,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RegionInfo_Query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task QueryRegionInfoNetAppResource_RegionInfoQuery()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/RegionInfo.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/RegionInfo.json
             // this example is just showing the usage of "NetAppResource_QueryRegionInfo" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,12 +120,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkSiblingSet_Query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task QueryNetworkSiblingSetNetAppResource_NetworkSiblingSetQuery()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/NetworkSiblingSet_Query.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/NetworkSiblingSet_Query.json
             // this example is just showing the usage of "NetAppResource_QueryNetworkSiblingSet" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,12 +146,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkFeatures_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateNetworkSiblingSetNetAppResource_NetworkFeaturesUpdate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/NetworkSiblingSet_Update.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/NetworkSiblingSet_Update.json
             // this example is just showing the usage of "NetAppResource_UpdateNetworkSiblingSet" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,12 +173,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // QuotaLimits
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetAppQuotaLimits_QuotaLimits()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/QuotaLimits_List.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/QuotaLimits_List.json
             // this example is just showing the usage of "NetAppResourceQuotaLimits_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -207,15 +198,14 @@ namespace Azure.ResourceManager.NetApp.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // QuotaLimits
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetAppQuotaLimit_QuotaLimits()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/QuotaLimits_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/QuotaLimits_Get.json
             // this example is just showing the usage of "NetAppResourceQuotaLimits_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

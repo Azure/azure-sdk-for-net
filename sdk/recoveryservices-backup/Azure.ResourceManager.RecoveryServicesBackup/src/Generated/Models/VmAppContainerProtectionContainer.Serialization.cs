@@ -6,88 +6,70 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmAppContainerProtectionContainer : IUtf8JsonSerializable
+    public partial class VmAppContainerProtectionContainer : IUtf8JsonSerializable, IJsonModel<VmAppContainerProtectionContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmAppContainerProtectionContainer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VmAppContainerProtectionContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceResourceId))
-            {
-                writer.WritePropertyName("sourceResourceId"u8);
-                writer.WriteStringValue(SourceResourceId);
-            }
-            if (Optional.IsDefined(LastUpdatedOn))
-            {
-                writer.WritePropertyName("lastUpdatedTime"u8);
-                writer.WriteStringValue(LastUpdatedOn.Value, "O");
-            }
-            if (Optional.IsDefined(ExtendedInfo))
-            {
-                writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
-            }
-            if (Optional.IsDefined(WorkloadType))
-            {
-                writer.WritePropertyName("workloadType"u8);
-                writer.WriteStringValue(WorkloadType.Value.ToString());
-            }
-            if (Optional.IsDefined(OperationType))
-            {
-                writer.WritePropertyName("operationType"u8);
-                writer.WriteStringValue(OperationType.Value.ToString());
-            }
-            if (Optional.IsDefined(FriendlyName))
-            {
-                writer.WritePropertyName("friendlyName"u8);
-                writer.WriteStringValue(FriendlyName);
-            }
-            if (Optional.IsDefined(BackupManagementType))
-            {
-                writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
-            }
-            if (Optional.IsDefined(RegistrationStatus))
-            {
-                writer.WritePropertyName("registrationStatus"u8);
-                writer.WriteStringValue(RegistrationStatus);
-            }
-            if (Optional.IsDefined(HealthStatus))
-            {
-                writer.WritePropertyName("healthStatus"u8);
-                writer.WriteStringValue(HealthStatus);
-            }
-            writer.WritePropertyName("containerType"u8);
-            writer.WriteStringValue(ContainerType.ToSerialString());
-            if (Optional.IsDefined(ProtectableObjectType))
-            {
-                writer.WritePropertyName("protectableObjectType"u8);
-                writer.WriteStringValue(ProtectableObjectType);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static VmAppContainerProtectionContainer DeserializeVmAppContainerProtectionContainer(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VmAppContainerProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VmAppContainerProtectionContainer)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        VmAppContainerProtectionContainer IJsonModel<VmAppContainerProtectionContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmAppContainerProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VmAppContainerProtectionContainer)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmAppContainerProtectionContainer(document.RootElement, options);
+        }
+
+        internal static VmAppContainerProtectionContainer DeserializeVmAppContainerProtectionContainer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<WorkloadContainerExtendedInfo> extendedInfo = default;
-            Optional<BackupWorkloadType> workloadType = default;
-            Optional<WorkloadOperationType> operationType = default;
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> registrationStatus = default;
-            Optional<string> healthStatus = default;
+            ResourceIdentifier sourceResourceId = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            WorkloadContainerExtendedInfo extendedInfo = default;
+            BackupWorkloadType? workloadType = default;
+            WorkloadOperationType? operationType = default;
+            string friendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string registrationStatus = default;
+            string healthStatus = default;
             ProtectableContainerType containerType = default;
-            Optional<string> protectableObjectType = default;
+            string protectableObjectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceResourceId"u8))
@@ -114,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = WorkloadContainerExtendedInfo.DeserializeWorkloadContainerExtendedInfo(property.Value);
+                    extendedInfo = WorkloadContainerExtendedInfo.DeserializeWorkloadContainerExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workloadType"u8))
@@ -169,8 +151,56 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectableObjectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VmAppContainerProtectionContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, sourceResourceId.Value, Optional.ToNullable(lastUpdatedTime), extendedInfo.Value, Optional.ToNullable(workloadType), Optional.ToNullable(operationType));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VmAppContainerProtectionContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                containerType,
+                protectableObjectType,
+                serializedAdditionalRawData,
+                sourceResourceId,
+                lastUpdatedTime,
+                extendedInfo,
+                workloadType,
+                operationType);
         }
+
+        BinaryData IPersistableModel<VmAppContainerProtectionContainer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmAppContainerProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VmAppContainerProtectionContainer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VmAppContainerProtectionContainer IPersistableModel<VmAppContainerProtectionContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmAppContainerProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVmAppContainerProtectionContainer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VmAppContainerProtectionContainer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VmAppContainerProtectionContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

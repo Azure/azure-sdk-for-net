@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -98,7 +96,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Return information about a script cmdlet resource in a specific package on a private cloud
+        /// Get a ScriptCmdlet
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -108,9 +106,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptCmdlets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptCmdletResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scriptCmdletName"> Name of the script cmdlet resource in the script package in the private cloud. </param>
+        /// <param name="scriptCmdletName"> Name of the script cmdlet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptCmdletName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scriptCmdletName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -121,7 +127,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Return information about a script cmdlet resource in a specific package on a private cloud
+        /// Get a ScriptCmdlet
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -131,9 +137,17 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptCmdlets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptCmdletResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scriptCmdletName"> Name of the script cmdlet resource in the script package in the private cloud. </param>
+        /// <param name="scriptCmdletName"> Name of the script cmdlet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptCmdletName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scriptCmdletName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -144,7 +158,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a script package available to run on a private cloud
+        /// Get a ScriptPackage
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -153,6 +167,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -176,7 +198,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a script package available to run on a private cloud
+        /// Get a ScriptPackage
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -185,6 +207,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

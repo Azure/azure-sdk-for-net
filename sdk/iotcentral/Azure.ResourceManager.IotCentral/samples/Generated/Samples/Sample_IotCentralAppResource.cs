@@ -7,22 +7,19 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.IotCentral;
 using Azure.ResourceManager.IotCentral.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.IotCentral.Samples
 {
     public partial class Sample_IotCentralAppResource
     {
-        // Apps_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AppsGet()
         {
             // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_Get.json
@@ -51,9 +48,8 @@ namespace Azure.ResourceManager.IotCentral.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Apps_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AppsUpdate()
         {
             // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_Update.json
@@ -80,12 +76,11 @@ namespace Azure.ResourceManager.IotCentral.Samples
             };
             await iotCentralApp.UpdateAsync(WaitUntil.Completed, patch);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Apps_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_AppsDelete()
         {
             // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_Delete.json
@@ -107,12 +102,11 @@ namespace Azure.ResourceManager.IotCentral.Samples
             // invoke the operation
             await iotCentralApp.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Apps_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIotCentralApps_AppsListBySubscription()
         {
             // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_ListBySubscription.json
@@ -139,12 +133,11 @@ namespace Azure.ResourceManager.IotCentral.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Apps_CheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckIotCentralAppNameAvailability_AppsCheckNameAvailability()
         {
             // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_CheckNameAvailability.json
@@ -171,9 +164,8 @@ namespace Azure.ResourceManager.IotCentral.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Apps_SubdomainAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckIotCentralAppSubdomainAvailability_AppsSubdomainAvailability()
         {
             // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_CheckSubdomainAvailability.json
@@ -200,9 +192,8 @@ namespace Azure.ResourceManager.IotCentral.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Apps_ListTemplates
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTemplatesApps_AppsListTemplates()
         {
             // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_Templates.json
@@ -225,7 +216,7 @@ namespace Azure.ResourceManager.IotCentral.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

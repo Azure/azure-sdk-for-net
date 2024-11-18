@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.SecurityDevOps;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityDevOps.Samples
 {
     public partial class Sample_GitHubRepoResource
     {
-        // GitHubRepo_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GitHubRepoGet()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/GitHubRepoGet.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GitHubRepo_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_GitHubRepoUpdate()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/GitHubRepoUpdate.json

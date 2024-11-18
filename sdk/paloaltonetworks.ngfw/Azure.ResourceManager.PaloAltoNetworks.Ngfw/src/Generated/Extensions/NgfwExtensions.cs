@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -314,6 +312,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -343,6 +349,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firewalls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -391,6 +405,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -420,6 +442,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -451,6 +481,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -478,6 +516,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firewalls_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -507,6 +553,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -534,6 +588,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -580,6 +642,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>GlobalRulestack_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -609,6 +679,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GlobalRulestack_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalRulestackResource"/></description>
         /// </item>
         /// </list>
         /// <item>

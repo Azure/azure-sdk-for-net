@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.ManagedServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServices.Models
@@ -27,7 +26,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <returns> A new <see cref="ManagedServices.ManagedServicesRegistrationData"/> instance for mocking. </returns>
         public static ManagedServicesRegistrationData ManagedServicesRegistrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServicesRegistrationProperties properties = null, ManagedServicesPlan plan = null)
         {
-            return new ManagedServicesRegistrationData(id, name, resourceType, systemData, properties, plan);
+            return new ManagedServicesRegistrationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                plan,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesRegistrationProperties"/>. </summary>
@@ -46,7 +52,17 @@ namespace Azure.ResourceManager.ManagedServices.Models
             authorizations ??= new List<ManagedServicesAuthorization>();
             eligibleAuthorizations ??= new List<ManagedServicesEligibleAuthorization>();
 
-            return new ManagedServicesRegistrationProperties(description, authorizations?.ToList(), eligibleAuthorizations?.ToList(), registrationDefinitionName, managedByTenantId, provisioningState, manageeTenantId, manageeTenantName, managedByTenantName);
+            return new ManagedServicesRegistrationProperties(
+                description,
+                authorizations?.ToList(),
+                eligibleAuthorizations?.ToList(),
+                registrationDefinitionName,
+                managedByTenantId,
+                provisioningState,
+                manageeTenantId,
+                manageeTenantName,
+                managedByTenantName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedServices.ManagedServicesRegistrationAssignmentData"/>. </summary>
@@ -58,7 +74,13 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <returns> A new <see cref="ManagedServices.ManagedServicesRegistrationAssignmentData"/> instance for mocking. </returns>
         public static ManagedServicesRegistrationAssignmentData ManagedServicesRegistrationAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServicesRegistrationAssignmentProperties properties = null)
         {
-            return new ManagedServicesRegistrationAssignmentData(id, name, resourceType, systemData, properties);
+            return new ManagedServicesRegistrationAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesRegistrationAssignmentProperties"/>. </summary>
@@ -68,7 +90,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <returns> A new <see cref="Models.ManagedServicesRegistrationAssignmentProperties"/> instance for mocking. </returns>
         public static ManagedServicesRegistrationAssignmentProperties ManagedServicesRegistrationAssignmentProperties(ResourceIdentifier registrationId = null, ManagedServicesProvisioningState? provisioningState = null, ManagedServicesRegistrationAssignmentRegistrationData registrationDefinition = null)
         {
-            return new ManagedServicesRegistrationAssignmentProperties(registrationId, provisioningState, registrationDefinition);
+            return new ManagedServicesRegistrationAssignmentProperties(registrationId, provisioningState, registrationDefinition, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesRegistrationAssignmentRegistrationData"/>. </summary>
@@ -81,7 +103,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <returns> A new <see cref="Models.ManagedServicesRegistrationAssignmentRegistrationData"/> instance for mocking. </returns>
         public static ManagedServicesRegistrationAssignmentRegistrationData ManagedServicesRegistrationAssignmentRegistrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServicesRegistrationAssignmentRegistrationProperties properties = null, ManagedServicesPlan plan = null)
         {
-            return new ManagedServicesRegistrationAssignmentRegistrationData(id, name, resourceType, systemData, properties, plan);
+            return new ManagedServicesRegistrationAssignmentRegistrationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                plan,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesRegistrationAssignmentRegistrationProperties"/>. </summary>
@@ -100,7 +129,17 @@ namespace Azure.ResourceManager.ManagedServices.Models
             authorizations ??= new List<ManagedServicesAuthorization>();
             eligibleAuthorizations ??= new List<ManagedServicesEligibleAuthorization>();
 
-            return new ManagedServicesRegistrationAssignmentRegistrationProperties(description, authorizations?.ToList(), eligibleAuthorizations?.ToList(), registrationDefinitionName, provisioningState, manageeTenantId, manageeTenantName, managedByTenantId, managedByTenantName);
+            return new ManagedServicesRegistrationAssignmentRegistrationProperties(
+                description,
+                authorizations?.ToList(),
+                eligibleAuthorizations?.ToList(),
+                registrationDefinitionName,
+                provisioningState,
+                manageeTenantId,
+                manageeTenantName,
+                managedByTenantId,
+                managedByTenantName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedServices.ManagedServicesMarketplaceRegistrationData"/>. </summary>
@@ -113,7 +152,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <returns> A new <see cref="ManagedServices.ManagedServicesMarketplaceRegistrationData"/> instance for mocking. </returns>
         public static ManagedServicesMarketplaceRegistrationData ManagedServicesMarketplaceRegistrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServicesMarketplaceRegistrationProperties properties = null, ManagedServicesPlan plan = null)
         {
-            return new ManagedServicesMarketplaceRegistrationData(id, name, resourceType, systemData, properties, plan);
+            return new ManagedServicesMarketplaceRegistrationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                plan,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesMarketplaceRegistrationProperties"/>. </summary>
@@ -129,7 +175,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
             authorizations ??= new List<ManagedServicesAuthorization>();
             eligibleAuthorizations ??= new List<ManagedServicesEligibleAuthorization>();
 
-            return new ManagedServicesMarketplaceRegistrationProperties(managedByTenantId, authorizations?.ToList(), eligibleAuthorizations?.ToList(), offerDisplayName, publisherDisplayName, planDisplayName);
+            return new ManagedServicesMarketplaceRegistrationProperties(
+                managedByTenantId,
+                authorizations?.ToList(),
+                eligibleAuthorizations?.ToList(),
+                offerDisplayName,
+                publisherDisplayName,
+                planDisplayName,
+                serializedAdditionalRawData: null);
         }
     }
 }

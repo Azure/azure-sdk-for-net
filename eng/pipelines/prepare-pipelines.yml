@@ -1,13 +1,9 @@
 trigger: none
 
 variables:
-  nugetMultiFeedWarnLevel: warn
+- template: /eng/pipelines/templates/variables/image.yml
 
 extends:
   template: /eng/common/pipelines/templates/jobs/prepare-pipelines.yml
   parameters:
-    Repository: $(Build.Repository.Name)
-    Prefix: net
-    CIConventionOptions: ''
-    UPConventionOptions: '--variablegroups 13 58 76 56 93'
-    TestsConventionOptions: '--variablegroups 64'
+    Repository: Azure/azure-sdk-for-net

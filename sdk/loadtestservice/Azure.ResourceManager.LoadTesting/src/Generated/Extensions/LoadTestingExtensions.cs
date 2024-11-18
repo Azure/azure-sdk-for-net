@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.LoadTesting.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -100,6 +98,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <term>Operation Id</term>
         /// <description>LoadTests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -129,6 +135,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadTests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -178,6 +192,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <term>Operation Id</term>
         /// <description>Quotas_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingQuotaResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -208,6 +230,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quotas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingQuotaResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -240,6 +270,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <term>Operation Id</term>
         /// <description>LoadTests_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -267,6 +305,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadTests_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// <item>

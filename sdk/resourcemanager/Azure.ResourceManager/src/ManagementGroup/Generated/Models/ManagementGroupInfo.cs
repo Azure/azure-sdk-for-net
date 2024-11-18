@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> The details of a management group. </summary>
     public partial class ManagementGroupInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ManagementGroupInfo"/>. </summary>
         internal ManagementGroupInfo()
         {
@@ -30,7 +61,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <param name="path"> The path from the root to the current group. </param>
         /// <param name="managementGroupAncestors"> The ancestors of the management group. </param>
         /// <param name="managementGroupAncestorChain"> The ancestors of the management group displayed in reversed order, from immediate parent to the root. </param>
-        internal ManagementGroupInfo(int? version, DateTimeOffset? updatedOn, string updatedBy, ParentManagementGroupInfo parent, IReadOnlyList<ManagementGroupPathElement> path, IReadOnlyList<string> managementGroupAncestors, IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorChain)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementGroupInfo(int? version, DateTimeOffset? updatedOn, string updatedBy, ParentManagementGroupInfo parent, IReadOnlyList<ManagementGroupPathElement> path, IReadOnlyList<string> managementGroupAncestors, IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorChain, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             UpdatedOn = updatedOn;
@@ -39,21 +71,29 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             Path = path;
             ManagementGroupAncestors = managementGroupAncestors;
             ManagementGroupAncestorChain = managementGroupAncestorChain;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The version number of the object. </summary>
+        [WirePath("version")]
         public int? Version { get; }
         /// <summary> The date and time when this object was last updated. </summary>
+        [WirePath("updatedTime")]
         public DateTimeOffset? UpdatedOn { get; }
         /// <summary> The identity of the principal or process that updated the object. </summary>
+        [WirePath("updatedBy")]
         public string UpdatedBy { get; }
         /// <summary> (Optional) The ID of the parent management group. </summary>
+        [WirePath("parent")]
         public ParentManagementGroupInfo Parent { get; }
         /// <summary> The path from the root to the current group. </summary>
+        [WirePath("path")]
         public IReadOnlyList<ManagementGroupPathElement> Path { get; }
         /// <summary> The ancestors of the management group. </summary>
+        [WirePath("managementGroupAncestors")]
         public IReadOnlyList<string> ManagementGroupAncestors { get; }
         /// <summary> The ancestors of the management group displayed in reversed order, from immediate parent to the root. </summary>
+        [WirePath("managementGroupAncestorsChain")]
         public IReadOnlyList<ManagementGroupPathElement> ManagementGroupAncestorChain { get; }
     }
 }

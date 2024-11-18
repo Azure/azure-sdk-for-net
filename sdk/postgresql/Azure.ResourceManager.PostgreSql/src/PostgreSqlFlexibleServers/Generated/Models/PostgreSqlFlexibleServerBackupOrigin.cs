@@ -23,14 +23,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         private const string FullValue = "Full";
+        private const string CustomerOnDemandValue = "Customer On-Demand";
 
         /// <summary> Full. </summary>
         public static PostgreSqlFlexibleServerBackupOrigin Full { get; } = new PostgreSqlFlexibleServerBackupOrigin(FullValue);
+        /// <summary> Customer On-Demand. </summary>
+        public static PostgreSqlFlexibleServerBackupOrigin CustomerOnDemand { get; } = new PostgreSqlFlexibleServerBackupOrigin(CustomerOnDemandValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerBackupOrigin"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerBackupOrigin left, PostgreSqlFlexibleServerBackupOrigin right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerBackupOrigin"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerBackupOrigin left, PostgreSqlFlexibleServerBackupOrigin right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerBackupOrigin"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerBackupOrigin"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerBackupOrigin(string value) => new PostgreSqlFlexibleServerBackupOrigin(value);
 
         /// <inheritdoc />
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

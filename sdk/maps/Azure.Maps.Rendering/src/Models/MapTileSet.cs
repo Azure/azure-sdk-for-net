@@ -5,6 +5,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Azure.Core;
 using Azure.Core.GeoJson;
 
@@ -12,6 +14,9 @@ using Azure.Core.GeoJson;
 namespace Azure.Maps.Rendering
 {
     /// <summary> Metadata for a tileset in the TileJSON format. </summary>
+    [CodeGenSerialization(nameof(TileJsonVersion), "tileJson")]
+    [CodeGenSerialization(nameof(MinZoomLevel), "minZoom")]
+    [CodeGenSerialization(nameof(MaxZoomLevel), "maxZoom")]
     [CodeGenModel("MapTileset")]
     public partial class MapTileSet
     {

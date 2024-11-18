@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -92,15 +92,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<BigDataPoolReference> bigDataPool = default;
-            Optional<SparkConfigurationReference> targetSparkConfiguration = default;
-            Optional<NotebookSessionProperties> sessionProperties = default;
+            string description = default;
+            BigDataPoolReference bigDataPool = default;
+            SparkConfigurationReference targetSparkConfiguration = default;
+            NotebookSessionProperties sessionProperties = default;
             NotebookMetadata metadata = default;
             int nbformat = default;
             int nbformatMinor = default;
             IList<NotebookCell> cells = default;
-            Optional<NotebookFolder> folder = default;
+            NotebookFolder folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Notebook(description.Value, bigDataPool.Value, targetSparkConfiguration.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, folder.Value, additionalProperties);
+            return new Notebook(
+                description,
+                bigDataPool,
+                targetSparkConfiguration,
+                sessionProperties,
+                metadata,
+                nbformat,
+                nbformatMinor,
+                cells,
+                folder,
+                additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Notebook FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNotebook(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class NotebookConverter : JsonConverter<Notebook>
@@ -186,6 +212,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override Notebook Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Alert details. </summary>
     public partial class AlertPropertiesDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AlertPropertiesDetails"/>. </summary>
         public AlertPropertiesDetails()
         {
@@ -48,7 +79,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="enrollmentStartDate"> datetime of enrollmentStartDate. </param>
         /// <param name="enrollmentEndDate"> datetime of enrollmentEndDate. </param>
         /// <param name="invoicingThreshold"> invoicing threshold. </param>
-        internal AlertPropertiesDetails(AlertTimeGrainType? timeGrainType, string periodStartDate, string triggeredBy, IList<BinaryData> resourceGroupFilter, IList<BinaryData> resourceFilter, IList<BinaryData> meterFilter, BinaryData tagFilter, decimal? threshold, CostManagementAlertOperator? @operator, decimal? amount, string unit, decimal? currentSpend, IList<string> contactEmails, IList<string> contactGroups, IList<string> contactRoles, string overridingAlert, string departmentName, string companyName, string enrollmentNumber, string enrollmentStartDate, string enrollmentEndDate, decimal? invoicingThreshold)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertPropertiesDetails(AlertTimeGrainType? timeGrainType, string periodStartDate, string triggeredBy, IList<BinaryData> resourceGroupFilter, IList<BinaryData> resourceFilter, IList<BinaryData> meterFilter, BinaryData tagFilter, decimal? threshold, CostManagementAlertOperator? @operator, decimal? amount, string unit, decimal? currentSpend, IList<string> contactEmails, IList<string> contactGroups, IList<string> contactRoles, string overridingAlert, string departmentName, string companyName, string enrollmentNumber, string enrollmentStartDate, string enrollmentEndDate, decimal? invoicingThreshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeGrainType = timeGrainType;
             PeriodStartDate = periodStartDate;
@@ -72,6 +104,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             EnrollmentStartDate = enrollmentStartDate;
             EnrollmentEndDate = enrollmentEndDate;
             InvoicingThreshold = invoicingThreshold;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of timegrain cadence. </summary>

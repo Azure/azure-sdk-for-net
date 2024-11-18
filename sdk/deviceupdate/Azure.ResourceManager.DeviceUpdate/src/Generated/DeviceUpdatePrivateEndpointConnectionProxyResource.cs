@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceUpdate.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
@@ -102,6 +100,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionProxies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +140,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionProxies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +179,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionProxies_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,6 +222,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionProxies_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -233,6 +263,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionProxies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -272,6 +310,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionProxies_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -310,6 +356,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionProxies_Validate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> The parameters for creating a private endpoint connection proxy. </param>
@@ -343,6 +397,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionProxies_Validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,6 +440,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionProxies_UpdatePrivateEndpointProperties</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointUpdate"> The parameters for updating a private endpoint connection proxy. </param>
@@ -411,6 +481,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionProxies_UpdatePrivateEndpointProperties</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

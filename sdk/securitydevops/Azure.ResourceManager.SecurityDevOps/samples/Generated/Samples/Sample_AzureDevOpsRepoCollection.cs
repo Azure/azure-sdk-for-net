@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.SecurityDevOps;
 using Azure.ResourceManager.SecurityDevOps.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityDevOps.Samples
 {
     public partial class Sample_AzureDevOpsRepoCollection
     {
-        // AzureDevOpsRepo_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AzureDevOpsRepoList()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/AzureDevOpsRepoList.json
@@ -54,12 +51,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AzureDevOpsRepo_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AzureDevOpsRepoGet()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/AzureDevOpsRepoGet.json
@@ -94,9 +90,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AzureDevOpsRepo_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_AzureDevOpsRepoGet()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/AzureDevOpsRepoGet.json
@@ -127,9 +122,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AzureDevOpsRepo_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AzureDevOpsRepoGet()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/AzureDevOpsRepoGet.json
@@ -160,7 +154,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -172,9 +166,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
             }
         }
 
-        // AzureDevOpsRepo_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AzureDevOpsRepoCreateOrUpdate()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/AzureDevOpsRepoCreateOrUpdate.json

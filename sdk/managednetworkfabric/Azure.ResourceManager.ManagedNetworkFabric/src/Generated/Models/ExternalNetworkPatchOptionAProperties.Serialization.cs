@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ExternalNetworkPatchOptionAProperties : IUtf8JsonSerializable
+    public partial class ExternalNetworkPatchOptionAProperties : IUtf8JsonSerializable, IJsonModel<ExternalNetworkPatchOptionAProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExternalNetworkPatchOptionAProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ExternalNetworkPatchOptionAProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkPatchOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExternalNetworkPatchOptionAProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
@@ -25,6 +45,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(FabricAsn))
+            {
+                writer.WritePropertyName("fabricASN"u8);
+                writer.WriteNumberValue(FabricAsn.Value);
+            }
             if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerASN"u8);
@@ -33,7 +58,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration);
+                writer.WriteObjectValue(BfdConfiguration, options);
             }
             if (Optional.IsDefined(IngressAclId))
             {
@@ -45,46 +70,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("egressAclId"u8);
                 writer.WriteStringValue(EgressAclId);
             }
-            if (Optional.IsDefined(PrimaryIPv4Prefix))
-            {
-                writer.WritePropertyName("primaryIpv4Prefix"u8);
-                writer.WriteStringValue(PrimaryIPv4Prefix);
-            }
-            if (Optional.IsDefined(PrimaryIPv6Prefix))
-            {
-                writer.WritePropertyName("primaryIpv6Prefix"u8);
-                writer.WriteStringValue(PrimaryIPv6Prefix);
-            }
-            if (Optional.IsDefined(SecondaryIPv4Prefix))
-            {
-                writer.WritePropertyName("secondaryIpv4Prefix"u8);
-                writer.WriteStringValue(SecondaryIPv4Prefix);
-            }
-            if (Optional.IsDefined(SecondaryIPv6Prefix))
-            {
-                writer.WritePropertyName("secondaryIpv6Prefix"u8);
-                writer.WriteStringValue(SecondaryIPv6Prefix);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static ExternalNetworkPatchOptionAProperties DeserializeExternalNetworkPatchOptionAProperties(JsonElement element)
+        ExternalNetworkPatchOptionAProperties IJsonModel<ExternalNetworkPatchOptionAProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkPatchOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExternalNetworkPatchOptionAProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExternalNetworkPatchOptionAProperties(document.RootElement, options);
+        }
+
+        internal static ExternalNetworkPatchOptionAProperties DeserializeExternalNetworkPatchOptionAProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> mtu = default;
-            Optional<int> vlanId = default;
-            Optional<long> fabricAsn = default;
-            Optional<long> peerAsn = default;
-            Optional<BfdConfiguration> bfdConfiguration = default;
-            Optional<ResourceIdentifier> ingressAclId = default;
-            Optional<ResourceIdentifier> egressAclId = default;
-            Optional<string> primaryIPv4Prefix = default;
-            Optional<string> primaryIPv6Prefix = default;
-            Optional<string> secondaryIPv4Prefix = default;
-            Optional<string> secondaryIPv6Prefix = default;
+            int? mtu = default;
+            int? vlanId = default;
+            long? fabricAsn = default;
+            long? peerAsn = default;
+            BfdConfiguration bfdConfiguration = default;
+            ResourceIdentifier ingressAclId = default;
+            ResourceIdentifier egressAclId = default;
+            string primaryIPv4Prefix = default;
+            string primaryIPv6Prefix = default;
+            string secondaryIPv4Prefix = default;
+            string secondaryIPv6Prefix = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mtu"u8))
@@ -129,7 +149,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value);
+                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ingressAclId"u8))
@@ -170,8 +190,56 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     secondaryIPv6Prefix = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExternalNetworkPatchOptionAProperties(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(fabricAsn), Optional.ToNullable(peerAsn), bfdConfiguration.Value, ingressAclId.Value, egressAclId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExternalNetworkPatchOptionAProperties(
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix,
+                serializedAdditionalRawData,
+                mtu,
+                vlanId,
+                fabricAsn,
+                peerAsn,
+                bfdConfiguration,
+                ingressAclId,
+                egressAclId);
         }
+
+        BinaryData IPersistableModel<ExternalNetworkPatchOptionAProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkPatchOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExternalNetworkPatchOptionAProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExternalNetworkPatchOptionAProperties IPersistableModel<ExternalNetworkPatchOptionAProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkPatchOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExternalNetworkPatchOptionAProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExternalNetworkPatchOptionAProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExternalNetworkPatchOptionAProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

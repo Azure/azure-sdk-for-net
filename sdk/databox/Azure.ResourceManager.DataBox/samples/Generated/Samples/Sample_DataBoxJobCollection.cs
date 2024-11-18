@@ -7,22 +7,19 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataBox;
 using Azure.ResourceManager.DataBox.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataBox.Samples
 {
     public partial class Sample_DataBoxJobCollection
     {
-        // JobsListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_JobsListByResourceGroup()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsListByResourceGroup.json
@@ -53,12 +50,11 @@ namespace Azure.ResourceManager.DataBox.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // JobsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_JobsGet()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGet.json
@@ -91,9 +87,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // JobsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_JobsGet()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGet.json
@@ -122,9 +117,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // JobsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_JobsGet()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGet.json
@@ -153,7 +147,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -165,9 +159,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             }
         }
 
-        // JobsGetCmk
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_JobsGetCmk()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetCmk.json
@@ -200,9 +193,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // JobsGetCmk
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_JobsGetCmk()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetCmk.json
@@ -231,9 +223,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // JobsGetCmk
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_JobsGetCmk()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetCmk.json
@@ -262,7 +253,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -274,9 +265,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             }
         }
 
-        // JobsGetCopyStuck
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_JobsGetCopyStuck()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetCopyStuck.json
@@ -309,9 +299,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // JobsGetCopyStuck
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_JobsGetCopyStuck()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetCopyStuck.json
@@ -340,9 +329,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // JobsGetCopyStuck
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_JobsGetCopyStuck()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetCopyStuck.json
@@ -371,7 +359,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -383,9 +371,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             }
         }
 
-        // JobsGetExport
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_JobsGetExport()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetExport.json
@@ -418,9 +405,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // JobsGetExport
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_JobsGetExport()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetExport.json
@@ -449,9 +435,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // JobsGetExport
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_JobsGetExport()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetExport.json
@@ -480,7 +465,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -492,9 +477,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             }
         }
 
-        // JobsGetWaitingForAction
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_JobsGetWaitingForAction()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetWaitingForAction.json
@@ -527,9 +511,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // JobsGetWaitingForAction
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_JobsGetWaitingForAction()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetWaitingForAction.json
@@ -558,9 +541,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // JobsGetWaitingForAction
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_JobsGetWaitingForAction()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetWaitingForAction.json
@@ -589,7 +571,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -601,9 +583,8 @@ namespace Azure.ResourceManager.DataBox.Samples
             }
         }
 
-        // JobsCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_JobsCreate()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsCreate.json
@@ -660,9 +641,8 @@ new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // JobsCreateDevicePassword
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_JobsCreateDevicePassword()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsCreateDevicePassword.json
@@ -723,9 +703,8 @@ SharePassword = "<sharePassword>",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // JobsCreateDoubleEncryption
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_JobsCreateDoubleEncryption()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsCreateDoubleEncryption.json
@@ -789,9 +768,8 @@ new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // JobsCreateExport
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_JobsCreateExport()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsCreateExport.json
@@ -855,9 +833,8 @@ TransferAllFiles = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // JobsCreateWithUserAssignedIdentity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_JobsCreateWithUserAssignedIdentity()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsCreateWithUserAssignedIdentity.json

@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.FrontDoor.Mocking;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Resources;
@@ -182,6 +180,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -211,6 +217,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -259,6 +273,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -288,6 +310,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -336,6 +366,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -366,6 +404,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -386,6 +432,78 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary>
+        /// Lists all of the protection policies within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/frontDoorWebApplicationFirewallPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Policies_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorSubscriptionResource.GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicy(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<FrontDoorWebApplicationFirewallPolicyResource> GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicyAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableFrontDoorSubscriptionResource(subscriptionResource).GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicyAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the protection policies within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/frontDoorWebApplicationFirewallPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Policies_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorSubscriptionResource.GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicy(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<FrontDoorWebApplicationFirewallPolicyResource> GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicy(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableFrontDoorSubscriptionResource(subscriptionResource).GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicy(cancellationToken);
+        }
+
+        /// <summary>
         /// Lists all available managed rule sets.
         /// <list type="bullet">
         /// <item>
@@ -395,6 +513,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedRuleSets_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -424,6 +546,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>ManagedRuleSets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -451,6 +577,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailabilityWithSubscription_Check</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -480,6 +610,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailabilityWithSubscription_Check</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -507,6 +641,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoors_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -536,6 +678,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -563,6 +713,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -592,6 +750,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -620,6 +786,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailability_Check</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -647,6 +817,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailability_Check</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
         /// </item>
         /// </list>
         /// <item>

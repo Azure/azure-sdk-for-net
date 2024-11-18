@@ -5,21 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningVirtualMachineSecrets
+    public partial class MachineLearningVirtualMachineSecrets : IUtf8JsonSerializable, IJsonModel<MachineLearningVirtualMachineSecrets>
     {
-        internal static MachineLearningVirtualMachineSecrets DeserializeMachineLearningVirtualMachineSecrets(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningVirtualMachineSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningVirtualMachineSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningVirtualMachineSecrets)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(AdministratorAccount))
+            {
+                writer.WritePropertyName("administratorAccount"u8);
+                writer.WriteObjectValue(AdministratorAccount, options);
+            }
+        }
+
+        MachineLearningVirtualMachineSecrets IJsonModel<MachineLearningVirtualMachineSecrets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningVirtualMachineSecrets)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningVirtualMachineSecrets(document.RootElement, options);
+        }
+
+        internal static MachineLearningVirtualMachineSecrets DeserializeMachineLearningVirtualMachineSecrets(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MachineLearningVmSshCredentials> administratorAccount = default;
+            MachineLearningVmSshCredentials administratorAccount = default;
             ComputeType computeType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("administratorAccount"u8))
@@ -28,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value);
+                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("computeType"u8))
@@ -36,8 +83,88 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     computeType = new ComputeType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningVirtualMachineSecrets(computeType, administratorAccount.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningVirtualMachineSecrets(computeType, serializedAdditionalRawData, administratorAccount);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdministratorAccount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  administratorAccount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdministratorAccount))
+                {
+                    builder.Append("  administratorAccount: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AdministratorAccount, options, 2, false, "  administratorAccount: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  computeType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  computeType: ");
+                builder.AppendLine($"'{ComputeType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningVirtualMachineSecrets>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineSecrets>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningVirtualMachineSecrets)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningVirtualMachineSecrets IPersistableModel<MachineLearningVirtualMachineSecrets>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineSecrets>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningVirtualMachineSecrets(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningVirtualMachineSecrets)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningVirtualMachineSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

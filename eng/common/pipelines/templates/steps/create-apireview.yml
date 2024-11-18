@@ -2,28 +2,39 @@ parameters:
   ArtifactPath: $(Build.ArtifactStagingDirectory)
   Artifacts: []
   ConfigFileDir: $(Build.ArtifactStagingDirectory)/PackageInfo
+  MarkPackageAsShipped: false
+  GenerateApiReviewForManualOnly: false
+  ArtifactName: 'packages'
+  PackageName: ''
+  SourceRootPath: $(Build.SourcesDirectory)
 
 steps:
   # ideally this should be done as initial step of a job in caller template
   # We can remove this step later once it is added in caller
   - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+    parameters:
+      WorkingDirectory: ${{ parameters.SourceRootPath }}
 
-  - ${{ each artifact in parameters.Artifacts }}:
+  # Automatic API review is generated for a package when pipeline runs irrespective of how pipeline gets triggered.
+  # Below condition ensures that API review is generated only for manual pipeline runs when flag GenerateApiReviewForManualOnly is set to true. 
+  - ${{ if or(ne(parameters.GenerateApiReviewForManualOnly, true), eq(variables['Build.Reason'], 'Manual')) }}:
     - task: Powershell@2
       inputs:
-        filePath: $(Build.SourcesDirectory)/eng/common/scripts/Create-APIReview.ps1
+        filePath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Create-APIReview.ps1
         arguments: >
-          -ArtifactPath ${{parameters.ArtifactPath}}
-          -APIViewUri $(azuresdk-apiview-uri)
-          -APIKey $(azuresdk-apiview-apikey)
-          -APILabel "Auto Review - $(Build.SourceVersion)"
-          -PackageName ${{artifact.name}}
-          -SourceBranch $(Build.SourceBranchName)
-          -DefaultBranch $(DefaultBranch)
+          -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
+          -ArtifactPath '${{parameters.ArtifactPath}}'
+          -ArtifactName ${{ parameters.ArtifactName }}
+          -APIKey '$(azuresdk-apiview-apikey)'
+          -PackageName '${{parameters.PackageName}}'
+          -SourceBranch '$(Build.SourceBranchName)'
+          -DefaultBranch '$(DefaultBranch)'
           -ConfigFileDir '${{parameters.ConfigFileDir}}'
+          -BuildId '$(Build.BuildId)'
+          -RepoName '$(Build.Repository.Name)'    
+          -MarkPackageAsShipped $${{parameters.MarkPackageAsShipped}}
         pwsh: true
-        workingDirectory: $(Pipeline.Workspace)
-      displayName: Create API Review for ${{ artifact.name}}
+      displayName: Create API Review
       condition: >-
         and(
           succeededOrFailed(),

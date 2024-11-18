@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources;
 
@@ -155,6 +153,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>GraphResources_GetGraph</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GraphResourceGetResultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="graphName"> Cosmos DB graph resource name. </param>
@@ -177,6 +183,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GraphResources_GetGraph</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GraphResourceGetResultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,6 +222,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>SqlResources_GetSqlDatabase</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
@@ -230,6 +252,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlResources_GetSqlDatabase</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,6 +291,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>SqlResources_GetSqlRoleDefinition</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlRoleDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
@@ -283,6 +321,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlResources_GetSqlRoleDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,6 +360,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>SqlResources_GetSqlRoleAssignment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlRoleAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
@@ -336,6 +390,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlResources_GetSqlRoleAssignment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlRoleAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -367,6 +429,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>MongoDBResources_GetMongoDBDatabase</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
@@ -389,6 +459,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MongoDBResources_GetMongoDBDatabase</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -420,6 +498,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>MongoDBResources_GetMongoRoleDefinition</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBRoleDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
@@ -442,6 +528,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MongoDBResources_GetMongoRoleDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -473,6 +567,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>MongoDBResources_GetMongoUserDefinition</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBUserDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="mongoUserDefinitionId"> The ID for the User Definition {dbName.userName}. </param>
@@ -495,6 +597,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MongoDBResources_GetMongoUserDefinition</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBUserDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -526,6 +636,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>TableResources_GetTable</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
@@ -548,6 +666,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TableResources_GetTable</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBTableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -579,6 +705,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>CassandraResources_GetCassandraKeyspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraKeyspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -601,6 +735,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CassandraResources_GetCassandraKeyspace</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraKeyspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -632,6 +774,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>GremlinResources_GetGremlinDatabase</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GremlinDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> Cosmos DB database name. </param>
@@ -654,6 +804,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GremlinResources_GetGremlinDatabase</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GremlinDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -685,6 +843,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DataTransferJobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataTransferJobGetResultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> Name of the Data Transfer Job. </param>
@@ -708,6 +874,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DataTransferJobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataTransferJobGetResultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> Name of the Data Transfer Job. </param>
@@ -718,6 +892,75 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Response<DataTransferJobGetResultResource> GetDataTransferJobGetResult(string jobName, CancellationToken cancellationToken = default)
         {
             return GetDataTransferJobGetResults().Get(jobName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkSecurityPerimeterConfigurationResources in the CosmosDBAccount. </summary>
+        /// <returns> An object representing collection of NetworkSecurityPerimeterConfigurationResources and their operations over a NetworkSecurityPerimeterConfigurationResource. </returns>
+        public virtual NetworkSecurityPerimeterConfigurationCollection GetNetworkSecurityPerimeterConfigurations()
+        {
+            return GetCachedClient(client => new NetworkSecurityPerimeterConfigurationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets effective Network Security Perimeter Configuration for association
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkSecurityPerimeterConfigurationResource>> GetNetworkSecurityPerimeterConfigurationAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetworkSecurityPerimeterConfigurations().GetAsync(networkSecurityPerimeterConfigurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets effective Network Security Perimeter Configuration for association
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkSecurityPerimeterConfigurationResource> GetNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        {
+            return GetNetworkSecurityPerimeterConfigurations().Get(networkSecurityPerimeterConfigurationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CosmosDBPrivateEndpointConnectionResources in the CosmosDBAccount. </summary>
@@ -737,6 +980,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -760,6 +1011,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -791,6 +1050,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
@@ -813,6 +1080,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -844,6 +1119,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>Service_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Cosmos DB service name. </param>
@@ -867,6 +1150,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>Service_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Cosmos DB service name. </param>
@@ -879,6 +1170,75 @@ namespace Azure.ResourceManager.CosmosDB
             return GetCosmosDBServices().Get(serviceName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of CosmosDBChaosFaultResources in the CosmosDBAccount. </summary>
+        /// <returns> An object representing collection of CosmosDBChaosFaultResources and their operations over a CosmosDBChaosFaultResource. </returns>
+        public virtual CosmosDBChaosFaultResourceCollection GetCosmosDBChaosFaultResources()
+        {
+            return GetCachedClient(client => new CosmosDBChaosFaultResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get Chaos Fault for a CosmosdB account for a particular Chaos Fault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/chaosFaults/{chaosFault}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChaosFault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBChaosFaultResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="chaosFault"> The name of the ChaosFault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chaosFault"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chaosFault"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CosmosDBChaosFaultResource>> GetCosmosDBChaosFaultResourceAsync(string chaosFault, CancellationToken cancellationToken = default)
+        {
+            return await GetCosmosDBChaosFaultResources().GetAsync(chaosFault, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Chaos Fault for a CosmosdB account for a particular Chaos Fault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/chaosFaults/{chaosFault}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChaosFault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBChaosFaultResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="chaosFault"> The name of the ChaosFault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chaosFault"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chaosFault"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CosmosDBChaosFaultResource> GetCosmosDBChaosFaultResource(string chaosFault, CancellationToken cancellationToken = default)
+        {
+            return GetCosmosDBChaosFaultResources().Get(chaosFault, cancellationToken);
+        }
+
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB database account.
         /// <list type="bullet">
@@ -889,6 +1249,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -922,6 +1290,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -953,6 +1329,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -988,6 +1372,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1021,6 +1413,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1060,6 +1460,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1097,6 +1505,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_FailoverPriorityChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1136,6 +1552,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_FailoverPriorityChange</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1174,6 +1598,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1203,6 +1635,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_ListKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1234,6 +1674,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_ListConnectionStrings</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1241,7 +1689,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBAccountConnectionString> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListConnectionStringsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBAccountConnectionString.DeserializeCosmosDBAccountConnectionString, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetConnectionStrings", "connectionStrings", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBAccountConnectionString.DeserializeCosmosDBAccountConnectionString(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetConnectionStrings", "connectionStrings", null, cancellationToken);
         }
 
         /// <summary>
@@ -1255,6 +1703,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_ListConnectionStrings</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1262,7 +1718,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBAccountConnectionString> GetConnectionStrings(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListConnectionStringsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBAccountConnectionString.DeserializeCosmosDBAccountConnectionString, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetConnectionStrings", "connectionStrings", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBAccountConnectionString.DeserializeCosmosDBAccountConnectionString(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetConnectionStrings", "connectionStrings", null, cancellationToken);
         }
 
         /// <summary>
@@ -1275,6 +1731,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_OfflineRegion</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1314,6 +1778,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_OfflineRegion</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1351,6 +1823,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_OnlineRegion</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1390,6 +1870,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_OnlineRegion</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1428,6 +1916,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_ListReadOnlyKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1458,6 +1954,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_ListReadOnlyKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1487,6 +1991,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_RegenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1526,6 +2038,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_RegenerateKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1564,6 +2084,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_ListMetrics</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
@@ -1575,7 +2103,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1589,6 +2117,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_ListMetrics</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
@@ -1600,7 +2136,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1613,6 +2149,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_ListUsages</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1622,7 +2166,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBBaseUsage> GetUsagesAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1636,6 +2180,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_ListUsages</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
@@ -1644,7 +2196,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBBaseUsage> GetUsages(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1657,6 +2209,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_ListMetricDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1665,7 +2225,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBMetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1679,6 +2239,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_ListMetricDefinitions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1686,7 +2254,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBMetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition, _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1699,6 +2267,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Database_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1714,7 +2286,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1727,6 +2299,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Database_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1742,7 +2318,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1755,6 +2331,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Database_ListUsages</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1769,7 +2349,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage, _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1782,6 +2362,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Database_ListUsages</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1796,7 +2380,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage, _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1809,6 +2393,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Database_ListMetricDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1822,7 +2410,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition, _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1836,6 +2424,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>Database_ListMetricDefinitions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseRid"> Cosmos DB database rid. </param>
@@ -1848,7 +2440,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition, _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1861,6 +2453,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Collection_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1878,7 +2474,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1891,6 +2487,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Collection_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1908,7 +2508,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1921,6 +2521,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Collection_ListUsages</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1937,7 +2541,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage, _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1950,6 +2554,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Collection_ListUsages</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1966,7 +2574,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage, _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1979,6 +2587,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Collection_ListMetricDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1994,7 +2606,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition, _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2007,6 +2619,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Collection_ListMetricDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2022,7 +2638,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition, _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2035,6 +2651,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CollectionRegion_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2054,7 +2674,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _collectionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _collectionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2067,6 +2687,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CollectionRegion_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2086,7 +2710,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _collectionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _collectionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2099,6 +2723,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccountRegion_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2114,7 +2742,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseAccountRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _databaseAccountRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabaseAccountRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _databaseAccountRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabaseAccountRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2127,6 +2755,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccountRegion_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2142,7 +2774,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseAccountRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric, _databaseAccountRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabaseAccountRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _databaseAccountRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabaseAccountRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2155,6 +2787,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PercentileSourceTarget_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2172,7 +2808,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileSourceTargetRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceRegion, targetRegion, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric, _percentileSourceTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileSourceTargets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileSourceTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileSourceTargets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2185,6 +2821,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PercentileSourceTarget_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2202,7 +2842,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileSourceTargetRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceRegion, targetRegion, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric, _percentileSourceTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileSourceTargets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileSourceTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileSourceTargets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2215,6 +2855,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PercentileTarget_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2230,7 +2874,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileTargetRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetRegion, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric, _percentileTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileTargets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileTargets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2243,6 +2887,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PercentileTarget_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2258,7 +2906,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileTargetRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetRegion, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric, _percentileTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileTargets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileTargets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2271,6 +2919,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Percentile_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2283,7 +2935,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric, _percentileClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentiles", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2297,6 +2949,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>Percentile_ListMetrics</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
@@ -2308,7 +2964,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric, _percentileClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentiles", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2321,6 +2977,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CollectionPartitionRegion_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2340,7 +3000,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _collectionPartitionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitionRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _collectionPartitionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitionRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2353,6 +3013,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CollectionPartitionRegion_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2372,7 +3036,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _collectionPartitionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitionRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _collectionPartitionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitionRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2385,6 +3049,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CollectionPartition_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2402,7 +3070,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2415,6 +3083,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CollectionPartition_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2432,7 +3104,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2445,6 +3117,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CollectionPartition_ListUsages</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2461,7 +3137,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PartitionUsage.DeserializePartitionUsage, _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollectionPartitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionUsage.DeserializePartitionUsage(e), _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollectionPartitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2474,6 +3150,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CollectionPartition_ListUsages</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2490,7 +3170,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PartitionUsage.DeserializePartitionUsage, _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollectionPartitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionUsage.DeserializePartitionUsage(e), _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollectionPartitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2503,6 +3183,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PartitionKeyRangeId_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2522,7 +3206,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partitionKeyRangeIdRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, partitionKeyRangeId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _partitionKeyRangeIdClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIds", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _partitionKeyRangeIdClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIds", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2535,6 +3219,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PartitionKeyRangeId_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2554,7 +3242,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partitionKeyRangeIdRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, partitionKeyRangeId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _partitionKeyRangeIdClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIds", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _partitionKeyRangeIdClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIds", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2567,6 +3255,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PartitionKeyRangeIdRegion_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2588,7 +3280,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partitionKeyRangeIdRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, partitionKeyRangeId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _partitionKeyRangeIdRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIdRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _partitionKeyRangeIdRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIdRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2601,6 +3293,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PartitionKeyRangeIdRegion_ListMetrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2622,7 +3318,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partitionKeyRangeIdRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, partitionKeyRangeId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PartitionMetric.DeserializePartitionMetric, _partitionKeyRangeIdRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIdRegions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _partitionKeyRangeIdRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIdRegions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2635,6 +3331,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2690,6 +3394,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -2744,6 +3456,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -2793,6 +3513,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -2841,6 +3569,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2893,6 +3629,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

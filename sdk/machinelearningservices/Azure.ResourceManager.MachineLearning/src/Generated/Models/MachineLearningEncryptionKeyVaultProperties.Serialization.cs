@@ -5,42 +5,92 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEncryptionKeyVaultProperties : IUtf8JsonSerializable
+    public partial class MachineLearningEncryptionKeyVaultProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningEncryptionKeyVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningEncryptionKeyVaultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningEncryptionKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningEncryptionKeyVaultProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("keyVaultArmId"u8);
+            writer.WriteStringValue(KeyVaultArmId);
+            writer.WritePropertyName("keyIdentifier"u8);
+            writer.WriteStringValue(KeyIdentifier);
             if (Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId);
             }
-            writer.WritePropertyName("keyIdentifier"u8);
-            writer.WriteStringValue(KeyIdentifier);
-            writer.WritePropertyName("keyVaultArmId"u8);
-            writer.WriteStringValue(KeyVaultArmId);
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static MachineLearningEncryptionKeyVaultProperties DeserializeMachineLearningEncryptionKeyVaultProperties(JsonElement element)
+        MachineLearningEncryptionKeyVaultProperties IJsonModel<MachineLearningEncryptionKeyVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningEncryptionKeyVaultProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningEncryptionKeyVaultProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningEncryptionKeyVaultProperties DeserializeMachineLearningEncryptionKeyVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> identityClientId = default;
-            string keyIdentifier = default;
             ResourceIdentifier keyVaultArmId = default;
+            string keyIdentifier = default;
+            string identityClientId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identityClientId"u8))
+                if (property.NameEquals("keyVaultArmId"u8))
                 {
-                    identityClientId = property.Value.GetString();
+                    keyVaultArmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyIdentifier"u8))
@@ -48,13 +98,127 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     keyIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultArmId"u8))
+                if (property.NameEquals("identityClientId"u8))
                 {
-                    keyVaultArmId = new ResourceIdentifier(property.Value.GetString());
+                    identityClientId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningEncryptionKeyVaultProperties(identityClientId.Value, keyIdentifier, keyVaultArmId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningEncryptionKeyVaultProperties(keyVaultArmId, keyIdentifier, identityClientId, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultArmId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keyVaultArmId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyVaultArmId))
+                {
+                    builder.Append("  keyVaultArmId: ");
+                    builder.AppendLine($"'{KeyVaultArmId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyIdentifier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keyIdentifier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyIdentifier))
+                {
+                    builder.Append("  keyIdentifier: ");
+                    if (KeyIdentifier.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyIdentifier}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyIdentifier}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identityClientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdentityClientId))
+                {
+                    builder.Append("  identityClientId: ");
+                    if (IdentityClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IdentityClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IdentityClientId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MachineLearningEncryptionKeyVaultProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningEncryptionKeyVaultProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningEncryptionKeyVaultProperties IPersistableModel<MachineLearningEncryptionKeyVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningEncryptionKeyVaultProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningEncryptionKeyVaultProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningEncryptionKeyVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

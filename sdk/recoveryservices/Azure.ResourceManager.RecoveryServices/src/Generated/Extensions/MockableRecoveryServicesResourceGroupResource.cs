@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServices;
 using Azure.ResourceManager.RecoveryServices.Models;
 
 namespace Azure.ResourceManager.RecoveryServices.Mocking
@@ -62,6 +59,14 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Vaults_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -84,6 +89,14 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Vaults_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,6 +122,10 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoveryServices_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -146,6 +163,10 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoveryServices_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>

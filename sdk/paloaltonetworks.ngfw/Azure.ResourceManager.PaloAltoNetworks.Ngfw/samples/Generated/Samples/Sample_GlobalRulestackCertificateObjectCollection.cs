@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 {
     public partial class Sample_GlobalRulestackCertificateObjectCollection
     {
-        // CertificateObjectGlobalRulestack_List_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_CertificateObjectGlobalRulestackListMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_List_MaximumSet_Gen.json
@@ -50,12 +47,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CertificateObjectGlobalRulestack_List_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_CertificateObjectGlobalRulestackListMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_List_MinimumSet_Gen.json
@@ -85,12 +81,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CertificateObjectGlobalRulestack_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CertificateObjectGlobalRulestackGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MaximumSet_Gen.json
@@ -121,9 +116,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CertificateObjectGlobalRulestack_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_CertificateObjectGlobalRulestackGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MaximumSet_Gen.json
@@ -150,9 +144,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CertificateObjectGlobalRulestack_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CertificateObjectGlobalRulestackGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MaximumSet_Gen.json
@@ -179,7 +172,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -191,9 +184,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             }
         }
 
-        // CertificateObjectGlobalRulestack_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CertificateObjectGlobalRulestackGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MinimumSet_Gen.json
@@ -224,9 +216,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CertificateObjectGlobalRulestack_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_CertificateObjectGlobalRulestackGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MinimumSet_Gen.json
@@ -253,9 +244,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CertificateObjectGlobalRulestack_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CertificateObjectGlobalRulestackGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MinimumSet_Gen.json
@@ -282,7 +272,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -294,9 +284,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             }
         }
 
-        // CertificateObjectGlobalRulestack_CreateOrUpdate_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CertificateObjectGlobalRulestackCreateOrUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_CreateOrUpdate_MaximumSet_Gen.json
@@ -335,9 +324,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CertificateObjectGlobalRulestack_CreateOrUpdate_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CertificateObjectGlobalRulestackCreateOrUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_CreateOrUpdate_MinimumSet_Gen.json

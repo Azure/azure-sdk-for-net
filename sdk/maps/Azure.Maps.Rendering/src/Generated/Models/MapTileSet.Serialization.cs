@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Rendering
 {
@@ -19,26 +19,26 @@ namespace Azure.Maps.Rendering
             {
                 return null;
             }
-            Optional<string> tilejson = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> version = default;
-            Optional<string> attribution = default;
-            Optional<string> template = default;
-            Optional<string> legend = default;
-            Optional<string> scheme = default;
-            Optional<IReadOnlyList<string>> tiles = default;
-            Optional<IReadOnlyList<string>> grids = default;
-            Optional<IReadOnlyList<string>> data = default;
-            Optional<int> minzoom = default;
-            Optional<int> maxzoom = default;
-            Optional<IReadOnlyList<float>> bounds = default;
-            Optional<IReadOnlyList<float>> center = default;
+            string tileJson = default;
+            string name = default;
+            string description = default;
+            string version = default;
+            string attribution = default;
+            string template = default;
+            string legend = default;
+            string scheme = default;
+            IReadOnlyList<string> tiles = default;
+            IReadOnlyList<string> grids = default;
+            IReadOnlyList<string> data = default;
+            int? minZoom = default;
+            int? maxZoom = default;
+            IReadOnlyList<float> bounds = default;
+            IReadOnlyList<float> center = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tilejson"u8))
+                if (property.NameEquals("tileJson"u8))
                 {
-                    tilejson = property.Value.GetString();
+                    tileJson = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -118,22 +118,22 @@ namespace Azure.Maps.Rendering
                     data = array;
                     continue;
                 }
-                if (property.NameEquals("minzoom"u8))
+                if (property.NameEquals("minZoom"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minzoom = property.Value.GetInt32();
+                    minZoom = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxzoom"u8))
+                if (property.NameEquals("maxZoom"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxzoom = property.Value.GetInt32();
+                    maxZoom = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("bounds"u8))
@@ -165,7 +165,30 @@ namespace Azure.Maps.Rendering
                     continue;
                 }
             }
-            return new MapTileSet(tilejson.Value, name.Value, description.Value, version.Value, attribution.Value, template.Value, legend.Value, scheme.Value, Optional.ToList(tiles), Optional.ToList(grids), Optional.ToList(data), Optional.ToNullable(minzoom), Optional.ToNullable(maxzoom), Optional.ToList(bounds), Optional.ToList(center));
+            return new MapTileSet(
+                tileJson,
+                name,
+                description,
+                version,
+                attribution,
+                template,
+                legend,
+                scheme,
+                tiles ?? new ChangeTrackingList<string>(),
+                grids ?? new ChangeTrackingList<string>(),
+                data ?? new ChangeTrackingList<string>(),
+                minZoom,
+                maxZoom,
+                bounds ?? new ChangeTrackingList<float>(),
+                center ?? new ChangeTrackingList<float>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MapTileSet FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMapTileSet(document.RootElement);
         }
     }
 }

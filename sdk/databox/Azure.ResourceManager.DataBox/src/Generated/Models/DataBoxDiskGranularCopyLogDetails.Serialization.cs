@@ -5,24 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxDiskGranularCopyLogDetails
+    public partial class DataBoxDiskGranularCopyLogDetails : IUtf8JsonSerializable, IJsonModel<DataBoxDiskGranularCopyLogDetails>
     {
-        internal static DataBoxDiskGranularCopyLogDetails DeserializeDataBoxDiskGranularCopyLogDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxDiskGranularCopyLogDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataBoxDiskGranularCopyLogDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskGranularCopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxDiskGranularCopyLogDetails)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            {
+                writer.WritePropertyName("serialNumber"u8);
+                writer.WriteStringValue(SerialNumber);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AccountId))
+            {
+                writer.WritePropertyName("accountId"u8);
+                writer.WriteStringValue(AccountId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ErrorLogLink))
+            {
+                writer.WritePropertyName("errorLogLink"u8);
+                writer.WriteStringValue(ErrorLogLink);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VerboseLogLink))
+            {
+                writer.WritePropertyName("verboseLogLink"u8);
+                writer.WriteStringValue(VerboseLogLink);
+            }
+        }
+
+        DataBoxDiskGranularCopyLogDetails IJsonModel<DataBoxDiskGranularCopyLogDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskGranularCopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxDiskGranularCopyLogDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxDiskGranularCopyLogDetails(document.RootElement, options);
+        }
+
+        internal static DataBoxDiskGranularCopyLogDetails DeserializeDataBoxDiskGranularCopyLogDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> serialNumber = default;
-            Optional<ResourceIdentifier> accountId = default;
-            Optional<string> errorLogLink = default;
-            Optional<string> verboseLogLink = default;
+            string serialNumber = default;
+            ResourceIdentifier accountId = default;
+            string errorLogLink = default;
+            string verboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serialNumber"u8))
@@ -54,8 +115,50 @@ namespace Azure.ResourceManager.DataBox.Models
                     copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxDiskGranularCopyLogDetails(copyLogDetailsType, serialNumber.Value, accountId.Value, errorLogLink.Value, verboseLogLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxDiskGranularCopyLogDetails(
+                copyLogDetailsType,
+                serializedAdditionalRawData,
+                serialNumber,
+                accountId,
+                errorLogLink,
+                verboseLogLink);
         }
+
+        BinaryData IPersistableModel<DataBoxDiskGranularCopyLogDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskGranularCopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxDiskGranularCopyLogDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxDiskGranularCopyLogDetails IPersistableModel<DataBoxDiskGranularCopyLogDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskGranularCopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataBoxDiskGranularCopyLogDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxDiskGranularCopyLogDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxDiskGranularCopyLogDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

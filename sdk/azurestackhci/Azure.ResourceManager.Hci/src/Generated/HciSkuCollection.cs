@@ -12,17 +12,15 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A class representing a collection of <see cref="HciSkuResource"/> and their operations.
-    /// Each <see cref="HciSkuResource"/> in the collection will belong to the same instance of <see cref="OfferResource"/>.
-    /// To get a <see cref="HciSkuCollection"/> instance call the GetHciSkus method from an instance of <see cref="OfferResource"/>.
+    /// Each <see cref="HciSkuResource"/> in the collection will belong to the same instance of <see cref="HciClusterOfferResource"/>.
+    /// To get a <see cref="HciSkuCollection"/> instance call the GetHciSkus method from an instance of <see cref="HciClusterOfferResource"/>.
     /// </summary>
     public partial class HciSkuCollection : ArmCollection, IEnumerable<HciSkuResource>, IAsyncEnumerable<HciSkuResource>
     {
@@ -49,8 +47,8 @@ namespace Azure.ResourceManager.Hci
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OfferResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OfferResource.ResourceType), nameof(id));
+            if (id.ResourceType != HciClusterOfferResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HciClusterOfferResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -102,6 +108,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
@@ -140,6 +154,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Skus_ListByOffer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
@@ -163,6 +185,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Skus_ListByOffer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
@@ -185,6 +215,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +260,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
@@ -257,6 +303,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,6 +349,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

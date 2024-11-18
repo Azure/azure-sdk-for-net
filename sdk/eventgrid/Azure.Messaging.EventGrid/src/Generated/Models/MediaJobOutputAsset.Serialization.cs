@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,10 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> assetName = default;
+            string assetName = default;
             string odataType = default;
-            Optional<MediaJobError> error = default;
-            Optional<string> label = default;
+            MediaJobError error = default;
+            string label = default;
             long progress = default;
             MediaJobState state = default;
             foreach (var property in element.EnumerateObject())
@@ -61,7 +60,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobOutputAsset(odataType, error.Value, label.Value, progress, state, assetName.Value);
+            return new MediaJobOutputAsset(
+                odataType,
+                error,
+                label,
+                progress,
+                state,
+                assetName);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MediaJobOutputAsset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaJobOutputAsset(document.RootElement);
         }
     }
 }

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -109,6 +107,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
@@ -130,6 +136,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
@@ -150,6 +164,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedManagedDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedManagedDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +204,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedManagedDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedManagedDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

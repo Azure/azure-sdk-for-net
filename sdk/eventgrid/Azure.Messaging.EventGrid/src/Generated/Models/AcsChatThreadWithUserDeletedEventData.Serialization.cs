@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,13 +20,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> deletedByCommunicationIdentifier = default;
-            Optional<DateTimeOffset> deleteTime = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<long> version = default;
-            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            CommunicationIdentifierModel deletedByCommunicationIdentifier = default;
+            DateTimeOffset? deleteTime = default;
+            DateTimeOffset? createTime = default;
+            long? version = default;
+            CommunicationIdentifierModel recipientCommunicationIdentifier = default;
+            string transactionId = default;
+            string threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deletedByCommunicationIdentifier"u8))
@@ -86,7 +85,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadWithUserDeletedEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), deletedByCommunicationIdentifier.Value, Optional.ToNullable(deleteTime));
+            return new AcsChatThreadWithUserDeletedEventData(
+                recipientCommunicationIdentifier,
+                transactionId,
+                threadId,
+                createTime,
+                version,
+                deletedByCommunicationIdentifier,
+                deleteTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsChatThreadWithUserDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsChatThreadWithUserDeletedEventData(document.RootElement);
         }
 
         internal partial class AcsChatThreadWithUserDeletedEventDataConverter : JsonConverter<AcsChatThreadWithUserDeletedEventData>
@@ -95,6 +109,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override AcsChatThreadWithUserDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

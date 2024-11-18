@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Advisor.Mocking;
 using Azure.ResourceManager.Advisor.Models;
 using Azure.ResourceManager.Resources;
@@ -69,6 +67,14 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Recommendations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -99,6 +105,14 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -188,6 +202,10 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Configurations_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -216,6 +234,10 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Configurations_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -243,6 +265,10 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Configurations_CreateInResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -273,6 +299,10 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Configurations_CreateInResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -302,6 +332,10 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Configurations_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -330,6 +364,10 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Configurations_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -357,6 +395,10 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Configurations_CreateInSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -387,6 +429,10 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Configurations_CreateInSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -416,6 +462,14 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Recommendations_Generate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -443,6 +497,14 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Recommendations_Generate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -469,6 +531,14 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetGenerateStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -498,6 +568,14 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetGenerateStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -525,6 +603,14 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Suppressions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SuppressionContractResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -555,6 +641,14 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Suppressions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SuppressionContractResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -603,6 +697,14 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>RecommendationMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetadataEntityResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -632,6 +734,14 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetadataEntityResource"/></description>
         /// </item>
         /// </list>
         /// <item>

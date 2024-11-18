@@ -91,7 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -101,13 +101,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
             writer.WritePropertyName("mapper"u8);
-            writer.WriteObjectValue(Mapper);
+            writer.WriteObjectValue<object>(Mapper);
             writer.WritePropertyName("reducer"u8);
-            writer.WriteObjectValue(Reducer);
+            writer.WriteObjectValue<object>(Reducer);
             writer.WritePropertyName("input"u8);
-            writer.WriteObjectValue(Input);
+            writer.WriteObjectValue<object>(Input);
             writer.WritePropertyName("output"u8);
-            writer.WriteObjectValue(Output);
+            writer.WriteObjectValue<object>(Output);
             writer.WritePropertyName("filePaths"u8);
             writer.WriteStartArray();
             foreach (var item in FilePaths)
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteNullValue();
                     continue;
                 }
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<object>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(FileLinkedService))
@@ -128,7 +128,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Combiner))
             {
                 writer.WritePropertyName("combiner"u8);
-                writer.WriteObjectValue(Combiner);
+                writer.WriteObjectValue<object>(Combiner);
             }
             if (Optional.IsCollectionDefined(CommandEnvironment))
             {
@@ -141,7 +141,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +157,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -165,7 +165,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -176,27 +176,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
-            Optional<IList<LinkedServiceReference>> storageLinkedServices = default;
-            Optional<IList<object>> arguments = default;
-            Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
+            IList<LinkedServiceReference> storageLinkedServices = default;
+            IList<object> arguments = default;
+            HDInsightActivityDebugInfoOption? getDebugInfo = default;
             object mapper = default;
             object reducer = default;
             object input = default;
             object output = default;
             IList<object> filePaths = default;
-            Optional<LinkedServiceReference> fileLinkedService = default;
-            Optional<object> combiner = default;
-            Optional<IList<object>> commandEnvironment = default;
-            Optional<IDictionary<string, object>> defines = default;
+            LinkedServiceReference fileLinkedService = default;
+            object combiner = default;
+            IList<object> commandEnvironment = default;
+            IDictionary<string, object> defines = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -436,7 +436,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightStreamingActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(storageLinkedServices), Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), mapper, reducer, input, output, filePaths, fileLinkedService.Value, combiner.Value, Optional.ToList(commandEnvironment), Optional.ToDictionary(defines));
+            return new HDInsightStreamingActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(),
+                arguments ?? new ChangeTrackingList<object>(),
+                getDebugInfo,
+                mapper,
+                reducer,
+                input,
+                output,
+                filePaths,
+                fileLinkedService,
+                combiner,
+                commandEnvironment ?? new ChangeTrackingList<object>(),
+                defines ?? new ChangeTrackingDictionary<string, object>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HDInsightStreamingActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHDInsightStreamingActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class HDInsightStreamingActivityConverter : JsonConverter<HDInsightStreamingActivity>
@@ -445,6 +483,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override HDInsightStreamingActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

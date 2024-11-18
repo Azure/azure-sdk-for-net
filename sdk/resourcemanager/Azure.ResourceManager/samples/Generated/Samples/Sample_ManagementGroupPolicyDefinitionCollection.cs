@@ -8,21 +8,18 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_ManagementGroupPolicyDefinitionCollection
     {
-        // Create or update a policy definition at management group level
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyDefinitionAtManagementGroupLevel()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/createOrUpdatePolicyDefinitionAtManagementGroup.json
@@ -100,9 +97,8 @@ Description = "Resource name suffix",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy definition at management group level
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicyDefinitionAtManagementGroupLevel()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicyDefinitionAtManagementGroup.json
@@ -133,9 +129,8 @@ Description = "Resource name suffix",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy definition at management group level
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAPolicyDefinitionAtManagementGroupLevel()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicyDefinitionAtManagementGroup.json
@@ -162,9 +157,8 @@ Description = "Resource name suffix",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Retrieve a policy definition at management group level
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAPolicyDefinitionAtManagementGroupLevel()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicyDefinitionAtManagementGroup.json
@@ -191,7 +185,7 @@ Description = "Resource name suffix",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -203,9 +197,8 @@ Description = "Resource name suffix",
             }
         }
 
-        // List policy definitions by management group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPolicyDefinitionsByManagementGroup()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/listPolicyDefinitionsByManagementGroup.json
@@ -235,7 +228,7 @@ Description = "Resource name suffix",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

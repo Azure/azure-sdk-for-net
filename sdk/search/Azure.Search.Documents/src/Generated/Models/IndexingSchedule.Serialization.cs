@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             TimeSpan interval = default;
-            Optional<DateTimeOffset> startTime = default;
+            DateTimeOffset? startTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interval"u8))
@@ -51,7 +51,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new IndexingSchedule(interval, Optional.ToNullable(startTime));
+            return new IndexingSchedule(interval, startTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IndexingSchedule FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIndexingSchedule(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

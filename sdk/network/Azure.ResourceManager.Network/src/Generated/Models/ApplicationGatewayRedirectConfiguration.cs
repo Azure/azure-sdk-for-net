@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -28,6 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="redirectType"> HTTP redirection type. </param>
         /// <param name="targetListener"> Reference to a listener to redirect the request to. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="requestRoutingRules"> Request routing specifying redirect configuration. </param>
         /// <param name="urlPathMaps"> Url path maps specifying default redirect configuration. </param>
         /// <param name="pathRules"> Path rules specifying redirect configuration. </param>
-        internal ApplicationGatewayRedirectConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, Uri targetUri, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id, name, resourceType)
+        internal ApplicationGatewayRedirectConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, Uri targetUri, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             RedirectType = redirectType;

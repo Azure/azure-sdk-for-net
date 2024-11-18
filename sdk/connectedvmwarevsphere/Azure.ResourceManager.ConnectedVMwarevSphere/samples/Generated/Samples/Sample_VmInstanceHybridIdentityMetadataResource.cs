@@ -9,19 +9,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ConnectedVMwarevSphere;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 {
     public partial class Sample_VmInstanceHybridIdentityMetadataResource
     {
-        // GetHybridIdentityMetadata
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetHybridIdentityMetadata()
         {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/GetVmInstanceHybridIdentityMetadata.json
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/GetVmInstanceHybridIdentityMetadata.json
             // this example is just showing the usage of "VmInstanceHybridIdentityMetadata_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -5,16 +5,56 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MonitoringInputDataBase : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownMonitoringInputDataBase))]
+    public partial class MonitoringInputDataBase : IUtf8JsonSerializable, IJsonModel<MonitoringInputDataBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringInputDataBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MonitoringInputDataBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringInputDataBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("inputDataType"u8);
+            writer.WriteStringValue(InputDataType.ToString());
+            if (Optional.IsDefined(DataContext))
+            {
+                if (DataContext != null)
+                {
+                    writer.WritePropertyName("dataContext"u8);
+                    writer.WriteStringValue(DataContext);
+                }
+                else
+                {
+                    writer.WriteNull("dataContext");
+                }
+            }
+            writer.WritePropertyName("jobInputType"u8);
+            writer.WriteStringValue(JobInputType.ToString());
+            writer.WritePropertyName("uri"u8);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsCollectionDefined(Columns))
             {
                 if (Columns != null)
@@ -33,29 +73,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columns");
                 }
             }
-            if (Optional.IsDefined(DataContext))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                if (DataContext != null)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName("dataContext"u8);
-                    writer.WriteStringValue(DataContext);
-                }
-                else
-                {
-                    writer.WriteNull("dataContext");
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
             }
-            writer.WritePropertyName("inputDataType"u8);
-            writer.WriteStringValue(InputDataType.ToString());
-            writer.WritePropertyName("jobInputType"u8);
-            writer.WriteStringValue(JobInputType.ToString());
-            writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
-            writer.WriteEndObject();
         }
 
-        internal static MonitoringInputDataBase DeserializeMonitoringInputDataBase(JsonElement element)
+        MonitoringInputDataBase IJsonModel<MonitoringInputDataBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringInputDataBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitoringInputDataBase(document.RootElement, options);
+        }
+
+        internal static MonitoringInputDataBase DeserializeMonitoringInputDataBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,12 +114,159 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Fixed": return FixedInputData.DeserializeFixedInputData(element);
-                    case "Static": return StaticInputData.DeserializeStaticInputData(element);
-                    case "Trailing": return TrailingInputData.DeserializeTrailingInputData(element);
+                    case "Fixed": return FixedInputData.DeserializeFixedInputData(element, options);
+                    case "Rolling": return RollingInputData.DeserializeRollingInputData(element, options);
+                    case "Static": return StaticInputData.DeserializeStaticInputData(element, options);
                 }
             }
-            return UnknownMonitoringInputDataBase.DeserializeUnknownMonitoringInputDataBase(element);
+            return UnknownMonitoringInputDataBase.DeserializeUnknownMonitoringInputDataBase(element, options);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InputDataType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  inputDataType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  inputDataType: ");
+                builder.AppendLine($"'{InputDataType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataContext), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataContext: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataContext))
+                {
+                    builder.Append("  dataContext: ");
+                    if (DataContext.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DataContext}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DataContext}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobInputType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jobInputType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  jobInputType: ");
+                builder.AppendLine($"'{JobInputType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  uri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Uri))
+                {
+                    builder.Append("  uri: ");
+                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Columns), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  columns: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Columns))
+                {
+                    if (Columns.Any())
+                    {
+                        builder.Append("  columns: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Columns)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MonitoringInputDataBase>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringInputDataBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MonitoringInputDataBase IPersistableModel<MonitoringInputDataBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringInputDataBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitoringInputDataBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitoringInputDataBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

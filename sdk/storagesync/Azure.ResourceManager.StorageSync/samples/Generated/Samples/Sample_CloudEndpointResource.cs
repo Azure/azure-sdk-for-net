@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StorageSync;
 using Azure.ResourceManager.StorageSync.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageSync.Samples
 {
     public partial class Sample_CloudEndpointResource
     {
-        // CloudEndpoints_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CloudEndpointsCreate()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_Create.json
@@ -59,9 +56,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CloudEndpoints_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CloudEndpointsGet()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_Get.json
@@ -92,9 +88,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CloudEndpoints_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_CloudEndpointsDelete()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_Delete.json
@@ -118,12 +113,11 @@ namespace Azure.ResourceManager.StorageSync.Samples
             // invoke the operation
             await cloudEndpoint.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CloudEndpoints_PreBackup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PreBackup_CloudEndpointsPreBackup()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_PreBackup.json
@@ -151,12 +145,11 @@ namespace Azure.ResourceManager.StorageSync.Samples
             };
             await cloudEndpoint.PreBackupAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CloudEndpoints_PostBackup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PostBackup_CloudEndpointsPostBackup()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_PostBackup.json
@@ -188,9 +181,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CloudEndpoints_PreRestore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PreRestore_CloudEndpointsPreRestore()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_PreRestore.json
@@ -238,16 +230,15 @@ IsDirectory = false,
             };
             await cloudEndpoint.PreRestoreAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CloudEndpoints_restoreheartbeat
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RestoreHeartbeat_CloudEndpointsRestoreheartbeat()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_RestoreHeatbeat.json
-            // this example is just showing the usage of "CloudEndpoints_restoreheartbeat" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_RestoreHeatbeat.json
+            // this example is just showing the usage of "CloudEndpoints_Restoreheartbeat" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -267,12 +258,11 @@ IsDirectory = false,
             // invoke the operation
             await cloudEndpoint.RestoreHeartbeatAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CloudEndpoints_PostRestore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PostRestore_CloudEndpointsPostRestore()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_PostRestore.json
@@ -322,12 +312,11 @@ IsDirectory = false,
             };
             await cloudEndpoint.PostRestoreAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CloudEndpoints_TriggerChangeDetection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TriggerChangeDetection_CloudEndpointsTriggerChangeDetection()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_TriggerChangeDetection.json
@@ -356,12 +345,11 @@ IsDirectory = false,
             };
             await cloudEndpoint.TriggerChangeDetectionAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CloudEndpoints_AfsShareMetadataCertificatePublicKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AfsShareMetadataCertificatePublicKeys_CloudEndpointsAfsShareMetadataCertificatePublicKeys()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_AfsShareMetadataCertificatePublicKeys.json

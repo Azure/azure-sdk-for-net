@@ -5,24 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class GenericProtectionPolicy : IUtf8JsonSerializable
+    public partial class GenericProtectionPolicy : IUtf8JsonSerializable, IJsonModel<GenericProtectionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenericProtectionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<GenericProtectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GenericProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GenericProtectionPolicy)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(SubProtectionPolicy))
             {
                 writer.WritePropertyName("subProtectionPolicy"u8);
                 writer.WriteStartArray();
                 foreach (var item in SubProtectionPolicy)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -36,38 +55,36 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName);
             }
-            if (Optional.IsDefined(ProtectedItemsCount))
-            {
-                writer.WritePropertyName("protectedItemsCount"u8);
-                writer.WriteNumberValue(ProtectedItemsCount.Value);
-            }
-            writer.WritePropertyName("backupManagementType"u8);
-            writer.WriteStringValue(BackupManagementType);
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
-            {
-                writer.WritePropertyName("resourceGuardOperationRequests"u8);
-                writer.WriteStartArray();
-                foreach (var item in ResourceGuardOperationRequests)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
-        internal static GenericProtectionPolicy DeserializeGenericProtectionPolicy(JsonElement element)
+        GenericProtectionPolicy IJsonModel<GenericProtectionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GenericProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GenericProtectionPolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGenericProtectionPolicy(document.RootElement, options);
+        }
+
+        internal static GenericProtectionPolicy DeserializeGenericProtectionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<SubProtectionPolicy>> subProtectionPolicy = default;
-            Optional<string> timeZone = default;
-            Optional<string> fabricName = default;
-            Optional<int> protectedItemsCount = default;
+            IList<SubProtectionPolicy> subProtectionPolicy = default;
+            string timeZone = default;
+            string fabricName = default;
+            int? protectedItemsCount = default;
             string backupManagementType = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
+            IList<string> resourceGuardOperationRequests = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subProtectionPolicy"u8))
@@ -79,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<SubProtectionPolicy> array = new List<SubProtectionPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.SubProtectionPolicy.DeserializeSubProtectionPolicy(item));
+                        array.Add(Models.SubProtectionPolicy.DeserializeSubProtectionPolicy(item, options));
                     }
                     subProtectionPolicy = array;
                     continue;
@@ -122,8 +139,51 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     resourceGuardOperationRequests = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GenericProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), Optional.ToList(subProtectionPolicy), timeZone.Value, fabricName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GenericProtectionPolicy(
+                protectedItemsCount,
+                backupManagementType,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                subProtectionPolicy ?? new ChangeTrackingList<SubProtectionPolicy>(),
+                timeZone,
+                fabricName);
         }
+
+        BinaryData IPersistableModel<GenericProtectionPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GenericProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GenericProtectionPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GenericProtectionPolicy IPersistableModel<GenericProtectionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GenericProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGenericProtectionPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GenericProtectionPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GenericProtectionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

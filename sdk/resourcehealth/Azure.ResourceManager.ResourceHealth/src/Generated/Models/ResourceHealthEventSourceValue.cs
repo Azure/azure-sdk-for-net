@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static bool operator ==(ResourceHealthEventSourceValue left, ResourceHealthEventSourceValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceHealthEventSourceValue"/> values are not the same. </summary>
         public static bool operator !=(ResourceHealthEventSourceValue left, ResourceHealthEventSourceValue right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceHealthEventSourceValue"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceHealthEventSourceValue"/>. </summary>
         public static implicit operator ResourceHealthEventSourceValue(string value) => new ResourceHealthEventSourceValue(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

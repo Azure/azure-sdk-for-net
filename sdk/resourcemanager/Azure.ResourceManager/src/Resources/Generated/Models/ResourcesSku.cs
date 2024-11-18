@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> SKU for the resource. </summary>
     public partial class ResourcesSku
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ResourcesSku"/>. </summary>
         public ResourcesSku()
         {
@@ -22,7 +57,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="family"> The SKU family. </param>
         /// <param name="model"> The SKU model. </param>
         /// <param name="capacity"> The SKU capacity. </param>
-        internal ResourcesSku(string name, string tier, string size, string family, string model, int? capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourcesSku(string name, string tier, string size, string family, string model, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
@@ -30,19 +66,26 @@ namespace Azure.ResourceManager.Resources.Models
             Family = family;
             Model = model;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The SKU name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The SKU tier. </summary>
+        [WirePath("tier")]
         public string Tier { get; set; }
         /// <summary> The SKU size. </summary>
+        [WirePath("size")]
         public string Size { get; set; }
         /// <summary> The SKU family. </summary>
+        [WirePath("family")]
         public string Family { get; set; }
         /// <summary> The SKU model. </summary>
+        [WirePath("model")]
         public string Model { get; set; }
         /// <summary> The SKU capacity. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

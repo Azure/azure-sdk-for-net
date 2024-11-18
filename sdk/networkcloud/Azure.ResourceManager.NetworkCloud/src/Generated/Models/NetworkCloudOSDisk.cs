@@ -5,13 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> OsDisk represents configuration of the boot disk. </summary>
     public partial class NetworkCloudOSDisk
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetworkCloudOSDisk"/>. </summary>
-        /// <param name="diskSizeInGB"> The size of the disk in gigabytes. Required if the createOption is Ephemeral. </param>
+        /// <param name="diskSizeInGB"> The size of the disk. Required if the createOption is Ephemeral. Allocations are measured in gibibytes. </param>
         public NetworkCloudOSDisk(long diskSizeInGB)
         {
             DiskSizeInGB = diskSizeInGB;
@@ -20,19 +55,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="NetworkCloudOSDisk"/>. </summary>
         /// <param name="createOption"> The strategy for creating the OS disk. </param>
         /// <param name="deleteOption"> The strategy for deleting the OS disk. </param>
-        /// <param name="diskSizeInGB"> The size of the disk in gigabytes. Required if the createOption is Ephemeral. </param>
-        internal NetworkCloudOSDisk(OSDiskCreateOption? createOption, OSDiskDeleteOption? deleteOption, long diskSizeInGB)
+        /// <param name="diskSizeInGB"> The size of the disk. Required if the createOption is Ephemeral. Allocations are measured in gibibytes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudOSDisk(OSDiskCreateOption? createOption, OSDiskDeleteOption? deleteOption, long diskSizeInGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreateOption = createOption;
             DeleteOption = deleteOption;
             DiskSizeInGB = diskSizeInGB;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudOSDisk"/> for deserialization. </summary>
+        internal NetworkCloudOSDisk()
+        {
         }
 
         /// <summary> The strategy for creating the OS disk. </summary>
         public OSDiskCreateOption? CreateOption { get; set; }
         /// <summary> The strategy for deleting the OS disk. </summary>
         public OSDiskDeleteOption? DeleteOption { get; set; }
-        /// <summary> The size of the disk in gigabytes. Required if the createOption is Ephemeral. </summary>
+        /// <summary> The size of the disk. Required if the createOption is Ephemeral. Allocations are measured in gibibytes. </summary>
         public long DiskSizeInGB { get; set; }
     }
 }

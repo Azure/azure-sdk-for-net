@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterBackupDataSourceSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isSnapshotVolumesEnabled"> Gets or sets the volume snapshot property. This property if enabled will take volume snapshots during backup. </param>
         /// <param name="isClusterScopeResourcesIncluded"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during backup. </param>
         /// <param name="includedNamespaces"> Gets or sets the include namespaces property. This property sets the namespaces to be included during backup. </param>
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="excludedResourceTypes"> Gets or sets the exclude resource types property. This property sets the resource types to be excluded during backup. </param>
         /// <param name="labelSelectors"> Gets or sets the LabelSelectors property. This property sets the resource with such label selectors to be included during backup. </param>
         /// <param name="backupHookReferences"> Gets or sets the backup hook references. This property sets the hook reference to be executed during backup. </param>
-        internal KubernetesClusterBackupDataSourceSettings(string objectType, bool isSnapshotVolumesEnabled, bool isClusterScopeResourcesIncluded, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, IList<NamespacedName> backupHookReferences) : base(objectType)
+        internal KubernetesClusterBackupDataSourceSettings(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool isSnapshotVolumesEnabled, bool isClusterScopeResourcesIncluded, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, IList<NamespacedName> backupHookReferences) : base(objectType, serializedAdditionalRawData)
         {
             IsSnapshotVolumesEnabled = isSnapshotVolumesEnabled;
             IsClusterScopeResourcesIncluded = isClusterScopeResourcesIncluded;
@@ -50,6 +51,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             LabelSelectors = labelSelectors;
             BackupHookReferences = backupHookReferences;
             ObjectType = objectType ?? "KubernetesClusterBackupDatasourceParameters";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterBackupDataSourceSettings"/> for deserialization. </summary>
+        internal KubernetesClusterBackupDataSourceSettings()
+        {
         }
 
         /// <summary> Gets or sets the volume snapshot property. This property if enabled will take volume snapshots during backup. </summary>

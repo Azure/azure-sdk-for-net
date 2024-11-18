@@ -74,22 +74,24 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a access token from Azure PowerShell, using the access token to authenticate. This method id called by Azure SDK clients.
+        /// Obtains an access token from Azure PowerShell, using the access token to authenticate. This method is called by Azure SDK clients.
         /// </summary>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
-        /// Obtains a access token from Azure PowerShell, using the access token to authenticate. This method id called by Azure SDK clients.
+        /// Obtains an access token from Azure PowerShell, using the access token to authenticate. This method is called by Azure SDK clients.
         /// </summary>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
@@ -159,7 +161,7 @@ namespace Azure.Identity
             try
             {
                 output = async ? await processRunner.RunAsync().ConfigureAwait(false) : processRunner.Run();
-                CheckForErrors(output);
+                CheckForErrors(output, processRunner.ExitCode);
                 ValidateResult(output);
             }
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
@@ -168,7 +170,7 @@ namespace Azure.Identity
             }
             catch (InvalidOperationException exception)
             {
-                CheckForErrors(exception.Message);
+                CheckForErrors(exception.Message, processRunner.ExitCode);
                 if (_isChainedCredential)
                 {
                     throw new CredentialUnavailableException($"{AzurePowerShellFailedError} {exception.Message}");
@@ -181,9 +183,10 @@ namespace Azure.Identity
             return DeserializeOutput(output);
         }
 
-        private static void CheckForErrors(string output)
+        private static void CheckForErrors(string output, int exitCode)
         {
-            bool noPowerShell = (output.IndexOf("not found", StringComparison.OrdinalIgnoreCase) != -1 ||
+            int notFoundExitCode = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? 9009 : 127;
+            bool noPowerShell = (exitCode == notFoundExitCode || output.IndexOf("not found", StringComparison.OrdinalIgnoreCase) != -1 ||
                                 output.IndexOf("is not recognized", StringComparison.OrdinalIgnoreCase) != -1) &&
                                 // If the error contains AADSTS, this should be treated as a general error to be bubbled to the user
                                 output.IndexOf("AADSTS", StringComparison.OrdinalIgnoreCase) == -1;
@@ -249,10 +252,28 @@ if (! $m) {{
     Write-Output '{AzurePowerShellNoAzAccountModule}'
     exit
 }}
+$tenantId = '{tenantIdArg}'
+$params = @{{
+    ResourceUrl = '{resource}'
+    WarningAction = 'Ignore' }}
 
-$token = Get-AzAccessToken -ResourceUrl '{resource}'{tenantIdArg}
+if ($tenantId.Length -gt 0) {{
+    $params['TenantId'] = '{tenantId}'
+}}
+
+$useSecureString = $m.Version -ge [version]'2.17.0'
+if ($useSecureString) {{
+    $params['AsSecureString'] = $true
+}}
+
+$token = Get-AzAccessToken @params
+
 $customToken = New-Object -TypeName psobject
-$customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
+if ($useSecureString) {{
+    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value (ConvertFrom-SecureString -AsPlainText $token.Token)
+}} else {{
+    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
+}}
 $customToken | Add-Member -MemberType NoteProperty -Name ExpiresOn -Value $token.ExpiresOn.ToUnixTimeSeconds()
 
 $x = $customToken | ConvertTo-Xml
@@ -264,7 +285,7 @@ return $x.Objects.FirstChild.OuterXml
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 fileName = Path.Combine(DefaultWorkingDirWindows, "cmd.exe");
-                argument = $"/d /c \"{powershellExe} \"{commandBase64}\" \"";
+                argument = $"/d /c \"{powershellExe} \"{commandBase64}\" \" & exit";
             }
             else
             {

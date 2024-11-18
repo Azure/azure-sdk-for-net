@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Samples
 {
     public partial class Sample_BlobInventoryPolicyResource
     {
-        // StorageAccountGetBlobInventoryPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetBlobInventoryPolicy()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountGetBlobInventoryPolicy.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetBlobInventoryPolicy.json
             // this example is just showing the usage of "BlobInventoryPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,12 +47,11 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountSetBlobInventoryPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountSetBlobInventoryPolicy()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountSetBlobInventoryPolicy.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountSetBlobInventoryPolicy.json
             // this example is just showing the usage of "BlobInventoryPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,16 +84,13 @@ IncludePrefix =
 {
 "inventoryprefix1","inventoryprefix2"
 },
-ExcludePrefix =
-{
-"excludeprefix1","excludeprefix2"
-},
 BlobTypes =
 {
 "blockBlob","appendBlob","pageBlob"
 },
 IncludeBlobVersions = true,
 IncludeSnapshots = true,
+CreationTimeLastNDays = 1000,
 },
 }),new BlobInventoryPolicyRule(true,"inventoryPolicyRule2","container2",new BlobInventoryPolicyDefinition(BlobInventoryPolicyFormat.Parquet,BlobInventoryPolicySchedule.Weekly,BlobInventoryPolicyObjectType.Container,new string[]
 {
@@ -115,12 +108,11 @@ IncludeSnapshots = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountSetBlobInventoryPolicyIncludeDeleteAndNewSchemaForHnsAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountSetBlobInventoryPolicyIncludeDeleteAndNewSchemaForHnsAccount()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountSetBlobInventoryPolicyIncludeDeleteAndNewSchemaForHnsAccount.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountSetBlobInventoryPolicyIncludeDeleteAndNewSchemaForHnsAccount.json
             // this example is just showing the usage of "BlobInventoryPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,12 +173,11 @@ IncludeDeleted = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountSetBlobInventoryPolicyIncludeDeleteAndNewSchemaForNonHnsAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountSetBlobInventoryPolicyIncludeDeleteAndNewSchemaForNonHnsAccount()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountSetBlobInventoryPolicyIncludeDeleteAndNewSchemaForNonHnsAccount.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountSetBlobInventoryPolicyIncludeDeleteAndNewSchemaForNonHnsAccount.json
             // this example is just showing the usage of "BlobInventoryPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -247,12 +238,11 @@ IncludeDeleted = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountDeleteBlobInventoryPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_StorageAccountDeleteBlobInventoryPolicy()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountDeleteBlobInventoryPolicy.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountDeleteBlobInventoryPolicy.json
             // this example is just showing the usage of "BlobInventoryPolicies_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -272,7 +262,7 @@ IncludeDeleted = true,
             // invoke the operation
             await blobInventoryPolicy.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

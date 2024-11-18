@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -19,8 +18,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<IReadOnlyList<DocumentFilterConjunctionGroupInfo>> documentFilterGroups = default;
+            string id = default;
+            IReadOnlyList<DocumentFilterConjunctionGroupInfo> documentFilterGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Id"u8))
@@ -30,10 +29,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 if (property.NameEquals("DocumentFilterGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DocumentFilterConjunctionGroupInfo> array = new List<DocumentFilterConjunctionGroupInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -43,7 +38,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new DocumentStreamInfo(id.Value, Optional.ToList(documentFilterGroups));
+            return new DocumentStreamInfo(id, documentFilterGroups);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentStreamInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentStreamInfo(document.RootElement);
         }
     }
 }

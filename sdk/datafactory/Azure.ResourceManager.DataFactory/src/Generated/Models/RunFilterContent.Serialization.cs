@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class RunFilterContent : IUtf8JsonSerializable
+    public partial class RunFilterContent : IUtf8JsonSerializable, IJsonModel<RunFilterContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunFilterContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RunFilterContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RunFilterContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RunFilterContent)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("continuationToken"u8);
@@ -30,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -40,11 +59,143 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in OrderBy)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
+
+        RunFilterContent IJsonModel<RunFilterContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RunFilterContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RunFilterContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRunFilterContent(document.RootElement, options);
+        }
+
+        internal static RunFilterContent DeserializeRunFilterContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string continuationToken = default;
+            DateTimeOffset lastUpdatedAfter = default;
+            DateTimeOffset lastUpdatedBefore = default;
+            IList<RunQueryFilter> filters = default;
+            IList<RunQueryOrderBy> orderBy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("continuationToken"u8))
+                {
+                    continuationToken = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastUpdatedAfter"u8))
+                {
+                    lastUpdatedAfter = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("lastUpdatedBefore"u8))
+                {
+                    lastUpdatedBefore = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("filters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RunQueryFilter> array = new List<RunQueryFilter>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(RunQueryFilter.DeserializeRunQueryFilter(item, options));
+                    }
+                    filters = array;
+                    continue;
+                }
+                if (property.NameEquals("orderBy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RunQueryOrderBy> array = new List<RunQueryOrderBy>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(RunQueryOrderBy.DeserializeRunQueryOrderBy(item, options));
+                    }
+                    orderBy = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RunFilterContent(
+                continuationToken,
+                lastUpdatedAfter,
+                lastUpdatedBefore,
+                filters ?? new ChangeTrackingList<RunQueryFilter>(),
+                orderBy ?? new ChangeTrackingList<RunQueryOrderBy>(),
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<RunFilterContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RunFilterContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RunFilterContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RunFilterContent IPersistableModel<RunFilterContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RunFilterContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRunFilterContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RunFilterContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RunFilterContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

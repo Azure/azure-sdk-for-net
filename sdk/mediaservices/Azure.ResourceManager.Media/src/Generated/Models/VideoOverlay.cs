@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -31,15 +31,21 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="fadeInDuration"> The duration over which the overlay fades in onto the input video. The value should be in ISO 8601 duration format. If not specified the default behavior is to have no fade in (same as PT0S). </param>
         /// <param name="fadeOutDuration"> The duration over which the overlay fades out of the input video. The value should be in ISO 8601 duration format. If not specified the default behavior is to have no fade out (same as PT0S). </param>
         /// <param name="audioGainLevel"> The gain level of audio in the overlay. The value should be in the range [0, 1.0]. The default is 1.0. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="position"> The location in the input video where the overlay is applied. </param>
         /// <param name="opacity"> The opacity of the overlay. This is a value in the range [0 - 1.0]. Default is 1.0 which mean the overlay is opaque. </param>
         /// <param name="cropRectangle"> An optional rectangular window used to crop the overlay image or video. </param>
-        internal VideoOverlay(string odataType, string inputLabel, TimeSpan? start, TimeSpan? end, TimeSpan? fadeInDuration, TimeSpan? fadeOutDuration, double? audioGainLevel, RectangularWindow position, double? opacity, RectangularWindow cropRectangle) : base(odataType, inputLabel, start, end, fadeInDuration, fadeOutDuration, audioGainLevel)
+        internal VideoOverlay(string odataType, string inputLabel, TimeSpan? start, TimeSpan? end, TimeSpan? fadeInDuration, TimeSpan? fadeOutDuration, double? audioGainLevel, IDictionary<string, BinaryData> serializedAdditionalRawData, RectangularWindow position, double? opacity, RectangularWindow cropRectangle) : base(odataType, inputLabel, start, end, fadeInDuration, fadeOutDuration, audioGainLevel, serializedAdditionalRawData)
         {
             Position = position;
             Opacity = opacity;
             CropRectangle = cropRectangle;
             OdataType = odataType ?? "#Microsoft.Media.VideoOverlay";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VideoOverlay"/> for deserialization. </summary>
+        internal VideoOverlay()
+        {
         }
 
         /// <summary> The location in the input video where the overlay is applied. </summary>

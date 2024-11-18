@@ -33,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static bool operator ==(OutputSelectorOperator left, OutputSelectorOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OutputSelectorOperator"/> values are not the same. </summary>
         public static bool operator !=(OutputSelectorOperator left, OutputSelectorOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OutputSelectorOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OutputSelectorOperator"/>. </summary>
         public static implicit operator OutputSelectorOperator(string value) => new OutputSelectorOperator(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

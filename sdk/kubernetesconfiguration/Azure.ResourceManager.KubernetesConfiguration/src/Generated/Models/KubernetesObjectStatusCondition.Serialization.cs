@@ -6,24 +6,104 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesObjectStatusCondition
+    public partial class KubernetesObjectStatusCondition : IUtf8JsonSerializable, IJsonModel<KubernetesObjectStatusCondition>
     {
-        internal static KubernetesObjectStatusCondition DeserializeKubernetesObjectStatusCondition(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesObjectStatusCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KubernetesObjectStatusCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatusCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(LastTransitionOn))
+            {
+                writer.WritePropertyName("lastTransitionTime"u8);
+                writer.WriteStringValue(LastTransitionOn.Value, "O");
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(ObjectStatusConditionDefinitionType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ObjectStatusConditionDefinitionType);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        KubernetesObjectStatusCondition IJsonModel<KubernetesObjectStatusCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatusCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesObjectStatusCondition(document.RootElement, options);
+        }
+
+        internal static KubernetesObjectStatusCondition DeserializeKubernetesObjectStatusCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastTransitionTime = default;
-            Optional<string> message = default;
-            Optional<string> reason = default;
-            Optional<string> status = default;
-            Optional<string> type = default;
+            DateTimeOffset? lastTransitionTime = default;
+            string message = default;
+            string reason = default;
+            string status = default;
+            string type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastTransitionTime"u8))
@@ -55,8 +135,175 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KubernetesObjectStatusCondition(Optional.ToNullable(lastTransitionTime), message.Value, reason.Value, status.Value, type.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KubernetesObjectStatusCondition(
+                lastTransitionTime,
+                message,
+                reason,
+                status,
+                type,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastTransitionOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastTransitionTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastTransitionOn))
+                {
+                    builder.Append("  lastTransitionTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastTransitionOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Message), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  message: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    builder.Append("  message: ");
+                    if (Message.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Message}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Message}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Reason))
+                {
+                    builder.Append("  reason: ");
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    if (Status.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Status}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Status}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObjectStatusConditionDefinitionType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ObjectStatusConditionDefinitionType))
+                {
+                    builder.Append("  type: ");
+                    if (ObjectStatusConditionDefinitionType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ObjectStatusConditionDefinitionType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ObjectStatusConditionDefinitionType}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<KubernetesObjectStatusCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatusCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KubernetesObjectStatusCondition IPersistableModel<KubernetesObjectStatusCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatusCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKubernetesObjectStatusCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubernetesObjectStatusCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

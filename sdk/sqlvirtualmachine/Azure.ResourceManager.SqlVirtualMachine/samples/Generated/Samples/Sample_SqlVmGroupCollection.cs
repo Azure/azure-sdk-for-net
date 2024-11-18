@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.SqlVirtualMachine;
 using Azure.ResourceManager.SqlVirtualMachine.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Samples
 {
     public partial class Sample_SqlVmGroupCollection
     {
-        // Gets a SQL virtual machine group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsASQLVirtualMachineGroup()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/GetSqlVirtualMachineGroup.json
@@ -53,9 +50,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets a SQL virtual machine group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsASQLVirtualMachineGroup()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/GetSqlVirtualMachineGroup.json
@@ -83,9 +79,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets a SQL virtual machine group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsASQLVirtualMachineGroup()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/GetSqlVirtualMachineGroup.json
@@ -113,7 +108,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -125,9 +120,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             }
         }
 
-        // Creates or updates a SQL virtual machine group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesASQLVirtualMachineGroup()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/CreateOrUpdateSqlVirtualMachineGroup.json
@@ -180,9 +174,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets all SQL virtual machine groups in a resource group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsAllSQLVirtualMachineGroupsInAResourceGroup()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/ListByResourceGroupSqlVirtualMachineGroup.json
@@ -213,7 +206,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

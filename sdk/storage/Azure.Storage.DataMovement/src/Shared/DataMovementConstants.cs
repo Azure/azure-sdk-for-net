@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement
         internal const int MaxJobPartReaders = 64;
         internal const int MaxJobChunkTasks = 3000;
         internal const int StatusCheckInSec = 10;
-        internal const int DefaultArrayPoolArraySize = 4 * 1024;
+        internal const int DefaultStreamCopyBufferSize = 81920;  // Use the .NET default
 
         internal const long DefaultInitialTransferSize = 32 * Constants.MB;
         internal const long DefaultChunkSize = 4 * Constants.MB;
@@ -58,9 +58,12 @@ namespace Azure.Storage.DataMovement
         }
 
         internal const int OneByte = 1;
+        internal const int ShortSizeInBytes = 2;
         internal const int LongSizeInBytes = 8;
         internal const int IntSizeInBytes = 4;
         internal const int GuidSizeInBytes = 16;
+        internal const string StringTypeStr = "string";
+        internal const string StringArrayTypeStr = "string[]";
 
         /// <summary>
         /// Constants used for job plan files.
@@ -140,6 +143,28 @@ namespace Azure.Storage.DataMovement
         {
             internal static readonly string[] CannotOverwrite = { "BlobAlreadyExists", "Cannot overwrite file." };
             internal static readonly string[] AccessDenied = { "AuthenticationFailed", "AuthorizationFailure", "access denied" };
+        }
+
+        internal static class ResourceProperties
+        {
+            internal const string AccessTier = "AccessTier";
+            internal const string BlobType = "BlobType";
+            internal const string CreationTime = "CreationTime";
+            internal const string ChangedOnTime = "ChangedOnTime";
+            internal const string ContentType = "ContentType";
+            internal const string ContentHash = "ContentHash";
+            internal const string ContentEncoding = "ContentEncoding";
+            internal const string ContentLanguage = "ContentLanguage";
+            internal const string ContentDisposition = "ContentDisposition";
+            internal const string CacheControl = "CacheControl";
+            internal const string ETag = "ETag";
+            internal const string LastModified = "LastModified";
+            internal const string LastWrittenOn = "LastWrittenOn";
+            internal const string Metadata = "Metadata";
+            internal const string FileAttributes = "FileAttributes";
+            internal const string FilePermissions = "FilePermissions";
+            internal const string SourceFilePermissionKey = "SourceFilePermissionKey";
+            internal const string DestinationFilePermissionKey = "DestinationFilePermissionKey";
         }
     }
 }

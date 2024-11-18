@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApplicationInsights.Samples
 {
     public partial class Sample_ApplicationInsightsComponentCollection
     {
-        // ComponentListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ComponentListByResourceGroup()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsListByResourceGroup.json
@@ -52,12 +49,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ComponentGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ComponentGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsGet.json
@@ -89,9 +85,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ComponentGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ComponentGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsGet.json
@@ -119,9 +114,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ComponentGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ComponentGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsGet.json
@@ -149,7 +143,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -161,9 +155,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             }
         }
 
-        // ComponentCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ComponentCreate()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsCreate.json
@@ -188,10 +181,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             string resourceName = "my-component";
             ApplicationInsightsComponentData data = new ApplicationInsightsComponentData(new AzureLocation("South Central US"), "web")
             {
-                ApplicationType = ApplicationType.Web,
-                FlowType = FlowType.Bluefield,
-                RequestSource = RequestSource.Rest,
-                WorkspaceResourceId = "/subscriptions/subid/resourcegroups/my-resource-group/providers/microsoft.operationalinsights/workspaces/my-workspace",
+                ApplicationType = ApplicationInsightsApplicationType.Web,
+                FlowType = ComponentFlowType.Bluefield,
+                RequestSource = ComponentRequestSource.Rest,
+                WorkspaceResourceId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/my-resource-group/providers/microsoft.operationalinsights/workspaces/my-workspace"),
             };
             ArmOperation<ApplicationInsightsComponentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
             ApplicationInsightsComponentResource result = lro.Value;
@@ -203,9 +196,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ComponentUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ComponentUpdate()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsUpdate.json

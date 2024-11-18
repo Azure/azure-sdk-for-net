@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DevSpaces;
 using Azure.ResourceManager.DevSpaces.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevSpaces.Samples
 {
     public partial class Sample_ControllerCollection
     {
-        // ControllersGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ControllersGet()
         {
             // Generated from example definition: specification/devspaces/resource-manager/Microsoft.DevSpaces/stable/2019-04-01/examples/ControllersGet_example.json
@@ -53,9 +50,8 @@ namespace Azure.ResourceManager.DevSpaces.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ControllersGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ControllersGet()
         {
             // Generated from example definition: specification/devspaces/resource-manager/Microsoft.DevSpaces/stable/2019-04-01/examples/ControllersGet_example.json
@@ -83,9 +79,8 @@ namespace Azure.ResourceManager.DevSpaces.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ControllersGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ControllersGet()
         {
             // Generated from example definition: specification/devspaces/resource-manager/Microsoft.DevSpaces/stable/2019-04-01/examples/ControllersGet_example.json
@@ -113,7 +108,7 @@ namespace Azure.ResourceManager.DevSpaces.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -125,9 +120,8 @@ namespace Azure.ResourceManager.DevSpaces.Samples
             }
         }
 
-        // ControllersCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ControllersCreate()
         {
             // Generated from example definition: specification/devspaces/resource-manager/Microsoft.DevSpaces/stable/2019-04-01/examples/ControllersCreate_example.json
@@ -169,9 +163,8 @@ namespace Azure.ResourceManager.DevSpaces.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ControllersListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ControllersListByResourceGroup()
         {
             // Generated from example definition: specification/devspaces/resource-manager/Microsoft.DevSpaces/stable/2019-04-01/examples/ControllersListByResourceGroup_example.json
@@ -202,7 +195,7 @@ namespace Azure.ResourceManager.DevSpaces.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

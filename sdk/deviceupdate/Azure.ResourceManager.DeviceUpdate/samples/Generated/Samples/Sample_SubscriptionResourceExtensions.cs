@@ -9,18 +9,16 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DeviceUpdate;
 using Azure.ResourceManager.DeviceUpdate.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DeviceUpdate.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // CheckNameAvailability_AlreadyExists
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckDeviceUpdateNameAvailability_CheckNameAvailabilityAlreadyExists()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/CheckNameAvailability_AlreadyExists.json
@@ -48,9 +46,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CheckNameAvailability_Available
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckDeviceUpdateNameAvailability_CheckNameAvailabilityAvailable()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/CheckNameAvailability_Available.json

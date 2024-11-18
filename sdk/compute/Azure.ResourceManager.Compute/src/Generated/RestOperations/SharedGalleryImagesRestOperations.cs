@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
@@ -33,8 +32,27 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-03";
+            _apiVersion = apiVersion ?? "2023-07-03";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/sharedGalleries/", false);
+            uri.AppendPath(galleryUniqueName, true);
+            uri.AppendPath("/images", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (sharedTo != null)
+            {
+                uri.AppendQuery("sharedTo", sharedTo.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo)
@@ -118,6 +136,22 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string galleryUniqueName, string galleryImageName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/sharedGalleries/", false);
+            uri.AppendPath(galleryUniqueName, true);
+            uri.AppendPath("/images/", false);
+            uri.AppendPath(galleryImageName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string galleryUniqueName, string galleryImageName)
@@ -204,6 +238,14 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo)

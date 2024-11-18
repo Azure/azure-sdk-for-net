@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearningCompute;
 using Azure.ResourceManager.MachineLearningCompute.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Samples
 {
     public partial class Sample_OperationalizationClusterCollection
     {
-        // PUT Operationalization Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PUTOperationalizationCluster()
         {
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_CreateOrUpdate.json
@@ -78,9 +75,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GET Operationalization Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GETOperationalizationCluster()
         {
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_Get.json
@@ -112,9 +108,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GET Operationalization Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GETOperationalizationCluster()
         {
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_Get.json
@@ -142,9 +137,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GET Operationalization Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GETOperationalizationCluster()
         {
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_Get.json
@@ -172,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -184,9 +178,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Samples
             }
         }
 
-        // List Operationalization Clusters by Resource Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListOperationalizationClustersByResourceGroup()
         {
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_ListByResourceGroup.json
@@ -217,7 +210,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ProviderHub;
 using Azure.ResourceManager.ProviderHub.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ProviderHub.Samples
 {
     public partial class Sample_ProviderRegistrationCollection
     {
-        // ProviderRegistrations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ProviderRegistrationsGet()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ProviderRegistrations_Get.json
@@ -52,9 +49,8 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ProviderRegistrations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ProviderRegistrationsGet()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ProviderRegistrations_Get.json
@@ -81,9 +77,8 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ProviderRegistrations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ProviderRegistrationsGet()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ProviderRegistrations_Get.json
@@ -110,7 +105,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -122,9 +117,8 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             }
         }
 
-        // ProviderRegistrations_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ProviderRegistrationsCreateOrUpdate()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ProviderRegistrations_CreateOrUpdate.json
@@ -174,9 +168,8 @@ new ResourceProviderCapabilities("CSP_2015-05-01",ResourceProviderCapabilitiesEf
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ProviderRegistrations_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ProviderRegistrationsList()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ProviderRegistrations_List.json
@@ -206,7 +199,7 @@ new ResourceProviderCapabilities("CSP_2015-05-01",ResourceProviderCapabilitiesEf
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

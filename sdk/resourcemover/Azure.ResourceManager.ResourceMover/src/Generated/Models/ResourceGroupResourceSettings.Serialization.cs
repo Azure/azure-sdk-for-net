@@ -5,40 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class ResourceGroupResourceSettings : IUtf8JsonSerializable
+    public partial class ResourceGroupResourceSettings : IUtf8JsonSerializable, IJsonModel<ResourceGroupResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceGroupResourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ResourceGroupResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceType"u8);
-            writer.WriteStringValue(ResourceType);
-            if (Optional.IsDefined(TargetResourceName))
-            {
-                writer.WritePropertyName("targetResourceName"u8);
-                writer.WriteStringValue(TargetResourceName);
-            }
-            if (Optional.IsDefined(TargetResourceGroupName))
-            {
-                writer.WritePropertyName("targetResourceGroupName"u8);
-                writer.WriteStringValue(TargetResourceGroupName);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static ResourceGroupResourceSettings DeserializeResourceGroupResourceSettings(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceGroupResourceSettings)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        ResourceGroupResourceSettings IJsonModel<ResourceGroupResourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceGroupResourceSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceGroupResourceSettings(document.RootElement, options);
+        }
+
+        internal static ResourceGroupResourceSettings DeserializeResourceGroupResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string resourceType = default;
-            Optional<string> targetResourceName = default;
-            Optional<string> targetResourceGroupName = default;
+            string targetResourceName = default;
+            string targetResourceGroupName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -56,8 +79,44 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     targetResourceGroupName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceGroupResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResourceGroupResourceSettings(resourceType, targetResourceName, targetResourceGroupName, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceGroupResourceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGroupResourceSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResourceGroupResourceSettings IPersistableModel<ResourceGroupResourceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceGroupResourceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGroupResourceSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceGroupResourceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

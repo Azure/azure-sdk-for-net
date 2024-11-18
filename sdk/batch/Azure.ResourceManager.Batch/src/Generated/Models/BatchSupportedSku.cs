@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Describes a Batch supported SKU. </summary>
     public partial class BatchSupportedSku
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="BatchSupportedSku"/>. </summary>
         internal BatchSupportedSku()
         {
@@ -23,11 +55,15 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="familyName"> The family name of the SKU. </param>
         /// <param name="capabilities"> A collection of capabilities which this SKU supports. </param>
-        internal BatchSupportedSku(string name, string familyName, IReadOnlyList<BatchSkuCapability> capabilities)
+        /// <param name="batchSupportEndOfLife"> The time when Azure Batch service will retire this SKU. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchSupportedSku(string name, string familyName, IReadOnlyList<BatchSkuCapability> capabilities, DateTimeOffset? batchSupportEndOfLife, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             FamilyName = familyName;
             Capabilities = capabilities;
+            BatchSupportEndOfLife = batchSupportEndOfLife;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the SKU. </summary>
@@ -36,5 +72,7 @@ namespace Azure.ResourceManager.Batch.Models
         public string FamilyName { get; }
         /// <summary> A collection of capabilities which this SKU supports. </summary>
         public IReadOnlyList<BatchSkuCapability> Capabilities { get; }
+        /// <summary> The time when Azure Batch service will retire this SKU. </summary>
+        public DateTimeOffset? BatchSupportEndOfLife { get; }
     }
 }

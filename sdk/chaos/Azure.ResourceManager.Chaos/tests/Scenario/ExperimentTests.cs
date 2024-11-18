@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Chaos.Models;
 using Azure.ResourceManager.Chaos.Tests.TestDependencies;
 using Azure.ResourceManager.Chaos.Tests.TestDependencies.Utilities;
 using Azure.ResourceManager.Resources;
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.Chaos.Tests
 
             if (Mode == RecordedTestMode.Record)
             {
-                await Task.Delay(10000);
+                await Delay(10000);
             }
         }
 
@@ -38,20 +41,37 @@ namespace Azure.ResourceManager.Chaos.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            var resourceResponse = await this.ExperimentCollection.CreateOrUpdateAsync(WaitUntil.Completed, this.ExperimentName, this.MockExperimentEntities.GetVmssShutdownV2v0Experiment());
+            var resourceResponse = await this.ExperimentCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                this.ExperimentName,
+                this.MockExperimentEntities.GetVmssShutdownV2v0Experiment());
             Assert.AreEqual(this.ExperimentName, resourceResponse.Value.Data.Name);
         }
 
         [TestCase, Order(2)]
         [RecordedTest]
+        public async Task Update()
+        {
+            var experimentTags = new Dictionary<string, string>() { { "key2", "value2" } };
+
+            var experiment = await this.ExperimentCollection.CreateOrUpdateAsync(WaitUntil.Completed, this.ExperimentName, this.MockExperimentEntities.GetVmssShutdownV2v0Experiment());
+            var resourceResponse = await experiment.Value.UpdateAsync(
+                WaitUntil.Completed,
+                this.MockExperimentEntities.GetSamplePatch());
+            Assert.AreEqual(experimentTags, resourceResponse.Value.Data.Tags);
+        }
+
+        [TestCase, Order(3)]
+        [RecordedTest]
         public async Task Get()
         {
             await this.ExperimentCollection.CreateOrUpdateAsync(WaitUntil.Completed, this.ExperimentName, this.MockExperimentEntities.GetVmssShutdownV2v0Experiment());
             var getResourceResponse = await this.ExperimentCollection.GetAsync(this.ExperimentName).ConfigureAwait(false);
+
             Assert.AreEqual(this.ExperimentName, getResourceResponse.Value.Data.Name);
         }
 
-        [TestCase, Order(3)]
+        [TestCase, Order(4)]
         [RecordedTest]
         public async Task List()
         {
@@ -59,7 +79,7 @@ namespace Azure.ResourceManager.Chaos.Tests
             Assert.True(experimentList.Any());
         }
 
-        [TestCase, Order(4)]
+        [TestCase, Order(5)]
         [RecordedTest]
         public async Task Delete()
         {
@@ -70,49 +90,37 @@ namespace Azure.ResourceManager.Chaos.Tests
             var deleteResponse = await experimentResourceResponse.Value.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
             Assert.AreEqual(200, deleteResponse.GetRawResponse().Status);
 
-            var existsResponse = await rg.GetExperiments().ExistsAsync(this.ExperimentName).ConfigureAwait(false);
+            await Delay(2000, 0);
+
+            var existsResponse = await rg.GetChaosExperiments().ExistsAsync(this.ExperimentName).ConfigureAwait(false);
             Assert.AreEqual(false, existsResponse.Value);
         }
 
-        [TestCase, Order(5)]
+        [TestCase, Order(6)]
         [RecordedTest]
-        public async Task StartAndCheckStatus()
+        public async Task StartAndCheckExecutionStatus()
         {
             var experimentName = string.Format(TestConstants.ExperimentForExecutionNameFormat, TestConstants.ExperimentNamePrefix, this.VmssId);
             var experimentResourceResponse = await this.ExperimentCollection.GetAsync(experimentName).ConfigureAwait(false);
-            var startResponse = await experimentResourceResponse.Value.StartAsync().ConfigureAwait(false);
-            Assert.AreEqual(experimentName, startResponse.Value.Name);
+            var startResponse = await experimentResourceResponse.Value.StartAsync(WaitUntil.Started).ConfigureAwait(false);
             Assert.AreEqual(202, startResponse.GetRawResponse().Status);
 
-            var statusId = UrlUtility.GetStatusId(startResponse.Value.StatusUri);
-            var statusResponse = await experimentResourceResponse.Value.GetExperimentStatusAsync(statusId).ConfigureAwait(false);
-            Assert.AreEqual(200, statusResponse.GetRawResponse().Status);
+            var executionsList = await experimentResourceResponse.Value.GetChaosExperimentExecutions().ToListAsync().ConfigureAwait(false);
+            Assert.True(executionsList.Any());
+
+            var executionId = UrlUtility.GetExecutionsId(executionsList.FirstOrDefault().Id);
+            var executionResponse = await experimentResourceResponse.Value.GetChaosExperimentExecutionAsync(executionId).ConfigureAwait(false);
+            Assert.AreEqual(200, executionResponse.GetRawResponse().Status);
         }
 
-        [TestCase, Order(6)]
+        [TestCase, Order(7)]
         [RecordedTest]
         public async Task Cancel()
         {
             var experimentName = string.Format(TestConstants.ExperimentForExecutionNameFormat, TestConstants.ExperimentNamePrefix, this.VmssId);
             var experimentResourceResponse = await this.ExperimentCollection.GetAsync(experimentName).ConfigureAwait(false);
-            var cancelResponse = await experimentResourceResponse.Value.CancelAsync().ConfigureAwait(false);
-            Assert.AreEqual(experimentName, cancelResponse.Value.Name);
+            var cancelResponse = await experimentResourceResponse.Value.CancelAsync(WaitUntil.Started).ConfigureAwait(false);
             Assert.AreEqual(202, cancelResponse.GetRawResponse().Status);
-        }
-
-        [TestCase, Order(7)]
-        [RecordedTest]
-        public async Task ListAndGetDetails()
-        {
-            var experimentName = string.Format(TestConstants.ExperimentForExecutionNameFormat, TestConstants.ExperimentNamePrefix, this.VmssId);
-            var experimentResourceResponse = await this.ExperimentCollection.GetAsync(experimentName).ConfigureAwait(false);
-            var detailsList = await experimentResourceResponse.Value.GetExperimentExecutionDetails().ToListAsync().ConfigureAwait(false);
-            Assert.True(detailsList.Any());
-
-            var detailId = UrlUtility.GetDetailsId(detailsList.FirstOrDefault().Id);
-            var experimentDetailResponse = await experimentResourceResponse.Value.GetExperimentExecutionDetailAsync(detailId).ConfigureAwait(false);
-            Assert.AreEqual(detailsList.FirstOrDefault().Id, experimentDetailResponse.Value.Id);
-            Assert.AreEqual(200, experimentDetailResponse.GetRawResponse().Status);
         }
     }
 }

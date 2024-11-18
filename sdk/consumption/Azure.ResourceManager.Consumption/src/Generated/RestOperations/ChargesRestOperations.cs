@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Consumption.Models;
@@ -35,6 +34,33 @@ namespace Azure.ResourceManager.Consumption
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string scope, string startDate, string endDate, string filter, string apply)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Consumption/charges", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (startDate != null)
+            {
+                uri.AppendQuery("startDate", startDate, true);
+            }
+            if (endDate != null)
+            {
+                uri.AppendQuery("endDate", endDate, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (apply != null)
+            {
+                uri.AppendQuery("$apply", apply, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string scope, string startDate, string endDate, string filter, string apply)

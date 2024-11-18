@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class AdministratorConfiguration : IUtf8JsonSerializable
+    public partial class AdministratorConfiguration : IUtf8JsonSerializable, IJsonModel<AdministratorConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdministratorConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AdministratorConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AdministratorConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AdministratorConfiguration)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
@@ -27,21 +45,51 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in SshPublicKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static AdministratorConfiguration DeserializeAdministratorConfiguration(JsonElement element)
+        AdministratorConfiguration IJsonModel<AdministratorConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AdministratorConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AdministratorConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdministratorConfiguration(document.RootElement, options);
+        }
+
+        internal static AdministratorConfiguration DeserializeAdministratorConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> adminUsername = default;
-            Optional<IList<NetworkCloudSshPublicKey>> sshPublicKeys = default;
+            string adminUsername = default;
+            IList<NetworkCloudSshPublicKey> sshPublicKeys = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminUsername"u8))
@@ -58,13 +106,49 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudSshPublicKey> array = new List<NetworkCloudSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(item));
+                        array.Add(NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(item, options));
                     }
                     sshPublicKeys = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AdministratorConfiguration(adminUsername.Value, Optional.ToList(sshPublicKeys));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AdministratorConfiguration(adminUsername, sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AdministratorConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AdministratorConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AdministratorConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AdministratorConfiguration IPersistableModel<AdministratorConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AdministratorConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAdministratorConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AdministratorConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AdministratorConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

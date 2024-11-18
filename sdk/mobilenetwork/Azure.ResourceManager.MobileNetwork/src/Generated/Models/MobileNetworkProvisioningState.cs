@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The current provisioning state. </summary>
+    /// <summary>
+    /// The current provisioning state.
+    /// Serialized Name: ProvisioningState
+    /// </summary>
     public readonly partial struct MobileNetworkProvisioningState : IEquatable<MobileNetworkProvisioningState>
     {
         private readonly string _value;
@@ -30,25 +33,46 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string CanceledValue = "Canceled";
         private const string DeletedValue = "Deleted";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: ProvisioningState.Unknown
+        /// </summary>
         public static MobileNetworkProvisioningState Unknown { get; } = new MobileNetworkProvisioningState(UnknownValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ProvisioningState.Succeeded
+        /// </summary>
         public static MobileNetworkProvisioningState Succeeded { get; } = new MobileNetworkProvisioningState(SucceededValue);
-        /// <summary> Accepted. </summary>
+        /// <summary>
+        /// Accepted
+        /// Serialized Name: ProvisioningState.Accepted
+        /// </summary>
         public static MobileNetworkProvisioningState Accepted { get; } = new MobileNetworkProvisioningState(AcceptedValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ProvisioningState.Deleting
+        /// </summary>
         public static MobileNetworkProvisioningState Deleting { get; } = new MobileNetworkProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ProvisioningState.Failed
+        /// </summary>
         public static MobileNetworkProvisioningState Failed { get; } = new MobileNetworkProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: ProvisioningState.Canceled
+        /// </summary>
         public static MobileNetworkProvisioningState Canceled { get; } = new MobileNetworkProvisioningState(CanceledValue);
-        /// <summary> Deleted. </summary>
+        /// <summary>
+        /// Deleted
+        /// Serialized Name: ProvisioningState.Deleted
+        /// </summary>
         public static MobileNetworkProvisioningState Deleted { get; } = new MobileNetworkProvisioningState(DeletedValue);
         /// <summary> Determines if two <see cref="MobileNetworkProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkProvisioningState left, MobileNetworkProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkProvisioningState left, MobileNetworkProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkProvisioningState"/>. </summary>
         public static implicit operator MobileNetworkProvisioningState(string value) => new MobileNetworkProvisioningState(value);
 
         /// <inheritdoc />
@@ -59,7 +83,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

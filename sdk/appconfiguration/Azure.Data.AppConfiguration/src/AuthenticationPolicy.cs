@@ -80,7 +80,7 @@ namespace Azure.Data.AppConfiguration
             const string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
 
             var uri = request.Uri.ToUri();
-            var host = uri.Host;
+            var host = uri.Authority;
             var pathAndQuery = uri.PathAndQuery;
             var method = request.Method.Method;
 

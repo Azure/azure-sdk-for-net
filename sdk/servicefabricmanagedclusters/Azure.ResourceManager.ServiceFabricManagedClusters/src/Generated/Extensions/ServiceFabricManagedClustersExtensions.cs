@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Mocking;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
@@ -33,6 +31,44 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         private static MockableServiceFabricManagedClustersSubscriptionResource GetMockableServiceFabricManagedClustersSubscriptionResource(ArmResource resource)
         {
             return resource.GetCachedClient(client => new MockableServiceFabricManagedClustersSubscriptionResource(client, resource.Id));
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceFabricManagedClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceFabricManagedClusterResource"/> object. </returns>
+        public static ServiceFabricManagedClusterResource GetServiceFabricManagedClusterResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedClusterResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceFabricManagedNodeTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedNodeTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedNodeTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedNodeTypeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceFabricManagedNodeTypeResource"/> object. </returns>
+        public static ServiceFabricManagedNodeTypeResource GetServiceFabricManagedNodeTypeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedNodeTypeResource(id);
         }
 
         /// <summary>
@@ -112,44 +148,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedClusterResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceFabricManagedClusterResource"/> object. </returns>
-        public static ServiceFabricManagedClusterResource GetServiceFabricManagedClusterResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedClusterResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedNodeTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedNodeTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedNodeTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedNodeTypeResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceFabricManagedNodeTypeResource"/> object. </returns>
-        public static ServiceFabricManagedNodeTypeResource GetServiceFabricManagedNodeTypeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedNodeTypeResource(id);
-        }
-
-        /// <summary>
         /// Gets a collection of ServiceFabricManagedClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -176,6 +174,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -207,6 +213,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -237,6 +251,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -265,6 +287,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -292,6 +322,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -323,6 +357,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -352,6 +390,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_GetByEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -384,6 +426,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_GetByEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -415,6 +461,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -444,6 +494,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -472,6 +526,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_ListByEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -503,6 +561,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>ManagedClusterVersion_ListByEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -533,6 +595,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>managedUnsupportedVMSizes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -561,6 +627,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <item>
         /// <term>Operation Id</term>
         /// <description>managedUnsupportedVMSizes_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -591,6 +661,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>managedUnsupportedVMSizes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -620,6 +694,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <item>
         /// <term>Operation Id</term>
         /// <description>managedUnsupportedVMSizes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// </list>
         /// <item>

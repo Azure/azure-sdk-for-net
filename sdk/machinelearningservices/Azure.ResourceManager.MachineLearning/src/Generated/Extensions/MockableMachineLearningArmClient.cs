@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Mocking
 {
@@ -37,6 +35,18 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="MachineLearningWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearningWorkspaceResource"/> object. </returns>
+        public virtual MachineLearningWorkspaceResource GetMachineLearningWorkspaceResource(ResourceIdentifier id)
+        {
+            MachineLearningWorkspaceResource.ValidateResourceId(id);
+            return new MachineLearningWorkspaceResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="MachineLearningComputeResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningComputeResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningComputeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -46,6 +56,42 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         {
             MachineLearningComputeResource.ValidateResourceId(id);
             return new MachineLearningComputeResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MachineLearningPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearningPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual MachineLearningPrivateEndpointConnectionResource GetMachineLearningPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            MachineLearningPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new MachineLearningPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MachineLearningWorkspaceConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningWorkspaceConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionResource"/> object. </returns>
+        public virtual MachineLearningWorkspaceConnectionResource GetMachineLearningWorkspaceConnectionResource(ResourceIdentifier id)
+        {
+            MachineLearningWorkspaceConnectionResource.ValidateResourceId(id);
+            return new MachineLearningWorkspaceConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MachineLearningOutboundRuleBasicResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningOutboundRuleBasicResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningOutboundRuleBasicResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearningOutboundRuleBasicResource"/> object. </returns>
+        public virtual MachineLearningOutboundRuleBasicResource GetMachineLearningOutboundRuleBasicResource(ResourceIdentifier id)
+        {
+            MachineLearningOutboundRuleBasicResource.ValidateResourceId(id);
+            return new MachineLearningOutboundRuleBasicResource(Client, id);
         }
 
         /// <summary>
@@ -397,15 +443,15 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningLabelingJobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningLabelingJobResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningLabelingJobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MachineLearningMarketplaceSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningMarketplaceSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningMarketplaceSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningLabelingJobResource"/> object. </returns>
-        public virtual MachineLearningLabelingJobResource GetMachineLearningLabelingJobResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningMarketplaceSubscriptionResource"/> object. </returns>
+        public virtual MachineLearningMarketplaceSubscriptionResource GetMachineLearningMarketplaceSubscriptionResource(ResourceIdentifier id)
         {
-            MachineLearningLabelingJobResource.ValidateResourceId(id);
-            return new MachineLearningLabelingJobResource(Client, id);
+            MachineLearningMarketplaceSubscriptionResource.ValidateResourceId(id);
+            return new MachineLearningMarketplaceSubscriptionResource(Client, id);
         }
 
         /// <summary>
@@ -445,6 +491,18 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="MachineLearningServerlessEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningServerlessEndpointResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningServerlessEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearningServerlessEndpointResource"/> object. </returns>
+        public virtual MachineLearningServerlessEndpointResource GetMachineLearningServerlessEndpointResource(ResourceIdentifier id)
+        {
+            MachineLearningServerlessEndpointResource.ValidateResourceId(id);
+            return new MachineLearningServerlessEndpointResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="MachineLearningRegistryResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningRegistryResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningRegistryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -454,54 +512,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         {
             MachineLearningRegistryResource.ValidateResourceId(id);
             return new MachineLearningRegistryResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningWorkspaceResource"/> object. </returns>
-        public virtual MachineLearningWorkspaceResource GetMachineLearningWorkspaceResource(ResourceIdentifier id)
-        {
-            MachineLearningWorkspaceResource.ValidateResourceId(id);
-            return new MachineLearningWorkspaceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningWorkspaceConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningWorkspaceConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionResource"/> object. </returns>
-        public virtual MachineLearningWorkspaceConnectionResource GetMachineLearningWorkspaceConnectionResource(ResourceIdentifier id)
-        {
-            MachineLearningWorkspaceConnectionResource.ValidateResourceId(id);
-            return new MachineLearningWorkspaceConnectionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningOutboundRuleBasicResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningOutboundRuleBasicResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningOutboundRuleBasicResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningOutboundRuleBasicResource"/> object. </returns>
-        public virtual MachineLearningOutboundRuleBasicResource GetMachineLearningOutboundRuleBasicResource(ResourceIdentifier id)
-        {
-            MachineLearningOutboundRuleBasicResource.ValidateResourceId(id);
-            return new MachineLearningOutboundRuleBasicResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual MachineLearningPrivateEndpointConnectionResource GetMachineLearningPrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            MachineLearningPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new MachineLearningPrivateEndpointConnectionResource(Client, id);
         }
     }
 }

@@ -5,16 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkInterfaceProperties : IUtf8JsonSerializable
+    public partial class MobileNetworkInterfaceProperties : IUtf8JsonSerializable, IJsonModel<MobileNetworkInterfaceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkInterfaceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MobileNetworkInterfaceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MobileNetworkInterfaceProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -35,19 +56,77 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("ipv4Gateway"u8);
                 writer.WriteStringValue(IPv4Gateway);
             }
-            writer.WriteEndObject();
+            if (Optional.IsDefined(VlanId))
+            {
+                writer.WritePropertyName("vlanId"u8);
+                writer.WriteNumberValue(VlanId.Value);
+            }
+            if (Optional.IsCollectionDefined(IPv4AddressList))
+            {
+                writer.WritePropertyName("ipv4AddressList"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPv4AddressList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(BfdIPv4Endpoints))
+            {
+                writer.WritePropertyName("bfdIpv4Endpoints"u8);
+                writer.WriteStartArray();
+                foreach (var item in BfdIPv4Endpoints)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static MobileNetworkInterfaceProperties DeserializeMobileNetworkInterfaceProperties(JsonElement element)
+        MobileNetworkInterfaceProperties IJsonModel<MobileNetworkInterfaceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MobileNetworkInterfaceProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileNetworkInterfaceProperties(document.RootElement, options);
+        }
+
+        internal static MobileNetworkInterfaceProperties DeserializeMobileNetworkInterfaceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> ipv4Address = default;
-            Optional<string> ipv4Subnet = default;
-            Optional<string> ipv4Gateway = default;
+            string name = default;
+            string ipv4Address = default;
+            string ipv4Subnet = default;
+            string ipv4Gateway = default;
+            int? vlanId = default;
+            IList<string> ipv4AddressList = default;
+            IList<string> bfdIPv4Endpoints = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -70,8 +149,285 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     ipv4Gateway = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("vlanId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vlanId = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("ipv4AddressList"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    ipv4AddressList = array;
+                    continue;
+                }
+                if (property.NameEquals("bfdIpv4Endpoints"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    bfdIPv4Endpoints = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MobileNetworkInterfaceProperties(name.Value, ipv4Address.Value, ipv4Subnet.Value, ipv4Gateway.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MobileNetworkInterfaceProperties(
+                name,
+                ipv4Address,
+                ipv4Subnet,
+                ipv4Gateway,
+                vlanId,
+                ipv4AddressList ?? new ChangeTrackingList<string>(),
+                bfdIPv4Endpoints ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPv4Address), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ipv4Address: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPv4Address))
+                {
+                    builder.Append("  ipv4Address: ");
+                    if (IPv4Address.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IPv4Address}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IPv4Address}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPv4Subnet), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ipv4Subnet: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPv4Subnet))
+                {
+                    builder.Append("  ipv4Subnet: ");
+                    if (IPv4Subnet.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IPv4Subnet}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IPv4Subnet}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPv4Gateway), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ipv4Gateway: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPv4Gateway))
+                {
+                    builder.Append("  ipv4Gateway: ");
+                    if (IPv4Gateway.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IPv4Gateway}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IPv4Gateway}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VlanId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vlanId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VlanId))
+                {
+                    builder.Append("  vlanId: ");
+                    builder.AppendLine($"{VlanId.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPv4AddressList), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ipv4AddressList: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IPv4AddressList))
+                {
+                    if (IPv4AddressList.Any())
+                    {
+                        builder.Append("  ipv4AddressList: ");
+                        builder.AppendLine("[");
+                        foreach (var item in IPv4AddressList)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BfdIPv4Endpoints), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bfdIpv4Endpoints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BfdIPv4Endpoints))
+                {
+                    if (BfdIPv4Endpoints.Any())
+                    {
+                        builder.Append("  bfdIpv4Endpoints: ");
+                        builder.AppendLine("[");
+                        foreach (var item in BfdIPv4Endpoints)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MobileNetworkInterfaceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MobileNetworkInterfaceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MobileNetworkInterfaceProperties IPersistableModel<MobileNetworkInterfaceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMobileNetworkInterfaceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MobileNetworkInterfaceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MobileNetworkInterfaceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

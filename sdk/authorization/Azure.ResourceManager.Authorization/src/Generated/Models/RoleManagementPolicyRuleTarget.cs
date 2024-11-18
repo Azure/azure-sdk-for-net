@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> The role management policy rule target. </summary>
     public partial class RoleManagementPolicyRuleTarget
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyRuleTarget"/>. </summary>
         public RoleManagementPolicyRuleTarget()
         {
@@ -29,7 +61,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="targetObjects"> The list of target objects. </param>
         /// <param name="inheritableSettings"> The list of inheritable settings. </param>
         /// <param name="enforcedSettings"> The list of enforced settings. </param>
-        internal RoleManagementPolicyRuleTarget(string caller, IList<string> operations, RoleManagementAssignmentLevel? level, IList<string> targetObjects, IList<string> inheritableSettings, IList<string> enforcedSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleManagementPolicyRuleTarget(string caller, IList<string> operations, RoleManagementAssignmentLevel? level, IList<string> targetObjects, IList<string> inheritableSettings, IList<string> enforcedSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Caller = caller;
             Operations = operations;
@@ -37,19 +70,26 @@ namespace Azure.ResourceManager.Authorization.Models
             TargetObjects = targetObjects;
             InheritableSettings = inheritableSettings;
             EnforcedSettings = enforcedSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The caller of the setting. </summary>
+        [WirePath("caller")]
         public string Caller { get; set; }
         /// <summary> The type of operation. </summary>
+        [WirePath("operations")]
         public IList<string> Operations { get; }
         /// <summary> The assignment level to which rule is applied. </summary>
+        [WirePath("level")]
         public RoleManagementAssignmentLevel? Level { get; set; }
         /// <summary> The list of target objects. </summary>
+        [WirePath("targetObjects")]
         public IList<string> TargetObjects { get; }
         /// <summary> The list of inheritable settings. </summary>
+        [WirePath("inheritableSettings")]
         public IList<string> InheritableSettings { get; }
         /// <summary> The list of enforced settings. </summary>
+        [WirePath("enforcedSettings")]
         public IList<string> EnforcedSettings { get; }
     }
 }

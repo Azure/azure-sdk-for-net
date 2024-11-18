@@ -7,22 +7,19 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.StoragePool;
 using Azure.ResourceManager.StoragePool.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StoragePool.Samples
 {
     public partial class Sample_DiskPoolResource
     {
-        // List Disk Pools by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDiskPools_ListDiskPoolsBySubscription()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_ListBySubscription.json
@@ -49,12 +46,11 @@ namespace Azure.ResourceManager.StoragePool.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update Disk pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateDiskPool()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Patch.json
@@ -105,9 +101,8 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Disk pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteDiskPool()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Delete.json
@@ -129,12 +124,11 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             // invoke the operation
             await diskPool.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Disk pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDiskPool()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Get.json
@@ -163,9 +157,8 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Disk Pool outbound network dependencies
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetOutboundNetworkDependenciesEndpoints_GetDiskPoolOutboundNetworkDependencies()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_GetOutboundNetworkDependencies.json
@@ -190,12 +183,11 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Start Disk Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Start_StartDiskPool()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Start.json
@@ -217,12 +209,11 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             // invoke the operation
             await diskPool.StartAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Deallocate Disk Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Deallocate_DeallocateDiskPool()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Deallocate.json
@@ -244,12 +235,11 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             // invoke the operation
             await diskPool.DeallocateAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Upgrade Disk Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Upgrade_UpgradeDiskPool()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Upgrade.json
@@ -271,7 +261,7 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             // invoke the operation
             await diskPool.UpgradeAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

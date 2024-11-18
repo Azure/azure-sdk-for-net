@@ -6,24 +6,36 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoCosmosDBDataConnection : IUtf8JsonSerializable
+    public partial class KustoCosmosDBDataConnection : IUtf8JsonSerializable, IJsonModel<KustoCosmosDBDataConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoCosmosDBDataConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KustoCosmosDBDataConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoCosmosDBDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                throw new FormatException($"The model {nameof(KustoCosmosDBDataConnection)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TableName))
@@ -40,6 +52,11 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 writer.WritePropertyName("managedIdentityResourceId"u8);
                 writer.WriteStringValue(ManagedIdentityResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ManagedIdentityObjectId))
+            {
+                writer.WritePropertyName("managedIdentityObjectId"u8);
+                writer.WriteStringValue(ManagedIdentityObjectId.Value);
             }
             if (Optional.IsDefined(CosmosDBAccountResourceId))
             {
@@ -61,31 +78,51 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("retrievalStartDate"u8);
                 writer.WriteStringValue(RetrievalStartOn.Value, "O");
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoCosmosDBDataConnection DeserializeKustoCosmosDBDataConnection(JsonElement element)
+        KustoCosmosDBDataConnection IJsonModel<KustoCosmosDBDataConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoCosmosDBDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KustoCosmosDBDataConnection)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoCosmosDBDataConnection(document.RootElement, options);
+        }
+
+        internal static KustoCosmosDBDataConnection DeserializeKustoCosmosDBDataConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             DataConnectionKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> tableName = default;
-            Optional<string> mappingRuleName = default;
-            Optional<ResourceIdentifier> managedIdentityResourceId = default;
-            Optional<Guid> managedIdentityObjectId = default;
-            Optional<ResourceIdentifier> cosmosDBAccountResourceId = default;
-            Optional<string> cosmosDBDatabase = default;
-            Optional<string> cosmosDBContainer = default;
-            Optional<DateTimeOffset> retrievalStartDate = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string tableName = default;
+            string mappingRuleName = default;
+            ResourceIdentifier managedIdentityResourceId = default;
+            Guid? managedIdentityObjectId = default;
+            ResourceIdentifier cosmosDBAccountResourceId = default;
+            string cosmosDBDatabase = default;
+            string cosmosDBContainer = default;
+            DateTimeOffset? retrievalStartDate = default;
+            KustoProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -203,8 +240,60 @@ namespace Azure.ResourceManager.Kusto.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KustoCosmosDBDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, tableName.Value, mappingRuleName.Value, managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), cosmosDBAccountResourceId.Value, cosmosDBDatabase.Value, cosmosDBContainer.Value, Optional.ToNullable(retrievalStartDate), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KustoCosmosDBDataConnection(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                serializedAdditionalRawData,
+                tableName,
+                mappingRuleName,
+                managedIdentityResourceId,
+                managedIdentityObjectId,
+                cosmosDBAccountResourceId,
+                cosmosDBDatabase,
+                cosmosDBContainer,
+                retrievalStartDate,
+                provisioningState);
         }
+
+        BinaryData IPersistableModel<KustoCosmosDBDataConnection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoCosmosDBDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KustoCosmosDBDataConnection)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KustoCosmosDBDataConnection IPersistableModel<KustoCosmosDBDataConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoCosmosDBDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKustoCosmosDBDataConnection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoCosmosDBDataConnection)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KustoCosmosDBDataConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

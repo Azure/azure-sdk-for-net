@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkFabricPatchablePropertiesTerminalServerConfiguration : IUtf8JsonSerializable
+    public partial class NetworkFabricPatchablePropertiesTerminalServerConfiguration : IUtf8JsonSerializable, IJsonModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkFabricPatchablePropertiesTerminalServerConfiguration)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
@@ -35,37 +55,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
             }
-            if (Optional.IsDefined(Username))
-            {
-                writer.WritePropertyName("username"u8);
-                writer.WriteStringValue(Username);
-            }
-            if (Optional.IsDefined(Password))
-            {
-                writer.WritePropertyName("password"u8);
-                writer.WriteStringValue(Password);
-            }
-            if (Optional.IsDefined(SerialNumber))
-            {
-                writer.WritePropertyName("serialNumber"u8);
-                writer.WriteStringValue(SerialNumber);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static NetworkFabricPatchablePropertiesTerminalServerConfiguration DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(JsonElement element)
+        NetworkFabricPatchablePropertiesTerminalServerConfiguration IJsonModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkFabricPatchablePropertiesTerminalServerConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(document.RootElement, options);
+        }
+
+        internal static NetworkFabricPatchablePropertiesTerminalServerConfiguration DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> primaryIPv4Prefix = default;
-            Optional<string> primaryIPv6Prefix = default;
-            Optional<string> secondaryIPv4Prefix = default;
-            Optional<string> secondaryIPv6Prefix = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> serialNumber = default;
+            string primaryIPv4Prefix = default;
+            string primaryIPv6Prefix = default;
+            string secondaryIPv4Prefix = default;
+            string secondaryIPv6Prefix = default;
+            string username = default;
+            string password = default;
+            string serialNumber = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryIpv4Prefix"u8))
@@ -103,8 +123,52 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     serialNumber = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkFabricPatchablePropertiesTerminalServerConfiguration(username.Value, password.Value, serialNumber.Value, primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetworkFabricPatchablePropertiesTerminalServerConfiguration(
+                username,
+                password,
+                serialNumber,
+                serializedAdditionalRawData,
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix);
         }
+
+        BinaryData IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricPatchablePropertiesTerminalServerConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetworkFabricPatchablePropertiesTerminalServerConfiguration IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricPatchablePropertiesTerminalServerConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

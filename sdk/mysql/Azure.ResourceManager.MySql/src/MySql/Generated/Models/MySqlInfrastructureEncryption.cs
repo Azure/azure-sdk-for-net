@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator ==(MySqlInfrastructureEncryption left, MySqlInfrastructureEncryption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlInfrastructureEncryption"/> values are not the same. </summary>
         public static bool operator !=(MySqlInfrastructureEncryption left, MySqlInfrastructureEncryption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlInfrastructureEncryption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlInfrastructureEncryption"/>. </summary>
         public static implicit operator MySqlInfrastructureEncryption(string value) => new MySqlInfrastructureEncryption(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MySql.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

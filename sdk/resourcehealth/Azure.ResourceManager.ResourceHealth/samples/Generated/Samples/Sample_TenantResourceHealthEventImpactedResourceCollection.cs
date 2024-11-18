@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ResourceHealth;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ResourceHealth.Samples
 {
     public partial class Sample_TenantResourceHealthEventImpactedResourceCollection
     {
-        // ListEventsByTenantId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListEventsByTenantId()
         {
             // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/ImpactedResources_ListByTenantId_ListByEventId.json
@@ -50,12 +47,11 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ImpactedResourcesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ImpactedResourcesGet()
         {
             // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/ImpactedResources_GetByTenantId.json
@@ -86,9 +82,8 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ImpactedResourcesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ImpactedResourcesGet()
         {
             // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/ImpactedResources_GetByTenantId.json
@@ -115,9 +110,8 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ImpactedResourcesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ImpactedResourcesGet()
         {
             // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/ImpactedResources_GetByTenantId.json
@@ -144,7 +138,7 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

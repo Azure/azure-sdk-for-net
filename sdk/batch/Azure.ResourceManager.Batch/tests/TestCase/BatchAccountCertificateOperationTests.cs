@@ -1,8 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
+using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Batch.Tests.Helpers;
 using NUnit.Framework;
 
@@ -36,8 +40,6 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             BatchAccountCertificateResource certificate2 = await certificate1.GetAsync();
 
             ResourceDataHelper.AssertCertificate(certificate1.Data, certificate2.Data);
-            //2.Delete
-            await certificate1.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Peering;
 using Azure.ResourceManager.Peering.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Peering.Samples
 {
     public partial class Sample_PeeringServiceResource
     {
-        // Get a peering service
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPeeringService()
         {
             // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetPeeringService.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.Peering.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a peering service
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAPeeringService()
         {
             // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/DeletePeeringService.json
@@ -74,12 +70,11 @@ namespace Azure.ResourceManager.Peering.Samples
             // invoke the operation
             await peeringService.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update peering service tags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatePeeringServiceTags()
         {
             // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/UpdatePeeringServiceTags.json
@@ -116,9 +111,8 @@ namespace Azure.ResourceManager.Peering.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List peering services in a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPeeringServices_ListPeeringServicesInASubscription()
         {
             // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/ListPeeringServicesBySubscription.json
@@ -145,12 +139,11 @@ namespace Azure.ResourceManager.Peering.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Initialize Peering Service for Connection Monitor functionality
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task InitializePeeringServiceConnectionMonitor_InitializePeeringServiceForConnectionMonitorFunctionality()
         {
             // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/InitializeConnectionMonitor.json
@@ -170,7 +163,7 @@ namespace Azure.ResourceManager.Peering.Samples
             // invoke the operation
             await subscriptionResource.InitializePeeringServiceConnectionMonitorAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

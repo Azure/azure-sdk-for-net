@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
@@ -61,6 +59,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The job name. </param>
@@ -97,6 +103,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +149,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The job name. </param>
@@ -170,6 +192,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The job name. </param>
@@ -204,6 +234,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,6 +279,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

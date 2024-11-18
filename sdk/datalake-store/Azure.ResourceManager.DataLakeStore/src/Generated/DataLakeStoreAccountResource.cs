@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataLakeStore.Models;
 using Azure.ResourceManager.Resources;
 
@@ -109,6 +107,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreFirewallRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule to retrieve. </param>
@@ -131,6 +137,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,6 +176,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreVirtualNetworkRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule to retrieve. </param>
@@ -184,6 +206,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreVirtualNetworkRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +245,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>TrustedIdProviders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreTrustedIdProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="trustedIdProviderName"> The name of the trusted identity provider to retrieve. </param>
@@ -238,6 +276,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>TrustedIdProviders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreTrustedIdProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="trustedIdProviderName"> The name of the trusted identity provider to retrieve. </param>
@@ -260,6 +306,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,6 +347,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -324,6 +386,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -359,6 +429,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>Accounts_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -392,6 +470,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -431,6 +517,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>Accounts_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -469,6 +563,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <term>Operation Id</term>
         /// <description>Accounts_EnableKeyVault</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -498,6 +600,14 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_EnableKeyVault</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeStoreAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

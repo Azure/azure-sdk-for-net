@@ -13,8 +13,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task GetAndListOperationsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), TestEnvironment.Credential);
 
             // Build a custom model to make sure that there is at least one operation.
             string modelId = Guid.NewGuid().ToString();
@@ -79,8 +78,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 Console.WriteLine($"  Operation ID: {operationItem.OperationId}");
                 Console.WriteLine($"  Status: {operationItem.Status}");
                 Console.WriteLine($"  Completion: {operationItem.PercentCompleted}%");
-                Console.WriteLine($"  Created on: {operationItem.CreatedDateTime}");
-                Console.WriteLine($"  Last updated on: {operationItem.LastUpdatedDateTime}");
+                Console.WriteLine($"  Created on: {operationItem.CreatedOn}");
+                Console.WriteLine($"  Last updated on: {operationItem.LastUpdatedOn}");
                 Console.WriteLine($"  Resource location: {operationItem.ResourceLocation}");
 
                 if (++count == 10)

@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The storage account information for storing Service Fabric diagnostic logs. </summary>
     public partial class DiagnosticsStorageAccountConfig
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DiagnosticsStorageAccountConfig"/>. </summary>
         /// <param name="storageAccountName"> The Azure storage account name. </param>
         /// <param name="protectedAccountKeyName"> The protected diagnostics storage key name. </param>
@@ -42,7 +74,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="blobEndpoint"> The blob endpoint of the azure storage account. </param>
         /// <param name="queueEndpoint"> The queue endpoint of the azure storage account. </param>
         /// <param name="tableEndpoint"> The table endpoint of the azure storage account. </param>
-        internal DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string protectedAccountKeyName2, Uri blobEndpoint, Uri queueEndpoint, Uri tableEndpoint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string protectedAccountKeyName2, Uri blobEndpoint, Uri queueEndpoint, Uri tableEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageAccountName = storageAccountName;
             ProtectedAccountKeyName = protectedAccountKeyName;
@@ -50,6 +83,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             BlobEndpoint = blobEndpoint;
             QueueEndpoint = queueEndpoint;
             TableEndpoint = tableEndpoint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsStorageAccountConfig"/> for deserialization. </summary>
+        internal DiagnosticsStorageAccountConfig()
+        {
         }
 
         /// <summary> The Azure storage account name. </summary>

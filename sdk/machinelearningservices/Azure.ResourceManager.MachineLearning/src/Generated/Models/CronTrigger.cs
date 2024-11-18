@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -24,10 +24,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Argument.AssertNotNull(expression, nameof(expression));
 
             Expression = expression;
-            TriggerType = MachineLearningTriggerType.Cron;
+            TriggerType = TriggerType.Cron;
         }
 
         /// <summary> Initializes a new instance of <see cref="CronTrigger"/>. </summary>
+        /// <param name="triggerType"> [Required]. </param>
         /// <param name="endTime">
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be "2022-06-01T00:00:01"
@@ -38,21 +39,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </param>
-        /// <param name="triggerType"> [Required]. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="expression">
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
         /// </param>
-        internal CronTrigger(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, string expression) : base(endTime, startTime, timeZone, triggerType)
+        internal CronTrigger(TriggerType triggerType, string endTime, string startTime, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData, string expression) : base(triggerType, endTime, startTime, timeZone, serializedAdditionalRawData)
         {
             Expression = expression;
             TriggerType = triggerType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CronTrigger"/> for deserialization. </summary>
+        internal CronTrigger()
+        {
         }
 
         /// <summary>
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
         /// </summary>
+        [WirePath("expression")]
         public string Expression { get; set; }
     }
 }

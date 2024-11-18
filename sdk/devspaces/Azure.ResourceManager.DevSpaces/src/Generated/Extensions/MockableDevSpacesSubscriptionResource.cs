@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DevSpaces;
 
 namespace Azure.ResourceManager.DevSpaces.Mocking
 {
@@ -53,6 +50,14 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// <term>Operation Id</term>
         /// <description>Controllers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ControllerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,6 +79,14 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Controllers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -6,38 +6,74 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AwsAssumeRoleAuthenticationDetailsProperties : IUtf8JsonSerializable
+    public partial class AwsAssumeRoleAuthenticationDetailsProperties : IUtf8JsonSerializable, IJsonModel<AwsAssumeRoleAuthenticationDetailsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AwsAssumeRoleAuthenticationDetailsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AwsAssumeRoleAuthenticationDetailsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AwsAssumeRoleAuthenticationDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AwsAssumeRoleAuthenticationDetailsProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(AccountId))
+            {
+                writer.WritePropertyName("accountId"u8);
+                writer.WriteStringValue(AccountId);
+            }
             writer.WritePropertyName("awsAssumeRoleArn"u8);
             writer.WriteStringValue(AwsAssumeRoleArn);
             writer.WritePropertyName("awsExternalId"u8);
             writer.WriteStringValue(AwsExternalId);
-            writer.WritePropertyName("authenticationType"u8);
-            writer.WriteStringValue(AuthenticationType.ToString());
-            writer.WriteEndObject();
         }
 
-        internal static AwsAssumeRoleAuthenticationDetailsProperties DeserializeAwsAssumeRoleAuthenticationDetailsProperties(JsonElement element)
+        AwsAssumeRoleAuthenticationDetailsProperties IJsonModel<AwsAssumeRoleAuthenticationDetailsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AwsAssumeRoleAuthenticationDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AwsAssumeRoleAuthenticationDetailsProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAwsAssumeRoleAuthenticationDetailsProperties(document.RootElement, options);
+        }
+
+        internal static AwsAssumeRoleAuthenticationDetailsProperties DeserializeAwsAssumeRoleAuthenticationDetailsProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> accountId = default;
+            string accountId = default;
             string awsAssumeRoleArn = default;
             Guid awsExternalId = default;
-            Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
-            Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
+            AuthenticationProvisioningState? authenticationProvisioningState = default;
+            IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions = default;
             AuthenticationType authenticationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountId"u8))
@@ -83,8 +119,51 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     authenticationType = new AuthenticationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AwsAssumeRoleAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType, accountId.Value, awsAssumeRoleArn, awsExternalId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AwsAssumeRoleAuthenticationDetailsProperties(
+                authenticationProvisioningState,
+                grantedPermissions ?? new ChangeTrackingList<SecurityCenterCloudPermission>(),
+                authenticationType,
+                serializedAdditionalRawData,
+                accountId,
+                awsAssumeRoleArn,
+                awsExternalId);
         }
+
+        BinaryData IPersistableModel<AwsAssumeRoleAuthenticationDetailsProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AwsAssumeRoleAuthenticationDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AwsAssumeRoleAuthenticationDetailsProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AwsAssumeRoleAuthenticationDetailsProperties IPersistableModel<AwsAssumeRoleAuthenticationDetailsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AwsAssumeRoleAuthenticationDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAwsAssumeRoleAuthenticationDetailsProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AwsAssumeRoleAuthenticationDetailsProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AwsAssumeRoleAuthenticationDetailsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static bool operator ==(DataReplicationReplicationVaultType left, DataReplicationReplicationVaultType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataReplicationReplicationVaultType"/> values are not the same. </summary>
         public static bool operator !=(DataReplicationReplicationVaultType left, DataReplicationReplicationVaultType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataReplicationReplicationVaultType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReplicationReplicationVaultType"/>. </summary>
         public static implicit operator DataReplicationReplicationVaultType(string value) => new DataReplicationReplicationVaultType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -41,7 +41,7 @@ namespace Microsoft.Extensions.Azure
         }
 
         /// <summary>
-        /// Registers a <see cref="KeyClient"/> instance with the provided <paramref name="vaultUri"/>
+        /// Registers a <see cref="CryptographyClient "/> instance with the provided <paramref name="vaultUri"/>
         /// </summary>
         /// <typeparam name="TBuilder">The type of builder to extend.</typeparam>
         /// <param name="builder">The builder to extend.</param>
@@ -54,7 +54,7 @@ namespace Microsoft.Extensions.Azure
         }
 
         /// <summary>
-        /// Registers a <see cref="KeyClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
+        /// Registers a <see cref="CryptographyClient "/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
         /// </summary>
         /// <typeparam name="TBuilder">The type of builder to extend.</typeparam>
         /// <typeparam name="TConfiguration">The type of configuration to use for the client builder.</typeparam>

@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RedisEnterprise.Mocking;
 using Azure.ResourceManager.RedisEnterprise.Models;
 using Azure.ResourceManager.Resources;
@@ -74,6 +72,25 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="AccessPolicyAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AccessPolicyAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AccessPolicyAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableRedisEnterpriseArmClient.GetAccessPolicyAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AccessPolicyAssignmentResource"/> object. </returns>
+        public static AccessPolicyAssignmentResource GetAccessPolicyAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableRedisEnterpriseArmClient(client).GetAccessPolicyAssignmentResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RedisEnterprisePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterprisePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -110,7 +127,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Gets information about a RedisEnterprise cluster
+        /// Gets information about a Redis Enterprise cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,6 +137,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -127,7 +152,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -140,7 +165,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Gets information about a RedisEnterprise cluster
+        /// Gets information about a Redis Enterprise cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -150,6 +175,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -157,7 +190,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -179,6 +212,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OperationsStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -210,6 +247,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <term>Operation Id</term>
         /// <description>OperationsStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -230,7 +271,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Gets all RedisEnterprise clusters in the specified subscription.
+        /// Lists all Redis Enterprise clusters in the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -239,6 +280,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -258,7 +307,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Gets all RedisEnterprise clusters in the specified subscription.
+        /// Lists all Redis Enterprise clusters in the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -267,6 +316,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -283,64 +340,6 @@ namespace Azure.ResourceManager.RedisEnterprise
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRedisEnterpriseSubscriptionResource(subscriptionResource).GetRedisEnterpriseClusters(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about skus in specified location for the given subscription id
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/locations/{location}/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_List</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRedisEnterpriseSubscriptionResource.GetRedisEnterpriseSkus(AzureLocation,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="RedisEnterpriseRegionSkuDetail"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableRedisEnterpriseSubscriptionResource(subscriptionResource).GetRedisEnterpriseSkusAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about skus in specified location for the given subscription id
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/locations/{location}/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_List</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRedisEnterpriseSubscriptionResource.GetRedisEnterpriseSkus(AzureLocation,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="RedisEnterpriseRegionSkuDetail"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RedisEnterpriseRegionSkuDetail> GetRedisEnterpriseSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableRedisEnterpriseSubscriptionResource(subscriptionResource).GetRedisEnterpriseSkus(location, cancellationToken);
         }
     }
 }

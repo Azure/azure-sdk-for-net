@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -54,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates an incident.
+        /// Creates or updates the incident.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Incidents_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,7 +88,9 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = await _securityInsightsIncidentIncidentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, incidentId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentResource>(Response.FromValue(new SecurityInsightsIncidentResource(Client, response), response.GetRawResponse()));
+                var uri = _securityInsightsIncidentIncidentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, incidentId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentResource>(Response.FromValue(new SecurityInsightsIncidentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +103,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates an incident.
+        /// Creates or updates the incident.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -104,6 +112,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Incidents_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +139,9 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = _securityInsightsIncidentIncidentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, incidentId, data, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentResource>(Response.FromValue(new SecurityInsightsIncidentResource(Client, response), response.GetRawResponse()));
+                var uri = _securityInsightsIncidentIncidentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, incidentId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentResource>(Response.FromValue(new SecurityInsightsIncidentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -136,7 +154,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a given incident.
+        /// Gets an incident.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -145,6 +163,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,7 +199,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a given incident.
+        /// Gets an incident.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -182,6 +208,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,6 +254,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Incidents_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
@@ -246,6 +288,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Incidents_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
@@ -271,6 +321,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,6 +365,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="incidentId"> Incident ID. </param>
@@ -341,6 +407,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,6 +452,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

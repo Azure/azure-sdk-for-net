@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -19,10 +20,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryDiskImageSource"/>. </summary>
-        /// <param name="id"> The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, user image or storage account resource. </param>
+        /// <param name="id"> The id of the gallery artifact version source. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </param>
         /// <param name="storageAccountId"> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </param>
-        internal GalleryDiskImageSource(ResourceIdentifier id, Uri uri, ResourceIdentifier storageAccountId) : base(id)
+        internal GalleryDiskImageSource(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri, ResourceIdentifier storageAccountId) : base(id, serializedAdditionalRawData)
         {
             Uri = uri;
             StorageAccountId = storageAccountId;

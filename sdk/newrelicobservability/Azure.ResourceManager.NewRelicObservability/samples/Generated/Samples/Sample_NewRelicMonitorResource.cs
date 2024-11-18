@@ -7,25 +7,23 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NewRelicObservability;
 using Azure.ResourceManager.NewRelicObservability.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NewRelicObservability.Samples
 {
     public partial class Sample_NewRelicMonitorResource
     {
-        // Monitors_ListBySubscription_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNewRelicMonitorResources_MonitorsListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -35,7 +33,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "hfmjmpyqgezxkp";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -49,15 +47,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MonitorsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +64,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "hfmjmpyqgezxkp";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             string monitorName = "cdlymktqw";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -83,12 +80,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_MonitorsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,7 +94,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "hfmjmpyqgezxkp";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             string monitorName = "cdlymktqw";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -147,14 +143,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                 PlanData = new NewRelicPlanDetails()
                 {
                     UsageType = NewRelicObservabilityUsageType.Payg,
-                    BillingCycle = NewRelicObservabilityBillingCycle.Yearly,
+                    NewRelicPlanBillingCycle = "Yearly",
                     PlanDetails = "tbbiaga",
                     EffectiveOn = DateTimeOffset.Parse("2022-12-05T14:11:37.786Z"),
                 },
                 OrgCreationSource = NewRelicObservabilityOrgCreationSource.Liftr,
                 AccountCreationSource = NewRelicObservabilityAccountCreationSource.Liftr,
             };
-            NewRelicMonitorResource result = await newRelicMonitorResource.UpdateAsync(patch);
+            ArmOperation<NewRelicMonitorResource> lro = await newRelicMonitorResource.UpdateAsync(WaitUntil.Completed, patch);
+            NewRelicMonitorResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -163,12 +160,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_MonitorsDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +174,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "ddqonpqwjr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -188,15 +184,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             string userEmail = "ruxvg@xqkmdhrnoo.hlmbpm";
             await newRelicMonitorResource.DeleteAsync(WaitUntil.Completed, userEmail);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_MonitorsDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_Delete_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -206,7 +201,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "ddqonpqwjr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -216,15 +211,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             string userEmail = "ruxvg@xqkmdhrnoo.hlmbpm";
             await newRelicMonitorResource.DeleteAsync(WaitUntil.Completed, userEmail);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_GetMetricRules_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMetricRules_MonitorsGetMetricRulesMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_GetMetricRules_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_GetMetricRules_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_GetMetricRules" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -234,7 +228,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "nqmcgifgaqlf";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             string monitorName = "fhcjxnxumkdlgpwanewtkdnyuz";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -247,12 +241,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_GetMetricRules_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMetricRules_MonitorsGetMetricRulesMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_GetMetricRules_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_GetMetricRules_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_GetMetricRules" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -262,7 +255,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "nqmcgifgaqlf";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             string monitorName = "fhcjxnxumkdlgpwanewtkdnyuz";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -275,12 +268,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_GetMetricStatus_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMetricStatus_MonitorsGetMetricStatusMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_GetMetricStatus_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_GetMetricStatus_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_GetMetricStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -290,7 +282,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "nqmcgifgaqlf";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             string monitorName = "fhcjxnxumkdlgpwanewtkdnyuz";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -301,7 +293,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             {
                 AzureResourceIds =
 {
-"enfghpfw"
+"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/NewRelic.Observability/monitors/fhcjxnxumkdlgpwanewtkdnyuz"
 },
             };
             NewRelicMetricsStatusResult result = await newRelicMonitorResource.GetMetricStatusAsync(content);
@@ -309,12 +301,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_GetMetricStatus_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMetricStatus_MonitorsGetMetricStatusMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_GetMetricStatus_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_GetMetricStatus_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_GetMetricStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -324,25 +315,30 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "nqmcgifgaqlf";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             string monitorName = "fhcjxnxumkdlgpwanewtkdnyuz";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation
-            NewRelicMetricsStatusContent content = new NewRelicMetricsStatusContent("ruxvg@xqkmdhrnoo.hlmbpm");
+            NewRelicMetricsStatusContent content = new NewRelicMetricsStatusContent("ruxvg@xqkmdhrnoo.hlmbpm")
+            {
+                AzureResourceIds =
+{
+"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/NewRelic.Observability/monitors/fhcjxnxumkdlgpwanewtkdnyuz"
+},
+            };
             NewRelicMetricsStatusResult result = await newRelicMonitorResource.GetMetricStatusAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_ListAppServices_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAppServices_MonitorsListAppServicesMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListAppServices_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListAppServices_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListAppServices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -352,7 +348,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "nqmcgifgaqlf";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             string monitorName = "fhcjxnxumkdlgpwanewtkdnyuz";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -363,7 +359,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             {
                 AzureResourceIds =
 {
-new ResourceIdentifier("pvzrksrmzowobuhxpwiotnpcvjbu")
+new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/NewRelic.Observability/monitors/fhcjxnxumkdlgpwanewtkdnyuz")
 },
             };
             await foreach (NewRelicObservabilityAppServiceInfo item in newRelicMonitorResource.GetAppServicesAsync(content))
@@ -371,15 +367,14 @@ new ResourceIdentifier("pvzrksrmzowobuhxpwiotnpcvjbu")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_ListAppServices_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAppServices_MonitorsListAppServicesMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListAppServices_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListAppServices_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListAppServices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -389,28 +384,33 @@ new ResourceIdentifier("pvzrksrmzowobuhxpwiotnpcvjbu")
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "nqmcgifgaqlf";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             string monitorName = "fhcjxnxumkdlgpwanewtkdnyuz";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            NewRelicAppServicesGetContent content = new NewRelicAppServicesGetContent("ruxvg@xqkmdhrnoo.hlmbpm");
+            NewRelicAppServicesGetContent content = new NewRelicAppServicesGetContent("ruxvg@xqkmdhrnoo.hlmbpm")
+            {
+                AzureResourceIds =
+{
+new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/NewRelic.Observability/monitors/fhcjxnxumkdlgpwanewtkdnyuz")
+},
+            };
             await foreach (NewRelicObservabilityAppServiceInfo item in newRelicMonitorResource.GetAppServicesAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_SwitchBilling_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SwitchBilling_MonitorsSwitchBillingMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_SwitchBilling_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_SwitchBilling_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_SwitchBilling" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -420,7 +420,7 @@ new ResourceIdentifier("pvzrksrmzowobuhxpwiotnpcvjbu")
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "nqmcgifgaqlf";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             string monitorName = "fhcjxnxumkdlgpwanewtkdnyuz";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -429,12 +429,12 @@ new ResourceIdentifier("pvzrksrmzowobuhxpwiotnpcvjbu")
             // invoke the operation
             NewRelicSwitchBillingContent content = new NewRelicSwitchBillingContent("ruxvg@xqkmdhrnoo.hlmbpm")
             {
-                AzureResourceId = new ResourceIdentifier("enfghpfw"),
+                AzureResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/NewRelic.Observability/monitors/fhcjxnxumkdlgpwanewtkdnyuz"),
                 OrganizationId = "k",
                 PlanData = new NewRelicPlanDetails()
                 {
                     UsageType = NewRelicObservabilityUsageType.Payg,
-                    BillingCycle = NewRelicObservabilityBillingCycle.Yearly,
+                    NewRelicPlanBillingCycle = "Yearly",
                     PlanDetails = "tbbiaga",
                     EffectiveOn = DateTimeOffset.Parse("2022-12-05T14:11:37.786Z"),
                 },
@@ -448,12 +448,11 @@ new ResourceIdentifier("pvzrksrmzowobuhxpwiotnpcvjbu")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_SwitchBilling_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SwitchBilling_MonitorsSwitchBillingMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_SwitchBilling_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_SwitchBilling_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_SwitchBilling" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -463,7 +462,7 @@ new ResourceIdentifier("pvzrksrmzowobuhxpwiotnpcvjbu")
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "nqmcgifgaqlf";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             string monitorName = "fhcjxnxumkdlgpwanewtkdnyuz";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -480,12 +479,11 @@ new ResourceIdentifier("pvzrksrmzowobuhxpwiotnpcvjbu")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_ListHosts_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHosts_MonitorsListHostsMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListHosts_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListHosts_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListHosts" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -495,7 +493,7 @@ new ResourceIdentifier("pvzrksrmzowobuhxpwiotnpcvjbu")
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "ddqonpqwjr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -514,15 +512,14 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_ListHosts_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHosts_MonitorsListHostsMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListHosts_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListHosts_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListHosts" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -532,7 +529,7 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "ddqonpqwjr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -551,15 +548,14 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_ListMonitoredResources_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMonitoredResources_MonitorsListMonitoredResourcesMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListMonitoredResources_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListMonitoredResources_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListMonitoredResources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -569,7 +565,7 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "ddqonpqwjr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -581,15 +577,14 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_ListMonitoredResources_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMonitoredResources_MonitorsListMonitoredResourcesMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListMonitoredResources_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListMonitoredResources_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListMonitoredResources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -599,7 +594,7 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "ddqonpqwjr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -611,15 +606,43 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_VmHostPayload_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetLinkedResources_MonitorsListLinkedResources()
+        {
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/LinkedResources_List.json
+            // this example is just showing the usage of "Monitors_ListLinkedResources" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NewRelicMonitorResource created on azure
+            // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string monitorName = "myMonitor";
+            ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
+            NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (SubResource item in newRelicMonitorResource.GetLinkedResourcesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task VmHostPayload_MonitorsVmHostPayloadMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_VmHostPayload_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_VmHostPayload_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_VmHostPayload" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -629,7 +652,7 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "ddqonpqwjr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -641,12 +664,11 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_VmHostPayload_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task VmHostPayload_MonitorsVmHostPayloadMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_VmHostPayload_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_VmHostPayload_MinimumSet_Gen.json
             // this example is just showing the usage of "Monitors_VmHostPayload" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -656,7 +678,7 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
 
             // this example assumes you already have this NewRelicMonitorResource created on azure
             // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "ddqonpqwjr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
@@ -666,6 +688,61 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
             NewRelicObservabilityVmExtensionPayload result = await newRelicMonitorResource.VmHostPayloadAsync();
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetBillingInfo_BillingInfoGet()
+        {
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/BillingInfo_Get.json
+            // this example is just showing the usage of "BillingInfo_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NewRelicMonitorResource created on azure
+            // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string monitorName = "myMonitor";
+            ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
+            NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
+
+            // invoke the operation
+            NewRelicBillingInfoResult result = await newRelicMonitorResource.GetBillingInfoAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetConnectedPartnerResources_ConnectedPartnerResourcesList()
+        {
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/ConnectedPartnerResources_List.json
+            // this example is just showing the usage of "ConnectedPartnerResources_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NewRelicMonitorResource created on azure
+            // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string monitorName = "myMonitor";
+            ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
+            NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (NewRelicConnectedPartnerResourceInfo item in newRelicMonitorResource.GetConnectedPartnerResourcesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -18,15 +18,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         public int Version;
 
-        /// <summary>
-        /// The type of blob.
-        /// </summary>
-        public BlobType BlobType;
-
-        public BlobCheckpointData(int version, BlobType blobType)
+        public BlobCheckpointData(int version)
         {
             Version = version;
-            BlobType = blobType;
         }
     }
 }

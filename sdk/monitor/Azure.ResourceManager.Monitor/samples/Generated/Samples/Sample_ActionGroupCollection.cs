@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Samples
 {
     public partial class Sample_ActionGroupCollection
     {
-        // Create or update an action group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnActionGroup()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/createOrUpdateActionGroup.json
@@ -139,9 +136,8 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an action group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnActionGroup()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/getActionGroup.json
@@ -173,9 +169,8 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an action group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnActionGroup()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/getActionGroup.json
@@ -203,9 +198,8 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an action group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnActionGroup()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/getActionGroup.json
@@ -233,7 +227,7 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -245,9 +239,8 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
             }
         }
 
-        // List action groups at resource group level
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListActionGroupsAtResourceGroupLevel()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/listActionGroups.json
@@ -278,7 +271,7 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Models
@@ -18,12 +17,9 @@ namespace Azure.ResourceManager.Models
     {
         /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         [InitializationConstructor]
         public OperationStatusResult(string status)
         {
-            Argument.AssertNotNull(status, nameof(status));
-
             Status = status;
             Operations = new ChangeTrackingList<OperationStatusResult>();
         }
@@ -50,21 +46,34 @@ namespace Azure.ResourceManager.Models
             Error = error;
         }
 
+        /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/> for deserialization. </summary>
+        protected OperationStatusResult()
+        {
+        }
+
         /// <summary> Fully qualified ID for the async operation. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> Name of the async operation. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Operation status. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> Percent of the operation that is complete. </summary>
+        [WirePath("percentComplete")]
         public float? PercentComplete { get; }
         /// <summary> The start time of the operation. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the operation. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> The operations list. </summary>
+        [WirePath("operations")]
         public IReadOnlyList<OperationStatusResult> Operations { get; }
         /// <summary> If present, details of the operation error. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

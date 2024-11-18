@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient,CallDialogRestClient callDialogRestClient, ClientDiagnostics clientDiagnostics, CallAutomationEventProcessor eventProcessor)
+        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient, CallDialogRestClient callDialogRestClient, ClientDiagnostics clientDiagnostics, CallAutomationEventProcessor eventProcessor)
         {
             CallConnectionId = callConnectionId;
             RestClient = callConnectionRestClient;
@@ -283,7 +283,8 @@ namespace Azure.Communication.CallAutomation
                 options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>()),
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
                 Transferee = options.Transferee == default ? null : CommunicationIdentifierSerializer.Serialize(options.Transferee),
-                OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
+                OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
+                SourceCallerIdNumber = options.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerIdNumber.PhoneNumber)
             };
 
             return request;

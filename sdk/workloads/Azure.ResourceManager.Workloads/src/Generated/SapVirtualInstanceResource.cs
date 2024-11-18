@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Workloads.Models;
@@ -111,6 +109,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPCentralInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapCentralServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
@@ -133,6 +139,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPCentralInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapCentralServerInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -164,6 +178,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPDatabaseInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapDatabaseInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
@@ -186,6 +208,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPDatabaseInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapDatabaseInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +247,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPApplicationServerInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
@@ -240,6 +278,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPApplicationServerInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapApplicationServerInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
@@ -262,6 +308,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,6 +349,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -326,6 +388,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,6 +431,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -394,6 +472,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -429,6 +515,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Request body to update a Virtual Instance for SAP solutions resource. </param>
@@ -462,6 +556,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Start</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -497,6 +599,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -530,6 +640,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -566,6 +684,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -600,6 +726,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -655,6 +789,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -709,6 +851,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -758,6 +908,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -806,6 +964,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -858,6 +1024,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

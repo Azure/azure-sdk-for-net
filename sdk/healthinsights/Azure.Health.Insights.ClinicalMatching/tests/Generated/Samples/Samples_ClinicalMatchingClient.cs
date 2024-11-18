@@ -8,9 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Health.Insights.ClinicalMatching;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -22,7 +20,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ClinicalMatchingClient_MatchTrials_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -40,18 +38,17 @@ id = "<id>",
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("modelVersion").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ClinicalMatchingClient_MatchTrials_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -69,50 +66,49 @@ id = "<id>",
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("modelVersion").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_ClinicalMatchingClient_MatchTrials_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<TrialMatcherResult> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
-            TrialMatcherResult responseData = operation.Value;
+            Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, body);
+            TrialMatcherResults responseData = operation.Value;
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ClinicalMatchingClient_MatchTrials_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<TrialMatcherResult> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
-            TrialMatcherResult responseData = operation.Value;
+            Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, body);
+            TrialMatcherResults responseData = operation.Value;
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_ClinicalMatchingClient_MatchTrials_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -146,7 +142,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+createdDateTime = "2022-05-10T18:57:31.2311892Z",
 content = new
 {
 sourceType = "inline",
@@ -296,59 +292,50 @@ radius = 123.45,
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("confidenceScore").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("eligibilityCriteriaEvidence").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("text").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("offset").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("length").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("system").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("importance").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("phases")[0].ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("studyType").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("recruitmentStatus").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("conditions")[0].ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("sponsors")[0].ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("contacts")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("contacts")[0].GetProperty("email").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("contacts")[0].GetProperty("phone").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("city").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("countryOrRegion").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("system").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("semanticType").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("modelVersion").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("knowledgeGraphLastUpdateDate").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("confidenceScore").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("eligibilityCriteriaEvidence").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("system").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("importance").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("phases")[0].ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("studyType").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("recruitmentStatus").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("conditions")[0].ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("sponsors")[0].ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("contacts")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("contacts")[0].GetProperty("email").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("contacts")[0].GetProperty("phone").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("city").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("countryOrRegion").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("system").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("semanticType").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("category").ToString());
+            Console.WriteLine(result.GetProperty("modelVersion").ToString());
+            Console.WriteLine(result.GetProperty("knowledgeGraphLastUpdateDate").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ClinicalMatchingClient_MatchTrials_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -382,7 +369,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+createdDateTime = "2022-05-10T18:57:31.2311892Z",
 content = new
 {
 sourceType = "inline",
@@ -532,63 +519,54 @@ radius = 123.45,
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("confidenceScore").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("eligibilityCriteriaEvidence").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("text").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("offset").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("length").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("system").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("importance").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("phases")[0].ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("studyType").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("recruitmentStatus").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("conditions")[0].ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("sponsors")[0].ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("contacts")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("contacts")[0].GetProperty("email").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("contacts")[0].GetProperty("phone").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("city").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("countryOrRegion").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("system").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("semanticType").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("modelVersion").ToString());
-            Console.WriteLine(result.GetProperty("results").GetProperty("knowledgeGraphLastUpdateDate").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("confidenceScore").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("eligibilityCriteriaEvidence").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("system").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("importance").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("phases")[0].ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("studyType").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("recruitmentStatus").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("conditions")[0].ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("sponsors")[0].ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("contacts")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("contacts")[0].GetProperty("email").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("contacts")[0].GetProperty("phone").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("city").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("countryOrRegion").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("system").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("semanticType").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("category").ToString());
+            Console.WriteLine(result.GetProperty("modelVersion").ToString());
+            Console.WriteLine(result.GetProperty("knowledgeGraphLastUpdateDate").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_ClinicalMatchingClient_MatchTrials_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -606,7 +584,7 @@ Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(Docum
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 }},
 }
             })
@@ -667,19 +645,19 @@ FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJso
                     IncludeEvidence = true,
                 },
             };
-            Operation<TrialMatcherResult> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
-            TrialMatcherResult responseData = operation.Value;
+            Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, body);
+            TrialMatcherResults responseData = operation.Value;
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ClinicalMatchingClient_MatchTrials_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -697,7 +675,7 @@ Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(Docum
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 }},
 }
             })
@@ -758,8 +736,8 @@ FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJso
                     IncludeEvidence = true,
                 },
             };
-            Operation<TrialMatcherResult> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
-            TrialMatcherResult responseData = operation.Value;
+            Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, body);
+            TrialMatcherResults responseData = operation.Value;
         }
     }
 }

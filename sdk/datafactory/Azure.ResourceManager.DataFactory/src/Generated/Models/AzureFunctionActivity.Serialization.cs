@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,70 +14,56 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureFunctionActivity : IUtf8JsonSerializable
+    public partial class AzureFunctionActivity : IUtf8JsonSerializable, IJsonModel<AzureFunctionActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFunctionActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AzureFunctionActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("linkedServiceName"u8);
-                JsonSerializer.Serialize(writer, LinkedServiceName);
+                throw new FormatException($"The model {nameof(AzureFunctionActivity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Policy))
-            {
-                writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
-            }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (Optional.IsDefined(OnInactiveMarkAs))
-            {
-                writer.WritePropertyName("onInactiveMarkAs"u8);
-                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(DependsOn))
-            {
-                writer.WritePropertyName("dependsOn"u8);
-                writer.WriteStartArray();
-                foreach (var item in DependsOn)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(UserProperties))
-            {
-                writer.WritePropertyName("userProperties"u8);
-                writer.WriteStartArray();
-                foreach (var item in UserProperties)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("functionName"u8);
             JsonSerializer.Serialize(writer, FunctionName);
-            if (Optional.IsDefined(Headers))
+            if (Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("headers"u8);
-                JsonSerializer.Serialize(writer, Headers);
+                writer.WriteStartObject();
+                foreach (var item in RequestHeaders)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Body))
             {
@@ -96,28 +83,41 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static AzureFunctionActivity DeserializeAzureFunctionActivity(JsonElement element)
+        AzureFunctionActivity IJsonModel<AzureFunctionActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureFunctionActivity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureFunctionActivity(document.RootElement, options);
+        }
+
+        internal static AzureFunctionActivity DeserializeAzureFunctionActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             AzureFunctionActivityMethod method = default;
             DataFactoryElement<string> functionName = default;
-            Optional<DataFactoryElement<string>> headers = default;
-            Optional<DataFactoryElement<string>> body = default;
+            IDictionary<string, BinaryData> headers = default;
+            DataFactoryElement<string> body = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -226,7 +226,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            headers = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            headers = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("body"u8))
@@ -244,7 +256,52 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFunctionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, method, functionName, headers.Value, body.Value);
+            return new AzureFunctionActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                method,
+                functionName,
+                headers ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                body);
         }
+
+        BinaryData IPersistableModel<AzureFunctionActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureFunctionActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureFunctionActivity IPersistableModel<AzureFunctionActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureFunctionActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureFunctionActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureFunctionActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

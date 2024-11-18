@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,10 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Please note <see cref="DataFactoryTriggerProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataFactoryBlobEventsTrigger"/>, <see cref="DataFactoryBlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="DataFactoryScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
     /// </summary>
-    public partial class DataFactoryTriggerProperties
+    public abstract partial class DataFactoryTriggerProperties
     {
         /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerProperties"/>. </summary>
-        public DataFactoryTriggerProperties()
+        protected DataFactoryTriggerProperties()
         {
             Annotations = new ChangeTrackingList<BinaryData>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();

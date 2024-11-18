@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -30,13 +29,19 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NamedPartitionSchemeDescription"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="names"> Array of size specified by the ‘count’ parameter, for the names of the partitions. </param>
-        internal NamedPartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, int count, IList<string> names) : base(partitionScheme)
+        internal NamedPartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, IDictionary<string, BinaryData> serializedAdditionalRawData, int count, IList<string> names) : base(partitionScheme, serializedAdditionalRawData)
         {
             Count = count;
             Names = names;
             PartitionScheme = partitionScheme;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NamedPartitionSchemeDescription"/> for deserialization. </summary>
+        internal NamedPartitionSchemeDescription()
+        {
         }
 
         /// <summary> The number of partitions. </summary>

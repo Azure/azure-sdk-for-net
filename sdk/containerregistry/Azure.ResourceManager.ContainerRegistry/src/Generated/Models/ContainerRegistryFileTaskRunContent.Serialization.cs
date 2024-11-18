@@ -5,17 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryFileTaskRunContent : IUtf8JsonSerializable
+    public partial class ContainerRegistryFileTaskRunContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryFileTaskRunContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryFileTaskRunContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContainerRegistryFileTaskRunContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryFileTaskRunContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryFileTaskRunContent)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("taskFilePath"u8);
             writer.WriteStringValue(TaskFilePath);
             if (Optional.IsDefined(ValuesFilePath))
@@ -29,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -39,11 +60,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             writer.WritePropertyName("platform"u8);
-            writer.WriteObjectValue(Platform);
+            writer.WriteObjectValue(Platform, options);
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                writer.WriteObjectValue(AgentConfiguration, options);
             }
             if (Optional.IsDefined(SourceLocation))
             {
@@ -53,46 +74,44 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue(Credentials, options);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(RunRequestType);
-            if (Optional.IsDefined(IsArchiveEnabled))
-            {
-                writer.WritePropertyName("isArchiveEnabled"u8);
-                writer.WriteBooleanValue(IsArchiveEnabled.Value);
-            }
-            if (Optional.IsDefined(AgentPoolName))
-            {
-                writer.WritePropertyName("agentPoolName"u8);
-                writer.WriteStringValue(AgentPoolName);
-            }
-            if (Optional.IsDefined(LogTemplate))
-            {
-                writer.WritePropertyName("logTemplate"u8);
-                writer.WriteStringValue(LogTemplate);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryFileTaskRunContent DeserializeContainerRegistryFileTaskRunContent(JsonElement element)
+        ContainerRegistryFileTaskRunContent IJsonModel<ContainerRegistryFileTaskRunContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryFileTaskRunContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryFileTaskRunContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryFileTaskRunContent(document.RootElement, options);
+        }
+
+        internal static ContainerRegistryFileTaskRunContent DeserializeContainerRegistryFileTaskRunContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string taskFilePath = default;
-            Optional<string> valuesFilePath = default;
-            Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
-            Optional<int> timeout = default;
+            string valuesFilePath = default;
+            IList<ContainerRegistryTaskOverridableValue> values = default;
+            int? timeout = default;
             ContainerRegistryPlatformProperties platform = default;
-            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Optional<string> sourceLocation = default;
-            Optional<ContainerRegistryCredentials> credentials = default;
+            ContainerRegistryAgentProperties agentConfiguration = default;
+            string sourceLocation = default;
+            ContainerRegistryCredentials credentials = default;
             string type = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> agentPoolName = default;
-            Optional<string> logTemplate = default;
+            bool? isArchiveEnabled = default;
+            string agentPoolName = default;
+            string logTemplate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("taskFilePath"u8))
@@ -114,7 +133,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTaskOverridableValue> array = new List<ContainerRegistryTaskOverridableValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item));
+                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item, options));
                     }
                     values = array;
                     continue;
@@ -130,7 +149,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (property.NameEquals("platform"u8))
                 {
-                    platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property.Value);
+                    platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("agentConfiguration"u8))
@@ -139,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property.Value);
+                    agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceLocation"u8))
@@ -153,7 +172,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value);
+                    credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -180,8 +199,314 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     logTemplate = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerRegistryFileTaskRunContent(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, taskFilePath, valuesFilePath.Value, Optional.ToList(values), Optional.ToNullable(timeout), platform, agentConfiguration.Value, sourceLocation.Value, credentials.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerRegistryFileTaskRunContent(
+                type,
+                isArchiveEnabled,
+                agentPoolName,
+                logTemplate,
+                serializedAdditionalRawData,
+                taskFilePath,
+                valuesFilePath,
+                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>(),
+                timeout,
+                platform,
+                agentConfiguration,
+                sourceLocation,
+                credentials);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TaskFilePath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  taskFilePath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TaskFilePath))
+                {
+                    builder.Append("  taskFilePath: ");
+                    if (TaskFilePath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TaskFilePath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TaskFilePath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValuesFilePath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  valuesFilePath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ValuesFilePath))
+                {
+                    builder.Append("  valuesFilePath: ");
+                    if (ValuesFilePath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ValuesFilePath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ValuesFilePath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Values), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  values: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Values))
+                {
+                    if (Values.Any())
+                    {
+                        builder.Append("  values: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Values)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  values: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeoutInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeoutInSeconds))
+                {
+                    builder.Append("  timeout: ");
+                    builder.AppendLine($"{TimeoutInSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Platform), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  platform: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Platform))
+                {
+                    builder.Append("  platform: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Platform, options, 2, false, "  platform: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AgentCpu", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  agentConfiguration: ");
+                builder.AppendLine("{");
+                builder.Append("    cpu: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AgentConfiguration))
+                {
+                    builder.Append("  agentConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AgentConfiguration, options, 2, false, "  agentConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sourceLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceLocation))
+                {
+                    builder.Append("  sourceLocation: ");
+                    if (SourceLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceLocation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Credentials), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  credentials: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Credentials))
+                {
+                    builder.Append("  credentials: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Credentials, options, 2, false, "  credentials: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RunRequestType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RunRequestType))
+                {
+                    builder.Append("  type: ");
+                    if (RunRequestType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RunRequestType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RunRequestType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsArchiveEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isArchiveEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsArchiveEnabled))
+                {
+                    builder.Append("  isArchiveEnabled: ");
+                    var boolValue = IsArchiveEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgentPoolName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  agentPoolName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AgentPoolName))
+                {
+                    builder.Append("  agentPoolName: ");
+                    if (AgentPoolName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AgentPoolName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AgentPoolName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogTemplate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logTemplate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogTemplate))
+                {
+                    builder.Append("  logTemplate: ");
+                    if (LogTemplate.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LogTemplate}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LogTemplate}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ContainerRegistryFileTaskRunContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryFileTaskRunContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryFileTaskRunContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerRegistryFileTaskRunContent IPersistableModel<ContainerRegistryFileTaskRunContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryFileTaskRunContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerRegistryFileTaskRunContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryFileTaskRunContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerRegistryFileTaskRunContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

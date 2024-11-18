@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.CostManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CostManagement.Samples
 {
     public partial class Sample_ScheduledActionCollection
     {
-        // ScheduledActionsListByScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ScheduledActionsListByScope()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledActions-list-shared.json
@@ -49,12 +46,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ScheduledActionsListByScopeFilterByViewId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ScheduledActionsListByScopeFilterByViewId()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledActions-listWithFilter-shared.json
@@ -84,12 +80,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CreateOrUpdateInsightAlertScheduledActionByScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateInsightAlertScheduledActionByScope()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledAction-insightAlert-createOrUpdate-shared.json
@@ -133,9 +128,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreateOrUpdateScheduledActionByScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateScheduledActionByScope()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledAction-createOrUpdate-shared.json
@@ -194,9 +188,8 @@ ScheduledActionWeeksOfMonth.First,ScheduledActionWeeksOfMonth.Third
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ScheduledActionByScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ScheduledActionByScope()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledAction-get-shared.json
@@ -226,9 +219,8 @@ ScheduledActionWeeksOfMonth.First,ScheduledActionWeeksOfMonth.Third
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ScheduledActionByScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ScheduledActionByScope()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledAction-get-shared.json
@@ -254,9 +246,8 @@ ScheduledActionWeeksOfMonth.First,ScheduledActionWeeksOfMonth.Third
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ScheduledActionByScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ScheduledActionByScope()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledAction-get-shared.json
@@ -282,7 +273,7 @@ ScheduledActionWeeksOfMonth.First,ScheduledActionWeeksOfMonth.Third
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

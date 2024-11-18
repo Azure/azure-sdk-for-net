@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,6 +15,38 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> The parameters used when creating a registered server. </summary>
     public partial class StorageSyncRegisteredServerCreateOrUpdateContent : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="StorageSyncRegisteredServerCreateOrUpdateContent"/>. </summary>
         public StorageSyncRegisteredServerCreateOrUpdateContent()
         {
@@ -33,9 +66,14 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="clusterName"> Registered Server clusterName. </param>
         /// <param name="serverId"> Registered Server serverId. </param>
         /// <param name="friendlyName"> Friendly Name. </param>
+<<<<<<< HEAD
         /// <param name="applicationId"> Server ServicePrincipal Id. </param>
         /// <param name="identity"> Apply server with newly discovered ApplicationId if available. </param>
         internal StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, string serverOSVersion, string lastHeartbeat, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, string friendlyName, string applicationId, bool? identity) : base(id, name, resourceType, systemData)
+=======
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, string serverOSVersion, string lastHeartbeat, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, string friendlyName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+>>>>>>> upstream/main
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
@@ -46,8 +84,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             ClusterName = clusterName;
             ServerId = serverId;
             FriendlyName = friendlyName;
+<<<<<<< HEAD
             ApplicationId = applicationId;
             Identity = identity;
+=======
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+>>>>>>> upstream/main
         }
 
         /// <summary>

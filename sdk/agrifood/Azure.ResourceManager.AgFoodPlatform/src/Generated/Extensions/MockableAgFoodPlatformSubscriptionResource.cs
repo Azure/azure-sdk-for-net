@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AgFoodPlatform;
 using Azure.ResourceManager.AgFoodPlatform.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Mocking
@@ -60,6 +57,14 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxPageSize">
@@ -87,6 +92,14 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxPageSize">
@@ -113,6 +126,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -147,6 +164,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

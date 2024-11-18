@@ -6,16 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class DiagnosticsStorageAccountConfig : IUtf8JsonSerializable
+    public partial class DiagnosticsStorageAccountConfig : IUtf8JsonSerializable, IJsonModel<DiagnosticsStorageAccountConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticsStorageAccountConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DiagnosticsStorageAccountConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsStorageAccountConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("storageAccountName"u8);
             writer.WriteStringValue(StorageAccountName);
             writer.WritePropertyName("protectedAccountKeyName"u8);
@@ -31,21 +49,51 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStringValue(QueueEndpoint.AbsoluteUri);
             writer.WritePropertyName("tableEndpoint"u8);
             writer.WriteStringValue(TableEndpoint.AbsoluteUri);
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DiagnosticsStorageAccountConfig DeserializeDiagnosticsStorageAccountConfig(JsonElement element)
+        DiagnosticsStorageAccountConfig IJsonModel<DiagnosticsStorageAccountConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsStorageAccountConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiagnosticsStorageAccountConfig(document.RootElement, options);
+        }
+
+        internal static DiagnosticsStorageAccountConfig DeserializeDiagnosticsStorageAccountConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string storageAccountName = default;
             string protectedAccountKeyName = default;
-            Optional<string> protectedAccountKeyName2 = default;
+            string protectedAccountKeyName2 = default;
             Uri blobEndpoint = default;
             Uri queueEndpoint = default;
             Uri tableEndpoint = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountName"u8))
@@ -78,8 +126,51 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     tableEndpoint = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DiagnosticsStorageAccountConfig(storageAccountName, protectedAccountKeyName, protectedAccountKeyName2.Value, blobEndpoint, queueEndpoint, tableEndpoint);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DiagnosticsStorageAccountConfig(
+                storageAccountName,
+                protectedAccountKeyName,
+                protectedAccountKeyName2,
+                blobEndpoint,
+                queueEndpoint,
+                tableEndpoint,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DiagnosticsStorageAccountConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsStorageAccountConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DiagnosticsStorageAccountConfig IPersistableModel<DiagnosticsStorageAccountConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsStorageAccountConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDiagnosticsStorageAccountConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DiagnosticsStorageAccountConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

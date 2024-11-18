@@ -7,19 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DigitalTwins;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DigitalTwins.Samples
 {
     public partial class Sample_DigitalTwinsPrivateLinkResourceCollection
     {
-        // List private link resources for given Digital Twin
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPrivateLinkResourcesForGivenDigitalTwin()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/PrivateLinkResourcesList_example.json
@@ -51,12 +48,11 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get the specified private link resource for the given Digital Twin
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheSpecifiedPrivateLinkResourceForTheGivenDigitalTwin()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/PrivateLinkResourcesByGroupId_example.json
@@ -89,9 +85,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get the specified private link resource for the given Digital Twin
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetTheSpecifiedPrivateLinkResourceForTheGivenDigitalTwin()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/PrivateLinkResourcesByGroupId_example.json
@@ -120,9 +115,8 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the specified private link resource for the given Digital Twin
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetTheSpecifiedPrivateLinkResourceForTheGivenDigitalTwin()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/PrivateLinkResourcesByGroupId_example.json
@@ -151,7 +145,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

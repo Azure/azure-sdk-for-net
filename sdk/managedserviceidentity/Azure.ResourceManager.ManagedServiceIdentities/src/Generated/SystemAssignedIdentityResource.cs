@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
@@ -98,6 +96,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <term>Operation Id</term>
         /// <description>SystemAssignedIdentities_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SystemAssignedIdentityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +135,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SystemAssignedIdentities_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SystemAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

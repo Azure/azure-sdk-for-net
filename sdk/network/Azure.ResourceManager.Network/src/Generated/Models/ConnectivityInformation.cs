@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Information on the connectivity status. </summary>
     public partial class ConnectivityInformation
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ConnectivityInformation"/>. </summary>
         internal ConnectivityInformation()
         {
@@ -27,7 +59,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="maxLatencyInMs"> Maximum latency in milliseconds. </param>
         /// <param name="probesSent"> Total number of probes sent. </param>
         /// <param name="probesFailed"> Number of failed probes. </param>
-        internal ConnectivityInformation(IReadOnlyList<ConnectivityHopInfo> hops, NetworkConnectionStatus? networkConnectionStatus, int? avgLatencyInMs, int? minLatencyInMs, int? maxLatencyInMs, int? probesSent, int? probesFailed)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivityInformation(IReadOnlyList<ConnectivityHopInfo> hops, NetworkConnectionStatus? networkConnectionStatus, int? avgLatencyInMs, int? minLatencyInMs, int? maxLatencyInMs, int? probesSent, int? probesFailed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Hops = hops;
             NetworkConnectionStatus = networkConnectionStatus;
@@ -36,6 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             MaxLatencyInMs = maxLatencyInMs;
             ProbesSent = probesSent;
             ProbesFailed = probesFailed;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of hops between the source and the destination. </summary>

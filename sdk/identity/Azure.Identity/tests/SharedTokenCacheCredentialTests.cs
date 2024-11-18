@@ -25,7 +25,7 @@ namespace Azure.Identity.Tests
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
             // Configure mock cache to return a token for the expected user
-            var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, TenantId, "token", "refreshToken");
+            var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, TenantId, "token", "refreshToken", config.AuthorityHost.Host);
             var tokenCacheOptions = new MockTokenCache(
                 () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
                 args => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes));
@@ -34,10 +34,19 @@ namespace Azure.Identity.Tests
             {
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
             };
             if (config.Transport != null)
             {
                 options.Transport = config.Transport;
+            }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
+            if (config.AuthenticationRecord != null)
+            {
+                options.AuthenticationRecord = config.AuthenticationRecord;
             }
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new SharedTokenCacheCredential(config.TenantId, ExpectedUsername, options, pipeline, config.MockPublicMsalClient));

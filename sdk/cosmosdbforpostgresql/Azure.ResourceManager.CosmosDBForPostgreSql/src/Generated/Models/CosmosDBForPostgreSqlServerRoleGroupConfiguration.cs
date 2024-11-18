@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     /// <summary> Represents server role group configuration value. </summary>
     public partial class CosmosDBForPostgreSqlServerRoleGroupConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlServerRoleGroupConfiguration"/>. </summary>
         /// <param name="role"> The role of servers in the server role group. </param>
         /// <param name="value"> Value of the configuration. </param>
@@ -30,12 +62,19 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="value"> Value of the configuration. </param>
         /// <param name="defaultValue"> Default value of the configuration. </param>
         /// <param name="source"> Source of the configuration. </param>
-        internal CosmosDBForPostgreSqlServerRoleGroupConfiguration(CosmosDBForPostgreSqlServerRole role, string value, string defaultValue, string source)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlServerRoleGroupConfiguration(CosmosDBForPostgreSqlServerRole role, string value, string defaultValue, string source, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Role = role;
             Value = value;
             DefaultValue = defaultValue;
             Source = source;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlServerRoleGroupConfiguration"/> for deserialization. </summary>
+        internal CosmosDBForPostgreSqlServerRoleGroupConfiguration()
+        {
         }
 
         /// <summary> The role of servers in the server role group. </summary>

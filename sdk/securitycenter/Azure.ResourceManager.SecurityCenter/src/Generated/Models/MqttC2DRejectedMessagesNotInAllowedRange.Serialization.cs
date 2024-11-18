@@ -6,31 +6,53 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class MqttC2DRejectedMessagesNotInAllowedRange : IUtf8JsonSerializable
+    public partial class MqttC2DRejectedMessagesNotInAllowedRange : IUtf8JsonSerializable, IJsonModel<MqttC2DRejectedMessagesNotInAllowedRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MqttC2DRejectedMessagesNotInAllowedRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MqttC2DRejectedMessagesNotInAllowedRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("timeWindowSize"u8);
-            writer.WriteStringValue(TimeWindowSize, "P");
-            writer.WritePropertyName("minThreshold"u8);
-            writer.WriteNumberValue(MinThreshold);
-            writer.WritePropertyName("maxThreshold"u8);
-            writer.WriteNumberValue(MaxThreshold);
-            writer.WritePropertyName("isEnabled"u8);
-            writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static MqttC2DRejectedMessagesNotInAllowedRange DeserializeMqttC2DRejectedMessagesNotInAllowedRange(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MqttC2DRejectedMessagesNotInAllowedRange)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        MqttC2DRejectedMessagesNotInAllowedRange IJsonModel<MqttC2DRejectedMessagesNotInAllowedRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MqttC2DRejectedMessagesNotInAllowedRange)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMqttC2DRejectedMessagesNotInAllowedRange(document.RootElement, options);
+        }
+
+        internal static MqttC2DRejectedMessagesNotInAllowedRange DeserializeMqttC2DRejectedMessagesNotInAllowedRange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,10 +60,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             TimeSpan timeWindowSize = default;
             int minThreshold = default;
             int maxThreshold = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeWindowSize"u8))
@@ -79,8 +103,52 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ruleType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MqttC2DRejectedMessagesNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MqttC2DRejectedMessagesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
         }
+
+        BinaryData IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MqttC2DRejectedMessagesNotInAllowedRange)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MqttC2DRejectedMessagesNotInAllowedRange IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMqttC2DRejectedMessagesNotInAllowedRange(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MqttC2DRejectedMessagesNotInAllowedRange)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

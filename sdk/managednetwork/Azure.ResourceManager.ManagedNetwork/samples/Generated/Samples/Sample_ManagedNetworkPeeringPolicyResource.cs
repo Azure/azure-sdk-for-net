@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetwork;
 using Azure.ResourceManager.ManagedNetwork.Models;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetwork.Samples
 {
     public partial class Sample_ManagedNetworkPeeringPolicyResource
     {
-        // ManagedNetworkPeeringPoliciesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ManagedNetworkPeeringPoliciesGet()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkPeeringPolicy/ManagedNetworkPeeringPoliciesGet.json
@@ -51,9 +48,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ManagedNetworkPeeringPoliciesPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ManagedNetworkPeeringPoliciesPut()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkPeeringPolicy/ManagedNetworkPeeringPoliciesPut.json
@@ -98,9 +94,8 @@ Id = new ResourceIdentifier("/subscriptionB/resourceGroups/myResourceGroup/provi
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ManagedNetworkPeeringPoliciesDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ManagedNetworkPeeringPoliciesDelete()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkPeeringPolicy/ManagedNetworkPeeringPoliciesDelete.json
@@ -123,7 +118,7 @@ Id = new ResourceIdentifier("/subscriptionB/resourceGroups/myResourceGroup/provi
             // invoke the operation
             await managedNetworkPeeringPolicy.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -398,7 +398,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                     receivedEventCount,
                     stopWatch.GetElapsedTime().TotalSeconds,
                     firstReceivedEvent?.SequenceNumber.ToString(),
-                    LastReceivedEvent?.SequenceNumber.ToString());
+                    LastReceivedEvent?.SequenceNumber.ToString(),
+                    maximumEventCount,
+                    waitTime.TotalSeconds);
             }
         }
 
@@ -493,7 +495,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     Interlocked.CompareExchange(ref _activePartitionStolenException, null, activeException);
                 }
 
-                EventHubsEventSource.Log.AmqpConsumerLinkCreateCapturedErrorThrow(EventHubName, consumerGroup, partitionId, ownerLevel?.ToString(CultureInfo.InvariantCulture), eventStartingPosition.ToString(), activeException.Message);
+                EventHubsEventSource.Log.AmqpConsumerLinkCreateCapturedErrorThrow(EventHubName, consumerGroup, partitionId, ownerLevel?.ToString(CultureInfo.InvariantCulture), eventStartingPosition.ToString(), activeException.Message, consumerIdentifier);
                 ExceptionDispatchInfo.Capture(activeException).Throw();
             }
 

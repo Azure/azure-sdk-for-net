@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TrafficManager;
 using Azure.ResourceManager.TrafficManager.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.TrafficManager.Samples
 {
     public partial class Sample_TrafficManagerProfileResource
     {
-        // NameAvailabilityTest_NameAvailablePOST21
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckTrafficManagerRelativeDnsNameAvailability_NameAvailabilityTestNameAvailablePOST21()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/NameAvailabilityTest_NameAvailable-POST-example-21.json
@@ -47,9 +44,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NameAvailabilityTest_NameNotAvailablePOST23
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckTrafficManagerRelativeDnsNameAvailability_NameAvailabilityTestNameNotAvailablePOST23()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/NameAvailabilityTest_NameNotAvailable-POST-example-23.json
@@ -75,13 +71,12 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NameAvailabilityV2Test_NameAvailablePOST21
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckTrafficManagerNameAvailabilityV2_NameAvailabilityV2TestNameAvailablePOST21()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/NameAvailabilityV2Test_NameAvailable-POST-example-21.json
-            // this example is just showing the usage of "Profiles_checkTrafficManagerNameAvailabilityV2" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Profiles_CheckTrafficManagerNameAvailabilityV2" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -105,13 +100,12 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NameAvailabilityV2Test_NameNotAvailablePOST23
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckTrafficManagerNameAvailabilityV2_NameAvailabilityV2TestNameNotAvailablePOST23()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/NameAvailabilityV2Test_NameNotAvailable-POST-example-23.json
-            // this example is just showing the usage of "Profiles_checkTrafficManagerNameAvailabilityV2" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Profiles_CheckTrafficManagerNameAvailabilityV2" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -135,9 +129,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTrafficManagerProfiles_ListBySubscription()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-BySubscription.json
@@ -164,12 +157,11 @@ namespace Azure.ResourceManager.TrafficManager.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Profile-GET-WithEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ProfileGETWithEndpoints()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithEndpoints.json
@@ -198,9 +190,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Profile-GET-WithTrafficViewDisabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ProfileGETWithTrafficViewDisabled()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewDisabled.json
@@ -229,9 +220,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Profile-GET-WithTrafficViewEnabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ProfileGETWithTrafficViewEnabled()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewEnabled.json
@@ -260,9 +250,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Profile-DELETE
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ProfileDELETE()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-DELETE.json
@@ -284,12 +273,11 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             // invoke the operation
             await trafficManagerProfile.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Profile-PATCH-MonitorConfig
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ProfilePATCHMonitorConfig()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-PATCH-MonitorConfig.json
@@ -314,11 +302,11 @@ namespace Azure.ResourceManager.TrafficManager.Samples
                 MonitorConfig = new TrafficManagerMonitorConfig()
                 {
                     Protocol = TrafficManagerMonitorProtocol.Http,
-                    Port = 80,
+                    Port = 80L,
                     Path = "/testpath.aspx",
-                    IntervalInSeconds = 30,
-                    TimeoutInSeconds = 6,
-                    ToleratedNumberOfFailures = 4,
+                    IntervalInSeconds = 30L,
+                    TimeoutInSeconds = 6L,
+                    ToleratedNumberOfFailures = 4L,
                     CustomHeaders =
 {
 new TrafficManagerMonitorConfigCustomHeaderInfo()

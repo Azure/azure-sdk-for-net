@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
@@ -25,7 +23,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -45,7 +43,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -65,7 +63,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -86,7 +84,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -107,7 +105,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -123,7 +121,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -139,7 +137,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -164,7 +162,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -189,7 +187,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             foreach (BinaryData item in client.GetAuthenticatedFarmersDetails(null, null, null, null, null, null, null, null, null, null))
             {
@@ -205,7 +203,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             await foreach (BinaryData item in client.GetAuthenticatedFarmersDetailsAsync(null, null, null, null, null, null, null, null, null, null))
             {
@@ -221,7 +219,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             foreach (BinaryData item in client.GetAuthenticatedFarmersDetails(new string[] { "<authProviderIds>" }, new string[] { "<partyIds>" }, true, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -241,7 +239,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             await foreach (BinaryData item in client.GetAuthenticatedFarmersDetailsAsync(new string[] { "<authProviderIds>" }, new string[] { "<partyIds>" }, true, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -261,7 +259,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<oauthProviderId>", null);
             BinaryData responseData = operation.Value;
@@ -278,7 +276,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<oauthProviderId>", null);
             BinaryData responseData = operation.Value;
@@ -295,7 +293,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<oauthProviderId>", null);
             BinaryData responseData = operation.Value;
@@ -321,7 +319,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+            FarmerOAuthTokens client = new FarmBeatsClient(endpoint, credential).GetFarmerOAuthTokensClient();
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<oauthProviderId>", null);
             BinaryData responseData = operation.Value;

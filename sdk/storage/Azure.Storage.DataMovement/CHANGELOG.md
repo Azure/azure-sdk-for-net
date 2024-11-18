@@ -1,15 +1,39 @@
 # Release History
 
-## 12.0.0-beta.5 (Unreleased)
+## 12.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed a bug where `ChannelClosedException` could occur and be sent as an event to `ItemTransferFailed` when there was a failure during a transfer.
+- Fixed bug where adding multiple transfers in parallel could cause a collision (`InvalidOperationException`) in the data transfers stored within the `TransferManager`.
 
 ### Other Changes
+
+## 12.0.0-beta.6 (2024-10-14)
+
+### Features Added
+- Added support to disable checkpointing via `TransferCheckpointStoreOptions.Disabled`.
+
+### Breaking Changes
+- Removed the constructor for `TransferCheckpointStoreOptions` and replaced with a static builder method `Local`.
+- Changed `TransferCheckpointStoreOptions.CheckpointerPath` to internal.
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.0.0-beta.5 (2024-07-16)
+
+### Breaking Changes
+- Renamed `StorageResourceProperties` to `StorageResourceItemProperties`
+- Renamed `StorageResourceReadStreamResult.ContentRange` to `Range`
+- Removed the following members from `StorageResourceReadStreamResult`:
+    - `AcceptRanges`
+    - `RangeContentHash`
+
+### Bugs Fixed
+- Fixed a bug where `ChannelClosedException` could occur and be sent as an event to `ItemTransferFailed` when there was a failure during a transfer.
 
 ## 12.0.0-beta.4 (2023-12-05)
 

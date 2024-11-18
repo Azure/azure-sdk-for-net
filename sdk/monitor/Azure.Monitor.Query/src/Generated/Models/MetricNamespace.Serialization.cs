@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -18,11 +17,11 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> type = default;
-            Optional<string> name = default;
-            Optional<MetricNamespaceClassification> classification = default;
-            Optional<MetricNamespaceName> properties = default;
+            string id = default;
+            string type = default;
+            string name = default;
+            MetricNamespaceClassification? classification = default;
+            MetricNamespaceName properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -59,7 +58,15 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricNamespace(id.Value, type.Value, name.Value, Optional.ToNullable(classification), properties.Value);
+            return new MetricNamespace(id, type, name, classification, properties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricNamespace FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricNamespace(document.RootElement);
         }
     }
 }

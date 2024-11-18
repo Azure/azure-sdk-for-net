@@ -62,6 +62,9 @@ namespace Azure.Data.Tables.Samples
             // Delete the entity given the partition and row key.
             await client.DeleteEntityAsync(partitionKey, rowKey);
 
+            // Delete the strong entity given the entity object.
+            await client.DeleteEntityAsync(strongEntity);
+
             await client.DeleteAsync();
         }
     }

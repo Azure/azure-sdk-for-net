@@ -8,7 +8,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/tables/
+    - sdk/tables/Azure.Data.Tables
+    - sdk/tables/service.projects
+    - sdk/tables/ci.yml
 
 pr:
   branches:
@@ -19,15 +21,16 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/tables/
+    - sdk/tables/Azure.Data.Tables
+    - sdk/tables/service.projects
+    - sdk/tables/ci.yml
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: tables
+    SDKType: client
     ArtifactName: packages
     Artifacts:
     - name: Azure.Data.Tables
       safeName: AzureDataTables
-    - name: Microsoft.Azure.WebJobs.Extensions.Tables
-      safeName: MicrosoftAzureWebJobsExtensionsTables

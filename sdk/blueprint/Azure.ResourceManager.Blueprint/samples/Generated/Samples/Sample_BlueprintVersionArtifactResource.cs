@@ -9,16 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Blueprint;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Blueprint.Samples
 {
     public partial class Sample_BlueprintVersionArtifactResource
     {
-        // MG-ARMTemplateArtifact
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MGARMTemplateArtifact()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPDef/SealedARMTemplateArtifact_Get.json
@@ -48,9 +46,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // MG-PolicyAssignmentArtifact
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MGPolicyAssignmentArtifact()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPDef/SealedPolicyAssignmentArtifact_Get.json
@@ -80,9 +77,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // MG-RoleAssignmentArtifact
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MGRoleAssignmentArtifact()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPDef/SealedRoleAssignmentArtifact_Get.json
@@ -112,9 +108,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Sub-ARMTemplateArtifact
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SubARMTemplateArtifact()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPDef/SealedARMTemplateArtifact_Get.json
@@ -144,9 +139,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Sub-PolicyAssignmentArtifact
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SubPolicyAssignmentArtifact()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPDef/SealedPolicyAssignmentArtifact_Get.json
@@ -176,9 +170,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Sub-RoleAssignmentArtifact
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SubRoleAssignmentArtifact()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPDef/SealedRoleAssignmentArtifact_Get.json

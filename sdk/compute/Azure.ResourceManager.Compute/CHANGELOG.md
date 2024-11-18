@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.7.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,66 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.0-beta.1 (2024-10-15)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+## 1.6.0 (2024-08-26)
+
+### Features Added
+
+- Added a new read-only property `LogicalSectorSize` to `DiskRestorePointData` class.
+- Added new properties `SkuProfile` and `ZonalPlatformFaultDomainAlignMode` to `VirtualMachineScaleSetData` class.
+- Added new properties `Zones`, `ZonalPlatformFaultDomainAlignMode`, and `SkuProfile` to `VirtualMachineScaleSetPatch` class.
+- Added a new property `ScheduledEventsPolicy` to `AvailabilitySetPatch` and `AvailabilitySetData` class.
+
+### Breaking Changes
+
+- `ExcludeExtensions` property in `ComputeSecurityPostureReference` is replaced by `ExcludeExtensionNames` property which takes in a list of strings.
+- `IsVmAgentPlatformUpdatesEnabled` property in `WindowsConfiguration` class is now read-only.
+
+## 1.5.0 (2024-05-10)
+
+### Features Added
+
+- Updated the CRP api-version from 'package-2023-09-01' to the newer 'package-2024-03-01'. This is for the latest Compute RP release (VM, VMSS, etc).
+
+## 1.5.0-beta.1 (2024-04-25)
+
+### Features Added
+
+- Support long-running operation rehydration.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.11.1.
+
+## 1.4.0 (2024-02-21)
+
+### Features Added
+
+- Added a new property 'virtualMachineId' to the 'GalleryArtifactVersionFullSource'.
+- Updated the api-version tag from 'package-2023-10-02' to the newer 'package-2023-07-03'. This is for the latest Gallery RP release (Galleries, CommunityGalleries, etc).
+
+## 1.4.0-beta.1 (2024-01-26)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-09-01' to 'package-2023-10-02'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ce47f9b775ec53750f37def0402ecacf3f1d661b/specification/compute/resource-manager/readme.md.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.10.0.
+
+## 1.3.0 (2023-12-29)
+
+### Features Added
+
+- Compute RP to `2023-09-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
 
 ## 1.2.1 (2023-11-21)
 

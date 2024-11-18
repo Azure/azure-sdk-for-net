@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class RouteCacheCompressionSettings : IUtf8JsonSerializable
+    public partial class RouteCacheCompressionSettings : IUtf8JsonSerializable, IJsonModel<RouteCacheCompressionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteCacheCompressionSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RouteCacheCompressionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteCacheCompressionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RouteCacheCompressionSettings)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(ContentTypesToCompress))
             {
                 writer.WritePropertyName("contentTypesToCompress"u8);
@@ -31,17 +49,47 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("isCompressionEnabled"u8);
                 writer.WriteBooleanValue(IsCompressionEnabled.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static RouteCacheCompressionSettings DeserializeRouteCacheCompressionSettings(JsonElement element)
+        RouteCacheCompressionSettings IJsonModel<RouteCacheCompressionSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteCacheCompressionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RouteCacheCompressionSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteCacheCompressionSettings(document.RootElement, options);
+        }
+
+        internal static RouteCacheCompressionSettings DeserializeRouteCacheCompressionSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> contentTypesToCompress = default;
-            Optional<bool> isCompressionEnabled = default;
+            IList<string> contentTypesToCompress = default;
+            bool? isCompressionEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentTypesToCompress"u8))
@@ -67,8 +115,44 @@ namespace Azure.ResourceManager.Cdn.Models
                     isCompressionEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouteCacheCompressionSettings(Optional.ToList(contentTypesToCompress), Optional.ToNullable(isCompressionEnabled));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RouteCacheCompressionSettings(contentTypesToCompress ?? new ChangeTrackingList<string>(), isCompressionEnabled, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouteCacheCompressionSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteCacheCompressionSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RouteCacheCompressionSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RouteCacheCompressionSettings IPersistableModel<RouteCacheCompressionSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteCacheCompressionSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRouteCacheCompressionSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RouteCacheCompressionSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RouteCacheCompressionSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

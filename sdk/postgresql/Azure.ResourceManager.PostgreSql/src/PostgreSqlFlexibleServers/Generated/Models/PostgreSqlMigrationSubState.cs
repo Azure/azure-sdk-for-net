@@ -32,6 +32,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string WaitingForCutoverTriggerValue = "WaitingForCutoverTrigger";
         private const string CompletingMigrationValue = "CompletingMigration";
         private const string CompletedValue = "Completed";
+        private const string CancelingRequestedDBMigrationsValue = "CancelingRequestedDBMigrations";
+        private const string ValidationInProgressValue = "ValidationInProgress";
 
         /// <summary> PerformingPreRequisiteSteps. </summary>
         public static PostgreSqlMigrationSubState PerformingPreRequisiteSteps { get; } = new PostgreSqlMigrationSubState(PerformingPreRequisiteStepsValue);
@@ -53,11 +55,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlMigrationSubState CompletingMigration { get; } = new PostgreSqlMigrationSubState(CompletingMigrationValue);
         /// <summary> Completed. </summary>
         public static PostgreSqlMigrationSubState Completed { get; } = new PostgreSqlMigrationSubState(CompletedValue);
+        /// <summary> CancelingRequestedDBMigrations. </summary>
+        public static PostgreSqlMigrationSubState CancelingRequestedDBMigrations { get; } = new PostgreSqlMigrationSubState(CancelingRequestedDBMigrationsValue);
+        /// <summary> ValidationInProgress. </summary>
+        public static PostgreSqlMigrationSubState ValidationInProgress { get; } = new PostgreSqlMigrationSubState(ValidationInProgressValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationSubState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationSubState left, PostgreSqlMigrationSubState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationSubState"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlMigrationSubState left, PostgreSqlMigrationSubState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationSubState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlMigrationSubState"/>. </summary>
         public static implicit operator PostgreSqlMigrationSubState(string value) => new PostgreSqlMigrationSubState(value);
 
         /// <inheritdoc />
@@ -68,7 +74,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>LabPlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="labPlanName"> The name of the lab plan that uniquely identifies it within containing resource group. Used in resource URIs and in UI. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LabPlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +120,14 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="labName"> The name of the lab that uniquely identifies it within containing lab plan. Used in resource URIs. </param>
@@ -129,6 +150,14 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

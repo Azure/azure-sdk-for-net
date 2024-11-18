@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> BgpAdvertisement represents the association of IP address pools to the communities and peers. </summary>
     public partial class BgpAdvertisement
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="BgpAdvertisement"/>. </summary>
         /// <param name="ipAddressPools"> The names of the IP address pools associated with this announcement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddressPools"/> is null. </exception>
@@ -32,12 +63,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="communities"> The names of the BGP communities to be associated with the announcement, utilizing a BGP community string in 1234:1234 format. </param>
         /// <param name="ipAddressPools"> The names of the IP address pools associated with this announcement. </param>
         /// <param name="peers"> The names of the BGP peers to limit this advertisement to. If no values are specified, all BGP peers will receive this advertisement. </param>
-        internal BgpAdvertisement(AdvertiseToFabric? advertiseToFabric, IList<string> communities, IList<string> ipAddressPools, IList<string> peers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BgpAdvertisement(AdvertiseToFabric? advertiseToFabric, IList<string> communities, IList<string> ipAddressPools, IList<string> peers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdvertiseToFabric = advertiseToFabric;
             Communities = communities;
             IPAddressPools = ipAddressPools;
             Peers = peers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BgpAdvertisement"/> for deserialization. </summary>
+        internal BgpAdvertisement()
+        {
         }
 
         /// <summary> The indicator of if this advertisement is also made to the network fabric associated with the Network Cloud Cluster. This field is ignored if fabricPeeringEnabled is set to False. </summary>

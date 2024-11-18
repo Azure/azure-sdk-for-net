@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +120,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scalingPlanName"> The name of the scaling plan. </param>
@@ -129,6 +150,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +189,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualApplicationGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationGroupName"> The name of the application group. </param>
@@ -182,6 +219,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualApplicationGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +258,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>HostPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
@@ -236,6 +289,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>HostPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
@@ -246,6 +307,75 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         public virtual Response<HostPoolResource> GetHostPool(string hostPoolName, CancellationToken cancellationToken = default)
         {
             return GetHostPools().Get(hostPoolName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AppAttachPackageResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AppAttachPackageResources and their operations over a AppAttachPackageResource. </returns>
+        public virtual AppAttachPackageCollection GetAppAttachPackages()
+        {
+            return GetCachedClient(client => new AppAttachPackageCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get an app attach package.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/appAttachPackages/{appAttachPackageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppAttachPackage_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppAttachPackageResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="appAttachPackageName"> The name of the App Attach package. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="appAttachPackageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appAttachPackageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AppAttachPackageResource>> GetAppAttachPackageAsync(string appAttachPackageName, CancellationToken cancellationToken = default)
+        {
+            return await GetAppAttachPackages().GetAsync(appAttachPackageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get an app attach package.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/appAttachPackages/{appAttachPackageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppAttachPackage_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppAttachPackageResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="appAttachPackageName"> The name of the App Attach package. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="appAttachPackageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appAttachPackageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AppAttachPackageResource> GetAppAttachPackage(string appAttachPackageName, CancellationToken cancellationToken = default)
+        {
+            return GetAppAttachPackages().Get(appAttachPackageName, cancellationToken);
         }
     }
 }

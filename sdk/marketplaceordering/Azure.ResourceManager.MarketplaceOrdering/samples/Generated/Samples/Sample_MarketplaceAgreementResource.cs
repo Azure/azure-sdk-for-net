@@ -9,16 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MarketplaceOrdering;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MarketplaceOrdering.Samples
 {
     public partial class Sample_MarketplaceAgreementResource
     {
-        // SetMarketplaceTerms
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Sign_SetMarketplaceTerms()
         {
             // Generated from example definition: specification/marketplaceordering/resource-manager/Microsoft.MarketplaceOrdering/stable/2021-01-01/examples/SignMarketplaceTerms.json
@@ -48,9 +46,8 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SetMarketplaceTerms
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Cancel_SetMarketplaceTerms()
         {
             // Generated from example definition: specification/marketplaceordering/resource-manager/Microsoft.MarketplaceOrdering/stable/2021-01-01/examples/CancelMarketplaceTerms.json
@@ -80,9 +77,8 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SetMarketplaceTerms
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SetMarketplaceTerms()
         {
             // Generated from example definition: specification/marketplaceordering/resource-manager/Microsoft.MarketplaceOrdering/stable/2021-01-01/examples/GetAgreementMarketplaceTerms.json

@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Media;
 using Azure.ResourceManager.Media.Models;
 
 namespace Azure.ResourceManager.Media.Mocking
@@ -60,6 +57,14 @@ namespace Azure.ResourceManager.Media.Mocking
         /// <term>Operation Id</term>
         /// <description>Mediaservices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,6 +87,14 @@ namespace Azure.ResourceManager.Media.Mocking
         /// <term>Operation Id</term>
         /// <description>Mediaservices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,6 +116,10 @@ namespace Azure.ResourceManager.Media.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +155,10 @@ namespace Azure.ResourceManager.Media.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
         /// </item>
         /// </list>
         /// </summary>

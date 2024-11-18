@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
 {
@@ -36,11 +33,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of FirmwareWorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of FirmwareWorkspaceResources and their operations over a FirmwareWorkspaceResource. </returns>
-        public virtual FirmwareWorkspaceCollection GetFirmwareWorkspaces()
+        /// <summary> Gets a collection of FirmwareAnalysisWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of FirmwareAnalysisWorkspaceResources and their operations over a FirmwareAnalysisWorkspaceResource. </returns>
+        public virtual FirmwareAnalysisWorkspaceCollection GetFirmwareAnalysisWorkspaces()
         {
-            return GetCachedClient(client => new FirmwareWorkspaceCollection(client, Id));
+            return GetCachedClient(client => new FirmwareAnalysisWorkspaceCollection(client, Id));
         }
 
         /// <summary>
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
@@ -61,9 +66,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FirmwareWorkspaceResource>> GetFirmwareWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirmwareAnalysisWorkspaceResource>> GetFirmwareAnalysisWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetFirmwareWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetFirmwareAnalysisWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -77,6 +82,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
@@ -84,9 +97,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FirmwareWorkspaceResource> GetFirmwareWorkspace(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<FirmwareAnalysisWorkspaceResource> GetFirmwareAnalysisWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {
-            return GetFirmwareWorkspaces().Get(workspaceName, cancellationToken);
+            return GetFirmwareAnalysisWorkspaces().Get(workspaceName, cancellationToken);
         }
     }
 }

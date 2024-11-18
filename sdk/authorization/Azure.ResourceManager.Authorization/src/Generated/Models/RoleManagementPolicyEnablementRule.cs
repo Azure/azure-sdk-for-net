@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -24,14 +24,16 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="enablementRules"> The list of enabled rules. </param>
-        internal RoleManagementPolicyEnablementRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IList<RoleAssignmentEnablementRuleType> enablementRules) : base(id, ruleType, target)
+        internal RoleManagementPolicyEnablementRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<RoleAssignmentEnablementRuleType> enablementRules) : base(id, ruleType, target, serializedAdditionalRawData)
         {
             EnablementRules = enablementRules;
             RuleType = ruleType;
         }
 
         /// <summary> The list of enabled rules. </summary>
+        [WirePath("enabledRules")]
         public IList<RoleAssignmentEnablementRuleType> EnablementRules { get; }
     }
 }

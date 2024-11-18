@@ -38,7 +38,7 @@ namespace Azure.Communication.Identity
         public static bool operator ==(CommunicationTokenScope left, CommunicationTokenScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationTokenScope"/> values are not the same. </summary>
         public static bool operator !=(CommunicationTokenScope left, CommunicationTokenScope right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CommunicationTokenScope"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CommunicationTokenScope"/>. </summary>
         public static implicit operator CommunicationTokenScope(string value) => new CommunicationTokenScope(value);
 
         /// <inheritdoc />
@@ -49,7 +49,7 @@ namespace Azure.Communication.Identity
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

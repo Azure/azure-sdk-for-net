@@ -7,22 +7,19 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 {
     public partial class Sample_PaloAltoNetworksFirewallCollection
     {
-        // Firewalls_ListByResourceGroup_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_FirewallsListByResourceGroupMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_ListByResourceGroup_MaximumSet_Gen.json
@@ -53,12 +50,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Firewalls_ListByResourceGroup_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_FirewallsListByResourceGroupMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_ListByResourceGroup_MinimumSet_Gen.json
@@ -89,12 +85,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Firewalls_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FirewallsGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Get_MaximumSet_Gen.json
@@ -126,9 +121,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Firewalls_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_FirewallsGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Get_MaximumSet_Gen.json
@@ -156,9 +150,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Firewalls_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_FirewallsGetMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Get_MaximumSet_Gen.json
@@ -186,7 +179,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -198,9 +191,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             }
         }
 
-        // Firewalls_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FirewallsGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Get_MinimumSet_Gen.json
@@ -232,9 +224,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Firewalls_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_FirewallsGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Get_MinimumSet_Gen.json
@@ -262,9 +253,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Firewalls_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_FirewallsGetMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Get_MinimumSet_Gen.json
@@ -292,7 +282,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -304,9 +294,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             }
         }
 
-        // Firewalls_CreateOrUpdate_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_FirewallsCreateOrUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_CreateOrUpdate_MaximumSet_Gen.json
@@ -456,9 +445,8 @@ Address = "20.22.32.136",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Firewalls_CreateOrUpdate_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_FirewallsCreateOrUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_CreateOrUpdate_MinimumSet_Gen.json

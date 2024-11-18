@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,14 +25,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FixedInputData"/>. </summary>
-        /// <param name="columns"> Mapping of column names to special uses. </param>
-        /// <param name="dataContext"> The context metadata of the data source. </param>
         /// <param name="inputDataType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="dataContext"> The context metadata of the data source. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
-        internal FixedInputData(IDictionary<string, string> columns, string dataContext, MonitoringInputDataType inputDataType, JobInputType jobInputType, Uri uri) : base(columns, dataContext, inputDataType, jobInputType, uri)
+        /// <param name="columns"> Mapping of column names to special uses. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FixedInputData(MonitoringInputDataType inputDataType, string dataContext, JobInputType jobInputType, Uri uri, IDictionary<string, string> columns, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(inputDataType, dataContext, jobInputType, uri, columns, serializedAdditionalRawData)
         {
             InputDataType = inputDataType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FixedInputData"/> for deserialization. </summary>
+        internal FixedInputData()
+        {
         }
     }
 }

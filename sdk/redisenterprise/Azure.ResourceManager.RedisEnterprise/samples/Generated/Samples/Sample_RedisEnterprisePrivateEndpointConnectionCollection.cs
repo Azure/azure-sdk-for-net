@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RedisEnterprise;
 using Azure.ResourceManager.RedisEnterprise.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RedisEnterprise.Samples
 {
     public partial class Sample_RedisEnterprisePrivateEndpointConnectionCollection
     {
-        // RedisEnterpriseListPrivateEndpointConnections
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_RedisEnterpriseListPrivateEndpointConnections()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2023-03-01-preview/examples/RedisEnterpriseListPrivateEndpointConnections.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseListPrivateEndpointConnections.json
             // this example is just showing the usage of "PrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,7 +30,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             // this example assumes you already have this RedisEnterpriseClusterResource created on azure
             // for more information of creating RedisEnterpriseClusterResource, please refer to the document of RedisEnterpriseClusterResource
-            string subscriptionId = "subid";
+            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
             string resourceGroupName = "rg1";
             string clusterName = "cache1";
             ResourceIdentifier redisEnterpriseClusterResourceId = RedisEnterpriseClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -52,15 +49,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RedisEnterpriseGetPrivateEndpointConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RedisEnterpriseGetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2023-03-01-preview/examples/RedisEnterpriseGetPrivateEndpointConnection.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseGetPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,7 +66,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             // this example assumes you already have this RedisEnterpriseClusterResource created on azure
             // for more information of creating RedisEnterpriseClusterResource, please refer to the document of RedisEnterpriseClusterResource
-            string subscriptionId = "subid";
+            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
             string resourceGroupName = "rg1";
             string clusterName = "cache1";
             ResourceIdentifier redisEnterpriseClusterResourceId = RedisEnterpriseClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -90,12 +86,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RedisEnterpriseGetPrivateEndpointConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RedisEnterpriseGetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2023-03-01-preview/examples/RedisEnterpriseGetPrivateEndpointConnection.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseGetPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,7 +100,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             // this example assumes you already have this RedisEnterpriseClusterResource created on azure
             // for more information of creating RedisEnterpriseClusterResource, please refer to the document of RedisEnterpriseClusterResource
-            string subscriptionId = "subid";
+            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
             string resourceGroupName = "rg1";
             string clusterName = "cache1";
             ResourceIdentifier redisEnterpriseClusterResourceId = RedisEnterpriseClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -121,12 +116,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RedisEnterpriseGetPrivateEndpointConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RedisEnterpriseGetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2023-03-01-preview/examples/RedisEnterpriseGetPrivateEndpointConnection.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseGetPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,7 +130,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             // this example assumes you already have this RedisEnterpriseClusterResource created on azure
             // for more information of creating RedisEnterpriseClusterResource, please refer to the document of RedisEnterpriseClusterResource
-            string subscriptionId = "subid";
+            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
             string resourceGroupName = "rg1";
             string clusterName = "cache1";
             ResourceIdentifier redisEnterpriseClusterResourceId = RedisEnterpriseClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -152,7 +146,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -164,12 +158,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             }
         }
 
-        // RedisEnterprisePutPrivateEndpointConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RedisEnterprisePutPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2023-03-01-preview/examples/RedisEnterprisePutPrivateEndpointConnection.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterprisePutPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Put" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -179,7 +172,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             // this example assumes you already have this RedisEnterpriseClusterResource created on azure
             // for more information of creating RedisEnterpriseClusterResource, please refer to the document of RedisEnterpriseClusterResource
-            string subscriptionId = "subid";
+            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
             string resourceGroupName = "rg1";
             string clusterName = "cache1";
             ResourceIdentifier redisEnterpriseClusterResourceId = RedisEnterpriseClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);

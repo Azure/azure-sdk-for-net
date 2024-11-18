@@ -6,18 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class PowerBIOutputDataSource : IUtf8JsonSerializable
+    public partial class PowerBIOutputDataSource : IUtf8JsonSerializable, IJsonModel<PowerBIOutputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PowerBIOutputDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PowerBIOutputDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(OutputDataSourceType);
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PowerBIOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PowerBIOutputDataSource)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RefreshToken))
@@ -61,24 +78,39 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static PowerBIOutputDataSource DeserializePowerBIOutputDataSource(JsonElement element)
+        PowerBIOutputDataSource IJsonModel<PowerBIOutputDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PowerBIOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PowerBIOutputDataSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePowerBIOutputDataSource(document.RootElement, options);
+        }
+
+        internal static PowerBIOutputDataSource DeserializePowerBIOutputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<string> refreshToken = default;
-            Optional<string> tokenUserPrincipalName = default;
-            Optional<string> tokenUserDisplayName = default;
-            Optional<string> dataset = default;
-            Optional<string> table = default;
-            Optional<Guid> groupId = default;
-            Optional<string> groupName = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string refreshToken = default;
+            string tokenUserPrincipalName = default;
+            string tokenUserDisplayName = default;
+            string dataset = default;
+            string table = default;
+            Guid? groupId = default;
+            string groupName = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -146,8 +178,54 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PowerBIOutputDataSource(type, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, dataset.Value, table.Value, Optional.ToNullable(groupId), groupName.Value, Optional.ToNullable(authenticationMode));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PowerBIOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                refreshToken,
+                tokenUserPrincipalName,
+                tokenUserDisplayName,
+                dataset,
+                table,
+                groupId,
+                groupName,
+                authenticationMode);
         }
+
+        BinaryData IPersistableModel<PowerBIOutputDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PowerBIOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PowerBIOutputDataSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PowerBIOutputDataSource IPersistableModel<PowerBIOutputDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PowerBIOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePowerBIOutputDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PowerBIOutputDataSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PowerBIOutputDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

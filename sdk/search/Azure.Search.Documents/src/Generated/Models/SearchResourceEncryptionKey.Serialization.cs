@@ -24,7 +24,19 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(AccessCredentialsInternal))
             {
                 writer.WritePropertyName("accessCredentials"u8);
-                writer.WriteObjectValue(AccessCredentialsInternal);
+                writer.WriteObjectValue<AzureActiveDirectoryApplicationCredentials>(AccessCredentialsInternal);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity);
+                }
+                else
+                {
+                    writer.WriteNull("identity");
+                }
             }
             writer.WriteEndObject();
         }
@@ -38,7 +50,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string keyVaultKeyName = default;
             string keyVaultKeyVersion = default;
             string keyVaultUri = default;
-            Optional<AzureActiveDirectoryApplicationCredentials> accessCredentials = default;
+            AzureActiveDirectoryApplicationCredentials accessCredentials = default;
+            SearchIndexerDataIdentity identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultKeyName"u8))
@@ -65,8 +78,34 @@ namespace Azure.Search.Documents.Indexes.Models
                     accessCredentials = AzureActiveDirectoryApplicationCredentials.DeserializeAzureActiveDirectoryApplicationCredentials(property.Value);
                     continue;
                 }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        identity = null;
+                        continue;
+                    }
+                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
+                    continue;
+                }
             }
-            return new SearchResourceEncryptionKey(keyVaultKeyName, keyVaultKeyVersion, keyVaultUri, accessCredentials.Value);
+            return new SearchResourceEncryptionKey(keyVaultKeyName, keyVaultKeyVersion, keyVaultUri, accessCredentials, identity);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchResourceEncryptionKey FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchResourceEncryptionKey(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

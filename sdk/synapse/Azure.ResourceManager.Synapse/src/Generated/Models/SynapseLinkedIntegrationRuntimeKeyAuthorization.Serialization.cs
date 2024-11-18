@@ -5,36 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseLinkedIntegrationRuntimeKeyAuthorization : IUtf8JsonSerializable
+    public partial class SynapseLinkedIntegrationRuntimeKeyAuthorization : IUtf8JsonSerializable, IJsonModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("key"u8);
-            writer.WriteObjectValue(Key);
-            writer.WritePropertyName("authorizationType"u8);
-            writer.WriteStringValue(AuthorizationType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static SynapseLinkedIntegrationRuntimeKeyAuthorization DeserializeSynapseLinkedIntegrationRuntimeKeyAuthorization(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseLinkedIntegrationRuntimeKeyAuthorization)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("key"u8);
+            writer.WriteObjectValue(Key, options);
+        }
+
+        SynapseLinkedIntegrationRuntimeKeyAuthorization IJsonModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseLinkedIntegrationRuntimeKeyAuthorization)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseLinkedIntegrationRuntimeKeyAuthorization(document.RootElement, options);
+        }
+
+        internal static SynapseLinkedIntegrationRuntimeKeyAuthorization DeserializeSynapseLinkedIntegrationRuntimeKeyAuthorization(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             SynapseSecureString key = default;
             string authorizationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
                 {
-                    key = SynapseSecureString.DeserializeSynapseSecureString(property.Value);
+                    key = SynapseSecureString.DeserializeSynapseSecureString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authorizationType"u8))
@@ -42,8 +75,44 @@ namespace Azure.ResourceManager.Synapse.Models
                     authorizationType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseLinkedIntegrationRuntimeKeyAuthorization(authorizationType, key);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SynapseLinkedIntegrationRuntimeKeyAuthorization(authorizationType, serializedAdditionalRawData, key);
         }
+
+        BinaryData IPersistableModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseLinkedIntegrationRuntimeKeyAuthorization)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SynapseLinkedIntegrationRuntimeKeyAuthorization IPersistableModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseLinkedIntegrationRuntimeKeyAuthorization(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseLinkedIntegrationRuntimeKeyAuthorization)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

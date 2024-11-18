@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -41,8 +40,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="hybridAksClustersAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the HybridAksClusters that have nodes hosted on this bare metal machine. </param>
         /// <param name="kubernetesNodeName"> The name of this machine represented by the host object in the Cluster's Kubernetes control plane. </param>
         /// <param name="kubernetesVersion"> The version of Kubernetes running on this machine. </param>
+        /// <param name="machineClusterVersion"> The cluster version that has been applied to this machine during deployment or a version update. </param>
         /// <param name="machineDetails"> The custom details provided by the customer. </param>
         /// <param name="machineName"> The OS-level hostname assigned to this machine. </param>
+        /// <param name="machineRoles"> The list of roles that are assigned to the cluster node running on this machine. </param>
         /// <param name="machineSkuId"> The unique internal identifier of the bare metal machine SKU. </param>
         /// <param name="oamIPv4Address"> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </param>
         /// <param name="oamIPv6Address"> The IPv6 address that is assigned to the bare metal machine during the cluster deployment. </param>
@@ -52,18 +53,62 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="rackId"> The resource ID of the rack where this bare metal machine resides. </param>
         /// <param name="rackSlot"> The rack slot in which this bare metal machine is located, ordered from the bottom up i.e. the lowest slot is 1. </param>
         /// <param name="readyState"> The indicator of whether the bare metal machine is ready to receive workloads. </param>
+        /// <param name="runtimeProtectionStatus"> The runtime protection status of the bare metal machine. </param>
+        /// <param name="secretRotationStatus"> The list of statuses that represent secret rotation activity. </param>
         /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
         /// <param name="serviceTag"> The discovered value of the machine's service tag. </param>
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the VirtualMachines that are hosted on this bare metal machine. </param>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudBareMetalMachineData"/> instance for mocking. </returns>
-        public static NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, IEnumerable<ResourceIdentifier> associatedResourceIds = null, string bmcConnectionString = null, AdministrativeCredentials bmcCredentials = null, string bmcMacAddress = null, string bootMacAddress = null, ResourceIdentifier clusterId = null, BareMetalMachineCordonStatus? cordonStatus = null, BareMetalMachineDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, HardwareInventory hardwareInventory = null, HardwareValidationStatus hardwareValidationStatus = null, IEnumerable<string> hybridAksClustersAssociatedIds = null, string kubernetesNodeName = null, string kubernetesVersion = null, string machineDetails = null, string machineName = null, string machineSkuId = null, IPAddress oamIPv4Address = null, string oamIPv6Address = null, string osImage = null, BareMetalMachinePowerState? powerState = null, BareMetalMachineProvisioningState? provisioningState = null, ResourceIdentifier rackId = null, long rackSlot = default, BareMetalMachineReadyState? readyState = null, string serialNumber = null, string serviceTag = null, IEnumerable<string> virtualMachinesAssociatedIds = null)
+        public static NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, IEnumerable<ResourceIdentifier> associatedResourceIds = null, string bmcConnectionString = null, AdministrativeCredentials bmcCredentials = null, string bmcMacAddress = null, string bootMacAddress = null, ResourceIdentifier clusterId = null, BareMetalMachineCordonStatus? cordonStatus = null, BareMetalMachineDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, HardwareInventory hardwareInventory = null, HardwareValidationStatus hardwareValidationStatus = null, IEnumerable<string> hybridAksClustersAssociatedIds = null, string kubernetesNodeName = null, string kubernetesVersion = null, string machineClusterVersion = null, string machineDetails = null, string machineName = null, IEnumerable<string> machineRoles = null, string machineSkuId = null, IPAddress oamIPv4Address = null, string oamIPv6Address = null, string osImage = null, BareMetalMachinePowerState? powerState = null, BareMetalMachineProvisioningState? provisioningState = null, ResourceIdentifier rackId = null, long rackSlot = default, BareMetalMachineReadyState? readyState = null, RuntimeProtectionStatus runtimeProtectionStatus = null, IEnumerable<SecretRotationStatus> secretRotationStatus = null, string serialNumber = null, string serviceTag = null, IEnumerable<string> virtualMachinesAssociatedIds = null)
         {
             tags ??= new Dictionary<string, string>();
             associatedResourceIds ??= new List<ResourceIdentifier>();
             hybridAksClustersAssociatedIds ??= new List<string>();
+            machineRoles ??= new List<string>();
+            secretRotationStatus ??= new List<SecretRotationStatus>();
             virtualMachinesAssociatedIds ??= new List<string>();
 
-            return new NetworkCloudBareMetalMachineData(id, name, resourceType, systemData, tags, location, extendedLocation, associatedResourceIds?.ToList(), bmcConnectionString, bmcCredentials, bmcMacAddress, bootMacAddress, clusterId, cordonStatus, detailedStatus, detailedStatusMessage, hardwareInventory, hardwareValidationStatus, hybridAksClustersAssociatedIds?.ToList(), kubernetesNodeName, kubernetesVersion, machineDetails, machineName, machineSkuId, oamIPv4Address, oamIPv6Address, osImage, powerState, provisioningState, rackId, rackSlot, readyState, serialNumber, serviceTag, virtualMachinesAssociatedIds?.ToList());
+            return new NetworkCloudBareMetalMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                associatedResourceIds?.ToList(),
+                bmcConnectionString,
+                bmcCredentials,
+                bmcMacAddress,
+                bootMacAddress,
+                clusterId,
+                cordonStatus,
+                detailedStatus,
+                detailedStatusMessage,
+                hardwareInventory,
+                hardwareValidationStatus,
+                hybridAksClustersAssociatedIds?.ToList(),
+                kubernetesNodeName,
+                kubernetesVersion,
+                machineClusterVersion,
+                machineDetails,
+                machineName,
+                machineRoles?.ToList(),
+                machineSkuId,
+                oamIPv4Address,
+                oamIPv6Address,
+                osImage,
+                powerState,
+                provisioningState,
+                rackId,
+                rackSlot,
+                readyState,
+                runtimeProtectionStatus,
+                secretRotationStatus?.ToList(),
+                serialNumber,
+                serviceTag,
+                virtualMachinesAssociatedIds?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HardwareInventory"/>. </summary>
@@ -76,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             interfaces ??= new List<HardwareInventoryNetworkInterface>();
             nics ??= new List<NetworkCloudNic>();
 
-            return new HardwareInventory(additionalHostInformation, interfaces?.ToList(), nics?.ToList());
+            return new HardwareInventory(additionalHostInformation, interfaces?.ToList(), nics?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HardwareInventoryNetworkInterface"/>. </summary>
@@ -87,7 +132,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <returns> A new <see cref="Models.HardwareInventoryNetworkInterface"/> instance for mocking. </returns>
         public static HardwareInventoryNetworkInterface HardwareInventoryNetworkInterface(string linkStatus = null, string macAddress = null, string name = null, string networkInterfaceId = null)
         {
-            return new HardwareInventoryNetworkInterface(linkStatus, macAddress, name, networkInterfaceId);
+            return new HardwareInventoryNetworkInterface(linkStatus, macAddress, name, networkInterfaceId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkCloudNic"/>. </summary>
@@ -97,7 +142,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <returns> A new <see cref="Models.NetworkCloudNic"/> instance for mocking. </returns>
         public static NetworkCloudNic NetworkCloudNic(LldpNeighbor lldpNeighbor = null, string macAddress = null, string name = null)
         {
-            return new NetworkCloudNic(lldpNeighbor, macAddress, name);
+            return new NetworkCloudNic(lldpNeighbor, macAddress, name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LldpNeighbor"/>. </summary>
@@ -108,7 +153,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <returns> A new <see cref="Models.LldpNeighbor"/> instance for mocking. </returns>
         public static LldpNeighbor LldpNeighbor(string portDescription = null, string portName = null, string systemDescription = null, string systemName = null)
         {
-            return new LldpNeighbor(portDescription, portName, systemDescription, systemName);
+            return new LldpNeighbor(portDescription, portName, systemDescription, systemName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HardwareValidationStatus"/>. </summary>
@@ -117,7 +162,53 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <returns> A new <see cref="Models.HardwareValidationStatus"/> instance for mocking. </returns>
         public static HardwareValidationStatus HardwareValidationStatus(DateTimeOffset? lastValidationOn = null, BareMetalMachineHardwareValidationResult? result = null)
         {
-            return new HardwareValidationStatus(lastValidationOn, result);
+            return new HardwareValidationStatus(lastValidationOn, result, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RuntimeProtectionStatus"/>. </summary>
+        /// <param name="definitionsLastUpdated"> The timestamp when the malware definitions were last updated. </param>
+        /// <param name="definitionsVersion"> The version of the malware definitions. </param>
+        /// <param name="scanCompletedOn"> The timestamp of the most recently completed scan, or empty if there has never been a scan. </param>
+        /// <param name="scanScheduledOn"> The timestamp of the most recently scheduled scan, or empty if no scan has been scheduled. </param>
+        /// <param name="scanStartedOn"> The timestamp of the most recently started scan, or empty if there has never been a scan. </param>
+        /// <returns> A new <see cref="Models.RuntimeProtectionStatus"/> instance for mocking. </returns>
+        public static RuntimeProtectionStatus RuntimeProtectionStatus(DateTimeOffset? definitionsLastUpdated = null, string definitionsVersion = null, DateTimeOffset? scanCompletedOn = null, DateTimeOffset? scanScheduledOn = null, DateTimeOffset? scanStartedOn = null)
+        {
+            return new RuntimeProtectionStatus(
+                definitionsLastUpdated,
+                definitionsVersion,
+                scanCompletedOn,
+                scanScheduledOn,
+                scanStartedOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecretRotationStatus"/>. </summary>
+        /// <param name="expirePeriodDays"> The maximum number of days the secret may be used before it must be changed. </param>
+        /// <param name="lastRotationOn"> The date and time when the secret was last changed. </param>
+        /// <param name="rotationPeriodDays"> The number of days a secret exists before rotations will be attempted. </param>
+        /// <param name="secretArchiveReference"> The reference to the secret in a key vault. </param>
+        /// <param name="secretType"> The type name used to identify the purpose of the secret. </param>
+        /// <returns> A new <see cref="Models.SecretRotationStatus"/> instance for mocking. </returns>
+        public static SecretRotationStatus SecretRotationStatus(long? expirePeriodDays = null, DateTimeOffset? lastRotationOn = null, long? rotationPeriodDays = null, SecretArchiveReference secretArchiveReference = null, string secretType = null)
+        {
+            return new SecretRotationStatus(
+                expirePeriodDays,
+                lastRotationOn,
+                rotationPeriodDays,
+                secretArchiveReference,
+                secretType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecretArchiveReference"/>. </summary>
+        /// <param name="keyVaultId"> The resource ID of the key vault containing the secret. </param>
+        /// <param name="secretName"> The name of the secret in the key vault. </param>
+        /// <param name="secretVersion"> The version of the secret in the key vault. </param>
+        /// <returns> A new <see cref="Models.SecretArchiveReference"/> instance for mocking. </returns>
+        public static SecretArchiveReference SecretArchiveReference(ResourceIdentifier keyVaultId = null, string secretName = null, string secretVersion = null)
+        {
+            return new SecretArchiveReference(keyVaultId, secretName, secretVersion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudCloudServicesNetworkData"/>. </summary>
@@ -149,7 +240,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             hybridAksClustersAssociatedIds ??= new List<ResourceIdentifier>();
             virtualMachinesAssociatedIds ??= new List<ResourceIdentifier>();
 
-            return new NetworkCloudCloudServicesNetworkData(id, name, resourceType, systemData, tags, location, extendedLocation, additionalEgressEndpoints?.ToList(), associatedResourceIds?.ToList(), clusterId, detailedStatus, detailedStatusMessage, enableDefaultEgressEndpoints, enabledEgressEndpoints?.ToList(), hybridAksClustersAssociatedIds?.ToList(), interfaceName, provisioningState, virtualMachinesAssociatedIds?.ToList());
+            return new NetworkCloudCloudServicesNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                additionalEgressEndpoints?.ToList(),
+                associatedResourceIds?.ToList(),
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                enableDefaultEgressEndpoints,
+                enabledEgressEndpoints?.ToList(),
+                hybridAksClustersAssociatedIds?.ToList(),
+                interfaceName,
+                provisioningState,
+                virtualMachinesAssociatedIds?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudClusterManagerData"/>. </summary>
@@ -159,6 +269,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="identity"> The identity of the cluster manager. </param>
         /// <param name="analyticsWorkspaceId"> The resource ID of the Log Analytics workspace that is used for the logs collection. </param>
         /// <param name="availabilityZones"> Field deprecated, this value will no longer influence the cluster manager allocation process and will be removed in a future version. The Azure availability zones within the region that will be used to support the cluster manager resource. </param>
         /// <param name="clusterVersions"> The list of the cluster versions the manager supports. It is used as input in clusterVersion property of a cluster resource. </param>
@@ -170,13 +281,31 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="provisioningState"> The provisioning state of the cluster manager. </param>
         /// <param name="vmSize"> Field deprecated, this value will no longer influence the cluster manager allocation process and will be removed in a future version. The size of the Azure virtual machines to use for hosting the cluster manager resource. </param>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudClusterManagerData"/> instance for mocking. </returns>
-        public static NetworkCloudClusterManagerData NetworkCloudClusterManagerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier analyticsWorkspaceId = null, IEnumerable<string> availabilityZones = null, IEnumerable<ClusterAvailableVersion> clusterVersions = null, ClusterManagerDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, ResourceIdentifier fabricControllerId = null, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, ExtendedLocation managerExtendedLocation = null, ClusterManagerProvisioningState? provisioningState = null, string vmSize = null)
+        public static NetworkCloudClusterManagerData NetworkCloudClusterManagerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ResourceIdentifier analyticsWorkspaceId = null, IEnumerable<string> availabilityZones = null, IEnumerable<ClusterAvailableVersion> clusterVersions = null, ClusterManagerDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, ResourceIdentifier fabricControllerId = null, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, ExtendedLocation managerExtendedLocation = null, ClusterManagerProvisioningState? provisioningState = null, string vmSize = null)
         {
             tags ??= new Dictionary<string, string>();
             availabilityZones ??= new List<string>();
             clusterVersions ??= new List<ClusterAvailableVersion>();
 
-            return new NetworkCloudClusterManagerData(id, name, resourceType, systemData, tags, location, analyticsWorkspaceId, availabilityZones?.ToList(), clusterVersions?.ToList(), detailedStatus, detailedStatusMessage, fabricControllerId, managedResourceGroupConfiguration, managerExtendedLocation, provisioningState, vmSize);
+            return new NetworkCloudClusterManagerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                analyticsWorkspaceId,
+                availabilityZones?.ToList(),
+                clusterVersions?.ToList(),
+                detailedStatus,
+                detailedStatusMessage,
+                fabricControllerId,
+                managedResourceGroupConfiguration,
+                managerExtendedLocation,
+                provisioningState,
+                vmSize,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterAvailableVersion"/>. </summary>
@@ -185,7 +314,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <returns> A new <see cref="Models.ClusterAvailableVersion"/> instance for mocking. </returns>
         public static ClusterAvailableVersion ClusterAvailableVersion(string supportExpiryDate = null, string targetClusterVersion = null)
         {
-            return new ClusterAvailableVersion(supportExpiryDate, targetClusterVersion);
+            return new ClusterAvailableVersion(supportExpiryDate, targetClusterVersion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudClusterData"/>. </summary>
@@ -196,6 +325,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
+        /// <param name="identity"> The identity for the resource. </param>
         /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
         /// <param name="analyticsWorkspaceId"> The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </param>
         /// <param name="availableUpgradeVersions"> The list of cluster runtime version upgrades available for this cluster. </param>
@@ -208,6 +338,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="clusterServicePrincipal"> The service principal to be used by the cluster during Arc Appliance installation. </param>
         /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
         /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
+        /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
         /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
         /// <param name="computeRackDefinitions">
         /// The list of rack definitions for the compute racks in a multi-rack
@@ -220,17 +351,56 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="manualActionCount"> The count of Manual Action Taken (MAT) events that have not been validated. </param>
         /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
+        /// <param name="runtimeProtectionEnforcementLevel"> The settings for cluster runtime protection. </param>
+        /// <param name="secretArchive"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
         /// <param name="supportExpireOn"> The support end date of the runtime version of the cluster. </param>
+        /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
         /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudClusterData"/> instance for mocking. </returns>
-        public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = null, ResourceIdentifier analyticsWorkspaceId = null, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions = null, ClusterCapacity clusterCapacity = null, ClusterConnectionStatus? clusterConnectionStatus = null, ExtendedLocation clusterExtendedLocation = null, string clusterLocation = null, ClusterManagerConnectionStatus? clusterManagerConnectionStatus = null, ResourceIdentifier clusterManagerId = null, ServicePrincipalInformation clusterServicePrincipal = null, ClusterType clusterType = default, string clusterVersion = null, ValidationThreshold computeDeploymentThreshold = null, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions = null, ClusterDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, ExtendedLocation hybridAksExtendedLocation = null, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, long? manualActionCount = null, ResourceIdentifier networkFabricId = null, ClusterProvisioningState? provisioningState = null, DateTimeOffset? supportExpireOn = null, IEnumerable<ResourceIdentifier> workloadResourceIds = null)
+        public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, ManagedServiceIdentity identity = null, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = null, ResourceIdentifier analyticsWorkspaceId = null, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions = null, ClusterCapacity clusterCapacity = null, ClusterConnectionStatus? clusterConnectionStatus = null, ExtendedLocation clusterExtendedLocation = null, string clusterLocation = null, ClusterManagerConnectionStatus? clusterManagerConnectionStatus = null, ResourceIdentifier clusterManagerId = null, ServicePrincipalInformation clusterServicePrincipal = null, ClusterType clusterType = default, string clusterVersion = null, CommandOutputSettings commandOutputSettings = null, ValidationThreshold computeDeploymentThreshold = null, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions = null, ClusterDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, ExtendedLocation hybridAksExtendedLocation = null, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, long? manualActionCount = null, ResourceIdentifier networkFabricId = null, ClusterProvisioningState? provisioningState = null, RuntimeProtectionEnforcementLevel? runtimeProtectionEnforcementLevel = null, ClusterSecretArchive secretArchive = null, DateTimeOffset? supportExpireOn = null, ClusterUpdateStrategy updateStrategy = null, IEnumerable<ResourceIdentifier> workloadResourceIds = null)
         {
             tags ??= new Dictionary<string, string>();
             availableUpgradeVersions ??= new List<ClusterAvailableUpgradeVersion>();
             computeRackDefinitions ??= new List<NetworkCloudRackDefinition>();
             workloadResourceIds ??= new List<ResourceIdentifier>();
 
-            return new NetworkCloudClusterData(id, name, resourceType, systemData, tags, location, extendedLocation, aggregatorOrSingleRackDefinition, analyticsWorkspaceId, availableUpgradeVersions?.ToList(), clusterCapacity, clusterConnectionStatus, clusterExtendedLocation, clusterLocation, clusterManagerConnectionStatus, clusterManagerId, clusterServicePrincipal, clusterType, clusterVersion, computeDeploymentThreshold, computeRackDefinitions?.ToList(), detailedStatus, detailedStatusMessage, hybridAksExtendedLocation, managedResourceGroupConfiguration, manualActionCount, networkFabricId, provisioningState, supportExpireOn, workloadResourceIds?.ToList());
+            return new NetworkCloudClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                identity,
+                aggregatorOrSingleRackDefinition,
+                analyticsWorkspaceId,
+                availableUpgradeVersions?.ToList(),
+                clusterCapacity,
+                clusterConnectionStatus,
+                clusterExtendedLocation,
+                clusterLocation,
+                clusterManagerConnectionStatus,
+                clusterManagerId,
+                clusterServicePrincipal,
+                clusterType,
+                clusterVersion,
+                commandOutputSettings,
+                computeDeploymentThreshold,
+                computeRackDefinitions?.ToList(),
+                detailedStatus,
+                detailedStatusMessage,
+                hybridAksExtendedLocation,
+                managedResourceGroupConfiguration,
+                manualActionCount,
+                networkFabricId,
+                provisioningState,
+                runtimeProtectionEnforcementLevel != null ? new RuntimeProtectionConfiguration(runtimeProtectionEnforcementLevel, serializedAdditionalRawData: null) : null,
+                secretArchive,
+                supportExpireOn,
+                updateStrategy,
+                workloadResourceIds?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BareMetalMachineConfiguration"/>. </summary>
@@ -248,7 +418,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <returns> A new <see cref="Models.BareMetalMachineConfiguration"/> instance for mocking. </returns>
         public static BareMetalMachineConfiguration BareMetalMachineConfiguration(string bmcConnectionString = null, AdministrativeCredentials bmcCredentials = null, string bmcMacAddress = null, string bootMacAddress = null, string machineDetails = null, string machineName = null, long rackSlot = default, string serialNumber = null)
         {
-            return new BareMetalMachineConfiguration(bmcConnectionString, bmcCredentials, bmcMacAddress, bootMacAddress, machineDetails, machineName, rackSlot, serialNumber);
+            return new BareMetalMachineConfiguration(
+                bmcConnectionString,
+                bmcCredentials,
+                bmcMacAddress,
+                bootMacAddress,
+                machineDetails,
+                machineName,
+                rackSlot,
+                serialNumber,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterAvailableUpgradeVersion"/>. </summary>
@@ -261,22 +440,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <returns> A new <see cref="Models.ClusterAvailableUpgradeVersion"/> instance for mocking. </returns>
         public static ClusterAvailableUpgradeVersion ClusterAvailableUpgradeVersion(ControlImpact? controlImpact = null, string expectedDuration = null, string impactDescription = null, DateTimeOffset? supportExpireOn = null, string targetClusterVersion = null, WorkloadImpact? workloadImpact = null)
         {
-            return new ClusterAvailableUpgradeVersion(controlImpact, expectedDuration, impactDescription, supportExpireOn, targetClusterVersion, workloadImpact);
+            return new ClusterAvailableUpgradeVersion(
+                controlImpact,
+                expectedDuration,
+                impactDescription,
+                supportExpireOn,
+                targetClusterVersion,
+                workloadImpact,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterCapacity"/>. </summary>
-        /// <param name="availableApplianceStorageGB"> The remaining appliance-based storage in GB available for workload use. </param>
+        /// <param name="availableApplianceStorageGB"> The remaining appliance-based storage in GB available for workload use. Measured in gibibytes. </param>
         /// <param name="availableCoreCount"> The remaining number of cores that are available in this cluster for workload use. </param>
-        /// <param name="availableHostStorageGB"> The remaining machine or host-based storage in GB available for workload use. </param>
-        /// <param name="availableMemoryGB"> The remaining memory in GB that are available in this cluster for workload use. </param>
-        /// <param name="totalApplianceStorageGB"> The total appliance-based storage in GB supported by this cluster for workload use. </param>
+        /// <param name="availableHostStorageGB"> The remaining machine or host-based storage in GB available for workload use. Measured in gibibytes. </param>
+        /// <param name="availableMemoryGB"> The remaining memory in GB that are available in this cluster for workload use. Measured in gibibytes. </param>
+        /// <param name="totalApplianceStorageGB"> The total appliance-based storage in GB supported by this cluster for workload use. Measured in gibibytes. </param>
         /// <param name="totalCoreCount"> The total number of cores that are supported by this cluster for workload use. </param>
-        /// <param name="totalHostStorageGB"> The total machine or host-based storage in GB supported by this cluster for workload use. </param>
-        /// <param name="totalMemoryGB"> The total memory supported by this cluster for workload use. </param>
+        /// <param name="totalHostStorageGB"> The total machine or host-based storage in GB supported by this cluster for workload use. Measured in gibibytes. </param>
+        /// <param name="totalMemoryGB"> The total memory supported by this cluster for workload use. Measured in gibibytes. </param>
         /// <returns> A new <see cref="Models.ClusterCapacity"/> instance for mocking. </returns>
         public static ClusterCapacity ClusterCapacity(long? availableApplianceStorageGB = null, long? availableCoreCount = null, long? availableHostStorageGB = null, long? availableMemoryGB = null, long? totalApplianceStorageGB = null, long? totalCoreCount = null, long? totalHostStorageGB = null, long? totalMemoryGB = null)
         {
-            return new ClusterCapacity(availableApplianceStorageGB, availableCoreCount, availableHostStorageGB, availableMemoryGB, totalApplianceStorageGB, totalCoreCount, totalHostStorageGB, totalMemoryGB);
+            return new ClusterCapacity(
+                availableApplianceStorageGB,
+                availableCoreCount,
+                availableHostStorageGB,
+                availableMemoryGB,
+                totalApplianceStorageGB,
+                totalCoreCount,
+                totalHostStorageGB,
+                totalMemoryGB,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudKubernetesClusterData"/>. </summary>
@@ -299,7 +494,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="featureStatuses"> The current feature settings. </param>
         /// <param name="initialAgentPoolConfigurations"> The agent pools that are created with this Kubernetes cluster for running critical system services and workloads. This data in this field is only used during creation, and the field will be empty following the creation of the Kubernetes Cluster. After creation, the management of agent pools is done using the agentPools sub-resource. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version for this cluster. Accepts n.n, n.n.n, and n.n.n-n format. The interpreted version used will be resolved into this field after creation or update. </param>
+        /// <param name="kubernetesVersion"> The Kubernetes version for this cluster. </param>
         /// <param name="managedResourceGroupConfiguration"> The configuration of the managed resource group associated with the resource. </param>
         /// <param name="networkConfiguration"> The configuration of the Kubernetes cluster networking, including the attachment of networks that span the cluster. </param>
         /// <param name="nodes"> The details of the nodes in this cluster. </param>
@@ -315,7 +510,32 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             initialAgentPoolConfigurations ??= new List<InitialAgentPoolConfiguration>();
             nodes ??= new List<KubernetesClusterNode>();
 
-            return new NetworkCloudKubernetesClusterData(id, name, resourceType, systemData, tags, location, extendedLocation, aadAdminGroupObjectIds != null ? new NetworkCloudAadConfiguration(aadAdminGroupObjectIds?.ToList()) : null, administratorConfiguration, attachedNetworkIds?.ToList(), availableUpgrades?.ToList(), clusterId, connectedClusterId, controlPlaneKubernetesVersion, controlPlaneNodeConfiguration, detailedStatus, detailedStatusMessage, featureStatuses?.ToList(), initialAgentPoolConfigurations?.ToList(), kubernetesVersion, managedResourceGroupConfiguration, networkConfiguration, nodes?.ToList(), provisioningState);
+            return new NetworkCloudKubernetesClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                aadAdminGroupObjectIds != null ? new NetworkCloudAadConfiguration(aadAdminGroupObjectIds?.ToList(), serializedAdditionalRawData: null) : null,
+                administratorConfiguration,
+                attachedNetworkIds?.ToList(),
+                availableUpgrades?.ToList(),
+                clusterId,
+                connectedClusterId,
+                controlPlaneKubernetesVersion,
+                controlPlaneNodeConfiguration,
+                detailedStatus,
+                detailedStatusMessage,
+                featureStatuses?.ToList(),
+                initialAgentPoolConfigurations?.ToList(),
+                kubernetesVersion,
+                managedResourceGroupConfiguration,
+                networkConfiguration,
+                nodes?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailableUpgrade"/>. </summary>
@@ -324,7 +544,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <returns> A new <see cref="Models.AvailableUpgrade"/> instance for mocking. </returns>
         public static AvailableUpgrade AvailableUpgrade(AvailabilityLifecycle? availabilityLifecycle = null, string version = null)
         {
-            return new AvailableUpgrade(availabilityLifecycle, version);
+            return new AvailableUpgrade(availabilityLifecycle, version, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FeatureStatus"/>. </summary>
@@ -335,21 +555,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <returns> A new <see cref="Models.FeatureStatus"/> instance for mocking. </returns>
         public static FeatureStatus FeatureStatus(FeatureDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, string name = null, string version = null)
         {
-            return new FeatureStatus(detailedStatus, detailedStatusMessage, name, version);
+            return new FeatureStatus(detailedStatus, detailedStatusMessage, name, version, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesClusterNode"/>. </summary>
-        /// <param name="agentPoolId"> The resource ID of the agent pool that this node belongs to. This value is not represented on control plane nodes. </param>
+        /// <param name="agentPoolArmId"> The resource ID of the agent pool that this node belongs to. This value is not represented on control plane nodes. </param>
         /// <param name="availabilityZone"> The availability zone this node is running within. </param>
-        /// <param name="bareMetalMachineId"> The resource ID of the bare metal machine that hosts this node. </param>
+        /// <param name="bareMetalMachineArmId"> The resource ID of the bare metal machine that hosts this node. </param>
         /// <param name="cpuCores"> The number of CPU cores configured for this node, derived from the VM SKU specified. </param>
         /// <param name="detailedStatus"> The detailed state of this node. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="diskSizeGB"> The size of the disk configured for this node. </param>
+        /// <param name="diskSizeGB"> The size of the disk configured for this node. Allocations are measured in gibibytes. </param>
         /// <param name="image"> The machine image used to deploy this node. </param>
         /// <param name="kubernetesVersion"> The currently running version of Kubernetes and bundled features running on this node. </param>
         /// <param name="labels"> The list of labels on this node that have been assigned to the agent pool containing this node. </param>
-        /// <param name="memorySizeGB"> The amount of memory configured for this node, derived from the vm SKU specified. </param>
+        /// <param name="memorySizeGB"> The amount of memory configured for this node, derived from the vm SKU specified. Allocations are measured in gibibytes. </param>
         /// <param name="mode"> The mode of the agent pool containing this node. Not applicable for control plane nodes. </param>
         /// <param name="name"> The name of this node, as realized in the Kubernetes cluster. </param>
         /// <param name="networkAttachments"> The NetworkAttachments made to this node. </param>
@@ -358,17 +578,36 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="taints"> The list of taints that have been assigned to the agent pool containing this node. </param>
         /// <param name="vmSkuName"> The VM SKU name that was used to create this cluster node. </param>
         /// <returns> A new <see cref="Models.KubernetesClusterNode"/> instance for mocking. </returns>
-        public static KubernetesClusterNode KubernetesClusterNode(string agentPoolId = null, string availabilityZone = null, string bareMetalMachineId = null, long? cpuCores = null, KubernetesClusterNodeDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, long? diskSizeGB = null, string image = null, string kubernetesVersion = null, IEnumerable<KubernetesLabel> labels = null, long? memorySizeGB = null, NetworkCloudAgentPoolMode? mode = null, string name = null, IEnumerable<NetworkAttachment> networkAttachments = null, KubernetesNodePowerState? powerState = null, KubernetesNodeRole? role = null, IEnumerable<KubernetesLabel> taints = null, string vmSkuName = null)
+        public static KubernetesClusterNode KubernetesClusterNode(ResourceIdentifier agentPoolArmId = null, string availabilityZone = null, ResourceIdentifier bareMetalMachineArmId = null, long? cpuCores = null, KubernetesClusterNodeDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, long? diskSizeGB = null, string image = null, string kubernetesVersion = null, IEnumerable<KubernetesLabel> labels = null, long? memorySizeGB = null, NetworkCloudAgentPoolMode? mode = null, string name = null, IEnumerable<NetworkAttachment> networkAttachments = null, KubernetesNodePowerState? powerState = null, KubernetesNodeRole? role = null, IEnumerable<KubernetesLabel> taints = null, string vmSkuName = null)
         {
             labels ??= new List<KubernetesLabel>();
             networkAttachments ??= new List<NetworkAttachment>();
             taints ??= new List<KubernetesLabel>();
 
-            return new KubernetesClusterNode(agentPoolId, availabilityZone, bareMetalMachineId, cpuCores, detailedStatus, detailedStatusMessage, diskSizeGB, image, kubernetesVersion, labels?.ToList(), memorySizeGB, mode, name, networkAttachments?.ToList(), powerState, role, taints?.ToList(), vmSkuName);
+            return new KubernetesClusterNode(
+                agentPoolArmId,
+                availabilityZone,
+                bareMetalMachineArmId,
+                cpuCores,
+                detailedStatus,
+                detailedStatusMessage,
+                diskSizeGB,
+                image,
+                kubernetesVersion,
+                labels?.ToList(),
+                memorySizeGB,
+                mode,
+                name,
+                networkAttachments?.ToList(),
+                powerState,
+                role,
+                taints?.ToList(),
+                vmSkuName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkAttachment"/>. </summary>
-        /// <param name="attachedNetworkId">
+        /// <param name="attachedNetworkArmId">
         /// The resource ID of the associated network attached to the virtual machine.
         /// It can be one of cloudServicesNetwork, l3Network, l2Network or trunkedNetwork resources.
         /// </param>
@@ -409,9 +648,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// For a CloudServicesNetwork resource, this name will be ignored.
         /// </param>
         /// <returns> A new <see cref="Models.NetworkAttachment"/> instance for mocking. </returns>
-        public static NetworkAttachment NetworkAttachment(string attachedNetworkId = null, DefaultGateway? defaultGateway = null, VirtualMachineIPAllocationMethod ipAllocationMethod = default, string ipv4Address = null, string ipv6Address = null, string macAddress = null, string networkAttachmentName = null)
+        public static NetworkAttachment NetworkAttachment(ResourceIdentifier attachedNetworkArmId = null, DefaultGateway? defaultGateway = null, VirtualMachineIPAllocationMethod ipAllocationMethod = default, string ipv4Address = null, string ipv6Address = null, string macAddress = null, string networkAttachmentName = null)
         {
-            return new NetworkAttachment(attachedNetworkId, defaultGateway, ipAllocationMethod, ipv4Address, ipv6Address, macAddress, networkAttachmentName);
+            return new NetworkAttachment(
+                attachedNetworkArmId,
+                defaultGateway,
+                ipAllocationMethod,
+                ipv4Address,
+                ipv6Address,
+                macAddress,
+                networkAttachmentName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudL2NetworkData"/>. </summary>
@@ -440,7 +687,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             hybridAksClustersAssociatedIds ??= new List<ResourceIdentifier>();
             virtualMachinesAssociatedIds ??= new List<ResourceIdentifier>();
 
-            return new NetworkCloudL2NetworkData(id, name, resourceType, systemData, tags, location, extendedLocation, associatedResourceIds?.ToList(), clusterId, detailedStatus, detailedStatusMessage, hybridAksClustersAssociatedIds?.ToList(), hybridAksPluginType, interfaceName, l2IsolationDomainId, provisioningState, virtualMachinesAssociatedIds?.ToList());
+            return new NetworkCloudL2NetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                associatedResourceIds?.ToList(),
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                hybridAksClustersAssociatedIds?.ToList(),
+                hybridAksPluginType,
+                interfaceName,
+                l2IsolationDomainId,
+                provisioningState,
+                virtualMachinesAssociatedIds?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudL3NetworkData"/>. </summary>
@@ -480,7 +745,30 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             hybridAksClustersAssociatedIds ??= new List<ResourceIdentifier>();
             virtualMachinesAssociatedIds ??= new List<ResourceIdentifier>();
 
-            return new NetworkCloudL3NetworkData(id, name, resourceType, systemData, tags, location, extendedLocation, associatedResourceIds?.ToList(), clusterId, detailedStatus, detailedStatusMessage, hybridAksClustersAssociatedIds?.ToList(), hybridAksIpamEnabled, hybridAksPluginType, interfaceName, ipAllocationType, ipv4ConnectedPrefix, ipv6ConnectedPrefix, l3IsolationDomainId, provisioningState, virtualMachinesAssociatedIds?.ToList(), vlan);
+            return new NetworkCloudL3NetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                associatedResourceIds?.ToList(),
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                hybridAksClustersAssociatedIds?.ToList(),
+                hybridAksIpamEnabled,
+                hybridAksPluginType,
+                interfaceName,
+                ipAllocationType,
+                ipv4ConnectedPrefix,
+                ipv6ConnectedPrefix,
+                l3IsolationDomainId,
+                provisioningState,
+                virtualMachinesAssociatedIds?.ToList(),
+                vlan,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudRackSkuData"/>. </summary>
@@ -504,7 +792,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             storageAppliances ??= new List<StorageApplianceSkuSlot>();
             supportedRackSkuIds ??= new List<string>();
 
-            return new NetworkCloudRackSkuData(id, name, resourceType, systemData, computeMachines?.ToList(), controllerMachines?.ToList(), description, maxClusterSlots, provisioningState, rackType, storageAppliances?.ToList(), supportedRackSkuIds?.ToList());
+            return new NetworkCloudRackSkuData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                computeMachines?.ToList(),
+                controllerMachines?.ToList(),
+                description,
+                maxClusterSlots,
+                provisioningState,
+                rackType,
+                storageAppliances?.ToList(),
+                supportedRackSkuIds?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineSkuSlot"/>. </summary>
@@ -515,7 +816,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="disks"> The list of disks. </param>
         /// <param name="generation"> The generation of the architecture. </param>
         /// <param name="hardwareVersion"> The hardware version of the machine. </param>
-        /// <param name="memoryCapacityGB"> The maximum amount of memory in GB. </param>
+        /// <param name="memoryCapacityGB"> The maximum amount of memory. Measured in gibibytes. </param>
         /// <param name="model"> The model of the machine. </param>
         /// <param name="networkInterfaces"> The list of network interfaces. </param>
         /// <param name="totalThreads"> The count of SMT and physical core threads for this machine. </param>
@@ -526,17 +827,30 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             disks ??= new List<MachineDisk>();
             networkInterfaces ??= new List<NetworkCloudNetworkInterface>();
 
-            return new MachineSkuSlot(rackSlot, bootstrapProtocol, cpuCores, cpuSockets, disks?.ToList(), generation, hardwareVersion, memoryCapacityGB, model, networkInterfaces?.ToList(), totalThreads, vendor);
+            return new MachineSkuSlot(
+                rackSlot,
+                bootstrapProtocol,
+                cpuCores,
+                cpuSockets,
+                disks?.ToList(),
+                generation,
+                hardwareVersion,
+                memoryCapacityGB,
+                model,
+                networkInterfaces?.ToList(),
+                totalThreads,
+                vendor,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineDisk"/>. </summary>
-        /// <param name="capacityGB"> The maximum amount of storage in GB. </param>
+        /// <param name="capacityGB"> The maximum amount of storage. Measured in gibibytes. </param>
         /// <param name="connection"> The connection type of the rack SKU resource. </param>
         /// <param name="diskType"> The disk type of rack SKU resource. </param>
         /// <returns> A new <see cref="Models.MachineDisk"/> instance for mocking. </returns>
         public static MachineDisk MachineDisk(long? capacityGB = null, MachineSkuDiskConnectionType? connection = null, DiskType? diskType = null)
         {
-            return new MachineDisk(capacityGB, connection, diskType);
+            return new MachineDisk(capacityGB, connection, diskType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkCloudNetworkInterface"/>. </summary>
@@ -545,22 +859,30 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="model"> The model name of the device. </param>
         /// <param name="physicalSlot"> The physical slot for this device. </param>
         /// <param name="portCount"> The number of ports on the device. </param>
-        /// <param name="portSpeed"> The maximum amount of data in GB that the line card transmits through a port at any given second. </param>
+        /// <param name="portSpeed"> The maximum amount of data in gigabits that the line card transmits through a port at any given second. </param>
         /// <param name="vendor"> The vendor name of the device. </param>
         /// <returns> A new <see cref="Models.NetworkCloudNetworkInterface"/> instance for mocking. </returns>
         public static NetworkCloudNetworkInterface NetworkCloudNetworkInterface(string address = null, DeviceConnectionType? deviceConnectionType = null, string model = null, long? physicalSlot = null, long? portCount = null, long? portSpeed = null, string vendor = null)
         {
-            return new NetworkCloudNetworkInterface(address, deviceConnectionType, model, physicalSlot, portCount, portSpeed, vendor);
+            return new NetworkCloudNetworkInterface(
+                address,
+                deviceConnectionType,
+                model,
+                physicalSlot,
+                portCount,
+                portSpeed,
+                vendor,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageApplianceSkuSlot"/>. </summary>
         /// <param name="rackSlot"> The position in the rack for the storage appliance. </param>
-        /// <param name="capacityGB"> The maximum capacity of the storage appliance. </param>
+        /// <param name="capacityGB"> The maximum capacity of the storage appliance. Measured in gibibytes. </param>
         /// <param name="model"> The model of the storage appliance. </param>
         /// <returns> A new <see cref="Models.StorageApplianceSkuSlot"/> instance for mocking. </returns>
         public static StorageApplianceSkuSlot StorageApplianceSkuSlot(long? rackSlot = null, long? capacityGB = null, string model = null)
         {
-            return new StorageApplianceSkuSlot(rackSlot, capacityGB, model);
+            return new StorageApplianceSkuSlot(rackSlot, capacityGB, model, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudRackData"/>. </summary>
@@ -584,7 +906,23 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NetworkCloudRackData(id, name, resourceType, systemData, tags, location, extendedLocation, availabilityZone, clusterId, detailedStatus, detailedStatusMessage, provisioningState, rackLocation, rackSerialNumber, rackSkuId);
+            return new NetworkCloudRackData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                availabilityZone,
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                provisioningState,
+                rackLocation,
+                rackSerialNumber,
+                rackSkuId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudStorageApplianceData"/>. </summary>
@@ -602,19 +940,50 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="detailedStatus"> The detailed status of the storage appliance. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="managementIPv4Address"> The endpoint for the management interface of the storage appliance. </param>
+        /// <param name="manufacturer"> The manufacturer of the storage appliance. </param>
+        /// <param name="model"> The model of the storage appliance. </param>
         /// <param name="provisioningState"> The provisioning state of the storage appliance. </param>
         /// <param name="rackId"> The resource ID of the rack where this storage appliance resides. </param>
         /// <param name="rackSlot"> The slot the storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="remoteVendorManagementFeature"> The indicator of whether the storage appliance supports remote vendor management. </param>
         /// <param name="remoteVendorManagementStatus"> The indicator of whether the remote vendor management feature is enabled or disabled, or unsupported if it is an unsupported feature. </param>
+        /// <param name="secretRotationStatus"> The list of statuses that represent secret rotation activity. </param>
         /// <param name="serialNumber"> The serial number for the storage appliance. </param>
         /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
+        /// <param name="version"> The version of the storage appliance. </param>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudStorageApplianceData"/> instance for mocking. </returns>
-        public static NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, AdministrativeCredentials administratorCredentials = null, long? capacity = null, long? capacityUsed = null, ResourceIdentifier clusterId = null, StorageApplianceDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, IPAddress managementIPv4Address = null, StorageApplianceProvisioningState? provisioningState = null, ResourceIdentifier rackId = null, long rackSlot = default, RemoteVendorManagementFeature? remoteVendorManagementFeature = null, RemoteVendorManagementStatus? remoteVendorManagementStatus = null, string serialNumber = null, string storageApplianceSkuId = null)
+        public static NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, AdministrativeCredentials administratorCredentials = null, long? capacity = null, long? capacityUsed = null, ResourceIdentifier clusterId = null, StorageApplianceDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, IPAddress managementIPv4Address = null, string manufacturer = null, string model = null, StorageApplianceProvisioningState? provisioningState = null, ResourceIdentifier rackId = null, long rackSlot = default, RemoteVendorManagementFeature? remoteVendorManagementFeature = null, RemoteVendorManagementStatus? remoteVendorManagementStatus = null, IEnumerable<SecretRotationStatus> secretRotationStatus = null, string serialNumber = null, string storageApplianceSkuId = null, string version = null)
         {
             tags ??= new Dictionary<string, string>();
+            secretRotationStatus ??= new List<SecretRotationStatus>();
 
-            return new NetworkCloudStorageApplianceData(id, name, resourceType, systemData, tags, location, extendedLocation, administratorCredentials, capacity, capacityUsed, clusterId, detailedStatus, detailedStatusMessage, managementIPv4Address, provisioningState, rackId, rackSlot, remoteVendorManagementFeature, remoteVendorManagementStatus, serialNumber, storageApplianceSkuId);
+            return new NetworkCloudStorageApplianceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                administratorCredentials,
+                capacity,
+                capacityUsed,
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                managementIPv4Address,
+                manufacturer,
+                model,
+                provisioningState,
+                rackId,
+                rackSlot,
+                remoteVendorManagementFeature,
+                remoteVendorManagementStatus,
+                secretRotationStatus?.ToList(),
+                serialNumber,
+                storageApplianceSkuId,
+                version,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudTrunkedNetworkData"/>. </summary>
@@ -646,7 +1015,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             virtualMachinesAssociatedIds ??= new List<ResourceIdentifier>();
             vlans ??= new List<long>();
 
-            return new NetworkCloudTrunkedNetworkData(id, name, resourceType, systemData, tags, location, extendedLocation, associatedResourceIds?.ToList(), clusterId, detailedStatus, detailedStatusMessage, hybridAksClustersAssociatedIds?.ToList(), hybridAksPluginType, interfaceName, isolationDomainIds?.ToList(), provisioningState, virtualMachinesAssociatedIds?.ToList(), vlans?.ToList());
+            return new NetworkCloudTrunkedNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                associatedResourceIds?.ToList(),
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                hybridAksClustersAssociatedIds?.ToList(),
+                hybridAksPluginType,
+                interfaceName,
+                isolationDomainIds?.ToList(),
+                provisioningState,
+                virtualMachinesAssociatedIds?.ToList(),
+                vlans?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudVirtualMachineData"/>. </summary>
@@ -659,7 +1047,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="adminUsername"> The name of the administrator to which the ssh public keys will be added into the authorized keys. </param>
         /// <param name="availabilityZone"> The cluster availability zone containing this virtual machine. </param>
-        /// <param name="bareMetalMachineId"> The resource ID of the bare metal machine the virtual machine has landed to. </param>
+        /// <param name="bareMetalMachineId"> The resource ID of the bare metal machine that hosts the virtual machine. </param>
         /// <param name="bootMethod"> Selects the boot method for the virtual machine. </param>
         /// <param name="cloudServicesNetworkAttachment"> The cloud service network that provides platform-level services for the virtual machine. </param>
         /// <param name="clusterId"> The resource ID of the cluster the virtual machine is created for. </param>
@@ -667,7 +1055,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="detailedStatus"> The more detailed status of the virtual machine. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="isolateEmulatorThread"> Field Deprecated, the value will be ignored if provided. The indicator of whether one of the specified CPU cores is isolated to run the emulator thread for this virtual machine. </param>
-        /// <param name="memorySizeInGB"> The memory size of the virtual machine in GB. </param>
+        /// <param name="memorySizeInGB"> The memory size of the virtual machine. Allocations are measured in gibibytes. </param>
         /// <param name="networkAttachments"> The list of network attachments to the virtual machine. </param>
         /// <param name="networkData"> The Base64 encoded cloud-init network data. </param>
         /// <param name="placementHints"> The scheduling hints for the virtual machine. </param>
@@ -690,7 +1078,39 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             sshPublicKeys ??= new List<NetworkCloudSshPublicKey>();
             volumes ??= new List<ResourceIdentifier>();
 
-            return new NetworkCloudVirtualMachineData(id, name, resourceType, systemData, tags, location, extendedLocation, adminUsername, availabilityZone, bareMetalMachineId, bootMethod, cloudServicesNetworkAttachment, clusterId, cpuCores, detailedStatus, detailedStatusMessage, isolateEmulatorThread, memorySizeInGB, networkAttachments?.ToList(), networkData, placementHints?.ToList(), powerState, provisioningState, sshPublicKeys?.ToList(), storageProfile, userData, virtioInterface, vmDeviceModel, vmImage, vmImageRepositoryCredentials, volumes?.ToList());
+            return new NetworkCloudVirtualMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                adminUsername,
+                availabilityZone,
+                bareMetalMachineId,
+                bootMethod,
+                cloudServicesNetworkAttachment,
+                clusterId,
+                cpuCores,
+                detailedStatus,
+                detailedStatusMessage,
+                isolateEmulatorThread,
+                memorySizeInGB,
+                networkAttachments?.ToList(),
+                networkData,
+                placementHints?.ToList(),
+                powerState,
+                provisioningState,
+                sshPublicKeys?.ToList(),
+                storageProfile,
+                userData,
+                virtioInterface,
+                vmDeviceModel,
+                vmImage,
+                vmImageRepositoryCredentials,
+                volumes?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudVolumeData"/>. </summary>
@@ -713,25 +1133,83 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             tags ??= new Dictionary<string, string>();
             attachedTo ??= new List<string>();
 
-            return new NetworkCloudVolumeData(id, name, resourceType, systemData, tags, location, extendedLocation, attachedTo?.ToList(), detailedStatus, detailedStatusMessage, provisioningState, serialNumber, sizeInMiB);
+            return new NetworkCloudVolumeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                attachedTo?.ToList(),
+                detailedStatus,
+                detailedStatusMessage,
+                provisioningState,
+                serialNumber,
+                sizeInMiB,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkCloudOperationStatusResult"/>. </summary>
-        /// <param name="id"> Fully qualified ID for the async operation. </param>
-        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
-        /// <param name="name"> Name of the async operation. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
         /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="exitCode"> For actions that run commands or scripts, the exit code of the script execution. </param>
+        /// <param name="outputHead"> For actions that run commands or scripts, the leading bytes of the output of the script execution. </param>
+        /// <param name="resultRef"> For actions that run commands or scripts, a reference to the location of the result. </param>
+        /// <param name="resultUri"> For actions that run commands or scripts, the URL where the full output of the script output can be retrieved. </param>
         /// <returns> A new <see cref="Models.NetworkCloudOperationStatusResult"/> instance for mocking. </returns>
-        public static NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(ResourceIdentifier id = null, ResourceIdentifier resourceId = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkCloudOperationStatusResult> operations = null, ResponseError error = null)
+        public static NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(DateTimeOffset? endOn = null, ResponseError error = null, ResourceIdentifier id = null, string name = null, IEnumerable<NetworkCloudOperationStatusResult> operations = null, float? percentComplete = null, ResourceIdentifier resourceId = null, DateTimeOffset? startOn = null, string status = null, string exitCode = null, string outputHead = null, Uri resultRef = null, Uri resultUri = null)
         {
             operations ??= new List<NetworkCloudOperationStatusResult>();
 
-            return new NetworkCloudOperationStatusResult(id, resourceId, name, status, percentComplete, startOn, endOn, operations?.ToList(), error);
+            return new NetworkCloudOperationStatusResult(
+                endOn,
+                error,
+                id,
+                name,
+                operations?.ToList(),
+                percentComplete,
+                resourceId,
+                startOn,
+                status,
+                exitCode,
+                outputHead,
+                resultRef,
+                resultUri,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BareMetalMachineRunCommandContent"/>. </summary>
+        /// <param name="arguments"> The list of string arguments that will be passed to the script in order as separate arguments. </param>
+        /// <param name="limitTimeSeconds">
+        /// The maximum time the script is allowed to run.
+        /// If the execution time exceeds the maximum, the script will be stopped, any output produced until then will be captured, and the exit code matching a timeout will be returned (252).
+        /// </param>
+        /// <param name="script"> The base64 encoded script to execute on the bare metal machine. </param>
+        /// <returns> A new <see cref="Models.BareMetalMachineRunCommandContent"/> instance for mocking. </returns>
+        public static BareMetalMachineRunCommandContent BareMetalMachineRunCommandContent(IEnumerable<string> arguments = null, long limitTimeSeconds = default, string script = null)
+        {
+            arguments ??= new List<string>();
+
+            return new BareMetalMachineRunCommandContent(arguments?.ToList(), limitTimeSeconds, script, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BareMetalMachineCommandSpecification"/>. </summary>
+        /// <param name="arguments"> The list of string arguments that will be passed to the script in order as separate arguments. </param>
+        /// <param name="command"> The command to execute against the bare metal machine. </param>
+        /// <returns> A new <see cref="Models.BareMetalMachineCommandSpecification"/> instance for mocking. </returns>
+        public static BareMetalMachineCommandSpecification BareMetalMachineCommandSpecification(IEnumerable<string> arguments = null, string command = null)
+        {
+            arguments ??= new List<string>();
+
+            return new BareMetalMachineCommandSpecification(arguments?.ToList(), command, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudBareMetalMachineKeySetData"/>. </summary>
@@ -761,7 +1239,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             userList ??= new List<KeySetUser>();
             userListStatus ??= new List<KeySetUserStatus>();
 
-            return new NetworkCloudBareMetalMachineKeySetData(id, name, resourceType, systemData, tags, location, extendedLocation, azureGroupId, detailedStatus, detailedStatusMessage, expireOn, jumpHostsAllowed?.ToList(), lastValidatedOn, osGroupName, privilegeLevel, provisioningState, userList?.ToList(), userListStatus?.ToList());
+            return new NetworkCloudBareMetalMachineKeySetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                azureGroupId,
+                detailedStatus,
+                detailedStatusMessage,
+                expireOn,
+                jumpHostsAllowed?.ToList(),
+                lastValidatedOn,
+                osGroupName,
+                privilegeLevel,
+                provisioningState,
+                userList?.ToList(),
+                userListStatus?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KeySetUserStatus"/>. </summary>
@@ -771,7 +1268,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <returns> A new <see cref="Models.KeySetUserStatus"/> instance for mocking. </returns>
         public static KeySetUserStatus KeySetUserStatus(string azureUserName = null, BareMetalMachineKeySetUserSetupStatus? status = null, string statusMessage = null)
         {
-            return new KeySetUserStatus(azureUserName, status, statusMessage);
+            return new KeySetUserStatus(azureUserName, status, statusMessage, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudBmcKeySetData"/>. </summary>
@@ -798,7 +1295,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             userList ??= new List<KeySetUser>();
             userListStatus ??= new List<KeySetUserStatus>();
 
-            return new NetworkCloudBmcKeySetData(id, name, resourceType, systemData, tags, location, extendedLocation, azureGroupId, detailedStatus, detailedStatusMessage, expireOn, lastValidatedOn, privilegeLevel, provisioningState, userList?.ToList(), userListStatus?.ToList());
+            return new NetworkCloudBmcKeySetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                azureGroupId,
+                detailedStatus,
+                detailedStatusMessage,
+                expireOn,
+                lastValidatedOn,
+                privilegeLevel,
+                provisioningState,
+                userList?.ToList(),
+                userListStatus?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudClusterMetricsConfigurationData"/>. </summary>
@@ -822,7 +1336,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             disabledMetrics ??= new List<string>();
             enabledMetrics ??= new List<string>();
 
-            return new NetworkCloudClusterMetricsConfigurationData(id, name, resourceType, systemData, tags, location, extendedLocation, collectionInterval, detailedStatus, detailedStatusMessage, disabledMetrics?.ToList(), enabledMetrics?.ToList(), provisioningState);
+            return new NetworkCloudClusterMetricsConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                collectionInterval,
+                detailedStatus,
+                detailedStatusMessage,
+                disabledMetrics?.ToList(),
+                enabledMetrics?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudAgentPoolData"/>. </summary>
@@ -845,17 +1373,76 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="mode"> The selection of how this agent pool is utilized, either as a system pool or a user pool. System pools run the features and critical services for the Kubernetes Cluster, while user pools are dedicated to user workloads. Every Kubernetes cluster must contain at least one system node pool with at least one node. </param>
         /// <param name="provisioningState"> The provisioning state of the agent pool. </param>
         /// <param name="taints"> The taints applied to the nodes in this agent pool. </param>
-        /// <param name="upgradeMaxSurge"> The configuration of the agent pool. </param>
+        /// <param name="upgradeSettings"> The configuration of the agent pool. </param>
         /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudAgentPoolData"/> instance for mocking. </returns>
-        public static NetworkCloudAgentPoolData NetworkCloudAgentPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, AdministratorConfiguration administratorConfiguration = null, NetworkCloudAgentConfiguration agentOptions = null, AttachedNetworkConfiguration attachedNetworkConfiguration = null, IEnumerable<string> availabilityZones = null, long count = default, AgentPoolDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, string kubernetesVersion = null, IEnumerable<KubernetesLabel> labels = null, NetworkCloudAgentPoolMode mode = default, AgentPoolProvisioningState? provisioningState = null, IEnumerable<KubernetesLabel> taints = null, string upgradeMaxSurge = null, string vmSkuName = null)
+        public static NetworkCloudAgentPoolData NetworkCloudAgentPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, AdministratorConfiguration administratorConfiguration = null, NetworkCloudAgentConfiguration agentOptions = null, AttachedNetworkConfiguration attachedNetworkConfiguration = null, IEnumerable<string> availabilityZones = null, long count = default, AgentPoolDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, string kubernetesVersion = null, IEnumerable<KubernetesLabel> labels = null, NetworkCloudAgentPoolMode mode = default, AgentPoolProvisioningState? provisioningState = null, IEnumerable<KubernetesLabel> taints = null, AgentPoolUpgradeSettings upgradeSettings = null, string vmSkuName = null)
         {
             tags ??= new Dictionary<string, string>();
             availabilityZones ??= new List<string>();
             labels ??= new List<KubernetesLabel>();
             taints ??= new List<KubernetesLabel>();
 
-            return new NetworkCloudAgentPoolData(id, name, resourceType, systemData, tags, location, extendedLocation, administratorConfiguration, agentOptions, attachedNetworkConfiguration, availabilityZones?.ToList(), count, detailedStatus, detailedStatusMessage, kubernetesVersion, labels?.ToList(), mode, provisioningState, taints?.ToList(), upgradeMaxSurge != null ? new AgentPoolUpgradeSettings(upgradeMaxSurge) : null, vmSkuName);
+            return new NetworkCloudAgentPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                administratorConfiguration,
+                agentOptions,
+                attachedNetworkConfiguration,
+                availabilityZones?.ToList(),
+                count,
+                detailedStatus,
+                detailedStatusMessage,
+                kubernetesVersion,
+                labels?.ToList(),
+                mode,
+                provisioningState,
+                taints?.ToList(),
+                upgradeSettings,
+                vmSkuName,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudKubernetesClusterFeatureData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="availabilityLifecycle"> The lifecycle indicator of the feature. </param>
+        /// <param name="detailedStatus"> The detailed status of the feature. </param>
+        /// <param name="detailedStatusMessage"> The descriptive message for the detailed status of the feature. </param>
+        /// <param name="options"> The configured options for the feature. </param>
+        /// <param name="provisioningState"> The provisioning state of the Kubernetes cluster feature. </param>
+        /// <param name="required"> The indicator of if the feature is required or optional. Optional features may be deleted by the user, while required features are managed with the kubernetes cluster lifecycle. </param>
+        /// <param name="version"> The version of the feature. </param>
+        /// <returns> A new <see cref="NetworkCloud.NetworkCloudKubernetesClusterFeatureData"/> instance for mocking. </returns>
+        public static NetworkCloudKubernetesClusterFeatureData NetworkCloudKubernetesClusterFeatureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, KubernetesClusterFeatureAvailabilityLifecycle? availabilityLifecycle = null, KubernetesClusterFeatureDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, IEnumerable<StringKeyValuePair> options = null, KubernetesClusterFeatureProvisioningState? provisioningState = null, KubernetesClusterFeatureRequired? required = null, string version = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            options ??= new List<StringKeyValuePair>();
+
+            return new NetworkCloudKubernetesClusterFeatureData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                availabilityLifecycle,
+                detailedStatus,
+                detailedStatusMessage,
+                options?.ToList(),
+                provisioningState,
+                required,
+                version,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudVirtualMachineConsoleData"/>. </summary>
@@ -879,7 +1466,177 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NetworkCloudVirtualMachineConsoleData(id, name, resourceType, systemData, tags, location, extendedLocation, detailedStatus, detailedStatusMessage, enabled, expireOn, privateLinkServiceId, provisioningState, keyData != null ? new NetworkCloudSshPublicKey(keyData) : null, virtualMachineAccessId);
+            return new NetworkCloudVirtualMachineConsoleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                detailedStatus,
+                detailedStatusMessage,
+                enabled,
+                expireOn,
+                privateLinkServiceId,
+                provisioningState,
+                keyData != null ? new NetworkCloudSshPublicKey(keyData, serializedAdditionalRawData: null) : null,
+                virtualMachineAccessId,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
+        /// <param name="bmcConnectionString"> The connection string for the baseboard management controller including IP address and protocol. </param>
+        /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
+        /// <param name="bmcMacAddress"> The MAC address of the BMC device. </param>
+        /// <param name="bootMacAddress"> The MAC address of a NIC connected to the PXE network. </param>
+        /// <param name="clusterId"> The resource ID of the cluster this bare metal machine is associated with. </param>
+        /// <param name="cordonStatus"> The cordon status of the bare metal machine. </param>
+        /// <param name="detailedStatus"> The more detailed status of the bare metal machine. </param>
+        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
+        /// <param name="hardwareInventory"> The hardware inventory, including information acquired from the model/sku information and from the ironic inspector. </param>
+        /// <param name="hardwareValidationStatus"> The details of the latest hardware validation performed for this bare metal machine. </param>
+        /// <param name="hybridAksClustersAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the HybridAksClusters that have nodes hosted on this bare metal machine. </param>
+        /// <param name="kubernetesNodeName"> The name of this machine represented by the host object in the Cluster's Kubernetes control plane. </param>
+        /// <param name="kubernetesVersion"> The version of Kubernetes running on this machine. </param>
+        /// <param name="machineDetails"> The custom details provided by the customer. </param>
+        /// <param name="machineName"> The OS-level hostname assigned to this machine. </param>
+        /// <param name="machineSkuId"> The unique internal identifier of the bare metal machine SKU. </param>
+        /// <param name="oamIPv4Address"> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </param>
+        /// <param name="oamIPv6Address"> The IPv6 address that is assigned to the bare metal machine during the cluster deployment. </param>
+        /// <param name="osImage"> The image that is currently provisioned to the OS disk. </param>
+        /// <param name="powerState"> The power state derived from the baseboard management controller. </param>
+        /// <param name="provisioningState"> The provisioning state of the bare metal machine. </param>
+        /// <param name="rackId"> The resource ID of the rack where this bare metal machine resides. </param>
+        /// <param name="rackSlot"> The rack slot in which this bare metal machine is located, ordered from the bottom up i.e. the lowest slot is 1. </param>
+        /// <param name="readyState"> The indicator of whether the bare metal machine is ready to receive workloads. </param>
+        /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
+        /// <param name="serviceTag"> The discovered value of the machine's service tag. </param>
+        /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the VirtualMachines that are hosted on this bare metal machine. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IEnumerable<ResourceIdentifier> associatedResourceIds, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, ResourceIdentifier clusterId, BareMetalMachineCordonStatus? cordonStatus, BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, HardwareInventory hardwareInventory, HardwareValidationStatus hardwareValidationStatus, IEnumerable<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineDetails, string machineName, string machineSkuId, IPAddress oamIPv4Address, string oamIPv6Address, string osImage, BareMetalMachinePowerState? powerState, BareMetalMachineProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, BareMetalMachineReadyState? readyState, string serialNumber, string serviceTag, IEnumerable<string> virtualMachinesAssociatedIds)
+        {
+            return NetworkCloudBareMetalMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, extendedLocation: extendedLocation, associatedResourceIds: associatedResourceIds, bmcConnectionString: bmcConnectionString, bmcCredentials: bmcCredentials, bmcMacAddress: bmcMacAddress, bootMacAddress: bootMacAddress, clusterId: clusterId, cordonStatus: cordonStatus, detailedStatus: detailedStatus, detailedStatusMessage: detailedStatusMessage, hardwareInventory: hardwareInventory, hardwareValidationStatus: hardwareValidationStatus, hybridAksClustersAssociatedIds: hybridAksClustersAssociatedIds, kubernetesNodeName: kubernetesNodeName, kubernetesVersion: kubernetesVersion, machineClusterVersion: default, machineDetails: machineDetails, machineName: machineName, machineRoles: default, machineSkuId: machineSkuId, oamIPv4Address: oamIPv4Address, oamIPv6Address: oamIPv6Address, osImage: osImage, powerState: powerState, provisioningState: provisioningState, rackId: rackId, rackSlot: rackSlot, readyState: readyState, runtimeProtectionStatus: default, secretRotationStatus: default, serialNumber: serialNumber, serviceTag: serviceTag, virtualMachinesAssociatedIds: virtualMachinesAssociatedIds);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="analyticsWorkspaceId"> The resource ID of the Log Analytics workspace that is used for the logs collection. </param>
+        /// <param name="availabilityZones"> Field deprecated, this value will no longer influence the cluster manager allocation process and will be removed in a future version. The Azure availability zones within the region that will be used to support the cluster manager resource. </param>
+        /// <param name="clusterVersions"> The list of the cluster versions the manager supports. It is used as input in clusterVersion property of a cluster resource. </param>
+        /// <param name="detailedStatus"> The detailed status that provides additional information about the cluster manager. </param>
+        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
+        /// <param name="fabricControllerId"> The resource ID of the fabric controller that has one to one mapping with the cluster manager. </param>
+        /// <param name="managedResourceGroupConfiguration"> The configuration of the managed resource group associated with the resource. </param>
+        /// <param name="managerExtendedLocation"> The extended location (custom location) that represents the cluster manager's control plane location. This extended location is used when creating cluster and rack manifest resources. </param>
+        /// <param name="provisioningState"> The provisioning state of the cluster manager. </param>
+        /// <param name="vmSize"> Field deprecated, this value will no longer influence the cluster manager allocation process and will be removed in a future version. The size of the Azure virtual machines to use for hosting the cluster manager resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudClusterManagerData NetworkCloudClusterManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier analyticsWorkspaceId, IEnumerable<string> availabilityZones, IEnumerable<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, string vmSize)
+        {
+            return NetworkCloudClusterManagerData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, analyticsWorkspaceId: analyticsWorkspaceId, availabilityZones: availabilityZones, clusterVersions: clusterVersions, detailedStatus: detailedStatus, detailedStatusMessage: detailedStatusMessage, fabricControllerId: fabricControllerId, managedResourceGroupConfiguration: managedResourceGroupConfiguration, managerExtendedLocation: managerExtendedLocation, provisioningState: provisioningState, vmSize: vmSize);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
+        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
+        /// <param name="analyticsWorkspaceId"> The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </param>
+        /// <param name="availableUpgradeVersions"> The list of cluster runtime version upgrades available for this cluster. </param>
+        /// <param name="clusterCapacity"> The capacity supported by this cluster. </param>
+        /// <param name="clusterConnectionStatus"> The latest heartbeat status between the cluster manager and the cluster. </param>
+        /// <param name="clusterExtendedLocation"> The extended location (custom location) that represents the cluster's control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </param>
+        /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
+        /// <param name="clusterManagerConnectionStatus"> The latest connectivity status between cluster manager and the cluster. </param>
+        /// <param name="clusterManagerId"> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </param>
+        /// <param name="clusterServicePrincipal"> The service principal to be used by the cluster during Arc Appliance installation. </param>
+        /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
+        /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
+        /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
+        /// <param name="computeRackDefinitions">
+        /// The list of rack definitions for the compute racks in a multi-rack
+        /// cluster, or an empty list in a single-rack cluster.
+        /// </param>
+        /// <param name="detailedStatus"> The current detailed status of the cluster. </param>
+        /// <param name="detailedStatusMessage"> The descriptive message about the detailed status. </param>
+        /// <param name="hybridAksExtendedLocation"> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </param>
+        /// <param name="managedResourceGroupConfiguration"> The configuration of the managed resource group associated with the resource. </param>
+        /// <param name="manualActionCount"> The count of Manual Action Taken (MAT) events that have not been validated. </param>
+        /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
+        /// <param name="provisioningState"> The provisioning state of the cluster. </param>
+        /// <param name="supportExpireOn"> The support end date of the runtime version of the cluster. </param>
+        /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ResourceIdentifier analyticsWorkspaceId, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, ValidationThreshold computeDeploymentThreshold, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, DateTimeOffset? supportExpireOn, IEnumerable<ResourceIdentifier> workloadResourceIds)
+        {
+            return NetworkCloudClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, extendedLocation: extendedLocation, identity: default, aggregatorOrSingleRackDefinition: aggregatorOrSingleRackDefinition, analyticsWorkspaceId: analyticsWorkspaceId, availableUpgradeVersions: availableUpgradeVersions, clusterCapacity: clusterCapacity, clusterConnectionStatus: clusterConnectionStatus, clusterExtendedLocation: clusterExtendedLocation, clusterLocation: clusterLocation, clusterManagerConnectionStatus: clusterManagerConnectionStatus, clusterManagerId: clusterManagerId, clusterServicePrincipal: clusterServicePrincipal, clusterType: clusterType, clusterVersion: clusterVersion, commandOutputSettings: default, computeDeploymentThreshold: computeDeploymentThreshold, computeRackDefinitions: computeRackDefinitions, detailedStatus: detailedStatus, detailedStatusMessage: detailedStatusMessage, hybridAksExtendedLocation: hybridAksExtendedLocation, managedResourceGroupConfiguration: managedResourceGroupConfiguration, manualActionCount: manualActionCount, networkFabricId: networkFabricId, provisioningState: provisioningState, runtimeProtectionEnforcementLevel: default, secretArchive: default, supportExpireOn: supportExpireOn, updateStrategy: default, workloadResourceIds: workloadResourceIds);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
+        /// <param name="capacity"> The total capacity of the storage appliance. </param>
+        /// <param name="capacityUsed"> The amount of storage consumed. </param>
+        /// <param name="clusterId"> The resource ID of the cluster this storage appliance is associated with. </param>
+        /// <param name="detailedStatus"> The detailed status of the storage appliance. </param>
+        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
+        /// <param name="managementIPv4Address"> The endpoint for the management interface of the storage appliance. </param>
+        /// <param name="provisioningState"> The provisioning state of the storage appliance. </param>
+        /// <param name="rackId"> The resource ID of the rack where this storage appliance resides. </param>
+        /// <param name="rackSlot"> The slot the storage appliance is in the rack based on the BOM configuration. </param>
+        /// <param name="remoteVendorManagementFeature"> The indicator of whether the storage appliance supports remote vendor management. </param>
+        /// <param name="remoteVendorManagementStatus"> The indicator of whether the remote vendor management feature is enabled or disabled, or unsupported if it is an unsupported feature. </param>
+        /// <param name="serialNumber"> The serial number for the storage appliance. </param>
+        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IPAddress managementIPv4Address, StorageApplianceProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, string serialNumber, string storageApplianceSkuId)
+        {
+            return NetworkCloudStorageApplianceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, extendedLocation: extendedLocation, administratorCredentials: administratorCredentials, capacity: capacity, capacityUsed: capacityUsed, clusterId: clusterId, detailedStatus: detailedStatus, detailedStatusMessage: detailedStatusMessage, managementIPv4Address: managementIPv4Address, manufacturer: default, model: default, provisioningState: provisioningState, rackId: rackId, rackSlot: rackSlot, remoteVendorManagementFeature: remoteVendorManagementFeature, remoteVendorManagementStatus: remoteVendorManagementStatus, secretRotationStatus: default, serialNumber: serialNumber, storageApplianceSkuId: storageApplianceSkuId, version: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult" />. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IEnumerable<NetworkCloudOperationStatusResult> operations, ResponseError error)
+        {
+            return NetworkCloudOperationStatusResult(endOn: endOn, error: error, id: id, name: name, operations: operations, percentComplete: percentComplete, resourceId: resourceId, startOn: startOn, status: status, exitCode: default, outputHead: default, resultRef: default, resultUri: default);
         }
     }
 }

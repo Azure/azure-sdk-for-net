@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseDayOfWeek left, SynapseDayOfWeek right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseDayOfWeek"/> values are not the same. </summary>
         public static bool operator !=(SynapseDayOfWeek left, SynapseDayOfWeek right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseDayOfWeek"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseDayOfWeek"/>. </summary>
         public static implicit operator SynapseDayOfWeek(string value) => new SynapseDayOfWeek(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

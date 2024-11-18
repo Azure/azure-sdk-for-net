@@ -5,18 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class EnvironmentVariableSetup : IUtf8JsonSerializable
+    public partial class EnvironmentVariableSetup : IUtf8JsonSerializable, IJsonModel<EnvironmentVariableSetup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnvironmentVariableSetup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<EnvironmentVariableSetup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CustomSetupBaseType);
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariableSetup>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EnvironmentVariableSetup)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("variableName"u8);
@@ -24,11 +42,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("variableValue"u8);
             writer.WriteStringValue(VariableValue);
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static EnvironmentVariableSetup DeserializeEnvironmentVariableSetup(JsonElement element)
+        EnvironmentVariableSetup IJsonModel<EnvironmentVariableSetup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariableSetup>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EnvironmentVariableSetup)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEnvironmentVariableSetup(document.RootElement, options);
+        }
+
+        internal static EnvironmentVariableSetup DeserializeEnvironmentVariableSetup(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +67,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             string variableName = default;
             string variableValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -65,8 +98,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EnvironmentVariableSetup(type, variableName, variableValue);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EnvironmentVariableSetup(type, serializedAdditionalRawData, variableName, variableValue);
         }
+
+        BinaryData IPersistableModel<EnvironmentVariableSetup>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariableSetup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EnvironmentVariableSetup)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EnvironmentVariableSetup IPersistableModel<EnvironmentVariableSetup>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariableSetup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEnvironmentVariableSetup(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EnvironmentVariableSetup)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EnvironmentVariableSetup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

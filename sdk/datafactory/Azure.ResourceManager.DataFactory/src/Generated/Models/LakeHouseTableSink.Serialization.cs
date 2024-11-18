@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,11 +14,28 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class LakeHouseTableSink : IUtf8JsonSerializable
+    public partial class LakeHouseTableSink : IUtf8JsonSerializable, IJsonModel<LakeHouseTableSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LakeHouseTableSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LakeHouseTableSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LakeHouseTableSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LakeHouseTableSink)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(TableActionOption))
             {
                 writer.WritePropertyName("tableActionOption"u8);
@@ -40,38 +58,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
-            {
-                writer.WritePropertyName("writeBatchSize"u8);
-                JsonSerializer.Serialize(writer, WriteBatchSize);
-            }
-            if (Optional.IsDefined(WriteBatchTimeout))
-            {
-                writer.WritePropertyName("writeBatchTimeout"u8);
-                JsonSerializer.Serialize(writer, WriteBatchTimeout);
-            }
-            if (Optional.IsDefined(SinkRetryCount))
-            {
-                writer.WritePropertyName("sinkRetryCount"u8);
-                JsonSerializer.Serialize(writer, SinkRetryCount);
-            }
-            if (Optional.IsDefined(SinkRetryWait))
-            {
-                writer.WritePropertyName("sinkRetryWait"u8);
-                JsonSerializer.Serialize(writer, SinkRetryWait);
-            }
-            if (Optional.IsDefined(MaxConcurrentConnections))
-            {
-                writer.WritePropertyName("maxConcurrentConnections"u8);
-                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
-            }
-            if (Optional.IsDefined(DisableMetricsCollection))
-            {
-                writer.WritePropertyName("disableMetricsCollection"u8);
-                JsonSerializer.Serialize(writer, DisableMetricsCollection);
-            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -84,25 +70,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static LakeHouseTableSink DeserializeLakeHouseTableSink(JsonElement element)
+        LakeHouseTableSink IJsonModel<LakeHouseTableSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LakeHouseTableSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LakeHouseTableSink)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLakeHouseTableSink(document.RootElement, options);
+        }
+
+        internal static LakeHouseTableSink DeserializeLakeHouseTableSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> tableActionOption = default;
-            Optional<DataFactoryElement<string>> partitionOption = default;
-            Optional<BinaryData> partitionNameList = default;
+            DataFactoryElement<string> tableActionOption = default;
+            DataFactoryElement<string> partitionOption = default;
+            BinaryData partitionNameList = default;
             string type = default;
-            Optional<DataFactoryElement<int>> writeBatchSize = default;
-            Optional<DataFactoryElement<string>> writeBatchTimeout = default;
-            Optional<DataFactoryElement<int>> sinkRetryCount = default;
-            Optional<DataFactoryElement<string>> sinkRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> writeBatchSize = default;
+            DataFactoryElement<string> writeBatchTimeout = default;
+            DataFactoryElement<int> sinkRetryCount = default;
+            DataFactoryElement<string> sinkRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +195,49 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new LakeHouseTableSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, tableActionOption.Value, partitionOption.Value, partitionNameList.Value);
+            return new LakeHouseTableSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                tableActionOption,
+                partitionOption,
+                partitionNameList);
         }
+
+        BinaryData IPersistableModel<LakeHouseTableSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LakeHouseTableSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LakeHouseTableSink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LakeHouseTableSink IPersistableModel<LakeHouseTableSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LakeHouseTableSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLakeHouseTableSink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LakeHouseTableSink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LakeHouseTableSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

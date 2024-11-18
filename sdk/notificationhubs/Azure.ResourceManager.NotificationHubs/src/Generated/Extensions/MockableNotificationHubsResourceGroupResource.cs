@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Mocking
 {
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         }
 
         /// <summary>
-        /// Returns the description for the specified namespace.
+        /// Returns the given namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -54,9 +51,17 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubNamespaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="namespaceName"> Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -67,7 +72,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         }
 
         /// <summary>
-        /// Returns the description for the specified namespace.
+        /// Returns the given namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -77,9 +82,17 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubNamespaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="namespaceName"> Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>

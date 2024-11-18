@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataMigration;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataMigration.Samples
 {
     public partial class Sample_SqlMigrationServiceResource
     {
-        // Get Migration Service.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMigrationService()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/GetMigrationService.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete SQL Migration Service.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSQLMigrationService()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/DeleteMigrationService.json
@@ -74,12 +70,11 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // invoke the operation
             await sqlMigrationService.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update SQL Migration Service.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateSQLMigrationService()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/UpdateMigrationService.json
@@ -116,13 +111,12 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve the List of Authentication Keys.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAuthKeys_RetrieveTheListOfAuthenticationKeys()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/ListAuthKeysMigrationService.json
-            // this example is just showing the usage of "SqlMigrationServices_listAuthKeys" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SqlMigrationServices_ListAuthKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -143,13 +137,12 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Regenerate the of Authentication Keys.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateAuthKeys_RegenerateTheOfAuthenticationKeys()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/RegenAuthKeysMigrationService.json
-            // this example is just showing the usage of "SqlMigrationServices_regenerateAuthKeys" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SqlMigrationServices_RegenerateAuthKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -174,13 +167,12 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Delete the integration runtime node.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteNode_DeleteTheIntegrationRuntimeNode()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/DeleteIntegrationRuntimeNode.json
-            // this example is just showing the usage of "SqlMigrationServices_deleteNode" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SqlMigrationServices_DeleteNode" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -206,13 +198,12 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List database migrations attached to the service.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMigrations_ListDatabaseMigrationsAttachedToTheService()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/ListMigrationsByMigrationService.json
-            // this example is just showing the usage of "SqlMigrationServices_listMigrations" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SqlMigrationServices_ListMigrations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -233,16 +224,15 @@ namespace Azure.ResourceManager.DataMigration.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Retrieve the Monitoring Data.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMonitoringData_RetrieveTheMonitoringData()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/GetMonitorDataMigrationService.json
-            // this example is just showing the usage of "SqlMigrationServices_listMonitoringData" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SqlMigrationServices_ListMonitoringData" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -263,9 +253,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Services in the Subscriptions.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSqlMigrationServices_GetServicesInTheSubscriptions()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/ListBySubscriptionMigrationService.json
@@ -292,7 +281,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

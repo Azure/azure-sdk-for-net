@@ -40,8 +40,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<MessageContentCategory> contentCategory = default;
-            Optional<IList<MessageExampleSequence>> examples = default;
+            MessageContentCategory? contentCategory = default;
+            IList<MessageExampleSequence> examples = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentCategory"u8))
@@ -68,7 +68,23 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new UseCase(Optional.ToNullable(contentCategory), Optional.ToList(examples));
+            return new UseCase(contentCategory, examples ?? new ChangeTrackingList<MessageExampleSequence>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static UseCase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUseCase(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

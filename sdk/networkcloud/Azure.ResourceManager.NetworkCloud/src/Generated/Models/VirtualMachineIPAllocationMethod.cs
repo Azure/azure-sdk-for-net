@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(VirtualMachineIPAllocationMethod left, VirtualMachineIPAllocationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachineIPAllocationMethod"/> values are not the same. </summary>
         public static bool operator !=(VirtualMachineIPAllocationMethod left, VirtualMachineIPAllocationMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualMachineIPAllocationMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineIPAllocationMethod"/>. </summary>
         public static implicit operator VirtualMachineIPAllocationMethod(string value) => new VirtualMachineIPAllocationMethod(value);
 
         /// <inheritdoc />
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

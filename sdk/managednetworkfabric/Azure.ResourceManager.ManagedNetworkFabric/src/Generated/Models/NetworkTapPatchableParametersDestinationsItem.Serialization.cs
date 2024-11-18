@@ -5,55 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkTapPatchableParametersDestinationsItem : IUtf8JsonSerializable
+    public partial class NetworkTapPatchableParametersDestinationsItem : IUtf8JsonSerializable, IJsonModel<NetworkTapPatchableParametersDestinationsItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkTapPatchableParametersDestinationsItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<NetworkTapPatchableParametersDestinationsItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(DestinationType))
-            {
-                writer.WritePropertyName("destinationType"u8);
-                writer.WriteStringValue(DestinationType.Value.ToString());
-            }
-            if (Optional.IsDefined(DestinationId))
-            {
-                writer.WritePropertyName("destinationId"u8);
-                writer.WriteStringValue(DestinationId);
-            }
-            if (Optional.IsDefined(IsolationDomainProperties))
-            {
-                writer.WritePropertyName("isolationDomainProperties"u8);
-                writer.WriteObjectValue(IsolationDomainProperties);
-            }
-            if (Optional.IsDefined(DestinationTapRuleId))
-            {
-                writer.WritePropertyName("destinationTapRuleId"u8);
-                writer.WriteStringValue(DestinationTapRuleId);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static NetworkTapPatchableParametersDestinationsItem DeserializeNetworkTapPatchableParametersDestinationsItem(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapPatchableParametersDestinationsItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkTapPatchableParametersDestinationsItem)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        NetworkTapPatchableParametersDestinationsItem IJsonModel<NetworkTapPatchableParametersDestinationsItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapPatchableParametersDestinationsItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkTapPatchableParametersDestinationsItem)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkTapPatchableParametersDestinationsItem(document.RootElement, options);
+        }
+
+        internal static NetworkTapPatchableParametersDestinationsItem DeserializeNetworkTapPatchableParametersDestinationsItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<NetworkTapDestinationType> destinationType = default;
-            Optional<ResourceIdentifier> destinationId = default;
-            Optional<IsolationDomainProperties> isolationDomainProperties = default;
-            Optional<ResourceIdentifier> destinationTapRuleId = default;
+            string name = default;
+            NetworkTapDestinationType? destinationType = default;
+            ResourceIdentifier destinationId = default;
+            IsolationDomainProperties isolationDomainProperties = default;
+            ResourceIdentifier destinationTapRuleId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -85,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    isolationDomainProperties = IsolationDomainProperties.DeserializeIsolationDomainProperties(property.Value);
+                    isolationDomainProperties = IsolationDomainProperties.DeserializeIsolationDomainProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("destinationTapRuleId"u8))
@@ -97,8 +107,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     destinationTapRuleId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkTapPatchableParametersDestinationsItem(name.Value, Optional.ToNullable(destinationType), destinationId.Value, isolationDomainProperties.Value, destinationTapRuleId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetworkTapPatchableParametersDestinationsItem(
+                name,
+                destinationType,
+                destinationId,
+                isolationDomainProperties,
+                destinationTapRuleId,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkTapPatchableParametersDestinationsItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapPatchableParametersDestinationsItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkTapPatchableParametersDestinationsItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetworkTapPatchableParametersDestinationsItem IPersistableModel<NetworkTapPatchableParametersDestinationsItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapPatchableParametersDestinationsItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkTapPatchableParametersDestinationsItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkTapPatchableParametersDestinationsItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkTapPatchableParametersDestinationsItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

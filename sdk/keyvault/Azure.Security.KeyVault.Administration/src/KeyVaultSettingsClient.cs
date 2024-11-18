@@ -163,7 +163,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="setting">A <see cref="KeyVaultSetting"/> to update. Must be a valid settings option.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        [CallerShouldAudit(Reason = KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
+        [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual Response<KeyVaultSetting> UpdateSetting(KeyVaultSetting setting, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(setting, nameof(setting));
@@ -187,7 +187,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="setting">A <see cref="KeyVaultSetting"/> to update. Must be a valid settings option.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        [CallerShouldAudit(Reason = KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
+        [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultSetting>> UpdateSettingAsync(KeyVaultSetting setting, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(setting, nameof(setting));

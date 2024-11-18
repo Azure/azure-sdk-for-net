@@ -1,22 +1,7 @@
-// <copyright file="ResourceSemanticConventions.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// </copyright>
+// SPDX-License-Identifier: Apache-2.0
 
-#nullable enable
-
-namespace OpenTelemetry.Resources;
+namespace OpenTelemetry.Trace;
 
 internal static class ResourceSemanticConventions
 {
@@ -59,6 +44,7 @@ internal static class ResourceSemanticConventions
     public const string AttributeProcessUsername = "process.username";
 
     public const string AttributeCloudAccount = "cloud.account.id";
+    public const string AttributeCloudAvailabilityZone = "cloud.availability_zone";
     public const string AttributeCloudPlatform = "cloud.platform";
     public const string AttributeCloudProvider = "cloud.provider";
     public const string AttributeCloudRegion = "cloud.region";

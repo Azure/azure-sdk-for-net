@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -25,11 +24,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Error target. </param>
         /// <param name="details"> Error details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The status of the sample input request. </param>
         /// <param name="diagnostics"> Diagnostics messages. E.g. message indicating some partitions from the input have no data. </param>
         /// <param name="eventsDownloadUri"> A SAS URL to download the sampled input data. </param>
         /// <param name="lastArrivedOn"> The timestamp for the last event in the data. It is in DateTime format. </param>
-        internal StreamAnalyticsSampleInputResult(string code, string message, string target, IReadOnlyList<StreamAnalyticsErrorDetails> details, StreamAnalyticsSampleInputResultStatus? status, IReadOnlyList<string> diagnostics, Uri eventsDownloadUri, DateTimeOffset? lastArrivedOn) : base(code, message, target, details)
+        internal StreamAnalyticsSampleInputResult(string code, string message, string target, IReadOnlyList<StreamAnalyticsErrorDetails> details, IDictionary<string, BinaryData> serializedAdditionalRawData, StreamAnalyticsSampleInputResultStatus? status, IReadOnlyList<string> diagnostics, Uri eventsDownloadUri, DateTimeOffset? lastArrivedOn) : base(code, message, target, details, serializedAdditionalRawData)
         {
             Status = status;
             Diagnostics = diagnostics;

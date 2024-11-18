@@ -1,17 +1,141 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
+## 1.14.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Claims from the `TokenRequestContext` are now correctly sent through to MSAL in `ConfidentialClient` credentials. [#40451](https://github.com/Azure/azure-sdk-for-net/issues/40451).
+ - Fixed an issue where setting `DefaultAzureCredentialOptions.TenantId` twice throws an `InvalidOperationException`. ([#47035](https://github.com/Azure/azure-sdk-for-net/issues/47035))
+ - Fixed an issue where some credentials in `DefaultAzureCredential` would not fall through to the next credential in the chain under certain exception conditions.
 
 ### Other Changes
 
+## 1.13.1 (2024-10-24)
+
+### Bugs Fixed
+- Fixed a regression that prevented `ManagedIdentityCredential` from attempting to detect if Workload Identity is enabled in the current environment. [#46653](https://github.com/Azure/azure-sdk-for-net/issues/46653)
+- Fixed a regression that prevented `DefaultAzureCredential` from progressing past `ManagedIdentityCredential` in some scenarios where the identity was not available. [#46709](https://github.com/Azure/azure-sdk-for-net/issues/46709)
+
+## 1.13.0 (2024-10-14)
+
+### Breaking Changes
+- Previously, if a clientID or ResourceID was specified for Cloud Shell managed identity, which is not supported, the clientID or resourceID would be silently ignored. Now, an exception will be thrown if a clientID or resourceID is specified for Cloud Shell managed identity.
+- Previously, if a clientID or ResourceID was specified for Service Fabric managed identity, which is not supported, the clientID or resourceID would be silently ignored. Now, an exception will be thrown if a clientID or resourceID is specified for Service Fabric managed identity.
+
+### Features Added
+- `ManagedIdentityCredential` now supports specifying a user-assigned managed identity by object ID.
+
+### Bugs Fixed
+
+- If `DefaultAzureCredential` attempts to authenticate with the `MangagedIdentityCredential` and it receives either a failed response that is not json, it will now fall through to the next credential in the chain. [#45184](https://github.com/Azure/azure-sdk-for-net/issues/45184)
+- Fixed the request sent in `AzurePipelinesCredential` so it doesn't result in a redirect response when an invalid system access token is provided.
+- Updated to version 4.65.0 of Microsoft.Identity.Client to address a bug preventing the use of alternate authority types such as dStS ([4927](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/issues/4927)) .
+
+### Other Changes
+
+- The logging level passed to MSAL now correlates to the log level configured on your configured `AzureEventSourceListener`. Previously, the log level was always set to `Microsoft.Identity.Client.LogLevel.Info`.
+- `AzurePowerShellCredential` now utilizes the AsSecureString parameter to Get-AzAccessToken for version 2.17.0 and greater of the Az.Accounts module.
+- Improved error logging for `AzurePipelinesCredential`.
+
+## 1.13.0-beta.2 (2024-09-17)
+
+### Features Added
+- `ManagedIdentityCredential` now supports specifying a user-assigned managed identity by object ID.
+
+### Bugs Fixed
+- If `DefaultAzureCredential` attempts to authenticate with the `MangagedIdentityCredential` and it receives either a failed response that is not json, it will now fall through to the next credential in the chain. [#45184](https://github.com/Azure/azure-sdk-for-net/issues/45184)
+
+### Other Changes
+- `AzurePowerShellCredential` now utilizes the AsSecureString parameter to Get-AzAccessToken for version 2.17.0 and greater of the Az.Accounts module.
+
+## 1.13.0-beta.1 (2024-07-24)
+
+### Breaking Changes
+- Previously, if a clientID or ResourceID was specified for Cloud Shell managed identity, which is not supported, the clientID or resourceID would be silently ignored. Now, an exception will be thrown if a clientID or resourceID is specified for Cloud Shell managed identity.
+
+### Other Changes
+- The logging level passed to MSAL now correlates to the log level configured on your configured `AzureEventSourceListener`. Previously, the log level was always set to `Microsoft.Identity.Client.LogLevel.Info`.
+
+## 1.12.0 (2024-06-17)
+
+### Features Added
+- Added `AzurePipelinesCredential` for authenticating with Azure Pipelines service connections.
+- `OnBehalfOfCredential` now supports client assertion callbacks for acquiring tokens on behalf of a user.
+- All credentials now support setting RefreshOn value if received from MSAL.
+- ManagedIdentityCredential sets RefreshOn value of half the token lifetime for AccessTokens with an ExpiresOn value greater than 2 hours in the future.
+- `ClientAssertionCredentialOptions` now supports `TokenCachePersistenceOptions` for configuring token cache persistence.
+
+## 1.12.0-beta.3 (2024-06-11)
+
+### Features Added
+- `OnBehalfOfCredential` now supports client assertion callbacks for acquiring tokens on behalf of a user.
+- All credentials now support setting RefreshOn value if received from MSAL.
+- ManagedIdentityCredential sets RefreshOn value of half the token lifetime for AccessTokens with an ExpiresOn value greater than 2 hours in the future.
+
+### Breaking Changes
+- The constructor of `AzurePipelinesCredential` now includes additional required parameters for the Azure Pipelines service connection.
+
+### Bugs Fixed
+- Bug fixes for `AzurePipelinesCredential`
+- Managed identity bug fixes.
+
+## 1.11.4 (2024-06-10)
+
+### Bugs Fixed
+- Managed identity bug fixes.
+
+## 1.12.0-beta.2 (2024-05-07)
+
+### Features Added
+- `ClientAssertionCredentialOptions` now supports `TokenCachePersistenceOptions` for configuring token cache persistence.
+- Added `AzurePipelinesCredential` for authenticating with Azure Pipelines service connections.
+
+### Bugs Fixed
+- Fixed a regression in `DefaultAzureCredential` probe request behavior for IMDS managed identity environments. [#43796](https://github.com/Azure/azure-sdk-for-net/issues/43796)
+
+## 1.11.3 (2024-05-07)
+
+### Bugs Fixed
+- Fixed a regression in `DefaultAzureCredential` probe request behavior for IMDS managed identity environments. [#43796](https://github.com/Azure/azure-sdk-for-net/issues/43796)
+
+## 1.12.0-beta.1 (2024-04-23)
+
+### Bugs Fixed
+- An experimental overload `Authenticate` method on `InteractiveBrowserCredential` now supports the experimental `PopTokenRequestContext` parameter.
+
+## 1.11.2 (2024-04-19)
+
+### Bugs Fixed
+- Fixed an issue which caused claims to be incorrectly added to confidential client credentials such as `DeviceCodeCredential` [#43468](https://github.com/Azure/azure-sdk-for-net/issues/43468)
+
+## 1.11.1 (2024-04-16)
+
+### Other Changes
+- Updated Microsoft.Identity.Client and related dependencies to version 4.60.3
+
+## 1.11.0 (2024-04-09)
+
+### Bugs Fixed
+- `AzurePowerShellCredential` now handles the case where it falls back to legacy PowerShell without relying on the error message string.
+
+### Breaking Changes
+- `DefaultAzureCredential` now sends a probe request with no retries for IMDS managed identity environments to avoid excessive retry delays when the IMDS endpoint is not available. This should improve credential chain resolution for local development scenarios. See [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#1110).
+
+## 1.11.0-beta.1 (2024-02-06)
+
+### Bugs Fixed
+- Claims from the `TokenRequestContext` are now correctly sent through to MSAL in `ConfidentialClient` credentials. [#40451](https://github.com/Azure/azure-sdk-for-net/issues/40451).
+- `ManagedIdentityCredential` is more lenient with the error message it matches when falling through to the next credential in the chain in the case that Docker Desktop returns a 403 response when attempting to access the IMDS endpoint. [#38218](https://github.com/Azure/azure-sdk-for-net/issues/38218)
+
+### Other Changes
+- `AzureCliCredential` utilizes the new `expires_on` property returned by `az account get-access-token` to determine token expiration.
+
 ## 1.10.4 (2023-11-13)
+
+### Breaking Changes
+- One of Azure.Identity's dependencies, Microsoft.Identity.Client, inadvertently added a dependency to `WindowsForms` when targeting `netX.0-windows` instead of `netX.0` in version 4.56.0. An additional installation of .NET Desktop Runtime may be necessary. Manually adding a reference to the latest Microsoft.Identity.Client will remove the need for the .NET Desktop Runtime. [#44232](https://github.com/Azure/azure-sdk-for-net/issues/44232)
 
 ### Other Changes
 - Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
@@ -290,7 +414,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 - Added support to `ManagedIdentityCredential` for Bridge to Kubernetes local development authentication.
 - TenantId values returned from service challenge responses can now be used to request tokens from the correct tenantId. To support this feature, there is a new `AllowMultiTenantAuthentication` option on `TokenCredentialOptions`.
   - By default, `AllowMultiTenantAuthentication` is false. When this option property is false and the tenant Id configured in the credential options differs from the tenant Id set in the `TokenRequestContext` sent to a credential, an `AuthorizationFailedException` will be thrown. This is potentially breaking change as it could be a different exception than what was thrown previously. This exception behavior can be overridden by either setting an `AppContext` switch named "Azure.Identity.EnableLegacyTenantSelection" to `true` or by setting the environment variable "AZURE_IDENTITY_ENABLE_LEGACY_TENANT_SELECTION" to "true". Note: AppContext switches can also be configured via configuration like below:
-- Added `OnBehalfOfFlowCredential` which enables support for Microsoft Entra On-Behalf-Of (OBO) flow. See the [Microsoft Entra ID documentation](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow) to learn more about OBO flow scenarios.
+- Added `OnBehalfOfFlowCredential` which enables support for Microsoft Entra On-Behalf-Of (OBO) flow. See the [Microsoft Entra ID documentation](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-on-behalf-of-flow) to learn more about OBO flow scenarios.
 
 ```xml
 <ItemGroup>
@@ -309,7 +433,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 ### New Features
 
-- By default, the MSAL Public Client Client Capabilities are populated with "CP1" to enable support for [Continuous Access Evaluation (CAE)](https://docs.microsoft.com/azure/active-directory/develop/app-resilience-continuous-access-evaluation).
+- By default, the MSAL Public Client Client Capabilities are populated with "CP1" to enable support for [Continuous Access Evaluation (CAE)](https://learn.microsoft.com/entra/identity-platform/app-resilience-continuous-access-evaluation).
 This indicates to Microsoft Entra ID that your application is CAE ready and can handle the CAE claim challenge. This capability can be disabled, if necessary, by either setting an `AppContext` switch named "Azure.Identity.DisableCP1" to `true` or by setting the environment variable;
 "AZURE_IDENTITY_DISABLE_CP1" to "true". Note: AppContext switches can also be configured via configuration like below:
 

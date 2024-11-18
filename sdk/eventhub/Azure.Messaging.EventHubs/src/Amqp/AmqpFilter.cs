@@ -62,9 +62,9 @@ namespace Azure.Messaging.EventHubs
                 return $"{ OffsetName } { (eventPosition.IsInclusive ? ">=" : ">") } { eventPosition.Offset }";
             }
 
-            if (eventPosition.SequenceNumber.HasValue)
+            if (!string.IsNullOrEmpty(eventPosition.SequenceNumber))
             {
-                return $"{ SequenceNumberName } { (eventPosition.IsInclusive ? ">=" : ">") } { eventPosition.SequenceNumber.Value }";
+                return $"{ SequenceNumberName } { (eventPosition.IsInclusive ? ">=" : ">") } { eventPosition.SequenceNumber }";
             }
 
             if (eventPosition.EnqueuedTime.HasValue)

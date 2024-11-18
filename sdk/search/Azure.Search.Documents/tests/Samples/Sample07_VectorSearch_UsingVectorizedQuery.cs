@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
@@ -32,7 +30,11 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
                 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Single_Vector_Search_UsingVectorizedQuery
+#if !SNIPPET
                 ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+#else
+                ReadOnlyMemory<float> vectorizedResult = GetEmbeddings("Top hotels in town");
+#endif
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
@@ -77,7 +79,11 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
                 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Filter_UsingVectorizedQuery
+#if !SNIPPET
                 ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+#else
+                ReadOnlyMemory<float> vectorizedResult = GetEmbeddings("Top hotels in town");
+#endif
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
@@ -123,7 +129,11 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
                 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Simple_Hybrid_Search_UsingVectorizedQuery
+#if !SNIPPET
                 ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+#else
+                ReadOnlyMemory<float> vectorizedResult = GetEmbeddings("Top hotels in town");
+#endif
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
@@ -169,8 +179,16 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
                 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search_UsingVectorizedQuery
+#if !SNIPPET
                 ReadOnlyMemory<float> vectorizedDescriptionQuery = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+#else
+                ReadOnlyMemory<float> vectorizedDescriptionQuery = GetEmbeddings("Top hotels in town");
+#endif
+#if !SNIPPET
                 ReadOnlyMemory<float> vectorizedCategoryQuery = VectorSearchEmbeddings.SearchVectorizeCategory; // "Luxury hotels in town"
+#else
+                ReadOnlyMemory<float> vectorizedCategoryQuery = GetEmbeddings("Luxury hotels in town");
+#endif
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
@@ -217,7 +235,11 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
                 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search_UsingVectorizedQuery
+#if !SNIPPET
                 ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+#else
+                ReadOnlyMemory<float> vectorizedResult = GetEmbeddings("Top hotels in town");
+#endif
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
@@ -324,6 +346,11 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         public static Hotel[] GetHotelDocuments()
         {
             return VectorSearchCommons.GetHotelDocuments();
+        }
+
+        public static ReadOnlyMemory<float> GetEmbeddings(string input)
+        {
+            return VectorSearchCommons.GetEmbeddings(input);
         }
     }
 }

@@ -5,107 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class InternalNetworkBgpConfiguration : IUtf8JsonSerializable
+    public partial class InternalNetworkBgpConfiguration : IUtf8JsonSerializable, IJsonModel<InternalNetworkBgpConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalNetworkBgpConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<InternalNetworkBgpConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BfdConfiguration))
-            {
-                writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration);
-            }
-            if (Optional.IsDefined(DefaultRouteOriginate))
-            {
-                writer.WritePropertyName("defaultRouteOriginate"u8);
-                writer.WriteStringValue(DefaultRouteOriginate.Value.ToString());
-            }
-            if (Optional.IsDefined(AllowAS))
-            {
-                writer.WritePropertyName("allowAS"u8);
-                writer.WriteNumberValue(AllowAS.Value);
-            }
-            if (Optional.IsDefined(AllowASOverride))
-            {
-                writer.WritePropertyName("allowASOverride"u8);
-                writer.WriteStringValue(AllowASOverride.Value.ToString());
-            }
-            if (Optional.IsDefined(PeerAsn))
-            {
-                writer.WritePropertyName("peerASN"u8);
-                writer.WriteNumberValue(PeerAsn.Value);
-            }
-            if (Optional.IsCollectionDefined(IPv4ListenRangePrefixes))
-            {
-                writer.WritePropertyName("ipv4ListenRangePrefixes"u8);
-                writer.WriteStartArray();
-                foreach (var item in IPv4ListenRangePrefixes)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(IPv6ListenRangePrefixes))
-            {
-                writer.WritePropertyName("ipv6ListenRangePrefixes"u8);
-                writer.WriteStartArray();
-                foreach (var item in IPv6ListenRangePrefixes)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(IPv4NeighborAddress))
-            {
-                writer.WritePropertyName("ipv4NeighborAddress"u8);
-                writer.WriteStartArray();
-                foreach (var item in IPv4NeighborAddress)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(IPv6NeighborAddress))
-            {
-                writer.WritePropertyName("ipv6NeighborAddress"u8);
-                writer.WriteStartArray();
-                foreach (var item in IPv6NeighborAddress)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Annotation))
-            {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static InternalNetworkBgpConfiguration DeserializeInternalNetworkBgpConfiguration(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkBgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InternalNetworkBgpConfiguration)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        InternalNetworkBgpConfiguration IJsonModel<InternalNetworkBgpConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkBgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InternalNetworkBgpConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInternalNetworkBgpConfiguration(document.RootElement, options);
+        }
+
+        internal static InternalNetworkBgpConfiguration DeserializeInternalNetworkBgpConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BfdConfiguration> bfdConfiguration = default;
-            Optional<NetworkFabricBooleanValue> defaultRouteOriginate = default;
-            Optional<int> allowAS = default;
-            Optional<AllowASOverride> allowASOverride = default;
-            Optional<long> fabricAsn = default;
-            Optional<long> peerAsn = default;
-            Optional<IList<string>> ipv4ListenRangePrefixes = default;
-            Optional<IList<string>> ipv6ListenRangePrefixes = default;
-            Optional<IList<NeighborAddress>> ipv4NeighborAddress = default;
-            Optional<IList<NeighborAddress>> ipv6NeighborAddress = default;
-            Optional<string> annotation = default;
+            BfdConfiguration bfdConfiguration = default;
+            NetworkFabricBooleanValue? defaultRouteOriginate = default;
+            int? allowAS = default;
+            AllowASOverride? allowASOverride = default;
+            long? fabricAsn = default;
+            long? peerAsn = default;
+            IList<string> ipv4ListenRangePrefixes = default;
+            IList<string> ipv6ListenRangePrefixes = default;
+            IList<NeighborAddress> ipv4NeighborAddress = default;
+            IList<NeighborAddress> ipv6NeighborAddress = default;
+            string annotation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bfdConfiguration"u8))
@@ -114,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value);
+                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defaultRouteOriginate"u8))
@@ -199,7 +163,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NeighborAddress> array = new List<NeighborAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NeighborAddress.DeserializeNeighborAddress(item));
+                        array.Add(NeighborAddress.DeserializeNeighborAddress(item, options));
                     }
                     ipv4NeighborAddress = array;
                     continue;
@@ -213,7 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NeighborAddress> array = new List<NeighborAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NeighborAddress.DeserializeNeighborAddress(item));
+                        array.Add(NeighborAddress.DeserializeNeighborAddress(item, options));
                     }
                     ipv6NeighborAddress = array;
                     continue;
@@ -223,8 +187,56 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InternalNetworkBgpConfiguration(annotation.Value, bfdConfiguration.Value, Optional.ToNullable(defaultRouteOriginate), Optional.ToNullable(allowAS), Optional.ToNullable(allowASOverride), Optional.ToNullable(fabricAsn), Optional.ToNullable(peerAsn), Optional.ToList(ipv4ListenRangePrefixes), Optional.ToList(ipv6ListenRangePrefixes), Optional.ToList(ipv4NeighborAddress), Optional.ToList(ipv6NeighborAddress));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InternalNetworkBgpConfiguration(
+                annotation,
+                serializedAdditionalRawData,
+                bfdConfiguration,
+                defaultRouteOriginate,
+                allowAS,
+                allowASOverride,
+                fabricAsn,
+                peerAsn,
+                ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>(),
+                ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>(),
+                ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),
+                ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>());
         }
+
+        BinaryData IPersistableModel<InternalNetworkBgpConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkBgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InternalNetworkBgpConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        InternalNetworkBgpConfiguration IPersistableModel<InternalNetworkBgpConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkBgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInternalNetworkBgpConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalNetworkBgpConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InternalNetworkBgpConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

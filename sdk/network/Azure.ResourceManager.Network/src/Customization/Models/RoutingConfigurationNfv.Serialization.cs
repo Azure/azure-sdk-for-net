@@ -3,15 +3,25 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RoutingConfigurationNfv : IUtf8JsonSerializable
+    public partial class RoutingConfigurationNfv : IUtf8JsonSerializable, IJsonModel<RoutingConfigurationNfv>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingConfigurationNfv>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RoutingConfigurationNfv>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationNfv>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoutingConfigurationNfv)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AssociatedRouteTable))
             {
@@ -36,16 +46,30 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static RoutingConfigurationNfv DeserializeRoutingConfigurationNfv(JsonElement element)
+        RoutingConfigurationNfv IJsonModel<RoutingConfigurationNfv>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationNfv>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoutingConfigurationNfv)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoutingConfigurationNfv(document.RootElement, options);
+        }
+
+        internal static RoutingConfigurationNfv DeserializeRoutingConfigurationNfv(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<RoutingConfigurationNfvSubResource> associatedRouteTable = default;
-            Optional<PropagatedRouteTableNfv> propagatedRouteTables = default;
-            Optional<RoutingConfigurationNfvSubResource> inboundRouteMap = default;
-            Optional<RoutingConfigurationNfvSubResource> outboundRouteMap = default;
+            RoutingConfigurationNfvSubResource associatedRouteTable = default;
+            PropagatedRouteTableNfv propagatedRouteTables = default;
+            RoutingConfigurationNfvSubResource inboundRouteMap = default;
+            RoutingConfigurationNfvSubResource outboundRouteMap = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("associatedRouteTable"u8))
@@ -85,7 +109,38 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new RoutingConfigurationNfv(associatedRouteTable.Value, propagatedRouteTables.Value, inboundRouteMap.Value, outboundRouteMap.Value);
+            return new RoutingConfigurationNfv(associatedRouteTable, propagatedRouteTables, inboundRouteMap, outboundRouteMap);
         }
+
+        BinaryData IPersistableModel<RoutingConfigurationNfv>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationNfv>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RoutingConfigurationNfv)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RoutingConfigurationNfv IPersistableModel<RoutingConfigurationNfv>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationNfv>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoutingConfigurationNfv(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoutingConfigurationNfv)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RoutingConfigurationNfv>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

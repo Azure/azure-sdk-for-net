@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CustomerInsights.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -328,6 +326,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <term>Operation Id</term>
         /// <description>Hubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -357,6 +363,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Hubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -388,6 +402,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <term>Operation Id</term>
         /// <description>Hubs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -415,6 +437,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Hubs_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubResource"/></description>
         /// </item>
         /// </list>
         /// <item>

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Whether the placement policy is enabled or disabled. </summary>
+    /// <summary> Placement Policy state. </summary>
     public readonly partial struct PlacementPolicyState : IEquatable<PlacementPolicyState>
     {
         private readonly string _value;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Avs.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> is enabled. </summary>
         public static PlacementPolicyState Enabled { get; } = new PlacementPolicyState(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> is disabled. </summary>
         public static PlacementPolicyState Disabled { get; } = new PlacementPolicyState(DisabledValue);
         /// <summary> Determines if two <see cref="PlacementPolicyState"/> values are the same. </summary>
         public static bool operator ==(PlacementPolicyState left, PlacementPolicyState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlacementPolicyState"/> values are not the same. </summary>
         public static bool operator !=(PlacementPolicyState left, PlacementPolicyState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PlacementPolicyState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PlacementPolicyState"/>. </summary>
         public static implicit operator PlacementPolicyState(string value) => new PlacementPolicyState(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

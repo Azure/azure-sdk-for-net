@@ -104,7 +104,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlobClient(httpUri, Tenants.GetOAuthCredential()),
+                () => new BlobClient(httpUri, TestEnvironment.Credential),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -218,7 +218,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobClient aadBlob = InstrumentClient(new BlobClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -250,7 +250,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobClient aadBlob = InstrumentClient(new BlobClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -282,7 +282,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobClient aadBlob = InstrumentClient(new BlobClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -1326,6 +1326,28 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(size, progress.List[progress.List.Count - 1]);
         }
+
+        [RecordedTest]
+        public async Task UploadAsync_ExpectContinue()
+        {
+            AssertMessageContentsPolicy assertPolicy = new(checkRequest: req =>
+            {
+                Assert.That(req.Headers.TryGetValue("Expect", out string val), Is.True);
+                Assert.That(val, Is.EqualTo("100-continue"));
+            });
+
+            BlobClientOptions options = GetOptions();
+            options.Request100ContinueOptions = new() { Mode = Request100ContinueMode.Always };
+            options.AddPolicy(assertPolicy, Core.HttpPipelinePosition.BeforeTransport);
+            await using DisposingContainer test = await GetTestContainerAsync(
+                BlobsClientBuilder.GetServiceClient_SharedKey(options));
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+
+            using (assertPolicy.CheckRequestScope())
+            {
+                await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(1024)));
+            }
+        }
         #endregion Upload
 
         [Test]
@@ -1500,7 +1522,7 @@ namespace Azure.Storage.Blobs.Test
             mock = new Mock<BlobClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
             mock = new Mock<BlobClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlobClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<BlobClient>(new Uri("https://test/test"), TestEnvironment.Credential, new BlobClientOptions()).Object;
         }
     }
 }

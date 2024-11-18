@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
@@ -122,6 +120,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
@@ -146,6 +152,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
@@ -169,6 +183,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectedItems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectedItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,6 +226,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectedItems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectedItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
@@ -238,6 +268,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectedItems_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectedItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -249,7 +287,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = await _backupProtectedItemProtectedItemsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation(response);
+                var uri = _backupProtectedItemProtectedItemsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesBackupArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -273,6 +313,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectedItems_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectedItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -284,7 +332,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = _backupProtectedItemProtectedItemsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation(response);
+                var uri = _backupProtectedItemProtectedItemsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesBackupArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -307,6 +357,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectedItems_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectedItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,6 +405,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectedItems_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectedItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -386,6 +452,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>Backups_Trigger</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> resource backup request. </param>
@@ -421,6 +491,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>Backups_Trigger</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> resource backup request. </param>
@@ -455,6 +529,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>RecoveryPointsRecommendedForMove_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> List Recovery points Recommended for Move Request. </param>
@@ -481,6 +559,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>RecoveryPointsRecommendedForMove_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> List Recovery points Recommended for Move Request. </param>
@@ -506,6 +588,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectedItems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectedItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -556,6 +646,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectedItems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectedItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -605,6 +703,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectedItems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectedItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -652,6 +758,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectedItems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectedItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -701,6 +815,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectedItems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectedItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -747,6 +869,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectedItems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectedItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

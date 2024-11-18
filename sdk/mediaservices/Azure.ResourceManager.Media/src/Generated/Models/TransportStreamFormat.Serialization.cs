@@ -5,43 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class TransportStreamFormat : IUtf8JsonSerializable
+    public partial class TransportStreamFormat : IUtf8JsonSerializable, IJsonModel<TransportStreamFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransportStreamFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<TransportStreamFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(OutputFiles))
-            {
-                writer.WritePropertyName("outputFiles"u8);
-                writer.WriteStartArray();
-                foreach (var item in OutputFiles)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
-            writer.WritePropertyName("filenamePattern"u8);
-            writer.WriteStringValue(FilenamePattern);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static TransportStreamFormat DeserializeTransportStreamFormat(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TransportStreamFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TransportStreamFormat)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        TransportStreamFormat IJsonModel<TransportStreamFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TransportStreamFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TransportStreamFormat)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTransportStreamFormat(document.RootElement, options);
+        }
+
+        internal static TransportStreamFormat DeserializeTransportStreamFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<MediaOutputFile>> outputFiles = default;
+            IList<MediaOutputFile> outputFiles = default;
             string odataType = default;
             string filenamePattern = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("outputFiles"u8))
@@ -53,7 +73,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaOutputFile> array = new List<MediaOutputFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaOutputFile.DeserializeMediaOutputFile(item));
+                        array.Add(MediaOutputFile.DeserializeMediaOutputFile(item, options));
                     }
                     outputFiles = array;
                     continue;
@@ -68,8 +88,44 @@ namespace Azure.ResourceManager.Media.Models
                     filenamePattern = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TransportStreamFormat(odataType, filenamePattern, Optional.ToList(outputFiles));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TransportStreamFormat(odataType, filenamePattern, serializedAdditionalRawData, outputFiles ?? new ChangeTrackingList<MediaOutputFile>());
         }
+
+        BinaryData IPersistableModel<TransportStreamFormat>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TransportStreamFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TransportStreamFormat)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TransportStreamFormat IPersistableModel<TransportStreamFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TransportStreamFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTransportStreamFormat(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TransportStreamFormat)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TransportStreamFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

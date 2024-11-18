@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -20,6 +19,38 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class OperationalInsightsSavedSearchData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsSavedSearchData"/>. </summary>
         /// <param name="category"> The category of the saved search. This helps the user to find a saved search faster. </param>
         /// <param name="displayName"> Saved search display name. </param>
@@ -50,7 +81,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="functionParameters"> The optional function parameters if query serves as a function. Value should be in the following format: 'param-name1:type1 = default_value1, param-name2:type2 = default_value2'. For more examples and proper syntax please refer to https://docs.microsoft.com/en-us/azure/kusto/query/functions/user-defined-functions. </param>
         /// <param name="version"> The version number of the query language. The current version is 2 and is the default. </param>
         /// <param name="tags"> The tags attached to the saved search. </param>
-        internal OperationalInsightsSavedSearchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string category, string displayName, string query, string functionAlias, string functionParameters, long? version, IList<OperationalInsightsTag> tags) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsSavedSearchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string category, string displayName, string query, string functionAlias, string functionParameters, long? version, IList<OperationalInsightsTag> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Category = category;
@@ -60,23 +92,37 @@ namespace Azure.ResourceManager.OperationalInsights
             FunctionParameters = functionParameters;
             Version = version;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSavedSearchData"/> for deserialization. </summary>
+        internal OperationalInsightsSavedSearchData()
+        {
         }
 
         /// <summary> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
         /// <summary> The category of the saved search. This helps the user to find a saved search faster. </summary>
+        [WirePath("properties.category")]
         public string Category { get; set; }
         /// <summary> Saved search display name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> The query expression for the saved search. </summary>
+        [WirePath("properties.query")]
         public string Query { get; set; }
         /// <summary> The function alias if query serves as a function. </summary>
+        [WirePath("properties.functionAlias")]
         public string FunctionAlias { get; set; }
         /// <summary> The optional function parameters if query serves as a function. Value should be in the following format: 'param-name1:type1 = default_value1, param-name2:type2 = default_value2'. For more examples and proper syntax please refer to https://docs.microsoft.com/en-us/azure/kusto/query/functions/user-defined-functions. </summary>
+        [WirePath("properties.functionParameters")]
         public string FunctionParameters { get; set; }
         /// <summary> The version number of the query language. The current version is 2 and is the default. </summary>
+        [WirePath("properties.version")]
         public long? Version { get; set; }
         /// <summary> The tags attached to the saved search. </summary>
+        [WirePath("properties.tags")]
         public IList<OperationalInsightsTag> Tags { get; }
     }
 }

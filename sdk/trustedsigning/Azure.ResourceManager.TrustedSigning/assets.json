@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/trustedsigning/Azure.ResourceManager.TrustedSigning",
+  "Tag": "net/trustedsigning/Azure.ResourceManager.TrustedSigning_4b8dfaad88"
+}

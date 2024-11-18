@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -31,13 +31,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="routes"> List of all routes. </param>
         /// <param name="labels"> List of labels associated with this route table. </param>
         /// <param name="associatedConnections"> List of all connections associated with this route table. </param>
         /// <param name="propagatingConnections"> List of all connections that advertise to this route table. </param>
         /// <param name="provisioningState"> The provisioning state of the RouteTable resource. </param>
-        internal HubRouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal HubRouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Routes = routes;

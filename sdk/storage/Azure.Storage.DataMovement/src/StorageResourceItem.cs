@@ -28,6 +28,12 @@ namespace Azure.Storage.DataMovement
         protected internal abstract DataTransferOrder TransferType { get; }
 
         /// <summary>
+        /// Defines the maximum supported size for the storage resource to be created
+        /// in a single API call.
+        /// </summary>
+        protected internal abstract long MaxSupportedSingleTransferSize { get; }
+
+        /// <summary>
         /// Defines the maximum supported chunk size for the storage resource.
         /// </summary>
         protected internal abstract long MaxSupportedChunkSize { get; }
@@ -43,6 +49,11 @@ namespace Azure.Storage.DataMovement
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
         protected internal abstract long? Length { get; }
+
+        /// <summary>
+        /// Properties of the Storage Resource Item.
+        /// </summary>
+        protected internal StorageResourceItemProperties ResourceProperties { get; set; }
 
         /// <summary>
         /// Consumes the readable stream to upload
@@ -141,10 +152,26 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Get properties of the resource.
         ///
-        /// See <see cref="StorageResourceProperties"/>.
+        /// See <see cref="StorageResourceItemProperties"/>.
         /// </summary>
-        /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceProperties"/></returns>
-        protected internal abstract Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token = default);
+        /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceItemProperties"/></returns>
+        protected internal abstract Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken token = default);
+
+        /// <summary>
+        /// Gets the Permissions of a storage resource.
+        /// </summary>
+        /// <returns></returns>
+        protected internal abstract Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Sets the permissions of the storage resource.
+        /// </summary>
+        /// <returns></returns>
+        protected internal abstract Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the Authorization Header for the storage resource if available.
@@ -165,12 +192,18 @@ namespace Azure.Storage.DataMovement
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
+        /// <param name="completeTransferOptions">
+        /// Optional parameters.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The Task which Commits the list of ids</returns>
-        protected internal abstract Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default);
+        protected internal abstract Task CompleteTransferAsync(
+            bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes the respective storage resource.

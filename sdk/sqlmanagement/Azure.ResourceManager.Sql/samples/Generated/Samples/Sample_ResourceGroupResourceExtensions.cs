@@ -9,80 +9,15 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Sql;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {
-        // Get all long term retention backups under the location.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetLongTermRetentionBackupsWithLocation_GetAllLongTermRetentionBackupsUnderTheLocation()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupListByLocation.json
-            // this example is just showing the usage of "LongTermRetentionBackups_ListByResourceGroupLocation" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation locationName = new AzureLocation("japaneast");
-            await foreach (LongTermRetentionBackupData item in resourceGroupResource.GetLongTermRetentionBackupsWithLocationAsync(locationName))
-            {
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {item.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get all long term retention backups under the server.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetLongTermRetentionBackupsWithServer_GetAllLongTermRetentionBackupsUnderTheServer()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupListByServer.json
-            // this example is just showing the usage of "LongTermRetentionBackups_ListByResourceGroupServer" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation locationName = new AzureLocation("japaneast");
-            string longTermRetentionServerName = "testserver";
-            await foreach (LongTermRetentionBackupData item in resourceGroupResource.GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName))
-            {
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {item.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get all long term retention backups under the managed instance.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLongTermRetentionManagedInstanceBackupsWithInstance_GetAllLongTermRetentionBackupsUnderTheManagedInstance()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ResourceGroupBasedManagedInstanceLongTermRetentionBackupListByInstance.json
@@ -109,12 +44,11 @@ namespace Azure.ResourceManager.Sql.Samples
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get all long term retention backups under the location.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLongTermRetentionManagedInstanceBackupsWithLocation_GetAllLongTermRetentionBackupsUnderTheLocation()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ResourceGroupBasedManagedInstanceLongTermRetentionBackupListByLocation.json
@@ -140,7 +74,68 @@ namespace Azure.ResourceManager.Sql.Samples
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetLongTermRetentionBackupsWithLocation_GetAllLongTermRetentionBackupsUnderTheLocationBasedOnResourceGroup()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupListByLocation.json
+            // this example is just showing the usage of "LongTermRetentionBackups_ListByResourceGroupLocation" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation locationName = new AzureLocation("japaneast");
+            await foreach (LongTermRetentionBackupData item in resourceGroupResource.GetLongTermRetentionBackupsWithLocationAsync(locationName))
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetLongTermRetentionBackupsWithServer_GetAllLongTermRetentionBackupsUnderTheServerBasedOnResourceGroup()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupListByServer.json
+            // this example is just showing the usage of "LongTermRetentionBackups_ListByResourceGroupServer" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation locationName = new AzureLocation("japaneast");
+            string longTermRetentionServerName = "testserver";
+            await foreach (LongTermRetentionBackupData item in resourceGroupResource.GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName))
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

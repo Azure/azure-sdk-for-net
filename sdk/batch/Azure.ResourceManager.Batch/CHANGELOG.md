@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,84 @@
 
 ### Other Changes
 
+## 1.5.0 (2024-09-15)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-02' to 'package-2024-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/d85634405ec3b905f1b0bfc350e47cb704aedb61/specification/batch/resource-manager/readme.md.
+  - Add NetworkSecurityPerimeter support
+    - Added `GetNetworkSecurityPerimeterConfigurations` api on `BatchAccountResource` definition.
+    - Added `GetNetworkSecurityPerimeterConfiguration` api on `BatchAccountResource` definition.
+    - Added `GetAll` api on `NetworkSecurityPerimeterConfigurationCollection` definition.
+    - Added `GetAll` api on `NetworkSecurityPerimeterConfigurationCollection` definition.
+    - Added `Exists` api on `NetworkSecurityPerimeterConfigurationCollection` definition.
+    - Added `GetIfExists` api on `NetworkSecurityPerimeterConfigurationCollection` definition.
+    - Added `GetNetworkSecurityPerimeterConfigurationResource` api on `ArmClient` definition.
+    - Added `ReconcileConfiguration` api on `NetworkSecurityPerimeterConfigurationResource` definition.
+
+  - Added `SharedGalleryImageId` and `CommunityGalleryImageId` to `BatchImageReference` definition.
+  - Added `SecurityProfile`  to `ManagedDisk` definition.
+  - Added `SecuredByPerimeter` to `BatchPublicNetworkAccess` enum.
+  - Added `ConfidentialVm` to `BatchSecurityType` enum.
+  - Added `ContainerHostBatchBindMounts` to `BatchTaskContainerSettings` definition.
+
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Other Changes
+
+- Remove CloudService support from Pools
+  - Removed `GetBatchSupportedCloudServiceSkus` api.
+  - Removed `BatchCloudServiceConfiguration` from `BatchDeploymentConfiguration`.
+- Upgraded Azure.Core from 1.38.0 to 1.42.0.
+- Upgraded Azure.ResourceManager from 1.10.2 to 1.13.0.
+
+## 1.4.0 (2024-03-01)
+
+### Features Added
+
+- Add `UpgradePolicy` support to Pool Creation
+  - Added `UpgradePolicy` definition.
+  - Added `AutomaticOSUpgradePolicy` definition.
+  - Added `RollingUpgradePolicy` definition.
+
+- Added `BatchSupportEndOfLife` property to `BatchSupportedSku` definition.
+
+## 1.3.0 (2024-01-18)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-05' to 'package-2023-11'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/408db257fe67fc66d8c66c10881be8d414d5e5f3/specification/batch/resource-manager/readme.md.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.10.0.
+
+## 1.3.0-beta.1 (2024-01-09)
+
+### Features Added
+
+- Add `ResourceTags` support to Pool Creation
+  - Added `resourceTags` property to `BatchAccountPoolData` definition
+  - Added `resourceTags` property to `ArmBatchModelFactory` definition
+
+- Add `SecurityProfile` support to Pool Creation
+  - Added `serviceArtifactReference` property to `BatchVmConfiguration`definition
+  - Added `securityProfile` property to `BatchVmConfiguration` definition
+
+- Add `ServiceArtifactReference` and `OSDisk` support to Pool Creation
+  - Added `standardssd_lrs` value to `BatchStorageAccountType` enum
+  - Added `caching` property to `BatchNodePlacementPolicyType` definition
+  - Added `managedDisk` property to `BatchNodePlacementPolicyType` definition
+  - Added `diskSizeGB` property to `BatchNodePlacementPolicyType` definition
+  - Added `writeAcceleratorEnabled` property to `BatchNodePlacementPolicyType` definition
+
 ## 1.2.1 (2023-11-27)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -24,10 +97,10 @@
 
 ### Features Added
 
-- Added boolean property `enableAcceleratedNetworking` to `NetworkConfiguration`. 
-    -  This property determines whether this pool should enable accelerated networking, with default value as False. 
-    - Whether this feature can be enabled is also related to whether an operating system/VM instance is supported, which should align with AcceleratedNetworking Policy ([AcceleratedNetworking Limitations and constraints](https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview?tabs=redhat#limitations-and-constraints)). 
-- Added boolean property `enableAutomaticUpgrade` to `VMExtension`. 
+- Added boolean property `enableAcceleratedNetworking` to `NetworkConfiguration`.
+    -  This property determines whether this pool should enable accelerated networking, with default value as False.
+    - Whether this feature can be enabled is also related to whether an operating system/VM instance is supported, which should align with AcceleratedNetworking Policy ([AcceleratedNetworking Limitations and constraints](https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview?tabs=redhat#limitations-and-constraints)).
+- Added boolean property `enableAutomaticUpgrade` to `VMExtension`.
     - This property determines whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available.
 - Added new property `Type` to `ContainerConfiguration`, which now supports two values: `DockerCompatible` and `CriCompatible`.
 
@@ -35,7 +108,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 - Added `BatchAccountCertificateData.ThumbprintString`, `BatchAccountCertificateCreateOrUpdateContent.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
   `BatchAccountCertificateData.Thumbprint`, `BatchAccountCertificateCreateOrUpdateContent.Thumbprint` have been hidden but are still available.
 
@@ -116,4 +189,3 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-

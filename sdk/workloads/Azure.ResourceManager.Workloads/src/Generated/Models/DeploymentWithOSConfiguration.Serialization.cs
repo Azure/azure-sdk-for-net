@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DeploymentWithOSConfiguration : IUtf8JsonSerializable
+    public partial class DeploymentWithOSConfiguration : IUtf8JsonSerializable, IJsonModel<DeploymentWithOSConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentWithOSConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DeploymentWithOSConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentWithOSConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeploymentWithOSConfiguration)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
@@ -23,34 +43,47 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(InfrastructureConfiguration))
             {
                 writer.WritePropertyName("infrastructureConfiguration"u8);
-                writer.WriteObjectValue(InfrastructureConfiguration);
+                writer.WriteObjectValue(InfrastructureConfiguration, options);
             }
             if (Optional.IsDefined(SoftwareConfiguration))
             {
                 writer.WritePropertyName("softwareConfiguration"u8);
-                writer.WriteObjectValue(SoftwareConfiguration);
+                writer.WriteObjectValue(SoftwareConfiguration, options);
             }
             if (Optional.IsDefined(OSSapConfiguration))
             {
                 writer.WritePropertyName("osSapConfiguration"u8);
-                writer.WriteObjectValue(OSSapConfiguration);
+                writer.WriteObjectValue(OSSapConfiguration, options);
             }
-            writer.WritePropertyName("configurationType"u8);
-            writer.WriteStringValue(ConfigurationType.ToString());
-            writer.WriteEndObject();
         }
 
-        internal static DeploymentWithOSConfiguration DeserializeDeploymentWithOSConfiguration(JsonElement element)
+        DeploymentWithOSConfiguration IJsonModel<DeploymentWithOSConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentWithOSConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeploymentWithOSConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeploymentWithOSConfiguration(document.RootElement, options);
+        }
+
+        internal static DeploymentWithOSConfiguration DeserializeDeploymentWithOSConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AzureLocation> appLocation = default;
-            Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
-            Optional<SapSoftwareConfiguration> softwareConfiguration = default;
-            Optional<OSSapConfiguration> osSapConfiguration = default;
+            AzureLocation? appLocation = default;
+            InfrastructureConfiguration infrastructureConfiguration = default;
+            SapSoftwareConfiguration softwareConfiguration = default;
+            OSSapConfiguration osSapConfiguration = default;
             SapConfigurationType configurationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appLocation"u8))
@@ -68,7 +101,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    infrastructureConfiguration = InfrastructureConfiguration.DeserializeInfrastructureConfiguration(property.Value);
+                    infrastructureConfiguration = InfrastructureConfiguration.DeserializeInfrastructureConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("softwareConfiguration"u8))
@@ -77,7 +110,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    softwareConfiguration = SapSoftwareConfiguration.DeserializeSapSoftwareConfiguration(property.Value);
+                    softwareConfiguration = SapSoftwareConfiguration.DeserializeSapSoftwareConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osSapConfiguration"u8))
@@ -86,7 +119,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    osSapConfiguration = OSSapConfiguration.DeserializeOSSapConfiguration(property.Value);
+                    osSapConfiguration = OSSapConfiguration.DeserializeOSSapConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))
@@ -94,8 +127,50 @@ namespace Azure.ResourceManager.Workloads.Models
                     configurationType = new SapConfigurationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeploymentWithOSConfiguration(configurationType, Optional.ToNullable(appLocation), infrastructureConfiguration.Value, softwareConfiguration.Value, osSapConfiguration.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DeploymentWithOSConfiguration(
+                configurationType,
+                serializedAdditionalRawData,
+                appLocation,
+                infrastructureConfiguration,
+                softwareConfiguration,
+                osSapConfiguration);
         }
+
+        BinaryData IPersistableModel<DeploymentWithOSConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentWithOSConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentWithOSConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DeploymentWithOSConfiguration IPersistableModel<DeploymentWithOSConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentWithOSConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeploymentWithOSConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentWithOSConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeploymentWithOSConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

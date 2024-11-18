@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MarketplaceOrdering.Mocking;
 using Azure.ResourceManager.MarketplaceOrdering.Models;
 using Azure.ResourceManager.Resources;
@@ -96,6 +94,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAgreementTermResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -128,6 +134,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAgreementTermResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -179,6 +193,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_GetAgreement</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAgreementResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -210,6 +232,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_GetAgreement</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAgreementResource"/></description>
         /// </item>
         /// </list>
         /// <item>

@@ -8,21 +8,18 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Samples
 {
     public partial class Sample_AutoscaleSettingResource
     {
-        // Delete an autoscale setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnAutoscaleSetting()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-10-01/examples/deleteAutoscaleSetting.json
@@ -44,12 +41,11 @@ namespace Azure.ResourceManager.Monitor.Samples
             // invoke the operation
             await autoscaleSetting.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get an autoscale setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAutoscaleSetting()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-10-01/examples/getAutoscaleSetting.json
@@ -78,9 +74,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch an autoscale setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchAnAutoscaleSetting()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-10-01/examples/patchAutoscaleSetting.json
@@ -196,9 +191,8 @@ Properties =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List autoscale settings by subs
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAutoscaleSettings_ListAutoscaleSettingsBySubs()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-10-01/examples/listAutoscaleSettingBySubscription.json
@@ -225,12 +219,11 @@ Properties =
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Metric for data
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPredictiveMetric_GetMetricForData()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-10-01/examples/GetPredictiveMetric.json

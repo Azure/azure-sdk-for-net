@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -98,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Get a watchlist item.
+        /// Gets a watchlist, without its watchlist items.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -108,9 +106,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>WatchlistItems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsWatchlistItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
+        /// <param name="watchlistItemId"> Watchlist Item Id (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -121,7 +127,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Get a watchlist item.
+        /// Gets a watchlist, without its watchlist items.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -131,9 +137,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>WatchlistItems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsWatchlistItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
+        /// <param name="watchlistItemId"> Watchlist Item Id (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -144,7 +158,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Get a watchlist, without its watchlist items.
+        /// Gets a watchlist, without its watchlist items.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -153,6 +167,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Watchlists_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsWatchlistResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -176,7 +198,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Get a watchlist, without its watchlist items.
+        /// Gets a watchlist, without its watchlist items.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -185,6 +207,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Watchlists_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsWatchlistResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,6 +248,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Watchlists_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsWatchlistResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -229,7 +267,9 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = await _securityInsightsWatchlistWatchlistsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation(response);
+                var uri = _securityInsightsWatchlistWatchlistsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -252,6 +292,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Watchlists_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsWatchlistResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -263,7 +311,9 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = _securityInsightsWatchlistWatchlistsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SecurityInsightsArmOperation(response);
+                var uri = _securityInsightsWatchlistWatchlistsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -276,7 +326,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Create or update a Watchlist and its Watchlist Items (bulk creation, e.g. through text/csv content type). To create a Watchlist and its Items, we should call this endpoint with rawContent and contentType properties.
+        /// Create or update a Watchlist and its Watchlist Items (bulk creation, e.g. through text/csv content type). To create a Watchlist and its Items, we should call this endpoint with either rawContent or a valid SAR URI and contentType properties. The rawContent is mainly used for small watchlist (content size below 3.8 MB). The SAS URI enables the creation of large watchlist, where the content size can go up to 500 MB. The status of processing such large file can be polled through the URL returned in Azure-AsyncOperation header.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -285,6 +335,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Watchlists_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsWatchlistResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,7 +359,9 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = await _securityInsightsWatchlistWatchlistsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistResource>(Response.FromValue(new SecurityInsightsWatchlistResource(Client, response), response.GetRawResponse()));
+                var uri = _securityInsightsWatchlistWatchlistsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistResource>(Response.FromValue(new SecurityInsightsWatchlistResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -314,7 +374,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Create or update a Watchlist and its Watchlist Items (bulk creation, e.g. through text/csv content type). To create a Watchlist and its Items, we should call this endpoint with rawContent and contentType properties.
+        /// Create or update a Watchlist and its Watchlist Items (bulk creation, e.g. through text/csv content type). To create a Watchlist and its Items, we should call this endpoint with either rawContent or a valid SAR URI and contentType properties. The rawContent is mainly used for small watchlist (content size below 3.8 MB). The SAS URI enables the creation of large watchlist, where the content size can go up to 500 MB. The status of processing such large file can be polled through the URL returned in Azure-AsyncOperation header.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -323,6 +383,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Watchlists_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsWatchlistResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -339,7 +407,9 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = _securityInsightsWatchlistWatchlistsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistResource>(Response.FromValue(new SecurityInsightsWatchlistResource(Client, response), response.GetRawResponse()));
+                var uri = _securityInsightsWatchlistWatchlistsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistResource>(Response.FromValue(new SecurityInsightsWatchlistResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

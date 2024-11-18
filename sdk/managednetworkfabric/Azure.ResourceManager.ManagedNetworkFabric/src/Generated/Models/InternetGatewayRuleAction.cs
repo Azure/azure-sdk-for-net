@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(InternetGatewayRuleAction left, InternetGatewayRuleAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InternetGatewayRuleAction"/> values are not the same. </summary>
         public static bool operator !=(InternetGatewayRuleAction left, InternetGatewayRuleAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InternetGatewayRuleAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InternetGatewayRuleAction"/>. </summary>
         public static implicit operator InternetGatewayRuleAction(string value) => new InternetGatewayRuleAction(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

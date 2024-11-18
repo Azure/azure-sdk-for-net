@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(IntegrationServiceEnvironmentNetworkEndPointAccessibilityState left, IntegrationServiceEnvironmentNetworkEndPointAccessibilityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentNetworkEndPointAccessibilityState"/> values are not the same. </summary>
         public static bool operator !=(IntegrationServiceEnvironmentNetworkEndPointAccessibilityState left, IntegrationServiceEnvironmentNetworkEndPointAccessibilityState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IntegrationServiceEnvironmentNetworkEndPointAccessibilityState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationServiceEnvironmentNetworkEndPointAccessibilityState"/>. </summary>
         public static implicit operator IntegrationServiceEnvironmentNetworkEndPointAccessibilityState(string value) => new IntegrationServiceEnvironmentNetworkEndPointAccessibilityState(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

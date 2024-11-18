@@ -5,55 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class DirectLineSpeechChannel : IUtf8JsonSerializable
+    public partial class DirectLineSpeechChannel : IUtf8JsonSerializable, IJsonModel<DirectLineSpeechChannel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectLineSpeechChannel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DirectLineSpeechChannel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
-            }
-            writer.WritePropertyName("channelName"u8);
-            writer.WriteStringValue(ChannelName);
-            if (Optional.IsDefined(ETag))
-            {
-                if (ETag != null)
-                {
-                    writer.WritePropertyName("etag"u8);
-                    writer.WriteStringValue(ETag.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("etag");
-                }
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DirectLineSpeechChannel DeserializeDirectLineSpeechChannel(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DirectLineSpeechChannel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DirectLineSpeechChannel)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+        }
+
+        DirectLineSpeechChannel IJsonModel<DirectLineSpeechChannel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DirectLineSpeechChannel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DirectLineSpeechChannel)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDirectLineSpeechChannel(document.RootElement, options);
+        }
+
+        internal static DirectLineSpeechChannel DeserializeDirectLineSpeechChannel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DirectLineSpeechChannelProperties> properties = default;
+            DirectLineSpeechChannelProperties properties = default;
             string channelName = default;
-            Optional<ETag?> etag = default;
-            Optional<string> provisioningState = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            string provisioningState = default;
+            AzureLocation? location = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -62,7 +77,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = DirectLineSpeechChannelProperties.DeserializeDirectLineSpeechChannelProperties(property.Value);
+                    properties = DirectLineSpeechChannelProperties.DeserializeDirectLineSpeechChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("channelName"u8))
@@ -94,8 +109,50 @@ namespace Azure.ResourceManager.BotService.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DirectLineSpeechChannel(channelName, Optional.ToNullable(etag), provisioningState.Value, Optional.ToNullable(location), properties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DirectLineSpeechChannel(
+                channelName,
+                etag,
+                provisioningState,
+                location,
+                serializedAdditionalRawData,
+                properties);
         }
+
+        BinaryData IPersistableModel<DirectLineSpeechChannel>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DirectLineSpeechChannel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DirectLineSpeechChannel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DirectLineSpeechChannel IPersistableModel<DirectLineSpeechChannel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DirectLineSpeechChannel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDirectLineSpeechChannel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DirectLineSpeechChannel)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DirectLineSpeechChannel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

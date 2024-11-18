@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The provisioning state of a resource e.g. SIM/SIM policy on a site. </summary>
+    /// <summary>
+    /// The provisioning state of a resource e.g. SIM/SIM policy on a site.
+    /// Serialized Name: SiteProvisioningState
+    /// </summary>
     public readonly partial struct MobileNetworkSiteProvisioningState : IEquatable<MobileNetworkSiteProvisioningState>
     {
         private readonly string _value;
@@ -29,23 +32,41 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string ProvisionedValue = "Provisioned";
         private const string FailedValue = "Failed";
 
-        /// <summary> The resource should not be provisioned on this site. </summary>
+        /// <summary>
+        /// The resource should not be provisioned on this site.
+        /// Serialized Name: SiteProvisioningState.NotApplicable
+        /// </summary>
         public static MobileNetworkSiteProvisioningState NotApplicable { get; } = new MobileNetworkSiteProvisioningState(NotApplicableValue);
-        /// <summary> The resource is being added to this site. </summary>
+        /// <summary>
+        /// The resource is being added to this site.
+        /// Serialized Name: SiteProvisioningState.Adding
+        /// </summary>
         public static MobileNetworkSiteProvisioningState Adding { get; } = new MobileNetworkSiteProvisioningState(AddingValue);
-        /// <summary> The resource is being updated on this site. </summary>
+        /// <summary>
+        /// The resource is being updated on this site.
+        /// Serialized Name: SiteProvisioningState.Updating
+        /// </summary>
         public static MobileNetworkSiteProvisioningState Updating { get; } = new MobileNetworkSiteProvisioningState(UpdatingValue);
-        /// <summary> The resource is being deleted from this site. </summary>
+        /// <summary>
+        /// The resource is being deleted from this site.
+        /// Serialized Name: SiteProvisioningState.Deleting
+        /// </summary>
         public static MobileNetworkSiteProvisioningState Deleting { get; } = new MobileNetworkSiteProvisioningState(DeletingValue);
-        /// <summary> The resource is provisioned on this site. </summary>
+        /// <summary>
+        /// The resource is provisioned on this site.
+        /// Serialized Name: SiteProvisioningState.Provisioned
+        /// </summary>
         public static MobileNetworkSiteProvisioningState Provisioned { get; } = new MobileNetworkSiteProvisioningState(ProvisionedValue);
-        /// <summary> The resource failed to be provisioned on this site. </summary>
+        /// <summary>
+        /// The resource failed to be provisioned on this site.
+        /// Serialized Name: SiteProvisioningState.Failed
+        /// </summary>
         public static MobileNetworkSiteProvisioningState Failed { get; } = new MobileNetworkSiteProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="MobileNetworkSiteProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkSiteProvisioningState left, MobileNetworkSiteProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkSiteProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkSiteProvisioningState left, MobileNetworkSiteProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkSiteProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkSiteProvisioningState"/>. </summary>
         public static implicit operator MobileNetworkSiteProvisioningState(string value) => new MobileNetworkSiteProvisioningState(value);
 
         /// <inheritdoc />
@@ -56,7 +77,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

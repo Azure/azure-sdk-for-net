@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string SolutionValue = "Solution";
         private const string InsightValue = "Insight";
         private const string AutomatedCheckValue = "AutomatedCheck";
+        private const string InputValue = "Input";
 
         /// <summary> Decision. </summary>
         public static SelfHelpType Decision { get; } = new SelfHelpType(DecisionValue);
@@ -35,11 +36,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static SelfHelpType Insight { get; } = new SelfHelpType(InsightValue);
         /// <summary> AutomatedCheck. </summary>
         public static SelfHelpType AutomatedCheck { get; } = new SelfHelpType(AutomatedCheckValue);
+        /// <summary> Input. </summary>
+        public static SelfHelpType Input { get; } = new SelfHelpType(InputValue);
         /// <summary> Determines if two <see cref="SelfHelpType"/> values are the same. </summary>
         public static bool operator ==(SelfHelpType left, SelfHelpType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SelfHelpType"/> values are not the same. </summary>
         public static bool operator !=(SelfHelpType left, SelfHelpType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SelfHelpType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SelfHelpType"/>. </summary>
         public static implicit operator SelfHelpType(string value) => new SelfHelpType(value);
 
         /// <inheritdoc />
@@ -50,7 +53,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

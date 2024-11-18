@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -22,9 +22,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationResult"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="featureType"> backup support feature type. </param>
         /// <param name="features"> Response features. </param>
-        internal BackupFeatureValidationResult(string objectType, BackupSupportedFeatureType? featureType, IReadOnlyList<BackupSupportedFeature> features) : base(objectType)
+        internal BackupFeatureValidationResult(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, BackupSupportedFeatureType? featureType, IReadOnlyList<BackupSupportedFeature> features) : base(objectType, serializedAdditionalRawData)
         {
             FeatureType = featureType;
             Features = features;

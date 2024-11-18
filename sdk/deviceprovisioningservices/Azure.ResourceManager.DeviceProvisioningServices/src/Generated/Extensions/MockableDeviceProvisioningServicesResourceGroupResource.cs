@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

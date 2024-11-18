@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using System.Text.Json;
@@ -26,12 +27,10 @@ namespace Azure.Monitor.Query
         private readonly HttpPipeline _pipeline;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
-        /// <example snippet="Snippet:CreateLogsClient">
-        /// <code language="csharp">
+        /// Creates an instance of <see cref="LogsQueryClient"/> for Azure Public Cloud usage. Uses the default 'https://api.loganalytics.io' endpoint.
+        /// <code snippet="Snippet:CreateLogsClient" language="csharp">
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         /// </code>
-        /// </example>
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         public LogsQueryClient(TokenCredential credential) : this(credential, null)
@@ -39,29 +38,37 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
+        /// Creates an instance of <see cref="LogsQueryClient"/> for Azure Public Cloud usage. Uses the default 'https://api.loganalytics.io' endpoint, unless <see cref="LogsQueryClientOptions.Audience"/> is set to an Azure sovereign cloud.
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="LogsQueryClientOptions"/> instance to use as client configuration.</param>
-        public LogsQueryClient(TokenCredential credential, LogsQueryClientOptions options) : this(_defaultEndpoint, credential, options)
+        public LogsQueryClient(TokenCredential credential, LogsQueryClientOptions options)
+            : this(
+                  string.IsNullOrEmpty(options?.Audience?.ToString())
+                    ? _defaultEndpoint
+                    : new Uri(options.Audience.ToString()),
+                  credential,
+                  options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>.
+        /// Creates an instance of <see cref="LogsQueryClient"/> for the Azure cloud represented by <paramref name="endpoint"/>.
         /// </summary>
         /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LogsQueryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>.
+        /// Creates an instance of <see cref="LogsQueryClient"/> for the Azure cloud represented by <paramref name="endpoint"/>.
         /// </summary>
         /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="LogsQueryClientOptions"/> instance to use as client configuration.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LogsQueryClient(Uri endpoint, TokenCredential credential, LogsQueryClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -69,11 +76,28 @@ namespace Azure.Monitor.Query
 
             Endpoint = endpoint;
             options ??= new LogsQueryClientOptions();
-            var scope = $"{endpoint.AbsoluteUri}/.default";
+
+            // Set authorization scope from Endpoint if Audience is not set.
+            string authorizationScope = "";
+            if (string.IsNullOrEmpty(options.Audience?.ToString()))
+            {
+                // Endpoint.AbsoluteUri includes an extra / so only adding one here
+                authorizationScope = $"{endpoint.AbsoluteUri}/.default";
+            }
+            else if (endpoint.Host != new Uri(options.Audience.ToString()).Host)
+            {
+                throw new InvalidOperationException("The endpoint URI and audience do not match. If setting the Audience to a regionally specific value, please use the LogsQueryClient(TokenCredential, LogsQueryClientOptions) constructor.");
+            }
+            else
+            {
+                authorizationScope = $"{options.Audience}//.default";
+            }
+
+            var scopes = new List<string> { authorizationScope };
 
             endpoint = new Uri(endpoint, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scope));
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline, endpoint);
         }
 

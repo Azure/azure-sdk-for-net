@@ -8,11 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HybridCompute;
-using Azure.ResourceManager.HybridCompute.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Mocking
 {
@@ -37,6 +33,75 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of HybridComputeLicenseResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HybridComputeLicenseResources and their operations over a HybridComputeLicenseResource. </returns>
+        public virtual HybridComputeLicenseCollection GetHybridComputeLicenses()
+        {
+            return GetCachedClient(client => new HybridComputeLicenseCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves information about the view of a license.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="licenseName"> The name of the license. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HybridComputeLicenseResource>> GetHybridComputeLicenseAsync(string licenseName, CancellationToken cancellationToken = default)
+        {
+            return await GetHybridComputeLicenses().GetAsync(licenseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves information about the view of a license.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="licenseName"> The name of the license. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HybridComputeLicenseResource> GetHybridComputeLicense(string licenseName, CancellationToken cancellationToken = default)
+        {
+            return GetHybridComputeLicenses().Get(licenseName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of HybridComputeMachineResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of HybridComputeMachineResources and their operations over a HybridComputeMachineResource. </returns>
         public virtual HybridComputeMachineCollection GetHybridComputeMachines()
@@ -55,6 +120,14 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <term>Operation Id</term>
         /// <description>Machines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="machineName"> The name of the hybrid machine. </param>
@@ -63,7 +136,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(string machineName, string expand = null, CancellationToken cancellationToken = default)
         {
             return await GetHybridComputeMachines().GetAsync(machineName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -79,6 +152,14 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <term>Operation Id</term>
         /// <description>Machines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="machineName"> The name of the hybrid machine. </param>
@@ -87,7 +168,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HybridComputeMachineResource> GetHybridComputeMachine(string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeMachineResource> GetHybridComputeMachine(string machineName, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetHybridComputeMachines().Get(machineName, expand, cancellationToken);
         }
@@ -109,6 +190,14 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,6 +221,14 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

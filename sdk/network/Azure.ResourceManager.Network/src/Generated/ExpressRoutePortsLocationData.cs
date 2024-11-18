@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -29,11 +30,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="address"> Address of peering location. </param>
         /// <param name="contact"> Contact details of peering locations. </param>
         /// <param name="availableBandwidths"> The inventory of available ExpressRoutePort bandwidths. </param>
         /// <param name="provisioningState"> The provisioning state of the express route port location resource. </param>
-        internal ExpressRoutePortsLocationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string address, string contact, IList<ExpressRoutePortsLocationBandwidths> availableBandwidths, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal ExpressRoutePortsLocationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string address, string contact, IList<ExpressRoutePortsLocationBandwidths> availableBandwidths, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Address = address;
             Contact = contact;

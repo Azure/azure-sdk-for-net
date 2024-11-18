@@ -2,7 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Reflection;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.DocumentIntelligence.Tests
 {
@@ -16,6 +20,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
         // Files are exactly the same, so this doesn't affect test behavior.
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
 
+        private static readonly string s_currentWorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
         public string Endpoint => GetRecordedVariable("ENDPOINT");
 
         public string ApiKey => GetRecordedVariable("API_KEY", options => options.IsSecret());
@@ -28,11 +34,42 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         public string ClassifierTrainingSasUrl => GetRecordedVariable("CLASSIFIER_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
 
+        public static string CreatePath(string filename)
+        {
+            return Path.Combine(s_currentWorkingDirectory, AssetsFolderName, filename);
+        }
+
         public static Uri CreateUri(string filename)
         {
             var uriString = string.Format(FileUriFormat, AssetsFolderName, filename);
 
             return new Uri(uriString);
+        }
+
+        public static BinaryData CreateBinaryData(string filename)
+        {
+            var path = CreatePath(filename);
+            var bytes = File.ReadAllBytes(path);
+
+            return BinaryData.FromBytes(bytes);
+        }
+
+        protected override async ValueTask<bool> IsEnvironmentReadyAsync()
+        {
+            var endpoint = new Uri(Endpoint);
+            var credential = Credential;
+            var client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            try
+            {
+                await client.GetResourceInfoAsync();
+            }
+            catch (RequestFailedException e) when (e.Status == 401)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

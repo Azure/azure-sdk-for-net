@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.Authorization
     /// </summary>
     public partial class DenyAssignmentData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DenyAssignmentData"/>. </summary>
         internal DenyAssignmentData()
         {
@@ -39,7 +72,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="principals"> Array of principals to which the deny assignment applies. </param>
         /// <param name="excludePrincipals"> Array of principals to which the deny assignment does not apply. </param>
         /// <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
-        internal DenyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string denyAssignmentName, string description, IReadOnlyList<DenyAssignmentPermission> permissions, string scope, bool? isAppliedToChildScopes, IReadOnlyList<RoleManagementPrincipal> principals, IReadOnlyList<RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DenyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string denyAssignmentName, string description, IReadOnlyList<DenyAssignmentPermission> permissions, string scope, bool? isAppliedToChildScopes, IReadOnlyList<RoleManagementPrincipal> principals, IReadOnlyList<RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DenyAssignmentName = denyAssignmentName;
             Description = description;
@@ -49,23 +83,32 @@ namespace Azure.ResourceManager.Authorization
             Principals = principals;
             ExcludePrincipals = excludePrincipals;
             IsSystemProtected = isSystemProtected;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The display name of the deny assignment. </summary>
+        [WirePath("properties.denyAssignmentName")]
         public string DenyAssignmentName { get; }
         /// <summary> The description of the deny assignment. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> An array of permissions that are denied by the deny assignment. </summary>
+        [WirePath("properties.permissions")]
         public IReadOnlyList<DenyAssignmentPermission> Permissions { get; }
         /// <summary> The deny assignment scope. </summary>
+        [WirePath("properties.scope")]
         public string Scope { get; }
         /// <summary> Determines if the deny assignment applies to child scopes. Default value is false. </summary>
+        [WirePath("properties.doNotApplyToChildScopes")]
         public bool? IsAppliedToChildScopes { get; }
         /// <summary> Array of principals to which the deny assignment applies. </summary>
+        [WirePath("properties.principals")]
         public IReadOnlyList<RoleManagementPrincipal> Principals { get; }
         /// <summary> Array of principals to which the deny assignment does not apply. </summary>
+        [WirePath("properties.excludePrincipals")]
         public IReadOnlyList<RoleManagementPrincipal> ExcludePrincipals { get; }
         /// <summary> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </summary>
+        [WirePath("properties.isSystemProtected")]
         public bool? IsSystemProtected { get; }
     }
 }

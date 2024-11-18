@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.IotHub;
 using Azure.ResourceManager.IotHub.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.IotHub.Samples
 {
     public partial class Sample_EventHubConsumerGroupInfoCollection
     {
-        // IotHubResource_ListEventHubConsumerGroups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_IotHubResourceListEventHubConsumerGroups()
         {
             // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_listehgroups.json
@@ -53,12 +50,11 @@ namespace Azure.ResourceManager.IotHub.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // IotHubResource_ListEventHubConsumerGroups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_IotHubResourceListEventHubConsumerGroups()
         {
             // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_getconsumergroup.json
@@ -92,9 +88,8 @@ namespace Azure.ResourceManager.IotHub.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // IotHubResource_ListEventHubConsumerGroups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_IotHubResourceListEventHubConsumerGroups()
         {
             // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_getconsumergroup.json
@@ -124,9 +119,8 @@ namespace Azure.ResourceManager.IotHub.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // IotHubResource_ListEventHubConsumerGroups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_IotHubResourceListEventHubConsumerGroups()
         {
             // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_getconsumergroup.json
@@ -156,7 +150,7 @@ namespace Azure.ResourceManager.IotHub.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -168,9 +162,8 @@ namespace Azure.ResourceManager.IotHub.Samples
             }
         }
 
-        // IotHubResource_CreateEventHubConsumerGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_IotHubResourceCreateEventHubConsumerGroup()
         {
             // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_createconsumergroup.json

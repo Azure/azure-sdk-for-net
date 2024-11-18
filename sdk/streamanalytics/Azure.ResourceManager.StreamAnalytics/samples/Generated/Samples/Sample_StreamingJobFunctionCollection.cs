@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StreamAnalytics;
 using Azure.ResourceManager.StreamAnalytics.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StreamAnalytics.Samples
 {
     public partial class Sample_StreamingJobFunctionCollection
     {
-        // Create a CLRUdf function
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateACLRUdfFunction()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Function_Create_CSharp.json
@@ -75,9 +72,8 @@ DataType = "nvarchar(max)",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a JavaScript function
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAJavaScriptFunction()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Function_Create_JavaScript.json
@@ -129,9 +125,8 @@ DataType = "Any",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create an Azure ML Service function
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnAzureMLServiceFunction()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Function_Create_AzureMLService.json
@@ -205,9 +200,8 @@ DataType = "string",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create an Azure ML function
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnAzureMLFunction()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Function_Create_AzureML.json
@@ -282,9 +276,8 @@ DataType = "string",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a JavaScript function
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAJavaScriptFunction()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Function_Get_JavaScript.json
@@ -317,9 +310,8 @@ DataType = "string",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a JavaScript function
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAJavaScriptFunction()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Function_Get_JavaScript.json
@@ -348,9 +340,8 @@ DataType = "string",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a JavaScript function
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAJavaScriptFunction()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Function_Get_JavaScript.json
@@ -379,7 +370,7 @@ DataType = "string",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -391,9 +382,8 @@ DataType = "string",
             }
         }
 
-        // Get an Azure ML function
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAzureMLFunction()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Function_Get_AzureML.json
@@ -426,9 +416,8 @@ DataType = "string",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Azure ML function
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAzureMLFunction()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Function_Get_AzureML.json
@@ -457,9 +446,8 @@ DataType = "string",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an Azure ML function
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAzureMLFunction()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Function_Get_AzureML.json
@@ -488,7 +476,7 @@ DataType = "string",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -500,9 +488,8 @@ DataType = "string",
             }
         }
 
-        // List all functions in a streaming job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllFunctionsInAStreamingJob()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Function_ListByStreamingJob.json
@@ -534,7 +521,7 @@ DataType = "string",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

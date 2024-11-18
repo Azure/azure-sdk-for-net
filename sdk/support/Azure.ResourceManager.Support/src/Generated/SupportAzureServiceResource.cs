@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Support
@@ -106,6 +104,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ProblemClassifications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
@@ -129,6 +135,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ProblemClassifications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
@@ -151,6 +165,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportAzureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +205,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportAzureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DiscoveryConfiguration : IUtf8JsonSerializable
+    public partial class DiscoveryConfiguration : IUtf8JsonSerializable, IJsonModel<DiscoveryConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiscoveryConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DiscoveryConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DiscoveryConfiguration)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(CentralServerVmId))
             {
                 writer.WritePropertyName("centralServerVmId"u8);
@@ -25,21 +45,39 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("managedRgStorageAccountName"u8);
                 writer.WriteStringValue(ManagedRgStorageAccountName);
             }
-            writer.WritePropertyName("configurationType"u8);
-            writer.WriteStringValue(ConfigurationType.ToString());
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(AppLocation))
+            {
+                writer.WritePropertyName("appLocation"u8);
+                writer.WriteStringValue(AppLocation.Value);
+            }
         }
 
-        internal static DiscoveryConfiguration DeserializeDiscoveryConfiguration(JsonElement element)
+        DiscoveryConfiguration IJsonModel<DiscoveryConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DiscoveryConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiscoveryConfiguration(document.RootElement, options);
+        }
+
+        internal static DiscoveryConfiguration DeserializeDiscoveryConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> centralServerVmId = default;
-            Optional<string> managedRgStorageAccountName = default;
-            Optional<AzureLocation> appLocation = default;
+            ResourceIdentifier centralServerVmId = default;
+            string managedRgStorageAccountName = default;
+            AzureLocation? appLocation = default;
             SapConfigurationType configurationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("centralServerVmId"u8))
@@ -70,8 +108,44 @@ namespace Azure.ResourceManager.Workloads.Models
                     configurationType = new SapConfigurationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DiscoveryConfiguration(configurationType, centralServerVmId.Value, managedRgStorageAccountName.Value, Optional.ToNullable(appLocation));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DiscoveryConfiguration(configurationType, serializedAdditionalRawData, centralServerVmId, managedRgStorageAccountName, appLocation);
         }
+
+        BinaryData IPersistableModel<DiscoveryConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DiscoveryConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DiscoveryConfiguration IPersistableModel<DiscoveryConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDiscoveryConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DiscoveryConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DiscoveryConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

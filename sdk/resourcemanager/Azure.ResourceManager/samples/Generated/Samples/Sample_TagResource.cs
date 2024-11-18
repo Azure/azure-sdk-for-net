@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_TagResource
     {
-        // Update tags on a resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateTagsOnAResource()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/PutTagsResource.json
@@ -56,9 +53,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update tags on a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateTagsOnASubscription()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/PutTagsSubscription.json
@@ -94,9 +90,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update tags on a resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateTagsOnAResource()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/PatchTagsResource.json
@@ -133,9 +128,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update tags on a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateTagsOnASubscription()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/PatchTagsSubscription.json
@@ -172,9 +166,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get tags on a resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTagsOnAResource()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/GetTagsResource.json
@@ -201,9 +194,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get tags on a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTagsOnASubscription()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/GetTagsSubscription.json
@@ -230,9 +222,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update tags on a resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_UpdateTagsOnAResource()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/DeleteTagsResource.json
@@ -252,12 +243,11 @@ namespace Azure.ResourceManager.Resources.Samples
             // invoke the operation
             await tagResource.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update tags on a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_UpdateTagsOnASubscription()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/DeleteTagsSubscription.json
@@ -277,7 +267,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // invoke the operation
             await tagResource.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

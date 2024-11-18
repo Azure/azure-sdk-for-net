@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,6 +18,38 @@ namespace Azure.ResourceManager.ServiceBus
     /// </summary>
     public partial class MigrationConfigurationData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MigrationConfigurationData"/>. </summary>
         public MigrationConfigurationData()
         {
@@ -32,7 +66,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="postMigrationName"> Name to access Standard Namespace after migration. </param>
         /// <param name="migrationState"> State in which Standard to Premium Migration is, possible values : Unknown, Reverting, Completing, Initiating, Syncing, Active. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal MigrationConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, long? pendingReplicationOperationsCount, ResourceIdentifier targetServiceBusNamespace, string postMigrationName, string migrationState, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, long? pendingReplicationOperationsCount, ResourceIdentifier targetServiceBusNamespace, string postMigrationName, string migrationState, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PendingReplicationOperationsCount = pendingReplicationOperationsCount;
@@ -40,19 +75,26 @@ namespace Azure.ResourceManager.ServiceBus
             PostMigrationName = postMigrationName;
             MigrationState = migrationState;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of Migration Configuration. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> Number of entities pending to be replicated. </summary>
+        [WirePath("properties.pendingReplicationOperationsCount")]
         public long? PendingReplicationOperationsCount { get; }
         /// <summary> Existing premium Namespace ARM Id name which has no entities, will be used for migration. </summary>
+        [WirePath("properties.targetNamespace")]
         public ResourceIdentifier TargetServiceBusNamespace { get; set; }
         /// <summary> Name to access Standard Namespace after migration. </summary>
+        [WirePath("properties.postMigrationName")]
         public string PostMigrationName { get; set; }
         /// <summary> State in which Standard to Premium Migration is, possible values : Unknown, Reverting, Completing, Initiating, Syncing, Active. </summary>
+        [WirePath("properties.migrationState")]
         public string MigrationState { get; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

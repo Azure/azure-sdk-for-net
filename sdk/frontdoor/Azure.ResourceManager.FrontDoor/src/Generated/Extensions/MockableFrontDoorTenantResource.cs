@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.FrontDoor.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Mocking
@@ -55,6 +52,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailability_Check</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
@@ -88,6 +89,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailability_Check</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
         /// </item>
         /// </list>
         /// </summary>

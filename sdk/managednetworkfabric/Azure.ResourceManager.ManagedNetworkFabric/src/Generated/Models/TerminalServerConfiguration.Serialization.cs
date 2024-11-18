@@ -5,16 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class TerminalServerConfiguration : IUtf8JsonSerializable
+    public partial class TerminalServerConfiguration : IUtf8JsonSerializable, IJsonModel<TerminalServerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TerminalServerConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<TerminalServerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TerminalServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TerminalServerConfiguration)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(NetworkDeviceId))
+            {
+                writer.WritePropertyName("networkDeviceId"u8);
+                writer.WriteStringValue(NetworkDeviceId);
+            }
             if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
@@ -35,38 +60,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
             }
-            if (Optional.IsDefined(Username))
-            {
-                writer.WritePropertyName("username"u8);
-                writer.WriteStringValue(Username);
-            }
-            if (Optional.IsDefined(Password))
-            {
-                writer.WritePropertyName("password"u8);
-                writer.WriteStringValue(Password);
-            }
-            if (Optional.IsDefined(SerialNumber))
-            {
-                writer.WritePropertyName("serialNumber"u8);
-                writer.WriteStringValue(SerialNumber);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static TerminalServerConfiguration DeserializeTerminalServerConfiguration(JsonElement element)
+        TerminalServerConfiguration IJsonModel<TerminalServerConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TerminalServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TerminalServerConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTerminalServerConfiguration(document.RootElement, options);
+        }
+
+        internal static TerminalServerConfiguration DeserializeTerminalServerConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> networkDeviceId = default;
-            Optional<string> primaryIPv4Prefix = default;
-            Optional<string> primaryIPv6Prefix = default;
-            Optional<string> secondaryIPv4Prefix = default;
-            Optional<string> secondaryIPv6Prefix = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> serialNumber = default;
+            ResourceIdentifier networkDeviceId = default;
+            string primaryIPv4Prefix = default;
+            string primaryIPv6Prefix = default;
+            string secondaryIPv4Prefix = default;
+            string secondaryIPv6Prefix = default;
+            string username = default;
+            string password = default;
+            string serialNumber = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkDeviceId"u8))
@@ -113,8 +138,53 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     serialNumber = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TerminalServerConfiguration(username.Value, password.Value, serialNumber.Value, networkDeviceId.Value, primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TerminalServerConfiguration(
+                username,
+                password,
+                serialNumber,
+                serializedAdditionalRawData,
+                networkDeviceId,
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix);
         }
+
+        BinaryData IPersistableModel<TerminalServerConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TerminalServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TerminalServerConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TerminalServerConfiguration IPersistableModel<TerminalServerConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TerminalServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTerminalServerConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TerminalServerConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TerminalServerConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

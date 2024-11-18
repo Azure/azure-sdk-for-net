@@ -28,10 +28,6 @@ Programming language to supply to metadata
 .PARAMETER RepoId
 GitHub repository ID of the SDK. Typically of the form: 'Azure/azure-sdk-for-js'
 
-.PARAMETER DocValidationImageId
-The docker image id in format of '$containerRegistry/$imageName:$tag'
-e.g. azuresdkimages.azurecr.io/jsrefautocr:latest
-
 #>
 
 param(
@@ -46,9 +42,6 @@ param(
 
   [Parameter(Mandatory = $false)]
   [string]$RepoId,
-
-  [Parameter(Mandatory = $false)]
-  [string]$DocValidationImageId,
 
   [Parameter(Mandatory = $false)]
   [string]$PackageSourceOverride
@@ -111,24 +104,18 @@ function GetPackageInfoJson ($packageInfoJsonLocation) {
 
   $packageInfoJson = Get-Content $packageInfoJsonLocation -Raw
   $packageInfo = ConvertFrom-Json $packageInfoJson
+  if ($GetDocsMsDevLanguageSpecificPackageInfoFn -and (Test-Path "Function:$GetDocsMsDevLanguageSpecificPackageInfoFn")) {
+    $packageInfo = &$GetDocsMsDevLanguageSpecificPackageInfoFn $packageInfo $PackageSourceOverride
+  }
+  # Default: use the dev version from package info as the version for
+  # downstream processes
   if ($packageInfo.DevVersion) {
-    # If the package is of a dev version there may be language-specific needs to
-    # specify the appropriate version. For example, in the case of JS, the dev
-    # version is always 'dev' when interacting with NPM.
-    if ($GetDocsMsDevLanguageSpecificPackageInfoFn -and (Test-Path "Function:$GetDocsMsDevLanguageSpecificPackageInfoFn")) {
-      $packageInfo = &$GetDocsMsDevLanguageSpecificPackageInfoFn $packageInfo
-    }
-    else {
-      # Default: use the dev version from package info as the version for
-      # downstream processes
-      $packageInfo.Version = $packageInfo.DevVersion
-    }
+    $packageInfo.Version = $packageInfo.DevVersion
   }
   return $packageInfo
 }
 
-function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
-  $packageInfo = GetPackageInfoJson $packageInfoJsonLocation
+function UpdateDocsMsMetadataForPackage($packageInfo, $packageMetadataName) {
 
   $originalVersion = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
   $packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name -and $_.Hide -ne 'true' -and $_.New -eq 'true' })
@@ -155,7 +142,6 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
     $metadataMoniker = 'preview'
     $readMePath = $docsMsMetadata.PreviewReadMeLocation
   }
-  $packageMetadataName = Split-Path $packageInfoJsonLocation -Leaf
   $packageInfoLocation = Join-Path $DocRepoLocation "metadata/$metadataMoniker"
   if (Test-Path "$packageInfoLocation/$packageMetadataName") {
     Write-Host "The docs metadata json $packageMetadataName exists, updating..."
@@ -198,37 +184,37 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
 $allSucceeded = $true
 foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
 
+  $packageInfo =  GetPackageInfoJson $packageInfoLocation
+
   if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
     Write-Host "Validating the packages..."
-
-    $packageInfo =  GetPackageInfoJson $packageInfoLocation
-    # This calls a function named "Validate-${Language}-DocMsPackages" 
+    # This calls a function named "Validate-${Language}-DocMsPackages"
     # declared in common.ps1, implemented in Language-Settings.ps1
     $isValid = &$ValidateDocsMsPackagesFn `
       -PackageInfos $packageInfo `
       -PackageSourceOverride $PackageSourceOverride `
-      -DocValidationImageId $DocValidationImageId `
       -DocRepoLocation $DocRepoLocation
 
     if (!$isValid) {
       Write-Host "Package validation failed for package: $packageInfoLocation"
       $allSucceeded = $false
 
-      # Skip the later call to UpdateDocsMsMetadataForPackage because this 
+      # Skip the later call to UpdateDocsMsMetadataForPackage because this
       # package has not passed validation
       continue
     }
   }
 
   Write-Host "Updating metadata for package: $packageInfoLocation"
+  $packageMetadataName = Split-Path $packageInfoLocation -Leaf
   # Convert package metadata json file to metadata json property.
-  UpdateDocsMsMetadataForPackage $packageInfoLocation
+  UpdateDocsMsMetadataForPackage $packageInfo $packageMetadataName
 }
 
 # Set a variable which will be used by the pipeline later to fail the build if
 # any packages failed validation
 if ($allSucceeded) {
   Write-Host "##vso[task.setvariable variable=DocsMsPackagesAllValid;]$true"
-} else { 
+} else {
   Write-Host "##vso[task.setvariable variable=DocsMsPackagesAllValid;]$false"
 }

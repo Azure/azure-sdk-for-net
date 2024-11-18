@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <term>Operation Id</term>
         /// <description>Queues_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -82,7 +88,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _serviceBusQueueQueuesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusArmOperation<ServiceBusQueueResource>(Response.FromValue(new ServiceBusQueueResource(Client, response), response.GetRawResponse()));
+                var uri = _serviceBusQueueQueuesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ServiceBusArmOperation<ServiceBusQueueResource>(Response.FromValue(new ServiceBusQueueResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <term>Operation Id</term>
         /// <description>Queues_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -123,7 +139,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _serviceBusQueueQueuesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, data, cancellationToken);
-                var operation = new ServiceBusArmOperation<ServiceBusQueueResource>(Response.FromValue(new ServiceBusQueueResource(Client, response), response.GetRawResponse()));
+                var uri = _serviceBusQueueQueuesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ServiceBusArmOperation<ServiceBusQueueResource>(Response.FromValue(new ServiceBusQueueResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -145,6 +163,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Queues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +209,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <term>Operation Id</term>
         /// <description>Queues_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="queueName"> The queue name. </param>
@@ -220,6 +254,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <term>Operation Id</term>
         /// <description>Queues_ListByNamespace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
@@ -244,6 +286,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <term>Operation Id</term>
         /// <description>Queues_ListByNamespace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
@@ -267,6 +317,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Queues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,6 +361,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <term>Operation Id</term>
         /// <description>Queues_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="queueName"> The queue name. </param>
@@ -337,6 +403,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Queues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -374,6 +448,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Queues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

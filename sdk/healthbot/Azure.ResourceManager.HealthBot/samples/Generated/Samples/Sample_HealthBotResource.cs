@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HealthBot;
 using Azure.ResourceManager.HealthBot.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HealthBot.Samples
 {
     public partial class Sample_HealthBotResource
     {
-        // ResourceInfoGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ResourceInfoGet()
         {
             // Generated from example definition: specification/healthbot/resource-manager/Microsoft.HealthBot/stable/2021-08-24/examples/ResourceInfoGet.json
@@ -50,9 +47,8 @@ namespace Azure.ResourceManager.HealthBot.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BotUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_BotUpdate()
         {
             // Generated from example definition: specification/healthbot/resource-manager/Microsoft.HealthBot/stable/2021-08-24/examples/ResourceUpdatePatch.json
@@ -85,9 +81,8 @@ namespace Azure.ResourceManager.HealthBot.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BotDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_BotDelete()
         {
             // Generated from example definition: specification/healthbot/resource-manager/Microsoft.HealthBot/stable/2021-08-24/examples/ResourceDeletionDelete.json
@@ -109,12 +104,11 @@ namespace Azure.ResourceManager.HealthBot.Samples
             // invoke the operation
             await healthBot.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List Bots by Subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHealthBots_ListBotsBySubscription()
         {
             // Generated from example definition: specification/healthbot/resource-manager/Microsoft.HealthBot/stable/2021-08-24/examples/ListBotsBySubscription.json
@@ -141,7 +135,7 @@ namespace Azure.ResourceManager.HealthBot.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

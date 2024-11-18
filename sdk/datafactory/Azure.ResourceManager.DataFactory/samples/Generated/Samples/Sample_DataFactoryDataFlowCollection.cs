@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Samples
 {
     public partial class Sample_DataFactoryDataFlowCollection
     {
-        // DataFlows_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DataFlowsCreate()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlows_Create.json
@@ -82,9 +79,8 @@ Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,"CADOutput"
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DataFlows_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DataFlowsUpdate()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlows_Update.json
@@ -146,9 +142,8 @@ Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,"CADOutput"
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DataFlows_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_DataFlowsGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlows_Get.json
@@ -181,9 +176,8 @@ Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,"CADOutput"
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DataFlows_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_DataFlowsGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlows_Get.json
@@ -212,9 +206,8 @@ Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,"CADOutput"
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // DataFlows_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DataFlowsGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlows_Get.json
@@ -243,7 +236,7 @@ Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,"CADOutput"
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -255,9 +248,8 @@ Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,"CADOutput"
             }
         }
 
-        // DataFlows_ListByFactory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DataFlowsListByFactory()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlows_ListByFactory.json
@@ -289,7 +281,7 @@ Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,"CADOutput"
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

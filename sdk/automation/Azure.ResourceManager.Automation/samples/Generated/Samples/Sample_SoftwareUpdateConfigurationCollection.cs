@@ -8,20 +8,17 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Automation;
 using Azure.ResourceManager.Automation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automation.Samples
 {
     public partial class Sample_SoftwareUpdateConfigurationCollection
     {
-        // Create software update configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSoftwareUpdateConfiguration()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/createSoftwareUpdateConfiguration.json
@@ -113,7 +110,7 @@ WorkspaceId = "WorkspaceId2",
             {
                 StartOn = DateTimeOffset.Parse("2017-10-19T12:22:57+00:00"),
                 ExpireOn = DateTimeOffset.Parse("2018-11-09T11:22:57+00:00"),
-                Interval = 1,
+                Interval = 1L,
                 Frequency = AutomationScheduleFrequency.Hour,
                 TimeZone = "America/Los_Angeles",
                 AdvancedSchedule = new AutomationAdvancedSchedule()
@@ -154,9 +151,8 @@ WorkspaceId = "WorkspaceId2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get software update configuration by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSoftwareUpdateConfigurationByName()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/getSoftwareUpdateConfigurationByName.json
@@ -189,9 +185,8 @@ WorkspaceId = "WorkspaceId2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get software update configuration by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSoftwareUpdateConfigurationByName()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/getSoftwareUpdateConfigurationByName.json
@@ -220,9 +215,8 @@ WorkspaceId = "WorkspaceId2",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get software update configuration by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSoftwareUpdateConfigurationByName()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/getSoftwareUpdateConfigurationByName.json
@@ -251,7 +245,7 @@ WorkspaceId = "WorkspaceId2",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -263,9 +257,8 @@ WorkspaceId = "WorkspaceId2",
             }
         }
 
-        // List software update configurations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSoftwareUpdateConfigurations()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/listSoftwareUpdateConfigurations.json
@@ -293,12 +286,11 @@ WorkspaceId = "WorkspaceId2",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List software update configurations Targeting a specific azure virtual machine
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSoftwareUpdateConfigurationsTargetingASpecificAzureVirtualMachine()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/listSoftwareUpdateConfigurationsByVm.json
@@ -327,7 +319,7 @@ WorkspaceId = "WorkspaceId2",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

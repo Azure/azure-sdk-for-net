@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NewRelicObservability;
 using Azure.ResourceManager.NewRelicObservability.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NewRelicObservability.Samples
 {
     public partial class Sample_NewRelicObservabilityTagRuleResource
     {
-        // TagRules_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TagRulesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/TagRules_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "TagRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,7 +30,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this NewRelicObservabilityTagRuleResource created on azure
             // for more information of creating NewRelicObservabilityTagRuleResource, please refer to the document of NewRelicObservabilityTagRuleResource
-            string subscriptionId = "ddqonpqwjr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             string ruleSetName = "bxcantgzggsepbhqmedjqyrqeezmfb";
@@ -50,12 +47,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TagRules_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TagRulesGetMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/TagRules_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "TagRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,7 +61,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this NewRelicObservabilityTagRuleResource created on azure
             // for more information of creating NewRelicObservabilityTagRuleResource, please refer to the document of NewRelicObservabilityTagRuleResource
-            string subscriptionId = "ddqonpqwjr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             string ruleSetName = "bxcantgzggsepbhqmedjqyrqeezmfb";
@@ -82,12 +78,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TagRules_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_TagRulesDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/TagRules_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "TagRules_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +92,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this NewRelicObservabilityTagRuleResource created on azure
             // for more information of creating NewRelicObservabilityTagRuleResource, please refer to the document of NewRelicObservabilityTagRuleResource
-            string subscriptionId = "ddqonpqwjr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             string ruleSetName = "bxcantgzggsepbhqmedjqyrqeezmfb";
@@ -107,15 +102,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation
             await newRelicObservabilityTagRule.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // TagRules_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_TagRulesDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/TagRules_Delete_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "TagRules_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +119,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this NewRelicObservabilityTagRuleResource created on azure
             // for more information of creating NewRelicObservabilityTagRuleResource, please refer to the document of NewRelicObservabilityTagRuleResource
-            string subscriptionId = "ddqonpqwjr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             string ruleSetName = "bxcantgzggsepbhqmedjqyrqeezmfb";
@@ -135,15 +129,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation
             await newRelicObservabilityTagRule.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // TagRules_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_TagRulesUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/TagRules_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "TagRules_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +146,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this NewRelicObservabilityTagRuleResource created on azure
             // for more information of creating NewRelicObservabilityTagRuleResource, please refer to the document of NewRelicObservabilityTagRuleResource
-            string subscriptionId = "ddqonpqwjr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             string ruleSetName = "bxcantgzggsepbhqmedjqyrqeezmfb";
@@ -201,12 +194,11 @@ Action = NewRelicObservabilityTagAction.Include,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TagRules_Update_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_TagRulesUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/TagRules_Update_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "TagRules_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -216,7 +208,7 @@ Action = NewRelicObservabilityTagAction.Include,
 
             // this example assumes you already have this NewRelicObservabilityTagRuleResource created on azure
             // for more information of creating NewRelicObservabilityTagRuleResource, please refer to the document of NewRelicObservabilityTagRuleResource
-            string subscriptionId = "ddqonpqwjr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string monitorName = "ipxmlcbonyxtolzejcjshkmlron";
             string ruleSetName = "bxcantgzggsepbhqmedjqyrqeezmfb";

@@ -15,6 +15,38 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters to get network configuration diagnostic. </summary>
     public partial class NetworkConfigurationDiagnosticContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetworkConfigurationDiagnosticContent"/>. </summary>
         /// <param name="targetResourceId"> The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application Gateway. </param>
         /// <param name="profiles"> List of network configuration diagnostic profiles. </param>
@@ -32,11 +64,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetResourceId"> The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application Gateway. </param>
         /// <param name="verbosityLevel"> Verbosity level. </param>
         /// <param name="profiles"> List of network configuration diagnostic profiles. </param>
-        internal NetworkConfigurationDiagnosticContent(ResourceIdentifier targetResourceId, VerbosityLevel? verbosityLevel, IList<NetworkConfigurationDiagnosticProfile> profiles)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkConfigurationDiagnosticContent(ResourceIdentifier targetResourceId, VerbosityLevel? verbosityLevel, IList<NetworkConfigurationDiagnosticProfile> profiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetResourceId = targetResourceId;
             VerbosityLevel = verbosityLevel;
             Profiles = profiles;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationDiagnosticContent"/> for deserialization. </summary>
+        internal NetworkConfigurationDiagnosticContent()
+        {
         }
 
         /// <summary> The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application Gateway. </summary>

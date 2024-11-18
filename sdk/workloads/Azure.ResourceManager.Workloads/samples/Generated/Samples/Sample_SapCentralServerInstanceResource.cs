@@ -7,21 +7,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Workloads;
 using Azure.ResourceManager.Workloads.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Workloads.Samples
 {
     public partial class Sample_SapCentralServerInstanceResource
     {
-        // SAPCentralInstances_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SAPCentralInstancesGet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPCentralInstances_Get.json
@@ -51,9 +48,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SAPCentralInstances_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SAPCentralInstancesUpdate()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPCentralInstances_Update.json
@@ -91,9 +87,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SAPCentralInstances_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SAPCentralInstancesDelete()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPCentralInstances_Delete.json
@@ -120,9 +115,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Start the SAP Central Services Instance
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StartInstance_StartTheSAPCentralServicesInstance()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPCentralInstances_StartInstance.json
@@ -149,9 +143,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Stop the SAP Central Services Instance.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StopInstance_StopTheSAPCentralServicesInstance()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPCentralInstances_StopInstance.json
@@ -174,7 +167,7 @@ namespace Azure.ResourceManager.Workloads.Samples
             // invoke the operation
             SapStopContent content = new SapStopContent()
             {
-                SoftStopTimeoutSeconds = 1200,
+                SoftStopTimeoutSeconds = 1200L,
             };
             ArmOperation<OperationStatusResult> lro = await sapCentralServerInstance.StopInstanceAsync(WaitUntil.Completed, content: content);
             OperationStatusResult result = lro.Value;

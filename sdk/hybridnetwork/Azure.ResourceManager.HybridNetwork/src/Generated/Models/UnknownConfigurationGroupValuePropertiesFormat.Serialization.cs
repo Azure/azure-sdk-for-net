@@ -5,39 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    internal partial class UnknownConfigurationGroupValuePropertiesFormat : IUtf8JsonSerializable
+    internal partial class UnknownConfigurationGroupValuePropertiesFormat : IUtf8JsonSerializable, IJsonModel<ConfigurationGroupValuePropertiesFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationGroupValuePropertiesFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConfigurationGroupValuePropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConfigurationGroupSchemaResourceReference))
-            {
-                writer.WritePropertyName("configurationGroupSchemaResourceReference"u8);
-                writer.WriteObjectValue(ConfigurationGroupSchemaResourceReference);
-            }
-            writer.WritePropertyName("configurationType"u8);
-            writer.WriteStringValue(ConfigurationType.ToString());
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static UnknownConfigurationGroupValuePropertiesFormat DeserializeUnknownConfigurationGroupValuePropertiesFormat(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationGroupValuePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        ConfigurationGroupValuePropertiesFormat IJsonModel<ConfigurationGroupValuePropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationGroupValuePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfigurationGroupValuePropertiesFormat(document.RootElement, options);
+        }
+
+        internal static UnknownConfigurationGroupValuePropertiesFormat DeserializeUnknownConfigurationGroupValuePropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> publisherName = default;
-            Optional<PublisherScope> publisherScope = default;
-            Optional<string> configurationGroupSchemaName = default;
-            Optional<string> configurationGroupSchemaOfferingLocation = default;
-            Optional<DeploymentResourceIdReference> configurationGroupSchemaResourceReference = default;
+            ProvisioningState? provisioningState = default;
+            string publisherName = default;
+            PublisherScope? publisherScope = default;
+            string configurationGroupSchemaName = default;
+            string configurationGroupSchemaOfferingLocation = default;
+            DeploymentResourceIdReference configurationGroupSchemaResourceReference = default;
             ConfigurationGroupValueConfigurationType configurationType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -79,7 +107,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    configurationGroupSchemaResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value);
+                    configurationGroupSchemaResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))
@@ -87,8 +115,52 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     configurationType = new ConfigurationGroupValueConfigurationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownConfigurationGroupValuePropertiesFormat(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), configurationGroupSchemaName.Value, configurationGroupSchemaOfferingLocation.Value, configurationGroupSchemaResourceReference.Value, configurationType);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownConfigurationGroupValuePropertiesFormat(
+                provisioningState,
+                publisherName,
+                publisherScope,
+                configurationGroupSchemaName,
+                configurationGroupSchemaOfferingLocation,
+                configurationGroupSchemaResourceReference,
+                configurationType,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConfigurationGroupValuePropertiesFormat>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationGroupValuePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConfigurationGroupValuePropertiesFormat IPersistableModel<ConfigurationGroupValuePropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationGroupValuePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConfigurationGroupValuePropertiesFormat(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConfigurationGroupValuePropertiesFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

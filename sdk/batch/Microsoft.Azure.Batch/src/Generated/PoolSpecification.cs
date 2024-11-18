@@ -24,50 +24,50 @@ namespace Microsoft.Azure.Batch
     {
         private class PropertyContainer : PropertyCollection
         {
-            public readonly PropertyAccessor<IList<string>> ApplicationLicensesProperty;
             public readonly PropertyAccessor<IList<ApplicationPackageReference>> ApplicationPackageReferencesProperty;
             public readonly PropertyAccessor<bool?> AutoScaleEnabledProperty;
             public readonly PropertyAccessor<TimeSpan?> AutoScaleEvaluationIntervalProperty;
             public readonly PropertyAccessor<string> AutoScaleFormulaProperty;
             public readonly PropertyAccessor<IList<CertificateReference>> CertificateReferencesProperty;
-            public readonly PropertyAccessor<CloudServiceConfiguration> CloudServiceConfigurationProperty;
             public readonly PropertyAccessor<string> DisplayNameProperty;
             public readonly PropertyAccessor<bool?> InterComputeNodeCommunicationEnabledProperty;
             public readonly PropertyAccessor<IList<MetadataItem>> MetadataProperty;
             public readonly PropertyAccessor<IList<MountConfiguration>> MountConfigurationProperty;
             public readonly PropertyAccessor<NetworkConfiguration> NetworkConfigurationProperty;
             public readonly PropertyAccessor<TimeSpan?> ResizeTimeoutProperty;
+            public readonly PropertyAccessor<IDictionary<string, string>> ResourceTagsProperty;
             public readonly PropertyAccessor<StartTask> StartTaskProperty;
             public readonly PropertyAccessor<int?> TargetDedicatedComputeNodesProperty;
             public readonly PropertyAccessor<int?> TargetLowPriorityComputeNodesProperty;
             public readonly PropertyAccessor<Common.NodeCommunicationMode?> TargetNodeCommunicationModeProperty;
             public readonly PropertyAccessor<TaskSchedulingPolicy> TaskSchedulingPolicyProperty;
             public readonly PropertyAccessor<int?> TaskSlotsPerNodeProperty;
+            public readonly PropertyAccessor<UpgradePolicy> UpgradePolicyProperty;
             public readonly PropertyAccessor<IList<UserAccount>> UserAccountsProperty;
             public readonly PropertyAccessor<VirtualMachineConfiguration> VirtualMachineConfigurationProperty;
             public readonly PropertyAccessor<string> VirtualMachineSizeProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.ApplicationLicensesProperty = this.CreatePropertyAccessor<IList<string>>(nameof(ApplicationLicenses), BindingAccess.Read | BindingAccess.Write);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>(nameof(ApplicationPackageReferences), BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleEnabledProperty = this.CreatePropertyAccessor<bool?>(nameof(AutoScaleEnabled), BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleEvaluationIntervalProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(AutoScaleEvaluationInterval), BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleFormulaProperty = this.CreatePropertyAccessor<string>(nameof(AutoScaleFormula), BindingAccess.Read | BindingAccess.Write);
                 this.CertificateReferencesProperty = this.CreatePropertyAccessor<IList<CertificateReference>>(nameof(CertificateReferences), BindingAccess.Read | BindingAccess.Write);
-                this.CloudServiceConfigurationProperty = this.CreatePropertyAccessor<CloudServiceConfiguration>(nameof(CloudServiceConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.DisplayNameProperty = this.CreatePropertyAccessor<string>(nameof(DisplayName), BindingAccess.Read | BindingAccess.Write);
                 this.InterComputeNodeCommunicationEnabledProperty = this.CreatePropertyAccessor<bool?>(nameof(InterComputeNodeCommunicationEnabled), BindingAccess.Read | BindingAccess.Write);
                 this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>(nameof(Metadata), BindingAccess.Read | BindingAccess.Write);
                 this.MountConfigurationProperty = this.CreatePropertyAccessor<IList<MountConfiguration>>(nameof(MountConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.NetworkConfigurationProperty = this.CreatePropertyAccessor<NetworkConfiguration>(nameof(NetworkConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.ResizeTimeoutProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(ResizeTimeout), BindingAccess.Read | BindingAccess.Write);
+                this.ResourceTagsProperty = this.CreatePropertyAccessor<IDictionary<string, string>>(nameof(ResourceTags), BindingAccess.Read | BindingAccess.Write);
                 this.StartTaskProperty = this.CreatePropertyAccessor<StartTask>(nameof(StartTask), BindingAccess.Read | BindingAccess.Write);
                 this.TargetDedicatedComputeNodesProperty = this.CreatePropertyAccessor<int?>(nameof(TargetDedicatedComputeNodes), BindingAccess.Read | BindingAccess.Write);
                 this.TargetLowPriorityComputeNodesProperty = this.CreatePropertyAccessor<int?>(nameof(TargetLowPriorityComputeNodes), BindingAccess.Read | BindingAccess.Write);
                 this.TargetNodeCommunicationModeProperty = this.CreatePropertyAccessor<Common.NodeCommunicationMode?>(nameof(TargetNodeCommunicationMode), BindingAccess.Read | BindingAccess.Write);
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor<TaskSchedulingPolicy>(nameof(TaskSchedulingPolicy), BindingAccess.Read | BindingAccess.Write);
                 this.TaskSlotsPerNodeProperty = this.CreatePropertyAccessor<int?>(nameof(TaskSlotsPerNode), BindingAccess.Read | BindingAccess.Write);
+                this.UpgradePolicyProperty = this.CreatePropertyAccessor<UpgradePolicy>(nameof(UpgradePolicy), BindingAccess.Read | BindingAccess.Write);
                 this.UserAccountsProperty = this.CreatePropertyAccessor<IList<UserAccount>>(nameof(UserAccounts), BindingAccess.Read | BindingAccess.Write);
                 this.VirtualMachineConfigurationProperty = this.CreatePropertyAccessor<VirtualMachineConfiguration>(nameof(VirtualMachineConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.VirtualMachineSizeProperty = this.CreatePropertyAccessor<string>(nameof(VirtualMachineSize), BindingAccess.Read | BindingAccess.Write);
@@ -75,10 +75,6 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer(Models.PoolSpecification protocolObject) : base(BindingState.Bound)
             {
-                this.ApplicationLicensesProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CollectionToThreadSafeCollection(protocolObject.ApplicationLicenses, o => o),
-                    nameof(ApplicationLicenses),
-                    BindingAccess.Read | BindingAccess.Write);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
                     ApplicationPackageReference.ConvertFromProtocolCollection(protocolObject.ApplicationPackageReferences),
                     nameof(ApplicationPackageReferences),
@@ -98,10 +94,6 @@ namespace Microsoft.Azure.Batch
                 this.CertificateReferencesProperty = this.CreatePropertyAccessor(
                     CertificateReference.ConvertFromProtocolCollection(protocolObject.CertificateReferences),
                     nameof(CertificateReferences),
-                    BindingAccess.Read | BindingAccess.Write);
-                this.CloudServiceConfigurationProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.CloudServiceConfiguration, o => new CloudServiceConfiguration(o)),
-                    nameof(CloudServiceConfiguration),
                     BindingAccess.Read | BindingAccess.Write);
                 this.DisplayNameProperty = this.CreatePropertyAccessor(
                     protocolObject.DisplayName,
@@ -127,6 +119,10 @@ namespace Microsoft.Azure.Batch
                     protocolObject.ResizeTimeout,
                     nameof(ResizeTimeout),
                     BindingAccess.Read | BindingAccess.Write);
+                this.ResourceTagsProperty = this.CreatePropertyAccessor(
+                    protocolObject.ResourceTags,
+                    nameof(ResourceTags),
+                    BindingAccess.Read);
                 this.StartTaskProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.StartTask, o => new StartTask(o)),
                     nameof(StartTask),
@@ -150,6 +146,10 @@ namespace Microsoft.Azure.Batch
                 this.TaskSlotsPerNodeProperty = this.CreatePropertyAccessor(
                     protocolObject.TaskSlotsPerNode,
                     nameof(TaskSlotsPerNode),
+                    BindingAccess.Read | BindingAccess.Write);
+                this.UpgradePolicyProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UpgradePolicy, o => new UpgradePolicy(o)),
+                    nameof(UpgradePolicy),
                     BindingAccess.Read | BindingAccess.Write);
                 this.UserAccountsProperty = this.CreatePropertyAccessor(
                     UserAccount.ConvertFromProtocolCollection(protocolObject.UserAccounts),
@@ -186,22 +186,6 @@ namespace Microsoft.Azure.Batch
         #endregion Constructors
 
         #region PoolSpecification
-
-        /// <summary>
-        /// Gets or sets the list of application licenses the Batch service will make available on each compute node in the 
-        /// pool.
-        /// </summary>
-        /// <remarks>
-        /// The list of application licenses must be a subset of available Batch service application licenses.
-        /// </remarks>
-        public IList<string> ApplicationLicenses
-        {
-            get { return this.propertyContainer.ApplicationLicensesProperty.Value; }
-            set
-            {
-                this.propertyContainer.ApplicationLicensesProperty.Value = ConcurrentChangeTrackedList<string>.TransformEnumerableToConcurrentList(value);
-            }
-        }
 
         /// <summary>
         /// Gets or sets a list of application package references to be installed on each compute node in the pool.
@@ -266,18 +250,6 @@ namespace Microsoft.Azure.Batch
             {
                 this.propertyContainer.CertificateReferencesProperty.Value = ConcurrentChangeTrackedModifiableList<CertificateReference>.TransformEnumerableToConcurrentModifiableList(value);
             }
-        }
-
-        /// <summary>
-        /// Gets or sets the <see cref="CloudServiceConfiguration"/> for the pool.
-        /// </summary>
-        /// <remarks>
-        /// This property is mutually exclusive with <see cref="VirtualMachineConfiguration"/>.
-        /// </remarks>
-        public CloudServiceConfiguration CloudServiceConfiguration
-        {
-            get { return this.propertyContainer.CloudServiceConfigurationProperty.Value; }
-            set { this.propertyContainer.CloudServiceConfigurationProperty.Value = value; }
         }
 
         /// <summary>
@@ -349,6 +321,20 @@ namespace Microsoft.Azure.Batch
         {
             get { return this.propertyContainer.ResizeTimeoutProperty.Value; }
             set { this.propertyContainer.ResizeTimeoutProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the user-specified tags associated with the pool.
+        /// </summary>
+        /// <remarks>
+        /// The user-defined tags to be associated with the Azure Batch Pool. When specified, these tags are propagated to 
+        /// the backing Azure resources associated with the pool. This property can only be specified when the Batch account 
+        /// was created with the poolAllocationMode property set to 'UserSubscription'.
+        /// </remarks>
+        public IDictionary<string, string> ResourceTags
+        {
+            get { return this.propertyContainer.ResourceTagsProperty.Value; }
+            set { this.propertyContainer.ResourceTagsProperty.Value = value; }
         }
 
         /// <summary>
@@ -425,6 +411,15 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the upgrade policy for the pool.
+        /// </summary>
+        public UpgradePolicy UpgradePolicy
+        {
+            get { return this.propertyContainer.UpgradePolicyProperty.Value; }
+            set { this.propertyContainer.UpgradePolicyProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the list of user accounts to be created on each node in the pool.
         /// </summary>
         public IList<UserAccount> UserAccounts
@@ -439,9 +434,6 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets or sets the <see cref="VirtualMachineConfiguration"/> of the pool.
         /// </summary>
-        /// <remarks>
-        /// This property is mutually exclusive with <see cref="CloudServiceConfiguration"/>.
-        /// </remarks>
         public VirtualMachineConfiguration VirtualMachineConfiguration
         {
             get { return this.propertyContainer.VirtualMachineConfigurationProperty.Value; }
@@ -487,25 +479,25 @@ namespace Microsoft.Azure.Batch
         {
             Models.PoolSpecification result = new Models.PoolSpecification()
             {
-                ApplicationLicenses = this.ApplicationLicenses,
                 ApplicationPackageReferences = UtilitiesInternal.ConvertToProtocolCollection(this.ApplicationPackageReferences),
                 EnableAutoScale = this.AutoScaleEnabled,
                 AutoScaleEvaluationInterval = this.AutoScaleEvaluationInterval,
                 AutoScaleFormula = this.AutoScaleFormula,
                 CertificateReferences = UtilitiesInternal.ConvertToProtocolCollection(this.CertificateReferences),
-                CloudServiceConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.CloudServiceConfiguration, (o) => o.GetTransportObject()),
                 DisplayName = this.DisplayName,
                 EnableInterNodeCommunication = this.InterComputeNodeCommunicationEnabled,
                 Metadata = UtilitiesInternal.ConvertToProtocolCollection(this.Metadata),
                 MountConfiguration = UtilitiesInternal.ConvertToProtocolCollection(this.MountConfiguration),
                 NetworkConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.NetworkConfiguration, (o) => o.GetTransportObject()),
                 ResizeTimeout = this.ResizeTimeout,
+                ResourceTags = this.ResourceTags,
                 StartTask = UtilitiesInternal.CreateObjectWithNullCheck(this.StartTask, (o) => o.GetTransportObject()),
                 TargetDedicatedNodes = this.TargetDedicatedComputeNodes,
                 TargetLowPriorityNodes = this.TargetLowPriorityComputeNodes,
                 TargetNodeCommunicationMode = UtilitiesInternal.MapNullableEnum<Common.NodeCommunicationMode, Models.NodeCommunicationMode>(this.TargetNodeCommunicationMode),
                 TaskSchedulingPolicy = UtilitiesInternal.CreateObjectWithNullCheck(this.TaskSchedulingPolicy, (o) => o.GetTransportObject()),
                 TaskSlotsPerNode = this.TaskSlotsPerNode,
+                UpgradePolicy = UtilitiesInternal.CreateObjectWithNullCheck(this.UpgradePolicy, (o) => o.GetTransportObject()),
                 UserAccounts = UtilitiesInternal.ConvertToProtocolCollection(this.UserAccounts),
                 VirtualMachineConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.VirtualMachineConfiguration, (o) => o.GetTransportObject()),
                 VmSize = this.VirtualMachineSize,

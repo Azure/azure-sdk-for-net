@@ -6,16 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersAwsOfferingMdeAutoProvisioning : IUtf8JsonSerializable
+    public partial class DefenderForServersAwsOfferingMdeAutoProvisioning : IUtf8JsonSerializable, IJsonModel<DefenderForServersAwsOfferingMdeAutoProvisioning>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForServersAwsOfferingMdeAutoProvisioning>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DefenderForServersAwsOfferingMdeAutoProvisioning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOfferingMdeAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingMdeAutoProvisioning)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
@@ -33,17 +51,47 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static DefenderForServersAwsOfferingMdeAutoProvisioning DeserializeDefenderForServersAwsOfferingMdeAutoProvisioning(JsonElement element)
+        DefenderForServersAwsOfferingMdeAutoProvisioning IJsonModel<DefenderForServersAwsOfferingMdeAutoProvisioning>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOfferingMdeAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingMdeAutoProvisioning)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForServersAwsOfferingMdeAutoProvisioning(document.RootElement, options);
+        }
+
+        internal static DefenderForServersAwsOfferingMdeAutoProvisioning DeserializeDefenderForServersAwsOfferingMdeAutoProvisioning(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<BinaryData> configuration = default;
+            bool? enabled = default;
+            BinaryData configuration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -64,8 +112,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     configuration = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefenderForServersAwsOfferingMdeAutoProvisioning(Optional.ToNullable(enabled), configuration.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DefenderForServersAwsOfferingMdeAutoProvisioning(enabled, configuration, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DefenderForServersAwsOfferingMdeAutoProvisioning>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOfferingMdeAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingMdeAutoProvisioning)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DefenderForServersAwsOfferingMdeAutoProvisioning IPersistableModel<DefenderForServersAwsOfferingMdeAutoProvisioning>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOfferingMdeAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDefenderForServersAwsOfferingMdeAutoProvisioning(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingMdeAutoProvisioning)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DefenderForServersAwsOfferingMdeAutoProvisioning>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

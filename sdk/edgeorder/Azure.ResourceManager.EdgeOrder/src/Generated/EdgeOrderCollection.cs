@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
@@ -62,6 +60,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -99,6 +105,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +152,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -174,6 +196,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -209,6 +239,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +285,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(HciHealthState left, HciHealthState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciHealthState"/> values are not the same. </summary>
         public static bool operator !=(HciHealthState left, HciHealthState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HciHealthState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HciHealthState"/>. </summary>
         public static implicit operator HciHealthState(string value) => new HciHealthState(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

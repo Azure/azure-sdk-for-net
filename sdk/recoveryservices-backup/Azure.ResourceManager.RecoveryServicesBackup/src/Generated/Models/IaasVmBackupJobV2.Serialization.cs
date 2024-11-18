@@ -6,17 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmBackupJobV2 : IUtf8JsonSerializable
+    public partial class IaasVmBackupJobV2 : IUtf8JsonSerializable, IJsonModel<IaasVmBackupJobV2>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmBackupJobV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<IaasVmBackupJobV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupJobV2>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IaasVmBackupJobV2)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(ActionsInfo))
             {
                 writer.WritePropertyName("actionsInfo"u8);
@@ -43,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,68 +73,46 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue(ExtendedInfo, options);
             }
-            if (Optional.IsDefined(EntityFriendlyName))
-            {
-                writer.WritePropertyName("entityFriendlyName"u8);
-                writer.WriteStringValue(EntityFriendlyName);
-            }
-            if (Optional.IsDefined(BackupManagementType))
-            {
-                writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
-            }
-            if (Optional.IsDefined(Operation))
-            {
-                writer.WritePropertyName("operation"u8);
-                writer.WriteStringValue(Operation);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
-            }
-            if (Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
-            }
-            if (Optional.IsDefined(EndOn))
-            {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
-            }
-            if (Optional.IsDefined(ActivityId))
-            {
-                writer.WritePropertyName("activityId"u8);
-                writer.WriteStringValue(ActivityId);
-            }
-            writer.WritePropertyName("jobType"u8);
-            writer.WriteStringValue(JobType);
-            writer.WriteEndObject();
         }
 
-        internal static IaasVmBackupJobV2 DeserializeIaasVmBackupJobV2(JsonElement element)
+        IaasVmBackupJobV2 IJsonModel<IaasVmBackupJobV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupJobV2>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IaasVmBackupJobV2)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIaasVmBackupJobV2(document.RootElement, options);
+        }
+
+        internal static IaasVmBackupJobV2 DeserializeIaasVmBackupJobV2(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<JobSupportedAction>> actionsInfo = default;
-            Optional<string> containerName = default;
-            Optional<TimeSpan> duration = default;
-            Optional<IList<IaasVmErrorInfo>> errorDetails = default;
-            Optional<string> virtualMachineVersion = default;
-            Optional<IaasVmBackupJobExtendedInfo> extendedInfo = default;
-            Optional<string> entityFriendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> operation = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> activityId = default;
+            IList<JobSupportedAction> actionsInfo = default;
+            string containerName = default;
+            TimeSpan? duration = default;
+            IList<IaasVmErrorInfo> errorDetails = default;
+            string virtualMachineVersion = default;
+            IaasVmBackupJobExtendedInfo extendedInfo = default;
+            string entityFriendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string operation = default;
+            string status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string activityId = default;
             string jobType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionsInfo"u8))
@@ -156,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<IaasVmErrorInfo> array = new List<IaasVmErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IaasVmErrorInfo.DeserializeIaasVmErrorInfo(item));
+                        array.Add(IaasVmErrorInfo.DeserializeIaasVmErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -172,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = IaasVmBackupJobExtendedInfo.DeserializeIaasVmBackupJobExtendedInfo(property.Value);
+                    extendedInfo = IaasVmBackupJobExtendedInfo.DeserializeIaasVmBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("entityFriendlyName"u8))
@@ -227,8 +223,59 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     jobType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IaasVmBackupJobV2(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, Optional.ToList(actionsInfo), containerName.Value, Optional.ToNullable(duration), Optional.ToList(errorDetails), virtualMachineVersion.Value, extendedInfo.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IaasVmBackupJobV2(
+                entityFriendlyName,
+                backupManagementType,
+                operation,
+                status,
+                startTime,
+                endTime,
+                activityId,
+                jobType,
+                serializedAdditionalRawData,
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                containerName,
+                duration,
+                errorDetails ?? new ChangeTrackingList<IaasVmErrorInfo>(),
+                virtualMachineVersion,
+                extendedInfo);
         }
+
+        BinaryData IPersistableModel<IaasVmBackupJobV2>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupJobV2>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IaasVmBackupJobV2)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IaasVmBackupJobV2 IPersistableModel<IaasVmBackupJobV2>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupJobV2>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIaasVmBackupJobV2(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IaasVmBackupJobV2)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IaasVmBackupJobV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

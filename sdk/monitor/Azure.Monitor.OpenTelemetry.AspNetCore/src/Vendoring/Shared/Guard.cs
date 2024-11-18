@@ -1,20 +1,10 @@
-// <copyright file="Guard.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// </copyright>
+// SPDX-License-Identifier: Apache-2.0
 
 #nullable enable
+
+// Note: For some targets this file will contain more than one type/namespace.
+#pragma warning disable IDE0161 // Convert to file-scoped namespace
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -25,7 +15,7 @@ using System.Runtime.CompilerServices;
 #pragma warning disable SA1403 // File may only contain a single namespace
 #pragma warning disable SA1649 // File name should match first type name
 
-#if !NET6_0_OR_GREATER
+#if !NET
 namespace System.Runtime.CompilerServices
 {
     /// <summary>Allows capturing of the expressions passed to a method.</summary>
@@ -42,7 +32,7 @@ namespace System.Runtime.CompilerServices
 }
 #endif
 
-#if !NET6_0_OR_GREATER && !NETSTANDARD2_1_OR_GREATER
+#if !NET && !NETSTANDARD2_1_OR_GREATER
 namespace System.Diagnostics.CodeAnalysis
 {
     /// <summary>Specifies that an output is not <see langword="null"/> even if
@@ -55,7 +45,6 @@ namespace System.Diagnostics.CodeAnalysis
 }
 #endif
 
-#pragma warning disable IDE0161 // Convert to file-scoped namespace
 namespace OpenTelemetry.Internal
 {
     /// <summary>

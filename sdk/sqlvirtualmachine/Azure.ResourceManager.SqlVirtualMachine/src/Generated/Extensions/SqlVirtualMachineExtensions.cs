@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SqlVirtualMachine.Mocking;
 
@@ -119,6 +117,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmGroupResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -148,6 +154,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmGroupResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -196,6 +210,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -226,6 +248,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -258,6 +288,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmGroupResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -285,6 +323,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmGroupResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -314,6 +360,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -341,6 +395,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmResource"/></description>
         /// </item>
         /// </list>
         /// <item>

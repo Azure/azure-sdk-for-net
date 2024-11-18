@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2024-10-10)
+
+### Features Added
+
+- Add AutoUpgrade and AutoUpgradeProfile support
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+## 1.0.0 (2023-12-13)
+
+This package is the first stable release of the Kubernetes Fleet management library.
 
 ## 1.0.0-beta.4 (2023-11-29)
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -18,9 +17,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            Optional<string> fieldName = default;
-            Optional<FilterInfoPredicate> predicate = default;
-            Optional<string> comparand = default;
+            string fieldName = default;
+            PredicateType predicate = default;
+            string comparand = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("FieldName"u8))
@@ -30,11 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 if (property.NameEquals("Predicate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    predicate = new FilterInfoPredicate(property.Value.GetString());
+                    predicate = new PredicateType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("Comparand"u8))
@@ -43,7 +38,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new FilterInfo(fieldName.Value, Optional.ToNullable(predicate), comparand.Value);
+            return new FilterInfo(fieldName, predicate, comparand);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static FilterInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFilterInfo(document.RootElement);
         }
     }
 }

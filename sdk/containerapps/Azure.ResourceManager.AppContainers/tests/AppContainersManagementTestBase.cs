@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.AppContainers.Tests
     public class AppContainersManagementTestBase : ManagementRecordedTestBase<AppContainersManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
+        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
+        protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected AppContainersManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -27,18 +29,26 @@ namespace Azure.ResourceManager.AppContainers.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
-            return lro.Value;
+            var resourceGroupName = Recording.GenerateAssetName("testRG-");
+            var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                resourceGroupName,
+                new ResourceGroupData(DefaultLocation)
+                {
+                    Tags =
+                    {
+                        { "test", "env" }
+                    }
+                });
+            return rgOp.Value;
         }
 
         protected async Task<ContainerAppManagedEnvironmentResource> CreateContainerAppManagedEnvironment(ResourceGroupResource resourceGroup, string envName)

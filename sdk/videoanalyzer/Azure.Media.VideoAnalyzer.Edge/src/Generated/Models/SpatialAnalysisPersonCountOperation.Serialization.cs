@@ -70,13 +70,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             IList<SpatialAnalysisPersonCountZoneEvents> zones = default;
-            Optional<string> debug = default;
-            Optional<string> calibrationConfiguration = default;
-            Optional<string> cameraConfiguration = default;
-            Optional<string> cameraCalibratorNodeConfiguration = default;
-            Optional<string> detectorNodeConfiguration = default;
-            Optional<string> trackerNodeConfiguration = default;
-            Optional<string> enableFaceMaskClassifier = default;
+            string debug = default;
+            string calibrationConfiguration = default;
+            string cameraConfiguration = default;
+            string cameraCalibratorNodeConfiguration = default;
+            string detectorNodeConfiguration = default;
+            string trackerNodeConfiguration = default;
+            string enableFaceMaskClassifier = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -131,7 +131,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonCountOperation(type, debug.Value, calibrationConfiguration.Value, cameraConfiguration.Value, cameraCalibratorNodeConfiguration.Value, detectorNodeConfiguration.Value, trackerNodeConfiguration.Value, enableFaceMaskClassifier.Value, zones);
+            return new SpatialAnalysisPersonCountOperation(
+                type,
+                debug,
+                calibrationConfiguration,
+                cameraConfiguration,
+                cameraCalibratorNodeConfiguration,
+                detectorNodeConfiguration,
+                trackerNodeConfiguration,
+                enableFaceMaskClassifier,
+                zones);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SpatialAnalysisPersonCountOperation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSpatialAnalysisPersonCountOperation(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -9,18 +9,16 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // List subscription capabilities in the given location.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCapabilitiesByLocation_ListSubscriptionCapabilitiesInTheGivenLocation()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/LocationCapabilityListByLocation.json
@@ -44,70 +42,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get all long term retention backups under the location.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetLongTermRetentionBackupsWithLocation_GetAllLongTermRetentionBackupsUnderTheLocation()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/LongTermRetentionBackupListByLocation.json
-            // this example is just showing the usage of "LongTermRetentionBackups_ListByLocation" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation locationName = new AzureLocation("japaneast");
-            await foreach (LongTermRetentionBackupData item in subscriptionResource.GetLongTermRetentionBackupsWithLocationAsync(locationName))
-            {
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {item.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get all long term retention backups under the server.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetLongTermRetentionBackupsWithServer_GetAllLongTermRetentionBackupsUnderTheServer()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/LongTermRetentionBackupListByServer.json
-            // this example is just showing the usage of "LongTermRetentionBackups_ListByServer" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation locationName = new AzureLocation("japaneast");
-            string longTermRetentionServerName = "testserver";
-            await foreach (LongTermRetentionBackupData item in subscriptionResource.GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName))
-            {
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {item.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get all long term retention backups under the managed instance.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLongTermRetentionManagedInstanceBackupsWithInstance_GetAllLongTermRetentionBackupsUnderTheManagedInstance()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupListByInstance.json
@@ -133,12 +69,11 @@ namespace Azure.ResourceManager.Sql.Samples
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get all long term retention backups under the location.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLongTermRetentionManagedInstanceBackupsWithLocation_GetAllLongTermRetentionBackupsUnderTheLocation()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupListByLocation.json
@@ -163,7 +98,66 @@ namespace Azure.ResourceManager.Sql.Samples
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetLongTermRetentionBackupsWithLocation_GetAllLongTermRetentionBackupsUnderTheLocation()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/LongTermRetentionBackupListByLocation.json
+            // this example is just showing the usage of "LongTermRetentionBackups_ListByLocation" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation locationName = new AzureLocation("japaneast");
+            await foreach (LongTermRetentionBackupData item in subscriptionResource.GetLongTermRetentionBackupsWithLocationAsync(locationName))
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetLongTermRetentionBackupsWithServer_GetAllLongTermRetentionBackupsUnderTheServer()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/LongTermRetentionBackupListByServer.json
+            // this example is just showing the usage of "LongTermRetentionBackups_ListByServer" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation locationName = new AzureLocation("japaneast");
+            string longTermRetentionServerName = "testserver";
+            await foreach (LongTermRetentionBackupData item in subscriptionResource.GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName))
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

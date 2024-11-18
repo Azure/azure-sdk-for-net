@@ -5,10 +5,10 @@
     },
     "matrix": {
         "Agent": {
-            "Ubuntu-20.04_NET7.0": {
+            "Ubuntu-20.04_NET8.0": {
                 "OSVmImage": "MMSUbuntu20.04",
                 "Pool": "azsdk-pool-mms-ubuntu-2004-general",
-                "TestTargetFramework": "net7.0",
+                "TestTargetFramework": "net8.0",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
@@ -36,15 +36,15 @@
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
 
-            "macos-11_NET7.0": {
-                "OSVmImage": "macos-11",
+            "macos_NET8.0": {
+                "OSVmImage": "macos-latest",
                 "Pool": "Azure Pipelines",
-                "TestTargetFramework": "net7.0",
+                "TestTargetFramework": "net8.0",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
-            "macos-11_NET6.0": {
-                "OSVmImage": "macos-11",
+            "macos_NET6.0": {
+                "OSVmImage": "macos-latest",
                 "Pool": "Azure Pipelines",
                 "TestTargetFramework": "net6.0",
                 "AZURE_TEST_AGENT": "MACOS_1015_NET60",
@@ -64,11 +64,11 @@
                 "Windows2022": {
                     "OSVmImage": "windows-2022",
                     "Pool": "azsdk-pool-mms-win-2022-general",
-                    "TestTargetFramework": "net7.0"
+                    "TestTargetFramework": "net8.0"
                 }
             },
             "TestMode": {
-                "NET7.0_Coverage_Record": {
+                "NET8.0_Coverage_Record": {
                     "SupportsRecording": true,
                     "CollectCoverage": true
                 }

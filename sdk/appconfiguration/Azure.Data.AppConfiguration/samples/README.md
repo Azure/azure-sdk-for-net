@@ -22,3 +22,4 @@ description: Samples for the Azure.Data.AppConfiguration client library
  - [Create, Retrieve and Delete a Feature Flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample9_FeatureFlags.md)
  - [Create, Retrieve and Delete a Secret Reference](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample10_SecretReference.md)
   - [Create, Retrieve and Update status of a Configuration Settings Snapshot](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample11_SettingsSnapshot.md)
+ - [Get Configuration Settings By Tags](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample12_GetSettingsUsingTags.md)

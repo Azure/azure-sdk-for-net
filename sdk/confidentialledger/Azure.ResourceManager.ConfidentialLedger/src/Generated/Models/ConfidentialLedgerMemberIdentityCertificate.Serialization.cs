@@ -6,16 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class ConfidentialLedgerMemberIdentityCertificate : IUtf8JsonSerializable
+    public partial class ConfidentialLedgerMemberIdentityCertificate : IUtf8JsonSerializable, IJsonModel<ConfidentialLedgerMemberIdentityCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfidentialLedgerMemberIdentityCertificate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConfidentialLedgerMemberIdentityCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerMemberIdentityCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfidentialLedgerMemberIdentityCertificate)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
@@ -38,18 +56,48 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ConfidentialLedgerMemberIdentityCertificate DeserializeConfidentialLedgerMemberIdentityCertificate(JsonElement element)
+        ConfidentialLedgerMemberIdentityCertificate IJsonModel<ConfidentialLedgerMemberIdentityCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerMemberIdentityCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfidentialLedgerMemberIdentityCertificate)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfidentialLedgerMemberIdentityCertificate(document.RootElement, options);
+        }
+
+        internal static ConfidentialLedgerMemberIdentityCertificate DeserializeConfidentialLedgerMemberIdentityCertificate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> certificate = default;
-            Optional<string> encryptionkey = default;
-            Optional<BinaryData> tags = default;
+            string certificate = default;
+            string encryptionkey = default;
+            BinaryData tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificate"u8))
@@ -71,8 +119,44 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     tags = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConfidentialLedgerMemberIdentityCertificate(certificate.Value, encryptionkey.Value, tags.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConfidentialLedgerMemberIdentityCertificate(certificate, encryptionkey, tags, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConfidentialLedgerMemberIdentityCertificate>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerMemberIdentityCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerMemberIdentityCertificate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConfidentialLedgerMemberIdentityCertificate IPersistableModel<ConfidentialLedgerMemberIdentityCertificate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerMemberIdentityCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConfidentialLedgerMemberIdentityCertificate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerMemberIdentityCertificate)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConfidentialLedgerMemberIdentityCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

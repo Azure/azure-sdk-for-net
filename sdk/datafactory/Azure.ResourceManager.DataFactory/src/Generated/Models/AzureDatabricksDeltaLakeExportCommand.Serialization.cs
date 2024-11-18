@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,11 +14,28 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureDatabricksDeltaLakeExportCommand : IUtf8JsonSerializable
+    public partial class AzureDatabricksDeltaLakeExportCommand : IUtf8JsonSerializable, IJsonModel<AzureDatabricksDeltaLakeExportCommand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDatabricksDeltaLakeExportCommand>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AzureDatabricksDeltaLakeExportCommand>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeExportCommand>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeExportCommand)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
@@ -28,8 +46,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("timestampFormat"u8);
                 JsonSerializer.Serialize(writer, TimestampFormat);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ExportSettingsType);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -42,17 +58,30 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static AzureDatabricksDeltaLakeExportCommand DeserializeAzureDatabricksDeltaLakeExportCommand(JsonElement element)
+        AzureDatabricksDeltaLakeExportCommand IJsonModel<AzureDatabricksDeltaLakeExportCommand>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeExportCommand>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeExportCommand)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDatabricksDeltaLakeExportCommand(document.RootElement, options);
+        }
+
+        internal static AzureDatabricksDeltaLakeExportCommand DeserializeAzureDatabricksDeltaLakeExportCommand(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> dateFormat = default;
-            Optional<DataFactoryElement<string>> timestampFormat = default;
+            DataFactoryElement<string> dateFormat = default;
+            DataFactoryElement<string> timestampFormat = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -84,7 +113,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksDeltaLakeExportCommand(type, additionalProperties, dateFormat.Value, timestampFormat.Value);
+            return new AzureDatabricksDeltaLakeExportCommand(type, additionalProperties, dateFormat, timestampFormat);
         }
+
+        BinaryData IPersistableModel<AzureDatabricksDeltaLakeExportCommand>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeExportCommand>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeExportCommand)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureDatabricksDeltaLakeExportCommand IPersistableModel<AzureDatabricksDeltaLakeExportCommand>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeExportCommand>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureDatabricksDeltaLakeExportCommand(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeExportCommand)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureDatabricksDeltaLakeExportCommand>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

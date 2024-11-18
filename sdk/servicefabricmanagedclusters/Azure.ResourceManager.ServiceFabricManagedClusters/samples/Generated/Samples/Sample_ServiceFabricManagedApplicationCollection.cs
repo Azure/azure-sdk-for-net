@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 {
     public partial class Sample_ServiceFabricManagedApplicationCollection
     {
-        // Get an application
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnApplication()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2023-03-01-preview/examples/ApplicationGetOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/examples/ApplicationGetOperation_example.json
             // this example is just showing the usage of "Applications_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,12 +50,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an application
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnApplication()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2023-03-01-preview/examples/ApplicationGetOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/examples/ApplicationGetOperation_example.json
             // this example is just showing the usage of "Applications_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,12 +80,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an application
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnApplication()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2023-03-01-preview/examples/ApplicationGetOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/examples/ApplicationGetOperation_example.json
             // this example is just showing the usage of "Applications_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,7 +110,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -127,12 +122,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             }
         }
 
-        // Put an application with maximum parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAnApplicationWithMaximumParameters()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2023-03-01-preview/examples/ApplicationPutOperation_example_max.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/examples/ApplicationPutOperation_example_max.json
             // this example is just showing the usage of "Applications_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -167,14 +161,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
                         DefaultServiceTypeHealthPolicy = new ServiceTypeHealthPolicy(0, 0, 0),
                         ServiceTypeHealthPolicyMap =
 {
-["myService"] = new ServiceTypeHealthPolicy(30,30,30),
+["service1"] = new ServiceTypeHealthPolicy(30,30,30),
 },
                     },
                     ForceRestart = false,
                     RollingUpgradeMonitoringPolicy = new RollingUpgradeMonitoringPolicy(PolicyViolationCompensationAction.Rollback, TimeSpan.Parse("00:02:00"), TimeSpan.Parse("00:05:00"), TimeSpan.Parse("00:10:00"), TimeSpan.Parse("01:00:00"), TimeSpan.Parse("00:15:00")),
-                    InstanceCloseDelayDurationInSeconds = 600,
+                    InstanceCloseDelayDurationInSeconds = 600L,
                     UpgradeMode = RollingUpgradeMode.UnmonitoredAuto,
-                    UpgradeReplicaSetCheckTimeout = 3600,
+                    UpgradeReplicaSetCheckTimeout = 3600L,
                     RecreateApplication = false,
                 },
                 Tags =
@@ -192,12 +186,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Put an application with minimum parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAnApplicationWithMinimumParameters()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2023-03-01-preview/examples/ApplicationPutOperation_example_min.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/examples/ApplicationPutOperation_example_min.json
             // this example is just showing the usage of "Applications_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -232,12 +225,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a list of application resources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAListOfApplicationResources()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2023-03-01-preview/examples/ApplicationListOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/examples/ApplicationListOperation_example.json
             // this example is just showing the usage of "Applications_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -266,7 +258,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

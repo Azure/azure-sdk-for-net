@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The DataCollector. </summary>
     public partial class DataCollector
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataCollector"/>. </summary>
         /// <param name="collections">
         /// [Required] The collection configuration. Each collection has it own configuration to collect model data and the name of collection can be arbitrary string.
@@ -32,28 +63,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] The collection configuration. Each collection has it own configuration to collect model data and the name of collection can be arbitrary string.
         /// Model data collector can be used for either payload logging or custom logging or both of them. Collection request and response are reserved for payload logging, others are for custom logging.
         /// </param>
-        /// <param name="requestLogging"> The request logging configuration for mdc, it includes advanced logging settings for all collections. It's optional. </param>
         /// <param name="rollingRate">
         /// When model data is collected to blob storage, we need to roll the data to different path to avoid logging all of them in a single blob file.
         /// If the rolling rate is hour, all data will be collected in the blob path /yyyy/MM/dd/HH/.
         /// If it's day, all data will be collected in blob path /yyyy/MM/dd/.
         /// The other benefit of rolling path is that model monitoring ui is able to select a time range of data very quickly.
         /// </param>
-        internal DataCollector(IDictionary<string, DataCollectionConfiguration> collections, RequestLogging requestLogging, RollingRateType? rollingRate)
+        /// <param name="requestLogging"> The request logging configuration for mdc, it includes advanced logging settings for all collections. It's optional. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollector(IDictionary<string, DataCollectionConfiguration> collections, RollingRateType? rollingRate, RequestLogging requestLogging, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Collections = collections;
-            RequestLogging = requestLogging;
             RollingRate = rollingRate;
+            RequestLogging = requestLogging;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataCollector"/> for deserialization. </summary>
+        internal DataCollector()
+        {
         }
 
         /// <summary>
         /// [Required] The collection configuration. Each collection has it own configuration to collect model data and the name of collection can be arbitrary string.
         /// Model data collector can be used for either payload logging or custom logging or both of them. Collection request and response are reserved for payload logging, others are for custom logging.
         /// </summary>
+        [WirePath("collections")]
         public IDictionary<string, DataCollectionConfiguration> Collections { get; }
+        /// <summary>
+        /// When model data is collected to blob storage, we need to roll the data to different path to avoid logging all of them in a single blob file.
+        /// If the rolling rate is hour, all data will be collected in the blob path /yyyy/MM/dd/HH/.
+        /// If it's day, all data will be collected in blob path /yyyy/MM/dd/.
+        /// The other benefit of rolling path is that model monitoring ui is able to select a time range of data very quickly.
+        /// </summary>
+        [WirePath("rollingRate")]
+        public RollingRateType? RollingRate { get; set; }
         /// <summary> The request logging configuration for mdc, it includes advanced logging settings for all collections. It's optional. </summary>
         internal RequestLogging RequestLogging { get; set; }
         /// <summary> For payload logging, we only collect payload by default. If customers also want to collect the specified headers, they can set them in captureHeaders so that backend will collect those headers along with payload. </summary>
+        [WirePath("requestLogging.captureHeaders")]
         public IList<string> RequestLoggingCaptureHeaders
         {
             get => RequestLogging is null ? default : RequestLogging.CaptureHeaders;
@@ -64,13 +112,5 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 RequestLogging.CaptureHeaders = value;
             }
         }
-
-        /// <summary>
-        /// When model data is collected to blob storage, we need to roll the data to different path to avoid logging all of them in a single blob file.
-        /// If the rolling rate is hour, all data will be collected in the blob path /yyyy/MM/dd/HH/.
-        /// If it's day, all data will be collected in blob path /yyyy/MM/dd/.
-        /// The other benefit of rolling path is that model monitoring ui is able to select a time range of data very quickly.
-        /// </summary>
-        public RollingRateType? RollingRate { get; set; }
     }
 }

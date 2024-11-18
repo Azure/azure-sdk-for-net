@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Marketplace
 {
@@ -99,6 +97,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_GetAdminRequestApproval</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherId"> The publisher id of this offer. </param>
@@ -134,6 +140,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_GetAdminRequestApproval</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,6 +185,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_UpdateAdminRequestApproval</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -186,7 +208,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _marketplaceAdminApprovalRequestPrivateStoreRestClient.UpdateAdminRequestApprovalAsync(Guid.Parse(Id.Parent.Name), Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response), response.GetRawResponse()));
+                var uri = _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateUpdateAdminRequestApprovalRequestUri(Guid.Parse(Id.Parent.Name), Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,6 +233,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_UpdateAdminRequestApproval</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -224,7 +256,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _marketplaceAdminApprovalRequestPrivateStoreRestClient.UpdateAdminRequestApproval(Guid.Parse(Id.Parent.Name), Id.Name, data, cancellationToken);
-                var operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response), response.GetRawResponse()));
+                var uri = _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateUpdateAdminRequestApprovalRequestUri(Guid.Parse(Id.Parent.Name), Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -8,20 +8,17 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Automation;
 using Azure.ResourceManager.Automation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automation.Samples
 {
     public partial class Sample_SoftwareUpdateConfigurationResource
     {
-        // Create software update configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateSoftwareUpdateConfiguration()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/createSoftwareUpdateConfiguration.json
@@ -110,7 +107,7 @@ WorkspaceId = "WorkspaceId2",
             {
                 StartOn = DateTimeOffset.Parse("2017-10-19T12:22:57+00:00"),
                 ExpireOn = DateTimeOffset.Parse("2018-11-09T11:22:57+00:00"),
-                Interval = 1,
+                Interval = 1L,
                 Frequency = AutomationScheduleFrequency.Hour,
                 TimeZone = "America/Los_Angeles",
                 AdvancedSchedule = new AutomationAdvancedSchedule()
@@ -151,9 +148,8 @@ WorkspaceId = "WorkspaceId2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get software update configuration by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSoftwareUpdateConfigurationByName()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/getSoftwareUpdateConfigurationByName.json
@@ -183,9 +179,8 @@ WorkspaceId = "WorkspaceId2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete software update configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSoftwareUpdateConfiguration()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/softwareUpdateConfiguration/deleteSoftwareUpdateConfiguration.json
@@ -208,7 +203,7 @@ WorkspaceId = "WorkspaceId2",
             // invoke the operation
             await softwareUpdateConfiguration.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

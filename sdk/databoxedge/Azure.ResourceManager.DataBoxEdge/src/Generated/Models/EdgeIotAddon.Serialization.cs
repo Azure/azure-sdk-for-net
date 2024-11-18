@@ -5,31 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeIotAddon : IUtf8JsonSerializable
+    public partial class EdgeIotAddon : IUtf8JsonSerializable, IJsonModel<EdgeIotAddon>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeIotAddon>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<EdgeIotAddon>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("ioTDeviceDetails"u8);
-            writer.WriteObjectValue(IotDeviceDetails);
-            writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
-            writer.WriteObjectValue(IotEdgeDeviceDetails);
-            writer.WriteEndObject();
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static EdgeIotAddon DeserializeEdgeIotAddon(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeIotAddon>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeIotAddon)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WritePropertyName("ioTDeviceDetails"u8);
+            writer.WriteObjectValue(IotDeviceDetails, options);
+            writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
+            writer.WriteObjectValue(IotEdgeDeviceDetails, options);
+            if (options.Format != "W" && Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HostPlatform))
+            {
+                writer.WritePropertyName("hostPlatform"u8);
+                writer.WriteStringValue(HostPlatform.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(HostPlatformType))
+            {
+                writer.WritePropertyName("hostPlatformType"u8);
+                writer.WriteStringValue(HostPlatformType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            writer.WriteEndObject();
+        }
+
+        EdgeIotAddon IJsonModel<EdgeIotAddon>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeIotAddon>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeIotAddon)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeIotAddon(document.RootElement, options);
+        }
+
+        internal static EdgeIotAddon DeserializeEdgeIotAddon(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,13 +89,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             EdgeIotDeviceInfo iotDeviceDetails = default;
             EdgeIotDeviceInfo iotEdgeDeviceDetails = default;
-            Optional<string> version = default;
-            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
-            Optional<HostPlatformType> hostPlatformType = default;
-            Optional<DataBoxEdgeRoleAddonProvisioningState> provisioningState = default;
+            string version = default;
+            DataBoxEdgeOSPlatformType? hostPlatform = default;
+            HostPlatformType? hostPlatformType = default;
+            DataBoxEdgeRoleAddonProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -87,12 +140,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         if (property0.NameEquals("ioTDeviceDetails"u8))
                         {
-                            iotDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
+                            iotDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ioTEdgeDeviceDetails"u8))
                         {
-                            iotEdgeDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
+                            iotEdgeDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("version"u8))
@@ -130,8 +183,56 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeIotAddon(id, name, type, systemData.Value, kind, iotDeviceDetails, iotEdgeDeviceDetails, version.Value, Optional.ToNullable(hostPlatform), Optional.ToNullable(hostPlatformType), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdgeIotAddon(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                iotDeviceDetails,
+                iotEdgeDeviceDetails,
+                version,
+                hostPlatform,
+                hostPlatformType,
+                provisioningState);
         }
+
+        BinaryData IPersistableModel<EdgeIotAddon>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeIotAddon>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeIotAddon)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EdgeIotAddon IPersistableModel<EdgeIotAddon>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeIotAddon>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEdgeIotAddon(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeIotAddon)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeIotAddon>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

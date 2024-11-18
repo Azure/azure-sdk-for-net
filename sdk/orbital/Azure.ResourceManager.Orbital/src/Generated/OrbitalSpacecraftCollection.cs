@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Orbital
@@ -65,6 +63,14 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalSpacecraftResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -105,6 +111,14 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalSpacecraftResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -147,6 +161,14 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalSpacecraftResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="spacecraftName"> Spacecraft ID. </param>
@@ -183,6 +205,14 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalSpacecraftResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +251,14 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalSpacecraftResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -244,6 +282,14 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalSpacecraftResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -266,6 +312,14 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalSpacecraftResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +356,14 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalSpacecraftResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="spacecraftName"> Spacecraft ID. </param>
@@ -336,6 +398,14 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalSpacecraftResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,6 +443,14 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalSpacecraftResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

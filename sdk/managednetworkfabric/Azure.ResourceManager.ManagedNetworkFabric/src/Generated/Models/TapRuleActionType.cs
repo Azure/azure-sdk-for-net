@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(TapRuleActionType left, TapRuleActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TapRuleActionType"/> values are not the same. </summary>
         public static bool operator !=(TapRuleActionType left, TapRuleActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TapRuleActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TapRuleActionType"/>. </summary>
         public static implicit operator TapRuleActionType(string value) => new TapRuleActionType(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

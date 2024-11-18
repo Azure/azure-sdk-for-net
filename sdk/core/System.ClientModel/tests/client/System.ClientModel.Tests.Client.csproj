@@ -4,6 +4,7 @@
     <Description>Test client code for use in System.ClientModel test libraries.</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestSupportProject>true</IsTestSupportProject>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +12,7 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="System.Linq.Async" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +32,9 @@
     <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWithVMsWireFormat.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestData\ModelWithPersistableOnly\ModelWithPersistableOnlyWireFormat.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\ModelXml.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -40,6 +45,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\ModelX\ModelXWireFormat.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ResourceProviderData\ResourceProviderData-TwoSpaces.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\ResourceProviderData\ResourceProviderData-Collapsed.json">

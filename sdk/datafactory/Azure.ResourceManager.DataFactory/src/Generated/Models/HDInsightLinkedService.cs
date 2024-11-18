@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -28,6 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="HDInsightLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="isEspEnabled"> Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean. </param>
         /// <param name="fileSystem"> Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string). </param>
-        internal HDInsightLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> clusterUri, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, DataFactoryLinkedServiceReference linkedServiceName, DataFactoryLinkedServiceReference hcatalogLinkedServiceName, string encryptedCredential, DataFactoryElement<bool> isEspEnabled, DataFactoryElement<string> fileSystem) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HDInsightLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> clusterUri, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryLinkedServiceReference linkedServiceName, DataFactoryLinkedServiceReference hcatalogLinkedServiceName, string encryptedCredential, DataFactoryElement<bool> isEspEnabled, DataFactoryElement<string> fileSystem) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterUri = clusterUri;
             UserName = userName;
@@ -54,12 +54,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "HDInsight";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightLinkedService"/> for deserialization. </summary>
+        internal HDInsightLinkedService()
+        {
+        }
+
         /// <summary> HDInsight cluster URI. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClusterUri { get; set; }
         /// <summary> HDInsight cluster user name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> HDInsight cluster password. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The Azure Storage linked service reference. </summary>
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> A reference to the Azure SQL linked service that points to the HCatalog database. </summary>

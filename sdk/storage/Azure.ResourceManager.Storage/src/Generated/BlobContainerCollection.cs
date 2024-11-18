@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -65,6 +63,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -83,7 +89,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _blobContainerRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<BlobContainerResource>(Response.FromValue(new BlobContainerResource(Client, response), response.GetRawResponse()));
+                var uri = _blobContainerRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<BlobContainerResource>(Response.FromValue(new BlobContainerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -124,7 +140,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _blobContainerRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, data, cancellationToken);
-                var operation = new StorageArmOperation<BlobContainerResource>(Response.FromValue(new BlobContainerResource(Client, response), response.GetRawResponse()));
+                var uri = _blobContainerRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<BlobContainerResource>(Response.FromValue(new BlobContainerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -146,6 +164,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,6 +210,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
@@ -221,6 +255,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
@@ -228,10 +270,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BlobContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(string maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(int? maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _blobContainerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blobContainerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _blobContainerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, include);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blobContainerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, include);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlobContainerResource(Client, BlobContainerData.DeserializeBlobContainerData(e)), _blobContainerClientDiagnostics, Pipeline, "BlobContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -246,6 +288,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
@@ -253,10 +303,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BlobContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BlobContainerResource> GetAll(string maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BlobContainerResource> GetAll(int? maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _blobContainerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blobContainerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _blobContainerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, include);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blobContainerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, include);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlobContainerResource(Client, BlobContainerData.DeserializeBlobContainerData(e)), _blobContainerClientDiagnostics, Pipeline, "BlobContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -270,6 +320,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,6 +364,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
@@ -340,6 +406,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,6 +451,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

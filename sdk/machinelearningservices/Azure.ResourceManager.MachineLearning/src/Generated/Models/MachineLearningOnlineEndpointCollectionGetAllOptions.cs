@@ -16,18 +16,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Name of the endpoint. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Number of endpoints to be retrieved in a page of results. </summary>
+        [WirePath("count")]
         public int? Count { get; set; }
         /// <summary> EndpointComputeType to be filtered by. </summary>
+        [WirePath("computeType")]
         public MachineLearningEndpointComputeType? ComputeType { get; set; }
         /// <summary> Continuation token for pagination. </summary>
+        [WirePath("skip")]
         public string Skip { get; set; }
         /// <summary> A set of tags with which to filter the returned models. It is a comma separated string of tags key or tags key=value. Example: tagKey1,tagKey2,tagKey3=value3 . </summary>
+        [WirePath("tags")]
         public string Tags { get; set; }
         /// <summary> A set of properties with which to filter the returned models. It is a comma separated string of properties key and/or properties key=value Example: propKey1,propKey2,propKey3=value3 . </summary>
+        [WirePath("properties")]
         public string Properties { get; set; }
         /// <summary> The option to order the response. </summary>
+        [WirePath("orderBy")]
         public MachineLearningOrderString? OrderBy { get; set; }
     }
 }

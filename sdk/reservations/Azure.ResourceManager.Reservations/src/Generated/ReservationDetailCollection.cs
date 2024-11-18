@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Reservations
 {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Reservation_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationId"> Id of the reservation item. </param>
@@ -97,6 +103,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Reservation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,6 +146,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Reservation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -154,6 +176,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Reservation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -175,6 +205,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Reservation_ListRevisions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +237,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Reservation_ListRevisions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationId"> Id of the reservation item. </param>
@@ -221,6 +267,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Reservation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -254,6 +308,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Reservation_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationId"> Id of the reservation item. </param>
@@ -285,6 +347,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Reservation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,6 +389,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Reservation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

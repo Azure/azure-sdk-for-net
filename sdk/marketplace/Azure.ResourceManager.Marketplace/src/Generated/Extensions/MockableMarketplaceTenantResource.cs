@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.Marketplace.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateStore_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
@@ -74,6 +79,14 @@ namespace Azure.ResourceManager.Marketplace.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

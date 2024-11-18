@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class PrivateCloudAvailabilityProperties : IUtf8JsonSerializable
+    public partial class PrivateCloudAvailabilityProperties : IUtf8JsonSerializable, IJsonModel<PrivateCloudAvailabilityProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateCloudAvailabilityProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PrivateCloudAvailabilityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateCloudAvailabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateCloudAvailabilityProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Strategy))
             {
                 writer.WritePropertyName("strategy"u8);
@@ -30,18 +49,48 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("secondaryZone"u8);
                 writer.WriteNumberValue(SecondaryZone.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static PrivateCloudAvailabilityProperties DeserializePrivateCloudAvailabilityProperties(JsonElement element)
+        PrivateCloudAvailabilityProperties IJsonModel<PrivateCloudAvailabilityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateCloudAvailabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateCloudAvailabilityProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateCloudAvailabilityProperties(document.RootElement, options);
+        }
+
+        internal static PrivateCloudAvailabilityProperties DeserializePrivateCloudAvailabilityProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AvailabilityStrategy> strategy = default;
-            Optional<int> zone = default;
-            Optional<int> secondaryZone = default;
+            AvailabilityStrategy? strategy = default;
+            int? zone = default;
+            int? secondaryZone = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("strategy"u8))
@@ -71,8 +120,44 @@ namespace Azure.ResourceManager.Avs.Models
                     secondaryZone = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrivateCloudAvailabilityProperties(Optional.ToNullable(strategy), Optional.ToNullable(zone), Optional.ToNullable(secondaryZone));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PrivateCloudAvailabilityProperties(strategy, zone, secondaryZone, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PrivateCloudAvailabilityProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateCloudAvailabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PrivateCloudAvailabilityProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PrivateCloudAvailabilityProperties IPersistableModel<PrivateCloudAvailabilityProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateCloudAvailabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePrivateCloudAvailabilityProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrivateCloudAvailabilityProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PrivateCloudAvailabilityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
@@ -19,7 +20,13 @@ namespace Microsoft.Extensions.Azure
         private const string ConnectionStringParameterName = "connectionString";
         private const char TenantDelimiter = ';';
 
-        public static object CreateClient(Type clientType, Type optionsType, object options, IConfiguration configuration, TokenCredential credential)
+        [RequiresUnreferencedCode("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        public static object CreateClient(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type clientType,
+            Type optionsType,
+            object options,
+            IConfiguration configuration,
+            TokenCredential credential)
         {
             List<object> arguments = new List<object>();
             // Handle single values as connection strings
@@ -90,6 +97,7 @@ namespace Microsoft.Extensions.Azure
             var clientId = configuration["clientId"];
             var tenantId = configuration["tenantId"];
             var resourceId = configuration["managedIdentityResourceId"];
+            var objectId = configuration["managedIdentityObjectId"];
             var clientSecret = configuration["clientSecret"];
             var certificate = configuration["clientCertificate"];
             var certificateStoreName = configuration["clientCertificateStoreName"];
@@ -107,14 +115,24 @@ namespace Microsoft.Extensions.Azure
 
             if (string.Equals(credentialType, "managedidentity", StringComparison.OrdinalIgnoreCase))
             {
-                if (!string.IsNullOrWhiteSpace(clientId) && !string.IsNullOrWhiteSpace(resourceId))
+                int idCount = 0;
+                idCount += string.IsNullOrWhiteSpace(clientId) ? 0 : 1;
+                idCount += string.IsNullOrWhiteSpace(resourceId) ? 0 : 1;
+                idCount += string.IsNullOrWhiteSpace(objectId) ? 0 : 1;
+
+                if (idCount > 1)
                 {
-                    throw new ArgumentException("Cannot specify both 'clientId' and 'managedIdentityResourceId'");
+                    throw new ArgumentException("Only one of either 'clientId', 'managedIdentityResourceId', or 'managedIdentityObjectId' can be specified for managed identity.");
                 }
 
                 if (!string.IsNullOrWhiteSpace(resourceId))
                 {
                     return new ManagedIdentityCredential(new ResourceIdentifier(resourceId));
+                }
+
+                if (!string.IsNullOrWhiteSpace(objectId))
+                {
+                    return new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedObjectId(objectId));
                 }
 
                 return new ManagedIdentityCredential(clientId);
@@ -208,6 +226,11 @@ namespace Microsoft.Extensions.Azure
 
             // TODO: More logging
 
+            if (!string.IsNullOrWhiteSpace(objectId))
+            {
+                throw new ArgumentException("'managedIdentityObjectId' is only supported when the credential type is 'managedidentity'.");
+            }
+
             if (additionallyAllowedTenantsList != null
                 || !string.IsNullOrWhiteSpace(tenantId)
                 || !string.IsNullOrWhiteSpace(clientId)
@@ -243,7 +266,9 @@ namespace Microsoft.Extensions.Azure
             return null;
         }
 
-        internal static object CreateClientOptions(object version, Type optionsType)
+        internal static object CreateClientOptions(
+            object version,
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type optionsType)
         {
             ConstructorInfo parameterlessConstructor = null;
             int versionParameterIndex = 0;
@@ -320,7 +345,11 @@ namespace Microsoft.Extensions.Azure
                    parameter.Position == ((ConstructorInfo)parameter.Member).GetParameters().Length - 1;
         }
 
-        private static string BuildErrorMessage(IConfiguration configuration, Type clientType, Type optionsType)
+        [RequiresUnreferencedCode("Walks the constructors of the type's constructor parameters, which can't be annotated for trimming.")]
+        private static string BuildErrorMessage(
+            IConfiguration configuration,
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type clientType,
+            Type optionsType)
         {
             var builder = new StringBuilder();
 
@@ -410,7 +439,12 @@ namespace Microsoft.Extensions.Azure
                    IsOptionsParameter(parameters[parameters.Length - 1], optionsType);
         }
 
-        private static bool TryConvertArgument(IConfiguration configuration, string parameterName, Type parameterType, out object value)
+        [RequiresUnreferencedCode("Recursively walks the constructors of parameterType's constructor parameters, which can't be annotated for trimming.")]
+        private static bool TryConvertArgument(
+            IConfiguration configuration,
+            string parameterName,
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type parameterType,
+            out object value)
         {
             if (parameterType == typeof(string))
             {
@@ -443,7 +477,11 @@ namespace Microsoft.Extensions.Azure
             return true;
         }
 
-        internal static bool TryCreateObject(Type type, IConfigurationSection configuration, out object value)
+        [RequiresUnreferencedCode("Recursively walks the constructors of the type's constructor parameters, which can't be annotated for trimming.")]
+        internal static bool TryCreateObject(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type type,
+            IConfigurationSection configuration,
+            out object value)
         {
             if (!configuration.GetChildren().Any())
             {
@@ -481,7 +519,8 @@ namespace Microsoft.Extensions.Azure
             return false;
         }
 
-        private static IOrderedEnumerable<ConstructorInfo> GetApplicableParameterConstructors(Type type)
+        private static IOrderedEnumerable<ConstructorInfo> GetApplicableParameterConstructors(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type type)
         {
             return type.GetConstructors(BindingFlags.Public | BindingFlags.Instance).OrderByDescending(c => c.GetParameters().Length);
         }

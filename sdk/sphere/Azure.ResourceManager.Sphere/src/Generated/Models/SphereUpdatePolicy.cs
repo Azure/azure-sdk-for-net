@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// Update policy values.
-    /// Serialized Name: UpdatePolicy
-    /// </summary>
+    /// <summary> Update policy values. </summary>
     public readonly partial struct SphereUpdatePolicy : IEquatable<SphereUpdatePolicy>
     {
         private readonly string _value;
@@ -28,21 +25,15 @@ namespace Azure.ResourceManager.Sphere.Models
         private const string UpdateAllValue = "UpdateAll";
         private const string No3RdPartyAppUpdatesValue = "No3rdPartyAppUpdates";
 
-        /// <summary>
-        /// Update all policy.
-        /// Serialized Name: UpdatePolicy.UpdateAll
-        /// </summary>
+        /// <summary> Update all policy. </summary>
         public static SphereUpdatePolicy UpdateAll { get; } = new SphereUpdatePolicy(UpdateAllValue);
-        /// <summary>
-        /// No update for 3rd party app policy.
-        /// Serialized Name: UpdatePolicy.No3rdPartyAppUpdates
-        /// </summary>
+        /// <summary> No update for 3rd party app policy. </summary>
         public static SphereUpdatePolicy No3RdPartyAppUpdates { get; } = new SphereUpdatePolicy(No3RdPartyAppUpdatesValue);
         /// <summary> Determines if two <see cref="SphereUpdatePolicy"/> values are the same. </summary>
         public static bool operator ==(SphereUpdatePolicy left, SphereUpdatePolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SphereUpdatePolicy"/> values are not the same. </summary>
         public static bool operator !=(SphereUpdatePolicy left, SphereUpdatePolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SphereUpdatePolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SphereUpdatePolicy"/>. </summary>
         public static implicit operator SphereUpdatePolicy(string value) => new SphereUpdatePolicy(value);
 
         /// <inheritdoc />
@@ -53,7 +44,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

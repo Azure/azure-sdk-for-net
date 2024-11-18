@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(ResourceTypeAliasPathAttributes left, ResourceTypeAliasPathAttributes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceTypeAliasPathAttributes"/> values are not the same. </summary>
         public static bool operator !=(ResourceTypeAliasPathAttributes left, ResourceTypeAliasPathAttributes right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceTypeAliasPathAttributes"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceTypeAliasPathAttributes"/>. </summary>
         public static implicit operator ResourceTypeAliasPathAttributes(string value) => new ResourceTypeAliasPathAttributes(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

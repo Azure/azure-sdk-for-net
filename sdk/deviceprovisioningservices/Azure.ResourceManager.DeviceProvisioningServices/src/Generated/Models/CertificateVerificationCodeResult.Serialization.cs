@@ -5,27 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class CertificateVerificationCodeResult
+    public partial class CertificateVerificationCodeResult : IUtf8JsonSerializable, IJsonModel<CertificateVerificationCodeResult>
     {
-        internal static CertificateVerificationCodeResult DeserializeCertificateVerificationCodeResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateVerificationCodeResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CertificateVerificationCodeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+        }
+
+        CertificateVerificationCodeResult IJsonModel<CertificateVerificationCodeResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCertificateVerificationCodeResult(document.RootElement, options);
+        }
+
+        internal static CertificateVerificationCodeResult DeserializeCertificateVerificationCodeResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<CertificateVerificationCodeProperties> properties = default;
+            ETag? etag = default;
+            CertificateVerificationCodeProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -43,7 +93,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     {
                         continue;
                     }
-                    properties = CertificateVerificationCodeProperties.DeserializeCertificateVerificationCodeProperties(property.Value);
+                    properties = CertificateVerificationCodeProperties.DeserializeCertificateVerificationCodeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -70,8 +120,51 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CertificateVerificationCodeResult(id, name, type, systemData.Value, Optional.ToNullable(etag), properties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CertificateVerificationCodeResult(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                properties,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CertificateVerificationCodeResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CertificateVerificationCodeResult IPersistableModel<CertificateVerificationCodeResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCertificateVerificationCodeResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CertificateVerificationCodeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

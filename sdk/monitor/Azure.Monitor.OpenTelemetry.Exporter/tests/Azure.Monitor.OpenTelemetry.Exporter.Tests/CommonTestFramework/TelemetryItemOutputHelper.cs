@@ -16,12 +16,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             this.output = output;
         }
 
-        public void Write(IEnumerable<TelemetryItem>? telemetryItems)
+        public void Write(IList<TelemetryItem>? telemetryItems)
         {
             if (telemetryItems == null)
             {
                 return;
             }
+
+            output.WriteLine($"Telemetry Items count: {telemetryItems.Count}");
+            output.WriteLine(string.Empty);
 
             foreach (var telemetryItem in telemetryItems)
             {
@@ -34,6 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             output.WriteLine(new string('-', 32));
 
             output.WriteLine($"Name: {telemetryItem.Name}");
+            output.WriteLine($"Timestamp: {telemetryItem.Time.ToString("yyyy-MM-ddTHH:mm:ss.ffffff")}");
             output.WriteLine($"Tags: {telemetryItem.Tags.Count}");
             foreach (var tag in telemetryItem.Tags)
             {
@@ -82,6 +86,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
                 output.WriteLine($"\tTypeName: {exceptionDetails.TypeName}");
                 output.WriteLine($"\tMessage: {exceptionDetails.Message}");
             }
+
+            output.WriteLine($"Properties: {exceptionData.Properties.Count}");
+            foreach (var prop in exceptionData.Properties)
+            {
+                output.WriteLine($"\t{prop.Key}: {prop.Value}");
+            }
         }
 
         private void WriteMetricsData(MetricsData metricsData)
@@ -113,6 +123,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         {
             output.WriteLine($"Name: {remoteDependencyData.Name}");
             output.WriteLine($"Id: {remoteDependencyData.Id}");
+            output.WriteLine($"Type: {remoteDependencyData.Type}");
+            output.WriteLine($"Data: {remoteDependencyData.Data}");
 
             output.WriteLine($"Properties: {remoteDependencyData.Properties.Count}");
             foreach (var prop in remoteDependencyData.Properties)

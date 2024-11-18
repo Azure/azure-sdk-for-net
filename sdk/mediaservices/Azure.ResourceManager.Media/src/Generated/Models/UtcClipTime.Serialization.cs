@@ -6,31 +6,63 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class UtcClipTime : IUtf8JsonSerializable
+    public partial class UtcClipTime : IUtf8JsonSerializable, IJsonModel<UtcClipTime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UtcClipTime>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<UtcClipTime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("time"u8);
-            writer.WriteStringValue(Time, "O");
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static UtcClipTime DeserializeUtcClipTime(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UtcClipTime>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UtcClipTime)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("time"u8);
+            writer.WriteStringValue(Time, "O");
+        }
+
+        UtcClipTime IJsonModel<UtcClipTime>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UtcClipTime>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UtcClipTime)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUtcClipTime(document.RootElement, options);
+        }
+
+        internal static UtcClipTime DeserializeUtcClipTime(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DateTimeOffset time = default;
             string odataType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -43,8 +75,44 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UtcClipTime(odataType, time);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UtcClipTime(odataType, serializedAdditionalRawData, time);
         }
+
+        BinaryData IPersistableModel<UtcClipTime>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UtcClipTime>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(UtcClipTime)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        UtcClipTime IPersistableModel<UtcClipTime>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UtcClipTime>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUtcClipTime(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UtcClipTime)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UtcClipTime>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

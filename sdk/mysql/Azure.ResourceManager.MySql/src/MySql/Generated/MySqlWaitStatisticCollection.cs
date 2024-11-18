@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitStatisticsId"> The Wait Statistic identifier. </param>
@@ -99,6 +105,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +151,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="input"> The required parameters for retrieving wait statistics. </param>
@@ -163,6 +185,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="input"> The required parameters for retrieving wait statistics. </param>
@@ -188,6 +218,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,6 +262,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitStatisticsId"> The Wait Statistic identifier. </param>
@@ -258,6 +304,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,6 +349,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

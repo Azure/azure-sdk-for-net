@@ -5,18 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class SynapseOutputDataSource : IUtf8JsonSerializable
+    public partial class SynapseOutputDataSource : IUtf8JsonSerializable, IJsonModel<SynapseOutputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseOutputDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SynapseOutputDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(OutputDataSourceType);
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseOutputDataSource)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Server))
@@ -50,22 +68,37 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static SynapseOutputDataSource DeserializeSynapseOutputDataSource(JsonElement element)
+        SynapseOutputDataSource IJsonModel<SynapseOutputDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseOutputDataSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseOutputDataSource(document.RootElement, options);
+        }
+
+        internal static SynapseOutputDataSource DeserializeSynapseOutputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<string> server = default;
-            Optional<string> database = default;
-            Optional<string> table = default;
-            Optional<string> user = default;
-            Optional<string> password = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string server = default;
+            string database = default;
+            string table = default;
+            string user = default;
+            string password = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -119,8 +152,52 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseOutputDataSource(type, server.Value, database.Value, table.Value, user.Value, password.Value, Optional.ToNullable(authenticationMode));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SynapseOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                server,
+                database,
+                table,
+                user,
+                password,
+                authenticationMode);
         }
+
+        BinaryData IPersistableModel<SynapseOutputDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseOutputDataSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SynapseOutputDataSource IPersistableModel<SynapseOutputDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseOutputDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseOutputDataSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseOutputDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,23 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ElasticSan;
 using Azure.ResourceManager.ElasticSan.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ElasticSan.Samples
 {
     public partial class Sample_ElasticSanSnapshotResource
     {
-        // VolumeSnapshots_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_VolumeSnapshotsCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeSnapshots_Create_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeSnapshots_Create_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeSnapshots_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -42,7 +39,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanSnapshotResource elasticSanSnapshot = client.GetElasticSanSnapshotResource(elasticSanSnapshotResourceId);
 
             // invoke the operation
-            ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationData(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}")));
+            ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationInfo(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}")));
             ArmOperation<ElasticSanSnapshotResource> lro = await elasticSanSnapshot.UpdateAsync(WaitUntil.Completed, data);
             ElasticSanSnapshotResource result = lro.Value;
 
@@ -53,12 +50,11 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VolumeSnapshots_Create_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_VolumeSnapshotsCreateMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeSnapshots_Create_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeSnapshots_Create_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeSnapshots_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +73,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanSnapshotResource elasticSanSnapshot = client.GetElasticSanSnapshotResource(elasticSanSnapshotResourceId);
 
             // invoke the operation
-            ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationData(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}")));
+            ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationInfo(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}")));
             ArmOperation<ElasticSanSnapshotResource> lro = await elasticSanSnapshot.UpdateAsync(WaitUntil.Completed, data);
             ElasticSanSnapshotResource result = lro.Value;
 
@@ -88,12 +84,11 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VolumeSnapshots_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_VolumeSnapshotsDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeSnapshots_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeSnapshots_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeSnapshots_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,15 +109,14 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             // invoke the operation
             await elasticSanSnapshot.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VolumeSnapshots_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_VolumeSnapshotsDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeSnapshots_Delete_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeSnapshots_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeSnapshots_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -143,15 +137,14 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             // invoke the operation
             await elasticSanSnapshot.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VolumeSnapshots_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeSnapshotsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeSnapshots_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeSnapshots_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeSnapshots_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -179,12 +172,11 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VolumeSnapshots_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeSnapshotsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeSnapshots_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeSnapshots_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeSnapshots_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

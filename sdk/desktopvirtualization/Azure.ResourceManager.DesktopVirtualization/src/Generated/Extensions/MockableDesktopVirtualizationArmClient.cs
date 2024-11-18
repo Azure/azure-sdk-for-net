@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Mocking
 {
@@ -190,6 +188,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         {
             MsixPackageResource.ValidateResourceId(id);
             return new MsixPackageResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AppAttachPackageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppAttachPackageResource.CreateResourceIdentifier" /> to create an <see cref="AppAttachPackageResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AppAttachPackageResource"/> object. </returns>
+        public virtual AppAttachPackageResource GetAppAttachPackageResource(ResourceIdentifier id)
+        {
+            AppAttachPackageResource.ValidateResourceId(id);
+            return new AppAttachPackageResource(Client, id);
         }
     }
 }

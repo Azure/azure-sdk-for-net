@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         private const string MMAWorkspaceNetworkValue = "MMAWorkspaceNetwork";
         private const string AzureArcVmValue = "AzureArcVM";
         private const string AzureVmssValue = "AzureVMSS";
+        private const string AzureArcNetworkValue = "AzureArcNetwork";
 
         /// <summary> AzureVM. </summary>
         public static ConnectionMonitorEndpointType AzureVm { get; } = new ConnectionMonitorEndpointType(AzureVmValue);
@@ -47,11 +48,13 @@ namespace Azure.ResourceManager.Network.Models
         public static ConnectionMonitorEndpointType AzureArcVm { get; } = new ConnectionMonitorEndpointType(AzureArcVmValue);
         /// <summary> AzureVMSS. </summary>
         public static ConnectionMonitorEndpointType AzureVmss { get; } = new ConnectionMonitorEndpointType(AzureVmssValue);
+        /// <summary> AzureArcNetwork. </summary>
+        public static ConnectionMonitorEndpointType AzureArcNetwork { get; } = new ConnectionMonitorEndpointType(AzureArcNetworkValue);
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointType"/> values are the same. </summary>
         public static bool operator ==(ConnectionMonitorEndpointType left, ConnectionMonitorEndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointType"/> values are not the same. </summary>
         public static bool operator !=(ConnectionMonitorEndpointType left, ConnectionMonitorEndpointType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectionMonitorEndpointType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionMonitorEndpointType"/>. </summary>
         public static implicit operator ConnectionMonitorEndpointType(string value) => new ConnectionMonitorEndpointType(value);
 
         /// <inheritdoc />
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

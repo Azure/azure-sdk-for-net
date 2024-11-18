@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary> The family of payment method. </summary>
+    /// <summary> Payment on Account type. </summary>
     public readonly partial struct PaymentMethodFamily : IEquatable<PaymentMethodFamily>
     {
         private readonly string _value;
@@ -22,18 +22,36 @@ namespace Azure.ResourceManager.Billing.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string OtherValue = "Other";
+        private const string NoneValue = "None";
         private const string CreditCardValue = "CreditCard";
+        private const string CreditsValue = "Credits";
         private const string CheckWireValue = "CheckWire";
+        private const string EWalletValue = "EWallet";
+        private const string TaskOrderValue = "TaskOrder";
+        private const string DirectDebitValue = "DirectDebit";
 
+        /// <summary> Other. </summary>
+        public static PaymentMethodFamily Other { get; } = new PaymentMethodFamily(OtherValue);
+        /// <summary> None. </summary>
+        public static PaymentMethodFamily None { get; } = new PaymentMethodFamily(NoneValue);
         /// <summary> CreditCard. </summary>
         public static PaymentMethodFamily CreditCard { get; } = new PaymentMethodFamily(CreditCardValue);
+        /// <summary> Credits. </summary>
+        public static PaymentMethodFamily Credits { get; } = new PaymentMethodFamily(CreditsValue);
         /// <summary> CheckWire. </summary>
         public static PaymentMethodFamily CheckWire { get; } = new PaymentMethodFamily(CheckWireValue);
+        /// <summary> EWallet. </summary>
+        public static PaymentMethodFamily EWallet { get; } = new PaymentMethodFamily(EWalletValue);
+        /// <summary> TaskOrder. </summary>
+        public static PaymentMethodFamily TaskOrder { get; } = new PaymentMethodFamily(TaskOrderValue);
+        /// <summary> DirectDebit. </summary>
+        public static PaymentMethodFamily DirectDebit { get; } = new PaymentMethodFamily(DirectDebitValue);
         /// <summary> Determines if two <see cref="PaymentMethodFamily"/> values are the same. </summary>
         public static bool operator ==(PaymentMethodFamily left, PaymentMethodFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PaymentMethodFamily"/> values are not the same. </summary>
         public static bool operator !=(PaymentMethodFamily left, PaymentMethodFamily right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PaymentMethodFamily"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PaymentMethodFamily"/>. </summary>
         public static implicit operator PaymentMethodFamily(string value) => new PaymentMethodFamily(value);
 
         /// <inheritdoc />
@@ -44,7 +62,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

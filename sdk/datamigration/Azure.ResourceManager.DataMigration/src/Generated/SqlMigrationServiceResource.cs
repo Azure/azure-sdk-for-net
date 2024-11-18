@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Resources;
 
@@ -104,6 +102,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -136,6 +142,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,6 +181,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +224,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -235,6 +265,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,6 +312,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -310,7 +356,15 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listAuthKeys</description>
+        /// <description>SqlMigrationServices_ListAuthKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +394,15 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listAuthKeys</description>
+        /// <description>SqlMigrationServices_ListAuthKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,7 +432,15 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_regenerateAuthKeys</description>
+        /// <description>SqlMigrationServices_RegenerateAuthKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,7 +474,15 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_regenerateAuthKeys</description>
+        /// <description>SqlMigrationServices_RegenerateAuthKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -438,7 +516,15 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_deleteNode</description>
+        /// <description>SqlMigrationServices_DeleteNode</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -472,7 +558,15 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_deleteNode</description>
+        /// <description>SqlMigrationServices_DeleteNode</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,7 +600,15 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMigrations</description>
+        /// <description>SqlMigrationServices_ListMigrations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -516,7 +618,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlMigrationServiceRestClient.CreateListMigrationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlMigrationServiceRestClient.CreateListMigrationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatabaseMigration.DeserializeDatabaseMigration, _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceResource.GetMigrations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatabaseMigration.DeserializeDatabaseMigration(e), _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceResource.GetMigrations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -528,7 +630,15 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMigrations</description>
+        /// <description>SqlMigrationServices_ListMigrations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -538,7 +648,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlMigrationServiceRestClient.CreateListMigrationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlMigrationServiceRestClient.CreateListMigrationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatabaseMigration.DeserializeDatabaseMigration, _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceResource.GetMigrations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatabaseMigration.DeserializeDatabaseMigration(e), _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceResource.GetMigrations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -550,7 +660,15 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMonitoringData</description>
+        /// <description>SqlMigrationServices_ListMonitoringData</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -580,7 +698,15 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMonitoringData</description>
+        /// <description>SqlMigrationServices_ListMonitoringData</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -611,6 +737,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -666,6 +800,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -720,6 +862,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -769,6 +919,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -817,6 +975,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -869,6 +1035,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

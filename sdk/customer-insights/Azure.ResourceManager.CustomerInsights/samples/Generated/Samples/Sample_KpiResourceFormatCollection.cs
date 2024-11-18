@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CustomerInsights;
 using Azure.ResourceManager.CustomerInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CustomerInsights.Samples
 {
     public partial class Sample_KpiResourceFormatCollection
     {
-        // Kpi_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_KpiCreateOrUpdate()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/KpiCreateOrUpdate.json
@@ -64,7 +61,7 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
 {
 "SavingAccountBalance"
 },
-                ThresHolds = new KpiThresholds(5, 50, true),
+                ThresHolds = new KpiThresholds(5M, 50M, true),
                 Aliases =
 {
 new KpiAlias("alias","Id+4")
@@ -80,9 +77,8 @@ new KpiAlias("alias","Id+4")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Kpi_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_KpiGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/KpiGet.json
@@ -115,9 +111,8 @@ new KpiAlias("alias","Id+4")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Kpi_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_KpiGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/KpiGet.json
@@ -146,9 +141,8 @@ new KpiAlias("alias","Id+4")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Kpi_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_KpiGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/KpiGet.json
@@ -177,7 +171,7 @@ new KpiAlias("alias","Id+4")
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -189,9 +183,8 @@ new KpiAlias("alias","Id+4")
             }
         }
 
-        // Kpi_ListByHub
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_KpiListByHub()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/KpiListByHub.json
@@ -223,7 +216,7 @@ new KpiAlias("alias","Id+4")
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

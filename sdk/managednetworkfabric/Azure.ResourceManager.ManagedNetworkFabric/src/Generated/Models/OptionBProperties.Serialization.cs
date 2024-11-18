@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class OptionBProperties : IUtf8JsonSerializable
+    public partial class OptionBProperties : IUtf8JsonSerializable, IJsonModel<OptionBProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OptionBProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<OptionBProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OptionBProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OptionBProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(ImportRouteTargets))
             {
                 writer.WritePropertyName("importRouteTargets"u8);
@@ -39,20 +57,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(RouteTargets))
             {
                 writer.WritePropertyName("routeTargets"u8);
-                writer.WriteObjectValue(RouteTargets);
+                writer.WriteObjectValue(RouteTargets, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static OptionBProperties DeserializeOptionBProperties(JsonElement element)
+        OptionBProperties IJsonModel<OptionBProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OptionBProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OptionBProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOptionBProperties(document.RootElement, options);
+        }
+
+        internal static OptionBProperties DeserializeOptionBProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> importRouteTargets = default;
-            Optional<IList<string>> exportRouteTargets = default;
-            Optional<RouteTargetInformation> routeTargets = default;
+            IList<string> importRouteTargets = default;
+            IList<string> exportRouteTargets = default;
+            RouteTargetInformation routeTargets = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("importRouteTargets"u8))
@@ -89,11 +137,47 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    routeTargets = RouteTargetInformation.DeserializeRouteTargetInformation(property.Value);
+                    routeTargets = RouteTargetInformation.DeserializeRouteTargetInformation(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OptionBProperties(Optional.ToList(importRouteTargets), Optional.ToList(exportRouteTargets), routeTargets.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OptionBProperties(importRouteTargets ?? new ChangeTrackingList<string>(), exportRouteTargets ?? new ChangeTrackingList<string>(), routeTargets, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OptionBProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OptionBProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OptionBProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OptionBProperties IPersistableModel<OptionBProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OptionBProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOptionBProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OptionBProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OptionBProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,20 +6,39 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class VideoOverlay : IUtf8JsonSerializable
+    public partial class VideoOverlay : IUtf8JsonSerializable, IJsonModel<VideoOverlay>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VideoOverlay>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VideoOverlay>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VideoOverlay>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VideoOverlay)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
-                writer.WriteObjectValue(Position);
+                writer.WriteObjectValue(Position, options);
             }
             if (Optional.IsDefined(Opacity))
             {
@@ -29,56 +48,42 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(CropRectangle))
             {
                 writer.WritePropertyName("cropRectangle"u8);
-                writer.WriteObjectValue(CropRectangle);
+                writer.WriteObjectValue(CropRectangle, options);
             }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
-            writer.WritePropertyName("inputLabel"u8);
-            writer.WriteStringValue(InputLabel);
-            if (Optional.IsDefined(Start))
-            {
-                writer.WritePropertyName("start"u8);
-                writer.WriteStringValue(Start.Value, "P");
-            }
-            if (Optional.IsDefined(End))
-            {
-                writer.WritePropertyName("end"u8);
-                writer.WriteStringValue(End.Value, "P");
-            }
-            if (Optional.IsDefined(FadeInDuration))
-            {
-                writer.WritePropertyName("fadeInDuration"u8);
-                writer.WriteStringValue(FadeInDuration.Value, "P");
-            }
-            if (Optional.IsDefined(FadeOutDuration))
-            {
-                writer.WritePropertyName("fadeOutDuration"u8);
-                writer.WriteStringValue(FadeOutDuration.Value, "P");
-            }
-            if (Optional.IsDefined(AudioGainLevel))
-            {
-                writer.WritePropertyName("audioGainLevel"u8);
-                writer.WriteNumberValue(AudioGainLevel.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        internal static VideoOverlay DeserializeVideoOverlay(JsonElement element)
+        VideoOverlay IJsonModel<VideoOverlay>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VideoOverlay>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VideoOverlay)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVideoOverlay(document.RootElement, options);
+        }
+
+        internal static VideoOverlay DeserializeVideoOverlay(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<RectangularWindow> position = default;
-            Optional<double> opacity = default;
-            Optional<RectangularWindow> cropRectangle = default;
+            RectangularWindow position = default;
+            double? opacity = default;
+            RectangularWindow cropRectangle = default;
             string odataType = default;
             string inputLabel = default;
-            Optional<TimeSpan> start = default;
-            Optional<TimeSpan> end = default;
-            Optional<TimeSpan> fadeInDuration = default;
-            Optional<TimeSpan> fadeOutDuration = default;
-            Optional<double> audioGainLevel = default;
+            TimeSpan? start = default;
+            TimeSpan? end = default;
+            TimeSpan? fadeInDuration = default;
+            TimeSpan? fadeOutDuration = default;
+            double? audioGainLevel = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("position"u8))
@@ -87,7 +92,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    position = RectangularWindow.DeserializeRectangularWindow(property.Value);
+                    position = RectangularWindow.DeserializeRectangularWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("opacity"u8))
@@ -105,7 +110,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    cropRectangle = RectangularWindow.DeserializeRectangularWindow(property.Value);
+                    cropRectangle = RectangularWindow.DeserializeRectangularWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -163,8 +168,55 @@ namespace Azure.ResourceManager.Media.Models
                     audioGainLevel = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VideoOverlay(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel), position.Value, Optional.ToNullable(opacity), cropRectangle.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VideoOverlay(
+                odataType,
+                inputLabel,
+                start,
+                end,
+                fadeInDuration,
+                fadeOutDuration,
+                audioGainLevel,
+                serializedAdditionalRawData,
+                position,
+                opacity,
+                cropRectangle);
         }
+
+        BinaryData IPersistableModel<VideoOverlay>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VideoOverlay>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VideoOverlay)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VideoOverlay IPersistableModel<VideoOverlay>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VideoOverlay>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVideoOverlay(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VideoOverlay)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VideoOverlay>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

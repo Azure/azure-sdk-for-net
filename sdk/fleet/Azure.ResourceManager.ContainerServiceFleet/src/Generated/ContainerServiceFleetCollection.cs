@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
@@ -65,6 +63,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -85,7 +91,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             try
             {
                 var response = await _containerServiceFleetFleetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, fleetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetResource>(new ContainerServiceFleetOperationSource(Client), _containerServiceFleetFleetsClientDiagnostics, Pipeline, _containerServiceFleetFleetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, fleetName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation, apiVersionOverrideValue: "2016-03-30");
+                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetResource>(new ContainerServiceFleetOperationSource(Client), _containerServiceFleetFleetsClientDiagnostics, Pipeline, _containerServiceFleetFleetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, fleetName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,6 +114,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -128,7 +142,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             try
             {
                 var response = _containerServiceFleetFleetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, fleetName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetResource>(new ContainerServiceFleetOperationSource(Client), _containerServiceFleetFleetsClientDiagnostics, Pipeline, _containerServiceFleetFleetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, fleetName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation, apiVersionOverrideValue: "2016-03-30");
+                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetResource>(new ContainerServiceFleetOperationSource(Client), _containerServiceFleetFleetsClientDiagnostics, Pipeline, _containerServiceFleetFleetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, fleetName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -150,6 +164,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,6 +210,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
@@ -225,6 +255,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -247,6 +285,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -268,6 +314,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +358,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
@@ -338,6 +400,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,6 +445,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

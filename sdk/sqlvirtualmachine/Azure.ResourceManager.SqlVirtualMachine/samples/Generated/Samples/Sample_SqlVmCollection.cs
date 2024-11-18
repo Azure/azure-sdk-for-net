@@ -8,21 +8,18 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.SqlVirtualMachine;
 using Azure.ResourceManager.SqlVirtualMachine.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Samples
 {
     public partial class Sample_SqlVmCollection
     {
-        // Gets a SQL virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsASQLVirtualMachine()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/GetSqlVirtualMachine.json
@@ -54,9 +51,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets a SQL virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsASQLVirtualMachine()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/GetSqlVirtualMachine.json
@@ -84,9 +80,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets a SQL virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsASQLVirtualMachine()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/GetSqlVirtualMachine.json
@@ -114,7 +109,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -126,9 +121,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             }
         }
 
-        // Creates or updates a SQL virtual machine and joins it to a SQL virtual machine group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesASQLVirtualMachineAndJoinsItToASQLVirtualMachineGroup()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/CreateOrUpdateVirtualMachineWithVMGroup.json
@@ -173,9 +167,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates a SQL virtual machine for Automated Back up Settings with Weekly and Days of the week to run the back up.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesASQLVirtualMachineForAutomatedBackUpSettingsWithWeeklyAndDaysOfTheWeekToRunTheBackUp()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/CreateOrUpdateSqlVirtualMachineAutomatedBackupWeekly.json
@@ -264,9 +257,8 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates a SQL virtual machine for Storage Configuration Settings to EXTEND Data, Log or TempDB storage pool.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesASQLVirtualMachineForStorageConfigurationSettingsToEXTENDDataLogOrTempDBStoragePool()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/CreateOrUpdateSqlVirtualMachineStorageConfigurationEXTEND.json
@@ -314,9 +306,8 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates a SQL virtual machine for Storage Configuration Settings to NEW Data, Log and TempDB storage pool.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesASQLVirtualMachineForStorageConfigurationSettingsToNEWDataLogAndTempDBStoragePool()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/CreateOrUpdateSqlVirtualMachineStorageConfigurationNEW.json
@@ -384,9 +375,8 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates a SQL virtual machine with max parameters.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesASQLVirtualMachineWithMaxParameters()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/CreateOrUpdateSqlVirtualMachineMAX.json
@@ -494,9 +484,8 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates a SQL virtual machine with min parameters.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesASQLVirtualMachineWithMinParameters()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/CreateOrUpdateSqlVirtualMachineMIN.json
@@ -533,9 +522,8 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets all SQL virtual machines in a resource group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsAllSQLVirtualMachinesInAResourceGroup()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/ListByResourceGroupSqlVirtualMachine.json
@@ -566,7 +554,7 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

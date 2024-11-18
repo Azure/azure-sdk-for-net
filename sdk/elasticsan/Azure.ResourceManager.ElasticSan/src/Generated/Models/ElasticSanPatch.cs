@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Response for ElasticSan update request. </summary>
     public partial class ElasticSanPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ElasticSanPatch"/>. </summary>
         public ElasticSanPatch()
         {
@@ -24,12 +56,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
         /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
         /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
-        internal ElasticSanPatch(IDictionary<string, string> tags, long? baseSizeTiB, long? extendedCapacitySizeTiB, PublicNetworkAccess? publicNetworkAccess)
+        /// <param name="autoScaleProperties"> Auto Scale Properties for Elastic San Appliance. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanPatch(IDictionary<string, string> tags, long? baseSizeTiB, long? extendedCapacitySizeTiB, ElasticSanPublicNetworkAccess? publicNetworkAccess, AutoScaleProperties autoScaleProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             BaseSizeTiB = baseSizeTiB;
             ExtendedCapacitySizeTiB = extendedCapacitySizeTiB;
             PublicNetworkAccess = publicNetworkAccess;
+            AutoScaleProperties = autoScaleProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Update tags. </summary>
@@ -39,6 +75,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Extended size of the Elastic San appliance in TiB. </summary>
         public long? ExtendedCapacitySizeTiB { get; set; }
         /// <summary> Allow or disallow public network access to ElasticSan Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public ElasticSanPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Auto Scale Properties for Elastic San Appliance. </summary>
+        internal AutoScaleProperties AutoScaleProperties { get; set; }
+        /// <summary> Scale up settings on Elastic San Appliance. </summary>
+        public ScaleUpProperties ScaleUpProperties
+        {
+            get => AutoScaleProperties is null ? default : AutoScaleProperties.ScaleUpProperties;
+            set
+            {
+                if (AutoScaleProperties is null)
+                    AutoScaleProperties = new AutoScaleProperties();
+                AutoScaleProperties.ScaleUpProperties = value;
+            }
+        }
     }
 }

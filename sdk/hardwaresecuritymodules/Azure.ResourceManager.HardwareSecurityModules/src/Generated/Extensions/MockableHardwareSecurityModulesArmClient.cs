@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
 {
@@ -49,15 +47,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CloudHsmClusterPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudHsmClusterPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="CloudHsmClusterPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual HardwareSecurityModulesPrivateEndpointConnectionResource GetHardwareSecurityModulesPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CloudHsmClusterPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual CloudHsmClusterPrivateEndpointConnectionResource GetCloudHsmClusterPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            HardwareSecurityModulesPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new HardwareSecurityModulesPrivateEndpointConnectionResource(Client, id);
+            CloudHsmClusterPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new CloudHsmClusterPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary>

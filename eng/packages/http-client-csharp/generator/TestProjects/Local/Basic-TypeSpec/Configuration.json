@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "BasicTypeSpec",
+  "library-name": "BasicTypeSpec",
+  "use-model-reader-writer": true
+}

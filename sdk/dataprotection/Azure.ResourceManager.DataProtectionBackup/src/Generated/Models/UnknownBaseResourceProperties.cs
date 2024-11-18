@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownBaseResourceProperties. </summary>
+    /// <summary> Unknown version of BaseResourceProperties. </summary>
     internal partial class UnknownBaseResourceProperties : BaseResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBaseResourceProperties"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        internal UnknownBaseResourceProperties(ResourcePropertiesObjectType objectType) : base(objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBaseResourceProperties(ResourcePropertiesObjectType objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
         {
             ObjectType = objectType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBaseResourceProperties"/> for deserialization. </summary>
+        internal UnknownBaseResourceProperties()
+        {
         }
     }
 }

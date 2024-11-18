@@ -17,6 +17,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 override-operation-name:
   AttachedDatabaseConfigurations_CheckNameAvailability: CheckKustoAttachedDatabaseConfigurationNameAvailability
@@ -27,7 +28,7 @@ override-operation-name:
   DatabasePrincipalAssignments_CheckNameAvailability: CheckKustoDatabasePrincipalAssignmentNameAvailability
   DataConnections_CheckNameAvailability: CheckKustoDataConnectionNameAvailability
   Scripts_CheckNameAvailability: CheckKustoScriptNameAvailability
-  DataConnections_dataConnectionValidation: ValidateDataConnection
+  DataConnections_DataConnectionValidation: ValidateDataConnection
   Clusters_CheckNameAvailability: CheckKustoClusterNameAvailability
   Clusters_ListSkus: GetKustoEligibleSkus
 
@@ -261,6 +262,10 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
   Db: DB
+
+suppress-abstract-base-class:
+- KustoDatabaseData
+- KustoDataConnectionData
 
 directive:
   - from: kusto.json

@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServicesBackup;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
@@ -66,6 +63,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>ProtectionIntent_Validate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Azure region to hit Api. </param>
@@ -104,6 +109,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>ProtectionIntent_Validate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Azure region to hit Api. </param>
@@ -138,6 +151,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,6 +191,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Azure region to hit Api. </param>
@@ -209,6 +230,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>FeatureSupport_Validate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Azure region to hit Api. </param>
@@ -243,6 +268,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FeatureSupport_Validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>

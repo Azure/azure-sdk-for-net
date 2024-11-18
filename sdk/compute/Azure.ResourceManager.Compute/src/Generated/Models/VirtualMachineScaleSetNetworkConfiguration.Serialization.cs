@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,18 +14,30 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetNetworkConfiguration : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetNetworkConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetNetworkConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetNetworkConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VirtualMachineScaleSetNetworkConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetNetworkConfiguration)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Primary))
@@ -54,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings);
+                writer.WriteObjectValue(DnsSettings, options);
             }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -62,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,28 +101,43 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStringValue(AuxiliarySku.Value.ToString());
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static VirtualMachineScaleSetNetworkConfiguration DeserializeVirtualMachineScaleSetNetworkConfiguration(JsonElement element)
+        VirtualMachineScaleSetNetworkConfiguration IJsonModel<VirtualMachineScaleSetNetworkConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetNetworkConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineScaleSetNetworkConfiguration(document.RootElement, options);
+        }
+
+        internal static VirtualMachineScaleSetNetworkConfiguration DeserializeVirtualMachineScaleSetNetworkConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<bool> primary = default;
-            Optional<bool> enableAcceleratedNetworking = default;
-            Optional<bool> disableTcpStateTracking = default;
-            Optional<bool> enableFpga = default;
-            Optional<WritableSubResource> networkSecurityGroup = default;
-            Optional<VirtualMachineScaleSetNetworkConfigurationDnsSettings> dnsSettings = default;
-            Optional<IList<VirtualMachineScaleSetIPConfiguration>> ipConfigurations = default;
-            Optional<bool> enableIPForwarding = default;
-            Optional<ComputeDeleteOption> deleteOption = default;
-            Optional<ComputeNetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
-            Optional<ComputeNetworkInterfaceAuxiliarySku> auxiliarySku = default;
+            ResourceIdentifier id = default;
+            bool? primary = default;
+            bool? enableAcceleratedNetworking = default;
+            bool? disableTcpStateTracking = default;
+            bool? enableFpga = default;
+            WritableSubResource networkSecurityGroup = default;
+            VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default;
+            IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations = default;
+            bool? enableIPForwarding = default;
+            ComputeDeleteOption? deleteOption = default;
+            ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
+            ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -185,7 +214,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            dnsSettings = VirtualMachineScaleSetNetworkConfigurationDnsSettings.DeserializeVirtualMachineScaleSetNetworkConfigurationDnsSettings(property0.Value);
+                            dnsSettings = VirtualMachineScaleSetNetworkConfigurationDnsSettings.DeserializeVirtualMachineScaleSetNetworkConfigurationDnsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))
@@ -197,7 +226,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<VirtualMachineScaleSetIPConfiguration> array = new List<VirtualMachineScaleSetIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualMachineScaleSetIPConfiguration.DeserializeVirtualMachineScaleSetIPConfiguration(item));
+                                array.Add(VirtualMachineScaleSetIPConfiguration.DeserializeVirtualMachineScaleSetIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -241,8 +270,58 @@ namespace Azure.ResourceManager.Compute.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineScaleSetNetworkConfiguration(id.Value, name, Optional.ToNullable(primary), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableFpga), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(enableIPForwarding), Optional.ToNullable(deleteOption), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualMachineScaleSetNetworkConfiguration(
+                id,
+                serializedAdditionalRawData,
+                name,
+                primary,
+                enableAcceleratedNetworking,
+                disableTcpStateTracking,
+                enableFpga,
+                networkSecurityGroup,
+                dnsSettings,
+                ipConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetIPConfiguration>(),
+                enableIPForwarding,
+                deleteOption,
+                auxiliaryMode,
+                auxiliarySku);
         }
+
+        BinaryData IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetNetworkConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VirtualMachineScaleSetNetworkConfiguration IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineScaleSetNetworkConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetNetworkConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

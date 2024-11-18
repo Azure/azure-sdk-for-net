@@ -6,18 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class DataLakeStoreOutputDataSource : IUtf8JsonSerializable
+    public partial class DataLakeStoreOutputDataSource : IUtf8JsonSerializable, IJsonModel<DataLakeStoreOutputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreOutputDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataLakeStoreOutputDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(OutputDataSourceType);
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataLakeStoreOutputDataSource)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RefreshToken))
@@ -66,25 +83,40 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static DataLakeStoreOutputDataSource DeserializeDataLakeStoreOutputDataSource(JsonElement element)
+        DataLakeStoreOutputDataSource IJsonModel<DataLakeStoreOutputDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataLakeStoreOutputDataSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeStoreOutputDataSource(document.RootElement, options);
+        }
+
+        internal static DataLakeStoreOutputDataSource DeserializeDataLakeStoreOutputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<string> refreshToken = default;
-            Optional<string> tokenUserPrincipalName = default;
-            Optional<string> tokenUserDisplayName = default;
-            Optional<string> accountName = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> filePathPrefix = default;
-            Optional<string> dateFormat = default;
-            Optional<string> timeFormat = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string refreshToken = default;
+            string tokenUserPrincipalName = default;
+            string tokenUserDisplayName = default;
+            string accountName = default;
+            Guid? tenantId = default;
+            string filePathPrefix = default;
+            string dateFormat = default;
+            string timeFormat = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -157,8 +189,55 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataLakeStoreOutputDataSource(type, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, accountName.Value, Optional.ToNullable(tenantId), filePathPrefix.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataLakeStoreOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                refreshToken,
+                tokenUserPrincipalName,
+                tokenUserDisplayName,
+                accountName,
+                tenantId,
+                filePathPrefix,
+                dateFormat,
+                timeFormat,
+                authenticationMode);
         }
+
+        BinaryData IPersistableModel<DataLakeStoreOutputDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataLakeStoreOutputDataSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataLakeStoreOutputDataSource IPersistableModel<DataLakeStoreOutputDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataLakeStoreOutputDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataLakeStoreOutputDataSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataLakeStoreOutputDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

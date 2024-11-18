@@ -6,40 +6,62 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class DailyRecurrence : IUtf8JsonSerializable
+    public partial class DailyRecurrence : IUtf8JsonSerializable, IJsonModel<DailyRecurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DailyRecurrence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DailyRecurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("recurrenceType"u8);
-            writer.WriteStringValue(RecurrenceType.ToString());
-            if (Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "T");
-            }
-            if (Optional.IsDefined(EndOn))
-            {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "T");
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static DailyRecurrence DeserializeDailyRecurrence(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DailyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DailyRecurrence)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        DailyRecurrence IJsonModel<DailyRecurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DailyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DailyRecurrence)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDailyRecurrence(document.RootElement, options);
+        }
+
+        internal static DailyRecurrence DeserializeDailyRecurrence(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             RecurrenceType recurrenceType = default;
-            Optional<TimeSpan> startTime = default;
-            Optional<TimeSpan> endTime = default;
+            TimeSpan? startTime = default;
+            TimeSpan? endTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recurrenceType"u8))
@@ -65,8 +87,44 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     endTime = property.Value.GetTimeSpan("T");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DailyRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DailyRecurrence(recurrenceType, startTime, endTime, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DailyRecurrence>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DailyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DailyRecurrence)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DailyRecurrence IPersistableModel<DailyRecurrence>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DailyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDailyRecurrence(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DailyRecurrence)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DailyRecurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

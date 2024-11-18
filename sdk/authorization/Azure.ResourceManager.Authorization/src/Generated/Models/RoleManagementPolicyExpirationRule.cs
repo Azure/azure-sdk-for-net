@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -22,9 +23,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isExpirationRequired"> The value indicating whether expiration is required. </param>
         /// <param name="maximumDuration"> The maximum duration of expiration in timespan. </param>
-        internal RoleManagementPolicyExpirationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, bool? isExpirationRequired, TimeSpan? maximumDuration) : base(id, ruleType, target)
+        internal RoleManagementPolicyExpirationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isExpirationRequired, TimeSpan? maximumDuration) : base(id, ruleType, target, serializedAdditionalRawData)
         {
             IsExpirationRequired = isExpirationRequired;
             MaximumDuration = maximumDuration;
@@ -32,8 +34,10 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The value indicating whether expiration is required. </summary>
+        [WirePath("isExpirationRequired")]
         public bool? IsExpirationRequired { get; set; }
         /// <summary> The maximum duration of expiration in timespan. </summary>
+        [WirePath("maximumDuration")]
         public TimeSpan? MaximumDuration { get; set; }
     }
 }
