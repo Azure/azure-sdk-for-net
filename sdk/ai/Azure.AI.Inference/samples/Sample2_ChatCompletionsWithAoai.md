@@ -49,7 +49,7 @@ var key = System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_KEY");
 // the credential object is still required. So create with a dummy value.
 var credential = new AzureKeyCredential("foo");
 
-ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(key), HttpPipelinePosition.PerCall);
 
 var client = new ChatCompletionsClient(endpoint, credential, clientOptions);
@@ -61,7 +61,7 @@ Alternatively, you can use EntraId to authenticate. This does not require the he
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_ENDPOINT"));
 var credential = new DefaultAzureCredential(includeInteractiveCredentials: true);
 
-ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
 BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://cognitiveservices.azure.com/.default" });
 clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
@@ -82,7 +82,7 @@ var requestOptions = new ChatCompletionsOptions()
 };
 
 Response<ChatCompletions> response = client.Complete(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 ```
 
 An `async` option is also available.
@@ -98,5 +98,5 @@ var requestOptions = new ChatCompletionsOptions()
 };
 
 Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 ```

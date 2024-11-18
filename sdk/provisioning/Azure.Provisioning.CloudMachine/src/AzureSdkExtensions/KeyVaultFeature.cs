@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using Azure.Core;
 using Azure.Provisioning.Authorization;
+using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.KeyVault;
-using Azure.Security.KeyVault.Secrets;
+using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.CloudMachine.KeyVault;
+namespace Azure.CloudMachine.KeyVault;
 
 public class KeyVaultFeature : CloudMachineFeature
 {
@@ -22,7 +21,7 @@ public class KeyVaultFeature : CloudMachineFeature
         }
         Sku = sku;
     }
-    public override void AddTo(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitCore(CloudMachineInfrastructure infrastructure)
     {
         // Add a KeyVault to the CloudMachine infrastructure.
         KeyVaultService keyVaultResource = new("cm_kv")
@@ -59,18 +58,7 @@ public class KeyVaultFeature : CloudMachineFeature
         kvMiRoleAssignment.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", KeyVaultBuiltInRole.KeyVaultAdministrator.ToString());
         kvMiRoleAssignment.PrincipalId = infrastructure.Identity.PrincipalId;
         infrastructure.AddResource(kvMiRoleAssignment);
-    }
-}
 
-public static class KeyVaultExtensions
-{
-    public static SecretClient GetKeyVaultSecretsClient(this ClientWorkspace workspace)
-    {
-        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(SecretClient));
-        if (connection.ConnectionKind == ClientConnectionKind.EntraId)
-        {
-            return new(connection.Endpoint, connection.TokenCredential);
-        }
-        throw new Exception("API key not supported");
+        return keyVaultResource;
     }
 }

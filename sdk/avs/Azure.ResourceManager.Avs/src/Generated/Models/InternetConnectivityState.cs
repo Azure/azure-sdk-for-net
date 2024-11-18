@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Connectivity to internet is enabled or disabled. </summary>
+    /// <summary> Whether internet is enabled or disabled. </summary>
     public readonly partial struct InternetConnectivityState : IEquatable<InternetConnectivityState>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Avs.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> is enabled. </summary>
         public static InternetConnectivityState Enabled { get; } = new InternetConnectivityState(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> is disabled. </summary>
         public static InternetConnectivityState Disabled { get; } = new InternetConnectivityState(DisabledValue);
         /// <summary> Determines if two <see cref="InternetConnectivityState"/> values are the same. </summary>
         public static bool operator ==(InternetConnectivityState left, InternetConnectivityState right) => left.Equals(right);

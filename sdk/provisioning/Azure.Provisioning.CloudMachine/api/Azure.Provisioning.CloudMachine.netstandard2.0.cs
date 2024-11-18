@@ -1,93 +1,74 @@
-namespace Azure.CloudMachine
+namespace Azure
 {
-    public partial class CloudMachineClient : Azure.CloudMachine.CloudMachineWorkspace
+    public partial class RestCallFailedException : System.Exception
     {
-        public CloudMachineClient(Azure.Core.TokenCredential? credential = null, Microsoft.Extensions.Configuration.IConfiguration? configuration = null) : base (default(Azure.Core.TokenCredential), default(Microsoft.Extensions.Configuration.IConfiguration)) { }
-        public Azure.CloudMachine.MessagingServices Messaging { get { throw null; } }
-        public Azure.CloudMachine.StorageServices Storage { get { throw null; } }
+        public RestCallFailedException(string message, System.ClientModel.Primitives.PipelineResponse response) { }
     }
-    public partial class CloudMachineWorkspace : Azure.Core.ClientWorkspace
+    public partial class RestClient
     {
-        public CloudMachineWorkspace(Azure.Core.TokenCredential? credential = null, Microsoft.Extensions.Configuration.IConfiguration? configuration = null) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public string Id { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override Azure.Core.ClientConnectionOptions GetConnectionOptions(System.Type clientType, string? instanceId = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string ToString() { throw null; }
+        public RestClient() { }
+        public RestClient(System.ClientModel.Primitives.PipelinePolicy auth) { }
+        public static Azure.RestClient Shared { get { throw null; } }
+        public System.ClientModel.Primitives.PipelineMessage Create(string method, System.Uri uri) { throw null; }
+        public System.ClientModel.Primitives.PipelineResponse Get(string uri, System.ClientModel.Primitives.RequestOptions? options = null) { throw null; }
+        public System.ClientModel.Primitives.PipelineResponse Patch(string uri, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions? options = null) { throw null; }
+        public System.ClientModel.Primitives.PipelineResponse Post(string uri, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions? options = null) { throw null; }
+        public System.ClientModel.Primitives.PipelineResponse Put(string uri, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions? options = null) { throw null; }
+        public System.ClientModel.Primitives.PipelineResponse Send(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.RequestOptions? options = null) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MessagingServices
+    public partial class RestClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public void SendMessage(object serializable) { }
-        public void WhenMessageReceived(System.Action<string> received) { }
-    }
-    public partial class StorageFile
-    {
-        internal StorageFile() { }
-        public System.Threading.CancellationToken CancellationToken { get { throw null; } }
-        public string Path { get { throw null; } }
-        public string RequestId { get { throw null; } }
-        public void Delete() { }
-        public System.BinaryData Download() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static implicit operator Azure.Response (Azure.CloudMachine.StorageFile result) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageServices
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public void DeleteBlob(string path) { }
-        public System.BinaryData DownloadBlob(string path) { throw null; }
-        public string UploadBlob(object json, string? name = null) { throw null; }
-        public void WhenBlobUploaded(System.Action<Azure.CloudMachine.StorageFile> function) { }
+        public RestClientOptions() { }
     }
 }
-namespace Azure.Core
+namespace Azure.CloudMachine
 {
-    public partial class ClientCache
+    public partial class CloudMachineCommands
     {
-        public ClientCache() { }
-        public T Get<T>(System.Func<T> value, string? id = null) where T : class { throw null; }
+        public CloudMachineCommands() { }
+        public static bool Execute(string[] args, System.Action<Azure.CloudMachine.CloudMachineInfrastructure>? configure = null, bool exitProcessIfHandled = true) { throw null; }
     }
-    public enum ClientConnectionKind
+    public partial class CloudMachineInfrastructure
     {
-        EntraId = 0,
-        ApiKey = 1,
-        OutOfBand = 2,
+        public CloudMachineInfrastructure(string cmId) { }
+        public Azure.CloudMachine.FeatureCollection Features { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.Provisioning.Roles.UserAssignedIdentity Identity { get { throw null; } }
+        public Azure.Provisioning.ProvisioningParameter PrincipalIdParameter { get { throw null; } }
+        public void AddEndpoints<T>() { }
+        public void AddFeature(Azure.Provisioning.CloudMachine.CloudMachineFeature feature) { }
+        public void AddResource(Azure.Provisioning.Primitives.NamedProvisionableConstruct resource) { }
+        public Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningBuildOptions? context = null) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ClientConnectionOptions
+    public partial class FeatureCollection
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ClientConnectionOptions(string subclientId) { throw null; }
-        public ClientConnectionOptions(System.Uri endpoint, Azure.Core.TokenCredential credential) { throw null; }
-        public ClientConnectionOptions(System.Uri endpoint, string apiKey) { throw null; }
-        public string? ApiKeyCredential { get { throw null; } }
-        public Azure.Core.ClientConnectionKind ConnectionKind { get { throw null; } }
-        public System.Uri? Endpoint { get { throw null; } }
-        public string? Id { get { throw null; } }
-        public Azure.Core.TokenCredential? TokenCredential { get { throw null; } }
+        public FeatureCollection() { }
+        public System.Collections.Generic.IEnumerable<T> FindAll<T>() where T : Azure.Provisioning.CloudMachine.CloudMachineFeature { throw null; }
     }
-    public abstract partial class ClientWorkspace
+}
+namespace Azure.CloudMachine.KeyVault
+{
+    public partial class KeyVaultFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
     {
-        protected ClientWorkspace() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public Azure.Core.ClientCache Subclients { get { throw null; } }
-        public abstract Azure.Core.ClientConnectionOptions GetConnectionOptions(System.Type clientType, string? instanceId = null);
+        public KeyVaultFeature(Azure.Provisioning.KeyVault.KeyVaultSku? sku = null) { }
+        public Azure.Provisioning.KeyVault.KeyVaultSku Sku { get { throw null; } set { } }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure infrastructure) { throw null; }
+    }
+}
+namespace Azure.CloudMachine.OpenAI
+{
+    public enum AIModelKind
+    {
+        Chat = 0,
+        Embedding = 1,
+    }
+    public partial class OpenAIModel : Azure.Provisioning.CloudMachine.CloudMachineFeature
+    {
+        public OpenAIModel(string model, string modelVersion, Azure.CloudMachine.OpenAI.AIModelKind kind = Azure.CloudMachine.OpenAI.AIModelKind.Chat) { }
+        public string Model { get { throw null; } }
+        public string ModelVersion { get { throw null; } }
+        public override void AddTo(Azure.CloudMachine.CloudMachineInfrastructure cm) { }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure cm) { throw null; }
     }
 }
 namespace Azure.Provisioning.CloudMachine
@@ -96,44 +77,21 @@ namespace Azure.Provisioning.CloudMachine
     {
         protected CloudMachineFeature() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public abstract void AddTo(Azure.Provisioning.CloudMachine.CloudMachineInfrastructure cm);
-    }
-    public partial class CloudMachineInfrastructure
-    {
-        public CloudMachineInfrastructure(string cmId) { }
-        public string Id { get { throw null; } }
-        public Azure.Provisioning.Roles.UserAssignedIdentity Identity { get { throw null; } }
-        public Azure.Provisioning.ProvisioningParameter PrincipalIdParameter { get { throw null; } }
-        public void AddFeature(Azure.Provisioning.CloudMachine.CloudMachineFeature resource) { }
-        public void AddResource(Azure.Provisioning.Primitives.NamedProvisionableConstruct resource) { }
-        public Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningBuildOptions? context = null) { throw null; }
-        public static bool Configure(string[] args, System.Action<Azure.Provisioning.CloudMachine.CloudMachineInfrastructure>? configure = null) { throw null; }
+        public Azure.Provisioning.Primitives.ProvisionableResource Emitted { get { throw null; } protected set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual void AddTo(Azure.CloudMachine.CloudMachineInfrastructure cm) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public void Emit(Azure.CloudMachine.CloudMachineInfrastructure cm) { }
+        protected abstract Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure cm);
     }
 }
-namespace Azure.Provisioning.CloudMachine.KeyVault
+namespace System.ClientModel.TypeSpec
 {
-    public static partial class KeyVaultExtensions
+    public static partial class TypeSpecWriter
     {
-        public static Azure.Security.KeyVault.Secrets.SecretClient GetKeyVaultSecretsClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
-    }
-    public partial class KeyVaultFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
-    {
-        public KeyVaultFeature(Azure.Provisioning.KeyVault.KeyVaultSku? sku = null) { }
-        public Azure.Provisioning.KeyVault.KeyVaultSku Sku { get { throw null; } set { } }
-        public override void AddTo(Azure.Provisioning.CloudMachine.CloudMachineInfrastructure infrastructure) { }
-    }
-}
-namespace Azure.Provisioning.CloudMachine.OpenAI
-{
-    public static partial class AzureOpenAIExtensions
-    {
-        public static OpenAI.Chat.ChatClient GetOpenAIChatClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
-    }
-    public partial class OpenAIFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
-    {
-        public OpenAIFeature(string model, string modelVersion) { }
-        public string Model { get { throw null; } }
-        public string ModelVersion { get { throw null; } }
-        public override void AddTo(Azure.Provisioning.CloudMachine.CloudMachineInfrastructure cloudMachine) { }
+        public static void WriteModel(System.IO.Stream output, System.Type model) { }
+        public static void WriteModel<T>(System.IO.Stream output) { }
+        public static void WriteServer(System.IO.Stream output, System.Type service) { }
+        public static void WriteServer<T>(System.IO.Stream output) { }
     }
 }

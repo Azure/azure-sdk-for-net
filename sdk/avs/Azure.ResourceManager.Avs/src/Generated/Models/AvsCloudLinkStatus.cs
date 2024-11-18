@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The state of the cloud link. </summary>
+    /// <summary> Cloud Link status. </summary>
     public readonly partial struct AvsCloudLinkStatus : IEquatable<AvsCloudLinkStatus>
     {
         private readonly string _value;
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.Avs.Models
         private const string FailedValue = "Failed";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary> Active. </summary>
+        /// <summary> is active. </summary>
         public static AvsCloudLinkStatus Active { get; } = new AvsCloudLinkStatus(ActiveValue);
-        /// <summary> Building. </summary>
+        /// <summary> is building. </summary>
         public static AvsCloudLinkStatus Building { get; } = new AvsCloudLinkStatus(BuildingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> is deleting. </summary>
         public static AvsCloudLinkStatus Deleting { get; } = new AvsCloudLinkStatus(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary> is failed. </summary>
         public static AvsCloudLinkStatus Failed { get; } = new AvsCloudLinkStatus(FailedValue);
-        /// <summary> Disconnected. </summary>
+        /// <summary> is disconnected. </summary>
         public static AvsCloudLinkStatus Disconnected { get; } = new AvsCloudLinkStatus(DisconnectedValue);
         /// <summary> Determines if two <see cref="AvsCloudLinkStatus"/> values are the same. </summary>
         public static bool operator ==(AvsCloudLinkStatus left, AvsCloudLinkStatus right) => left.Equals(right);

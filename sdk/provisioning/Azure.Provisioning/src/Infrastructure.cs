@@ -52,7 +52,7 @@ public class Infrastructure(string bicepName = "main") : Provisionable
             construct.ParentInfrastructure != this)
         {
             // Don't parent expression references
-            if (construct.ExpressionOverride is not null) { return; }
+            if (((IBicepValue)construct).Kind == BicepValueKind.Expression) { return; }
 
             // Remove it from any existing Infrastructure first
             construct.ParentInfrastructure?.Remove(this);

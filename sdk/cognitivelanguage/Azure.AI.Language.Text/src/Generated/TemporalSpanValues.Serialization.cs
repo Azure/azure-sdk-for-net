@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Text
 
         void IJsonModel<TemporalSpanValues>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TemporalSpanValues>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TemporalSpanValues)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Begin))
             {
                 writer.WritePropertyName("begin"u8);
@@ -66,7 +74,6 @@ namespace Azure.AI.Language.Text
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TemporalSpanValues IJsonModel<TemporalSpanValues>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

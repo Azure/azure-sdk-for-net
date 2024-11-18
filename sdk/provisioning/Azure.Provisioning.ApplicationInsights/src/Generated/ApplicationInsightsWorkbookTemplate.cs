@@ -21,46 +21,74 @@ public partial class ApplicationInsightsWorkbookTemplate : ProvisionableResource
     /// <summary>
     /// The name of the Application Insights component resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Information about the author of the workbook template.
     /// </summary>
-    public BicepValue<string> Author { get => _author; set => _author.Assign(value); }
-    private readonly BicepValue<string> _author;
+    public BicepValue<string> Author 
+    {
+        get { Initialize(); return _author!; }
+        set { Initialize(); _author!.Assign(value); }
+    }
+    private BicepValue<string>? _author;
 
     /// <summary>
     /// Workbook galleries supported by the template.
     /// </summary>
-    public BicepList<WorkbookTemplateGallery> Galleries { get => _galleries; set => _galleries.Assign(value); }
-    private readonly BicepList<WorkbookTemplateGallery> _galleries;
+    public BicepList<WorkbookTemplateGallery> Galleries 
+    {
+        get { Initialize(); return _galleries!; }
+        set { Initialize(); _galleries!.Assign(value); }
+    }
+    private BicepList<WorkbookTemplateGallery>? _galleries;
 
     /// <summary>
     /// Key value pair of localized gallery. Each key is the locale code of
     /// languages supported by the Azure portal.
     /// </summary>
-    public BicepDictionary<BicepList<WorkbookTemplateLocalizedGallery>> LocalizedGalleries { get => _localizedGalleries; set => _localizedGalleries.Assign(value); }
-    private readonly BicepDictionary<BicepList<WorkbookTemplateLocalizedGallery>> _localizedGalleries;
+    public BicepDictionary<BicepList<WorkbookTemplateLocalizedGallery>> LocalizedGalleries 
+    {
+        get { Initialize(); return _localizedGalleries!; }
+        set { Initialize(); _localizedGalleries!.Assign(value); }
+    }
+    private BicepDictionary<BicepList<WorkbookTemplateLocalizedGallery>>? _localizedGalleries;
 
     /// <summary>
     /// Priority of the template. Determines which template to open when a
     /// workbook gallery is opened in viewer mode.
     /// </summary>
-    public BicepValue<int> Priority { get => _priority; set => _priority.Assign(value); }
-    private readonly BicepValue<int> _priority;
+    public BicepValue<int> Priority 
+    {
+        get { Initialize(); return _priority!; }
+        set { Initialize(); _priority!.Assign(value); }
+    }
+    private BicepValue<int>? _priority;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Valid JSON object containing workbook template payload.
@@ -78,20 +106,30 @@ public partial class ApplicationInsightsWorkbookTemplate : ProvisionableResource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> TemplateData { get => _templateData; set => _templateData.Assign(value); }
-    private readonly BicepValue<BinaryData> _templateData;
+    public BicepValue<BinaryData> TemplateData 
+    {
+        get { Initialize(); return _templateData!; }
+        set { Initialize(); _templateData!.Assign(value); }
+    }
+    private BicepValue<BinaryData>? _templateData;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new ApplicationInsightsWorkbookTemplate.
@@ -106,16 +144,24 @@ public partial class ApplicationInsightsWorkbookTemplate : ProvisionableResource
     public ApplicationInsightsWorkbookTemplate(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Insights/workbooktemplates", resourceVersion ?? "2020-11-20")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _author = BicepValue<string>.DefineProperty(this, "Author", ["properties", "author"]);
-        _galleries = BicepList<WorkbookTemplateGallery>.DefineProperty(this, "Galleries", ["properties", "galleries"]);
-        _localizedGalleries = BicepDictionary<BicepList<WorkbookTemplateLocalizedGallery>>.DefineProperty(this, "LocalizedGalleries", ["properties", "localized"]);
-        _priority = BicepValue<int>.DefineProperty(this, "Priority", ["properties", "priority"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _templateData = BicepValue<BinaryData>.DefineProperty(this, "TemplateData", ["properties", "templateData"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ApplicationInsightsWorkbookTemplate.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _author = DefineProperty<string>("Author", ["properties", "author"]);
+        _galleries = DefineListProperty<WorkbookTemplateGallery>("Galleries", ["properties", "galleries"]);
+        _localizedGalleries = DefineDictionaryProperty<BicepList<WorkbookTemplateLocalizedGallery>>("LocalizedGalleries", ["properties", "localized"]);
+        _priority = DefineProperty<int>("Priority", ["properties", "priority"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _templateData = DefineProperty<BinaryData>("TemplateData", ["properties", "templateData"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>

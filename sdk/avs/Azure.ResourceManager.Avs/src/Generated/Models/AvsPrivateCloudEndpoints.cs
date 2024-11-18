@@ -51,23 +51,35 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudEndpoints"/>. </summary>
-        /// <param name="nsxtManager"> Endpoint for the NSX-T Data Center manager. </param>
-        /// <param name="vcsa"> Endpoint for Virtual Center Server Appliance. </param>
-        /// <param name="hcxCloudManager"> Endpoint for the HCX Cloud Manager. </param>
+        /// <param name="nsxtManager"> Endpoint FQDN for the NSX-T Data Center manager. </param>
+        /// <param name="vcsa"> Endpoint FQDN for Virtual Center Server Appliance. </param>
+        /// <param name="hcxCloudManager"> Endpoint FQDN for the HCX Cloud Manager. </param>
+        /// <param name="nsxtManagerIP"> Endpoint IP for the NSX-T Data Center manager. </param>
+        /// <param name="vcenterIP"> Endpoint IP for Virtual Center Server Appliance. </param>
+        /// <param name="hcxCloudManagerIP"> Endpoint IP for the HCX Cloud Manager. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudEndpoints(string nsxtManager, string vcsa, string hcxCloudManager, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvsPrivateCloudEndpoints(string nsxtManager, string vcsa, string hcxCloudManager, string nsxtManagerIP, string vcenterIP, string hcxCloudManagerIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NsxtManager = nsxtManager;
             Vcsa = vcsa;
             HcxCloudManager = hcxCloudManager;
+            NsxtManagerIP = nsxtManagerIP;
+            VcenterIP = vcenterIP;
+            HcxCloudManagerIP = hcxCloudManagerIP;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Endpoint for the NSX-T Data Center manager. </summary>
+        /// <summary> Endpoint FQDN for the NSX-T Data Center manager. </summary>
         public string NsxtManager { get; }
-        /// <summary> Endpoint for Virtual Center Server Appliance. </summary>
+        /// <summary> Endpoint FQDN for Virtual Center Server Appliance. </summary>
         public string Vcsa { get; }
-        /// <summary> Endpoint for the HCX Cloud Manager. </summary>
+        /// <summary> Endpoint FQDN for the HCX Cloud Manager. </summary>
         public string HcxCloudManager { get; }
+        /// <summary> Endpoint IP for the NSX-T Data Center manager. </summary>
+        public string NsxtManagerIP { get; }
+        /// <summary> Endpoint IP for Virtual Center Server Appliance. </summary>
+        public string VcenterIP { get; }
+        /// <summary> Endpoint IP for the HCX Cloud Manager. </summary>
+        public string HcxCloudManagerIP { get; }
     }
 }

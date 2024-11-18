@@ -19,13 +19,22 @@ namespace Azure.Communication.JobRouter
 
         void IJsonModel<BestWorkerMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BestWorkerMode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BestWorkerMode)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ScoringRule))
             {
                 writer.WritePropertyName("scoringRule"u8);
@@ -36,33 +45,6 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("scoringRuleOptions"u8);
                 writer.WriteObjectValue<ScoringRuleOptions>(ScoringRuleOptions, options);
             }
-            writer.WritePropertyName("minConcurrentOffers"u8);
-            writer.WriteNumberValue(MinConcurrentOffers);
-            writer.WritePropertyName("maxConcurrentOffers"u8);
-            writer.WriteNumberValue(MaxConcurrentOffers);
-            if (Optional.IsDefined(BypassSelectors))
-            {
-                writer.WritePropertyName("bypassSelectors"u8);
-                writer.WriteBooleanValue(BypassSelectors.Value);
-            }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         BestWorkerMode IJsonModel<BestWorkerMode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

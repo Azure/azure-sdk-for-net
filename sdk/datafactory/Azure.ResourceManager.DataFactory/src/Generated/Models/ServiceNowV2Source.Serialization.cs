@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("expression"u8);
                 writer.WriteObjectValue(Expression, options);
             }
+            if (Optional.IsDefined(PageSize))
+            {
+                writer.WritePropertyName("pageSize"u8);
+                JsonSerializer.Serialize(writer, PageSize);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -76,6 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryExpressionV2 expression = default;
+            DataFactoryElement<int> pageSize = default;
             DataFactoryElement<string> queryTimeout = default;
             BinaryData additionalColumns = default;
             string type = default;
@@ -94,6 +100,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     expression = DataFactoryExpressionV2.DeserializeDataFactoryExpressionV2(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("pageSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pageSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))
@@ -167,7 +182,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties,
                 queryTimeout,
                 additionalColumns,
-                expression);
+                expression,
+                pageSize);
         }
 
         BinaryData IPersistableModel<ServiceNowV2Source>.Write(ModelReaderWriterOptions options)

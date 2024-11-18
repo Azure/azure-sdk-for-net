@@ -1,5 +1,6 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <AzureOpenAILibraryVersion>2.1.0-beta.2</AzureOpenAILibraryVersion>
     <!--
       During development, we may want to get ahead of the published Nuget package versions. These next property flags
       allow you to replace Nuget package references with external assembly .dll references, or even the source code

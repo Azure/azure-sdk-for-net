@@ -21,10 +21,10 @@ public class ModuleImport : NamedProvisionableConstruct
 
     public ModuleImport(string bicepIdentifier, BicepValue<string> path) : base(bicepIdentifier)
     {
-        _name = BicepValue<string>.DefineProperty(this, nameof(Name), ["name"], isRequired: true);
-        _path = BicepValue<string>.DefineProperty(this, nameof(Path), ["path"], defaultValue: path);
-        _scope = BicepValue<string>.DefineProperty(this, nameof(Scope), ["scope"]);
-        Parameters = BicepDictionary<object>.DefineProperty(this, nameof(Parameters), ["params"]);
+        _name = DefineProperty<string>(nameof(Name), ["name"], isRequired: true);
+        _path = DefineProperty<string>(nameof(Path), ["path"], defaultValue: path);
+        _scope = DefineProperty<string>(nameof(Scope), ["scope"]);
+        Parameters = DefineDictionaryProperty<object>(nameof(Parameters), ["params"]);
     }
 
     protected internal override void Validate(ProvisioningBuildOptions? options = null)
@@ -37,7 +37,7 @@ public class ModuleImport : NamedProvisionableConstruct
     {
         List<BicepStatement> statements = [];
         Dictionary<string, BicepExpression> properties = new() { { "name", _name.Compile() } };
-        if (_scope.Kind != BicepValueKind.Unset) { properties.Add("scope", _scope.Compile()); }
+        if (((IBicepValue)_scope).Kind != BicepValueKind.Unset) { properties.Add("scope", _scope.Compile()); }
         if (Parameters.Count > 0) { properties.Add("params", Parameters.Compile()); }
         ModuleStatement module = BicepSyntax.Declare.Module(BicepIdentifier, _path.Compile(), BicepSyntax.Object(properties));
         statements.Add(module);

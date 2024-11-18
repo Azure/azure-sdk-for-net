@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             string secureValue = default;
-            string name = default;
             ScriptExecutionParameterType type = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.Avs.Models
                     secureValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"u8))
                 {
                     type = new ScriptExecutionParameterType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ScriptSecureStringExecutionParameterDetails(name, type, serializedAdditionalRawData, secureValue);
+            return new ScriptSecureStringExecutionParameterDetails(type, name, serializedAdditionalRawData, secureValue);
         }
 
         BinaryData IPersistableModel<ScriptSecureStringExecutionParameterDetails>.Write(ModelReaderWriterOptions options)
