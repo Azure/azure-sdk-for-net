@@ -7,10 +7,11 @@
     <LangVersion>12</LangVersion>
 
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
-    <NoWarn>CS1591</NoWarn>
+    <NoWarn>CS1591;AZC0007</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Provisioning" />
     <PackageReference Include="Azure.Provisioning.KeyVault" />
     <PackageReference Include="Azure.Provisioning.Storage" />
