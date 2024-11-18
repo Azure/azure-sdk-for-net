@@ -1003,6 +1003,12 @@
 # ServiceLabel: %Large Instance %Mgmt
 # ServiceOwners:                                                   @8Gitbrix
 
+# PRLabel: %Neon Postgres
+/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArthurMa1978
+
+# ServiceLabel: %Neon Postgres %Mgmt
+# ServiceOwners:                                                   @ArthurMa1978
+
 # PRLabel: %Network - CDN
 /sdk/cdn/Azure.ResourceManager.*/                                  @ptnan7
 
