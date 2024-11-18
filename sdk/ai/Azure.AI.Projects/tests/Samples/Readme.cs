@@ -4,23 +4,30 @@
 #nullable disable
 
 using System;
-using Azure.Identity;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
 
-internal partial class Readme
+public partial class Readme : SamplesBase<AIProjectsTestEnvironment>
 {
-    public void CreateProjectClient()
+    [Test]
+    public void Authenticate()
     {
         #region Snippet:OverviewCreateClient
+#if SNIPPET
         var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+#else
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+#endif
         AIProjectClient projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential());
         #endregion
     }
 
+    [Test]
     public void Troubleshooting()
     {
-        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 
         #region Snippet:Readme_Troubleshooting
