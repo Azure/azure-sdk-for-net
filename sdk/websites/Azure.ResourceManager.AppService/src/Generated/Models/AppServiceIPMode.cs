@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Specifies the IP mode of the app. </summary>
-    public enum IPMode
+    public enum AppServiceIPMode
     {
         /// <summary> IPv4. </summary>
         IPv4,

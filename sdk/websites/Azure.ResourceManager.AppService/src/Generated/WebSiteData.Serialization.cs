@@ -251,10 +251,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("ipMode"u8);
                 writer.WriteStringValue(IPMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(EndToEndEncryptionEnabled))
+            if (Optional.IsDefined(IsEndToEndEncryptionEnabled))
             {
                 writer.WritePropertyName("endToEndEncryptionEnabled"u8);
-                writer.WriteBooleanValue(EndToEndEncryptionEnabled.Value);
+                writer.WriteBooleanValue(IsEndToEndEncryptionEnabled.Value);
             }
             if (Optional.IsDefined(IsHostNameDisabled))
             {
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.AppService
             bool? clientCertEnabled = default;
             ClientCertMode? clientCertMode = default;
             string clientCertExclusionPaths = default;
-            IPMode? ipMode = default;
+            AppServiceIPMode? ipMode = default;
             bool? endToEndEncryptionEnabled = default;
             bool? hostNamesDisabled = default;
             string customDomainVerificationId = default;
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            ipMode = property0.Value.GetString().ToIPMode();
+                            ipMode = property0.Value.GetString().ToAppServiceIPMode();
                             continue;
                         }
                         if (property0.NameEquals("endToEndEncryptionEnabled"u8))
@@ -1897,7 +1897,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndToEndEncryptionEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEndToEndEncryptionEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    endToEndEncryptionEnabled: ");
@@ -1905,10 +1905,10 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsDefined(EndToEndEncryptionEnabled))
+                if (Optional.IsDefined(IsEndToEndEncryptionEnabled))
                 {
                     builder.Append("    endToEndEncryptionEnabled: ");
-                    var boolValue = EndToEndEncryptionEnabled.Value == true ? "true" : "false";
+                    var boolValue = IsEndToEndEncryptionEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
