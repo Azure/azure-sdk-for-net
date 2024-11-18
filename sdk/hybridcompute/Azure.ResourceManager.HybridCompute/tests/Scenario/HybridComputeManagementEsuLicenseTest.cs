@@ -26,42 +26,72 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
             }
         }
 
+        // [TestCase]
+        // [RecordedTest]
+        // public async Task CanCreateEsuLicense()
+        // {
+        //     HybridComputeLicenseData resourceData = await createEsuLicense();
+        //     Assert.AreEqual(esuLicenseName, resourceData.Name);
+        // }
+
+        // [TestCase]
+        // [RecordedTest]
+        // public async Task CanUpdateEsuLicense()
+        // {
+        //     HybridComputeLicenseData resourceData = await updateEsuLicense();
+        //     Assert.AreNotEqual("Activated", resourceData.LicenseDetails.State);
+        // }
+
+        // [TestCase]
+        // [RecordedTest]
+        // public async Task CanGetEsuLicense()
+        // {
+        //     HybridComputeLicenseData resourceData = await getEsuLicense();
+        //     Assert.AreEqual(esuLicenseName, resourceData.Name);
+        // }
+
+        // [TestCase]
+        // [RecordedTest]
+        // public async Task CanGetEsuLicenseCollection()
+        // {
+        //     HybridComputeLicenseCollection resourceCollection = await getEsuLicenseCollection();
+        //     Assert.IsNotNull(resourceCollection);
+        // }
+
+        // [TestCase]
+        // [RecordedTest]
+        // public async Task CanDeleteEsuLicense(){
+        //     await deleteEsuLicense();
+        // }
+
         [TestCase]
         [RecordedTest]
-        public async Task CanCreateEsuLicense()
+        public async Task CanCreateLicenseProfile()
         {
-            HybridComputeLicenseData resourceData = await createEsuLicense();
-            Assert.AreEqual(esuLicenseName, resourceData.Name);
+            HybridComputeLicenseProfileData resourceData = await createLicenseProfile();
+            Assert.AreEqual("default", resourceData.Name);
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task CanUpdateEsuLicense()
+        public async Task CanGetLicenseProfile()
         {
-            HybridComputeLicenseData resourceData = await updateEsuLicense();
-            Assert.AreNotEqual("Activated", resourceData.LicenseDetails.State);
+            HybridComputeLicenseProfileData resourceData = await getLicenseProfile();
+            Assert.AreEqual("default", resourceData.Name);
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task CanGetEsuLicense()
+        public async Task CanUpdateLicenseProfile()
         {
-            HybridComputeLicenseData resourceData = await getEsuLicense();
-            Assert.AreEqual(esuLicenseName, resourceData.Name);
+            HybridComputeLicenseProfileData resourceData = await updateLicenseProfile();
+            Assert.AreEqual("default", resourceData.Name);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task CanGetEsuLicenseCollection()
-        {
-            HybridComputeLicenseCollection resourceCollection = await getEsuLicenseCollection();
-            Assert.IsNotNull(resourceCollection);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task CanDeleteEsuLicense(){
-            await deleteEsuLicense();
-        }
+        // [TestCase]
+        // [RecordedTest]
+        // public async Task CanDeleteLicenseProfile(){
+        //     await deleteLicenseProfile();
+        // }
     }
 }

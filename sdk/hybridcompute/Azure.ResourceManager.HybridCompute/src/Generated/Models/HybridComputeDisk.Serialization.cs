@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id.Value);
+                writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             string path = default;
             string diskType = default;
             string generatedId = default;
-            Guid? id = default;
+            ResourceIdentifier id = default;
             string name = default;
             long? maxSizeInBytes = default;
             long? usedSpaceInBytes = default;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    id = property.Value.GetGuid();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.Value.ToString()}'");
+                    builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 

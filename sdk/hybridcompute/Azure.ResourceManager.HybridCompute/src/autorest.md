@@ -111,10 +111,10 @@ rename-mapping:
   GatewayUpdate: ArcGatewayUpdate
   Gateway: ArcGateway
   Settings: ArcSettings
-  NetworkInterface.id: -|uuid
+  NetworkInterface.id: -|arm-id
   RunCommandManagedIdentity.clientId: -|uuid
   RunCommandManagedIdentity.objectId: -|uuid
-  Disk.id: -|uuid
+  Disk.id: -|arm-id
 
 format-by-name-rules:
   'tenantId': 'uuid'

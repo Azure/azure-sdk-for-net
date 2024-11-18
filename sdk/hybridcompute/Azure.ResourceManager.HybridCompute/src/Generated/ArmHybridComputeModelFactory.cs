@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="maxSizeInBytes"> The size of the disk, in bytes. </param>
         /// <param name="usedSpaceInBytes"> The amount of space used on the disk, in bytes. </param>
         /// <returns> A new <see cref="Models.HybridComputeDisk"/> instance for mocking. </returns>
-        public static HybridComputeDisk HybridComputeDisk(string path = null, string diskType = null, string generatedId = null, Guid? id = null, string name = null, long? maxSizeInBytes = null, long? usedSpaceInBytes = null)
+        public static HybridComputeDisk HybridComputeDisk(string path = null, string diskType = null, string generatedId = null, ResourceIdentifier id = null, string name = null, long? maxSizeInBytes = null, long? usedSpaceInBytes = null)
         {
             return new HybridComputeDisk(
                 path,
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="name"> Represents the name of the network interface. </param>
         /// <param name="ipAddresses"> The list of IP addresses in this interface. </param>
         /// <returns> A new <see cref="Models.HybridComputeNetworkInterface"/> instance for mocking. </returns>
-        public static HybridComputeNetworkInterface HybridComputeNetworkInterface(string macAddress = null, Guid? id = null, string name = null, IEnumerable<HybridComputeIPAddress> ipAddresses = null)
+        public static HybridComputeNetworkInterface HybridComputeNetworkInterface(string macAddress = null, ResourceIdentifier id = null, string name = null, IEnumerable<HybridComputeIPAddress> ipAddresses = null)
         {
             ipAddresses ??= new List<HybridComputeIPAddress>();
 
