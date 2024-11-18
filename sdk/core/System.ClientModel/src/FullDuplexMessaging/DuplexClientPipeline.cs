@@ -4,57 +4,57 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives.BidirectionalClients;
+namespace System.ClientModel.Primitives.FullDuplexMessaging;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public sealed class BidirectionalPipeline : IDisposable, IAsyncDisposable
+public sealed class DuplexClientPipeline : IDisposable, IAsyncDisposable
 {
-    private readonly ReadOnlyMemory<BidirectionalPipelinePolicy> _policies;
+    private readonly ReadOnlyMemory<DuplexPipelinePolicy> _policies;
 
     private bool _disposed;
 
-    private BidirectionalPipeline(ReadOnlyMemory<BidirectionalPipelinePolicy> policies)
+    private DuplexClientPipeline(ReadOnlyMemory<DuplexPipelinePolicy> policies)
     {
         _policies = policies;
     }
 
-    //public static BidirectionalPipeline Create(ReadOnlySpan<BidirectionalPipelinePolicy> policies)
+    //public static DuplexClientPipeline Create(ReadOnlySpan<DuplexPipelinePolicy> policies)
     //{
-    //    if (policies[policies.Length - 1] is not BidirectionalPipelineTransport)
+    //    if (policies[policies.Length - 1] is not DuplexPipelineTransport)
     //    {
-    //        throw new ArgumentException("The last policy must be of type 'TwoWayPipelineTransport'.", nameof(policies));
+    //        throw new ArgumentException("The last policy must be of type 'DuplexPipelineTransport'.", nameof(policies));
     //    }
 
     //    throw new NotImplementedException();
     //}
 
-    public static BidirectionalPipeline Create(PipelineResponse response, BidirectionalPipelineOptions options)
+    public static DuplexClientPipeline Create(PipelineResponse response, DuplexPipelineOptions options)
     {
         throw new NotImplementedException();
     }
 
-    public BidirectionalPipelineRequest CreateMessage()
+    public DuplexPipelineRequest CreateMessage()
     {
         throw new NotImplementedException();
     }
 
-    public void Send(BidirectionalPipelineRequest message)
+    public void Send(DuplexPipelineRequest message)
     {
         throw new NotImplementedException();
     }
 
-    public Task SendAsync(BidirectionalPipelineRequest message)
+    public Task SendAsync(DuplexPipelineRequest message)
     {
         throw new NotImplementedException();
     }
 
     // TODO: What is sync story for recieve - does this work?
-    public IEnumerable<BidirectionalPipelineResponse> GetResponseStream()
+    public IEnumerable<DuplexPipelineResponse> GetResponseStream()
     {
         throw new NotImplementedException();
     }
 
-    public IAsyncEnumerable<BidirectionalPipelineResponse> GetResponseStreamAsync()
+    public IAsyncEnumerable<DuplexPipelineResponse> GetResponseStreamAsync()
     {
         throw new NotImplementedException();
     }

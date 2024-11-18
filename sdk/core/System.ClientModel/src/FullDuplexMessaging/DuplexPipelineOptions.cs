@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives.BidirectionalClients;
+namespace System.ClientModel.Primitives.FullDuplexMessaging;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class BidirectionalPipelineOptions
+public class DuplexPipelineOptions
 {
     private bool _frozen;
 
@@ -32,7 +32,7 @@ public class BidirectionalPipelineOptions
     {
         if (_frozen)
         {
-            throw new InvalidOperationException("Cannot change a BidirectionalPipelineOptions instance after it has been used to create a ClientPipeline.");
+            throw new InvalidOperationException("Cannot change a DuplexPipelineOptions instance after it has been used to create a ClientPipeline.");
         }
     }
 }

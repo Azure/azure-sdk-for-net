@@ -7,13 +7,16 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives.BidirectionalClients;
+namespace System.ClientModel.Primitives.FullDuplexMessaging;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public partial class WebSocketBidirectionalPipelineTransport
+public partial class WebSocketDuplexPipelineTransport
 {
-    private sealed class WebSocketTransportClientMessage : WebSocketRequest
+    private sealed class WebSocketTransportServiceMessage : WebSocketResponse
     {
+        public override string ContentType => throw new NotImplementedException();
+
+        public override bool IsLastFragment => throw new NotImplementedException();
     }
 }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

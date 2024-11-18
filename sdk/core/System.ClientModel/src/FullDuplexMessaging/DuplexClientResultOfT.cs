@@ -4,12 +4,12 @@
 using System.ClientModel.Internal;
 using System.Threading;
 
-namespace System.ClientModel.Primitives.BidirectionalClients;
+namespace System.ClientModel.Primitives.FullDuplexMessaging;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class BidirectionalClientResult<T> : BidirectionalClientResult
+public class DuplexClientResult<T> : DuplexClientResult
 {
-    protected internal BidirectionalClientResult(T value, BidirectionalPipelineResponse response)
+    protected internal DuplexClientResult(T value, DuplexPipelineResponse response)
         : base(response)
     {
         Value = value;
@@ -17,12 +17,12 @@ public class BidirectionalClientResult<T> : BidirectionalClientResult
 
     public T Value { get; }
 
-    public static implicit operator T(BidirectionalClientResult<T> result)
+    public static implicit operator T(DuplexClientResult<T> result)
     {
         if (result == null)
         {
 #pragma warning disable CA1065 // Don't throw from cast operators
-            throw new ArgumentNullException(nameof(result), $"The implicit cast from BidirectionalClientResult<{typeof(T)}> to {typeof(T)} failed because the ClientResult<{typeof(T)}> was null.");
+            throw new ArgumentNullException(nameof(result), $"The implicit cast from DuplexClientResult<{typeof(T)}> to {typeof(T)} failed because the DuplexClientResult<{typeof(T)}> was null.");
 #pragma warning restore CA1065
         }
 

@@ -4,23 +4,23 @@
 using System.ClientModel.Internal;
 using System.Threading;
 
-namespace System.ClientModel.Primitives.BidirectionalClients;
+namespace System.ClientModel.Primitives.FullDuplexMessaging;
 
 /// <summary>
-/// Data to send via bidirectional pipeline.
+/// Data to send via full-duplex pipeline.
 /// In WebSockets, a message can be sent across one or more frames.
 /// The BCL type has opted not to use the word "frame" in their naming.
 /// Client data and service data feels like it reflects the general-
 /// purpose concept of either a message or a frame.
 ///
 /// We use the name `Request` to indicate it is client data being
-/// sent over the bidirectional connection, and to align with SCM
+/// sent over the full-duplex connection, and to align with SCM
 /// naming of an outgoing message sent by the client.
 /// </summary>
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public abstract class BidirectionalPipelineRequest : IDisposable
+public abstract class DuplexPipelineRequest : IDisposable
 {
-    protected BidirectionalPipelineRequest() { }
+    protected DuplexPipelineRequest() { }
 
     private ArrayBackedPropertyBag<ulong, object>? _propertyBag;
     private bool _disposedValue;

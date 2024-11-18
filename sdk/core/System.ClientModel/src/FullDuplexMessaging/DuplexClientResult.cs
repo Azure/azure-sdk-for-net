@@ -4,14 +4,14 @@
 using System.ClientModel.Internal;
 using System.Threading;
 
-namespace System.ClientModel.Primitives.BidirectionalClients;
+namespace System.ClientModel.Primitives.FullDuplexMessaging;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class BidirectionalClientResult
+public class DuplexClientResult
 {
-    private readonly BidirectionalPipelineResponse _response;
+    private readonly DuplexPipelineResponse _response;
 
-    protected BidirectionalClientResult(BidirectionalPipelineResponse response)
+    protected DuplexClientResult(DuplexPipelineResponse response)
     {
         Argument.AssertNotNull(response, nameof(response));
 
@@ -31,26 +31,26 @@ public class BidirectionalClientResult
     /// </summary>
     /// <param name="response"></param>
     /// <returns></returns>
-    public static BidirectionalClientResult FromResponse(BidirectionalPipelineResponse response)
+    public static DuplexClientResult FromResponse(DuplexPipelineResponse response)
     {
         Argument.AssertNotNull(response, nameof(response));
 
-        return new BidirectionalClientResult(response);
+        return new DuplexClientResult(response);
     }
 
-    public static BidirectionalClientResult<T> FromValue<T>(T value, BidirectionalPipelineResponse response)
+    public static DuplexClientResult<T> FromValue<T>(T value, DuplexPipelineResponse response)
     {
         Argument.AssertNotNull(response, nameof(response));
 
         if (value is null)
         {
-            string message = "BidirectionalClientResult<T> contract guarantees that BidirectionalClientResult<T>.Value is non-null. " +
-                "If you need to return a BidirectionalClientResult where the Value is null, please use BidirectionalClientResult.FromOptionalValue instead.";
+            string message = "DuplexClientResult<T> contract guarantees that DuplexClientResult<T>.Value is non-null. " +
+                "If you need to return a DuplexClientResult where the Value is null, please use DuplexClientResult.FromOptionalValue instead.";
 
             throw new ArgumentNullException(nameof(value), message);
         }
 
-        return new BidirectionalClientResult<T>(value, response);
+        return new DuplexClientResult<T>(value, response);
     }
 }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

@@ -4,10 +4,10 @@
 using System.ClientModel.Internal;
 using System.Threading;
 
-namespace System.ClientModel.Primitives.BidirectionalClients;
+namespace System.ClientModel.Primitives.FullDuplexMessaging;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public abstract class WebSocketResponse : BidirectionalPipelineResponse
+public abstract class WebSocketResponse : DuplexPipelineResponse
 {
     // Can be Text, Blob, or ArrayBuffer
     public abstract string ContentType { get; }

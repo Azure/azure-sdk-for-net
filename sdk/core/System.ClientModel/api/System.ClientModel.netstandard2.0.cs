@@ -300,65 +300,65 @@ namespace System.ClientModel.Primitives
         public void SetHeader(string name, string value) { }
     }
 }
-namespace System.ClientModel.Primitives.BidirectionalClients
+namespace System.ClientModel.Primitives.FullDuplexMessaging
 {
-    public partial class BidirectionalClientResult
+    public sealed partial class DuplexClientPipeline : System.IAsyncDisposable, System.IDisposable
     {
-        protected BidirectionalClientResult(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse response) { }
-        public static System.ClientModel.Primitives.BidirectionalClients.BidirectionalClientResult FromResponse(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse response) { throw null; }
-        public static System.ClientModel.Primitives.BidirectionalClients.BidirectionalClientResult<T> FromValue<T>(T value, System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse response) { throw null; }
-        public System.ClientModel.Primitives.BidirectionalClients.WebSocketResponse GetWebSocketResponse() { throw null; }
-    }
-    public partial class BidirectionalClientResult<T> : System.ClientModel.Primitives.BidirectionalClients.BidirectionalClientResult
-    {
-        protected internal BidirectionalClientResult(T value, System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse response) : base (default(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse)) { }
-        public T Value { get { throw null; } }
-        public static implicit operator T (System.ClientModel.Primitives.BidirectionalClients.BidirectionalClientResult<T> result) { throw null; }
-    }
-    public partial class BidirectionalConnectionResult : System.IDisposable
-    {
-        protected BidirectionalConnectionResult(System.ClientModel.Primitives.PipelineResponse response, System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineOptions? options = null) { }
-        public System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipeline Pipeline { get { throw null; } }
-        public void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-        public virtual System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.BidirectionalClients.BidirectionalClientResult> GetResults(System.ClientModel.Primitives.BidirectionalClients.BidirectionalRequestOptions options) { throw null; }
-        public virtual System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.BidirectionalClients.BidirectionalClientResult> GetResultsAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalRequestOptions options) { throw null; }
-        protected void Send(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.BidirectionalClients.BidirectionalRequestOptions? options = null) { }
-        protected System.Threading.Tasks.Task SendAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.BidirectionalClients.BidirectionalRequestOptions? options = null) { throw null; }
-    }
-    public sealed partial class BidirectionalPipeline : System.IAsyncDisposable, System.IDisposable
-    {
-        internal BidirectionalPipeline() { }
-        public static System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipeline Create(System.ClientModel.Primitives.PipelineResponse response, System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineOptions options) { throw null; }
-        public System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest CreateMessage() { throw null; }
+        internal DuplexClientPipeline() { }
+        public static System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientPipeline Create(System.ClientModel.Primitives.PipelineResponse response, System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineOptions options) { throw null; }
+        public System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateMessage() { throw null; }
         public void Dispose() { }
         public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
-        public System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse> GetResponseStream() { throw null; }
-        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse> GetResponseStreamAsync() { throw null; }
-        public void Send(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest message) { }
-        public System.Threading.Tasks.Task SendAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest message) { throw null; }
+        public System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse> GetResponseStream() { throw null; }
+        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse> GetResponseStreamAsync() { throw null; }
+        public void Send(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest message) { }
+        public System.Threading.Tasks.Task SendAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest message) { throw null; }
     }
-    public partial class BidirectionalPipelineOptions
+    public partial class DuplexClientResult
     {
-        public BidirectionalPipelineOptions() { }
+        protected DuplexClientResult(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response) { }
+        public static System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult FromResponse(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response) { throw null; }
+        public static System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult<T> FromValue<T>(T value, System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response) { throw null; }
+        public System.ClientModel.Primitives.FullDuplexMessaging.WebSocketResponse GetWebSocketResponse() { throw null; }
+    }
+    public partial class DuplexClientResult<T> : System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult
+    {
+        protected internal DuplexClientResult(T value, System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response) : base (default(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse)) { }
+        public T Value { get { throw null; } }
+        public static implicit operator T (System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult<T> result) { throw null; }
+    }
+    public partial class DuplexConnectionResult : System.IDisposable
+    {
+        protected DuplexConnectionResult(System.ClientModel.Primitives.PipelineResponse response, System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineOptions? options = null) { }
+        public System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientPipeline Pipeline { get { throw null; } }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        public virtual System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult> GetResults(System.ClientModel.Primitives.FullDuplexMessaging.DuplexRequestOptions options) { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult> GetResultsAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexRequestOptions options) { throw null; }
+        protected void Send(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.FullDuplexMessaging.DuplexRequestOptions? options = null) { }
+        protected System.Threading.Tasks.Task SendAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.FullDuplexMessaging.DuplexRequestOptions? options = null) { throw null; }
+    }
+    public partial class DuplexPipelineOptions
+    {
+        public DuplexPipelineOptions() { }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
     }
-    public abstract partial class BidirectionalPipelinePolicy
+    public abstract partial class DuplexPipelinePolicy
     {
-        protected BidirectionalPipelinePolicy() { }
-        public abstract void Process(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelinePolicy> pipeline, int currentIndex);
-        public abstract void Process(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelinePolicy> pipeline, int currentIndex);
-        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelinePolicy> pipeline, int currentIndex);
-        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelinePolicy> pipeline, int currentIndex);
-        protected static void ProcessNext(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelinePolicy> pipeline, int currentIndex) { }
-        protected static void ProcessNext(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelinePolicy> pipeline, int currentIndex) { }
-        protected static System.Threading.Tasks.ValueTask ProcessNextAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelinePolicy> pipeline, int currentIndex) { throw null; }
-        protected static System.Threading.Tasks.ValueTask ProcessNextAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelinePolicy> pipeline, int currentIndex) { throw null; }
+        protected DuplexPipelinePolicy() { }
+        public abstract void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex);
+        public abstract void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex);
+        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex);
+        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex);
+        protected static void ProcessNext(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { }
+        protected static void ProcessNext(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { }
+        protected static System.Threading.Tasks.ValueTask ProcessNextAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { throw null; }
+        protected static System.Threading.Tasks.ValueTask ProcessNextAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
-    public abstract partial class BidirectionalPipelineRequest : System.IDisposable
+    public abstract partial class DuplexPipelineRequest : System.IDisposable
     {
-        protected BidirectionalPipelineRequest() { }
+        protected DuplexPipelineRequest() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
         public void Dispose() { }
@@ -366,58 +366,58 @@ namespace System.ClientModel.Primitives.BidirectionalClients
         public void SetProperty(System.Type key, object? value) { }
         public bool TryGetProperty(System.Type key, out object? value) { throw null; }
     }
-    public abstract partial class BidirectionalPipelineResponse
+    public abstract partial class DuplexPipelineResponse
     {
-        protected BidirectionalPipelineResponse() { }
+        protected DuplexPipelineResponse() { }
         public System.BinaryData? Content { get { throw null; } set { } }
         public void SetProperty(System.Type key, object? value) { }
         public bool TryGetProperty(System.Type key, out object? value) { throw null; }
     }
-    public abstract partial class BidirectionalPipelineTransport : System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelinePolicy
+    public abstract partial class DuplexPipelineTransport : System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy
     {
-        protected BidirectionalPipelineTransport() { }
-        public System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest CreateMessage() { throw null; }
-        protected abstract System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest CreateMessageCore();
-        public void Process(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest clientMessage) { }
-        public sealed override void Process(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelinePolicy> pipeline, int currentIndex) { }
-        public void Process(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse serviceMessage) { }
-        public sealed override void Process(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelinePolicy> pipeline, int currentIndex) { }
-        public System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest clientMessage) { throw null; }
-        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelinePolicy> pipeline, int currentIndex) { throw null; }
-        public System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse serviceMessage) { throw null; }
-        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelinePolicy> pipeline, int currentIndex) { throw null; }
-        protected abstract void ProcessCore(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest clientMessage);
-        protected abstract void ProcessCore(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse serviceMessage);
-        protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest clientMessage);
-        protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse serviceMessage);
+        protected DuplexPipelineTransport() { }
+        public System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateMessage() { throw null; }
+        protected abstract System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateMessageCore();
+        public void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage) { }
+        public sealed override void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { }
+        public void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage) { }
+        public sealed override void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { }
+        public System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage) { throw null; }
+        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { throw null; }
+        public System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage) { throw null; }
+        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { throw null; }
+        protected abstract void ProcessCore(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage);
+        protected abstract void ProcessCore(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage);
+        protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage);
+        protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage);
     }
-    public partial class BidirectionalRequestOptions
+    public partial class DuplexRequestOptions
     {
-        public BidirectionalRequestOptions() { }
+        public DuplexRequestOptions() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public bool? IsLastFragment { get { throw null; } set { } }
-        protected internal void Apply(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest message) { }
+        protected internal void Apply(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest message) { }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
     }
-    public partial class WebSocketBidirectionalPipelineTransport : System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineTransport, System.IAsyncDisposable, System.IDisposable
+    public partial class WebSocketDuplexPipelineTransport : System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineTransport, System.IAsyncDisposable, System.IDisposable
     {
-        public WebSocketBidirectionalPipelineTransport() { }
-        protected override System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest CreateMessageCore() { throw null; }
+        public WebSocketDuplexPipelineTransport() { }
+        protected override System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateMessageCore() { throw null; }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
-        protected override void ProcessCore(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest clientMessage) { }
-        protected override void ProcessCore(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse serviceMessage) { }
-        protected override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest clientMessage) { throw null; }
-        protected override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse serviceMessage) { throw null; }
+        protected override void ProcessCore(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage) { }
+        protected override void ProcessCore(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage) { }
+        protected override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage) { throw null; }
+        protected override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage) { throw null; }
     }
-    public abstract partial class WebSocketRequest : System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineRequest
+    public abstract partial class WebSocketRequest : System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest
     {
         protected WebSocketRequest() { }
         public bool? IsLastFragment { get { throw null; } set { } }
     }
-    public abstract partial class WebSocketResponse : System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipelineResponse
+    public abstract partial class WebSocketResponse : System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse
     {
         protected WebSocketResponse() { }
         public abstract string ContentType { get; }

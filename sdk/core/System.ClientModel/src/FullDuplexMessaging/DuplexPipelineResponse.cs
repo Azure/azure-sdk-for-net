@@ -10,24 +10,24 @@ using System.Text;
 // If the sendable message and the recievable message could be the same message
 // type, policy.Process changes to policy.ProcessSend and policy.ProcessReceive
 
-namespace System.ClientModel.Primitives.BidirectionalClients;
+namespace System.ClientModel.Primitives.FullDuplexMessaging;
 
 /// <summary>
-/// Data to send via bidirectional pipeline.
+/// Data to send via full-duplex pipeline.
 /// In WebSockets, a message can be sent across one or more frames.
 /// The BCL type has opted not to use the word "frame" in their naming.
 /// Client data and service data feels like it reflects the general-
 /// purpose concept of either a message or a frame.
 ///
 /// We use the name `Response` to indicate it is service data being
-/// received over the bidirectional connection, and to align with SCM
+/// received over the full-duplex connection, and to align with SCM
 /// naming of an incoming message received by the client.
 /// </summary>
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public abstract class BidirectionalPipelineResponse
+public abstract class DuplexPipelineResponse
 {
-    protected BidirectionalPipelineResponse() { }
+    protected DuplexPipelineResponse() { }
 
     private ArrayBackedPropertyBag<ulong, object>? _propertyBag;
     private ArrayBackedPropertyBag<ulong, object> PropertyBag => _propertyBag ??= new();

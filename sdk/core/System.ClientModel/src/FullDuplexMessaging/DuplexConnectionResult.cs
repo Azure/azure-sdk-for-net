@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives.BidirectionalClients;
+namespace System.ClientModel.Primitives.FullDuplexMessaging;
 
 /// <summary>
 /// This is intended to be the base type for a subclient that holds a
@@ -12,55 +12,55 @@ namespace System.ClientModel.Primitives.BidirectionalClients;
 /// subclient that polls for updates to a long-running operation.
 /// </summary>
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class BidirectionalConnectionResult : IDisposable /*TODO: IAsyncDisposable? */
+public class DuplexConnectionResult : IDisposable /*TODO: IAsyncDisposable? */
 {
-    private readonly BidirectionalPipelineOptions _options;
-    private BidirectionalPipeline? _pipeline;
+    private readonly DuplexPipelineOptions _options;
+    private DuplexClientPipeline? _pipeline;
 
     private bool _disposed;
 
-    protected BidirectionalConnectionResult(PipelineResponse response, BidirectionalPipelineOptions? options = default)
+    protected DuplexConnectionResult(PipelineResponse response, DuplexPipelineOptions? options = default)
     {
-        _options = options ?? new BidirectionalPipelineOptions();
+        _options = options ?? new DuplexPipelineOptions();
 
-        _pipeline = BidirectionalPipeline.Create(response, _options);
+        _pipeline = DuplexClientPipeline.Create(response, _options);
     }
 
-    public BidirectionalPipeline Pipeline => _pipeline ?? throw new ObjectDisposedException("TBD");
+    public DuplexClientPipeline Pipeline => _pipeline ?? throw new ObjectDisposedException("TBD");
 
-    // Protocol layer async method
+    // Protocol layer async DuplexClientResult
     // Note: idea is that convenience method overload will add BidirectionalClientResult<T>
     // and take CancellationToken instead.
-    public virtual IAsyncEnumerable<BidirectionalClientResult> GetResultsAsync(BidirectionalRequestOptions options)
+    public virtual IAsyncEnumerable<DuplexClientResult> GetResultsAsync(DuplexRequestOptions options)
     {
         throw new NotImplementedException();
     }
 
     // Protocol layer sync method
-    public virtual IEnumerable<BidirectionalClientResult> GetResults(BidirectionalRequestOptions options)
+    public virtual IEnumerable<DuplexClientResult> GetResults(DuplexRequestOptions options)
     {
         throw new NotImplementedException();
     }
 
     // effectively the base-layer protocol message
-    // only difference between this and Pipeline.Send is that BidirectionalRequestOptions
+    // only difference between this and Pipeline.Send is that DuplexRequestOptions
     // can mutate the pipeline before sending.
     // Intention is that client authors will layer protocol methods around this
     // as a convenience to them, but open question whether we would expose this
     // to end users instead of protocol methods.  We probably still want named
     // protocol methods to provide discoverable convenience overloads.
-    protected async Task SendAsync(BinaryContent content, BidirectionalRequestOptions? options = default)
+    protected async Task SendAsync(BinaryContent content, DuplexRequestOptions? options = default)
     {
-        using BidirectionalPipelineRequest message = Pipeline.CreateMessage();
+        using DuplexPipelineRequest message = Pipeline.CreateMessage();
         message.Content = content;
 
         options?.Apply(message);
         await Pipeline.SendAsync(message).ConfigureAwait(false);
     }
 
-    protected void Send(BinaryContent content, BidirectionalRequestOptions? options = default)
+    protected void Send(BinaryContent content, DuplexRequestOptions? options = default)
     {
-        using BidirectionalPipelineRequest message = Pipeline.CreateMessage();
+        using DuplexPipelineRequest message = Pipeline.CreateMessage();
         message.Content = content;
 
         options?.Apply(message);

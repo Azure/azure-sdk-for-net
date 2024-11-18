@@ -4,13 +4,13 @@
 using System.ClientModel.Internal;
 using System.Threading;
 
-namespace System.ClientModel.Primitives.BidirectionalClients;
+namespace System.ClientModel.Primitives.FullDuplexMessaging;
 
 /// <summary>
 /// This is the equivalent of RequestOptions for HTTP requests
 /// </summary>
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class BidirectionalRequestOptions
+public class DuplexRequestOptions
 {
     // TODO: Error options?
     // TODO: Policies for the two-way pipeline?
@@ -44,11 +44,11 @@ public class BidirectionalRequestOptions
     {
         if (_frozen)
         {
-            throw new InvalidOperationException("Cannot change a BidirectionalClientDataOptions instance after it has been passed to a client method.");
+            throw new InvalidOperationException("Cannot change a DuplexRequestOptions instance after it has been passed to a client method.");
         }
     }
 
-    protected internal void Apply(BidirectionalPipelineRequest message)
+    protected internal void Apply(DuplexPipelineRequest message)
     {
         Argument.AssertNotNull(message, nameof(message));
 
