@@ -29,7 +29,19 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         {
             var startTime = _cloudRunMetadata.TestRunStartTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
             var gitBasedRunName = ReporterUtils.GetRunName(CiInfoProvider.GetCIInfo())?.Trim();
-            string runName = string.IsNullOrEmpty(gitBasedRunName) ? _cloudRunMetadata.RunId! : gitBasedRunName!;
+            string runName;
+            if (!string.IsNullOrEmpty(_cloudRunMetadata.RunName))
+            {
+                runName = _cloudRunMetadata.RunName!;
+            }
+            else if (!string.IsNullOrEmpty(gitBasedRunName))
+            {
+                runName = gitBasedRunName!;
+            }
+            else
+            {
+                runName = _cloudRunMetadata.RunId!;
+            }
             var run = new TestRunDto
             {
                 TestRunId = _cloudRunMetadata.RunId!,
@@ -55,7 +67,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                     TestType = "WebTest",
                     TestSdkLanguage = "CSHARP",
                     TestFramework = new TestFramework() { Name = "PLAYWRIGHT", RunnerName = "NUNIT", Version = "3.1" }, // TODO fetch runner name MSTest/Nunit
-                    ReporterPackageVersion = "1.0.0-beta.1",
+                    ReporterPackageVersion = "1.0.0-beta.3",
                     Shards = new Shard() { Total = 1 }
                 }
             };
