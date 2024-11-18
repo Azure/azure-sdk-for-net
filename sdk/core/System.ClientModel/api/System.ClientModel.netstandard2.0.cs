@@ -376,20 +376,20 @@ namespace System.ClientModel.Primitives.FullDuplexMessaging
     public abstract partial class DuplexPipelineTransport : System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy
     {
         protected DuplexPipelineTransport() { }
-        public System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateMessage() { throw null; }
-        protected abstract System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateMessageCore();
-        public void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage) { }
-        public sealed override void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { }
-        public void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage) { }
-        public sealed override void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { }
-        public System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage) { throw null; }
-        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { throw null; }
-        public System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage) { throw null; }
-        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { throw null; }
-        protected abstract void ProcessCore(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage);
-        protected abstract void ProcessCore(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage);
-        protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage);
-        protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage);
+        public System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateRequest() { throw null; }
+        protected abstract System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateRequestCore();
+        public void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest request) { }
+        public sealed override void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest request, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { }
+        public void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response) { }
+        public sealed override void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { }
+        public System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest request) { throw null; }
+        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest request, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { throw null; }
+        public System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response) { throw null; }
+        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { throw null; }
+        protected abstract void ProcessCore(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest request);
+        protected abstract void ProcessCore(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response);
+        protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest request);
+        protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response);
     }
     public partial class DuplexRequestOptions
     {
@@ -403,7 +403,7 @@ namespace System.ClientModel.Primitives.FullDuplexMessaging
     public partial class WebSocketDuplexPipelineTransport : System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineTransport, System.IAsyncDisposable, System.IDisposable
     {
         public WebSocketDuplexPipelineTransport() { }
-        protected override System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateMessageCore() { throw null; }
+        protected override System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateRequestCore() { throw null; }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }

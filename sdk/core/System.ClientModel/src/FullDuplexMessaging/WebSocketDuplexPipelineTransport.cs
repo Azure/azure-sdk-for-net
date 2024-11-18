@@ -19,7 +19,7 @@ public partial class WebSocketDuplexPipelineTransport : DuplexPipelineTransport,
         _webSocket = new();
     }
 
-    protected override DuplexPipelineRequest CreateMessageCore()
+    protected override DuplexPipelineRequest CreateRequestCore()
     {
         return new WebSocketTransportClientMessage();
     }

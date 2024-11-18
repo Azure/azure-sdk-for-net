@@ -12,66 +12,66 @@ public abstract class DuplexPipelineTransport : DuplexPipelinePolicy
 {
     protected DuplexPipelineTransport() { }
 
-    public DuplexPipelineRequest CreateMessage()
+    public DuplexPipelineRequest CreateRequest()
     {
-        return CreateMessageCore();
+        return CreateRequestCore();
     }
 
-    public void Process(DuplexPipelineRequest clientMessage)
+    public void Process(DuplexPipelineRequest request)
     {
-        ProcessCore(clientMessage);
+        ProcessCore(request);
     }
 
-    public ValueTask ProcessAsync(DuplexPipelineRequest clientMessage)
+    public ValueTask ProcessAsync(DuplexPipelineRequest request)
     {
-        return ProcessCoreAsync(clientMessage);
+        return ProcessCoreAsync(request);
     }
 
-    public void Process(DuplexPipelineResponse serviceMessage)
+    public void Process(DuplexPipelineResponse response)
     {
-        ProcessCore(serviceMessage);
+        ProcessCore(response);
     }
 
-    public ValueTask ProcessAsync(DuplexPipelineResponse serviceMessage)
+    public ValueTask ProcessAsync(DuplexPipelineResponse response)
     {
-        return ProcessCoreAsync(serviceMessage);
+        return ProcessCoreAsync(response);
     }
 
-    protected abstract DuplexPipelineRequest CreateMessageCore();
+    protected abstract DuplexPipelineRequest CreateRequestCore();
 
-    protected abstract void ProcessCore(DuplexPipelineRequest clientMessage);
+    protected abstract void ProcessCore(DuplexPipelineRequest request);
 
-    protected abstract ValueTask ProcessCoreAsync(DuplexPipelineRequest clientMessage);
+    protected abstract ValueTask ProcessCoreAsync(DuplexPipelineRequest request);
 
-    protected abstract void ProcessCore(DuplexPipelineResponse serviceMessage);
+    protected abstract void ProcessCore(DuplexPipelineResponse response);
 
-    protected abstract ValueTask ProcessCoreAsync(DuplexPipelineResponse serviceMessage);
+    protected abstract ValueTask ProcessCoreAsync(DuplexPipelineResponse response);
 
     #region DuplexPipelinePolicy.Process overrides
-    public sealed override void Process(DuplexPipelineRequest clientMessage, IReadOnlyList<DuplexPipelinePolicy> pipeline, int currentIndex)
+    public sealed override void Process(DuplexPipelineRequest request, IReadOnlyList<DuplexPipelinePolicy> pipeline, int currentIndex)
     {
-        Process(clientMessage);
+        Process(request);
 
         Debug.Assert(++currentIndex == pipeline.Count, "Transport is not at last position in pipeline.");
     }
 
-    public sealed override async ValueTask ProcessAsync(DuplexPipelineRequest clientMessage, IReadOnlyList<DuplexPipelinePolicy> pipeline, int currentIndex)
+    public sealed override async ValueTask ProcessAsync(DuplexPipelineRequest request, IReadOnlyList<DuplexPipelinePolicy> pipeline, int currentIndex)
     {
-        await ProcessAsync(clientMessage).ConfigureAwait(false);
+        await ProcessAsync(request).ConfigureAwait(false);
 
         Debug.Assert(++currentIndex == pipeline.Count, "Transport is not at last position in pipeline.");
     }
 
-    public sealed override void Process(DuplexPipelineResponse serviceMessage, IReadOnlyList<DuplexPipelinePolicy> pipeline, int currentIndex)
+    public sealed override void Process(DuplexPipelineResponse response, IReadOnlyList<DuplexPipelinePolicy> pipeline, int currentIndex)
     {
-        Process(serviceMessage);
+        Process(response);
 
         Debug.Assert(++currentIndex == pipeline.Count, "Transport is not at last position in pipeline.");
     }
 
-    public sealed override async ValueTask ProcessAsync(DuplexPipelineResponse serviceMessage, IReadOnlyList<DuplexPipelinePolicy> pipeline, int currentIndex)
+    public sealed override async ValueTask ProcessAsync(DuplexPipelineResponse response, IReadOnlyList<DuplexPipelinePolicy> pipeline, int currentIndex)
     {
-        await ProcessAsync(serviceMessage).ConfigureAwait(false);
+        await ProcessAsync(response).ConfigureAwait(false);
 
         Debug.Assert(++currentIndex == pipeline.Count, "Transport is not at last position in pipeline.");
     }
