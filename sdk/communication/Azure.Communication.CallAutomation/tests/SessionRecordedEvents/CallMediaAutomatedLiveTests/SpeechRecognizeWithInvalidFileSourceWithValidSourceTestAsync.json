@@ -1,0 +1,124 @@
+{
+  "entries": [
+    {
+      "body": "{\u0022to\u0022:{\u0022kind\u0022:\u0022communicationUser\u0022,\u0022rawId\u0022:\u0022Sanitized\u0022,\u0022communicationUser\u0022:{\u0022id\u0022:\u0022Sanitized\u0022}},\u0022from\u0022:{\u0022kind\u0022:\u0022communicationUser\u0022,\u0022rawId\u0022:\u0022Sanitized\u0022,\u0022communicationUser\u0022:{\u0022id\u0022:\u0022Sanitized\u0022}},\u0022serverCallId\u0022:\u0022aHR0cHM6Ly9hcGkuZmxpZ2h0cHJveHkuc2t5cGUuY29tL2FwaS92Mi9jcC9jb252LXVzZWEtMDMtcHJvZC1ha3MuY29udi5za3lwZS5jb20vY29udi9kdmhJMzZnUnVrcXd0UFJqRnF1RDVnP2k9MTAtMTI4LTE3LTEyNSZlPTYzODY3MjE5MjE1MDI3NTU3MA==\u0022,\u0022callerDisplayName\u0022:\u0022\u0022,\u0022incomingCallContext\u0022:\u0022eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJjYyI6Ikg0c0lBQUFBQUFBQUNzMVliWFBpT0JMK0t5NnU2ajVjclVBdnRtV3Jpcm9paE5saE0za2ptWm1iSytwU3NpU0ROOGIyeWliQXpPNS92NWFCaElUY3p0enQzdFpDQVpiVTZ1ZnAxa3QzODZXalpKNWZsRTJXWmtvMldWbDB4SmRPYXN1Ris4MTBSM1FpSVZVdFNLS2xwRW1NNGdCejVBYytSVWtTK2tqeWhGS0ZzWXkwZjRmYkYyVklxelJFUkhLTWFKVDZpUGxNWW8weFQ4SzQ4MTFIWjNXVnk4MkZYSmlPS0paNS9xenJwbHhhQlFPZFpYRmZsS3NDSnBoQ1YyVldOR1BIaDhZcWxwSEN5R0NTSU44SC9Rbm5Ha1ZCUUltTUUwWUNCNUxMWXJhVU0rUG1iREVxYVp0TVpaWGNLMHE0am9qMmtlWXhtS1FaUjdHZk1FU0kwZ0ZqaGlaQkNvcm1tZFlHM0pMS3ZEWlBYRzQzbFNOWkcvdGc3S0NxUUxLeVpXVnNzem1Sc3kzbUw5OTFtdkwzY0tRMFI0NU1mck1qdHlBWW8xZSs5cTl2Y3FRdkUyTjBraUtWUmhHWUZER1VhQzJSWVVsSWRBUk9UWkpqUjFwVHR3UmJGZC9pbGYvZzRUd3I3bXZuWk5rMFVzMUIyYnhwcWxyMGVyTEt1bW1lemVZTnpGdHZ1dlU5ckZsWGxRczMwbnVnUFZYMWxFTEwya2lFR1FJaGplUjkzVlhxUUZTcDNnUHBwYVc5TjdxSGRaQkliQmdLbURISVR4T0NFaEl3SkhWS3dvZ2F5UW52VWQ3TFNJOXgzdHN5K252V0p4aUZHTVdJa2dDc1dCaWR5VUZScjR3RnRrb0IxWVhjV2pjRHI5Ui9KaFAybkk2TXNPWkhvNW8vRTlVdG95T2lTMTNkV2xuVVZXa2RYV2dDMllCMkNhRmR5cm8wRk16blVhL3p5MjVoaG1YUm1BSkV2M1RVOW5GMzFHVlY1YnRMc2xkcmQrQ1R2RXhnNEtHUHAzWmFsSDNrVWJnNHNJZTk4WVUzdnZJOVFua1h3NXU0OGJwZmd5Tmh0bXVvL2s3RU1lRnhsMURmZmR4UTBoL2VDckk3Z0s2ajZZTks5N0RveTZYT1NvK0M0YjQzdWIzcURUNWNlUVQ3WGd6ZnpDT0VlQ1FDK01pTE9mUkF5M1ZHWHdHVWZkdW9DdGs2KzJ3TzJta2kvdWF0MFFKSXcvSDN3SHl2aGd0RTZIcnVXYU1lM01OV2ZJM3FiRlpJT0ltelg1djFwRnM0QzRKdE8xTUdMVk1yWitMVCszL01udnFxbFJiRGliMGZ2MTNyZjY0L2ZoNy9zTURzMDJWMnZScWVITEJjTE5mYmxwS0Z6clJzakFDenZmZW5WeDRsREhNYytveThNSHJud0dZRDNHeWFyejBydGJiZ01CaU11b1RCSjhTZWRUdG1LM3FNUUE4UWdoaWMvZ3BDOE8wSXdVc0VDalk0ODZRQ0FVSmhPNFNZdjRLQ1laRy9FUVZFajFIb0g0QUNlN0QxRnFGQlJHUHNITk9ldjZCTFNkemwzSU1ER0xmNnJZSFl0ZFAvZ3NSV2Z4Z1EzL2ZPYjk5UExzYW5Iby9pbUFkQkdOSW93alFnTWFmSDJQUUpPNHBCOUxkZ3MrZ1JHN3psRXo4R1RURVBBeDVTR3IzRWh2UGZlcmVTZFEzeWZrUUFINGQ3QWlUa1hlS2FBU2YrdDFGZ0VZK09USVFGK2lOZ2dvTWQ2VkNDS0dZRS8vNG85UCtHa2tPZWtvdUZ6QXJVM3FQYjNrV214VzdMcmxHeU1qS2ZsVFpyNWd1UnJKUlhTWFZ2bWtwbTFsdVpCRzZjSFdHN3Fab1M3b0hCNk9adWVINEhKK0h1N2ZsZ2VIZnpka0R1SXV4bEJkeUdSZ3hXd3pONWVXSERzMWxTVnB0TmRYL2RpOCtqajUvdHg3ZXFJbVFTckFmZmsrdkp6L1JmalB4TTlrUjI2dW5YMUZ0L3cwL2krblJFcmorUjh1Sk1mN3k0L1BUT25JOG0vamwrdUdyazZPRXkvUERodWxXL3Z6U3JoYXdndnZqZXpmamRXUS9PN2piS1BBN0YzdmVjMGw3MHN0OUZtSGJLOFFqRW5adnhaSFJ4cUMxZE5OdVJKR3NzTEczL0dBbXVUWUNLRHhSdUowV2VMQXF6VHZwRitVd2VlMWZEOC9mSCtKSHJIeHozUXhDY2pFNWZzd1Myc3NsTk5TOExnOHdEeFBnakRpQ0NFUW1mejJQZThPSTE4eVBYZjJCZjFXUUx1RjMzQ2lFdUdsdFpTTHhGUFplSUJxR0hRMEhlaUJFVk1STU1pM2drd2plQ0VURTZGUU1xK0lrWW5Bck1SUUJEV0lTQkNIemhEd1dQUlJRSUdndkdBVlVNbVloR1l2aEd4TkJQM1BOSklJYW40blFYVHN5NmFmbDVMa2NUVTNpdFZxdnVkaDkzU3p1YlRzMGE4bW5nV2pUMWRBcm1vTG0yTUdzNmxVbU5YTnhHenBKbjJ0aVR0c2U4N1ZjVXBiSnU3aEk0MzZ0TU4vTzcxRlVLY0tiK0FsV1R5NFh1MkRQbHdYT3FtV25TTGRGTVQ2ZmF5clJCOHpKZkdJdnNBbEl4MU93ek93VHFEWUw4RWhTWndtbXUwVDRTUVhwU1c0VkFkQWFoMjVVNDdzdU43WlB4ZDJiV2xpRUtCeXBSSVVjNmxRVDVTakVVU3dwVkxFUWFYd1p3dFFhdUpESTFWTTF0SW5pcDFOTEN3czRleTVyQ3JDN1QxR1gyYlFka2xaQnhucG1OeXlkMytWL2I2ckJzZEYrZEZQU01qTEtMNk94c0hpL3FxMVcvRC9xaHVvSkxCMlF1cTJnMHV0SGp1bHBlZjFxb0ZTdm03SFFBTXFEV0FuRkl3eHlMcTIxWmxKbTJEc3JxeVc1b2tPZmx5b0JoalYwNkptcFpOK1dpVFhEWHpXTUJCVm11VzR6V25uSHhrRFdQL3dNY2pyaFp0c3p6dG1iNXIzSitVUEpLMWcrOWgzay9OSHY2WVQ1bTRXeXl2UDlwMVZ4TmZuenowL0kwbUcwVGVyZ0JFZUh3RS96VjlFTVdoUnppTnlUNG1FSUN3TjJpWlBYNU1tK3lLeWhPTjQrcmtkVW50cFJhd1NaOFdoQnRrdVhzTU0ySHYwRGE1ZWM2alNPS1E4UTBwc2hQWW94a1RCUktLZlg5aVBJVVRqZ2dnYnVWVzhsaU5vU1pUNDRaRjNVamk3YmszanZvcXdXUEsvdEtSeVNUdWROMitGZk1UY3R2WjhuL1ZIU0RzVE5iTHF2blMvNXY1RlhIamZVUkFBQT0iLCJzaHJUb2tlbiI6ImV5SmhiR2NpT2lKU1V6STFOaUlzSW5SNWNDSTZJbkJ2Y0NKOS5leUpoZENJNkltVjVTakJsV0VGcFQybEtTMVl4VVdsTVEwcG9Za2RqYVU5cFNsTlZla2t4VG1sSmMwbHVaekZrUTBrMlNXcE9VVmxWY3pCU1YxbzFVV3MxVW1SVVRrUmtSM0JhWXpKRmVsZFhNVzlWVkZaR1RVTkpjMGx0ZEhCYVEwazJTV3BPVVZsVmN6QlNWMW8xVVdzMVVtUlVUa1JrUjNCYVl6SkZlbGRYTVc5VlZGWkdUVU5LT1M1bGVVcG9aRmRSYVU5cFNtbE9SRlpzVFVScmQxbFRNV3RaVjBwdFRGUlJlRTVFVlhSWlZFRXlUME13ZDA5SFJUUk5hbXhwVFhwQ2JFOUhVV2xNUTBwd1l6Tk5hVTlwU205a1NGSjNZM3B2ZGt3elRqQmplVFV6WVZjMWEySXpaSHBNYlRWc1pFTTVhbHBIVFRGWlYxWnNXVk13ZUU1WFRURk1WRkpyV1dwWmRGbHFRVE5QVXpGdFdUSkdhMXBFU1RGTlJGWnJXWHBKZGtscGQybGhWMFl3U1dwdmVFNTZUWGhQUkdzeFQwUlJOVXhEU25WWmJWbHBUMnBGTTAxNlJUUlBWRlUwVGtScmMwbHRWalJqUTBrMlRWUmplazFVYXpSTmFsVXdUMU4zYVZsWGJIWkphbTlwWVhwS1Exb3hiRVZoUkU1YVZHcG9SR1F6YUZOaVdGVXdUakJ3VmtzeGFFOWpiVFYxVkVWR1VsRlVNR2xNUTBwb1kwaENjRnBEU1RaSmJVVjZXVlJOZWxsNlNtaE1WRWsxVDBkVmRFNUVSbXROVXpBMVRWUk5NMHhYUlRGT1JGbDVUVzFWTWs5RVJtcFplVWx6U1cxR2QyTkhiR3RaVjA1NVNXcHZhVTFwU1hOSmJVNTFXbWxKTm1WNVNuRmtNbk5wVDI1emFXRXpValZKYW05cFZXeE9Ra2xwZDJsaWFVazJTVzV3Tm1NeVpGSldhazV5VjJ4V1psZElXVEJPTVVZellWZFNiRk5YVGxSUldHeFlWbTFHVEdGV1JrUlZNbXMxWTFWb1ZGTkdaSE5UYmxrelYyNVNhVTFzV20xYWFrNUlWREExVm1OSGRHeFZWV2h4VlZkNGQxWXdOWGRPTW5Sb1VrUk9hbFpGVWpCVmF6VXdUbTFLY21WVVdrVmtlbWh5VTFNeFVXSnJNVkZhTTFwWVdYcG9TbFZwTVdGVVJVMHpWVE53U0dWSGRFbGlNVlkwWTFVNVZWSXdUWGhPU0VKYVZFVm9NMUpzT1VSUmEzaFlXbGQ0VVU1Rk5YcE9iVTB6VXpOU1JXUkVhR0ZqVlhNMFpWTXhUbVZxYkZCVFIwbzBVbGh3UTB4V1JsZGtXR2d3WVZob2VWVlhSblpXTW14SVZXeEdNbFZVVmxwUk1qVkZWa2RaTW1Oc1FrSlNSVlY2VlVSb05sTkhOVTFoVjNoNlpWWktSa3hVYkVsVlZWWkVXVzVvZWxKRlNsZGtWVlpwWWtSYVNHSkhNVzFrYTBsMFYxWktkV015VG1oVk1EVnJWRlpLWm1OR1NtNVZXRXBVVkhwc2NtVnRjREppVjFKdVpESkpOVlJ1UmpaaVIwWm1ZbFJzVWxaNmJIQlViR3hVVkZWU05GUXlTVFJTYmtaelVrY3hjVnBXUVRCbFZXOHlWRlJTV2xJeWNFeE5TRTVDVVZadmVWa3hiR0ZaVjNSWFdWWlJlVmxzYTNwWFIxcEhXa2hrVDFOVVJuSmpWMmhRWkZWU1ZGSlVXbEJpYlZZeFZWTkpjMGx0VldsUGFVcENWVlZHUTBscGQybFpWM2h1U1dwdmFWVnNUWGxPVkZscFRFTktjbUZYVVdsUGFVbzBVVk14UkZOSWFGUmplbHB6WVZkU2RsSlZPVnBrTTNBMFVtMVNiR0pWVWxwaVJsWkRUVVZhVVdKR1dsaFZWM2hZWVc1SmRGbHJTa1pKYmpFNVRFTktjRnBJUVdsUGFVcHZaRWhTZDJONmIzWk1NMDR3WTNrMU0yRlhOV3RpTTJSNlRHMDFiR1JET1dwYVIwMHhXVmRXYkZsVE1IaE9WMDB4VEZSU2ExbHFXWFJaYWtFelQxTXhiVmt5Um10YVJFa3hUVVJXYTFsNlNYWkphWGRwWVZkU01HVllRV2xQYVVwb1kwaEJhVXhEU25aaFYxRnBUMmxKZVZsNll6VlpNa2t6VDBNd2Vsa3lUbWhNVkZGNldsZEpkRmx0Vm1sTmFURnBUVVJyTWxwWFNUVk5hbEV5V1ZSbmFVeERTbmxoUTBrMlNXcEZkVkZXU2twUlZGcDRUakJhTmxreFZsZGtSM041WkRKV2JXVllVWGRpUlVwclpESmtkbE5zYUhsVk1UaDVZVEZhUTJJd1pHNVRXRVpFWWxod1JXSjZRbFJSVlVaQ1ZUQkdRa3hwU1hOSmJrNHhXV2xKTmtscVNtcE9lbXhxV1dwak5FeFVUbXBaTWtWMFRrUk9iRmxwTVdsYVYwbDVURmRKZDA5VVdteFphbXQ1VGtSYWFFOURTWE5KYmxKd1drTkpOa2x0VG10WmVsWm9XbGRXYUV4VVJURlplbFYwVGtkU2FVNXBNV2xOUkdNMVRGZGFhbGxYVW10TmFsVjNUbGRTYWsxcFNYTkpibFl3WVZOSk5rbHFSa05UTUU1eVkxUkdSMlJyVmxCU01IQkxUMVp3VG1ReFVuVlJWVVZwVEVOS01scFlTV2xQYVVsNFRHcEJhVXhEU2pSaVdFNW1ZVmRTZVZwWGQybFBhVWt6U1VSbmFXWlJMbWh2ZDNOVVpERmZabUZQT1ZweGNrd3hXSFpLVjNKbVQzaGpTV0k1YmtSbGNtWktSVTQ1ZWxCQlZWVlRSSFEzTUZwd2NIVnpiMVZRTWpWc01rUlFORk5NVkhCb1FtSTBVbGg1Um5kTVRIZEhkbEZLYzNKM2EwMVdSWFV5UWxjd09VSTFVRXhvV0ZwSFowVkRaRXR0T1d3elIyOTFheTEyWlUxSWNpMWplVkpSUlVaaVdtWlFWMWR5TFdsS1RVWk9aVkZRZDNkeVdUZHJVVXhLYTNSVExXMDJOMWR0WTJGdmRVaFdNelZUTjBoRGJXRjJVazQxY0MxNWNVMVBSRXBQUVVVNFRreFBTWEJITTBvMFkxaEdTRVJvTmtKNFp6QmpORTl6YUV0cVlVRTRTalZOT1hkWlVrZGtaREoyTm0xUWFtMUNValpJZDIxTmIzVTBMVkJWYlRGbVpHRlJXblU1WWt4Vk0zRnpVM0ZoWVVkV1duUndhRlJvVjBKSmJXWlNjVXRsWWtaV09XNU5UR3MyUzJsM1FWVjRPWGR6WDAxemRuQlJNRTQ1YnpGV04zQXhUV05hZUdkM1ZEbENibTFsWVhwSFpVZDRVU0lzSW5Seklqb3hOek14T0RrMk5UYzBMQ0ppSWpvaU5GcGpiMjlHZVhkMlgxWkhibkZMUWkxTVowdHJlRVUzZGpOcFlYWlZUMTg0VGxoT1dVdzBMV3BIYXlJc0ltNXZibU5sSWpvaU1UVmtNV05sT1dRelpUQXhOREpsWVRrNU5qRXpPV1k1WW1FellXWTRNalFpTENKamJtWWlPbnNpYW5kcklqcDdJbXRwWkNJNklqSnhXVlZUZDNWUWNWZ3hWREZCYkdkNVExbHpPQzE2YTI1Q1pEZGpjRjlWUlRoeWJrdEZTMTh0U2xFaUxDSmxJam9pUVZGQlFpSXNJbXQwZVNJNklsSlRRU0lzSW00aU9pSjZlbk5uVVZZemExcFZYMWgyTkRkUmQybGtaVWxqVTBGNVYxWmhTMmxSUTFOcE9YRklVMGhYYkVwMk4xcDBZakpXWm1ZelIwOU9WWEJyWlZGSWFsRnNjRmRPY0RkcllVUXpZMVJFZEZKT2REWmlhM2syUkhjNGEwa3RVRzVOVUdkMlYyTTRTVkl0V2t4RE4xTjZSM2hyU0c5VmVIRlBWRWRETVRSd1dVeElkMFpmUTBKTVYyVnNVRFJPY3paak4wdDBSSFE0V25GTE9Ia3RUWG81VDBoaWVFVjZRaTFSVm5WNGRHbDRjbEZoYjFkcFIxSlJkbEUxV1VOdVJGUm1ObkpRUVVSRk0xQTRla2h1VEdsc2MzbFNSUzA1U0ZGRlEySjRjMFJDVm5WRlltdzJSMnh0Wm5aQ0xWbFNibk5qWVZOT1pFMVNYM0JTWjFGeVUwODVhM3BxZG0xa1ozZGlPVTV4ZW14aFgyMDVVVmM1YVU1WlUwMUVlRTlpT0VaeGJFUnRhbVZRTkhsS05rMDBXVWRxU3pCelFVRmFNbU5aV21GclZtRlVNbUpaTTFobVJtUjNUa2t4YTNGb1QzVkVVMFUyVDI1bGRWRWlmWDE5Lks0QnJCVGhfUkViT0RlczNVZ2VscVdBM3R2eGxKRWNGX2E5UU5qMnZ1N2FzbUJfQ29tbERBOE9hUmZ5TjNLRkpnZnBjUlZpd2hFeVlYLV96N1JvUkJ3Q0NHU09qWnBFRWpGR1hlYUdUWEpfTmVLQjF0a0xrWmhyS2tNbVZ3TmtpRkROQ21uR212bFlndF9uZ2xucWZRcDlxNTJkRlBTaWZRa0k4aHgzUkpLei1Ddmh2cExEaV9mSDVnd2txODdEczlxOUtLQUZyZjQ4dDMxZE5SYXVRMUpHWXk5emRMbWpSOGUyeDhEVWpyQlFDNUdhX2hNRHVZVHpGaXBVOGRfNG1pRFMzLVZXeXp1cV9ZQXBJYTRaemM1YUJNclVSYUx0Qi1BeURVdG16eG9nLXltUzhDb2M3VEd4SGVyYW56eDFuZFZQSVJkSG1NaGVZWG5NS1FqNk1QdyJ9.\u0022,\u0022correlationId\u0022:\u00227df98206-3d02-4b90-a91c-f2244827f600\u0022}",
+      "messageId": "a6f48ba4e0224dbe84fa70ea378df215",
+      "partitionKey": null,
+      "sessionId": null,
+      "replyToSessionId": null,
+      "correlationId": null,
+      "subject": null,
+      "contentType": null,
+      "replyTo": null,
+      "applicationProperties": {
+        "Diagnostic-Id": "00-75c3138c5a85b7bdcfecd64fbf9afe14-f032ac2339f1fe81-00"
+      },
+      "enqueuedTime": "0001-01-01T00:00:00+00:00"
+    },
+    {
+      "body": "[{\u0022id\u0022:\u0022Sanitized\u0022,\u0022source\u0022:\u0022calling/callConnections/04001e80-3ab6-413c-8e6d-cad346aaa11d\u0022,\u0022type\u0022:\u0022Microsoft.Communication.ParticipantsUpdated\u0022,\u0022data\u0022:{\u0022participants\u0022:[{\u0022identifier\u0022:{\u0022rawId\u0022:\u0022Sanitized\u0022,\u0022kind\u0022:\u0022communicationUser\u0022,\u0022communicationUser\u0022:{\u0022id\u0022:\u0022Sanitized\u0022}},\u0022isMuted\u0022:false,\u0022isOnHold\u0022:false},{\u0022identifier\u0022:{\u0022rawId\u0022:\u0022Sanitized\u0022,\u0022kind\u0022:\u0022communicationUser\u0022,\u0022communicationUser\u0022:{\u0022id\u0022:\u0022Sanitized\u0022}},\u0022isMuted\u0022:false,\u0022isOnHold\u0022:false}],\u0022sequenceNumber\u0022:1,\u0022resultInformation\u0022:{\u0022code\u0022:200,\u0022subCode\u0022:0,\u0022message\u0022:\u0022\u0022},\u0022version\u0022:\u00222024-09-01-preview\u0022,\u0022callConnectionId\u0022:\u002204001e80-3ab6-413c-8e6d-cad346aaa11d\u0022,\u0022serverCallId\u0022:\u0022aHR0cHM6Ly9hcGkuZmxpZ2h0cHJveHkuc2t5cGUuY29tL2FwaS92Mi9jcC9jb252LXVzZWEtMDMtcHJvZC1ha3MuY29udi5za3lwZS5jb20vY29udi9kdmhJMzZnUnVrcXd0UFJqRnF1RDVnP2k9MTAtMTI4LTE3LTEyNSZlPTYzODY3MjE5MjE1MDI3NTU3MA==\u0022,\u0022correlationId\u0022:\u00227df98206-3d02-4b90-a91c-f2244827f600\u0022,\u0022publicEventType\u0022:\u0022Microsoft.Communication.ParticipantsUpdated\u0022},\u0022time\u0022:\u00222024-11-18T02:22:55.1711396\\u002B00:00\u0022,\u0022specversion\u0022:\u00221.0\u0022,\u0022datacontenttype\u0022:\u0022application/json\u0022,\u0022subject\u0022:\u0022calling/callConnections/04001e80-3ab6-413c-8e6d-cad346aaa11d\u0022}]",
+      "messageId": "ca18b848f658419887a3854da6b32b8d",
+      "partitionKey": null,
+      "sessionId": null,
+      "replyToSessionId": null,
+      "correlationId": null,
+      "subject": null,
+      "contentType": null,
+      "replyTo": null,
+      "applicationProperties": {
+        "Diagnostic-Id": "00-8e3014c186a90277564ffee62fd4eeea-eef1e6df1ba7711c-00"
+      },
+      "enqueuedTime": "0001-01-01T00:00:00+00:00"
+    },
+    {
+      "body": "[{\u0022id\u0022:\u0022Sanitized\u0022,\u0022source\u0022:\u0022calling/callConnections/04001e80-3ab6-413c-8e6d-cad346aaa11d\u0022,\u0022type\u0022:\u0022Microsoft.Communication.CallConnected\u0022,\u0022data\u0022:{\u0022version\u0022:\u00222024-09-01-preview\u0022,\u0022resultInformation\u0022:{\u0022code\u0022:200,\u0022subCode\u0022:0,\u0022message\u0022:\u0022\u0022},\u0022callConnectionId\u0022:\u002204001e80-3ab6-413c-8e6d-cad346aaa11d\u0022,\u0022serverCallId\u0022:\u0022aHR0cHM6Ly9hcGkuZmxpZ2h0cHJveHkuc2t5cGUuY29tL2FwaS92Mi9jcC9jb252LXVzZWEtMDMtcHJvZC1ha3MuY29udi5za3lwZS5jb20vY29udi9kdmhJMzZnUnVrcXd0UFJqRnF1RDVnP2k9MTAtMTI4LTE3LTEyNSZlPTYzODY3MjE5MjE1MDI3NTU3MA==\u0022,\u0022correlationId\u0022:\u00227df98206-3d02-4b90-a91c-f2244827f600\u0022,\u0022publicEventType\u0022:\u0022Microsoft.Communication.CallConnected\u0022},\u0022time\u0022:\u00222024-11-18T02:22:55.1903249\\u002B00:00\u0022,\u0022specversion\u0022:\u00221.0\u0022,\u0022datacontenttype\u0022:\u0022application/json\u0022,\u0022subject\u0022:\u0022calling/callConnections/04001e80-3ab6-413c-8e6d-cad346aaa11d\u0022}]",
+      "messageId": "621ac9398c1b42869a3596c1eee9468e",
+      "partitionKey": null,
+      "sessionId": null,
+      "replyToSessionId": null,
+      "correlationId": null,
+      "subject": null,
+      "contentType": null,
+      "replyTo": null,
+      "applicationProperties": {
+        "Diagnostic-Id": "00-e5db550ea65597d8f615e5f87e2b4f42-f2776e901f37d7fc-00"
+      },
+      "enqueuedTime": "0001-01-01T00:00:00+00:00"
+    },
+    {
+      "body": "[{\u0022id\u0022:\u0022Sanitized\u0022,\u0022source\u0022:\u0022calling/callConnections/04001e80-f0b8-4a94-95b5-8c7b831ceb1d\u0022,\u0022type\u0022:\u0022Microsoft.Communication.CallConnected\u0022,\u0022data\u0022:{\u0022version\u0022:\u00222024-09-01-preview\u0022,\u0022resultInformation\u0022:{\u0022code\u0022:200,\u0022subCode\u0022:0,\u0022message\u0022:\u0022\u0022},\u0022callConnectionId\u0022:\u002204001e80-f0b8-4a94-95b5-8c7b831ceb1d\u0022,\u0022serverCallId\u0022:\u0022aHR0cHM6Ly9hcGkuZmxpZ2h0cHJveHkuc2t5cGUuY29tL2FwaS92Mi9jcC9jb252LXVzZWEtMDMtcHJvZC1ha3MuY29udi5za3lwZS5jb20vY29udi9kdmhJMzZnUnVrcXd0UFJqRnF1RDVnP2k9MTAtMTI4LTE3LTEyNSZlPTYzODY3MjE5MjE1MDI3NTU3MA==\u0022,\u0022correlationId\u0022:\u00227df98206-3d02-4b90-a91c-f2244827f600\u0022,\u0022publicEventType\u0022:\u0022Microsoft.Communication.CallConnected\u0022},\u0022time\u0022:\u00222024-11-18T02:22:55.2036527\\u002B00:00\u0022,\u0022specversion\u0022:\u00221.0\u0022,\u0022datacontenttype\u0022:\u0022application/json\u0022,\u0022subject\u0022:\u0022calling/callConnections/04001e80-f0b8-4a94-95b5-8c7b831ceb1d\u0022}]",
+      "messageId": "9a2580468651457787f9ff5825c89850",
+      "partitionKey": null,
+      "sessionId": null,
+      "replyToSessionId": null,
+      "correlationId": null,
+      "subject": null,
+      "contentType": null,
+      "replyTo": null,
+      "applicationProperties": {
+        "Diagnostic-Id": "00-8be1cf5a96e44ebf8d4170138390fe1f-79da72862f73782b-00"
+      },
+      "enqueuedTime": "0001-01-01T00:00:00+00:00"
+    },
+    {
+      "body": "[{\u0022id\u0022:\u0022Sanitized\u0022,\u0022source\u0022:\u0022calling/callConnections/04001e80-f0b8-4a94-95b5-8c7b831ceb1d\u0022,\u0022type\u0022:\u0022Microsoft.Communication.ParticipantsUpdated\u0022,\u0022data\u0022:{\u0022participants\u0022:[{\u0022identifier\u0022:{\u0022rawId\u0022:\u0022Sanitized\u0022,\u0022kind\u0022:\u0022communicationUser\u0022,\u0022communicationUser\u0022:{\u0022id\u0022:\u0022Sanitized\u0022}},\u0022isMuted\u0022:false,\u0022isOnHold\u0022:false},{\u0022identifier\u0022:{\u0022rawId\u0022:\u0022Sanitized\u0022,\u0022kind\u0022:\u0022communicationUser\u0022,\u0022communicationUser\u0022:{\u0022id\u0022:\u0022Sanitized\u0022}},\u0022isMuted\u0022:false,\u0022isOnHold\u0022:false}],\u0022sequenceNumber\u0022:1,\u0022resultInformation\u0022:{\u0022code\u0022:200,\u0022subCode\u0022:0,\u0022message\u0022:\u0022\u0022},\u0022version\u0022:\u00222024-09-01-preview\u0022,\u0022callConnectionId\u0022:\u002204001e80-f0b8-4a94-95b5-8c7b831ceb1d\u0022,\u0022serverCallId\u0022:\u0022aHR0cHM6Ly9hcGkuZmxpZ2h0cHJveHkuc2t5cGUuY29tL2FwaS92Mi9jcC9jb252LXVzZWEtMDMtcHJvZC1ha3MuY29udi5za3lwZS5jb20vY29udi9kdmhJMzZnUnVrcXd0UFJqRnF1RDVnP2k9MTAtMTI4LTE3LTEyNSZlPTYzODY3MjE5MjE1MDI3NTU3MA==\u0022,\u0022correlationId\u0022:\u00227df98206-3d02-4b90-a91c-f2244827f600\u0022,\u0022publicEventType\u0022:\u0022Microsoft.Communication.ParticipantsUpdated\u0022},\u0022time\u0022:\u00222024-11-18T02:22:55.2036527\\u002B00:00\u0022,\u0022specversion\u0022:\u00221.0\u0022,\u0022datacontenttype\u0022:\u0022application/json\u0022,\u0022subject\u0022:\u0022calling/callConnections/04001e80-f0b8-4a94-95b5-8c7b831ceb1d\u0022}]",
+      "messageId": "aa3c9aba640243318c34c4b4e5d6413a",
+      "partitionKey": null,
+      "sessionId": null,
+      "replyToSessionId": null,
+      "correlationId": null,
+      "subject": null,
+      "contentType": null,
+      "replyTo": null,
+      "applicationProperties": {
+        "Diagnostic-Id": "00-4684f9121923b8ee07454742203bc507-3433b76c7dd635af-00"
+      },
+      "enqueuedTime": "0001-01-01T00:00:00+00:00"
+    },
+    {
+      "body": "[{\u0022id\u0022:\u0022Sanitized\u0022,\u0022source\u0022:\u0022calling/callConnections/04001e80-f0b8-4a94-95b5-8c7b831ceb1d\u0022,\u0022type\u0022:\u0022Microsoft.Communication.RecognizeFailed\u0022,\u0022data\u0022:{\u0022failedPlaySourceIndex\u0022:0,\u0022version\u0022:\u00222024-09-01-preview\u0022,\u0022operationContext\u0022:\u0022speechContext\u0022,\u0022resultInformation\u0022:{\u0022code\u0022:500,\u0022subCode\u0022:8511,\u0022message\u0022:\u0022Action failed, encountered failure while trying to play the prompt.\u0022},\u0022callConnectionId\u0022:\u002204001e80-f0b8-4a94-95b5-8c7b831ceb1d\u0022,\u0022serverCallId\u0022:\u0022aHR0cHM6Ly9hcGkuZmxpZ2h0cHJveHkuc2t5cGUuY29tL2FwaS92Mi9jcC9jb252LXVzZWEtMDMtcHJvZC1ha3MuY29udi5za3lwZS5jb20vY29udi9kdmhJMzZnUnVrcXd0UFJqRnF1RDVnP2k9MTAtMTI4LTE3LTEyNSZlPTYzODY3MjE5MjE1MDI3NTU3MA==\u0022,\u0022correlationId\u0022:\u00227df98206-3d02-4b90-a91c-f2244827f600\u0022,\u0022publicEventType\u0022:\u0022Microsoft.Communication.RecognizeFailed\u0022},\u0022time\u0022:\u00222024-11-18T02:22:57.4892541\\u002B00:00\u0022,\u0022specversion\u0022:\u00221.0\u0022,\u0022datacontenttype\u0022:\u0022application/json\u0022,\u0022subject\u0022:\u0022calling/callConnections/04001e80-f0b8-4a94-95b5-8c7b831ceb1d\u0022}]",
+      "messageId": "f93787b2c1bb498fa393b9ccbb913878",
+      "partitionKey": null,
+      "sessionId": null,
+      "replyToSessionId": null,
+      "correlationId": null,
+      "subject": null,
+      "contentType": null,
+      "replyTo": null,
+      "applicationProperties": {
+        "Diagnostic-Id": "00-e14c28f6374f2e010bd465a6a632a371-59e1dc3c7f2ee59b-00"
+      },
+      "enqueuedTime": "0001-01-01T00:00:00+00:00"
+    },
+    {
+      "body": "[{\u0022id\u0022:\u0022Sanitized\u0022,\u0022source\u0022:\u0022calling/callConnections/04001e80-f0b8-4a94-95b5-8c7b831ceb1d\u0022,\u0022type\u0022:\u0022Microsoft.Communication.CallDisconnected\u0022,\u0022data\u0022:{\u0022version\u0022:\u00222024-09-01-preview\u0022,\u0022resultInformation\u0022:{\u0022code\u0022:200,\u0022subCode\u0022:0,\u0022message\u0022:\u0022\u0022},\u0022callConnectionId\u0022:\u002204001e80-f0b8-4a94-95b5-8c7b831ceb1d\u0022,\u0022serverCallId\u0022:\u0022aHR0cHM6Ly9hcGkuZmxpZ2h0cHJveHkuc2t5cGUuY29tL2FwaS92Mi9jcC9jb252LXVzZWEtMDMtcHJvZC1ha3MuY29udi5za3lwZS5jb20vY29udi9kdmhJMzZnUnVrcXd0UFJqRnF1RDVnP2k9MTAtMTI4LTE3LTEyNSZlPTYzODY3MjE5MjE1MDI3NTU3MA==\u0022,\u0022correlationId\u0022:\u00227df98206-3d02-4b90-a91c-f2244827f600\u0022,\u0022publicEventType\u0022:\u0022Microsoft.Communication.CallDisconnected\u0022},\u0022time\u0022:\u00222024-11-18T02:22:58.1446969\\u002B00:00\u0022,\u0022specversion\u0022:\u00221.0\u0022,\u0022datacontenttype\u0022:\u0022application/json\u0022,\u0022subject\u0022:\u0022calling/callConnections/04001e80-f0b8-4a94-95b5-8c7b831ceb1d\u0022}]",
+      "messageId": "2524eb53f42f4ffba36b54cf37d285ed",
+      "partitionKey": null,
+      "sessionId": null,
+      "replyToSessionId": null,
+      "correlationId": null,
+      "subject": null,
+      "contentType": null,
+      "replyTo": null,
+      "applicationProperties": {
+        "Diagnostic-Id": "00-ea2b3b43ce199223b137267dfb918dc2-0df5e3b5a0cca02f-00"
+      },
+      "enqueuedTime": "0001-01-01T00:00:00+00:00"
+    },
+    {
+      "body": "[{\u0022id\u0022:\u0022Sanitized\u0022,\u0022source\u0022:\u0022calling/callConnections/04001e80-3ab6-413c-8e6d-cad346aaa11d\u0022,\u0022type\u0022:\u0022Microsoft.Communication.CallDisconnected\u0022,\u0022data\u0022:{\u0022version\u0022:\u00222024-09-01-preview\u0022,\u0022resultInformation\u0022:{\u0022code\u0022:200,\u0022subCode\u0022:0,\u0022message\u0022:\u0022\u0022},\u0022callConnectionId\u0022:\u002204001e80-3ab6-413c-8e6d-cad346aaa11d\u0022,\u0022serverCallId\u0022:\u0022aHR0cHM6Ly9hcGkuZmxpZ2h0cHJveHkuc2t5cGUuY29tL2FwaS92Mi9jcC9jb252LXVzZWEtMDMtcHJvZC1ha3MuY29udi5za3lwZS5jb20vY29udi9kdmhJMzZnUnVrcXd0UFJqRnF1RDVnP2k9MTAtMTI4LTE3LTEyNSZlPTYzODY3MjE5MjE1MDI3NTU3MA==\u0022,\u0022correlationId\u0022:\u00227df98206-3d02-4b90-a91c-f2244827f600\u0022,\u0022publicEventType\u0022:\u0022Microsoft.Communication.CallDisconnected\u0022},\u0022time\u0022:\u00222024-11-18T02:22:58.2732659\\u002B00:00\u0022,\u0022specversion\u0022:\u00221.0\u0022,\u0022datacontenttype\u0022:\u0022application/json\u0022,\u0022subject\u0022:\u0022calling/callConnections/04001e80-3ab6-413c-8e6d-cad346aaa11d\u0022}]",
+      "messageId": "ea8779c3d05a4cc58fe000c26eec942b",
+      "partitionKey": null,
+      "sessionId": null,
+      "replyToSessionId": null,
+      "correlationId": null,
+      "subject": null,
+      "contentType": null,
+      "replyTo": null,
+      "applicationProperties": {
+        "Diagnostic-Id": "00-c462f75de340cb07b117507b79ef6a23-e4a940378ec05fb9-00"
+      },
+      "enqueuedTime": "0001-01-01T00:00:00+00:00"
+    }
+  ]
+}

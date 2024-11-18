@@ -479,7 +479,9 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.RecognizeFailed"/> instance for mocking. </returns>
         public static RecognizeFailed RecognizeFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, int? failedPlaySourceIndex = null)
         {
-            return new RecognizeFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, failedPlaySourceIndex);
+            var internalObject = new RecognizeFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, failedPlaySourceIndex);
+
+            return new RecognizeFailed(internalObject);
         }
 
         /// <summary> Initializes a new instance of RecordingStateChanged. </summary>

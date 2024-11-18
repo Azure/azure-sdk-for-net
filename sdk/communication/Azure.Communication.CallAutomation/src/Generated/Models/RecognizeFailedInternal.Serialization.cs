@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class RecognizeFailed
+    internal partial class RecognizeFailedInternal
     {
-        internal static RecognizeFailed DeserializeRecognizeFailed(JsonElement element)
+        internal static RecognizeFailedInternal DeserializeRecognizeFailedInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -64,7 +64,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecognizeFailed(
+            return new RecognizeFailedInternal(
                 callConnectionId,
                 serverCallId,
                 correlationId,
@@ -75,10 +75,10 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static RecognizeFailed FromResponse(Response response)
+        internal static RecognizeFailedInternal FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRecognizeFailed(document.RootElement);
+            return DeserializeRecognizeFailedInternal(document.RootElement);
         }
     }
 }
