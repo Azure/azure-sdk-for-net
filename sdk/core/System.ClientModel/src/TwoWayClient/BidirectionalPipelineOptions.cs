@@ -32,7 +32,7 @@ public class BidirectionalPipelineOptions
     {
         if (_frozen)
         {
-            throw new InvalidOperationException("Cannot change a TwoWayPipelineOptions instance after it has been used to create a ClientPipeline.");
+            throw new InvalidOperationException("Cannot change a BidirectionalPipelineOptions instance after it has been used to create a ClientPipeline.");
         }
     }
 }

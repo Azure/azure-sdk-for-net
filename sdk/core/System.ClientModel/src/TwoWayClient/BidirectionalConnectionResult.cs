@@ -29,21 +29,21 @@ public class BidirectionalConnectionResult : IDisposable /*TODO: IAsyncDisposabl
     public BidirectionalPipeline Pipeline => _pipeline ?? throw new ObjectDisposedException("TBD");
 
     // Protocol layer async method
-    // Note: idea is that convenience method overload will add TwoWayResponse<T>
+    // Note: idea is that convenience method overload will add BidirectionalClientResult<T>
     // and take CancellationToken instead.
-    public virtual IAsyncEnumerable<BidirectionalClientResult> GetResponsesAsync(BidirectionalRequestOptions options)
+    public virtual IAsyncEnumerable<BidirectionalClientResult> GetResultsAsync(BidirectionalRequestOptions options)
     {
         throw new NotImplementedException();
     }
 
     // Protocol layer sync method
-    public virtual IEnumerable<BidirectionalClientResult> GetResponses(BidirectionalRequestOptions options)
+    public virtual IEnumerable<BidirectionalClientResult> GetResults(BidirectionalRequestOptions options)
     {
         throw new NotImplementedException();
     }
 
     // effectively the base-layer protocol message
-    // only difference between this and Pipeline.Send is that BidirectionalClientDataOptions
+    // only difference between this and Pipeline.Send is that BidirectionalRequestOptions
     // can mutate the pipeline before sending.
     // Intention is that client authors will layer protocol methods around this
     // as a convenience to them, but open question whether we would expose this

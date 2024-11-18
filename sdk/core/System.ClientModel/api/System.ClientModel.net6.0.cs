@@ -323,8 +323,8 @@ namespace System.ClientModel.Primitives.BidirectionalClients
         public System.ClientModel.Primitives.BidirectionalClients.BidirectionalPipeline Pipeline { get { throw null; } }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        public virtual System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.BidirectionalClients.BidirectionalClientResult> GetResponses(System.ClientModel.Primitives.BidirectionalClients.BidirectionalRequestOptions options) { throw null; }
-        public virtual System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.BidirectionalClients.BidirectionalClientResult> GetResponsesAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalRequestOptions options) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.BidirectionalClients.BidirectionalClientResult> GetResults(System.ClientModel.Primitives.BidirectionalClients.BidirectionalRequestOptions options) { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.BidirectionalClients.BidirectionalClientResult> GetResultsAsync(System.ClientModel.Primitives.BidirectionalClients.BidirectionalRequestOptions options) { throw null; }
         protected void Send(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.BidirectionalClients.BidirectionalRequestOptions? options = null) { }
         protected System.Threading.Tasks.Task SendAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.BidirectionalClients.BidirectionalRequestOptions? options = null) { throw null; }
     }

@@ -47,7 +47,7 @@ public abstract class BidirectionalPipelineTransport : BidirectionalPipelinePoli
 
     protected abstract ValueTask ProcessCoreAsync(BidirectionalPipelineResponse serviceMessage);
 
-    #region TwoWayPipelinePolicy.Process overrides
+    #region BidirectionalPipelinePolicy.Process overrides
     public sealed override void Process(BidirectionalPipelineRequest clientMessage, IReadOnlyList<BidirectionalPipelinePolicy> pipeline, int currentIndex)
     {
         Process(clientMessage);

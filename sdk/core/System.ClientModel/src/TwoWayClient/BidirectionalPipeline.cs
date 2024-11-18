@@ -18,9 +18,9 @@ public sealed class BidirectionalPipeline : IDisposable, IAsyncDisposable
         _policies = policies;
     }
 
-    //public static TwoWayPipeline Create(ReadOnlySpan<TwoWayPipelinePolicy> policies)
+    //public static BidirectionalPipeline Create(ReadOnlySpan<BidirectionalPipelinePolicy> policies)
     //{
-    //    if (policies[policies.Length - 1] is not TwoWayPipelineTransport)
+    //    if (policies[policies.Length - 1] is not BidirectionalPipelineTransport)
     //    {
     //        throw new ArgumentException("The last policy must be of type 'TwoWayPipelineTransport'.", nameof(policies));
     //    }
