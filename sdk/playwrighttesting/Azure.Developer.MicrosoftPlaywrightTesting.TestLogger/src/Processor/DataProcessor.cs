@@ -55,7 +55,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                     TestType = "WebTest",
                     TestSdkLanguage = "CSHARP",
                     TestFramework = new TestFramework() { Name = "PLAYWRIGHT", RunnerName = "NUNIT", Version = "3.1" }, // TODO fetch runner name MSTest/Nunit
-                    ReporterPackageVersion = "1.0.0-beta.1",
+                    ReporterPackageVersion = "1.0.0-beta.3",
                     Shards = new Shard() { Total = 1 }
                 }
             };
