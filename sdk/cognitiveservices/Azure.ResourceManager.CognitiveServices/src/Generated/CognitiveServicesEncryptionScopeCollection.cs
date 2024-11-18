@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EncryptionScopeResource"/> and their operations.
-    /// Each <see cref="EncryptionScopeResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
-    /// To get an <see cref="EncryptionScopeCollection"/> instance call the GetEncryptionScopes method from an instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// A class representing a collection of <see cref="CognitiveServicesEncryptionScopeResource"/> and their operations.
+    /// Each <see cref="CognitiveServicesEncryptionScopeResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// To get a <see cref="CognitiveServicesEncryptionScopeCollection"/> instance call the GetCognitiveServicesEncryptionScopes method from an instance of <see cref="CognitiveServicesAccountResource"/>.
     /// </summary>
-    public partial class EncryptionScopeCollection : ArmCollection, IEnumerable<EncryptionScopeResource>, IAsyncEnumerable<EncryptionScopeResource>
+    public partial class CognitiveServicesEncryptionScopeCollection : ArmCollection, IEnumerable<CognitiveServicesEncryptionScopeResource>, IAsyncEnumerable<CognitiveServicesEncryptionScopeResource>
     {
-        private readonly ClientDiagnostics _encryptionScopeClientDiagnostics;
-        private readonly EncryptionScopesRestOperations _encryptionScopeRestClient;
+        private readonly ClientDiagnostics _cognitiveServicesEncryptionScopeEncryptionScopesClientDiagnostics;
+        private readonly EncryptionScopesRestOperations _cognitiveServicesEncryptionScopeEncryptionScopesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EncryptionScopeCollection"/> class for mocking. </summary>
-        protected EncryptionScopeCollection()
+        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesEncryptionScopeCollection"/> class for mocking. </summary>
+        protected CognitiveServicesEncryptionScopeCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EncryptionScopeCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesEncryptionScopeCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal EncryptionScopeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CognitiveServicesEncryptionScopeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _encryptionScopeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", EncryptionScopeResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EncryptionScopeResource.ResourceType, out string encryptionScopeApiVersion);
-            _encryptionScopeRestClient = new EncryptionScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, encryptionScopeApiVersion);
+            _cognitiveServicesEncryptionScopeEncryptionScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesEncryptionScopeResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CognitiveServicesEncryptionScopeResource.ResourceType, out string cognitiveServicesEncryptionScopeEncryptionScopesApiVersion);
+            _cognitiveServicesEncryptionScopeEncryptionScopesRestClient = new EncryptionScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesEncryptionScopeEncryptionScopesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EncryptionScopeResource"/></description>
+        /// <description><see cref="CognitiveServicesEncryptionScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<EncryptionScopeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string encryptionScopeName, EncryptionScopeData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CognitiveServicesEncryptionScopeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string encryptionScopeName, CognitiveServicesEncryptionScopeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.CreateOrUpdate");
+            using var scope = _cognitiveServicesEncryptionScopeEncryptionScopesClientDiagnostics.CreateScope("CognitiveServicesEncryptionScopeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _encryptionScopeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _encryptionScopeRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, data);
+                var response = await _cognitiveServicesEncryptionScopeEncryptionScopesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _cognitiveServicesEncryptionScopeEncryptionScopesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CognitiveServicesArmOperation<EncryptionScopeResource>(Response.FromValue(new EncryptionScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new CognitiveServicesArmOperation<CognitiveServicesEncryptionScopeResource>(Response.FromValue(new CognitiveServicesEncryptionScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EncryptionScopeResource"/></description>
+        /// <description><see cref="CognitiveServicesEncryptionScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<EncryptionScopeResource> CreateOrUpdate(WaitUntil waitUntil, string encryptionScopeName, EncryptionScopeData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CognitiveServicesEncryptionScopeResource> CreateOrUpdate(WaitUntil waitUntil, string encryptionScopeName, CognitiveServicesEncryptionScopeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.CreateOrUpdate");
+            using var scope = _cognitiveServicesEncryptionScopeEncryptionScopesClientDiagnostics.CreateScope("CognitiveServicesEncryptionScopeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _encryptionScopeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, data, cancellationToken);
-                var uri = _encryptionScopeRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, data);
+                var response = _cognitiveServicesEncryptionScopeEncryptionScopesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, data, cancellationToken);
+                var uri = _cognitiveServicesEncryptionScopeEncryptionScopesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CognitiveServicesArmOperation<EncryptionScopeResource>(Response.FromValue(new EncryptionScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new CognitiveServicesArmOperation<CognitiveServicesEncryptionScopeResource>(Response.FromValue(new CognitiveServicesEncryptionScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EncryptionScopeResource"/></description>
+        /// <description><see cref="CognitiveServicesEncryptionScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
-        public virtual async Task<Response<EncryptionScopeResource>> GetAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesEncryptionScopeResource>> GetAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
 
-            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.Get");
+            using var scope = _cognitiveServicesEncryptionScopeEncryptionScopesClientDiagnostics.CreateScope("CognitiveServicesEncryptionScopeCollection.Get");
             scope.Start();
             try
             {
-                var response = await _encryptionScopeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken).ConfigureAwait(false);
+                var response = await _cognitiveServicesEncryptionScopeEncryptionScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EncryptionScopeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CognitiveServicesEncryptionScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EncryptionScopeResource"/></description>
+        /// <description><see cref="CognitiveServicesEncryptionScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
-        public virtual Response<EncryptionScopeResource> Get(string encryptionScopeName, CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesEncryptionScopeResource> Get(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
 
-            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.Get");
+            using var scope = _cognitiveServicesEncryptionScopeEncryptionScopesClientDiagnostics.CreateScope("CognitiveServicesEncryptionScopeCollection.Get");
             scope.Start();
             try
             {
-                var response = _encryptionScopeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken);
+                var response = _cognitiveServicesEncryptionScopeEncryptionScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EncryptionScopeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CognitiveServicesEncryptionScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,17 +260,17 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EncryptionScopeResource"/></description>
+        /// <description><see cref="CognitiveServicesEncryptionScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EncryptionScopeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EncryptionScopeResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CognitiveServicesEncryptionScopeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesEncryptionScopeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionScopeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _encryptionScopeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EncryptionScopeResource(Client, EncryptionScopeData.DeserializeEncryptionScopeData(e)), _encryptionScopeClientDiagnostics, Pipeline, "EncryptionScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesEncryptionScopeEncryptionScopesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesEncryptionScopeEncryptionScopesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesEncryptionScopeResource(Client, CognitiveServicesEncryptionScopeData.DeserializeCognitiveServicesEncryptionScopeData(e)), _cognitiveServicesEncryptionScopeEncryptionScopesClientDiagnostics, Pipeline, "CognitiveServicesEncryptionScopeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -290,17 +290,17 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EncryptionScopeResource"/></description>
+        /// <description><see cref="CognitiveServicesEncryptionScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EncryptionScopeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EncryptionScopeResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesEncryptionScopeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesEncryptionScopeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionScopeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _encryptionScopeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EncryptionScopeResource(Client, EncryptionScopeData.DeserializeEncryptionScopeData(e)), _encryptionScopeClientDiagnostics, Pipeline, "EncryptionScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesEncryptionScopeEncryptionScopesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesEncryptionScopeEncryptionScopesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesEncryptionScopeResource(Client, CognitiveServicesEncryptionScopeData.DeserializeCognitiveServicesEncryptionScopeData(e)), _cognitiveServicesEncryptionScopeEncryptionScopesClientDiagnostics, Pipeline, "CognitiveServicesEncryptionScopeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EncryptionScopeResource"/></description>
+        /// <description><see cref="CognitiveServicesEncryptionScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,11 +332,11 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
 
-            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.Exists");
+            using var scope = _cognitiveServicesEncryptionScopeEncryptionScopesClientDiagnostics.CreateScope("CognitiveServicesEncryptionScopeCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _encryptionScopeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cognitiveServicesEncryptionScopeEncryptionScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EncryptionScopeResource"/></description>
+        /// <description><see cref="CognitiveServicesEncryptionScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,11 +375,11 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
 
-            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.Exists");
+            using var scope = _cognitiveServicesEncryptionScopeEncryptionScopesClientDiagnostics.CreateScope("CognitiveServicesEncryptionScopeCollection.Exists");
             scope.Start();
             try
             {
-                var response = _encryptionScopeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken: cancellationToken);
+                var response = _cognitiveServicesEncryptionScopeEncryptionScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EncryptionScopeResource"/></description>
+        /// <description><see cref="CognitiveServicesEncryptionScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,18 +414,18 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
-        public virtual async Task<NullableResponse<EncryptionScopeResource>> GetIfExistsAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<CognitiveServicesEncryptionScopeResource>> GetIfExistsAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
 
-            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.GetIfExists");
+            using var scope = _cognitiveServicesEncryptionScopeEncryptionScopesClientDiagnostics.CreateScope("CognitiveServicesEncryptionScopeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _encryptionScopeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cognitiveServicesEncryptionScopeEncryptionScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<EncryptionScopeResource>(response.GetRawResponse());
-                return Response.FromValue(new EncryptionScopeResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<CognitiveServicesEncryptionScopeResource>(response.GetRawResponse());
+                return Response.FromValue(new CognitiveServicesEncryptionScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EncryptionScopeResource"/></description>
+        /// <description><see cref="CognitiveServicesEncryptionScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,18 +459,18 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
-        public virtual NullableResponse<EncryptionScopeResource> GetIfExists(string encryptionScopeName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<CognitiveServicesEncryptionScopeResource> GetIfExists(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
 
-            using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.GetIfExists");
+            using var scope = _cognitiveServicesEncryptionScopeEncryptionScopesClientDiagnostics.CreateScope("CognitiveServicesEncryptionScopeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _encryptionScopeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken: cancellationToken);
+                var response = _cognitiveServicesEncryptionScopeEncryptionScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<EncryptionScopeResource>(response.GetRawResponse());
-                return Response.FromValue(new EncryptionScopeResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<CognitiveServicesEncryptionScopeResource>(response.GetRawResponse());
+                return Response.FromValue(new CognitiveServicesEncryptionScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        IEnumerator<EncryptionScopeResource> IEnumerable<EncryptionScopeResource>.GetEnumerator()
+        IEnumerator<CognitiveServicesEncryptionScopeResource> IEnumerable<CognitiveServicesEncryptionScopeResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<EncryptionScopeResource> IAsyncEnumerable<EncryptionScopeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CognitiveServicesEncryptionScopeResource> IAsyncEnumerable<CognitiveServicesEncryptionScopeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

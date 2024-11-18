@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Information about a linked Network Security Perimeter. </summary>
-    public partial class NetworkSecurityPerimeter
+    public partial class CognitiveServicesNetworkSecurityPerimeter
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeter"/>. </summary>
-        public NetworkSecurityPerimeter()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesNetworkSecurityPerimeter"/>. </summary>
+        public CognitiveServicesNetworkSecurityPerimeter()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesNetworkSecurityPerimeter"/>. </summary>
         /// <param name="id"> Fully qualified identifier of the resource. </param>
         /// <param name="perimeterGuid"> Guid of the resource. </param>
         /// <param name="location"> Location of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CognitiveServicesNetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             PerimeterGuid = perimeterGuid;

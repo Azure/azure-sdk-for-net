@@ -369,12 +369,12 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceSku> GetSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CognitiveServicesResourceSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesResourceSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceSku.DeserializeResourceSku(e), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, "CognitiveServicesAccountDeploymentResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CognitiveServicesResourceSku.DeserializeCognitiveServicesResourceSku(e), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, "CognitiveServicesAccountDeploymentResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -399,12 +399,12 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceSku> GetSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesResourceSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesResourceSku> GetSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceSku.DeserializeResourceSku(e), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, "CognitiveServicesAccountDeploymentResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CognitiveServicesResourceSku.DeserializeCognitiveServicesResourceSku(e), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, "CognitiveServicesAccountDeploymentResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

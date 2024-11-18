@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             string name = default;
             bool? enabled = default;
-            ContentLevel? severityThreshold = default;
+            RaiPolicyContentLevel? severityThreshold = default;
             bool? blocking = default;
             RaiPolicyContentSource? source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    severityThreshold = new ContentLevel(property.Value.GetString());
+                    severityThreshold = new RaiPolicyContentLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("blocking"u8))

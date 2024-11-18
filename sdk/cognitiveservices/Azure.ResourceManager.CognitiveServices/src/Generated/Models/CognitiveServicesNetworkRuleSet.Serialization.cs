@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             CognitiveServicesNetworkRuleAction? defaultAction = default;
-            ByPassSelection? bypass = default;
+            TrustedServicesByPassSelection? bypass = default;
             IList<CognitiveServicesIPRule> ipRules = default;
             IList<CognitiveServicesVirtualNetworkRule> virtualNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    bypass = new ByPassSelection(property.Value.GetString());
+                    bypass = new TrustedServicesByPassSelection(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipRules"u8))

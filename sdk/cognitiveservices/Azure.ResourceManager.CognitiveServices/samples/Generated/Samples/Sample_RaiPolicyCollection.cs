@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CognitiveServices.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CognitiveServices.Samples
 {
     public partial class Sample_RaiPolicyCollection
     {
-        // ListRaiPolicies
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListRaiPolicies()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/ListRaiPolicies.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GetRaiPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRaiPolicy()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetRaiPolicy.json
@@ -87,9 +86,8 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetRaiPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetRaiPolicy()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetRaiPolicy.json
@@ -118,9 +116,8 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetRaiPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetRaiPolicy()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetRaiPolicy.json
@@ -149,7 +146,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -161,9 +158,8 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             }
         }
 
-        // PutRaiPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutRaiPolicy()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/PutRaiPolicy.json
@@ -199,56 +195,56 @@ new RaiPolicyContentFilter()
 {
 Name = "hate",
 Enabled = false,
-SeverityThreshold = ContentLevel.High,
+SeverityThreshold = RaiPolicyContentLevel.High,
 Blocking = false,
 Source = RaiPolicyContentSource.Prompt,
 },new RaiPolicyContentFilter()
 {
 Name = "hate",
 Enabled = true,
-SeverityThreshold = ContentLevel.Medium,
+SeverityThreshold = RaiPolicyContentLevel.Medium,
 Blocking = true,
 Source = RaiPolicyContentSource.Completion,
 },new RaiPolicyContentFilter()
 {
 Name = "sexual",
 Enabled = true,
-SeverityThreshold = ContentLevel.High,
+SeverityThreshold = RaiPolicyContentLevel.High,
 Blocking = true,
 Source = RaiPolicyContentSource.Prompt,
 },new RaiPolicyContentFilter()
 {
 Name = "sexual",
 Enabled = true,
-SeverityThreshold = ContentLevel.Medium,
+SeverityThreshold = RaiPolicyContentLevel.Medium,
 Blocking = true,
 Source = RaiPolicyContentSource.Completion,
 },new RaiPolicyContentFilter()
 {
 Name = "selfharm",
 Enabled = true,
-SeverityThreshold = ContentLevel.High,
+SeverityThreshold = RaiPolicyContentLevel.High,
 Blocking = true,
 Source = RaiPolicyContentSource.Prompt,
 },new RaiPolicyContentFilter()
 {
 Name = "selfharm",
 Enabled = true,
-SeverityThreshold = ContentLevel.Medium,
+SeverityThreshold = RaiPolicyContentLevel.Medium,
 Blocking = true,
 Source = RaiPolicyContentSource.Completion,
 },new RaiPolicyContentFilter()
 {
 Name = "violence",
 Enabled = true,
-SeverityThreshold = ContentLevel.Medium,
+SeverityThreshold = RaiPolicyContentLevel.Medium,
 Blocking = true,
 Source = RaiPolicyContentSource.Prompt,
 },new RaiPolicyContentFilter()
 {
 Name = "violence",
 Enabled = true,
-SeverityThreshold = ContentLevel.Medium,
+SeverityThreshold = RaiPolicyContentLevel.Medium,
 Blocking = true,
 Source = RaiPolicyContentSource.Completion,
 },new RaiPolicyContentFilter()

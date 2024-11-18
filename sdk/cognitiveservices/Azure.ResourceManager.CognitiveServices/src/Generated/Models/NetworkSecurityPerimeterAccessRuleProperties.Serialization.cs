@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             NspAccessRuleDirection? direction = default;
             IList<string> addressPrefixes = default;
             IList<WritableSubResource> subscriptions = default;
-            IList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
+            IList<CognitiveServicesNetworkSecurityPerimeter> networkSecurityPerimeters = default;
             IList<string> fullyQualifiedDomainNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<NetworkSecurityPerimeter> array = new List<NetworkSecurityPerimeter>();
+                    List<CognitiveServicesNetworkSecurityPerimeter> array = new List<CognitiveServicesNetworkSecurityPerimeter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(item, options));
+                        array.Add(CognitiveServicesNetworkSecurityPerimeter.DeserializeCognitiveServicesNetworkSecurityPerimeter(item, options));
                     }
                     networkSecurityPerimeters = array;
                     continue;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
                 subscriptions ?? new ChangeTrackingList<WritableSubResource>(),
-                networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>(),
+                networkSecurityPerimeters ?? new ChangeTrackingList<CognitiveServicesNetworkSecurityPerimeter>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

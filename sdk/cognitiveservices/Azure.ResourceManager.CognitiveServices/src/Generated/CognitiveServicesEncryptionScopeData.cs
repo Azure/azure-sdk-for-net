@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
-    /// A class representing the EncryptionScope data model.
+    /// A class representing the CognitiveServicesEncryptionScope data model.
     /// Cognitive Services EncryptionScope
     /// </summary>
-    public partial class EncryptionScopeData : ResourceData
+    public partial class CognitiveServicesEncryptionScopeData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionScopeData"/>. </summary>
-        public EncryptionScopeData()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesEncryptionScopeData"/>. </summary>
+        public CognitiveServicesEncryptionScopeData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionScopeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesEncryptionScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Properties of Cognitive Services EncryptionScope. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, EncryptionScopeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesEncryptionScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, CognitiveServicesEncryptionScopeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Tags = tags;
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.CognitiveServices
         public IDictionary<string, string> Tags { get; }
         /// <summary> Properties of Cognitive Services EncryptionScope. </summary>
         [WirePath("properties")]
-        public EncryptionScopeProperties Properties { get; set; }
+        public CognitiveServicesEncryptionScopeProperties Properties { get; set; }
     }
 }

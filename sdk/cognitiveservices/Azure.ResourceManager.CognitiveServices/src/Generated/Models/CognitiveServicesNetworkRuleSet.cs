@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="ipRules"> The list of IP address rules. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesNetworkRuleSet(CognitiveServicesNetworkRuleAction? defaultAction, ByPassSelection? bypass, IList<CognitiveServicesIPRule> ipRules, IList<CognitiveServicesVirtualNetworkRule> virtualNetworkRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CognitiveServicesNetworkRuleSet(CognitiveServicesNetworkRuleAction? defaultAction, TrustedServicesByPassSelection? bypass, IList<CognitiveServicesIPRule> ipRules, IList<CognitiveServicesVirtualNetworkRule> virtualNetworkRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefaultAction = defaultAction;
             Bypass = bypass;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesNetworkRuleAction? DefaultAction { get; set; }
         /// <summary> Setting for trusted services. </summary>
         [WirePath("bypass")]
-        public ByPassSelection? Bypass { get; set; }
+        public TrustedServicesByPassSelection? Bypass { get; set; }
         /// <summary> The list of IP address rules. </summary>
         [WirePath("ipRules")]
         public IList<CognitiveServicesIPRule> IPRules { get; }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CognitiveServices.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CognitiveServices.Samples
 {
-    public partial class Sample_EncryptionScopeResource
+    public partial class Sample_CognitiveServicesEncryptionScopeResource
     {
-        // GetEncryptionScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetEncryptionScope()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetEncryptionScope.json
@@ -28,28 +28,27 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this EncryptionScopeResource created on azure
-            // for more information of creating EncryptionScopeResource, please refer to the document of EncryptionScopeResource
+            // this example assumes you already have this CognitiveServicesEncryptionScopeResource created on azure
+            // for more information of creating CognitiveServicesEncryptionScopeResource, please refer to the document of CognitiveServicesEncryptionScopeResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string accountName = "accountName";
             string encryptionScopeName = "encryptionScopeName";
-            ResourceIdentifier encryptionScopeResourceId = EncryptionScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, encryptionScopeName);
-            EncryptionScopeResource encryptionScope = client.GetEncryptionScopeResource(encryptionScopeResourceId);
+            ResourceIdentifier cognitiveServicesEncryptionScopeResourceId = CognitiveServicesEncryptionScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, encryptionScopeName);
+            CognitiveServicesEncryptionScopeResource cognitiveServicesEncryptionScope = client.GetCognitiveServicesEncryptionScopeResource(cognitiveServicesEncryptionScopeResourceId);
 
             // invoke the operation
-            EncryptionScopeResource result = await encryptionScope.GetAsync();
+            CognitiveServicesEncryptionScopeResource result = await cognitiveServicesEncryptionScope.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            EncryptionScopeData resourceData = result.Data;
+            CognitiveServicesEncryptionScopeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PutEncryptionScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PutEncryptionScope()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/PutEncryptionScope.json
@@ -60,19 +59,19 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this EncryptionScopeResource created on azure
-            // for more information of creating EncryptionScopeResource, please refer to the document of EncryptionScopeResource
+            // this example assumes you already have this CognitiveServicesEncryptionScopeResource created on azure
+            // for more information of creating CognitiveServicesEncryptionScopeResource, please refer to the document of CognitiveServicesEncryptionScopeResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string accountName = "accountName";
             string encryptionScopeName = "encryptionScopeName";
-            ResourceIdentifier encryptionScopeResourceId = EncryptionScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, encryptionScopeName);
-            EncryptionScopeResource encryptionScope = client.GetEncryptionScopeResource(encryptionScopeResourceId);
+            ResourceIdentifier cognitiveServicesEncryptionScopeResourceId = CognitiveServicesEncryptionScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, encryptionScopeName);
+            CognitiveServicesEncryptionScopeResource cognitiveServicesEncryptionScope = client.GetCognitiveServicesEncryptionScopeResource(cognitiveServicesEncryptionScopeResourceId);
 
             // invoke the operation
-            EncryptionScopeData data = new EncryptionScopeData()
+            CognitiveServicesEncryptionScopeData data = new CognitiveServicesEncryptionScopeData()
             {
-                Properties = new EncryptionScopeProperties()
+                Properties = new CognitiveServicesEncryptionScopeProperties()
                 {
                     State = EncryptionScopeState.Enabled,
                     KeyVaultProperties = new CognitiveServicesKeyVaultProperties()
@@ -85,19 +84,18 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
                     KeySource = ServiceAccountEncryptionKeySource.MicrosoftKeyVault,
                 },
             };
-            ArmOperation<EncryptionScopeResource> lro = await encryptionScope.UpdateAsync(WaitUntil.Completed, data);
-            EncryptionScopeResource result = lro.Value;
+            ArmOperation<CognitiveServicesEncryptionScopeResource> lro = await cognitiveServicesEncryptionScope.UpdateAsync(WaitUntil.Completed, data);
+            CognitiveServicesEncryptionScopeResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            EncryptionScopeData resourceData = result.Data;
+            CognitiveServicesEncryptionScopeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteEncryptionScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteEncryptionScope()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/DeleteEncryptionScope.json
@@ -108,19 +106,19 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this EncryptionScopeResource created on azure
-            // for more information of creating EncryptionScopeResource, please refer to the document of EncryptionScopeResource
+            // this example assumes you already have this CognitiveServicesEncryptionScopeResource created on azure
+            // for more information of creating CognitiveServicesEncryptionScopeResource, please refer to the document of CognitiveServicesEncryptionScopeResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string accountName = "accountName";
             string encryptionScopeName = "encryptionScopeName";
-            ResourceIdentifier encryptionScopeResourceId = EncryptionScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, encryptionScopeName);
-            EncryptionScopeResource encryptionScope = client.GetEncryptionScopeResource(encryptionScopeResourceId);
+            ResourceIdentifier cognitiveServicesEncryptionScopeResourceId = CognitiveServicesEncryptionScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, encryptionScopeName);
+            CognitiveServicesEncryptionScopeResource cognitiveServicesEncryptionScope = client.GetCognitiveServicesEncryptionScopeResource(cognitiveServicesEncryptionScopeResourceId);
 
             // invoke the operation
-            await encryptionScope.DeleteAsync(WaitUntil.Completed);
+            await cognitiveServicesEncryptionScope.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

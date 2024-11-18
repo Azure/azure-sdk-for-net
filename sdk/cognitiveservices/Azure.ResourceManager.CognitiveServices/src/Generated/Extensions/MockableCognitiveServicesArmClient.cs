@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EncryptionScopeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EncryptionScopeResource.CreateResourceIdentifier" /> to create an <see cref="EncryptionScopeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CognitiveServicesEncryptionScopeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CognitiveServicesEncryptionScopeResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesEncryptionScopeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EncryptionScopeResource"/> object. </returns>
-        public virtual EncryptionScopeResource GetEncryptionScopeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesEncryptionScopeResource"/> object. </returns>
+        public virtual CognitiveServicesEncryptionScopeResource GetCognitiveServicesEncryptionScopeResource(ResourceIdentifier id)
         {
-            EncryptionScopeResource.ValidateResourceId(id);
-            return new EncryptionScopeResource(Client, id);
+            CognitiveServicesEncryptionScopeResource.ValidateResourceId(id);
+            return new CognitiveServicesEncryptionScopeResource(Client, id);
         }
 
         /// <summary>

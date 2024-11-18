@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
         public NetworkSecurityPerimeterConfigurationProperties()
         {
-            ProvisioningIssues = new ChangeTrackingList<ProvisioningIssue>();
+            ProvisioningIssues = new ChangeTrackingList<NetworkSecurityPerimeterProvisioningIssue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="resourceAssociation"> Network Security Perimeter Configuration Association Information. </param>
         /// <param name="profile"> Network Security Perimeter Profile Information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationProperties(string provisioningState, IList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, NetworkSecurityPerimeterConfigurationAssociationInfo resourceAssociation, NetworkSecurityPerimeterProfileInfo profile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterConfigurationProperties(string provisioningState, IList<NetworkSecurityPerimeterProvisioningIssue> provisioningIssues, CognitiveServicesNetworkSecurityPerimeter networkSecurityPerimeter, NetworkSecurityPerimeterConfigurationAssociationInfo resourceAssociation, NetworkSecurityPerimeterProfileInfo profile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string ProvisioningState { get; }
         /// <summary> List of Provisioning Issues. </summary>
         [WirePath("provisioningIssues")]
-        public IList<ProvisioningIssue> ProvisioningIssues { get; }
+        public IList<NetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get; }
         /// <summary> Information about a linked Network Security Perimeter. </summary>
         [WirePath("networkSecurityPerimeter")]
-        public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; set; }
+        public CognitiveServicesNetworkSecurityPerimeter NetworkSecurityPerimeter { get; set; }
         /// <summary> Network Security Perimeter Configuration Association Information. </summary>
         [WirePath("resourceAssociation")]
         public NetworkSecurityPerimeterConfigurationAssociationInfo ResourceAssociation { get; set; }

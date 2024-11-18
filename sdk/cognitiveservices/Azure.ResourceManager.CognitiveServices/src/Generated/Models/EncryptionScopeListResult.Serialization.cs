@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<EncryptionScopeData> value = default;
+            IReadOnlyList<CognitiveServicesEncryptionScopeData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<EncryptionScopeData> array = new List<EncryptionScopeData>();
+                    List<CognitiveServicesEncryptionScopeData> array = new List<CognitiveServicesEncryptionScopeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EncryptionScopeData.DeserializeEncryptionScopeData(item, options));
+                        array.Add(CognitiveServicesEncryptionScopeData.DeserializeCognitiveServicesEncryptionScopeData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EncryptionScopeListResult(nextLink, value ?? new ChangeTrackingList<EncryptionScopeData>(), serializedAdditionalRawData);
+            return new EncryptionScopeListResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesEncryptionScopeData>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

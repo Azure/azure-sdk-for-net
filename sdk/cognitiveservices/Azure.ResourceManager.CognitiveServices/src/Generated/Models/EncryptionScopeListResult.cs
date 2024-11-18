@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="EncryptionScopeListResult"/>. </summary>
         internal EncryptionScopeListResult()
         {
-            Value = new ChangeTrackingList<EncryptionScopeData>();
+            Value = new ChangeTrackingList<CognitiveServicesEncryptionScopeData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EncryptionScopeListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of EncryptionScope. </param>
         /// <param name="value"> The list of EncryptionScope. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionScopeListResult(string nextLink, IReadOnlyList<EncryptionScopeData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EncryptionScopeListResult(string nextLink, IReadOnlyList<CognitiveServicesEncryptionScopeData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> The link used to get the next page of EncryptionScope. </summary>
         public string NextLink { get; }
         /// <summary> The list of EncryptionScope. </summary>
-        public IReadOnlyList<EncryptionScopeData> Value { get; }
+        public IReadOnlyList<CognitiveServicesEncryptionScopeData> Value { get; }
     }
 }

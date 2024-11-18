@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UpdateDeployment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateDeployment()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/UpdateDeployment.json
@@ -114,9 +113,8 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             Console.WriteLine("Succeeded");
         }
 
-        // ListDeploymentSkus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSkus_ListDeploymentSkus()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/ListDeploymentSkus.json
@@ -137,12 +135,12 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             CognitiveServicesAccountDeploymentResource cognitiveServicesAccountDeployment = client.GetCognitiveServicesAccountDeploymentResource(cognitiveServicesAccountDeploymentResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ResourceSku item in cognitiveServicesAccountDeployment.GetSkusAsync())
+            await foreach (CognitiveServicesResourceSku item in cognitiveServicesAccountDeployment.GetSkusAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

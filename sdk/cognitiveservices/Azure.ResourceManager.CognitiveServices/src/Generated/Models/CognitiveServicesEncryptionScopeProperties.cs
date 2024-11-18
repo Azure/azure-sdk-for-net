@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties to EncryptionScope. </summary>
-    public partial class EncryptionScopeProperties : ServiceAccountEncryptionProperties
+    public partial class CognitiveServicesEncryptionScopeProperties : ServiceAccountEncryptionProperties
     {
-        /// <summary> Initializes a new instance of <see cref="EncryptionScopeProperties"/>. </summary>
-        public EncryptionScopeProperties()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesEncryptionScopeProperties"/>. </summary>
+        public CognitiveServicesEncryptionScopeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionScopeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesEncryptionScopeProperties"/>. </summary>
         /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
         /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
         /// <param name="state"> The encryptionScope state. </param>
-        internal EncryptionScopeProperties(CognitiveServicesKeyVaultProperties keyVaultProperties, ServiceAccountEncryptionKeySource? keySource, IDictionary<string, BinaryData> serializedAdditionalRawData, EncryptionScopeProvisioningState? provisioningState, EncryptionScopeState? state) : base(keyVaultProperties, keySource, serializedAdditionalRawData)
+        internal CognitiveServicesEncryptionScopeProperties(CognitiveServicesKeyVaultProperties keyVaultProperties, ServiceAccountEncryptionKeySource? keySource, IDictionary<string, BinaryData> serializedAdditionalRawData, EncryptionScopeProvisioningState? provisioningState, EncryptionScopeState? state) : base(keyVaultProperties, keySource, serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             State = state;

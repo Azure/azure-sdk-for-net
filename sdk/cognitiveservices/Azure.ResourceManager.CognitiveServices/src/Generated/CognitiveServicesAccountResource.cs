@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetCommitmentPlans().Get(commitmentPlanName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EncryptionScopeResources in the CognitiveServicesAccount. </summary>
-        /// <returns> An object representing collection of EncryptionScopeResources and their operations over a EncryptionScopeResource. </returns>
-        public virtual EncryptionScopeCollection GetEncryptionScopes()
+        /// <summary> Gets a collection of CognitiveServicesEncryptionScopeResources in the CognitiveServicesAccount. </summary>
+        /// <returns> An object representing collection of CognitiveServicesEncryptionScopeResources and their operations over a CognitiveServicesEncryptionScopeResource. </returns>
+        public virtual CognitiveServicesEncryptionScopeCollection GetCognitiveServicesEncryptionScopes()
         {
-            return GetCachedClient(client => new EncryptionScopeCollection(client, Id));
+            return GetCachedClient(client => new CognitiveServicesEncryptionScopeCollection(client, Id));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EncryptionScopeResource"/></description>
+        /// <description><see cref="CognitiveServicesEncryptionScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,9 +335,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EncryptionScopeResource>> GetEncryptionScopeAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesEncryptionScopeResource>> GetCognitiveServicesEncryptionScopeAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
-            return await GetEncryptionScopes().GetAsync(encryptionScopeName, cancellationToken).ConfigureAwait(false);
+            return await GetCognitiveServicesEncryptionScopes().GetAsync(encryptionScopeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EncryptionScopeResource"/></description>
+        /// <description><see cref="CognitiveServicesEncryptionScopeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -366,9 +366,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EncryptionScopeResource> GetEncryptionScope(string encryptionScopeName, CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesEncryptionScopeResource> GetCognitiveServicesEncryptionScope(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
-            return GetEncryptionScopes().Get(encryptionScopeName, cancellationToken);
+            return GetCognitiveServicesEncryptionScopes().Get(encryptionScopeName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RaiPolicyResources in the CognitiveServicesAccount. </summary>

@@ -9,6 +9,7 @@ csharp: true
 library-name: CognitiveServices
 namespace: Azure.ResourceManager.CognitiveServices
 require: https://github.com/Azure/azure-rest-api-specs/blob/399cbac2de1bc0acbed4c9a0a864a9c84da3692e/specification/cognitiveservices/resource-manager/readme.md
+#tag: package-2024-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,8 +21,8 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 list-exception:
   - /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
@@ -90,11 +91,15 @@ rename-mapping:
   CapacityConfig: CognitiveServicesCapacityConfig
   CalculateModelCapacityParameter: CalculateModelCapacityContent
   RaiBlocklistItemBulkRequest: RaiBlocklistItemBulkContent
-  SkuResource: ResourceSku
+  SkuResource: CognitiveServicesResourceSku
   DeploymentProperties.dynamicThrottlingEnabled: IsDynamicThrottlingEnabled
   RaiMonitorConfig.adxStorageResourceId: -|arm-id
   UserOwnedAmlWorkspace.resourceId: -|arm-id
   NetworkSecurityPerimeter.perimeterGuid: -|uuid
+  ByPassSelection: TrustedServicesByPassSelection
+  ContentLevel: RaiPolicyContentLevel
+  ProvisioningIssue: NetworkSecurityPerimeterProvisioningIssue
+  ProvisioningIssueProperties: NetworkSecurityPerimeterProvisioningIssueProperties
 
 prepend-rp-prefix:
   - Account
@@ -104,9 +109,12 @@ prepend-rp-prefix:
   - AccountProperties
   - AccountSku
   - AccountSkuListResult
+  - EncryptionScope
+  - EncryptionScopeProperties
   - IpRule
   - NetworkRuleAction
   - NetworkRuleSet
+  - NetworkSecurityPerimeter
   - SkuCapability
   - SkuChangeInfo
   - VirtualNetworkRule

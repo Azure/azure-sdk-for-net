@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CognitiveServices.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CognitiveServices.Samples
 {
-    public partial class Sample_EncryptionScopeCollection
+    public partial class Sample_CognitiveServicesEncryptionScopeCollection
     {
-        // ListEncryptionScopes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListEncryptionScopes()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/ListEncryptionScopes.json
@@ -36,25 +36,24 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             ResourceIdentifier cognitiveServicesAccountResourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             CognitiveServicesAccountResource cognitiveServicesAccount = client.GetCognitiveServicesAccountResource(cognitiveServicesAccountResourceId);
 
-            // get the collection of this EncryptionScopeResource
-            EncryptionScopeCollection collection = cognitiveServicesAccount.GetEncryptionScopes();
+            // get the collection of this CognitiveServicesEncryptionScopeResource
+            CognitiveServicesEncryptionScopeCollection collection = cognitiveServicesAccount.GetCognitiveServicesEncryptionScopes();
 
             // invoke the operation and iterate over the result
-            await foreach (EncryptionScopeResource item in collection.GetAllAsync())
+            await foreach (CognitiveServicesEncryptionScopeResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                EncryptionScopeData resourceData = item.Data;
+                CognitiveServicesEncryptionScopeData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GetEncryptionScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetEncryptionScope()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetEncryptionScope.json
@@ -73,23 +72,22 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             ResourceIdentifier cognitiveServicesAccountResourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             CognitiveServicesAccountResource cognitiveServicesAccount = client.GetCognitiveServicesAccountResource(cognitiveServicesAccountResourceId);
 
-            // get the collection of this EncryptionScopeResource
-            EncryptionScopeCollection collection = cognitiveServicesAccount.GetEncryptionScopes();
+            // get the collection of this CognitiveServicesEncryptionScopeResource
+            CognitiveServicesEncryptionScopeCollection collection = cognitiveServicesAccount.GetCognitiveServicesEncryptionScopes();
 
             // invoke the operation
             string encryptionScopeName = "encryptionScopeName";
-            EncryptionScopeResource result = await collection.GetAsync(encryptionScopeName);
+            CognitiveServicesEncryptionScopeResource result = await collection.GetAsync(encryptionScopeName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            EncryptionScopeData resourceData = result.Data;
+            CognitiveServicesEncryptionScopeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetEncryptionScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetEncryptionScope()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetEncryptionScope.json
@@ -108,8 +106,8 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             ResourceIdentifier cognitiveServicesAccountResourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             CognitiveServicesAccountResource cognitiveServicesAccount = client.GetCognitiveServicesAccountResource(cognitiveServicesAccountResourceId);
 
-            // get the collection of this EncryptionScopeResource
-            EncryptionScopeCollection collection = cognitiveServicesAccount.GetEncryptionScopes();
+            // get the collection of this CognitiveServicesEncryptionScopeResource
+            CognitiveServicesEncryptionScopeCollection collection = cognitiveServicesAccount.GetCognitiveServicesEncryptionScopes();
 
             // invoke the operation
             string encryptionScopeName = "encryptionScopeName";
@@ -118,9 +116,8 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetEncryptionScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetEncryptionScope()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetEncryptionScope.json
@@ -139,31 +136,30 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             ResourceIdentifier cognitiveServicesAccountResourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             CognitiveServicesAccountResource cognitiveServicesAccount = client.GetCognitiveServicesAccountResource(cognitiveServicesAccountResourceId);
 
-            // get the collection of this EncryptionScopeResource
-            EncryptionScopeCollection collection = cognitiveServicesAccount.GetEncryptionScopes();
+            // get the collection of this CognitiveServicesEncryptionScopeResource
+            CognitiveServicesEncryptionScopeCollection collection = cognitiveServicesAccount.GetCognitiveServicesEncryptionScopes();
 
             // invoke the operation
             string encryptionScopeName = "encryptionScopeName";
-            NullableResponse<EncryptionScopeResource> response = await collection.GetIfExistsAsync(encryptionScopeName);
-            EncryptionScopeResource result = response.HasValue ? response.Value : null;
+            NullableResponse<CognitiveServicesEncryptionScopeResource> response = await collection.GetIfExistsAsync(encryptionScopeName);
+            CognitiveServicesEncryptionScopeResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                EncryptionScopeData resourceData = result.Data;
+                CognitiveServicesEncryptionScopeData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
         }
 
-        // PutEncryptionScope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutEncryptionScope()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/PutEncryptionScope.json
@@ -182,14 +178,14 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             ResourceIdentifier cognitiveServicesAccountResourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             CognitiveServicesAccountResource cognitiveServicesAccount = client.GetCognitiveServicesAccountResource(cognitiveServicesAccountResourceId);
 
-            // get the collection of this EncryptionScopeResource
-            EncryptionScopeCollection collection = cognitiveServicesAccount.GetEncryptionScopes();
+            // get the collection of this CognitiveServicesEncryptionScopeResource
+            CognitiveServicesEncryptionScopeCollection collection = cognitiveServicesAccount.GetCognitiveServicesEncryptionScopes();
 
             // invoke the operation
             string encryptionScopeName = "encryptionScopeName";
-            EncryptionScopeData data = new EncryptionScopeData()
+            CognitiveServicesEncryptionScopeData data = new CognitiveServicesEncryptionScopeData()
             {
-                Properties = new EncryptionScopeProperties()
+                Properties = new CognitiveServicesEncryptionScopeProperties()
                 {
                     State = EncryptionScopeState.Enabled,
                     KeyVaultProperties = new CognitiveServicesKeyVaultProperties()
@@ -202,12 +198,12 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
                     KeySource = ServiceAccountEncryptionKeySource.MicrosoftKeyVault,
                 },
             };
-            ArmOperation<EncryptionScopeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, encryptionScopeName, data);
-            EncryptionScopeResource result = lro.Value;
+            ArmOperation<CognitiveServicesEncryptionScopeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, encryptionScopeName, data);
+            CognitiveServicesEncryptionScopeResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            EncryptionScopeData resourceData = result.Data;
+            CognitiveServicesEncryptionScopeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

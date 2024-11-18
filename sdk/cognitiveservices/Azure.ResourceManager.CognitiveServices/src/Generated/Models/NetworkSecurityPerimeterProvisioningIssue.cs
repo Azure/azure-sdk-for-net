@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> Properties of Cognitive Services account resource sku resource properties. </summary>
-    public partial class ResourceSku
+    /// <summary> The NetworkSecurityPerimeterProvisioningIssue. </summary>
+    public partial class NetworkSecurityPerimeterProvisioningIssue
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
-        internal ResourceSku()
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningIssue"/>. </summary>
+        public NetworkSecurityPerimeterProvisioningIssue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
-        /// <param name="resourceType"> The resource type name. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="capacity"> The capacity configuration. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningIssue"/>. </summary>
+        /// <param name="name"> Name of the NSP provisioning issue. </param>
+        /// <param name="properties"> Properties of Provisioning Issue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSku(string resourceType, CognitiveServicesSku sku, CognitiveServicesCapacityConfig capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterProvisioningIssue(string name, NetworkSecurityPerimeterProvisioningIssueProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ResourceType = resourceType;
-            Sku = sku;
-            Capacity = capacity;
+            Name = name;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource type name. </summary>
-        [WirePath("resourceType")]
-        public string ResourceType { get; }
-        /// <summary> The resource model definition representing SKU. </summary>
-        [WirePath("sku")]
-        public CognitiveServicesSku Sku { get; }
-        /// <summary> The capacity configuration. </summary>
-        [WirePath("capacity")]
-        public CognitiveServicesCapacityConfig Capacity { get; }
+        /// <summary> Name of the NSP provisioning issue. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
+        /// <summary> Properties of Provisioning Issue. </summary>
+        [WirePath("properties")]
+        public NetworkSecurityPerimeterProvisioningIssueProperties Properties { get; set; }
     }
 }

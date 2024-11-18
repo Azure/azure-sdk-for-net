@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties of Provisioning Issue. </summary>
-    public partial class ProvisioningIssueProperties
+    public partial class NetworkSecurityPerimeterProvisioningIssueProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,21 +46,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssueProperties"/>. </summary>
-        public ProvisioningIssueProperties()
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
+        public NetworkSecurityPerimeterProvisioningIssueProperties()
         {
             SuggestedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
             SuggestedAccessRules = new ChangeTrackingList<NetworkSecurityPerimeterAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssueProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"> Type of Issue. </param>
         /// <param name="severity"> Severity of the issue. </param>
         /// <param name="description"> Description of the issue. </param>
         /// <param name="suggestedResourceIds"> IDs of resources that can be associated to the same perimeter to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Optional array, suggested access rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningIssueProperties(string issueType, string severity, string description, IList<ResourceIdentifier> suggestedResourceIds, IList<NetworkSecurityPerimeterAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterProvisioningIssueProperties(string issueType, string severity, string description, IList<ResourceIdentifier> suggestedResourceIds, IList<NetworkSecurityPerimeterAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IssueType = issueType;
             Severity = severity;

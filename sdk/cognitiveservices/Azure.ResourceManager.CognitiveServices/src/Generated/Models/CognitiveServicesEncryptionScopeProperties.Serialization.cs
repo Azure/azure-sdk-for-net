@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class EncryptionScopeProperties : IUtf8JsonSerializable, IJsonModel<EncryptionScopeProperties>
+    public partial class CognitiveServicesEncryptionScopeProperties : IUtf8JsonSerializable, IJsonModel<CognitiveServicesEncryptionScopeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionScopeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesEncryptionScopeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EncryptionScopeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CognitiveServicesEncryptionScopeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesEncryptionScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionScopeProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesEncryptionScopeProperties)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
         }
 
-        EncryptionScopeProperties IJsonModel<EncryptionScopeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CognitiveServicesEncryptionScopeProperties IJsonModel<CognitiveServicesEncryptionScopeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesEncryptionScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionScopeProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesEncryptionScopeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEncryptionScopeProperties(document.RootElement, options);
+            return DeserializeCognitiveServicesEncryptionScopeProperties(document.RootElement, options);
         }
 
-        internal static EncryptionScopeProperties DeserializeEncryptionScopeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CognitiveServicesEncryptionScopeProperties DeserializeCognitiveServicesEncryptionScopeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EncryptionScopeProperties(keyVaultProperties, keySource, serializedAdditionalRawData, provisioningState, state);
+            return new CognitiveServicesEncryptionScopeProperties(keyVaultProperties, keySource, serializedAdditionalRawData, provisioningState, state);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<EncryptionScopeProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CognitiveServicesEncryptionScopeProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesEncryptionScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -207,26 +207,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionScopeProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesEncryptionScopeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EncryptionScopeProperties IPersistableModel<EncryptionScopeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CognitiveServicesEncryptionScopeProperties IPersistableModel<CognitiveServicesEncryptionScopeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesEncryptionScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEncryptionScopeProperties(document.RootElement, options);
+                        return DeserializeCognitiveServicesEncryptionScopeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionScopeProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesEncryptionScopeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EncryptionScopeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CognitiveServicesEncryptionScopeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

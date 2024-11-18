@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> The ProvisioningIssue. </summary>
-    public partial class ProvisioningIssue
+    /// <summary> Properties of Cognitive Services account resource sku resource properties. </summary>
+    public partial class CognitiveServicesResourceSku
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,32 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
-        public ProvisioningIssue()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesResourceSku"/>. </summary>
+        internal CognitiveServicesResourceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
-        /// <param name="name"> Name of the NSP provisioning issue. </param>
-        /// <param name="properties"> Properties of Provisioning Issue. </param>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesResourceSku"/>. </summary>
+        /// <param name="resourceType"> The resource type name. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <param name="capacity"> The capacity configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningIssue(string name, ProvisioningIssueProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CognitiveServicesResourceSku(string resourceType, CognitiveServicesSku sku, CognitiveServicesCapacityConfig capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Properties = properties;
+            ResourceType = resourceType;
+            Sku = sku;
+            Capacity = capacity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the NSP provisioning issue. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
-        /// <summary> Properties of Provisioning Issue. </summary>
-        [WirePath("properties")]
-        public ProvisioningIssueProperties Properties { get; set; }
+        /// <summary> The resource type name. </summary>
+        [WirePath("resourceType")]
+        public string ResourceType { get; }
+        /// <summary> The resource model definition representing SKU. </summary>
+        [WirePath("sku")]
+        public CognitiveServicesSku Sku { get; }
+        /// <summary> The capacity configuration. </summary>
+        [WirePath("capacity")]
+        public CognitiveServicesCapacityConfig Capacity { get; }
     }
 }

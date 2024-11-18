@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             Subscriptions = new ChangeTrackingList<WritableSubResource>();
-            NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeter>();
+            NetworkSecurityPerimeters = new ChangeTrackingList<CognitiveServicesNetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="networkSecurityPerimeters"> NetworkSecurityPerimeters for inbound rules. </param>
         /// <param name="fullyQualifiedDomainNames"> Fully qualified domain name for outbound rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAccessRuleProperties(NspAccessRuleDirection? direction, IList<string> addressPrefixes, IList<WritableSubResource> subscriptions, IList<NetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterAccessRuleProperties(NspAccessRuleDirection? direction, IList<string> addressPrefixes, IList<WritableSubResource> subscriptions, IList<CognitiveServicesNetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public IList<WritableSubResource> Subscriptions { get; }
         /// <summary> NetworkSecurityPerimeters for inbound rules. </summary>
         [WirePath("networkSecurityPerimeters")]
-        public IList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
+        public IList<CognitiveServicesNetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
         /// <summary> Fully qualified domain name for outbound rules. </summary>
         [WirePath("fullyQualifiedDomainNames")]
         public IList<string> FullyQualifiedDomainNames { get; }

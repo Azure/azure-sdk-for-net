@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string provisioningState = default;
-            IList<ProvisioningIssue> provisioningIssues = default;
-            NetworkSecurityPerimeter networkSecurityPerimeter = default;
+            IList<NetworkSecurityPerimeterProvisioningIssue> provisioningIssues = default;
+            CognitiveServicesNetworkSecurityPerimeter networkSecurityPerimeter = default;
             NetworkSecurityPerimeterConfigurationAssociationInfo resourceAssociation = default;
             NetworkSecurityPerimeterProfileInfo profile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<ProvisioningIssue> array = new List<ProvisioningIssue>();
+                    List<NetworkSecurityPerimeterProvisioningIssue> array = new List<NetworkSecurityPerimeterProvisioningIssue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProvisioningIssue.DeserializeProvisioningIssue(item, options));
+                        array.Add(NetworkSecurityPerimeterProvisioningIssue.DeserializeNetworkSecurityPerimeterProvisioningIssue(item, options));
                     }
                     provisioningIssues = array;
                     continue;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    networkSecurityPerimeter = NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(property.Value, options);
+                    networkSecurityPerimeter = CognitiveServicesNetworkSecurityPerimeter.DeserializeCognitiveServicesNetworkSecurityPerimeter(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceAssociation"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new NetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
-                provisioningIssues ?? new ChangeTrackingList<ProvisioningIssue>(),
+                provisioningIssues ?? new ChangeTrackingList<NetworkSecurityPerimeterProvisioningIssue>(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,

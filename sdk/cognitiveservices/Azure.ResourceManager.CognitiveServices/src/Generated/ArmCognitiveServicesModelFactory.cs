@@ -674,14 +674,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountDeploymentScaleSettings(scaleType, capacity, activeCapacity, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesResourceSku"/>. </summary>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="capacity"> The capacity configuration. </param>
-        /// <returns> A new <see cref="Models.ResourceSku"/> instance for mocking. </returns>
-        public static ResourceSku ResourceSku(string resourceType = null, CognitiveServicesSku sku = null, CognitiveServicesCapacityConfig capacity = null)
+        /// <returns> A new <see cref="Models.CognitiveServicesResourceSku"/> instance for mocking. </returns>
+        public static CognitiveServicesResourceSku CognitiveServicesResourceSku(string resourceType = null, CognitiveServicesSku sku = null, CognitiveServicesCapacityConfig capacity = null)
         {
-            return new ResourceSku(resourceType, sku, capacity, serializedAdditionalRawData: null);
+            return new CognitiveServicesResourceSku(resourceType, sku, capacity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.CommitmentPlanData"/>. </summary>
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.EncryptionScopeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesEncryptionScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -768,12 +768,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Properties of Cognitive Services EncryptionScope. </param>
-        /// <returns> A new <see cref="CognitiveServices.EncryptionScopeData"/> instance for mocking. </returns>
-        public static EncryptionScopeData EncryptionScopeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IDictionary<string, string> tags = null, EncryptionScopeProperties properties = null)
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesEncryptionScopeData"/> instance for mocking. </returns>
+        public static CognitiveServicesEncryptionScopeData CognitiveServicesEncryptionScopeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IDictionary<string, string> tags = null, CognitiveServicesEncryptionScopeProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EncryptionScopeData(
+            return new CognitiveServicesEncryptionScopeData(
                 id,
                 name,
                 resourceType,
@@ -784,15 +784,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EncryptionScopeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesEncryptionScopeProperties"/>. </summary>
         /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
         /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
         /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
         /// <param name="state"> The encryptionScope state. </param>
-        /// <returns> A new <see cref="Models.EncryptionScopeProperties"/> instance for mocking. </returns>
-        public static EncryptionScopeProperties EncryptionScopeProperties(CognitiveServicesKeyVaultProperties keyVaultProperties = null, ServiceAccountEncryptionKeySource? keySource = null, EncryptionScopeProvisioningState? provisioningState = null, EncryptionScopeState? state = null)
+        /// <returns> A new <see cref="Models.CognitiveServicesEncryptionScopeProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesEncryptionScopeProperties CognitiveServicesEncryptionScopeProperties(CognitiveServicesKeyVaultProperties keyVaultProperties = null, ServiceAccountEncryptionKeySource? keySource = null, EncryptionScopeProvisioningState? provisioningState = null, EncryptionScopeState? state = null)
         {
-            return new EncryptionScopeProperties(keyVaultProperties, keySource, serializedAdditionalRawData: null, provisioningState, state);
+            return new CognitiveServicesEncryptionScopeProperties(keyVaultProperties, keySource, serializedAdditionalRawData: null, provisioningState, state);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.RaiPolicyData"/>. </summary>
@@ -955,9 +955,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="resourceAssociation"> Network Security Perimeter Configuration Association Information. </param>
         /// <param name="profile"> Network Security Perimeter Profile Information. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(string provisioningState = null, IEnumerable<ProvisioningIssue> provisioningIssues = null, NetworkSecurityPerimeter networkSecurityPerimeter = null, NetworkSecurityPerimeterConfigurationAssociationInfo resourceAssociation = null, NetworkSecurityPerimeterProfileInfo profile = null)
+        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(string provisioningState = null, IEnumerable<NetworkSecurityPerimeterProvisioningIssue> provisioningIssues = null, CognitiveServicesNetworkSecurityPerimeter networkSecurityPerimeter = null, NetworkSecurityPerimeterConfigurationAssociationInfo resourceAssociation = null, NetworkSecurityPerimeterProfileInfo profile = null)
         {
-            provisioningIssues ??= new List<ProvisioningIssue>();
+            provisioningIssues ??= new List<NetworkSecurityPerimeterProvisioningIssue>();
 
             return new NetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,

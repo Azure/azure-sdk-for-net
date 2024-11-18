@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ProvisioningIssue : IUtf8JsonSerializable, IJsonModel<ProvisioningIssue>
+    public partial class NetworkSecurityPerimeterProvisioningIssue : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterProvisioningIssue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisioningIssue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterProvisioningIssue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ProvisioningIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkSecurityPerimeterProvisioningIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisioningIssue)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProvisioningIssue)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Name))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
         }
 
-        ProvisioningIssue IJsonModel<ProvisioningIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeterProvisioningIssue IJsonModel<NetworkSecurityPerimeterProvisioningIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisioningIssue)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProvisioningIssue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProvisioningIssue(document.RootElement, options);
+            return DeserializeNetworkSecurityPerimeterProvisioningIssue(document.RootElement, options);
         }
 
-        internal static ProvisioningIssue DeserializeProvisioningIssue(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkSecurityPerimeterProvisioningIssue DeserializeNetworkSecurityPerimeterProvisioningIssue(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string name = default;
-            ProvisioningIssueProperties properties = default;
+            NetworkSecurityPerimeterProvisioningIssueProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    properties = ProvisioningIssueProperties.DeserializeProvisioningIssueProperties(property.Value, options);
+                    properties = NetworkSecurityPerimeterProvisioningIssueProperties.DeserializeNetworkSecurityPerimeterProvisioningIssueProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProvisioningIssue(name, properties, serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterProvisioningIssue(name, properties, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ProvisioningIssue>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkSecurityPerimeterProvisioningIssue>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -175,26 +175,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisioningIssue)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProvisioningIssue)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ProvisioningIssue IPersistableModel<ProvisioningIssue>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeterProvisioningIssue IPersistableModel<NetworkSecurityPerimeterProvisioningIssue>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProvisioningIssue(document.RootElement, options);
+                        return DeserializeNetworkSecurityPerimeterProvisioningIssue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisioningIssue)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProvisioningIssue)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ProvisioningIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkSecurityPerimeterProvisioningIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

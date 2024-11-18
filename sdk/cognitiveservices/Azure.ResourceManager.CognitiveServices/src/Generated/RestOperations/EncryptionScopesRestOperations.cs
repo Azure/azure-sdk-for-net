@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="encryptionScopeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EncryptionScopeData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesEncryptionScopeData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        EncryptionScopeData value = default;
+                        CognitiveServicesEncryptionScopeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EncryptionScopeData.DeserializeEncryptionScopeData(document.RootElement);
+                        value = CognitiveServicesEncryptionScopeData.DeserializeCognitiveServicesEncryptionScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EncryptionScopeData)null, message.Response);
+                    return Response.FromValue((CognitiveServicesEncryptionScopeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="encryptionScopeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EncryptionScopeData> Get(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesEncryptionScopeData> Get(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        EncryptionScopeData value = default;
+                        CognitiveServicesEncryptionScopeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EncryptionScopeData.DeserializeEncryptionScopeData(document.RootElement);
+                        value = CognitiveServicesEncryptionScopeData.DeserializeCognitiveServicesEncryptionScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EncryptionScopeData)null, message.Response);
+                    return Response.FromValue((CognitiveServicesEncryptionScopeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName, EncryptionScopeData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName, CognitiveServicesEncryptionScopeData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName, EncryptionScopeData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName, CognitiveServicesEncryptionScopeData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="encryptionScopeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EncryptionScopeData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName, EncryptionScopeData data, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesEncryptionScopeData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName, CognitiveServicesEncryptionScopeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -300,9 +300,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                 case 201:
                     {
-                        EncryptionScopeData value = default;
+                        CognitiveServicesEncryptionScopeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EncryptionScopeData.DeserializeEncryptionScopeData(document.RootElement);
+                        value = CognitiveServicesEncryptionScopeData.DeserializeCognitiveServicesEncryptionScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="encryptionScopeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EncryptionScopeData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName, EncryptionScopeData data, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesEncryptionScopeData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName, CognitiveServicesEncryptionScopeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -334,9 +334,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 case 200:
                 case 201:
                     {
-                        EncryptionScopeData value = default;
+                        CognitiveServicesEncryptionScopeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EncryptionScopeData.DeserializeEncryptionScopeData(document.RootElement);
+                        value = CognitiveServicesEncryptionScopeData.DeserializeCognitiveServicesEncryptionScopeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
