@@ -1,20 +1,17 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0-beta.2 (2024-11-19)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag from 'package-2024-06-preview' to 'package-2024-09-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f17b769690a46d858134ee68ef0d89635083b560/specification/servicefabricmanagedclusters/resource-manager/readme.md.
 
 ## 1.3.0-beta.1 (2024-11-15)
 
 ### Features Added
 
 - Upgraded api-version tag from 'package-2024-04' to 'package-2024-06-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/e79d9ef3e065f2dcb6bd1db51e29c62a99dff5cb/specification/servicefabricmanagedclusters/resource-manager/readme.md.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.2.0 (2024-06-25)
 
