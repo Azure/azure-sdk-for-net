@@ -13,10 +13,6 @@ using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Test.Shared;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
-using BaseBlobs::Azure.Storage.Blobs.Models;
-using System.Threading;
-using System.Linq;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -103,52 +99,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             return InstrumentClientOptions(options);
-        }
-
-        [Test]
-        public async Task DownloadTransferTest()
-        {
-            BlobServiceClient service = ClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
-            BlobContainerClient container = service.GetBlobContainerClient("test-download-1");
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-
-            //await container.CreateIfNotExistsAsync();
-            //Random random = new();
-            //foreach (int i in Enumerable.Range(0, 5))
-            //{
-            //    byte[] data = new byte[1048576];
-            //    random.NextBytes(data);
-            //    await container.UploadBlobAsync($"blob{i}", new BinaryData(data));
-            //}
-
-            BlobsStorageResourceProvider blobProvider = new();
-            LocalFilesStorageResourceProvider localProvider = new();
-
-            TransferManager transferManager = new();
-            DataTransferOptions options = new()
-            {
-                InitialTransferSize = 4096,
-                MaximumTransferChunkSize = 4096,
-            };
-            TestEventsRaised testEvents = new(options);
-            DataTransfer transfer = await transferManager.StartTransferAsync(
-                blobProvider.FromClient(container),
-                localProvider.FromDirectory(testDirectory.DirectoryPath),
-                options);
-
-            CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(cts.Token);
-            testEvents.AssertUnexpectedFailureCheck();
-
-            await foreach (BlobItem blob in container.GetBlobsAsync())
-            {
-                string localPath = Path.Combine(testDirectory.DirectoryPath, blob.Name);
-                var response = await container.GetBlobClient(blob.Name).DownloadContentAsync();
-                byte[] expected = response.Value.Content.ToArray();
-                byte[] actual = File.ReadAllBytes(localPath);
-
-                Assert.That(actual, Is.EqualTo(expected));
-            }
         }
     }
 }

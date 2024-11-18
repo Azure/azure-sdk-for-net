@@ -394,11 +394,22 @@ namespace Azure.Storage.DataMovement
                     (long)range.Length,
                     _cancellationToken).ConfigureAwait(false);
 
+                // Stream the data from the network before queueing disk IO.
+                MemoryStream content = new((int)result.ContentLength.Value);
+                using (Stream dataStream = result.Content)
+                {
+                    await dataStream.CopyToAsync(
+                        content,
+                        DataMovementConstants.DefaultStreamCopyBufferSize,
+                        _cancellationToken).ConfigureAwait(false);
+                }
+                content.Position = 0;
+
                 // The chunk handler may have been disposed in failure case
                 _downloadChunkHandler?.QueueChunk(new QueueDownloadChunkArgs(
                     offset: range.Offset,
                     length: (long)range.Length,
-                    result: result.Content));
+                    content: content));
             }
             catch (Exception ex)
             {

@@ -9,16 +9,16 @@ namespace Azure.Storage.DataMovement
     {
         public long Offset { get; }
         public long Length { get; }
-        public Stream Result { get; }
+        public Stream Content { get; }
 
         public QueueDownloadChunkArgs(
             long offset,
             long length,
-            Stream result)
+            Stream content)
         {
             Offset = offset;
             Length = length;
-            Result = result;
+            Content = content;
         }
     }
 }

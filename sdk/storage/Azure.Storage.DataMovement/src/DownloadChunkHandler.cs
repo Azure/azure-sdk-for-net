@@ -122,7 +122,7 @@ namespace Azure.Storage.DataMovement
                     QueueDownloadChunkArgs args = await _downloadRangeChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
 
                     // Copy the current chunk to the destination
-                    using (Stream content = args.Result)
+                    using (Stream content = args.Content)
                     {
                         await _copyToDestinationFile(
                             args.Offset,
@@ -133,7 +133,7 @@ namespace Azure.Storage.DataMovement
                     }
                     UpdateBytesAndRange(args.Length);
 
-                     //Check if we finished downloading the blob
+                    // Check if we finished downloading the blob
                     if (_bytesTransferred == _expectedLength)
                     {
                         await _queueCompleteFileDownload().ConfigureAwait(false);

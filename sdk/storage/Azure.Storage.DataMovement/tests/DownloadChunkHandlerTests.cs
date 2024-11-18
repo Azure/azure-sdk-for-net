@@ -178,7 +178,7 @@ namespace Azure.Storage.DataMovement.Tests
             downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: 0,
                 length: blockSize,
-                result: content));
+                content: content));
 
             // Assert
             VerifyDelegateInvocations(
@@ -215,7 +215,7 @@ namespace Azure.Storage.DataMovement.Tests
             downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: 0,
                 length: blockSize,
-                result: content));
+                content: content));
 
             // Assert
             VerifyDelegateInvocations(
@@ -231,7 +231,7 @@ namespace Azure.Storage.DataMovement.Tests
             downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: blockSize,
                 length: blockSize,
-                result: content2));
+                content: content2));
 
             // Assert
             VerifyDelegateInvocations(
@@ -269,7 +269,7 @@ namespace Azure.Storage.DataMovement.Tests
             downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: blockSize,
                 length: blockSize,
-                result: content));
+                content: content));
 
             // Assert
             VerifyDelegateInvocations(
@@ -283,7 +283,7 @@ namespace Azure.Storage.DataMovement.Tests
             downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: 0,
                 length: blockSize,
-                result: content));
+                content: content));
 
             // Assert
             VerifyDelegateInvocations(
@@ -328,7 +328,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Task task = Task.Run(() => downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                     offset: offset,
                     length: blockSize,
-                    result: content)));
+                    content: content)));
                 runningTasks.Add(task);
             }
 
@@ -372,7 +372,7 @@ namespace Azure.Storage.DataMovement.Tests
             downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: 0,
                 length: blockSize,
-                result: content));
+                content: content));
 
             // Assert
             VerifyDelegateInvocations(
@@ -409,7 +409,7 @@ namespace Azure.Storage.DataMovement.Tests
             downloadChunkHandler.QueueChunk(new QueueDownloadChunkArgs(
                 offset: 0,
                 length: blockSize,
-                result: content));
+                content: content));
 
             // Assert
             VerifyDelegateInvocations(
