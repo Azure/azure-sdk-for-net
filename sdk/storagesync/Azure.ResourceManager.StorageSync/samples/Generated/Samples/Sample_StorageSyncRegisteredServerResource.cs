@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_RegisteredServersCreate()
+        public async Task Update_RegisteredServersUpdate()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/RegisteredServers_Update.json
             // this example is just showing the usage of "RegisteredServers_Update" operation, for the dependent resources, they will have to be created separately.
@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
             StorageSyncRegisteredServerPatch patch = new StorageSyncRegisteredServerPatch()
             {
                 Identity = true,
+                ApplicationId = "120d4132-bcd5-40a0-96a0-71a6057ebf0c",
             };
             ArmOperation<StorageSyncRegisteredServerResource> lro = await storageSyncRegisteredServer.UpdateAsync(WaitUntil.Completed, patch);
             StorageSyncRegisteredServerResource result = lro.Value;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task TriggerRollover_RegisteredServersTriggerRollover()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/RegisteredServers_TriggerRollover.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/RegisteredServers_TriggerRollover.json
             // this example is just showing the usage of "RegisteredServers_TriggerRollover" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

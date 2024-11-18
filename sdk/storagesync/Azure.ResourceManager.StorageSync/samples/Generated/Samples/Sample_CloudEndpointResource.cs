@@ -237,7 +237,7 @@ IsDirectory = false,
         [Ignore("Only validating compilation of examples")]
         public async Task RestoreHeartbeat_CloudEndpointsRestoreheartbeat()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_RestoreHeatbeat.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_RestoreHeatbeat.json
             // this example is just showing the usage of "CloudEndpoints_Restoreheartbeat" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

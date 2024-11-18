@@ -126,20 +126,6 @@ namespace Azure.ResourceManager.StorageSync.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-<<<<<<< HEAD
-            Optional<SystemData> systemData = default;
-            Optional<BinaryData> serverCertificate = default;
-            Optional<string> agentVersion = default;
-            Optional<string> serverOSVersion = default;
-            Optional<string> lastHeartbeat = default;
-            Optional<string> serverRole = default;
-            Optional<Guid> clusterId = default;
-            Optional<string> clusterName = default;
-            Optional<Guid> serverId = default;
-            Optional<string> friendlyName = default;
-            Optional<string> applicationId = default;
-            Optional<bool> identity = default;
-=======
             SystemData systemData = default;
             BinaryData serverCertificate = default;
             string agentVersion = default;
@@ -150,9 +136,10 @@ namespace Azure.ResourceManager.StorageSync.Models
             string clusterName = default;
             Guid? serverId = default;
             string friendlyName = default;
+            string applicationId = default;
+            bool? identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
->>>>>>> upstream/main
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -267,9 +254,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-<<<<<<< HEAD
-            return new StorageSyncRegisteredServerCreateOrUpdateContent(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, serverOSVersion.Value, lastHeartbeat.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), friendlyName.Value, applicationId.Value, Optional.ToNullable(identity));
-=======
             serializedAdditionalRawData = rawDataDictionary;
             return new StorageSyncRegisteredServerCreateOrUpdateContent(
                 id,
@@ -285,8 +269,9 @@ namespace Azure.ResourceManager.StorageSync.Models
                 clusterName,
                 serverId,
                 friendlyName,
+                applicationId,
+                identity,
                 serializedAdditionalRawData);
->>>>>>> upstream/main
         }
 
         BinaryData IPersistableModel<StorageSyncRegisteredServerCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

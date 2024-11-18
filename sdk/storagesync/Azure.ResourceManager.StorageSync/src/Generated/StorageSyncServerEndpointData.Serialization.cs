@@ -134,20 +134,16 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("initialUploadPolicy"u8);
                 writer.WriteStringValue(InitialUploadPolicy.Value.ToString());
             }
-<<<<<<< HEAD:sdk/storagesync/Azure.ResourceManager.StorageSync/src/Generated/Models/StorageSyncServerEndpointData.Serialization.cs
-            if (Optional.IsDefined(ServerEndpointProvisioningStatus))
-            {
-                writer.WritePropertyName("serverEndpointProvisioningStatus"u8);
-                writer.WriteObjectValue(ServerEndpointProvisioningStatus);
-            }
-            writer.WriteEndObject();
-=======
             if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
->>>>>>> upstream/main:sdk/storagesync/Azure.ResourceManager.StorageSync/src/Generated/StorageSyncServerEndpointData.Serialization.cs
+            if (Optional.IsDefined(ServerEndpointProvisioningStatus))
+            {
+                writer.WritePropertyName("serverEndpointProvisioningStatus"u8);
+                writer.WriteObjectValue(ServerEndpointProvisioningStatus, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -174,30 +170,6 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-<<<<<<< HEAD:sdk/storagesync/Azure.ResourceManager.StorageSync/src/Generated/Models/StorageSyncServerEndpointData.Serialization.cs
-            Optional<SystemData> systemData = default;
-            Optional<string> serverLocalPath = default;
-            Optional<StorageSyncFeatureStatus> cloudTiering = default;
-            Optional<int> volumeFreeSpacePercent = default;
-            Optional<int> tierFilesOlderThanDays = default;
-            Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> serverResourceId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> lastWorkflowId = default;
-            Optional<string> lastOperationName = default;
-            Optional<ServerEndpointSyncStatus> syncStatus = default;
-            Optional<StorageSyncFeatureStatus> offlineDataTransfer = default;
-            Optional<ResourceIdentifier> offlineDataTransferStorageAccountResourceId = default;
-            Optional<Guid> offlineDataTransferStorageAccountTenantId = default;
-            Optional<string> offlineDataTransferShareName = default;
-            Optional<ServerEndpointCloudTieringStatus> cloudTieringStatus = default;
-            Optional<ServerEndpointRecallStatus> recallStatus = default;
-            Optional<InitialDownloadPolicy> initialDownloadPolicy = default;
-            Optional<LocalCacheMode> localCacheMode = default;
-            Optional<InitialUploadPolicy> initialUploadPolicy = default;
-            Optional<string> serverName = default;
-            Optional<ServerEndpointProvisioningStatus> serverEndpointProvisioningStatus = default;
-=======
             SystemData systemData = default;
             string serverLocalPath = default;
             StorageSyncFeatureStatus? cloudTiering = default;
@@ -219,9 +191,9 @@ namespace Azure.ResourceManager.StorageSync
             LocalCacheMode? localCacheMode = default;
             InitialUploadPolicy? initialUploadPolicy = default;
             string serverName = default;
+            ServerEndpointProvisioningStatus serverEndpointProvisioningStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
->>>>>>> upstream/main:sdk/storagesync/Azure.ResourceManager.StorageSync/src/Generated/StorageSyncServerEndpointData.Serialization.cs
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -415,7 +387,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            serverEndpointProvisioningStatus = ServerEndpointProvisioningStatus.DeserializeServerEndpointProvisioningStatus(property0.Value);
+                            serverEndpointProvisioningStatus = ServerEndpointProvisioningStatus.DeserializeServerEndpointProvisioningStatus(property0.Value, options);
                             continue;
                         }
                     }
@@ -426,9 +398,6 @@ namespace Azure.ResourceManager.StorageSync
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-<<<<<<< HEAD:sdk/storagesync/Azure.ResourceManager.StorageSync/src/Generated/Models/StorageSyncServerEndpointData.Serialization.cs
-            return new StorageSyncServerEndpointData(id, name, type, systemData.Value, serverLocalPath.Value, Optional.ToNullable(cloudTiering), Optional.ToNullable(volumeFreeSpacePercent), Optional.ToNullable(tierFilesOlderThanDays), friendlyName.Value, serverResourceId.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, syncStatus.Value, Optional.ToNullable(offlineDataTransfer), offlineDataTransferStorageAccountResourceId.Value, Optional.ToNullable(offlineDataTransferStorageAccountTenantId), offlineDataTransferShareName.Value, cloudTieringStatus.Value, recallStatus.Value, Optional.ToNullable(initialDownloadPolicy), Optional.ToNullable(localCacheMode), Optional.ToNullable(initialUploadPolicy), serverName.Value, serverEndpointProvisioningStatus.Value);
-=======
             serializedAdditionalRawData = rawDataDictionary;
             return new StorageSyncServerEndpointData(
                 id,
@@ -455,8 +424,8 @@ namespace Azure.ResourceManager.StorageSync
                 localCacheMode,
                 initialUploadPolicy,
                 serverName,
+                serverEndpointProvisioningStatus,
                 serializedAdditionalRawData);
->>>>>>> upstream/main:sdk/storagesync/Azure.ResourceManager.StorageSync/src/Generated/StorageSyncServerEndpointData.Serialization.cs
         }
 
         BinaryData IPersistableModel<StorageSyncServerEndpointData>.Write(ModelReaderWriterOptions options)

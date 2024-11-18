@@ -81,13 +81,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="localCacheMode"> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </param>
         /// <param name="initialUploadPolicy"> Policy for how the initial upload sync session is performed. </param>
         /// <param name="serverName"> Server name. </param>
-<<<<<<< HEAD
         /// <param name="serverEndpointProvisioningStatus"> Server Endpoint provisioning status. </param>
-        internal StorageSyncServerEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, string provisioningState, string lastWorkflowId, string lastOperationName, ServerEndpointSyncStatus syncStatus, StorageSyncFeatureStatus? offlineDataTransfer, ResourceIdentifier offlineDataTransferStorageAccountResourceId, Guid? offlineDataTransferStorageAccountTenantId, string offlineDataTransferShareName, ServerEndpointCloudTieringStatus cloudTieringStatus, ServerEndpointRecallStatus recallStatus, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy, string serverName, ServerEndpointProvisioningStatus serverEndpointProvisioningStatus) : base(id, name, resourceType, systemData)
-=======
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncServerEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, string provisioningState, string lastWorkflowId, string lastOperationName, ServerEndpointSyncStatus syncStatus, StorageSyncFeatureStatus? offlineDataTransfer, ResourceIdentifier offlineDataTransferStorageAccountResourceId, Guid? offlineDataTransferStorageAccountTenantId, string offlineDataTransferShareName, ServerEndpointCloudTieringStatus cloudTieringStatus, ServerEndpointRecallStatus recallStatus, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy, string serverName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
->>>>>>> upstream/main
+        internal StorageSyncServerEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, string provisioningState, string lastWorkflowId, string lastOperationName, ServerEndpointSyncStatus syncStatus, StorageSyncFeatureStatus? offlineDataTransfer, ResourceIdentifier offlineDataTransferStorageAccountResourceId, Guid? offlineDataTransferStorageAccountTenantId, string offlineDataTransferShareName, ServerEndpointCloudTieringStatus cloudTieringStatus, ServerEndpointRecallStatus recallStatus, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy, string serverName, ServerEndpointProvisioningStatus serverEndpointProvisioningStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServerLocalPath = serverLocalPath;
             CloudTiering = cloudTiering;
@@ -109,11 +105,8 @@ namespace Azure.ResourceManager.StorageSync
             LocalCacheMode = localCacheMode;
             InitialUploadPolicy = initialUploadPolicy;
             ServerName = serverName;
-<<<<<<< HEAD
             ServerEndpointProvisioningStatus = serverEndpointProvisioningStatus;
-=======
             _serializedAdditionalRawData = serializedAdditionalRawData;
->>>>>>> upstream/main
         }
 
         /// <summary> Server Local path. </summary>

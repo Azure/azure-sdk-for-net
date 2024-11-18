@@ -7,11 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
-using Azure.Core;
 using Azure.ResourceManager.Models;
-=======
->>>>>>> upstream/main
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -60,22 +56,15 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="tags"> The user-specified tags associated with the storage sync service. </param>
         /// <param name="identity"> managed identities for the Container App to interact with other Azure services without maintaining any secrets or credentials in code. </param>
         /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
-<<<<<<< HEAD
         /// <param name="useIdentity"> Use Identity authorization when customer have finished setup RBAC permissions. </param>
-        internal StorageSyncServicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IncomingTrafficPolicy? incomingTrafficPolicy, bool? useIdentity)
-=======
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncServicePatch(IDictionary<string, string> tags, IncomingTrafficPolicy? incomingTrafficPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
->>>>>>> upstream/main
+        internal StorageSyncServicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IncomingTrafficPolicy? incomingTrafficPolicy, bool? useIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Identity = identity;
             IncomingTrafficPolicy = incomingTrafficPolicy;
-<<<<<<< HEAD
             UseIdentity = useIdentity;
-=======
             _serializedAdditionalRawData = serializedAdditionalRawData;
->>>>>>> upstream/main
         }
 
         /// <summary> The user-specified tags associated with the storage sync service. </summary>

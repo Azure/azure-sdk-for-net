@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -36,18 +37,6 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageSyncServiceCreateOrUpdateContent"/>. </summary>
-        /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
-        /// <param name="tags"> Gets or sets a list of key value pairs that describe the resource. These tags can be used for viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key with a length no greater than 128 characters and a value with a length no greater than 256 characters. </param>
-        /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
-        /// <returns> A new <see cref="Models.StorageSyncServiceCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static StorageSyncServiceCreateOrUpdateContent StorageSyncServiceCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = null, IncomingTrafficPolicy? incomingTrafficPolicy = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new StorageSyncServiceCreateOrUpdateContent(location, tags, incomingTrafficPolicy, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StorageSyncServiceCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -62,7 +51,17 @@ namespace Azure.ResourceManager.StorageSync.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new StorageSyncServiceCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, identity, incomingTrafficPolicy, useIdentity);
+            return new StorageSyncServiceCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                incomingTrafficPolicy,
+                useIdentity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncServiceData"/>. </summary>
@@ -99,6 +98,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 storageSyncServiceStatus,
                 storageSyncServiceUid,
                 provisioningState,
+                useIdentity,
                 lastWorkflowId,
                 lastOperationName,
                 privateEndpointConnections?.ToList(),
@@ -117,12 +117,14 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <returns> A new <see cref="StorageSync.StorageSyncPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static StorageSyncPrivateEndpointConnectionData StorageSyncPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, StorageSyncPrivateLinkServiceConnectionState connectionState = null, StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
+            groupIds ??= new List<string>();
+
             return new StorageSyncPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                groupIds?.ToList()
+                groupIds?.ToList(),
                 privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
                 connectionState,
                 provisioningState,
@@ -672,7 +674,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         {
             provisioningStepStatuses ??= new List<ServerEndpointProvisioningStepStatus>();
 
-            return new ServerEndpointProvisioningStatus(provisioningStatus, provisioningType, provisioningStepStatuses?.ToList());
+            return new ServerEndpointProvisioningStatus(provisioningStatus, provisioningType, provisioningStepStatuses?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointProvisioningStepStatus"/>. </summary>
@@ -689,7 +691,16 @@ namespace Azure.ResourceManager.StorageSync.Models
         {
             additionalInformation ??= new Dictionary<string, string>();
 
-            return new ServerEndpointProvisioningStepStatus(name, status, startOn, minutesLeft, progressPercentage, endOn, errorCode, additionalInformation);
+            return new ServerEndpointProvisioningStepStatus(
+                name,
+                status,
+                startOn,
+                minutesLeft,
+                progressPercentage,
+                endOn,
+                errorCode,
+                additionalInformation,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncRegisteredServerData"/>. </summary>
@@ -758,7 +769,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 applicationId,
                 identity,
                 latestApplicationId,
-                activeAuthType
+                activeAuthType,
                 serializedAdditionalRawData: null);
         }
 
@@ -806,10 +817,18 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="identity"> Apply server with newly discovered ApplicationId if available. </param>
+        /// <param name="applicationId"> Apply server with new ServicePrincipal Id. </param>
         /// <returns> A new <see cref="Models.StorageSyncRegisteredServerPatch"/> instance for mocking. </returns>
-        public static StorageSyncRegisteredServerPatch StorageSyncRegisteredServerPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? identity = null)
+        public static StorageSyncRegisteredServerPatch StorageSyncRegisteredServerPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? identity = null, string applicationId = null)
         {
-            return new StorageSyncRegisteredServerPatch(id, name, resourceType, systemData, identity);
+            return new StorageSyncRegisteredServerPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                applicationId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncWorkflowData"/>. </summary>

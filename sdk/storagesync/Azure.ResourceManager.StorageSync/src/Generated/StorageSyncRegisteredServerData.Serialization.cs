@@ -156,25 +156,31 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("monitoringConfiguration"u8);
                 writer.WriteStringValue(MonitoringConfiguration);
             }
-<<<<<<< HEAD:sdk/storagesync/Azure.ResourceManager.StorageSync/src/Generated/Models/StorageSyncRegisteredServerData.Serialization.cs
+            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            {
+                writer.WritePropertyName("serverName"u8);
+                writer.WriteStringValue(ServerName);
+            }
             if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteBooleanValue(Identity.Value);
             }
             if (Optional.IsDefined(LatestApplicationId))
             {
                 writer.WritePropertyName("latestApplicationId"u8);
                 writer.WriteStringValue(LatestApplicationId);
             }
-            writer.WriteEndObject();
-=======
-            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            if (options.Format != "W" && Optional.IsDefined(ActiveAuthType))
             {
-                writer.WritePropertyName("serverName"u8);
-                writer.WriteStringValue(ServerName);
+                writer.WritePropertyName("activeAuthType"u8);
+                writer.WriteStringValue(ActiveAuthType.Value.ToString());
             }
->>>>>>> upstream/main:sdk/storagesync/Azure.ResourceManager.StorageSync/src/Generated/StorageSyncRegisteredServerData.Serialization.cs
             writer.WriteEndObject();
         }
 
@@ -201,36 +207,6 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-<<<<<<< HEAD:sdk/storagesync/Azure.ResourceManager.StorageSync/src/Generated/Models/StorageSyncRegisteredServerData.Serialization.cs
-            Optional<SystemData> systemData = default;
-            Optional<BinaryData> serverCertificate = default;
-            Optional<string> agentVersion = default;
-            Optional<RegisteredServerAgentVersionStatus> agentVersionStatus = default;
-            Optional<DateTimeOffset> agentVersionExpirationDate = default;
-            Optional<string> serverOSVersion = default;
-            Optional<int> serverManagementErrorCode = default;
-            Optional<string> lastHeartbeat = default;
-            Optional<string> provisioningState = default;
-            Optional<string> serverRole = default;
-            Optional<Guid> clusterId = default;
-            Optional<string> clusterName = default;
-            Optional<Guid> serverId = default;
-            Optional<Guid> storageSyncServiceUid = default;
-            Optional<string> lastWorkflowId = default;
-            Optional<string> lastOperationName = default;
-            Optional<Uri> discoveryEndpointUri = default;
-            Optional<AzureLocation> resourceLocation = default;
-            Optional<AzureLocation> serviceLocation = default;
-            Optional<string> friendlyName = default;
-            Optional<Uri> managementEndpointUri = default;
-            Optional<Uri> monitoringEndpointUri = default;
-            Optional<string> monitoringConfiguration = default;
-            Optional<string> serverName = default;
-            Optional<string> applicationId = default;
-            Optional<bool> identity = default;
-            Optional<string> latestApplicationId = default;
-            Optional<ServerAuthType> activeAuthType = default;
-=======
             SystemData systemData = default;
             BinaryData serverCertificate = default;
             string agentVersion = default;
@@ -255,9 +231,12 @@ namespace Azure.ResourceManager.StorageSync
             Uri monitoringEndpointUri = default;
             string monitoringConfiguration = default;
             string serverName = default;
+            string applicationId = default;
+            bool? identity = default;
+            string latestApplicationId = default;
+            ServerAuthType? activeAuthType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
->>>>>>> upstream/main:sdk/storagesync/Azure.ResourceManager.StorageSync/src/Generated/StorageSyncRegisteredServerData.Serialization.cs
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -492,9 +471,6 @@ namespace Azure.ResourceManager.StorageSync
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-<<<<<<< HEAD:sdk/storagesync/Azure.ResourceManager.StorageSync/src/Generated/Models/StorageSyncRegisteredServerData.Serialization.cs
-            return new StorageSyncRegisteredServerData(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, Optional.ToNullable(agentVersionStatus), Optional.ToNullable(agentVersionExpirationDate), serverOSVersion.Value, Optional.ToNullable(serverManagementErrorCode), lastHeartbeat.Value, provisioningState.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), Optional.ToNullable(storageSyncServiceUid), lastWorkflowId.Value, lastOperationName.Value, discoveryEndpointUri.Value, Optional.ToNullable(resourceLocation), Optional.ToNullable(serviceLocation), friendlyName.Value, managementEndpointUri.Value, monitoringEndpointUri.Value, monitoringConfiguration.Value, serverName.Value, applicationId.Value, Optional.ToNullable(identity), latestApplicationId.Value, Optional.ToNullable(activeAuthType));
-=======
             serializedAdditionalRawData = rawDataDictionary;
             return new StorageSyncRegisteredServerData(
                 id,
@@ -524,8 +500,11 @@ namespace Azure.ResourceManager.StorageSync
                 monitoringEndpointUri,
                 monitoringConfiguration,
                 serverName,
+                applicationId,
+                identity,
+                latestApplicationId,
+                activeAuthType,
                 serializedAdditionalRawData);
->>>>>>> upstream/main:sdk/storagesync/Azure.ResourceManager.StorageSync/src/Generated/StorageSyncRegisteredServerData.Serialization.cs
         }
 
         BinaryData IPersistableModel<StorageSyncRegisteredServerData>.Write(ModelReaderWriterOptions options)

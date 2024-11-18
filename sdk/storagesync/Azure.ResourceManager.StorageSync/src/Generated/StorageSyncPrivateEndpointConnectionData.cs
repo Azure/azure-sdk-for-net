@@ -5,10 +5,7 @@
 
 #nullable disable
 
-<<<<<<< HEAD
-=======
 using System;
->>>>>>> upstream/main
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -70,12 +67,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-<<<<<<< HEAD
-        internal StorageSyncPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, StorageSyncPrivateLinkServiceConnectionState connectionState, StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
-=======
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, StorageSyncPrivateLinkServiceConnectionState connectionState, StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
->>>>>>> upstream/main
+        internal StorageSyncPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, StorageSyncPrivateLinkServiceConnectionState connectionState, StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;

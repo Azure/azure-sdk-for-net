@@ -62,26 +62,19 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="location"> The location. </param>
         /// <param name="identity"> managed identities for the Storage Sync to interact with other Azure services without maintaining any secrets or credentials in code. </param>
         /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
-<<<<<<< HEAD
         /// <param name="useIdentity"> Use Identity authorization when customer have finished setup RBAC permissions. </param>
-        internal StorageSyncServiceCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IncomingTrafficPolicy? incomingTrafficPolicy, bool? useIdentity) : base(id, name, resourceType, systemData, tags, location)
-=======
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncServiceCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, IncomingTrafficPolicy? incomingTrafficPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
->>>>>>> upstream/main
+        internal StorageSyncServiceCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IncomingTrafficPolicy? incomingTrafficPolicy, bool? useIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             IncomingTrafficPolicy = incomingTrafficPolicy;
-<<<<<<< HEAD
             UseIdentity = useIdentity;
-=======
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSyncServiceCreateOrUpdateContent"/> for deserialization. </summary>
         internal StorageSyncServiceCreateOrUpdateContent()
         {
->>>>>>> upstream/main
         }
 
         /// <summary> managed identities for the Storage Sync to interact with other Azure services without maintaining any secrets or credentials in code. </summary>

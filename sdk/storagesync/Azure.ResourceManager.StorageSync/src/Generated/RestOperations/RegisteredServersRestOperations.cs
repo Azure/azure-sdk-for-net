@@ -330,16 +330,8 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-<<<<<<< HEAD
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, Guid serverId, StorageSyncRegisteredServerPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, Guid serverId, StorageSyncRegisteredServerPatch patch)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-=======
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, Guid serverId)
-        {
->>>>>>> upstream/main
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -351,12 +343,30 @@ namespace Azure.ResourceManager.StorageSync
             uri.AppendPath("/registeredServers/", false);
             uri.AppendPath(serverId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-<<<<<<< HEAD
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, Guid serverId, StorageSyncRegisteredServerPatch patch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
+            uri.AppendPath(storageSyncServiceName, true);
+            uri.AppendPath("/registeredServers/", false);
+            uri.AppendPath(serverId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -416,9 +426,22 @@ namespace Azure.ResourceManager.StorageSync
                 default:
                     throw new RequestFailedException(message.Response);
             }
-=======
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, Guid serverId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
+            uri.AppendPath(storageSyncServiceName, true);
+            uri.AppendPath("/registeredServers/", false);
+            uri.AppendPath(serverId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
->>>>>>> upstream/main
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, Guid serverId)

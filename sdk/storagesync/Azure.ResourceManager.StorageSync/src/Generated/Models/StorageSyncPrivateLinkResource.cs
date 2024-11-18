@@ -61,14 +61,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
-<<<<<<< HEAD
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        internal StorageSyncPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
-=======
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StorageSyncPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
->>>>>>> upstream/main
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

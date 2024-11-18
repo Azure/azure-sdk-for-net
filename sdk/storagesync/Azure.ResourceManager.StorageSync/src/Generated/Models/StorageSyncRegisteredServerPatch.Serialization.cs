@@ -5,17 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class StorageSyncRegisteredServerPatch : IUtf8JsonSerializable
+    public partial class StorageSyncRegisteredServerPatch : IUtf8JsonSerializable, IJsonModel<StorageSyncRegisteredServerPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSyncRegisteredServerPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<StorageSyncRegisteredServerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncRegisteredServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageSyncRegisteredServerPatch)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -23,12 +43,30 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("identity"u8);
                 writer.WriteBooleanValue(Identity.Value);
             }
-            writer.WriteEndObject();
+            if (Optional.IsDefined(ApplicationId))
+            {
+                writer.WritePropertyName("applicationId"u8);
+                writer.WriteStringValue(ApplicationId);
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageSyncRegisteredServerPatch DeserializeStorageSyncRegisteredServerPatch(JsonElement element)
+        StorageSyncRegisteredServerPatch IJsonModel<StorageSyncRegisteredServerPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncRegisteredServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageSyncRegisteredServerPatch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageSyncRegisteredServerPatch(document.RootElement, options);
+        }
+
+        internal static StorageSyncRegisteredServerPatch DeserializeStorageSyncRegisteredServerPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,8 +74,11 @@ namespace Azure.ResourceManager.StorageSync.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> identity = default;
+            SystemData systemData = default;
+            bool? identity = default;
+            string applicationId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -82,11 +123,59 @@ namespace Azure.ResourceManager.StorageSync.Models
                             identity = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("applicationId"u8))
+                        {
+                            applicationId = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageSyncRegisteredServerPatch(id, name, type, systemData.Value, Optional.ToNullable(identity));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StorageSyncRegisteredServerPatch(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                applicationId,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageSyncRegisteredServerPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncRegisteredServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageSyncRegisteredServerPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StorageSyncRegisteredServerPatch IPersistableModel<StorageSyncRegisteredServerPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncRegisteredServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageSyncRegisteredServerPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageSyncRegisteredServerPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageSyncRegisteredServerPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
