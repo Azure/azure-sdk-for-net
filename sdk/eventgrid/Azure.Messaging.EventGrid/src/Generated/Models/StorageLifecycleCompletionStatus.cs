@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Policy status can be Completed/CompletedWithError/Incomplete. </summary>
     public readonly partial struct StorageLifecycleCompletionStatus : IEquatable<StorageLifecycleCompletionStatus>

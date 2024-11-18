@@ -362,7 +362,7 @@ namespace Azure.Messaging.EventGrid
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail deleteSummary, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail tierToColdSummary, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary policyRunSummary = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail deleteSummary = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail tierToColdSummary = null, Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary StorageLifecyclePolicyRunSummary(Azure.Messaging.EventGrid.Models.StorageLifecycleCompletionStatus completionStatus = default(Azure.Messaging.EventGrid.Models.StorageLifecycleCompletionStatus)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyRunSummary StorageLifecyclePolicyRunSummary(Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus completionStatus = default(Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentCompletedEventData StorageTaskAssignmentCompletedEventData(Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentCompletedStatus? status = default(Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentCompletedStatus?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), string taskExecutionId = null, string taskName = null, System.Uri summaryReportBlobUri = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskAssignmentQueuedEventData StorageTaskAssignmentQueuedEventData(System.DateTimeOffset? queuedOn = default(System.DateTimeOffset?), string taskExecutionId = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedEventData StorageTaskCompletedEventData(Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus? status = default(Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedStatus?), System.DateTimeOffset? completedDateTime = default(System.DateTimeOffset?), string taskExecutionId = null, string taskName = null, System.Uri summaryReportBlobUri = null) { throw null; }
@@ -782,25 +782,6 @@ namespace Azure.Messaging.EventGrid.Models
         public static bool operator ==(Azure.Messaging.EventGrid.Models.RecordingFormatType left, Azure.Messaging.EventGrid.Models.RecordingFormatType right) { throw null; }
         public static implicit operator Azure.Messaging.EventGrid.Models.RecordingFormatType (string value) { throw null; }
         public static bool operator !=(Azure.Messaging.EventGrid.Models.RecordingFormatType left, Azure.Messaging.EventGrid.Models.RecordingFormatType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageLifecycleCompletionStatus : System.IEquatable<Azure.Messaging.EventGrid.Models.StorageLifecycleCompletionStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StorageLifecycleCompletionStatus(string value) { throw null; }
-        public static Azure.Messaging.EventGrid.Models.StorageLifecycleCompletionStatus Completed { get { throw null; } }
-        public static Azure.Messaging.EventGrid.Models.StorageLifecycleCompletionStatus CompletedWithError { get { throw null; } }
-        public static Azure.Messaging.EventGrid.Models.StorageLifecycleCompletionStatus Incomplete { get { throw null; } }
-        public bool Equals(Azure.Messaging.EventGrid.Models.StorageLifecycleCompletionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventGrid.Models.StorageLifecycleCompletionStatus left, Azure.Messaging.EventGrid.Models.StorageLifecycleCompletionStatus right) { throw null; }
-        public static implicit operator Azure.Messaging.EventGrid.Models.StorageLifecycleCompletionStatus (string value) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventGrid.Models.StorageLifecycleCompletionStatus left, Azure.Messaging.EventGrid.Models.StorageLifecycleCompletionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
 }
@@ -3538,6 +3519,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SourceUrl { get { throw null; } }
         public object StorageDiagnostics { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageLifecycleCompletionStatus : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageLifecycleCompletionStatus(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus Completed { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus CompletedWithError { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus Incomplete { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus left, Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus left, Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class StorageLifecyclePolicyActionSummaryDetail
     {
         internal StorageLifecyclePolicyActionSummaryDetail() { }
@@ -3558,7 +3558,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class StorageLifecyclePolicyRunSummary
     {
         internal StorageLifecyclePolicyRunSummary() { }
-        public Azure.Messaging.EventGrid.Models.StorageLifecycleCompletionStatus CompletionStatus { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.StorageLifecycleCompletionStatus CompletionStatus { get { throw null; } }
     }
     public partial class StorageTaskAssignmentCompletedEventData
     {

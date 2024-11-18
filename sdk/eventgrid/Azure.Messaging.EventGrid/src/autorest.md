@@ -181,6 +181,10 @@ directive:
       {
           $[path]["properties"]["type"]["x-namespace"] = namespace;
       }
+      if (path.includes("StorageLifecyclePolicyRunSummary"))
+      {
+          $[path]["properties"]["completionStatus"]["x-namespace"] = namespace;
+      }
     }
 ```
 

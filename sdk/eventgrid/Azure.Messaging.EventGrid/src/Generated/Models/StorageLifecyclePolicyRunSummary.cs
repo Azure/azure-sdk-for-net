@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Messaging.EventGrid.Models;
-
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Policy run status of an account in a Blob Management cycle. </summary>
