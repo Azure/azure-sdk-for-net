@@ -483,10 +483,14 @@ namespace Azure.AI.Projects
     {
         public static Azure.AI.Projects.AgentPageableListOfVectorStore AgentPageableListOfVectorStore(Azure.AI.Projects.AgentPageableListOfVectorStoreObject @object = default(Azure.AI.Projects.AgentPageableListOfVectorStoreObject), System.Collections.Generic.IEnumerable<Azure.AI.Projects.VectorStore> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
         public static Azure.AI.Projects.AgentPageableListOfVectorStoreFile AgentPageableListOfVectorStoreFile(Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject @object = default(Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject), System.Collections.Generic.IEnumerable<Azure.AI.Projects.VectorStoreFile> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
+        public static Azure.AI.Projects.ConnectionProperties ConnectionProperties(Azure.AI.Projects.ConnectionType category = Azure.AI.Projects.ConnectionType.AzureOpenAI, string target = null) { throw null; }
+        public static Azure.AI.Projects.ConnectionPropertiesApiKeyAuth ConnectionPropertiesApiKeyAuth(Azure.AI.Projects.ConnectionType category = Azure.AI.Projects.ConnectionType.AzureOpenAI, string target = null, Azure.AI.Projects.CredentialsApiKeyAuth credentials = null) { throw null; }
+        public static Azure.AI.Projects.ConnectionResponse ConnectionResponse(string id = null, string name = null, Azure.AI.Projects.ConnectionProperties properties = null) { throw null; }
+        public static Azure.AI.Projects.CredentialsApiKeyAuth CredentialsApiKeyAuth(string key = null) { throw null; }
         public static Azure.AI.Projects.Evaluation Evaluation(string id = null, Azure.AI.Projects.InputData data = null, string displayName = null, string description = null, Azure.AI.Projects.SystemData systemData = null, string status = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.EvaluatorConfiguration> evaluators = null) { throw null; }
         public static Azure.AI.Projects.EvaluationSchedule EvaluationSchedule(string name = null, Azure.AI.Projects.ApplicationInsightsConfiguration data = null, string description = null, Azure.AI.Projects.SystemData systemData = null, string provisioningStatus = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.EvaluatorConfiguration> evaluators = null, Azure.AI.Projects.Trigger trigger = null) { throw null; }
         public static Azure.AI.Projects.GetWorkspaceResponse GetWorkspaceResponse(string id = null, string name = null, Azure.AI.Projects.WorkspaceProperties properties = null) { throw null; }
-        public static Azure.AI.Projects.ListConnectionsResponse ListConnectionsResponse(System.Collections.Generic.IEnumerable<Azure.AI.Projects.GetConnectionResponse> value = null) { throw null; }
+        public static Azure.AI.Projects.ListConnectionsResponse ListConnectionsResponse(System.Collections.Generic.IEnumerable<Azure.AI.Projects.ConnectionResponse> value = null) { throw null; }
         public static Azure.AI.Projects.MessageDelta MessageDelta(Azure.AI.Projects.MessageRole role = default(Azure.AI.Projects.MessageRole), System.Collections.Generic.IEnumerable<Azure.AI.Projects.MessageDeltaContent> content = null) { throw null; }
         public static Azure.AI.Projects.MessageDeltaChunk MessageDeltaChunk(string id = null, Azure.AI.Projects.MessageDeltaChunkObject @object = default(Azure.AI.Projects.MessageDeltaChunkObject), Azure.AI.Projects.MessageDelta delta = null) { throw null; }
         public static Azure.AI.Projects.MessageDeltaContent MessageDeltaContent(int index = 0, string type = null) { throw null; }
@@ -636,6 +640,43 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CodeInterpreterToolResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CodeInterpreterToolResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public abstract partial class ConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionProperties>
+    {
+        protected ConnectionProperties(Azure.AI.Projects.ConnectionType category, string target) { }
+        public Azure.AI.Projects.AuthenticationType AuthType { get { throw null; } set { } }
+        public Azure.AI.Projects.ConnectionType Category { get { throw null; } }
+        public string Target { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.ConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.ConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ConnectionPropertiesApiKeyAuth : Azure.AI.Projects.ConnectionProperties, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ConnectionPropertiesApiKeyAuth>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionPropertiesApiKeyAuth>
+    {
+        internal ConnectionPropertiesApiKeyAuth() : base (default(Azure.AI.Projects.ConnectionType), default(string)) { }
+        public Azure.AI.Projects.CredentialsApiKeyAuth Credentials { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.ConnectionPropertiesApiKeyAuth System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ConnectionPropertiesApiKeyAuth>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ConnectionPropertiesApiKeyAuth>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.ConnectionPropertiesApiKeyAuth System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionPropertiesApiKeyAuth>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionPropertiesApiKeyAuth>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionPropertiesApiKeyAuth>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ConnectionResponse : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ConnectionResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionResponse>
+    {
+        internal ConnectionResponse() { }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.AI.Projects.ConnectionProperties Properties { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.ConnectionResponse System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ConnectionResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ConnectionResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.ConnectionResponse System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ConnectionsClient
     {
         protected ConnectionsClient() { }
@@ -645,19 +686,19 @@ namespace Azure.AI.Projects
         public ConnectionsClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetConnection(string connectionName, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.Projects.GetConnectionResponse> GetConnection(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Projects.ConnectionResponse> GetConnection(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetConnectionAsync(string connectionName, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.GetConnectionResponse>> GetConnectionAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.ConnectionResponse>> GetConnectionAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Projects.ListConnectionsResponse> GetConnections(Azure.AI.Projects.ConnectionType? category = default(Azure.AI.Projects.ConnectionType?), bool? includeAll = default(bool?), string target = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetConnections(string category, bool? includeAll, string target, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.ListConnectionsResponse>> GetConnectionsAsync(Azure.AI.Projects.ConnectionType? category = default(Azure.AI.Projects.ConnectionType?), bool? includeAll = default(bool?), string target = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetConnectionsAsync(string category, bool? includeAll, string target, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetConnectionWithSecrets(string connectionName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.Projects.GetConnectionResponse> GetConnectionWithSecrets(string connectionName, string ignored, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Projects.ConnectionResponse> GetConnectionWithSecrets(string connectionName, string ignored, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetConnectionWithSecretsAsync(string connectionName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.GetConnectionResponse>> GetConnectionWithSecretsAsync(string connectionName, string ignored, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Projects.GetConnectionResponse> GetDefaultConnection(Azure.AI.Projects.ConnectionType category, bool? withCredential = default(bool?), bool? includeAll = default(bool?), string target = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.GetConnectionResponse>> GetDefaultConnectionAsync(Azure.AI.Projects.ConnectionType category, bool? withCredential = default(bool?), bool? includeAll = default(bool?), string target = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.ConnectionResponse>> GetConnectionWithSecretsAsync(string connectionName, string ignored, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Projects.ConnectionResponse> GetDefaultConnection(Azure.AI.Projects.ConnectionType category, bool? withCredential = default(bool?), bool? includeAll = default(bool?), string target = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.ConnectionResponse>> GetDefaultConnectionAsync(Azure.AI.Projects.ConnectionType category, bool? withCredential = default(bool?), bool? includeAll = default(bool?), string target = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetWorkspace(Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Projects.GetWorkspaceResponse> GetWorkspace(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetWorkspaceAsync(Azure.RequestContext context) { throw null; }
@@ -671,6 +712,17 @@ namespace Azure.AI.Projects
         AzureAIServices = 3,
         AzureAISearch = 4,
         ApiKey = 5,
+    }
+    public partial class CredentialsApiKeyAuth : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.CredentialsApiKeyAuth>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CredentialsApiKeyAuth>
+    {
+        internal CredentialsApiKeyAuth() { }
+        public string Key { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.CredentialsApiKeyAuth System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.CredentialsApiKeyAuth>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.CredentialsApiKeyAuth>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.CredentialsApiKeyAuth System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CredentialsApiKeyAuth>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CredentialsApiKeyAuth>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CredentialsApiKeyAuth>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CronTrigger : Azure.AI.Projects.Trigger, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.CronTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CronTrigger>
     {
@@ -942,18 +994,6 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.FunctionToolDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.FunctionToolDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GetConnectionResponse : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.GetConnectionResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.GetConnectionResponse>
-    {
-        internal GetConnectionResponse() { }
-        public string Id { get { throw null; } }
-        public string Name { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.GetConnectionResponse System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.GetConnectionResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.GetConnectionResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.GetConnectionResponse System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.GetConnectionResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.GetConnectionResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.GetConnectionResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class GetWorkspaceResponse : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.GetWorkspaceResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.GetWorkspaceResponse>
     {
         internal GetWorkspaceResponse() { }
@@ -1010,7 +1050,7 @@ namespace Azure.AI.Projects
     public partial class ListConnectionsResponse : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ListConnectionsResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ListConnectionsResponse>
     {
         internal ListConnectionsResponse() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.GetConnectionResponse> Value { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.ConnectionResponse> Value { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Projects.ListConnectionsResponse System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ListConnectionsResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ListConnectionsResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
