@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives.TwoWayClient;
+namespace System.ClientModel.Primitives.BidirectionalClients;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class TwoWayPipelineOptions
+public class BidirectionalPipelineOptions
 {
     private bool _frozen;
 

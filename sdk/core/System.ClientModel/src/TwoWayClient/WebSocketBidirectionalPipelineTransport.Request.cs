@@ -7,12 +7,12 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives.TwoWayClient;
+namespace System.ClientModel.Primitives.BidirectionalClients;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public partial class WebSocketTwoWayPipelineTransport
+public partial class WebSocketBidirectionalPipelineTransport
 {
-    private sealed class WebSocketTransportClientMessage : WebSocketClientMessage
+    private sealed class WebSocketTransportClientMessage : WebSocketRequest
     {
     }
 }

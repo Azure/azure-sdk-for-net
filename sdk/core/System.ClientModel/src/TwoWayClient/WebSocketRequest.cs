@@ -4,10 +4,10 @@
 using System.ClientModel.Internal;
 using System.Threading;
 
-namespace System.ClientModel.Primitives.TwoWayClient;
+namespace System.ClientModel.Primitives.BidirectionalClients;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public abstract class WebSocketClientMessage : TwoWayPipelineClientMessage
+public abstract class WebSocketRequest : BidirectionalPipelineRequest
 {
     // TODO: should this be on the base type?
     public bool? IsLastFragment { get; set; }

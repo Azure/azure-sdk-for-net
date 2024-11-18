@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives.TwoWayClient;
+namespace System.ClientModel.Primitives.BidirectionalClients;
 
 /// <summary>
 /// This is intended to be the base type for a subclient that holds a
@@ -12,55 +12,55 @@ namespace System.ClientModel.Primitives.TwoWayClient;
 /// subclient that polls for updates to a long-running operation.
 /// </summary>
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class TwoWayConnectionResult : IDisposable /*TODO: IAsyncDisposable? */
+public class BidirectionalConnectionResult : IDisposable /*TODO: IAsyncDisposable? */
 {
-    private readonly TwoWayPipelineOptions _options;
-    private TwoWayPipeline? _pipeline;
+    private readonly BidirectionalPipelineOptions _options;
+    private BidirectionalPipeline? _pipeline;
 
     private bool _disposed;
 
-    protected TwoWayConnectionResult(PipelineResponse response, TwoWayPipelineOptions? options = default)
+    protected BidirectionalConnectionResult(PipelineResponse response, BidirectionalPipelineOptions? options = default)
     {
-        _options = options ?? new TwoWayPipelineOptions();
+        _options = options ?? new BidirectionalPipelineOptions();
 
-        _pipeline = TwoWayPipeline.Create(response, _options);
+        _pipeline = BidirectionalPipeline.Create(response, _options);
     }
 
-    public TwoWayPipeline Pipeline => _pipeline ?? throw new ObjectDisposedException("TBD");
+    public BidirectionalPipeline Pipeline => _pipeline ?? throw new ObjectDisposedException("TBD");
 
     // Protocol layer async method
     // Note: idea is that convenience method overload will add TwoWayResponse<T>
     // and take CancellationToken instead.
-    public virtual IAsyncEnumerable<TwoWayResult> GetResponsesAsync(TwoWayMessageOptions options)
+    public virtual IAsyncEnumerable<BidirectionalClientResult> GetResponsesAsync(BidirectionalRequestOptions options)
     {
         throw new NotImplementedException();
     }
 
     // Protocol layer sync method
-    public virtual IEnumerable<TwoWayResult> GetResponses(TwoWayMessageOptions options)
+    public virtual IEnumerable<BidirectionalClientResult> GetResponses(BidirectionalRequestOptions options)
     {
         throw new NotImplementedException();
     }
 
     // effectively the base-layer protocol message
-    // only difference between this and Pipeline.Send is that TwoWayMessageOptions
+    // only difference between this and Pipeline.Send is that BidirectionalClientDataOptions
     // can mutate the pipeline before sending.
     // Intention is that client authors will layer protocol methods around this
     // as a convenience to them, but open question whether we would expose this
     // to end users instead of protocol methods.  We probably still want named
     // protocol methods to provide discoverable convenience overloads.
-    protected async Task SendAsync(BinaryContent content, TwoWayMessageOptions? options = default)
+    protected async Task SendAsync(BinaryContent content, BidirectionalRequestOptions? options = default)
     {
-        using TwoWayPipelineClientMessage message = Pipeline.CreateMessage();
+        using BidirectionalPipelineRequest message = Pipeline.CreateMessage();
         message.Content = content;
 
         options?.Apply(message);
         await Pipeline.SendAsync(message).ConfigureAwait(false);
     }
 
-    protected void Send(BinaryContent content, TwoWayMessageOptions? options = default)
+    protected void Send(BinaryContent content, BidirectionalRequestOptions? options = default)
     {
-        using TwoWayPipelineClientMessage message = Pipeline.CreateMessage();
+        using BidirectionalPipelineRequest message = Pipeline.CreateMessage();
         message.Content = content;
 
         options?.Apply(message);

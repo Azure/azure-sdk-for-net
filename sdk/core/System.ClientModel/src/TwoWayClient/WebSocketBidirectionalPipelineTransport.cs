@@ -4,32 +4,32 @@
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives.TwoWayClient;
+namespace System.ClientModel.Primitives.BidirectionalClients;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public partial class WebSocketTwoWayPipelineTransport : TwoWayPipelineTransport,
+public partial class WebSocketBidirectionalPipelineTransport : BidirectionalPipelineTransport,
     IDisposable, IAsyncDisposable
 {
     private ClientWebSocket? _webSocket;
 
     private bool _disposed;
 
-    public WebSocketTwoWayPipelineTransport()
+    public WebSocketBidirectionalPipelineTransport()
     {
         _webSocket = new();
     }
 
-    protected override TwoWayPipelineClientMessage CreateMessageCore()
+    protected override BidirectionalPipelineRequest CreateMessageCore()
     {
         return new WebSocketTransportClientMessage();
     }
 
-    protected override void ProcessCore(TwoWayPipelineClientMessage clientMessage)
+    protected override void ProcessCore(BidirectionalPipelineRequest clientMessage)
     {
         throw new NotImplementedException();
     }
 
-    protected override ValueTask ProcessCoreAsync(TwoWayPipelineClientMessage clientMessage)
+    protected override ValueTask ProcessCoreAsync(BidirectionalPipelineRequest clientMessage)
     {
         // Send the message over the WebSocket.
 
@@ -56,12 +56,12 @@ public partial class WebSocketTwoWayPipelineTransport : TwoWayPipelineTransport,
 //#endif
     }
 
-    protected override void ProcessCore(TwoWayPipelineServiceMessage serviceMessage)
+    protected override void ProcessCore(BidirectionalPipelineResponse serviceMessage)
     {
         throw new NotImplementedException();
     }
 
-    protected override ValueTask ProcessCoreAsync(TwoWayPipelineServiceMessage serviceMessage)
+    protected override ValueTask ProcessCoreAsync(BidirectionalPipelineResponse serviceMessage)
     {
         throw new NotImplementedException();
     }

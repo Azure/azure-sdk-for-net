@@ -4,16 +4,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives.TwoWayClient;
+namespace System.ClientModel.Primitives.BidirectionalClients;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public sealed class TwoWayPipeline : IDisposable, IAsyncDisposable
+public sealed class BidirectionalPipeline : IDisposable, IAsyncDisposable
 {
-    private readonly ReadOnlyMemory<TwoWayPipelinePolicy> _policies;
+    private readonly ReadOnlyMemory<BidirectionalPipelinePolicy> _policies;
 
     private bool _disposed;
 
-    private TwoWayPipeline(ReadOnlyMemory<TwoWayPipelinePolicy> policies)
+    private BidirectionalPipeline(ReadOnlyMemory<BidirectionalPipelinePolicy> policies)
     {
         _policies = policies;
     }
@@ -28,33 +28,33 @@ public sealed class TwoWayPipeline : IDisposable, IAsyncDisposable
     //    throw new NotImplementedException();
     //}
 
-    public static TwoWayPipeline Create(PipelineResponse response, TwoWayPipelineOptions options)
+    public static BidirectionalPipeline Create(PipelineResponse response, BidirectionalPipelineOptions options)
     {
         throw new NotImplementedException();
     }
 
-    public TwoWayPipelineClientMessage CreateMessage()
+    public BidirectionalPipelineRequest CreateMessage()
     {
         throw new NotImplementedException();
     }
 
-    public void Send(TwoWayPipelineClientMessage message)
+    public void Send(BidirectionalPipelineRequest message)
     {
         throw new NotImplementedException();
     }
 
-    public Task SendAsync(TwoWayPipelineClientMessage message)
+    public Task SendAsync(BidirectionalPipelineRequest message)
     {
         throw new NotImplementedException();
     }
 
     // TODO: What is sync story for recieve - does this work?
-    public IEnumerable<TwoWayPipelineServiceMessage> GetResponseStream()
+    public IEnumerable<BidirectionalPipelineResponse> GetResponseStream()
     {
         throw new NotImplementedException();
     }
 
-    public IAsyncEnumerable<TwoWayPipelineServiceMessage> GetResponseStreamAsync()
+    public IAsyncEnumerable<BidirectionalPipelineResponse> GetResponseStreamAsync()
     {
         throw new NotImplementedException();
     }

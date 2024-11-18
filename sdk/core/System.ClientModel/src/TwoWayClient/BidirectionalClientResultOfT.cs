@@ -4,12 +4,12 @@
 using System.ClientModel.Internal;
 using System.Threading;
 
-namespace System.ClientModel.Primitives.TwoWayClient;
+namespace System.ClientModel.Primitives.BidirectionalClients;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class TwoWayResult<T> : TwoWayResult
+public class BidirectionalClientResult<T> : BidirectionalClientResult
 {
-    protected internal TwoWayResult(T value, TwoWayPipelineServiceMessage response)
+    protected internal BidirectionalClientResult(T value, BidirectionalPipelineResponse response)
         : base(response)
     {
         Value = value;
@@ -17,12 +17,12 @@ public class TwoWayResult<T> : TwoWayResult
 
     public T Value { get; }
 
-    public static implicit operator T(TwoWayResult<T> result)
+    public static implicit operator T(BidirectionalClientResult<T> result)
     {
         if (result == null)
         {
 #pragma warning disable CA1065 // Don't throw from cast operators
-            throw new ArgumentNullException(nameof(result), $"The implicit cast from TwoWayResult<{typeof(T)}> to {typeof(T)} failed because the ClientResult<{typeof(T)}> was null.");
+            throw new ArgumentNullException(nameof(result), $"The implicit cast from BidirectionalClientResult<{typeof(T)}> to {typeof(T)} failed because the ClientResult<{typeof(T)}> was null.");
 #pragma warning restore CA1065
         }
 

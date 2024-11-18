@@ -4,14 +4,14 @@
 using System.ClientModel.Internal;
 using System.Threading;
 
-namespace System.ClientModel.Primitives.TwoWayClient;
+namespace System.ClientModel.Primitives.BidirectionalClients;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class TwoWayResult
+public class BidirectionalClientResult
 {
-    private readonly TwoWayPipelineServiceMessage _response;
+    private readonly BidirectionalPipelineResponse _response;
 
-    protected TwoWayResult(TwoWayPipelineServiceMessage response)
+    protected BidirectionalClientResult(BidirectionalPipelineResponse response)
     {
         Argument.AssertNotNull(response, nameof(response));
 
@@ -23,7 +23,7 @@ public class TwoWayResult
     /// </summary>
     /// <returns></returns>
     /// <exception cref="NotSupportedException"></exception>
-    public WebSocketServiceMessage GetWebSocketResponse() => _response as WebSocketServiceMessage ??
+    public WebSocketResponse GetWebSocketResponse() => _response as WebSocketResponse ??
         throw new NotSupportedException();
 
     /// <summary>
@@ -31,26 +31,26 @@ public class TwoWayResult
     /// </summary>
     /// <param name="response"></param>
     /// <returns></returns>
-    public static TwoWayResult FromResponse(TwoWayPipelineServiceMessage response)
+    public static BidirectionalClientResult FromResponse(BidirectionalPipelineResponse response)
     {
         Argument.AssertNotNull(response, nameof(response));
 
-        return new TwoWayResult(response);
+        return new BidirectionalClientResult(response);
     }
 
-    public static TwoWayResult<T> FromValue<T>(T value, TwoWayPipelineServiceMessage response)
+    public static BidirectionalClientResult<T> FromValue<T>(T value, BidirectionalPipelineResponse response)
     {
         Argument.AssertNotNull(response, nameof(response));
 
         if (value is null)
         {
-            string message = "TwoWayResult<T> contract guarantees that TwoWayResult<T>.Value is non-null. " +
-                "If you need to return a TwoWayResult where the Value is null, please use TwoWayResult.FromOptionalValue instead.";
+            string message = "BidirectionalClientResult<T> contract guarantees that BidirectionalClientResult<T>.Value is non-null. " +
+                "If you need to return a BidirectionalClientResult where the Value is null, please use BidirectionalClientResult.FromOptionalValue instead.";
 
             throw new ArgumentNullException(nameof(value), message);
         }
 
-        return new TwoWayResult<T>(value, response);
+        return new BidirectionalClientResult<T>(value, response);
     }
 }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
