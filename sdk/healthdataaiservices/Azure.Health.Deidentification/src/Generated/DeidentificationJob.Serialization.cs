@@ -124,7 +124,7 @@ namespace Azure.Health.Deidentification
             DeidentificationOperationType? operation = default;
             SourceStorageLocation sourceLocation = default;
             TargetStorageLocation targetLocation = default;
-            JobCustomizationOptions customizations = default;
+            DeidentificationJobCustomizationOptions customizations = default;
             DeidentificationJobStatus status = default;
             ResponseError error = default;
             DateTimeOffset lastUpdatedAt = default;
@@ -165,7 +165,7 @@ namespace Azure.Health.Deidentification
                     {
                         continue;
                     }
-                    customizations = JobCustomizationOptions.DeserializeJobCustomizationOptions(property.Value, options);
+                    customizations = DeidentificationJobCustomizationOptions.DeserializeDeidentificationJobCustomizationOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
