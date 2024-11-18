@@ -255,7 +255,8 @@ namespace Azure.Storage.DataMovement
                     offset: 0,
                     sourceLength: initialLength.Value,
                     source: initialResult.Content,
-                    expectedLength: totalLength).ConfigureAwait(false);
+                    expectedLength: totalLength,
+                    initial: true).ConfigureAwait(false);
                 if (successfulInitialCopy)
                 {
                     ReportBytesWritten(initialLength.Value);
@@ -307,7 +308,8 @@ namespace Azure.Storage.DataMovement
                     offset: 0,
                     sourceLength: downloadLength,
                     source: result.Content,
-                    expectedLength: totalLength).ConfigureAwait(false);
+                    expectedLength: totalLength,
+                    initial: true).ConfigureAwait(false);
                 if (successfulCopy)
                 {
                     ReportBytesWritten(downloadLength);
@@ -325,20 +327,17 @@ namespace Azure.Storage.DataMovement
         #region PartitionedDownloader
         private async Task QueueChunksToChannel(long initialLength, long totalLength)
         {
-            // Get list of ranges of the blob
-            IList<HttpRange> ranges = GetRanges(initialLength, totalLength, _transferChunkSize).ToList();
-
             // Create Download Chunk event handler to manage when the ranges finish downloading
-            _downloadChunkHandler = GetDownloadChunkHandler(
+            _downloadChunkHandler = new DownloadChunkHandler(
                 currentTransferred: initialLength,
                 expectedLength: totalLength,
-                ranges: ranges,
-                jobPart: this);
+                GetDownloadChunkHandlerBehaviors(this),
+                _cancellationToken);
 
             // Fill the queue with tasks to download each of the remaining
             // ranges in the file
             _queueingTasks = true;
-            foreach (HttpRange httpRange in ranges)
+            foreach (HttpRange httpRange in GetRanges(initialLength, totalLength, _transferChunkSize))
             {
                 if (_cancellationToken.IsCancellationRequested)
                 {
@@ -411,7 +410,8 @@ namespace Azure.Storage.DataMovement
             long offset,
             long sourceLength,
             Stream source,
-            long expectedLength)
+            long expectedLength,
+            bool initial)
         {
             CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
 
@@ -426,6 +426,7 @@ namespace Azure.Storage.DataMovement
                     options: new StorageResourceWriteToOffsetOptions()
                     {
                         Position = offset,
+                        Initial = initial,
                     },
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
                 return true;
@@ -439,18 +440,6 @@ namespace Azure.Storage.DataMovement
             }
             return false;
         }
-
-        internal DownloadChunkHandler GetDownloadChunkHandler(
-            long currentTransferred,
-            long expectedLength,
-            IList<HttpRange> ranges,
-            UriToStreamJobPart jobPart)
-            => new DownloadChunkHandler(
-                currentTransferred,
-                expectedLength,
-                ranges,
-                GetDownloadChunkHandlerBehaviors(jobPart),
-                _cancellationToken);
 
         private static DownloadChunkHandler.Behaviors GetDownloadChunkHandlerBehaviors(UriToStreamJobPart jobPart)
         {
@@ -505,7 +494,8 @@ namespace Azure.Storage.DataMovement
                 offset: 0,
                 sourceLength: 0,
                 source: default,
-                expectedLength: 0).ConfigureAwait(false);
+                expectedLength: 0,
+                initial: true).ConfigureAwait(false);
             if (successfulCreation)
             {
                 // Queue the work to end the download

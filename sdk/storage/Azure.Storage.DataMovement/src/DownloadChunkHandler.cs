@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Channels;
@@ -14,7 +13,7 @@ namespace Azure.Storage.DataMovement
     internal class DownloadChunkHandler : IDisposable
     {
         #region Delegate Definitions
-        public delegate Task CopyToDestinationFileInternal(long offset, long length, Stream stream, long expectedLength);
+        public delegate Task CopyToDestinationFileInternal(long offset, long length, Stream stream, long expectedLength, bool initial);
         public delegate void ReportProgressInBytes(long bytesWritten);
         public delegate Task QueueCompleteFileDownloadInternal();
         public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
@@ -43,21 +42,7 @@ namespace Azure.Storage.DataMovement
 
         private long _bytesTransferred;
         private readonly long _expectedLength;
-
-        /// <summary>
-        /// List that holds all ranges of chunks to process.
-        /// </summary>
-        private readonly IList<HttpRange> _ranges;
-        /// <summary>
-        /// Holds which range we are currently waiting on to download.
-        /// </summary>
-        private int _currentRangeIndex;
-
-        /// <summary>
-        /// If any download chunks come in early before the chunk before it
-        /// to copy to the file, let's hold it in order here before we copy it over.
-        /// </summary>
-        private readonly Dictionary<long, Stream> _pendingChunks;
+        private int _chunkTransferred;
 
         /// <summary>
         /// The controller for downloading the chunks to each file.
@@ -67,9 +52,6 @@ namespace Azure.Storage.DataMovement
         /// </param>
         /// <param name="expectedLength">
         /// The expected length of the content to be downloaded in bytes.
-        /// </param>
-        /// <param name="ranges">
-        /// List that holds the expected ranges the chunk ranges will come back as.
         /// </param>
         /// <param name="behaviors">
         /// Contains all the supported function calls.
@@ -82,14 +64,13 @@ namespace Azure.Storage.DataMovement
         public DownloadChunkHandler(
             long currentTransferred,
             long expectedLength,
-            IList<HttpRange> ranges,
             Behaviors behaviors,
             CancellationToken cancellationToken)
         {
             // Set bytes transferred to the length of bytes we got back from the initial
             // download request
             _bytesTransferred = currentTransferred;
-            _currentRangeIndex = 0;
+            _chunkTransferred = 0;
 
             // The size of the channel should never exceed 50k (limit on blocks in a block blob).
             // and that's in the worst case that we never read from the channel and had a maximum chunk blob.
@@ -103,14 +84,11 @@ namespace Azure.Storage.DataMovement
             _cancellationToken = cancellationToken;
 
             _expectedLength = expectedLength;
-            _ranges = ranges;
-            _pendingChunks = new();
 
             if (expectedLength <= 0)
             {
                 throw Errors.InvalidExpectedLength(expectedLength);
             }
-            Argument.AssertNotNullOrEmpty(ranges, nameof(ranges));
             Argument.AssertNotNull(behaviors, nameof(behaviors));
 
             // Set values
@@ -126,11 +104,6 @@ namespace Azure.Storage.DataMovement
 
         public void Dispose()
         {
-            foreach (Stream chunkStream in _pendingChunks.Values)
-            {
-                chunkStream.Dispose();
-            }
-            _pendingChunks.Clear();
             _downloadRangeChannel.Writer.TryComplete();
         }
 
@@ -147,40 +120,23 @@ namespace Azure.Storage.DataMovement
                 {
                     // Read one event argument at a time.
                     QueueDownloadChunkArgs args = await _downloadRangeChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                    long currentRangeOffset = _ranges[_currentRangeIndex].Offset;
-                    if (currentRangeOffset < args.Offset)
-                    {
-                        // Early chunk, add to pending
-                        _pendingChunks.Add(args.Offset, args.Result);
-                    }
-                    else if (currentRangeOffset == args.Offset)
-                    {
-                        // Copy the current chunk to the destination
-                        using (Stream content = args.Result)
-                        {
-                            await _copyToDestinationFile(
-                                args.Offset,
-                                args.Length,
-                                content,
-                                _expectedLength).ConfigureAwait(false);
-                        }
-                        UpdateBytesAndRange(args.Length);
 
-                        // Check if the next chunks are already downloaeded and copy those
-                        await AppendPendingChunks().ConfigureAwait(false);
-
-                        // Check if we finished downloading the blob
-                        if (_bytesTransferred == _expectedLength)
-                        {
-                            await _queueCompleteFileDownload().ConfigureAwait(false);
-                        }
-                    }
-                    else
+                    // Copy the current chunk to the destination
+                    using (Stream content = args.Result)
                     {
-                        // We should never reach this point because that means
-                        // the range that came back was less than the next range that is supposed
-                        // to be copied to the file
-                        throw Errors.InvalidDownloadOffset(args.Offset, args.Length);
+                        await _copyToDestinationFile(
+                            args.Offset,
+                            args.Length,
+                            content,
+                            _expectedLength,
+                            initial: _chunkTransferred == 0).ConfigureAwait(false);
+                    }
+                    UpdateBytesAndRange(args.Length);
+
+                     //Check if we finished downloading the blob
+                    if (_bytesTransferred == _expectedLength)
+                    {
+                        await _queueCompleteFileDownload().ConfigureAwait(false);
                     }
                 }
             }
@@ -191,32 +147,13 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private async Task AppendPendingChunks()
-        {
-            while (_currentRangeIndex < _ranges.Count &&
-                _pendingChunks.ContainsKey(_ranges[_currentRangeIndex].Offset))
-            {
-                HttpRange currentRange = _ranges[_currentRangeIndex];
-                using (Stream nextChunk = _pendingChunks[currentRange.Offset])
-                {
-                    await _copyToDestinationFile(
-                        currentRange.Offset,
-                        currentRange.Length.Value,
-                        nextChunk,
-                        _expectedLength).ConfigureAwait(false);
-                }
-                _pendingChunks.Remove(currentRange.Offset);
-                UpdateBytesAndRange((long)currentRange.Length);
-            }
-        }
-
         /// <summary>
         /// Moves the downloader to the next range and updates/reports bytes transferred.
         /// </summary>
         /// <param name="bytesDownloaded"></param>
         private void UpdateBytesAndRange(long bytesDownloaded)
         {
-            _currentRangeIndex++;
+            _chunkTransferred++;
             _bytesTransferred += bytesDownloaded;
             _reportProgressInBytes(bytesDownloaded);
         }
