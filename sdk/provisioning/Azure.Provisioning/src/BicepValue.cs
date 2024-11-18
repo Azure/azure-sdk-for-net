@@ -2,110 +2,131 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning;
 
-// TODO: Currently everything's wrapped in BicepValue, but we're going to pull
-// models and enums out (kind of like we do with ResourceReference already) so
-// we get a better intellisense experience.  That'll also remove a lot of the
-// clutter in this class hierarchy.
-
 /// <summary>
 /// Represents the value of a property that could be a literal .NET value, a
 /// Bicep expression, or it could be unset.
 /// </summary>
-public abstract class BicepValue
+public abstract class BicepValue : IBicepValue
 {
-    /// <summary>
-    /// Gets the kind of this value (a literal value, an expression, or it's
-    /// unset).
-    /// </summary>
-    public BicepValueKind Kind { get; set; } = BicepValueKind.Unset;
+    /// <inheritdoc />
+    BicepValueKind IBicepValue.Kind => _kind;
+    private protected BicepValueKind _kind = BicepValueKind.Unset;
 
-    public BicepExpression? Expression { get; set; } = null;
-    // TODO: Lock down setter?  At a minimum we should force Kind to stay in
-    // sync, but I'm hoping to change both at once.
+    /// <inheritdoc />
+    BicepExpression? IBicepValue.Expression
+    {
+        get => _kind == BicepValueKind.Expression ? _expression : null;
+        set
+        {
+            _kind = BicepValueKind.Expression;
+            _expression = value;
+        }
+    }
+    private protected BicepExpression? _expression;
 
-    // Get the value when Kind == Literal
-    internal abstract object? GetLiteralValue();
+    /// <inheritdoc />
+    object? IBicepValue.LiteralValue => GetLiteralValue();
+    private protected abstract object? GetLiteralValue();
 
-    // Tracks who defined this property
-    internal BicepValueReference? Self { get; }
+    /// <inheritdoc />
+    BicepValueReference? IBicepValue.Self { get => _self; set => _self = value; }
+    private protected BicepValueReference? _self;
 
-    // Tracks who set this property
-    internal BicepValueReference? Source { get; private set; }
+    /// <inheritdoc />
+    BicepValueReference? IBicepValue.Source => _source;
+    private protected BicepValueReference? _source;
 
-    // Tracks whether this is an output only property.
-    internal bool IsOutput { get; set; } = false;
+    /// <inheritdoc />
+    bool IBicepValue.IsOutput => _isOutput;
+    internal bool _isOutput;
 
-    // Tracks whether this property is required.
-    internal bool IsRequired { get; set; } = false;
+    /// <inheritdoc />
+    bool IBicepValue.IsRequired => _isRequired;
+    internal bool _isRequired;
 
-    // Tracks whether we currently wrap a secure value.  Bicep doesn't really
-    // make use of this directly, but it will be important for module splitting
-    // and test sanitization.
-    internal bool IsSecure { get; set; } = false;
+    /// <inheritdoc />
+    bool IBicepValue.IsSecure => _isSecure;
+    internal bool _isSecure;
 
     // Optional format defining how values should be serialized
     internal string? Format { get; set; } = null;
 
     // Indicate whether this value is empty or should be included in output
-    internal virtual bool IsEmpty => Kind == BicepValueKind.Unset;
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public virtual bool IsEmpty => _kind == BicepValueKind.Unset;
 
     // Naive Bicep type of the value.  We don't support complex object types so
     // this is mostly to help map primitives.
     private protected virtual BicepExpression GetBicepType() => BicepSyntax.Types.Object;
 
     // TODO: Clean these up when pulling richer objects out of BicepValue<T>
-    private protected BicepValue(BicepValueReference? self) => Self = self;
+    private protected BicepValue(BicepValueReference? self)
+    {
+        _kind = BicepValueKind.Unset;
+        _self = self;
+    }
     private protected BicepValue(BicepValueReference? self, /* unused but forces literal */ object literal)
-        : this(self) { Kind = BicepValueKind.Literal; }
+        : this(self)
+    {
+        _kind = BicepValueKind.Literal;
+    }
     private protected BicepValue(BicepValueReference? self, BicepExpression expression)
-        : this(self) { Kind = BicepValueKind.Expression; Expression = expression; }
+        : this(self)
+    {
+        _kind = BicepValueKind.Expression;
+        _expression = expression;
+    }
+
+    /// <inheritdoc />
+    void IBicepValue.SetReadOnly() => _isOutput = true;
+
+    /// <inheritdoc />
+    public override string ToString() => Compile().ToString();
+
+    /// <inheritdoc />
+    public BicepExpression Compile() => BicepTypeMapping.ToBicep(this, Format);
+
+    /// <inheritdoc />
+    void IBicepValue.Assign(IBicepValue source) => Assign(source);
 
     // Assign a value to this property.
-    internal virtual void Assign(BicepValue source)
+    internal virtual void Assign(IBicepValue source)
     {
         // TODO: Do we want to add a more explicit notion of readonly
         // (especially for expr ref resources)?
-        if (IsOutput) { throw new InvalidOperationException($"Cannot assign to output value {Self?.PropertyName}"); }
+        if (_isOutput) { throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}"); }
 
         // Track the source so we can correctly link references across modules
-        Source = source?.Self;
+        _source = source?.Self;
 
         // Copy over the common values (but rely on derived classes for other values)
-        Kind = source?.Kind ?? BicepValueKind.Unset;
-        Expression = source?.Expression;
-        IsSecure = source?.IsSecure ?? false;
+        _kind = source?.Kind ?? BicepValueKind.Unset;
+        _expression = source?.Expression;
+        _isSecure = source?.IsSecure ?? false;
 
         // If we're being assigned an Unset value that references a specific
         // resource, we'll consider this an expression referencing that property
         // (i.e., this is like referencing the unset Id property of a resource
         // you created moments ago).
-        if (Kind == BicepValueKind.Unset && Source is not null)
+        if (_kind == BicepValueKind.Unset && _source is not null)
         {
-            Kind = BicepValueKind.Expression;
-            Expression = Source.GetReference();
+            _kind = BicepValueKind.Expression;
+            _expression = _source.GetReference();
         }
     }
 
-    /// <inheritdoc />
-    public override string ToString() =>
-        Kind switch
-        {
-            BicepValueKind.Unset =>   $"<{nameof(BicepValue)}: Unset>",
-            BicepValueKind.Literal => $"<{nameof(BicepValue)}: {GetLiteralValue()}>",
-            _ =>                      $"<{nameof(BicepValue)}: {Compile()}>",
-        };
-
-    public BicepExpression Compile() => BicepTypeMapping.ToBicep(this, Format);
+    /// <summary>
+    /// Gets a bicep expression corresponding to this instance.
+    /// </summary>
+    /// <param name="value"></param>
+    public static explicit operator BicepExpression?(BicepValue value) =>
+        value._kind == BicepValueKind.Expression ?
+            value._expression :
+            value._self?.GetReference();
 }
-
-/// <summary>
-/// Gets the kind of a <see cref="BicepValue"/>.
-/// </summary>
-public enum BicepValueKind { Unset, Literal, Expression }
-
-// TODO: Replace this with helper properties like HasLiteral

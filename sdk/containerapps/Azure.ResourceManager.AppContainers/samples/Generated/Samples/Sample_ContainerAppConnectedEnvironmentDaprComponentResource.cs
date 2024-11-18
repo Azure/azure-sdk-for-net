@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppContainers.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppContainers.Samples
 {
     public partial class Sample_ContainerAppConnectedEnvironmentDaprComponentResource
     {
-        // Get Dapr Component
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDaprComponent()
         {
             // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ConnectedEnvironmentsDaprComponents_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.AppContainers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update dapr component
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateDaprComponent()
         {
             // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ConnectedEnvironmentsDaprComponents_CreateOrUpdate.json
@@ -119,9 +118,8 @@ SecretRef = "masterkey",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete dapr component
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteDaprComponent()
         {
             // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ConnectedEnvironmentsDaprComponents_Delete.json
@@ -144,12 +142,11 @@ SecretRef = "masterkey",
             // invoke the operation
             await containerAppConnectedEnvironmentDaprComponent.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List Container Apps Secrets
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSecrets_ListContainerAppsSecrets()
         {
             // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ConnectedEnvironmentsDaprComponents_ListSecrets.json
@@ -175,7 +172,7 @@ SecretRef = "masterkey",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ResourceMover.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ResourceMover.Samples
 {
     public partial class Sample_MoverResource
     {
-        // MoveResources_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_MoveResourcesCreate()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveResources_Create.json
@@ -73,9 +73,8 @@ TargetId = new ResourceIdentifier("/subscriptions/c4488a3f-a7f7-4ad4-aa72-0e1f4d
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // MoveResources_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_MoveResourcesDelete()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveResources_Delete.json
@@ -102,9 +101,8 @@ TargetId = new ResourceIdentifier("/subscriptions/c4488a3f-a7f7-4ad4-aa72-0e1f4d
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // MoveResources_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MoveResourcesGet()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveResources_Get.json

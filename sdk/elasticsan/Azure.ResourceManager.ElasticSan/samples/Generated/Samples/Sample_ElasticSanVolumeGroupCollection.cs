@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ElasticSan.Samples
 {
     public partial class Sample_ElasticSanVolumeGroupCollection
     {
-        // VolumeGroups_ListByElasticSan_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VolumeGroupsListByElasticSanMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_ListByElasticSan_MaximumSet_Gen.json
@@ -50,12 +50,11 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VolumeGroups_ListByElasticSan_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VolumeGroupsListByElasticSanMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_ListByElasticSan_MinimumSet_Gen.json
@@ -87,12 +86,11 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VolumeGroups_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VolumeGroupsCreateMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Create_MaximumSet_Gen.json
@@ -156,9 +154,8 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VolumeGroups_Create_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VolumeGroupsCreateMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Create_MinimumSet_Gen.json
@@ -193,9 +190,8 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VolumeGroups_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeGroupsGetMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MaximumSet_Gen.json
@@ -228,9 +224,8 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VolumeGroups_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_VolumeGroupsGetMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MaximumSet_Gen.json
@@ -259,9 +254,8 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VolumeGroups_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VolumeGroupsGetMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MaximumSet_Gen.json
@@ -290,7 +284,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -302,9 +296,8 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             }
         }
 
-        // VolumeGroups_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeGroupsGetMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MinimumSet_Gen.json
@@ -337,9 +330,8 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VolumeGroups_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_VolumeGroupsGetMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MinimumSet_Gen.json
@@ -368,9 +360,8 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VolumeGroups_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VolumeGroupsGetMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MinimumSet_Gen.json
@@ -399,7 +390,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

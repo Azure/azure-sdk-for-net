@@ -18,18 +18,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="server"> Server name for connection. Type: string. </param>
         /// <param name="username"> Username for authentication. Type: string. </param>
         /// <param name="database"> Database name for connection. Type: string. </param>
+        /// <param name="authenticationType"> The authentication type to use. Type: string. </param>
         /// <param name="sslMode"> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="server"/>, <paramref name="username"/>, <paramref name="database"/> or <paramref name="sslMode"/> is null. </exception>
-        public PostgreSqlV2LinkedService(DataFactoryElement<string> server, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode)
+        /// <exception cref="ArgumentNullException"> <paramref name="server"/>, <paramref name="username"/>, <paramref name="database"/>, <paramref name="authenticationType"/> or <paramref name="sslMode"/> is null. </exception>
+        public PostgreSqlV2LinkedService(DataFactoryElement<string> server, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<string> authenticationType, DataFactoryElement<int> sslMode)
         {
             Argument.AssertNotNull(server, nameof(server));
             Argument.AssertNotNull(username, nameof(username));
             Argument.AssertNotNull(database, nameof(database));
+            Argument.AssertNotNull(authenticationType, nameof(authenticationType));
             Argument.AssertNotNull(sslMode, nameof(sslMode));
 
             Server = server;
             Username = username;
             Database = database;
+            AuthenticationType = authenticationType;
             SslMode = sslMode;
             LinkedServiceType = "PostgreSqlV2";
         }
@@ -46,6 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="port"> The port for the connection. Type: integer. </param>
         /// <param name="username"> Username for authentication. Type: string. </param>
         /// <param name="database"> Database name for connection. Type: string. </param>
+        /// <param name="authenticationType"> The authentication type to use. Type: string. </param>
         /// <param name="sslMode"> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. </param>
         /// <param name="schema"> Sets the schema search path. Type: string. </param>
         /// <param name="pooling"> Whether connection pooling should be used. Type: boolean. </param>
@@ -61,12 +65,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encoding"> Gets or sets the .NET encoding that will be used to encode/decode PostgreSQL string data. Type: string. </param>
         /// <param name="password"> The Azure key vault secret reference of password in connection string. Type: string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal PostgreSqlV2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode, DataFactoryElement<string> schema, DataFactoryElement<bool> pooling, DataFactoryElement<int> connectionTimeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<string> sslCertificate, DataFactoryElement<string> sslKey, DataFactoryElement<string> sslPassword, DataFactoryElement<int> readBufferSize, DataFactoryElement<bool> logParameters, DataFactoryElement<string> timezone, DataFactoryElement<string> encoding, DataFactoryKeyVaultSecret password, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        internal PostgreSqlV2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<string> authenticationType, DataFactoryElement<int> sslMode, DataFactoryElement<string> schema, DataFactoryElement<bool> pooling, DataFactoryElement<int> connectionTimeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<string> sslCertificate, DataFactoryElement<string> sslKey, DataFactoryElement<string> sslPassword, DataFactoryElement<int> readBufferSize, DataFactoryElement<bool> logParameters, DataFactoryElement<string> timezone, DataFactoryElement<string> encoding, DataFactoryKeyVaultSecret password, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             Port = port;
             Username = username;
             Database = database;
+            AuthenticationType = authenticationType;
             SslMode = sslMode;
             Schema = schema;
             Pooling = pooling;
@@ -98,6 +103,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Database name for connection. Type: string. </summary>
         public DataFactoryElement<string> Database { get; set; }
+        /// <summary> The authentication type to use. Type: string. </summary>
+        public DataFactoryElement<string> AuthenticationType { get; set; }
         /// <summary> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. </summary>
         public DataFactoryElement<int> SslMode { get; set; }
         /// <summary> Sets the schema search path. Type: string. </summary>

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DefenderEasm.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DefenderEasm.Samples
 {
     public partial class Sample_EasmLabelResource
     {
-        // Labels
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_Labels()
         {
             // Generated from example definition: specification/riskiq/resource-manager/Microsoft.Easm/preview/2023-04-01-preview/examples/Labels_GetByWorkspace.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Labels
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_Labels()
         {
             // Generated from example definition: specification/riskiq/resource-manager/Microsoft.Easm/preview/2023-04-01-preview/examples/Labels_Update.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Labels
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_Labels()
         {
             // Generated from example definition: specification/riskiq/resource-manager/Microsoft.Easm/preview/2023-04-01-preview/examples/Labels_Delete.json
@@ -105,7 +103,7 @@ namespace Azure.ResourceManager.DefenderEasm.Samples
             // invoke the operation
             await easmLabel.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

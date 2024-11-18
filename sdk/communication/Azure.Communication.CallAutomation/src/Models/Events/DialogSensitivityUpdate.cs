@@ -26,6 +26,7 @@ namespace Azure.Communication.CallAutomation
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
             DialogId = internalEvent.DialogId;
+            SensitiveMask = internalEvent.SensitiveMask;
         }
 
         /// <summary> Determines the type of the dialog. </summary>
@@ -33,6 +34,9 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Dialog Id</summary>
         public string DialogId { get; }
+
+        /// <summary> SensitiveMask </summary>
+        public bool? SensitiveMask { get; }
 
         /// <summary>
         /// Deserialize <see cref="DialogSensitivityUpdate"/> event.

@@ -11,17 +11,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Avs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
 {
     public partial class Sample_WorkloadNetworkDnsServiceCollection
     {
-        // WorkloadNetworks_ListDnsServices
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_WorkloadNetworksListDnsServices()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_ListDnsServices.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_ListDnsServices.json
             // this example is just showing the usage of "WorkloadNetworks_ListDnsServices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkDnsServiceResource
-            WorkloadNetworkDnsServiceCollection collection = avsPrivateCloud.GetWorkloadNetworkDnsServices();
+            WorkloadNetworkDnsServiceCollection collection = workloadNetwork.GetWorkloadNetworkDnsServices();
 
             // invoke the operation and iterate over the result
             await foreach (WorkloadNetworkDnsServiceResource item in collection.GetAllAsync())
@@ -50,15 +50,14 @@ namespace Azure.ResourceManager.Avs.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // WorkloadNetworks_GetDnsService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkloadNetworksGetDnsService()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetDnsServices.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetDnsService.json
             // this example is just showing the usage of "WorkloadNetworks_GetDnsService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,16 +65,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkDnsServiceResource
-            WorkloadNetworkDnsServiceCollection collection = avsPrivateCloud.GetWorkloadNetworkDnsServices();
+            WorkloadNetworkDnsServiceCollection collection = workloadNetwork.GetWorkloadNetworkDnsServices();
 
             // invoke the operation
             string dnsServiceId = "dnsService1";
@@ -88,12 +87,11 @@ namespace Azure.ResourceManager.Avs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // WorkloadNetworks_GetDnsService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_WorkloadNetworksGetDnsService()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetDnsServices.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetDnsService.json
             // this example is just showing the usage of "WorkloadNetworks_GetDnsService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,16 +99,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkDnsServiceResource
-            WorkloadNetworkDnsServiceCollection collection = avsPrivateCloud.GetWorkloadNetworkDnsServices();
+            WorkloadNetworkDnsServiceCollection collection = workloadNetwork.GetWorkloadNetworkDnsServices();
 
             // invoke the operation
             string dnsServiceId = "dnsService1";
@@ -119,12 +117,11 @@ namespace Azure.ResourceManager.Avs.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // WorkloadNetworks_GetDnsService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_WorkloadNetworksGetDnsService()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetDnsServices.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetDnsService.json
             // this example is just showing the usage of "WorkloadNetworks_GetDnsService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,16 +129,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkDnsServiceResource
-            WorkloadNetworkDnsServiceCollection collection = avsPrivateCloud.GetWorkloadNetworkDnsServices();
+            WorkloadNetworkDnsServiceCollection collection = workloadNetwork.GetWorkloadNetworkDnsServices();
 
             // invoke the operation
             string dnsServiceId = "dnsService1";
@@ -150,7 +147,7 @@ namespace Azure.ResourceManager.Avs.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -162,12 +159,11 @@ namespace Azure.ResourceManager.Avs.Samples
             }
         }
 
-        // WorkloadNetworks_CreateDnsService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_WorkloadNetworksCreateDnsService()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_CreateDnsServices.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_CreateDnsService.json
             // this example is just showing the usage of "WorkloadNetworks_CreateDnsService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,16 +171,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkDnsServiceResource
-            WorkloadNetworkDnsServiceCollection collection = avsPrivateCloud.GetWorkloadNetworkDnsServices();
+            WorkloadNetworkDnsServiceCollection collection = workloadNetwork.GetWorkloadNetworkDnsServices();
 
             // invoke the operation
             string dnsServiceId = "dnsService1";

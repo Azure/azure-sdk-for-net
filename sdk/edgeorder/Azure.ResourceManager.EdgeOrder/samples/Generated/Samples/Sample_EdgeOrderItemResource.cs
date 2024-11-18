@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EdgeOrder.Samples
 {
     public partial class Sample_EdgeOrderItemResource
     {
-        // ListOrderItemsAtSubscriptionLevel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetEdgeOrderItems_ListOrderItemsAtSubscriptionLevel()
         {
             // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/ListOrderItemsAtSubscriptionLevel.json
@@ -45,12 +45,11 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GetOrderItemByName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetOrderItemByName()
         {
             // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/GetOrderItemByName.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteOrderItemByName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteOrderItemByName()
         {
             // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/DeleteOrderItemByName.json
@@ -103,12 +101,11 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
             // invoke the operation
             await edgeOrderItem.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // UpdateOrderItem
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateOrderItem()
         {
             // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/UpdateOrderItem.json
@@ -155,9 +152,8 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CancelOrderItem
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Cancel_CancelOrderItem()
         {
             // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/CancelOrderItem.json
@@ -180,12 +176,11 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
             EdgeOrderItemCancellationReason cancellationReason = new EdgeOrderItemCancellationReason("Order cancelled");
             await edgeOrderItem.CancelAsync(cancellationReason);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ReturnOrderItem
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Return_ReturnOrderItem()
         {
             // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/ReturnOrderItem.json
@@ -208,7 +203,7 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
             EdgeOrderItemReturnContent content = new EdgeOrderItemReturnContent("Order returned");
             await edgeOrderItem.ReturnAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

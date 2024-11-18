@@ -20,50 +20,79 @@ public partial class SignalRCustomCertificate : ProvisionableResource
     /// <summary>
     /// Custom certificate name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Base uri of the KeyVault that stores certificate.
     /// </summary>
-    public BicepValue<Uri> KeyVaultBaseUri { get => _keyVaultBaseUri; set => _keyVaultBaseUri.Assign(value); }
-    private readonly BicepValue<Uri> _keyVaultBaseUri;
+    public BicepValue<Uri> KeyVaultBaseUri 
+    {
+        get { Initialize(); return _keyVaultBaseUri!; }
+        set { Initialize(); _keyVaultBaseUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _keyVaultBaseUri;
 
     /// <summary>
     /// Certificate secret name.
     /// </summary>
-    public BicepValue<string> KeyVaultSecretName { get => _keyVaultSecretName; set => _keyVaultSecretName.Assign(value); }
-    private readonly BicepValue<string> _keyVaultSecretName;
+    public BicepValue<string> KeyVaultSecretName 
+    {
+        get { Initialize(); return _keyVaultSecretName!; }
+        set { Initialize(); _keyVaultSecretName!.Assign(value); }
+    }
+    private BicepValue<string>? _keyVaultSecretName;
 
     /// <summary>
     /// Certificate secret version.
     /// </summary>
-    public BicepValue<string> KeyVaultSecretVersion { get => _keyVaultSecretVersion; set => _keyVaultSecretVersion.Assign(value); }
-    private readonly BicepValue<string> _keyVaultSecretVersion;
+    public BicepValue<string> KeyVaultSecretVersion 
+    {
+        get { Initialize(); return _keyVaultSecretVersion!; }
+        set { Initialize(); _keyVaultSecretVersion!.Assign(value); }
+    }
+    private BicepValue<string>? _keyVaultSecretVersion;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the resource.
     /// </summary>
-    public BicepValue<SignalRProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<SignalRProvisioningState> _provisioningState;
+    public BicepValue<SignalRProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<SignalRProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SignalRService.
     /// </summary>
-    public SignalRService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SignalRService> _parent;
+    public SignalRService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SignalRService>? _parent;
 
     /// <summary>
     /// Creates a new SignalRCustomCertificate.
@@ -78,14 +107,21 @@ public partial class SignalRCustomCertificate : ProvisionableResource
     public SignalRCustomCertificate(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.SignalRService/signalR/customCertificates", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _keyVaultBaseUri = BicepValue<Uri>.DefineProperty(this, "KeyVaultBaseUri", ["properties", "keyVaultBaseUri"], isRequired: true);
-        _keyVaultSecretName = BicepValue<string>.DefineProperty(this, "KeyVaultSecretName", ["properties", "keyVaultSecretName"], isRequired: true);
-        _keyVaultSecretVersion = BicepValue<string>.DefineProperty(this, "KeyVaultSecretVersion", ["properties", "keyVaultSecretVersion"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<SignalRProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SignalRService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SignalRCustomCertificate.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _keyVaultBaseUri = DefineProperty<Uri>("KeyVaultBaseUri", ["properties", "keyVaultBaseUri"], isRequired: true);
+        _keyVaultSecretName = DefineProperty<string>("KeyVaultSecretName", ["properties", "keyVaultSecretName"], isRequired: true);
+        _keyVaultSecretVersion = DefineProperty<string>("KeyVaultSecretVersion", ["properties", "keyVaultSecretVersion"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<SignalRProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SignalRService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

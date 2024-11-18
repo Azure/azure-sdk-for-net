@@ -355,7 +355,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             testProcessor.TestCaseResultHandler(sender, new TestResultEventArgs(testResult));
 
             Assert.AreEqual(0, testProcessor.TestResults.Count);
-            Assert.IsTrue(testProcessor.RawTestResultsMap.Keys.Count == 1);
+            Assert.IsTrue(testProcessor.RawTestResultsMap.Keys.Count == 0);
             Assert.IsTrue(testProcessor.PassedTestCount == 0);
             Assert.IsTrue(testProcessor.FailedTestCount == 0);
             Assert.IsTrue(testProcessor.SkippedTestCount == 0);
@@ -579,6 +579,39 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             serviceClientMock.Verify(c => c.UploadBatchTestResults(It.IsAny<UploadTestResultsRequest>()), Times.Never);
             serviceClientMock.Verify(c => c.PostTestRunShardInfo(It.IsAny<TestRunShardDto>()), Times.Never);
             cloudRunErrorParserMock.Verify(c => c.DisplayMessages(), Times.Exactly(1));
+        }
+        [Test]
+        public void CheckAndRenewSasUri_WhenUriExpired_FetchesNewSasUri()
+        {
+            var loggerMock = new Mock<ILogger>();
+            var dataProcessorMock = new Mock<IDataProcessor>();
+            var consoleWriterMock = new Mock<IConsoleWriter>();
+            var cloudRunErrorParserMock = new Mock<ICloudRunErrorParser>();
+            var serviceClientMock = new Mock<IServiceClient>();
+            var testProcessor = new TestProcessor(_cloudRunMetadata, _cIInfo, loggerMock.Object, dataProcessorMock.Object, cloudRunErrorParserMock.Object, serviceClientMock.Object, consoleWriterMock.Object);
+            var expiredTestResultsSasUri = new TestResultsUri { Uri = "http://example.com", ExpiresAt = DateTime.UtcNow.AddMinutes(-5).ToString(), AccessLevel = AccessLevel.Read };
+            var newTestResultsSasUri = new TestResultsUri { Uri = "http://newexample.com", ExpiresAt = DateTime.UtcNow.AddHours(1).ToString(), AccessLevel = AccessLevel.Read };
+            testProcessor._testResultsSasUri = expiredTestResultsSasUri;
+            serviceClientMock.Setup(sc => sc.GetTestRunResultsUri()).Returns(newTestResultsSasUri);
+            TestResultsUri? result = testProcessor.CheckAndRenewSasUri();
+            Assert.AreEqual(newTestResultsSasUri, result);
+            loggerMock.Verify(l => l.Info(It.IsAny<string>()), Times.AtLeastOnce);
+        }
+        [Test]
+        public void CheckAndRenewSasUri_WhenUriNotExpired_DoesNotFetchNewSasUri()
+        {
+            var loggerMock = new Mock<ILogger>();
+            var dataProcessorMock = new Mock<IDataProcessor>();
+            var consoleWriterMock = new Mock<IConsoleWriter>();
+            var cloudRunErrorParserMock = new Mock<ICloudRunErrorParser>();
+            var serviceClientMock = new Mock<IServiceClient>();
+            var testProcessor = new TestProcessor(_cloudRunMetadata, _cIInfo, loggerMock.Object, dataProcessorMock.Object, cloudRunErrorParserMock.Object, serviceClientMock.Object, consoleWriterMock.Object);
+            var validTestResultsSasUri = new TestResultsUri { Uri = "http://example.com?se=" + DateTime.UtcNow.AddMinutes(15).ToString("o"), ExpiresAt = DateTime.UtcNow.AddMinutes(15).ToString(), AccessLevel = AccessLevel.Read };
+            testProcessor._testResultsSasUri = validTestResultsSasUri;
+            TestResultsUri? result = testProcessor.CheckAndRenewSasUri();
+            Assert.AreEqual(validTestResultsSasUri, result);
+            serviceClientMock.Verify(sc => sc.GetTestRunResultsUri(), Times.Never);
+            loggerMock.Verify(l => l.Info(It.IsAny<string>()), Times.Never);
         }
     }
 }

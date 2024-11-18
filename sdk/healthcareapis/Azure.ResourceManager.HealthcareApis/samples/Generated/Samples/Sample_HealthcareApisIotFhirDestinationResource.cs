@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HealthcareApis.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HealthcareApis.Samples
 {
     public partial class Sample_HealthcareApisIotFhirDestinationResource
     {
-        // Get an IoT Connector destination
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnIoTConnectorDestination()
         {
             // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/iotconnectors/iotconnector_fhirdestination_Get.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update an Iot Connector FHIR destination
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateAnIotConnectorFHIRDestination()
         {
             // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/iotconnectors/iotconnector_fhirdestination_Create.json
@@ -111,9 +110,8 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete an IoT Connector destination
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnIoTConnectorDestination()
         {
             // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/iotconnectors/iotconnector_fhirdestination_Delete.json
@@ -137,7 +135,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             // invoke the operation
             await healthcareApisIotFhirDestination.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

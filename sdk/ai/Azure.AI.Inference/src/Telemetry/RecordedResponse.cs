@@ -68,8 +68,8 @@ namespace Azure.AI.Inference.Telemetry
                 calls[t] = new
                 {
                     id = toolCalls[t].Id,
-                    type = toolCalls[t].Type,
-                    function = toolCalls[t] is ChatCompletionsFunctionToolCall funcCall ?
+                    type = toolCalls[t].Type.ToString(),
+                    function = toolCalls[t] is ChatCompletionsToolCall funcCall ?
                         new { name = funcCall.Name, arguments = traceContent ? funcCall.Arguments : null }
                         : null
                 };

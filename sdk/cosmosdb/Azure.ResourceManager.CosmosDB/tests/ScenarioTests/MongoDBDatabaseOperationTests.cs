@@ -37,9 +37,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public async Task GlobalTeardown()
         {
-            if (_databaseAccountIdentifier != null)
+            if (Mode != RecordedTestMode.Playback)
             {
-                await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).DeleteAsync(WaitUntil.Completed);
+                if (_databaseAccountIdentifier != null)
+                {
+                    await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
@@ -52,12 +55,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await MongoDBDatabaseCollection.ExistsAsync(_databaseName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = MongoDBDatabaseCollection.Id;
-                id = MongoDBDatabaseResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
-                MongoDBDatabaseResource database = this.ArmClient.GetMongoDBDatabaseResource(id);
-                await database.DeleteAsync(WaitUntil.Completed);
+                if (await MongoDBDatabaseCollection.ExistsAsync(_databaseName))
+                {
+                    var id = MongoDBDatabaseCollection.Id;
+                    id = MongoDBDatabaseResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
+                    MongoDBDatabaseResource database = this.ArmClient.GetMongoDBDatabaseResource(id);
+                    await database.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 

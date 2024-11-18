@@ -35,8 +35,6 @@ public abstract class NamedProvisionableConstruct : ProvisionableConstruct
     /// </param>
     protected NamedProvisionableConstruct(string bicepIdentifier)
     {
-        // TODO: In the near future we'll make this optional and only validate
-        // if the value passed in isn't null.
         Infrastructure.ValidateBicepIdentifier(bicepIdentifier, nameof(bicepIdentifier));
         _bicepIdentifier = bicepIdentifier;
     }

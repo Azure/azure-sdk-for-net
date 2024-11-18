@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Grafana.Samples
 {
     public partial class Sample_GrafanaPrivateEndpointConnectionResource
     {
-        // PrivateEndpointConnections_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateEndpointConnectionsGet()
         {
             // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/PrivateEndpointConnections_Get.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.Grafana.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateEndpointConnections_Approve
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PrivateEndpointConnectionsApprove()
         {
             // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/PrivateEndpointConnections_Approve.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.Grafana.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateEndpointConnections_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PrivateEndpointConnectionsDelete()
         {
             // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/PrivateEndpointConnections_Delete.json
@@ -105,7 +103,7 @@ namespace Azure.ResourceManager.Grafana.Samples
             // invoke the operation
             await grafanaPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

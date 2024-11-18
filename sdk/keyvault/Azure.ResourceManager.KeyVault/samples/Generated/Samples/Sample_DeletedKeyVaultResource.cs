@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.KeyVault.Samples
 {
     public partial class Sample_DeletedKeyVaultResource
     {
-        // Retrieve a deleted vault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveADeletedVault()
         {
             // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-07-01/examples/getDeletedVault.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.KeyVault.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Purge a deleted vault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PurgeDeleted_PurgeADeletedVault()
         {
             // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-07-01/examples/purgeDeletedVault.json
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
             // invoke the operation
             await deletedKeyVault.PurgeDeletedAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -36,6 +36,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             RegisterHub(hub.GetType().Name, hub);
         }
 
+        public void RegisterHub<THub>(string hubName) where THub : WebPubSubHub
+        {
+            var hub = Create<THub>();
+            RegisterHub(hubName, hub);
+        }
+
         // For test only
         internal void RegisterHub(string hubName, WebPubSubHub hub)
         {

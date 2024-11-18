@@ -469,15 +469,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 }
 
                 // Log RuntimeInformation if EnableReceiverRuntimeMetric is enabled
-                if (context.LastEnqueuedEventProperties != null)
-                {
-                    writer.WritePropertyName("runtimeInformation");
-                    writer.WriteStartObject();
-                    WritePropertyIfNotNull(writer, "lastEnqueuedOffset", context.LastEnqueuedEventProperties.Offset?.ToString(CultureInfo.InvariantCulture));
-                    WritePropertyIfNotNull(writer, "lastSequenceNumber", context.LastEnqueuedEventProperties.SequenceNumber?.ToString(CultureInfo.InvariantCulture));
-                    WritePropertyIfNotNull(writer, "lastEnqueuedTimeUtc", context.LastEnqueuedEventProperties.EnqueuedTime?.ToString("o", CultureInfo.InvariantCulture));
-                    writer.WriteEndObject();
-                }
+                writer.WritePropertyName("runtimeInformation");
+                writer.WriteStartObject();
+                WritePropertyIfNotNull(writer, "lastEnqueuedOffset", context.LastEnqueuedEventProperties.Offset?.ToString(CultureInfo.InvariantCulture));
+                WritePropertyIfNotNull(writer, "lastSequenceNumber", context.LastEnqueuedEventProperties.SequenceNumber?.ToString(CultureInfo.InvariantCulture));
+                WritePropertyIfNotNull(writer, "lastEnqueuedTimeUtc", context.LastEnqueuedEventProperties.EnqueuedTime?.ToString("o", CultureInfo.InvariantCulture));
+                writer.WriteEndObject();
+
                 writer.WriteEndObject();
 
                 return sw.ToString();

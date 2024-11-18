@@ -91,3 +91,165 @@ function CompatibleConvertFrom-Yaml {
       return ConvertFrom-Yaml $content
   }
 }
+
+<#
+.SYNOPSIS
+Common function that will verify that the YmlFile being loaded exists, load the raw file and
+return the results of CompatibleConvertFrom-Yaml or report an exception and return null if
+there's a problem loading the yml file. The return is the PowerShell HashTable object.
+
+.DESCRIPTION
+Common function that will verify that the YmlFile being loaded exists, load the raw file and
+return the results of CompatibleConvertFrom-Yaml or report an exception and return null if
+there's a problem loading the yml file. This is just to save anyone needing to load yml from
+having to deal with checking the file's existence and ensure that the CompatibleConvertFrom-Yaml
+is made within a try/catch. The return is the PowerShell HashTable object from the
+CompatibleConvertFrom-Yaml call or $null if there was an issue with the convert.
+
+.PARAMETER YmlFile
+The full path of the yml file to load.
+
+.EXAMPLE
+LoadFrom-Yaml -YmlFile path/to/file.yml
+#>
+function LoadFrom-Yaml {
+  param(
+    [Parameter(Mandatory=$true)]
+    [string]$YmlFile
+  )
+  if (Test-Path -Path $YmlFile) {
+    try {
+      return Get-Content -Raw -Path $YmlFile | CompatibleConvertFrom-Yaml
+    }
+    catch {
+      Write-Host "LoadFrom-Yaml::Exception while parsing yml file $($YmlFile): $_"
+    }
+  }
+  else {
+    Write-Host "LoadFrom-Yaml::YmlFile '$YmlFile' does not exist."
+  }
+  return $null
+}
+
+<#
+.SYNOPSIS
+Given the Hashtable contents of a Yml file and an array of strings representing the keys
+return the value if it exist or null if it doesn't.
+
+.DESCRIPTION
+The Yaml file needs to be loaded via CompatibleConvertFrom-Yaml which returns the file as
+as hashtable. The Keys are basically the path in the yaml file whose value to return, or
+null if it doesn't exist. This function safely traverses the path, outputting an error
+if there's an issue or returning the object representing the result if successful. This
+function loops through the Keys safely trying to get values, checking each piece of the
+path to ensure it exists. Normally one would just do
+$Yml["extends"]["parameters"]["artifacts"]
+but if something was off it would throw. Doing it this way allows more succinct error
+reporting if a piece of the path didn't exist
+
+.PARAMETER YamlContentAsHashtable
+The hashtable representing the yaml file contents loaded through LoadFrom-Yaml
+or CompatibleConvertFrom-Yaml, which is what LoadFrom-Yaml calls.
+
+.PARAMETER Keys
+String array representation of the path in the yaml file whose value we're trying to retrieve.
+
+.EXAMPLE
+GetValueSafelyFrom-Yaml -YamlContentAsHashtable $YmlFileContent -Keys @("extends", "parameters", "Artifacts")
+#>
+function GetValueSafelyFrom-Yaml {
+  param(
+    [Parameter(Mandatory=$true)]
+    $YamlContentAsHashtable,
+    [Parameter(Mandatory=$true)]
+    [string[]]$Keys
+  )
+  $current = $YamlContentAsHashtable
+  foreach ($key in $Keys) {
+      if ($current.ContainsKey($key) -or $current[$key]) {
+        $current = $current[$key]
+      }
+      else {
+        return $null
+      }
+  }
+
+  return [object]$current
+}
+
+function Get-ObjectKey {
+  param (
+    [Parameter(Mandatory = $true)]
+    [object]$Object
+  )
+
+  if (-not $Object) {
+    return "unset"
+  }
+
+  if ($Object -is [hashtable] -or $Object -is [System.Collections.Specialized.OrderedDictionary]) {
+    $sortedEntries = $Object.GetEnumerator() | Sort-Object Name
+    $hashString = ($sortedEntries | ForEach-Object { "$($_.Key)=$($_.Value)" }) -join ";"
+    return $hashString.GetHashCode()
+  }
+
+  elseif ($Object -is [PSCustomObject]) {
+    $sortedProperties = $Object.PSObject.Properties | Sort-Object Name
+    $propertyString = ($sortedProperties | ForEach-Object { "$($_.Name)=$($_.Value)" }) -join ";"
+    return $propertyString.GetHashCode()
+  }
+
+  elseif ($Object -is [array]) {
+    $arrayString = ($Object | ForEach-Object { Get-ObjectKey $_ }) -join ";"
+    return $arrayString.GetHashCode()
+  }
+
+  else {
+    return $Object.GetHashCode()
+  }
+}
+
+function Group-ByObjectKey {
+  param (
+    [Parameter(Mandatory)]
+    [array]$Items,
+
+    [Parameter(Mandatory)]
+    [string]$GroupByProperty
+  )
+
+  $groupedDictionary = @{}
+
+  foreach ($item in $Items) {
+    $key = Get-ObjectKey $item."$GroupByProperty"
+
+    if (-not $groupedDictionary.ContainsKey($key)) {
+      $groupedDictionary[$key] = @()
+    }
+
+    # Add the current item to the array for this key
+    $groupedDictionary[$key] += $item
+  }
+
+  return $groupedDictionary
+}
+
+function Split-ArrayIntoBatches {
+  param (
+    [Parameter(Mandatory = $true)]
+    [Object[]]$InputArray,
+
+    [Parameter(Mandatory = $true)]
+    [int]$BatchSize
+  )
+
+  $batches = @()
+
+  for ($i = 0; $i -lt $InputArray.Count; $i += $BatchSize) {
+    $batch = $InputArray[$i..[math]::Min($i + $BatchSize - 1, $InputArray.Count - 1)]
+
+    $batches += , $batch
+  }
+
+  return , $batches
+}

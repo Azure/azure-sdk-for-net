@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EventGrid.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Samples
 {
     public partial class Sample_EventGridNamespacePermissionBindingCollection
     {
-        // PermissionBindings_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PermissionBindingsGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PermissionBindings_Get.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PermissionBindings_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_PermissionBindingsGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PermissionBindings_Get.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PermissionBindings_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PermissionBindingsGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PermissionBindings_Get.json
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -124,9 +122,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             }
         }
 
-        // PermissionBindings_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PermissionBindingsCreateOrUpdate()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PermissionBindings_CreateOrUpdate.json
@@ -166,9 +163,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PermissionBindings_ListByNamespace
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_PermissionBindingsListByNamespace()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PermissionBindings_ListByNamespace.json
@@ -200,7 +196,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

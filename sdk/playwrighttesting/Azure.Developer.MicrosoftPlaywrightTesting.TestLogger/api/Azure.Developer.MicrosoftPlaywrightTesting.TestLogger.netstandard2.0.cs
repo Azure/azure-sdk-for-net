@@ -8,9 +8,12 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger
     }
     public partial class PlaywrightService
     {
-        public PlaywrightService(Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.PlaywrightServiceOptions playwrightServiceOptions, Azure.Core.TokenCredential? credential = null) { }
-        public PlaywrightService(System.Runtime.InteropServices.OSPlatform? os = default(System.Runtime.InteropServices.OSPlatform?), string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = default(bool?), Azure.Core.TokenCredential? credential = null) { }
+        public PlaywrightService(Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.PlaywrightServiceOptions playwrightServiceOptions, Azure.Core.TokenCredential? credential = null, Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface.IFrameworkLogger? frameworkLogger = null) { }
+        public PlaywrightService(System.Runtime.InteropServices.OSPlatform? os = default(System.Runtime.InteropServices.OSPlatform?), string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = default(bool?), Azure.Core.TokenCredential? credential = null, Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface.IFrameworkLogger? frameworkLogger = null) { }
+        public string? ExposeNetwork { get { throw null; } set { } }
+        public System.Runtime.InteropServices.OSPlatform? Os { get { throw null; } set { } }
         public System.Threading.Timer? RotationTimer { get { throw null; } set { } }
+        public string? RunId { get { throw null; } set { } }
         public string ServiceAuth { get { throw null; } set { } }
         public static string? ServiceEndpoint { get { throw null; } }
         public bool UseCloudHostedBrowsers { get { throw null; } set { } }
@@ -29,8 +32,10 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger
         public static readonly string EnableResultPublish;
         public static readonly string ExposeNetwork;
         public static readonly string ManagedIdentityClientId;
+        public static readonly string NumberOfTestWorkers;
         public static readonly string Os;
         public static readonly string RunId;
+        public static readonly string RunName;
         public static readonly string ServiceAuthType;
         public static readonly string UseCloudHostedBrowsers;
         public RunSettingKey() { }
@@ -60,5 +65,15 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Client
         {
             V2024_09_01_Preview = 1,
         }
+    }
+}
+namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface
+{
+    public partial interface IFrameworkLogger
+    {
+        void Debug(string message);
+        void Error(string message);
+        void Info(string message);
+        void Warning(string message);
     }
 }

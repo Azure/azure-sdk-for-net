@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DeviceUpdate.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DeviceUpdate.Samples
 {
     public partial class Sample_DeviceUpdatePrivateEndpointConnectionProxyResource
     {
-        // PrivateEndpointConnectionProxyValidate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Validate_PrivateEndpointConnectionProxyValidate()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/PrivateEndpointConnectionProxies/PrivateEndpointConnectionProxy_Validate.json
@@ -72,12 +72,11 @@ GroupConnectivityInformation =
             };
             await deviceUpdatePrivateEndpointConnectionProxy.ValidateAsync(data);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PrivateEndpointConnectionProxyPrivateEndpointUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdatePrivateEndpointProperties_PrivateEndpointConnectionProxyPrivateEndpointUpdate()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/PrivateEndpointConnectionProxies/PrivateEndpointConnectionProxy_PrivateEndpointUpdate.json
@@ -108,12 +107,11 @@ GroupConnectivityInformation =
             };
             await deviceUpdatePrivateEndpointConnectionProxy.UpdatePrivateEndpointPropertiesAsync(privateEndpointUpdate);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PrivateEndpointConnectionProxyGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateEndpointConnectionProxyGet()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/PrivateEndpointConnectionProxies/PrivateEndpointConnectionProxy_Get.json
@@ -143,9 +141,8 @@ GroupConnectivityInformation =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateEndpointConnectionProxyCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PrivateEndpointConnectionProxyCreateOrUpdate()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/PrivateEndpointConnectionProxies/PrivateEndpointConnectionProxy_CreateOrUpdate.json
@@ -208,9 +205,8 @@ GroupConnectivityInformation =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateEndpointConnectionProxyDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PrivateEndpointConnectionProxyDelete()
         {
             // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/PrivateEndpointConnectionProxies/PrivateEndpointConnectionProxy_Delete.json
@@ -233,7 +229,7 @@ GroupConnectivityInformation =
             // invoke the operation
             await deviceUpdatePrivateEndpointConnectionProxy.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

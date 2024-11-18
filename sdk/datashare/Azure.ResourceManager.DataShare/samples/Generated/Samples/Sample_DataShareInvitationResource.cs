@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataShare.Samples
 {
     public partial class Sample_DataShareInvitationResource
     {
-        // Invitations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_InvitationsGet()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Invitations_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Invitations_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_InvitationsCreate()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Invitations_Create.json
@@ -86,9 +85,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Invitations_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_InvitationsDelete()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Invitations_Delete.json
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.DataShare.Samples
             // invoke the operation
             await dataShareInvitation.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

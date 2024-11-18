@@ -22,7 +22,11 @@ public class MockStringServiceTests : RecordedClientTestBase
         RecordingOptions.SanitizersToRemove.Add("AZSDK3430");  // $..id
     }
 
-    public DirectoryInfo RepositoryRoot { get; } = FindRepoRoot();
+    public DirectoryInfo RepositoryRoot { get; } = FindFirstParentWithSubfolders(".git")
+        ?? throw new InvalidOperationException("Could not find your Git repository root folder");
+
+    public DirectoryInfo SourceRoot { get; } = FindFirstParentWithSubfolders("eng", "sdk")
+        ?? throw new InvalidOperationException("Could not find your source root folder");
 
     [Test]
     public async Task AddAndGet()
@@ -71,7 +75,7 @@ public class MockStringServiceTests : RecordedClientTestBase
             DotnetExecutable = AssemblyHelper.GetDotnetExecutable()?.FullName!,
             TestProxyDll = AssemblyHelper.GetAssemblyMetadata<ProxyService>("TestProxyPath")!,
             DevCertFile = Path.Combine(
-                RepositoryRoot.FullName,
+                SourceRoot.FullName,
                 "eng",
                 "common",
                 "testproxy",
@@ -91,25 +95,27 @@ public class MockStringServiceTests : RecordedClientTestBase
 
     #region helper methods
 
-    private static DirectoryInfo FindRepoRoot()
+    private static DirectoryInfo? FindFirstParentWithSubfolders(params string[] subFolders)
     {
-        /**
-         * This code assumes that we are running in the standard Azure .Net SDK repository layout. With this in mind, 
-         * we generally assume that we are running our test code from
-         * <root>/artifacts/bin/<NameOfProject>/<Configuration>/<TargetFramework>
-         * So to find the root we keep navigating up until we find a folder with a .git subfolder
-         * 
-         * Another alternative would be to call: git rev-parse --show-toplevel
-         */
-
-        DirectoryInfo? current = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory;
-        while (current != null && !current.EnumerateDirectories(".git").Any())
+        if (subFolders == null || subFolders.Length == 0)
         {
-            current = current.Parent;
+            return null;
         }
 
-        return current
-            ?? throw new InvalidOperationException("Could not determine the root folder for this repository");
+        DirectoryInfo? start = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory;
+        for (DirectoryInfo? current = start; current != null; current = current.Parent)
+        {
+            if (!current.Exists)
+            {
+                return null;
+            }
+            else if (subFolders.All(sub => current.EnumerateDirectories(sub).Any()))
+            {
+                return current;
+            }
+        }
+
+        return null;
     }
 
     private string GetRecordingFile()

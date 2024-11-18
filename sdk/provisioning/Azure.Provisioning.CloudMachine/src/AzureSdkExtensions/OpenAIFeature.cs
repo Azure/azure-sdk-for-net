@@ -1,36 +1,25 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using System;
-using System.ClientModel;
-using Azure.AI.OpenAI;
-using Azure.Core;
+using System.Collections.Generic;
 using Azure.Provisioning.Authorization;
+using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
-using OpenAI.Chat;
+using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.CloudMachine.OpenAI;
+namespace Azure.CloudMachine.OpenAI;
 
-public class OpenAIFeature : CloudMachineFeature
+internal class OpenAIFeature : CloudMachineFeature
 {
-    public string Model { get; }
-    public string ModelVersion { get; }
+    private List<OpenAIModel> _models = new List<OpenAIModel>();
 
-    public OpenAIFeature(string model, string modelVersion) {  Model = model; ModelVersion = modelVersion; }
+    public OpenAIFeature()
+    {}
 
-    public override void AddTo(CloudMachineInfrastructure cloudMachine)
+    protected override ProvisionableResource EmitCore(CloudMachineInfrastructure cloudMachine)
     {
-        CognitiveServicesAccount cognitiveServices = new("openai")
-        {
-            Name = cloudMachine.Id,
-            Kind = "OpenAI",
-            Sku = new CognitiveServicesSku { Name = "S0" },
-            Properties = new CognitiveServicesAccountProperties()
-            {
-                PublicNetworkAccess = ServiceAccountPublicNetworkAccess.Enabled,
-                CustomSubDomainName = cloudMachine.Id
-            },
-        };
+        CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(cloudMachine);
+        cloudMachine.AddResource(cognitiveServices);
 
         cloudMachine.AddResource(cognitiveServices.CreateRoleAssignment(
             CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor,
@@ -38,57 +27,44 @@ public class OpenAIFeature : CloudMachineFeature
             cloudMachine.PrincipalIdParameter)
         );
 
-        // TODO: if we every support more than one deployment, they need to be chained using DependsOn.
-        // The reason is that deployments need to be deployed/created serially.
-        CognitiveServicesAccountDeployment deployment = new("openai_deployment", "2023-05-01")
+        Emitted = cognitiveServices;
+
+        OpenAIModel? previous = null;
+        foreach (OpenAIModel model in _models)
         {
-            Parent = cognitiveServices,
-            Name = cloudMachine.Id,
-            Properties = new CognitiveServicesAccountDeploymentProperties()
+            model.Emit(cloudMachine);
+            if (previous != null)
             {
-                Model = new CognitiveServicesAccountDeploymentModel() {
-                    Name = this.Model,
-                    Format = "OpenAI",
-                    Version = this.ModelVersion
-                }
+                model.Emitted.DependsOn.Add(previous.Emitted);
+            }
+            previous = model;
+        }
+
+        return cognitiveServices;
+    }
+
+    internal void AddModel(OpenAIModel model)
+    {
+        if (model.Account!= null)
+        {
+            throw new InvalidOperationException("Model already added to an account");
+        }
+        model.Account = this;
+        _models.Add(model);
+    }
+
+    internal CognitiveServicesAccount CreateOpenAIAccount(CloudMachineInfrastructure cm)
+    {
+        return new("openai")
+        {
+            Name = cm.Id,
+            Kind = "OpenAI",
+            Sku = new CognitiveServicesSku { Name = "S0" },
+            Properties = new CognitiveServicesAccountProperties()
+            {
+                PublicNetworkAccess = ServiceAccountPublicNetworkAccess.Enabled,
+                CustomSubDomainName = cm.Id
             },
         };
-
-        cloudMachine.AddResource(cognitiveServices);
-        cloudMachine.AddResource(deployment);
-    }
-}
-
-public static class AzureOpenAIExtensions
-{
-    public static ChatClient GetOpenAIChatClient(this ClientWorkspace workspace)
-    {
-        ChatClient chatClient = workspace.Subclients.Get(() =>
-        {
-            AzureOpenAIClient aoiaClient = workspace.Subclients.Get(() => CreateAzureOpenAIClient(workspace));
-            return workspace.CreateChatClient(aoiaClient);
-        });
-
-        return chatClient;
-    }
-
-    private static AzureOpenAIClient CreateAzureOpenAIClient(this ClientWorkspace workspace)
-    {
-        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(AzureOpenAIClient));
-        if (connection.ConnectionKind == ClientConnectionKind.EntraId)
-        {
-            return new(connection.Endpoint, connection.TokenCredential);
-        }
-        else
-        {
-            return  new(connection.Endpoint, new ApiKeyCredential(connection.ApiKeyCredential!));
-        }
-    }
-
-    private static ChatClient CreateChatClient(this ClientWorkspace workspace, AzureOpenAIClient client)
-    {
-        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(ChatClient));
-        ChatClient chat = client.GetChatClient(connection.Id);
-        return chat;
     }
 }

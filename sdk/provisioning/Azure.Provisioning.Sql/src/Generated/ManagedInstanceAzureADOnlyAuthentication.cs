@@ -20,32 +20,49 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : ProvisionableRes
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Azure Active Directory only Authentication enabled.
     /// </summary>
-    public BicepValue<bool> IsAzureADOnlyAuthenticationEnabled { get => _isAzureADOnlyAuthenticationEnabled; set => _isAzureADOnlyAuthenticationEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isAzureADOnlyAuthenticationEnabled;
+    public BicepValue<bool> IsAzureADOnlyAuthenticationEnabled 
+    {
+        get { Initialize(); return _isAzureADOnlyAuthenticationEnabled!; }
+        set { Initialize(); _isAzureADOnlyAuthenticationEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAzureADOnlyAuthenticationEnabled;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ManagedInstance.
     /// </summary>
-    public ManagedInstance? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ManagedInstance> _parent;
+    public ManagedInstance? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
     /// Creates a new ManagedInstanceAzureADOnlyAuthentication.
@@ -61,11 +78,19 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : ProvisionableRes
     public ManagedInstanceAzureADOnlyAuthentication(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/managedInstances/azureADOnlyAuthentications", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _isAzureADOnlyAuthenticationEnabled = BicepValue<bool>.DefineProperty(this, "IsAzureADOnlyAuthenticationEnabled", ["properties", "azureADOnlyAuthentication"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ManagedInstance>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ManagedInstanceAzureADOnlyAuthentication.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _isAzureADOnlyAuthenticationEnabled = DefineProperty<bool>("IsAzureADOnlyAuthenticationEnabled", ["properties", "azureADOnlyAuthentication"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ManagedInstance>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

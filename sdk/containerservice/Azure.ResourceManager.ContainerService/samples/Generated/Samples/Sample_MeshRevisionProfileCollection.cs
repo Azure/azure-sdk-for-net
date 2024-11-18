@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerService.Samples
 {
     public partial class Sample_MeshRevisionProfileCollection
     {
-        // List mesh revision profiles in a location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListMeshRevisionProfilesInALocation()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersList_MeshRevisionProfiles.json
@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.ContainerService.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a mesh revision profile for a mesh mode
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAMeshRevisionProfileForAMeshMode()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersGet_MeshRevisionProfile.json
@@ -85,9 +84,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a mesh revision profile for a mesh mode
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAMeshRevisionProfileForAMeshMode()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersGet_MeshRevisionProfile.json
@@ -115,9 +113,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a mesh revision profile for a mesh mode
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAMeshRevisionProfileForAMeshMode()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersGet_MeshRevisionProfile.json
@@ -145,7 +142,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

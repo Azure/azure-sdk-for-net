@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Billing.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingProfileResource
     {
-        // AvailableBalanceGetByBillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingProfileAvailableBalance_AvailableBalanceGetByBillingProfile()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/availableBalanceGetByBillingProfile.json
@@ -41,9 +41,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BillingPermissionsListByBillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingPermissions_BillingPermissionsListByBillingProfile()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingPermissionsListByBillingProfile.json
@@ -67,12 +66,11 @@ namespace Azure.ResourceManager.Billing.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CheckAccessByBillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckAccessBillingPermissions_CheckAccessByBillingProfile()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/checkAccessByBillingProfile.json
@@ -103,12 +101,11 @@ namespace Azure.ResourceManager.Billing.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BillingProfilesValidateDeleteEligibilityFailure
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateDeleteEligibility_BillingProfilesValidateDeleteEligibilityFailure()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingProfilesValidateDeleteEligibilityFailure.json
@@ -132,9 +129,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BillingProfilesValidateDeleteEligibilitySuccess
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateDeleteEligibility_BillingProfilesValidateDeleteEligibilitySuccess()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingProfilesValidateDeleteEligibilitySuccess.json
@@ -158,9 +154,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BillingProfilesDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_BillingProfilesDelete()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingProfilesDelete.json
@@ -181,12 +176,11 @@ namespace Azure.ResourceManager.Billing.Samples
             // invoke the operation
             await billingProfile.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BillingProfilesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BillingProfilesGet()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingProfilesGet.json
@@ -214,9 +208,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingProfilesCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_BillingProfilesCreateOrUpdate()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingProfilesCreateOrUpdate.json
@@ -292,9 +285,8 @@ SkuId = "0002",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingRequestsListByBillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingRequests_BillingRequestsListByBillingProfile()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRequestsListByBillingProfile.json
@@ -323,12 +315,11 @@ SkuId = "0002",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BillingRoleAssignmentCreateByBillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateByBillingProfileBillingRoleAssignment_BillingRoleAssignmentCreateByBillingProfile()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRoleAssignmentCreateByBillingProfile.json
@@ -360,9 +351,8 @@ SkuId = "0002",
             Console.WriteLine($"Succeeded on id: {result.Id}");
         }
 
-        // ResolveBillingRoleAssignmentByBillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResolveByBillingProfileBillingRoleAssignment_ResolveBillingRoleAssignmentByBillingProfile()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/resolveBillingRoleAssignmentByBillingProfile.json
@@ -387,9 +377,8 @@ SkuId = "0002",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // InvoicesListByBillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetInvoices_InvoicesListByBillingProfile()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoicesListByBillingProfile.json
@@ -415,12 +404,11 @@ SkuId = "0002",
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ProductsListByBillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetProducts_ProductsListByBillingProfile()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/productsListByBillingProfile.json
@@ -449,12 +437,11 @@ SkuId = "0002",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ReservationsListByBillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReservations_ReservationsListByBillingProfile()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/reservationsListByBillingProfile.json
@@ -483,12 +470,11 @@ SkuId = "0002",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // TransactionsListByBillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTransactions_TransactionsListByBillingProfile()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/transactionsListByBillingProfile.json
@@ -513,7 +499,7 @@ SkuId = "0002",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

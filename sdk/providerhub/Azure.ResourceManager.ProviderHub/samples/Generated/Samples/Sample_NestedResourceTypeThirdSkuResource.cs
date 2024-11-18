@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ProviderHub.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ProviderHub.Samples
 {
     public partial class Sample_NestedResourceTypeThirdSkuResource
     {
-        // Skus_GetNestedResourceTypeThird
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SkusGetNestedResourceTypeThird()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_GetNestedResourceTypeThird.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Skus_CreateOrUpdateNestedResourceTypeThird
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SkusCreateOrUpdateNestedResourceTypeThird()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_CreateOrUpdateNestedResourceTypeThird.json
@@ -105,9 +104,8 @@ new ResourceTypeSkuCost("xxx")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Skus_DeleteNestedResourceTypeThird
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SkusDeleteNestedResourceTypeThird()
         {
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_DeleteNestedResourceTypeThird.json
@@ -133,7 +131,7 @@ new ResourceTypeSkuCost("xxx")
             // invoke the operation
             await nestedResourceTypeThirdSku.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

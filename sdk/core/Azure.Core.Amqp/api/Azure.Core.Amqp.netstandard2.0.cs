@@ -8,7 +8,7 @@ namespace Azure.Core.Amqp
         public AmqpAddress(string address) { throw null; }
         public bool Equals(Azure.Core.Amqp.AmqpAddress other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
         public bool Equals(string other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
@@ -65,7 +65,7 @@ namespace Azure.Core.Amqp
         public AmqpMessageId(string messageId) { throw null; }
         public bool Equals(Azure.Core.Amqp.AmqpMessageId other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
         public bool Equals(string other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }

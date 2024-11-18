@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Support.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Support.Samples
 {
     public partial class Sample_SubscriptionSupportTicketCollection
     {
-        // List support tickets created on or after a certain date and in open state for a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSupportTicketsCreatedOnOrAfterACertainDateAndInOpenStateForASubscription()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/ListSupportTicketsCreatedOnOrAfterAndInOpenStateBySubscription.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.Support.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List support tickets created on or after a certain date and in updating state for a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSupportTicketsCreatedOnOrAfterACertainDateAndInUpdatingStateForASubscription()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/ListSupportTicketsCreatedOnOrAfterAndInUpdatingStateBySubscription.json
@@ -85,12 +84,11 @@ namespace Azure.ResourceManager.Support.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List support tickets for a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSupportTicketsForASubscription()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/ListSupportTicketsBySubscription.json
@@ -120,12 +118,11 @@ namespace Azure.ResourceManager.Support.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List support tickets in open state for a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSupportTicketsInOpenStateForASubscription()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/ListSupportTicketsInOpenStateBySubscription.json
@@ -156,12 +153,11 @@ namespace Azure.ResourceManager.Support.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List support tickets in updating state for a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSupportTicketsInUpdatingStateForASubscription()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/ListSupportTicketsInUpdatingStateBySubscription.json
@@ -192,12 +188,11 @@ namespace Azure.ResourceManager.Support.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List support tickets with a certain problem classification id for a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSupportTicketsWithACertainProblemClassificationIdForASubscription()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/ListSupportTicketsProblemClassificationIdEqualsForSubscription.json
@@ -228,12 +223,11 @@ namespace Azure.ResourceManager.Support.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List support tickets with a certain service id for a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSupportTicketsWithACertainServiceIdForASubscription()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/ListSupportTicketsServiceIdEqualsForSubscription.json
@@ -264,12 +258,11 @@ namespace Azure.ResourceManager.Support.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get details of a subscription ticket
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDetailsOfASubscriptionTicket()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetSubscriptionSupportTicketDetails.json
@@ -300,9 +293,8 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get details of a subscription ticket
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetDetailsOfASubscriptionTicket()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetSubscriptionSupportTicketDetails.json
@@ -329,9 +321,8 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get details of a subscription ticket
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetDetailsOfASubscriptionTicket()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetSubscriptionSupportTicketDetails.json
@@ -358,7 +349,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -370,9 +361,8 @@ namespace Azure.ResourceManager.Support.Samples
             }
         }
 
-        // Create a ticket for Billing related issues
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketForBillingRelatedIssues()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateBillingSupportTicketForSubscription.json
@@ -409,9 +399,8 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket for Subscription Management related issues for a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketForSubscriptionManagementRelatedIssuesForASubscription()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateSubMgmtSupportTicketForSubscription.json
@@ -448,9 +437,8 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket for Technical issue related to a specific resource for a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketForTechnicalIssueRelatedToASpecificResourceForASubscription()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateTechnicalSupportTicketForSubscription.json
@@ -497,9 +485,8 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket to request Quota increase for Active Jobs and Job Schedules for a Batch account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForActiveJobsAndJobSchedulesForABatchAccount()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateBatchQuotaTicketForSpecificBatchAccountForActiveJobs.json
@@ -548,9 +535,8 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"Jobs\"}",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket to request Quota increase for Azure SQL managed instance
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForAzureSQLManagedInstance()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateSqlManagedInstanceQuotaTicket.json
@@ -603,9 +589,8 @@ Payload = "{\"NewLimit\":200, \"Metadata\":null, \"Type\":\"Subnet\"}",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket to request Quota increase for Batch accounts for a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForBatchAccountsForASubscription()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateBatchQuotaTicketForSubscription.json
@@ -654,9 +639,8 @@ Payload = "{\"NewLimit\":200,\"Type\":\"Account\"}",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket to request Quota increase for Compute VM Cores
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForComputeVMCores()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateCoresQuotaTicketForSubscription.json
@@ -704,9 +688,8 @@ Payload = "{\"SKU\":\"DSv3 Series\",\"NewLimit\":104}",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket to request Quota increase for DTUs for Azure Synapse Analytics
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForDTUsForAzureSynapseAnalytics()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateSqlDatawarehouseQuotaTicketForDTUs.json
@@ -755,9 +738,8 @@ Payload = "{\"ServerName\":\"testserver\",\"NewLimit\":54000}",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket to request Quota increase for DTUs for SQL Database
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForDTUsForSQLDatabase()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateSqlDatabaseQuotaTicketForDTUs.json
@@ -806,9 +788,8 @@ Payload = "{\"ServerName\":\"testserver\",\"NewLimit\":54000}",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket to request Quota increase for Low-priority cores for Machine Learning service
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForLowPriorityCoresForMachineLearningService()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateMachineLearningQuotaTicketForLowPriorityCores.json
@@ -857,9 +838,8 @@ Payload = "{\"NewLimit\":200,\"Type\":\"LowPriority\"}",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket to request Quota increase for Low-priority cores for a Batch account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForLowPriorityCoresForABatchAccount()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateBatchQuotaTicketForSpecificBatchAccountForLowPriorityCores.json
@@ -908,9 +888,8 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"LowPriority\"}"
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket to request Quota increase for Pools for a Batch account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForPoolsForABatchAccount()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateBatchQuotaTicketForSpecificBatchAccountForPools.json
@@ -959,9 +938,8 @@ Payload = "{\"AccountName\":\"test\",\"NewLimit\":200,\"Type\":\"Pools\"}",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket to request Quota increase for Servers for Azure Synapse Analytics
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForServersForAzureSynapseAnalytics()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateSqlDatawarehouseQuotaTicketForServers.json
@@ -1010,9 +988,8 @@ Payload = "{\"NewLimit\":200}",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket to request Quota increase for Servers for SQL Database
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForServersForSQLDatabase()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateSqlDatabaseQuotaTicketForServers.json
@@ -1061,9 +1038,8 @@ Payload = "{\"NewLimit\":200}",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket to request Quota increase for services that do not require additional details in the quotaTicketDetails object
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForServicesThatDoNotRequireAdditionalDetailsInTheQuotaTicketDetailsObject()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateGenericQuotaTicket.json
@@ -1096,9 +1072,8 @@ Payload = "{\"NewLimit\":200}",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket to request Quota increase for specific VM family cores for Machine Learning service
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForSpecificVMFamilyCoresForMachineLearningService()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateMachineLearningQuotaTicketForDedicatedCores.json
@@ -1147,9 +1122,8 @@ Payload = "{\"VMFamily\":\"standardA0_A7Family\",\"NewLimit\":200,\"Type\":\"Ded
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a ticket to request Quota increase for specific VM family cores for a Batch account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateATicketToRequestQuotaIncreaseForSpecificVMFamilyCoresForABatchAccount()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateBatchQuotaTicketForSpecificBatchAccountForDedicatedCores.json

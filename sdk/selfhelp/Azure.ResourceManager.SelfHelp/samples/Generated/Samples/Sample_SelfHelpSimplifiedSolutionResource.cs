@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SelfHelp.Samples
 {
     public partial class Sample_SelfHelpSimplifiedSolutionResource
     {
-        // Solution_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SolutionCreate()
         {
             // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/SimplifiedSolutions_Create.json
@@ -53,9 +53,8 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Solution_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SolutionGet()
         {
             // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/SimplifiedSolutions_Get.json

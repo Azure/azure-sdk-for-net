@@ -21,28 +21,41 @@ public partial class TagResource : ProvisionableResource
     /// <summary>
     /// The name of the resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Dictionary of &lt;string&gt;.
     /// </summary>
-    public BicepDictionary<string> TagValues { get => _tagValues; set => _tagValues.Assign(value); }
-    private readonly BicepDictionary<string> _tagValues;
+    public BicepDictionary<string> TagValues 
+    {
+        get { Initialize(); return _tagValues!; }
+        set { Initialize(); _tagValues!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tagValues;
 
     /// <summary>
     /// Fully qualified resource ID for the resource. Ex -
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Azure Resource Manager metadata containing createdBy and modifiedBy
     /// information.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new TagResource.
@@ -57,10 +70,17 @@ public partial class TagResource : ProvisionableResource
     public TagResource(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Resources/tags", resourceVersion ?? "2023-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _tagValues = BicepDictionary<string>.DefineProperty(this, "TagValues", ["properties", "tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of TagResource.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _tagValues = DefineDictionaryProperty<string>("TagValues", ["properties", "tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>

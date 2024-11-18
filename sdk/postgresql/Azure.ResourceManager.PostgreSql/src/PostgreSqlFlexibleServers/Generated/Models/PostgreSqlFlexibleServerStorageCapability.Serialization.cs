@@ -42,10 +42,30 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("supportedIops"u8);
                 writer.WriteNumberValue(SupportedIops.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(SupportedMaximumIops))
+            {
+                writer.WritePropertyName("supportedMaximumIops"u8);
+                writer.WriteNumberValue(SupportedMaximumIops.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(StorageSizeInMB))
             {
                 writer.WritePropertyName("storageSizeMb"u8);
                 writer.WriteNumberValue(StorageSizeInMB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaximumStorageSizeMb))
+            {
+                writer.WritePropertyName("maximumStorageSizeMb"u8);
+                writer.WriteNumberValue(MaximumStorageSizeMb.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SupportedThroughput))
+            {
+                writer.WritePropertyName("supportedThroughput"u8);
+                writer.WriteNumberValue(SupportedThroughput.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SupportedMaximumThroughput))
+            {
+                writer.WritePropertyName("supportedMaximumThroughput"u8);
+                writer.WriteNumberValue(SupportedMaximumThroughput.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(DefaultIopsTier))
             {
@@ -85,7 +105,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             long? supportedIops = default;
+            int? supportedMaximumIops = default;
             long? storageSizeMb = default;
+            long? maximumStorageSizeMb = default;
+            int? supportedThroughput = default;
+            int? supportedMaximumThroughput = default;
             string defaultIopsTier = default;
             IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers = default;
             PostgreSqlFlexbileServerCapabilityStatus? status = default;
@@ -103,6 +127,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedIops = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("supportedMaximumIops"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportedMaximumIops = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("storageSizeMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -110,6 +143,33 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         continue;
                     }
                     storageSizeMb = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("maximumStorageSizeMb"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maximumStorageSizeMb = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("supportedThroughput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportedThroughput = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("supportedMaximumThroughput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportedMaximumThroughput = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("defaultIopsTier"u8))
@@ -156,7 +216,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 reason,
                 serializedAdditionalRawData,
                 supportedIops,
+                supportedMaximumIops,
                 storageSizeMb,
+                maximumStorageSizeMb,
+                supportedThroughput,
+                supportedMaximumThroughput,
                 defaultIopsTier,
                 supportedIopsTiers ?? new ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability>());
         }
@@ -187,6 +251,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMaximumIops), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedMaximumIops: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedMaximumIops))
+                {
+                    builder.Append("  supportedMaximumIops: ");
+                    builder.AppendLine($"{SupportedMaximumIops.Value}");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageSizeInMB), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -199,6 +278,51 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     builder.Append("  storageSizeMb: ");
                     builder.AppendLine($"'{StorageSizeInMB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumStorageSizeMb), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximumStorageSizeMb: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumStorageSizeMb))
+                {
+                    builder.Append("  maximumStorageSizeMb: ");
+                    builder.AppendLine($"'{MaximumStorageSizeMb.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedThroughput), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedThroughput: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedThroughput))
+                {
+                    builder.Append("  supportedThroughput: ");
+                    builder.AppendLine($"{SupportedThroughput.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMaximumThroughput), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedMaximumThroughput: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedMaximumThroughput))
+                {
+                    builder.Append("  supportedMaximumThroughput: ");
+                    builder.AppendLine($"{SupportedMaximumThroughput.Value}");
                 }
             }
 

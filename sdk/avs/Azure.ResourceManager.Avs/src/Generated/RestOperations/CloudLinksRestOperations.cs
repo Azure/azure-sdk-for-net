@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Avs
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01";
+            _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List cloud link in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List CloudLink resources by PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List cloud link in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List CloudLink resources by PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Get an cloud link by name in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a CloudLink. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="cloudLinkName"> Name of the cloud link resource. </param>
+        /// <param name="cloudLinkName"> Name of the cloud link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="cloudLinkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Get an cloud link by name in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a CloudLink. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="cloudLinkName"> Name of the cloud link resource. </param>
+        /// <param name="cloudLinkName"> Name of the cloud link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="cloudLinkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -276,12 +276,12 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Create or update a cloud link in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Create a CloudLink. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> The name of the private cloud. </param>
-        /// <param name="cloudLinkName"> Name of the cloud link resource. </param>
-        /// <param name="data"> A cloud link in the private cloud. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cloudLinkName"> Name of the cloud link. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="cloudLinkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -305,12 +305,12 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Create or update a cloud link in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Create a CloudLink. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> The name of the private cloud. </param>
-        /// <param name="cloudLinkName"> Name of the cloud link resource. </param>
-        /// <param name="data"> A cloud link in the private cloud. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cloudLinkName"> Name of the cloud link. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="cloudLinkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -372,11 +372,11 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Delete a cloud link in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Delete a CloudLink. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="cloudLinkName"> Name of the cloud link resource. </param>
+        /// <param name="cloudLinkName"> Name of the cloud link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="cloudLinkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -400,11 +400,11 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Delete a cloud link in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Delete a CloudLink. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="cloudLinkName"> Name of the cloud link resource. </param>
+        /// <param name="cloudLinkName"> Name of the cloud link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="cloudLinkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -450,9 +450,9 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List cloud link in a private cloud. </summary>
+        /// <summary> List CloudLink resources by PrivateCloud. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -481,9 +481,9 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List cloud link in a private cloud. </summary>
+        /// <summary> List CloudLink resources by PrivateCloud. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

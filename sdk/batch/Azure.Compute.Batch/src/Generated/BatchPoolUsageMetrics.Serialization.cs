@@ -19,13 +19,21 @@ namespace Azure.Compute.Batch
 
         void IJsonModel<BatchPoolUsageMetrics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BatchPoolUsageMetrics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchPoolUsageMetrics)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("poolId"u8);
             writer.WriteStringValue(PoolId);
             writer.WritePropertyName("startTime"u8);
@@ -51,7 +59,6 @@ namespace Azure.Compute.Batch
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BatchPoolUsageMetrics IJsonModel<BatchPoolUsageMetrics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

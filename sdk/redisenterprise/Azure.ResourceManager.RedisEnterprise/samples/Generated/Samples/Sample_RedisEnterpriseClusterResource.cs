@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.RedisEnterprise.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RedisEnterprise.Samples
 {
     public partial class Sample_RedisEnterpriseClusterResource
     {
-        // RedisEnterpriseUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RedisEnterpriseUpdate()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseUpdate.json
@@ -60,9 +60,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RedisEnterpriseDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RedisEnterpriseDelete()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDelete.json
@@ -84,12 +83,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             // invoke the operation
             await redisEnterpriseCluster.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RedisEnterpriseGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RedisEnterpriseGet()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseGet.json
@@ -118,9 +116,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RedisEnterpriseList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRedisEnterpriseClusters_RedisEnterpriseList()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseList.json
@@ -147,12 +144,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RedisEnterpriseListPrivateLinkResources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResourcesByCluster_RedisEnterpriseListPrivateLinkResources()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseListPrivateLinkResources.json
@@ -177,7 +173,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
