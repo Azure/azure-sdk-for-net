@@ -11,7 +11,8 @@
                 "name": "Standard"
             },
             "tags": {
-                "SFRP.CertificateSource": "Dsms"
+                "SFRP.CertificateSource": "Dsms",
+                "SFRP.EnableDiagnosticMI": "true"
             },
             "properties": {
                 "dnsName": "sfmctestclusternet1",

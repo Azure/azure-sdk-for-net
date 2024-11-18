@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
                 VmSize = "Standard_D4ds_v5",
                 VmImagePublisher = "MicrosoftWindowsServer",
                 VmImageOffer = "WindowsServer",
-                VmImageSku = "2019-datacenter-gensecond",
+                VmImageSku = "2022-datacenter-azure-edition",
                 VmImageVersion = "latest",
                 SecurityType = "TrustedLaunch",
                 IsSecureBootEnabled = true,

@@ -11,6 +11,7 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.ManagedServiceIdentities;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 {
@@ -89,6 +90,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                     }
                 }
             };
+            data.Tags.Add(new KeyValuePair<string, string>("SFRP.EnableDiagnosticMI", "true"));
             var clusterLro = await resourceGroup.GetServiceFabricManagedClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             return clusterLro.Value;
         }
