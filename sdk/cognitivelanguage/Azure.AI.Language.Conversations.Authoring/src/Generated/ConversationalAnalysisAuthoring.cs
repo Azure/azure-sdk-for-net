@@ -11,7 +11,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure.AI.Language.Authoring.Conversations.Models;
 using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -382,14 +381,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetCopyProjectStatusAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetCopyProjectStatusResult>> GetCopyProjectStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CopyProjectJobState>> GetCopyProjectStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetCopyProjectStatusAsync(projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(GetCopyProjectStatusResult.FromResponse(response), response);
+            return Response.FromValue(CopyProjectJobState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing copy project job. </summary>
@@ -399,14 +398,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetCopyProjectStatus(string,string,CancellationToken)']/*" />
-        public virtual Response<GetCopyProjectStatusResult> GetCopyProjectStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<CopyProjectJobState> GetCopyProjectStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetCopyProjectStatus(projectName, jobId, context);
-            return Response.FromValue(GetCopyProjectStatusResult.FromResponse(response), response);
+            return Response.FromValue(CopyProjectJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -500,14 +499,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetDeploymentAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetDeploymentResult>> GetDeploymentAsync(string projectName, string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectDeployment>> GetDeploymentAsync(string projectName, string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDeploymentAsync(projectName, deploymentName, context).ConfigureAwait(false);
-            return Response.FromValue(GetDeploymentResult.FromResponse(response), response);
+            return Response.FromValue(ProjectDeployment.FromResponse(response), response);
         }
 
         /// <summary> Gets the details of a deployment. </summary>
@@ -517,14 +516,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetDeployment(string,string,CancellationToken)']/*" />
-        public virtual Response<GetDeploymentResult> GetDeployment(string projectName, string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectDeployment> GetDeployment(string projectName, string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDeployment(projectName, deploymentName, context);
-            return Response.FromValue(GetDeploymentResult.FromResponse(response), response);
+            return Response.FromValue(ProjectDeployment.FromResponse(response), response);
         }
 
         /// <summary>
@@ -619,7 +618,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetDeploymentDeleteFromResourcesStatusAsync(string,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetDeploymentDeleteFromResourcesStatusResult>> GetDeploymentDeleteFromResourcesStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeploymentDeleteFromResourcesJobState>> GetDeploymentDeleteFromResourcesStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -627,7 +626,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDeploymentDeleteFromResourcesStatusAsync(projectName, deploymentName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(GetDeploymentDeleteFromResourcesStatusResult.FromResponse(response), response);
+            return Response.FromValue(DeploymentDeleteFromResourcesJobState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
@@ -638,7 +637,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetDeploymentDeleteFromResourcesStatus(string,string,string,CancellationToken)']/*" />
-        public virtual Response<GetDeploymentDeleteFromResourcesStatusResult> GetDeploymentDeleteFromResourcesStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentDeleteFromResourcesJobState> GetDeploymentDeleteFromResourcesStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -646,7 +645,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDeploymentDeleteFromResourcesStatus(projectName, deploymentName, jobId, context);
-            return Response.FromValue(GetDeploymentDeleteFromResourcesStatusResult.FromResponse(response), response);
+            return Response.FromValue(DeploymentDeleteFromResourcesJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -745,7 +744,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetDeploymentStatusAsync(string,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetDeploymentStatusResult>> GetDeploymentStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeploymentJobState>> GetDeploymentStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -753,7 +752,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDeploymentStatusAsync(projectName, deploymentName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(GetDeploymentStatusResult.FromResponse(response), response);
+            return Response.FromValue(DeploymentJobState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing deployment job. </summary>
@@ -764,7 +763,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetDeploymentStatus(string,string,string,CancellationToken)']/*" />
-        public virtual Response<GetDeploymentStatusResult> GetDeploymentStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentJobState> GetDeploymentStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -772,7 +771,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDeploymentStatus(projectName, deploymentName, jobId, context);
-            return Response.FromValue(GetDeploymentStatusResult.FromResponse(response), response);
+            return Response.FromValue(DeploymentJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -870,14 +869,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetSwapDeploymentsStatusAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetSwapDeploymentsStatusResult>> GetSwapDeploymentsStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SwapDeploymentsJobState>> GetSwapDeploymentsStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetSwapDeploymentsStatusAsync(projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(GetSwapDeploymentsStatusResult.FromResponse(response), response);
+            return Response.FromValue(SwapDeploymentsJobState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing swap deployment job. </summary>
@@ -887,14 +886,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetSwapDeploymentsStatus(string,string,CancellationToken)']/*" />
-        public virtual Response<GetSwapDeploymentsStatusResult> GetSwapDeploymentsStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<SwapDeploymentsJobState> GetSwapDeploymentsStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetSwapDeploymentsStatus(projectName, jobId, context);
-            return Response.FromValue(GetSwapDeploymentsStatusResult.FromResponse(response), response);
+            return Response.FromValue(SwapDeploymentsJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -991,14 +990,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetExportStatusAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetExportStatusResult>> GetExportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExportProjectJobState>> GetExportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetExportStatusAsync(projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(GetExportStatusResult.FromResponse(response), response);
+            return Response.FromValue(ExportProjectJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1011,14 +1010,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetExportStatus(string,string,CancellationToken)']/*" />
-        public virtual Response<GetExportStatusResult> GetExportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ExportProjectJobState> GetExportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetExportStatus(projectName, jobId, context);
-            return Response.FromValue(GetExportStatusResult.FromResponse(response), response);
+            return Response.FromValue(ExportProjectJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1114,14 +1113,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetImportStatusAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetImportStatusResult>> GetImportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImportProjectJobState>> GetImportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetImportStatusAsync(projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(GetImportStatusResult.FromResponse(response), response);
+            return Response.FromValue(ImportProjectJobState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for an import. </summary>
@@ -1131,14 +1130,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetImportStatus(string,string,CancellationToken)']/*" />
-        public virtual Response<GetImportStatusResult> GetImportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ImportProjectJobState> GetImportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetImportStatus(projectName, jobId, context);
-            return Response.FromValue(GetImportStatusResult.FromResponse(response), response);
+            return Response.FromValue(ImportProjectJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1232,14 +1231,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetTrainedModelAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetTrainedModelResult>> GetTrainedModelAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectTrainedModel>> GetTrainedModelAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTrainedModelAsync(projectName, trainedModelLabel, context).ConfigureAwait(false);
-            return Response.FromValue(GetTrainedModelResult.FromResponse(response), response);
+            return Response.FromValue(ProjectTrainedModel.FromResponse(response), response);
         }
 
         /// <summary> Gets the details of a trained model. </summary>
@@ -1249,14 +1248,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetTrainedModel(string,string,CancellationToken)']/*" />
-        public virtual Response<GetTrainedModelResult> GetTrainedModel(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectTrainedModel> GetTrainedModel(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTrainedModel(projectName, trainedModelLabel, context);
-            return Response.FromValue(GetTrainedModelResult.FromResponse(response), response);
+            return Response.FromValue(ProjectTrainedModel.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1427,7 +1426,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetEvaluationStatusAsync(string,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetEvaluationStatusResult>> GetEvaluationStatusAsync(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EvaluationJobState>> GetEvaluationStatusAsync(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -1435,7 +1434,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetEvaluationStatusAsync(projectName, trainedModelLabel, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(GetEvaluationStatusResult.FromResponse(response), response);
+            return Response.FromValue(EvaluationJobState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for an evaluation job. </summary>
@@ -1446,7 +1445,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetEvaluationStatus(string,string,string,CancellationToken)']/*" />
-        public virtual Response<GetEvaluationStatusResult> GetEvaluationStatus(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<EvaluationJobState> GetEvaluationStatus(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -1454,7 +1453,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetEvaluationStatus(projectName, trainedModelLabel, jobId, context);
-            return Response.FromValue(GetEvaluationStatusResult.FromResponse(response), response);
+            return Response.FromValue(EvaluationJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1679,7 +1678,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetLoadSnapshotStatusAsync(string,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetLoadSnapshotStatusResult>> GetLoadSnapshotStatusAsync(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LoadSnapshotJobState>> GetLoadSnapshotStatusAsync(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -1687,7 +1686,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetLoadSnapshotStatusAsync(projectName, trainedModelLabel, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(GetLoadSnapshotStatusResult.FromResponse(response), response);
+            return Response.FromValue(LoadSnapshotJobState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for loading a snapshot. </summary>
@@ -1698,7 +1697,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetLoadSnapshotStatus(string,string,string,CancellationToken)']/*" />
-        public virtual Response<GetLoadSnapshotStatusResult> GetLoadSnapshotStatus(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<LoadSnapshotJobState> GetLoadSnapshotStatus(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -1706,7 +1705,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetLoadSnapshotStatus(projectName, trainedModelLabel, jobId, context);
-            return Response.FromValue(GetLoadSnapshotStatusResult.FromResponse(response), response);
+            return Response.FromValue(LoadSnapshotJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1804,14 +1803,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatusAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetAssignDeploymentResourcesStatusResult>> GetAssignDeploymentResourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeploymentResourcesJobState>> GetAssignDeploymentResourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetAssignDeploymentResourcesStatusAsync(projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(GetAssignDeploymentResourcesStatusResult.FromResponse(response), response);
+            return Response.FromValue(DeploymentResourcesJobState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing assign deployment resources job. </summary>
@@ -1821,14 +1820,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatus(string,string,CancellationToken)']/*" />
-        public virtual Response<GetAssignDeploymentResourcesStatusResult> GetAssignDeploymentResourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentResourcesJobState> GetAssignDeploymentResourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAssignDeploymentResourcesStatus(projectName, jobId, context);
-            return Response.FromValue(GetAssignDeploymentResourcesStatusResult.FromResponse(response), response);
+            return Response.FromValue(DeploymentResourcesJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1922,14 +1921,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetUnassignDeploymentResourcesStatusAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetUnassignDeploymentResourcesStatusResult>> GetUnassignDeploymentResourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeploymentResourcesJobState>> GetUnassignDeploymentResourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetUnassignDeploymentResourcesStatusAsync(projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(GetUnassignDeploymentResourcesStatusResult.FromResponse(response), response);
+            return Response.FromValue(DeploymentResourcesJobState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
@@ -1939,14 +1938,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetUnassignDeploymentResourcesStatus(string,string,CancellationToken)']/*" />
-        public virtual Response<GetUnassignDeploymentResourcesStatusResult> GetUnassignDeploymentResourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentResourcesJobState> GetUnassignDeploymentResourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetUnassignDeploymentResourcesStatus(projectName, jobId, context);
-            return Response.FromValue(GetUnassignDeploymentResourcesStatusResult.FromResponse(response), response);
+            return Response.FromValue(DeploymentResourcesJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -2040,14 +2039,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetTrainingStatusAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetTrainingStatusResult>> GetTrainingStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrainingJobState>> GetTrainingStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTrainingStatusAsync(projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(GetTrainingStatusResult.FromResponse(response), response);
+            return Response.FromValue(TrainingJobState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for a training job. </summary>
@@ -2057,14 +2056,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetTrainingStatus(string,string,CancellationToken)']/*" />
-        public virtual Response<GetTrainingStatusResult> GetTrainingStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<TrainingJobState> GetTrainingStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTrainingStatus(projectName, jobId, context);
-            return Response.FromValue(GetTrainingStatusResult.FromResponse(response), response);
+            return Response.FromValue(TrainingJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -2157,13 +2156,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetProjectDeletionStatusAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetProjectDeletionStatusResult>> GetProjectDeletionStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectDeletionJobState>> GetProjectDeletionStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetProjectDeletionStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(GetProjectDeletionStatusResult.FromResponse(response), response);
+            return Response.FromValue(ProjectDeletionJobState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for a project deletion job. </summary>
@@ -2172,13 +2171,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetProjectDeletionStatus(string,CancellationToken)']/*" />
-        public virtual Response<GetProjectDeletionStatusResult> GetProjectDeletionStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectDeletionJobState> GetProjectDeletionStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetProjectDeletionStatus(jobId, context);
-            return Response.FromValue(GetProjectDeletionStatusResult.FromResponse(response), response);
+            return Response.FromValue(ProjectDeletionJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -2752,14 +2751,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetExportedModelAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetExportedModelResult>> GetExportedModelAsync(string projectName, string exportedModelName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExportedTrainedModel>> GetExportedModelAsync(string projectName, string exportedModelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetExportedModelAsync(projectName, exportedModelName, context).ConfigureAwait(false);
-            return Response.FromValue(GetExportedModelResult.FromResponse(response), response);
+            return Response.FromValue(ExportedTrainedModel.FromResponse(response), response);
         }
 
         /// <summary> Gets the details of an exported model. </summary>
@@ -2769,14 +2768,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetExportedModel(string,string,CancellationToken)']/*" />
-        public virtual Response<GetExportedModelResult> GetExportedModel(string projectName, string exportedModelName, CancellationToken cancellationToken = default)
+        public virtual Response<ExportedTrainedModel> GetExportedModel(string projectName, string exportedModelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetExportedModel(projectName, exportedModelName, context);
-            return Response.FromValue(GetExportedModelResult.FromResponse(response), response);
+            return Response.FromValue(ExportedTrainedModel.FromResponse(response), response);
         }
 
         /// <summary>
@@ -2871,7 +2870,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetExportedModelJobStatusAsync(string,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetExportedModelJobStatusResult>> GetExportedModelJobStatusAsync(string projectName, string exportedModelName, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExportedModelJobState>> GetExportedModelJobStatusAsync(string projectName, string exportedModelName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
@@ -2879,7 +2878,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetExportedModelJobStatusAsync(projectName, exportedModelName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(GetExportedModelJobStatusResult.FromResponse(response), response);
+            return Response.FromValue(ExportedModelJobState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for an existing job to create or update an exported model. </summary>
@@ -2890,7 +2889,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationalAnalysisAuthoring.xml" path="doc/members/member[@name='GetExportedModelJobStatus(string,string,string,CancellationToken)']/*" />
-        public virtual Response<GetExportedModelJobStatusResult> GetExportedModelJobStatus(string projectName, string exportedModelName, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ExportedModelJobState> GetExportedModelJobStatus(string projectName, string exportedModelName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
@@ -2898,7 +2897,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetExportedModelJobStatus(projectName, exportedModelName, jobId, context);
-            return Response.FromValue(GetExportedModelJobStatusResult.FromResponse(response), response);
+            return Response.FromValue(ExportedModelJobState.FromResponse(response), response);
         }
 
         /// <summary>

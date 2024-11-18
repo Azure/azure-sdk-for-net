@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
-    public partial class TrainingJobState : IUtf8JsonSerializable, IJsonModel<TrainingJobState>
+    public partial class ProjectDeletionJobState : IUtf8JsonSerializable, IJsonModel<ProjectDeletionJobState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrainingJobState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProjectDeletionJobState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TrainingJobState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProjectDeletionJobState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrainingJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProjectDeletionJobState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrainingJobState)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectDeletionJobState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,8 +62,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("result"u8);
-            writer.WriteObjectValue(Result, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,19 +80,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             writer.WriteEndObject();
         }
 
-        TrainingJobState IJsonModel<TrainingJobState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProjectDeletionJobState IJsonModel<ProjectDeletionJobState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrainingJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProjectDeletionJobState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrainingJobState)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectDeletionJobState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTrainingJobState(document.RootElement, options);
+            return DeserializeProjectDeletionJobState(document.RootElement, options);
         }
 
-        internal static TrainingJobState DeserializeTrainingJobState(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ProjectDeletionJobState DeserializeProjectDeletionJobState(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -109,7 +107,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             JobStatus status = default;
             IReadOnlyList<AuthoringConversationsWarning> warnings = default;
             IReadOnlyList<AuthoringConversationsError> errors = default;
-            TrainingJobResult result = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,18 +168,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("result"u8))
-                {
-                    result = TrainingJobResult.DeserializeTrainingJobResult(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TrainingJobState(
+            return new ProjectDeletionJobState(
                 jobId,
                 createdDateTime,
                 lastUpdatedDateTime,
@@ -190,47 +182,46 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 status,
                 warnings ?? new ChangeTrackingList<AuthoringConversationsWarning>(),
                 errors ?? new ChangeTrackingList<AuthoringConversationsError>(),
-                result,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TrainingJobState>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProjectDeletionJobState>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrainingJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProjectDeletionJobState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrainingJobState)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectDeletionJobState)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TrainingJobState IPersistableModel<TrainingJobState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ProjectDeletionJobState IPersistableModel<ProjectDeletionJobState>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrainingJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProjectDeletionJobState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTrainingJobState(document.RootElement, options);
+                        return DeserializeProjectDeletionJobState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrainingJobState)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectDeletionJobState)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TrainingJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProjectDeletionJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TrainingJobState FromResponse(Response response)
+        internal static ProjectDeletionJobState FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTrainingJobState(document.RootElement);
+            return DeserializeProjectDeletionJobState(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

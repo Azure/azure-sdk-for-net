@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.AI.Language.Authoring.Conversations.Models;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.Core;
@@ -29,7 +28,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             string jobId = "SampleJobId";
 
             #region Snippet:Sample16_ConversationsAuthoring_GetAssignDeploymentResourcesStatusAsync
-            Response<GetAssignDeploymentResourcesStatusResult> response;
+            Response<DeploymentResourcesJobState> response;
             do
             {
                 response = await authoringClient.GetAssignDeploymentResourcesStatusAsync(

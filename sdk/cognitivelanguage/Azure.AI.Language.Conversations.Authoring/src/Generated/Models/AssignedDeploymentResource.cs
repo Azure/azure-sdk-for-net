@@ -46,15 +46,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AssignedDeploymentResource"/>. </summary>
-        /// <param name="azureResourceId"> The resource ID. </param>
         /// <param name="region"> The resource region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureResourceId"/> or <paramref name="region"/> is null. </exception>
-        internal AssignedDeploymentResource(string azureResourceId, string region)
+        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
+        internal AssignedDeploymentResource(string region)
         {
-            Argument.AssertNotNull(azureResourceId, nameof(azureResourceId));
             Argument.AssertNotNull(region, nameof(region));
 
-            AzureResourceId = azureResourceId;
             Region = region;
         }
 

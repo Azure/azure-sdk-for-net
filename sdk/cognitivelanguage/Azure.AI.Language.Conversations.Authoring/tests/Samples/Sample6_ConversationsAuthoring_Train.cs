@@ -28,15 +28,17 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             var trainingJobConfig = new TrainingJobConfig(
                 modelLabel: "MyModel",
-                trainingMode: TrainingMode.Standard,
-                trainingConfigVersion: "1.0",
-                evaluationOptions: new EvaluationConfig
+                trainingMode: TrainingMode.Standard
+            )
+            {
+                TrainingConfigVersion = "1.0",
+                EvaluationOptions = new EvaluationConfig
                 {
                     Kind = EvaluationKind.Percentage,
                     TestingSplitPercentage = 20,
                     TrainingSplitPercentage = 80
                 }
-            );
+            };
 
             Operation<TrainingJobResult> operation = authoringClient.Train(
                 waitUntil: WaitUntil.Completed,

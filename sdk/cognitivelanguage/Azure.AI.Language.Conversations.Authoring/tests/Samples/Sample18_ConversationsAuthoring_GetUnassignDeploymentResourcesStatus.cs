@@ -4,7 +4,6 @@
 using System;
 using System.Threading;
 using Azure;
-using Azure.AI.Language.Authoring.Conversations.Models;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.Core;
@@ -28,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             string jobId = "SampleJobId";
 
             #region Snippet:Sample18_ConversationsAuthoring_GetUnassignDeploymentResourcesStatus
-            Response<GetUnassignDeploymentResourcesStatusResult> response;
+            Response<DeploymentResourcesJobState> response;
 
             do
             {

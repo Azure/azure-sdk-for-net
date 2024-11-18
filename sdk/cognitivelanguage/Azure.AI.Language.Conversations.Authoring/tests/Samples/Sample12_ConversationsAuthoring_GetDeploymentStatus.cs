@@ -3,7 +3,6 @@
 
 using System;
 using Azure;
-using Azure.AI.Language.Authoring.Conversations.Models;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.Core;
@@ -28,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             string jobId = "SampleJobId";
 
             #region Snippet:Sample13_ConversationsAuthoring_GetDeploymentStatus
-            Response<GetDeploymentStatusResult> response = authoringClient.GetDeploymentStatus(
+            Response<DeploymentJobState> response = authoringClient.GetDeploymentStatus(
                 projectName: projectName,
                 deploymentName: deploymentName,
                 jobId: jobId

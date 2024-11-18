@@ -30,15 +30,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             var projectMetadata = new CreateProjectConfig(
                 projectKind: "Conversation",
-                settings: new ProjectSettings
-                (
-                    confidenceThreshold : 0.7F
-                ),
                 projectName: projectName,
-                multilingual: true,
-                description: "Trying out CLU with assets",
                 language: "en"
-            );
+            )
+            {
+                Settings = new ProjectSettings(0.7F),
+                Multilingual = true,
+                Description = "Trying out CLU with assets"
+            };
 
             var projectAssets = new ConversationExportedProjectAssets();
 
@@ -49,27 +48,27 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             projectAssets.Utterances.Add(new ConversationExportedUtterance(
                 text: "text1",
-                language: "en",
-                intent: "intent1",
-                dataset: "dataset1",
-                entities: new List<ExportedUtteranceEntityLabel>
-                {
-                    new ExportedUtteranceEntityLabel
-                    (
-                        category : "entity1",
-                        offset : 5,
-                        length : 5
-                    )
-                }
+                intent: "intent1"
+            )
+            {
+                Language = "en",
+                Dataset = "dataset1"
+            });
+
+            projectAssets.Utterances[projectAssets.Utterances.Count - 1].Entities.Add(new ExportedUtteranceEntityLabel(
+                category: "entity1",
+                offset: 5,
+                length: 5
             ));
 
             projectAssets.Utterances.Add(new ConversationExportedUtterance(
                 text: "text2",
-                language: "en",
-                intent: "intent2",
-                dataset: "dataset1",
-                entities: new List<ExportedUtteranceEntityLabel>()
-            ));
+                intent: "intent2"
+            )
+            {
+                Language = "en",
+                Dataset = "dataset1"
+            });
 
             var exportedProject = new ExportedProject(
                 projectFileVersion: "2023-10-01",

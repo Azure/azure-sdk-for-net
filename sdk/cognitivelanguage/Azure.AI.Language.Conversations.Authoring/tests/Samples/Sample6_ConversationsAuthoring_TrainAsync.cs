@@ -28,16 +28,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             string projectName = "MySampleProjectAsync";
 
             var trainingJobConfig = new TrainingJobConfig(
-                modelLabel: "MyModelAsync",
-                trainingMode: TrainingMode.Standard,
-                trainingConfigVersion: "1.0",
-                evaluationOptions: new EvaluationConfig
+                modelLabel: "MyModel",
+                trainingMode: TrainingMode.Standard
+            )
+            {
+                TrainingConfigVersion = "1.0",
+                EvaluationOptions = new EvaluationConfig
                 {
                     Kind = EvaluationKind.Percentage,
                     TestingSplitPercentage = 20,
                     TrainingSplitPercentage = 80
                 }
-            );
+            };
 
             Operation<TrainingJobResult> operation = await authoringClient.TrainAsync(
                 waitUntil: WaitUntil.Completed,

@@ -46,20 +46,17 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExportedTrainedModel"/>. </summary>
-        /// <param name="exportedModelName"> The exported model name. </param>
         /// <param name="modelId"> The model ID. </param>
         /// <param name="lastTrainedDateTime"> The last trained date time of the model. </param>
         /// <param name="lastExportedModelDateTime"> The last exported date time of the model. </param>
         /// <param name="modelExpirationDate"> The model expiration date. </param>
         /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportedModelName"/>, <paramref name="modelId"/> or <paramref name="modelTrainingConfigVersion"/> is null. </exception>
-        internal ExportedTrainedModel(string exportedModelName, string modelId, DateTimeOffset lastTrainedDateTime, DateTimeOffset lastExportedModelDateTime, DateTimeOffset modelExpirationDate, string modelTrainingConfigVersion)
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="modelTrainingConfigVersion"/> is null. </exception>
+        internal ExportedTrainedModel(string modelId, DateTimeOffset lastTrainedDateTime, DateTimeOffset lastExportedModelDateTime, DateTimeOffset modelExpirationDate, string modelTrainingConfigVersion)
         {
-            Argument.AssertNotNull(exportedModelName, nameof(exportedModelName));
             Argument.AssertNotNull(modelId, nameof(modelId));
             Argument.AssertNotNull(modelTrainingConfigVersion, nameof(modelTrainingConfigVersion));
 
-            ExportedModelName = exportedModelName;
             ModelId = modelId;
             LastTrainedDateTime = lastTrainedDateTime;
             LastExportedModelDateTime = lastExportedModelDateTime;

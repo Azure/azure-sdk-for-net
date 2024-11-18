@@ -26,8 +26,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("text"u8);
-            writer.WriteStringValue(Text);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("text"u8);
+                writer.WriteStringValue(Text);
+            }
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
             writer.WritePropertyName("entitiesResult"u8);

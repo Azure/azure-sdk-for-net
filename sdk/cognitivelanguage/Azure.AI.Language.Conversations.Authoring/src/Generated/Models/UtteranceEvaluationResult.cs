@@ -46,7 +46,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UtteranceEvaluationResult"/>. </summary>
-        /// <param name="text"> Represents the utterance text. </param>
         /// <param name="language">
         /// Represents the utterance language. This is BCP-47 representation of a language.
         /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
@@ -54,15 +53,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// </param>
         /// <param name="entitiesResult"> Represents the entities results for the utterance. </param>
         /// <param name="intentsResult"> Represents the intents results for the utterance. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="language"/>, <paramref name="entitiesResult"/> or <paramref name="intentsResult"/> is null. </exception>
-        internal UtteranceEvaluationResult(string text, string language, UtteranceEntitiesEvaluationResult entitiesResult, UtteranceIntentsEvaluationResult intentsResult)
+        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="entitiesResult"/> or <paramref name="intentsResult"/> is null. </exception>
+        internal UtteranceEvaluationResult(string language, UtteranceEntitiesEvaluationResult entitiesResult, UtteranceIntentsEvaluationResult intentsResult)
         {
-            Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(entitiesResult, nameof(entitiesResult));
             Argument.AssertNotNull(intentsResult, nameof(intentsResult));
 
-            Text = text;
             Language = language;
             EntitiesResult = entitiesResult;
             IntentsResult = intentsResult;

@@ -47,22 +47,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProjectDeployment"/>. </summary>
-        /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="modelId"> Represents deployment modelId. </param>
         /// <param name="lastTrainedDateTime"> Represents deployment last trained time. </param>
         /// <param name="lastDeployedDateTime"> Represents deployment last deployed time. </param>
         /// <param name="deploymentExpirationDate"> Represents deployment expiration date in the runtime. </param>
         /// <param name="modelTrainingConfigVersion"> Represents model training config version. </param>
         /// <param name="assignedResources"> Represents the metadata of the assigned Azure resources. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/>, <paramref name="modelId"/>, <paramref name="modelTrainingConfigVersion"/> or <paramref name="assignedResources"/> is null. </exception>
-        internal ProjectDeployment(string deploymentName, string modelId, DateTimeOffset lastTrainedDateTime, DateTimeOffset lastDeployedDateTime, DateTimeOffset deploymentExpirationDate, string modelTrainingConfigVersion, IEnumerable<DeploymentResource> assignedResources)
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/>, <paramref name="modelTrainingConfigVersion"/> or <paramref name="assignedResources"/> is null. </exception>
+        internal ProjectDeployment(string modelId, DateTimeOffset lastTrainedDateTime, DateTimeOffset lastDeployedDateTime, DateTimeOffset deploymentExpirationDate, string modelTrainingConfigVersion, IEnumerable<DeploymentResource> assignedResources)
         {
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(modelId, nameof(modelId));
             Argument.AssertNotNull(modelTrainingConfigVersion, nameof(modelTrainingConfigVersion));
             Argument.AssertNotNull(assignedResources, nameof(assignedResources));
 
-            DeploymentName = deploymentName;
             ModelId = modelId;
             LastTrainedDateTime = lastTrainedDateTime;
             LastDeployedDateTime = lastDeployedDateTime;

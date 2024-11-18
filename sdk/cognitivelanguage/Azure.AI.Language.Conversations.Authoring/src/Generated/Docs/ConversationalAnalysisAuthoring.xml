@@ -369,7 +369,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetCopyProjectStatusResult> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
+Response<CopyProjectJobState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetCopyProjectStatusAsync with all parameters.
 <code><![CDATA[
@@ -377,7 +377,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetCopyProjectStatusResult> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
+Response<CopyProjectJobState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetCopyProjectStatus(string,string,CancellationToken)">
@@ -388,7 +388,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetCopyProjectStatusResult> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
+Response<CopyProjectJobState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetCopyProjectStatus with all parameters.
 <code><![CDATA[
@@ -396,7 +396,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetCopyProjectStatusResult> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
+Response<CopyProjectJobState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetCopyProjectStatusAsync(string,string,RequestContext)">
@@ -410,6 +410,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -423,6 +424,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -456,6 +458,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -469,6 +472,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -499,7 +503,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetDeploymentResult> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
+Response<ProjectDeployment> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
 ]]></code>
 This sample shows how to call GetDeploymentAsync with all parameters.
 <code><![CDATA[
@@ -507,7 +511,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetDeploymentResult> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
+Response<ProjectDeployment> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
 ]]></code></example>
     </member>
     <member name="GetDeployment(string,string,CancellationToken)">
@@ -518,7 +522,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetDeploymentResult> response = client.GetDeployment("<projectName>", "<deploymentName>");
+Response<ProjectDeployment> response = client.GetDeployment("<projectName>", "<deploymentName>");
 ]]></code>
 This sample shows how to call GetDeployment with all parameters.
 <code><![CDATA[
@@ -526,7 +530,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetDeploymentResult> response = client.GetDeployment("<projectName>", "<deploymentName>");
+Response<ProjectDeployment> response = client.GetDeployment("<projectName>", "<deploymentName>");
 ]]></code></example>
     </member>
     <member name="GetDeploymentAsync(string,string,RequestContext)">
@@ -540,6 +544,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
@@ -557,6 +562,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
@@ -577,6 +583,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetDeployment("<projectName>", "<deploymentName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
@@ -594,6 +601,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetDeployment("<projectName>", "<deploymentName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
@@ -611,7 +619,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetDeploymentDeleteFromResourcesStatusResult> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentDeleteFromResourcesJobState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatusAsync with all parameters.
 <code><![CDATA[
@@ -619,7 +627,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetDeploymentDeleteFromResourcesStatusResult> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentDeleteFromResourcesJobState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetDeploymentDeleteFromResourcesStatus(string,string,string,CancellationToken)">
@@ -630,7 +638,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetDeploymentDeleteFromResourcesStatusResult> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentDeleteFromResourcesJobState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatus with all parameters.
 <code><![CDATA[
@@ -638,7 +646,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetDeploymentDeleteFromResourcesStatusResult> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentDeleteFromResourcesJobState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetDeploymentDeleteFromResourcesStatusAsync(string,string,string,RequestContext)">
@@ -652,6 +660,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -665,6 +674,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -698,6 +708,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -711,6 +722,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -741,7 +753,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetDeploymentStatusResult> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentJobState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetDeploymentStatusAsync with all parameters.
 <code><![CDATA[
@@ -749,7 +761,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetDeploymentStatusResult> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentJobState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetDeploymentStatus(string,string,string,CancellationToken)">
@@ -760,7 +772,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetDeploymentStatusResult> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentJobState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetDeploymentStatus with all parameters.
 <code><![CDATA[
@@ -768,7 +780,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetDeploymentStatusResult> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentJobState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetDeploymentStatusAsync(string,string,string,RequestContext)">
@@ -782,6 +794,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -795,6 +808,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -828,6 +842,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -841,6 +856,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -871,7 +887,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetSwapDeploymentsStatusResult> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
+Response<SwapDeploymentsJobState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetSwapDeploymentsStatusAsync with all parameters.
 <code><![CDATA[
@@ -879,7 +895,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetSwapDeploymentsStatusResult> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
+Response<SwapDeploymentsJobState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetSwapDeploymentsStatus(string,string,CancellationToken)">
@@ -890,7 +906,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetSwapDeploymentsStatusResult> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
+Response<SwapDeploymentsJobState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetSwapDeploymentsStatus with all parameters.
 <code><![CDATA[
@@ -898,7 +914,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetSwapDeploymentsStatusResult> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
+Response<SwapDeploymentsJobState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetSwapDeploymentsStatusAsync(string,string,RequestContext)">
@@ -912,6 +928,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -925,6 +942,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -958,6 +976,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -971,6 +990,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1001,7 +1021,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetExportStatusResult> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
+Response<ExportProjectJobState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetExportStatusAsync with all parameters.
 <code><![CDATA[
@@ -1009,7 +1029,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetExportStatusResult> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
+Response<ExportProjectJobState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetExportStatus(string,string,CancellationToken)">
@@ -1020,7 +1040,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetExportStatusResult> response = client.GetExportStatus("<projectName>", "<jobId>");
+Response<ExportProjectJobState> response = client.GetExportStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetExportStatus with all parameters.
 <code><![CDATA[
@@ -1028,7 +1048,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetExportStatusResult> response = client.GetExportStatus("<projectName>", "<jobId>");
+Response<ExportProjectJobState> response = client.GetExportStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetExportStatusAsync(string,string,RequestContext)">
@@ -1042,6 +1062,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -1055,6 +1076,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1089,6 +1111,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -1102,6 +1125,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1133,7 +1157,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetImportStatusResult> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+Response<ImportProjectJobState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetImportStatusAsync with all parameters.
 <code><![CDATA[
@@ -1141,7 +1165,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetImportStatusResult> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+Response<ImportProjectJobState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetImportStatus(string,string,CancellationToken)">
@@ -1152,7 +1176,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetImportStatusResult> response = client.GetImportStatus("<projectName>", "<jobId>");
+Response<ImportProjectJobState> response = client.GetImportStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetImportStatus with all parameters.
 <code><![CDATA[
@@ -1160,7 +1184,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetImportStatusResult> response = client.GetImportStatus("<projectName>", "<jobId>");
+Response<ImportProjectJobState> response = client.GetImportStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetImportStatusAsync(string,string,RequestContext)">
@@ -1174,6 +1198,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -1187,6 +1212,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1220,6 +1246,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -1233,6 +1260,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1263,7 +1291,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetTrainedModelResult> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+Response<ProjectTrainedModel> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
 ]]></code>
 This sample shows how to call GetTrainedModelAsync with all parameters.
 <code><![CDATA[
@@ -1271,7 +1299,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetTrainedModelResult> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+Response<ProjectTrainedModel> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
 ]]></code></example>
     </member>
     <member name="GetTrainedModel(string,string,CancellationToken)">
@@ -1282,7 +1310,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetTrainedModelResult> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
+Response<ProjectTrainedModel> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
 ]]></code>
 This sample shows how to call GetTrainedModel with all parameters.
 <code><![CDATA[
@@ -1290,7 +1318,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetTrainedModelResult> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
+Response<ProjectTrainedModel> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
 ]]></code></example>
     </member>
     <member name="GetTrainedModelAsync(string,string,RequestContext)">
@@ -1304,6 +1332,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("label").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
@@ -1320,6 +1349,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("label").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
@@ -1339,6 +1369,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("label").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
@@ -1355,6 +1386,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("label").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
@@ -1417,7 +1449,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetEvaluationStatusResult> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<EvaluationJobState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
 This sample shows how to call GetEvaluationStatusAsync with all parameters.
 <code><![CDATA[
@@ -1425,7 +1457,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetEvaluationStatusResult> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<EvaluationJobState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetEvaluationStatus(string,string,string,CancellationToken)">
@@ -1436,7 +1468,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetEvaluationStatusResult> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<EvaluationJobState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
 This sample shows how to call GetEvaluationStatus with all parameters.
 <code><![CDATA[
@@ -1444,7 +1476,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetEvaluationStatusResult> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<EvaluationJobState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetEvaluationStatusAsync(string,string,string,RequestContext)">
@@ -1458,6 +1490,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -1475,6 +1508,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1514,6 +1548,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -1531,6 +1566,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1769,7 +1805,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetLoadSnapshotStatusResult> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<LoadSnapshotJobState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
 This sample shows how to call GetLoadSnapshotStatusAsync with all parameters.
 <code><![CDATA[
@@ -1777,7 +1813,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetLoadSnapshotStatusResult> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<LoadSnapshotJobState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetLoadSnapshotStatus(string,string,string,CancellationToken)">
@@ -1788,7 +1824,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetLoadSnapshotStatusResult> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<LoadSnapshotJobState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
 This sample shows how to call GetLoadSnapshotStatus with all parameters.
 <code><![CDATA[
@@ -1796,7 +1832,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetLoadSnapshotStatusResult> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<LoadSnapshotJobState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetLoadSnapshotStatusAsync(string,string,string,RequestContext)">
@@ -1810,6 +1846,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -1823,6 +1860,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1856,6 +1894,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -1869,6 +1908,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1899,7 +1939,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetAssignDeploymentResourcesStatusResult> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+Response<DeploymentResourcesJobState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetAssignDeploymentResourcesStatusAsync with all parameters.
 <code><![CDATA[
@@ -1907,7 +1947,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetAssignDeploymentResourcesStatusResult> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+Response<DeploymentResourcesJobState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetAssignDeploymentResourcesStatus(string,string,CancellationToken)">
@@ -1918,7 +1958,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetAssignDeploymentResourcesStatusResult> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
+Response<DeploymentResourcesJobState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetAssignDeploymentResourcesStatus with all parameters.
 <code><![CDATA[
@@ -1926,7 +1966,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetAssignDeploymentResourcesStatusResult> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
+Response<DeploymentResourcesJobState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetAssignDeploymentResourcesStatusAsync(string,string,RequestContext)">
@@ -1940,6 +1980,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -1953,6 +1994,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1986,6 +2028,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -1999,6 +2042,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2029,7 +2073,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetUnassignDeploymentResourcesStatusResult> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+Response<DeploymentResourcesJobState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetUnassignDeploymentResourcesStatusAsync with all parameters.
 <code><![CDATA[
@@ -2037,7 +2081,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetUnassignDeploymentResourcesStatusResult> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+Response<DeploymentResourcesJobState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetUnassignDeploymentResourcesStatus(string,string,CancellationToken)">
@@ -2048,7 +2092,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetUnassignDeploymentResourcesStatusResult> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
+Response<DeploymentResourcesJobState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetUnassignDeploymentResourcesStatus with all parameters.
 <code><![CDATA[
@@ -2056,7 +2100,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetUnassignDeploymentResourcesStatusResult> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
+Response<DeploymentResourcesJobState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetUnassignDeploymentResourcesStatusAsync(string,string,RequestContext)">
@@ -2070,6 +2114,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2083,6 +2128,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2116,6 +2162,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2129,6 +2176,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2159,7 +2207,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetTrainingStatusResult> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
+Response<TrainingJobState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetTrainingStatusAsync with all parameters.
 <code><![CDATA[
@@ -2167,7 +2215,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetTrainingStatusResult> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
+Response<TrainingJobState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetTrainingStatus(string,string,CancellationToken)">
@@ -2178,7 +2226,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetTrainingStatusResult> response = client.GetTrainingStatus("<projectName>", "<jobId>");
+Response<TrainingJobState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetTrainingStatus with all parameters.
 <code><![CDATA[
@@ -2186,7 +2234,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetTrainingStatusResult> response = client.GetTrainingStatus("<projectName>", "<jobId>");
+Response<TrainingJobState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetTrainingStatusAsync(string,string,RequestContext)">
@@ -2200,6 +2248,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2217,6 +2266,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2262,6 +2312,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetTrainingStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2279,6 +2330,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetTrainingStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2321,7 +2373,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetProjectDeletionStatusResult> response = await client.GetProjectDeletionStatusAsync("<jobId>");
+Response<ProjectDeletionJobState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
 ]]></code>
 This sample shows how to call GetProjectDeletionStatusAsync with all parameters.
 <code><![CDATA[
@@ -2329,7 +2381,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetProjectDeletionStatusResult> response = await client.GetProjectDeletionStatusAsync("<jobId>");
+Response<ProjectDeletionJobState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
 ]]></code></example>
     </member>
     <member name="GetProjectDeletionStatus(string,CancellationToken)">
@@ -2340,7 +2392,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetProjectDeletionStatusResult> response = client.GetProjectDeletionStatus("<jobId>");
+Response<ProjectDeletionJobState> response = client.GetProjectDeletionStatus("<jobId>");
 ]]></code>
 This sample shows how to call GetProjectDeletionStatus with all parameters.
 <code><![CDATA[
@@ -2348,7 +2400,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetProjectDeletionStatusResult> response = client.GetProjectDeletionStatus("<jobId>");
+Response<ProjectDeletionJobState> response = client.GetProjectDeletionStatus("<jobId>");
 ]]></code></example>
     </member>
     <member name="GetProjectDeletionStatusAsync(string,RequestContext)">
@@ -2362,6 +2414,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetProjectDeletionStatusAsync("<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2375,6 +2428,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetProjectDeletionStatusAsync("<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2408,6 +2462,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetProjectDeletionStatus("<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2421,6 +2476,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetProjectDeletionStatus("<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2839,7 +2895,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetExportedModelResult> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
+Response<ExportedTrainedModel> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
 ]]></code>
 This sample shows how to call GetExportedModelAsync with all parameters.
 <code><![CDATA[
@@ -2847,7 +2903,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetExportedModelResult> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
+Response<ExportedTrainedModel> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
 ]]></code></example>
     </member>
     <member name="GetExportedModel(string,string,CancellationToken)">
@@ -2858,7 +2914,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetExportedModelResult> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
+Response<ExportedTrainedModel> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
 ]]></code>
 This sample shows how to call GetExportedModel with all parameters.
 <code><![CDATA[
@@ -2866,7 +2922,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetExportedModelResult> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
+Response<ExportedTrainedModel> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
 ]]></code></example>
     </member>
     <member name="GetExportedModelAsync(string,string,RequestContext)">
@@ -2880,6 +2936,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("exportedModelName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastExportedModelDateTime").ToString());
@@ -2895,6 +2952,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("exportedModelName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastExportedModelDateTime").ToString());
@@ -2913,6 +2971,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("exportedModelName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastExportedModelDateTime").ToString());
@@ -2928,6 +2987,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("exportedModelName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastExportedModelDateTime").ToString());
@@ -2943,7 +3003,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetExportedModelJobStatusResult> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
+Response<ExportedModelJobState> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetExportedModelJobStatusAsync with all parameters.
 <code><![CDATA[
@@ -2951,7 +3011,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetExportedModelJobStatusResult> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
+Response<ExportedModelJobState> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetExportedModelJobStatus(string,string,string,CancellationToken)">
@@ -2962,7 +3022,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetExportedModelJobStatusResult> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
+Response<ExportedModelJobState> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetExportedModelJobStatus with all parameters.
 <code><![CDATA[
@@ -2970,7 +3030,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<GetExportedModelJobStatusResult> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
+Response<ExportedModelJobState> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetExportedModelJobStatusAsync(string,string,string,RequestContext)">
@@ -2984,6 +3044,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2997,6 +3058,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -3030,6 +3092,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -3043,6 +3106,7 @@ ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credentia
 Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());

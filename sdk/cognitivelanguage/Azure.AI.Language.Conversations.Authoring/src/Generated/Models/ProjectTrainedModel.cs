@@ -46,21 +46,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProjectTrainedModel"/>. </summary>
-        /// <param name="label"> The trained model label. </param>
         /// <param name="modelId"> The model ID. </param>
         /// <param name="lastTrainedDateTime"> The last trained date time of the model. </param>
         /// <param name="lastTrainingDurationInSeconds"> The duration of the model's last training request in seconds. </param>
         /// <param name="modelExpirationDate"> The model expiration date. </param>
         /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
         /// <param name="hasSnapshot"> The flag to indicate if the trained model has a snapshot ready. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="label"/>, <paramref name="modelId"/> or <paramref name="modelTrainingConfigVersion"/> is null. </exception>
-        internal ProjectTrainedModel(string label, string modelId, DateTimeOffset lastTrainedDateTime, int lastTrainingDurationInSeconds, DateTimeOffset modelExpirationDate, string modelTrainingConfigVersion, bool hasSnapshot)
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="modelTrainingConfigVersion"/> is null. </exception>
+        internal ProjectTrainedModel(string modelId, DateTimeOffset lastTrainedDateTime, int lastTrainingDurationInSeconds, DateTimeOffset modelExpirationDate, string modelTrainingConfigVersion, bool hasSnapshot)
         {
-            Argument.AssertNotNull(label, nameof(label));
             Argument.AssertNotNull(modelId, nameof(modelId));
             Argument.AssertNotNull(modelTrainingConfigVersion, nameof(modelTrainingConfigVersion));
 
-            Label = label;
             ModelId = modelId;
             LastTrainedDateTime = lastTrainedDateTime;
             LastTrainingDurationInSeconds = lastTrainingDurationInSeconds;

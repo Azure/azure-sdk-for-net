@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Language.Authoring.Conversations.Models;
 using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.Core;
 using Azure.Identity;
@@ -419,6 +418,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -435,6 +435,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -448,7 +449,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetCopyProjectStatusResult> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
+            Response<CopyProjectJobState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -459,7 +460,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetCopyProjectStatusResult> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
+            Response<CopyProjectJobState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -473,6 +474,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -506,6 +508,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -536,7 +539,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetCopyProjectStatusResult> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
+            Response<CopyProjectJobState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -547,7 +550,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetCopyProjectStatusResult> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
+            Response<CopyProjectJobState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -561,6 +564,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetDeployment("<projectName>", "<deploymentName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deploymentName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
@@ -581,6 +585,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deploymentName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
@@ -598,7 +603,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetDeploymentResult> response = client.GetDeployment("<projectName>", "<deploymentName>");
+            Response<ProjectDeployment> response = client.GetDeployment("<projectName>", "<deploymentName>");
         }
 
         [Test]
@@ -609,7 +614,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetDeploymentResult> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
+            Response<ProjectDeployment> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
         }
 
         [Test]
@@ -623,6 +628,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetDeployment("<projectName>", "<deploymentName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deploymentName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
@@ -643,6 +649,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deploymentName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
@@ -660,7 +667,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetDeploymentResult> response = client.GetDeployment("<projectName>", "<deploymentName>");
+            Response<ProjectDeployment> response = client.GetDeployment("<projectName>", "<deploymentName>");
         }
 
         [Test]
@@ -671,7 +678,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetDeploymentResult> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
+            Response<ProjectDeployment> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
         }
 
         [Test]
@@ -685,6 +692,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -701,6 +709,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -714,7 +723,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetDeploymentDeleteFromResourcesStatusResult> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentDeleteFromResourcesJobState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -725,7 +734,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetDeploymentDeleteFromResourcesStatusResult> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentDeleteFromResourcesJobState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -739,6 +748,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -772,6 +782,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -802,7 +813,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetDeploymentDeleteFromResourcesStatusResult> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentDeleteFromResourcesJobState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -813,7 +824,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetDeploymentDeleteFromResourcesStatusResult> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentDeleteFromResourcesJobState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -827,6 +838,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -843,6 +855,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -856,7 +869,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetDeploymentStatusResult> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentJobState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -867,7 +880,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetDeploymentStatusResult> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentJobState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -881,6 +894,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -914,6 +928,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -944,7 +959,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetDeploymentStatusResult> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentJobState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -955,7 +970,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetDeploymentStatusResult> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentJobState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -969,6 +984,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -985,6 +1001,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -998,7 +1015,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetSwapDeploymentsStatusResult> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
+            Response<SwapDeploymentsJobState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -1009,7 +1026,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetSwapDeploymentsStatusResult> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
+            Response<SwapDeploymentsJobState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -1023,6 +1040,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1056,6 +1074,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1086,7 +1105,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetSwapDeploymentsStatusResult> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
+            Response<SwapDeploymentsJobState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -1097,7 +1116,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetSwapDeploymentsStatusResult> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
+            Response<SwapDeploymentsJobState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -1111,6 +1130,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -1127,6 +1147,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -1140,7 +1161,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetExportStatusResult> response = client.GetExportStatus("<projectName>", "<jobId>");
+            Response<ExportProjectJobState> response = client.GetExportStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -1151,7 +1172,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetExportStatusResult> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
+            Response<ExportProjectJobState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -1165,6 +1186,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1199,6 +1221,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1230,7 +1253,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetExportStatusResult> response = client.GetExportStatus("<projectName>", "<jobId>");
+            Response<ExportProjectJobState> response = client.GetExportStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -1241,7 +1264,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetExportStatusResult> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
+            Response<ExportProjectJobState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -1255,6 +1278,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -1271,6 +1295,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -1284,7 +1309,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetImportStatusResult> response = client.GetImportStatus("<projectName>", "<jobId>");
+            Response<ImportProjectJobState> response = client.GetImportStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -1295,7 +1320,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetImportStatusResult> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+            Response<ImportProjectJobState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -1309,6 +1334,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1342,6 +1368,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1372,7 +1399,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetImportStatusResult> response = client.GetImportStatus("<projectName>", "<jobId>");
+            Response<ImportProjectJobState> response = client.GetImportStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -1383,7 +1410,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetImportStatusResult> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+            Response<ImportProjectJobState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -1397,6 +1424,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("label").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
@@ -1416,6 +1444,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("label").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
@@ -1432,7 +1461,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetTrainedModelResult> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
+            Response<ProjectTrainedModel> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
         }
 
         [Test]
@@ -1443,7 +1472,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetTrainedModelResult> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+            Response<ProjectTrainedModel> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
         }
 
         [Test]
@@ -1457,6 +1486,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("label").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
@@ -1476,6 +1506,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("label").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
@@ -1492,7 +1523,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetTrainedModelResult> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
+            Response<ProjectTrainedModel> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
         }
 
         [Test]
@@ -1503,7 +1534,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetTrainedModelResult> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+            Response<ProjectTrainedModel> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
         }
 
         [Test]
@@ -1569,6 +1600,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -1589,6 +1621,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -1606,7 +1639,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetEvaluationStatusResult> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<EvaluationJobState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -1617,7 +1650,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetEvaluationStatusResult> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<EvaluationJobState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -1631,6 +1664,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1670,6 +1704,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1706,7 +1741,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetEvaluationStatusResult> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<EvaluationJobState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -1717,7 +1752,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetEvaluationStatusResult> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<EvaluationJobState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -1945,6 +1980,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -1961,6 +1997,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -1974,7 +2011,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetLoadSnapshotStatusResult> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<LoadSnapshotJobState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -1985,7 +2022,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetLoadSnapshotStatusResult> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<LoadSnapshotJobState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -1999,6 +2036,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2032,6 +2070,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2062,7 +2101,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetLoadSnapshotStatusResult> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<LoadSnapshotJobState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -2073,7 +2112,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetLoadSnapshotStatusResult> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<LoadSnapshotJobState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -2087,6 +2126,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -2103,6 +2143,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -2116,7 +2157,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetAssignDeploymentResourcesStatusResult> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
+            Response<DeploymentResourcesJobState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -2127,7 +2168,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetAssignDeploymentResourcesStatusResult> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+            Response<DeploymentResourcesJobState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -2141,6 +2182,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2174,6 +2216,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2204,7 +2247,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetAssignDeploymentResourcesStatusResult> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
+            Response<DeploymentResourcesJobState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -2215,7 +2258,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetAssignDeploymentResourcesStatusResult> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+            Response<DeploymentResourcesJobState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -2229,6 +2272,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -2245,6 +2289,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -2258,7 +2303,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetUnassignDeploymentResourcesStatusResult> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
+            Response<DeploymentResourcesJobState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -2269,7 +2314,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetUnassignDeploymentResourcesStatusResult> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+            Response<DeploymentResourcesJobState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -2283,6 +2328,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2316,6 +2362,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2346,7 +2393,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetUnassignDeploymentResourcesStatusResult> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
+            Response<DeploymentResourcesJobState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -2357,7 +2404,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetUnassignDeploymentResourcesStatusResult> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
+            Response<DeploymentResourcesJobState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -2371,6 +2418,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetTrainingStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -2391,6 +2439,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -2408,7 +2457,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetTrainingStatusResult> response = client.GetTrainingStatus("<projectName>", "<jobId>");
+            Response<TrainingJobState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -2419,7 +2468,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetTrainingStatusResult> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
+            Response<TrainingJobState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -2433,6 +2482,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetTrainingStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2478,6 +2528,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2520,7 +2571,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetTrainingStatusResult> response = client.GetTrainingStatus("<projectName>", "<jobId>");
+            Response<TrainingJobState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -2531,7 +2582,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetTrainingStatusResult> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
+            Response<TrainingJobState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -2545,6 +2596,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetProjectDeletionStatus("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -2561,6 +2613,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetProjectDeletionStatusAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -2574,7 +2627,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetProjectDeletionStatusResult> response = client.GetProjectDeletionStatus("<jobId>");
+            Response<ProjectDeletionJobState> response = client.GetProjectDeletionStatus("<jobId>");
         }
 
         [Test]
@@ -2585,7 +2638,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetProjectDeletionStatusResult> response = await client.GetProjectDeletionStatusAsync("<jobId>");
+            Response<ProjectDeletionJobState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
         }
 
         [Test]
@@ -2599,6 +2652,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetProjectDeletionStatus("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2632,6 +2686,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetProjectDeletionStatusAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -2662,7 +2717,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetProjectDeletionStatusResult> response = client.GetProjectDeletionStatus("<jobId>");
+            Response<ProjectDeletionJobState> response = client.GetProjectDeletionStatus("<jobId>");
         }
 
         [Test]
@@ -2673,7 +2728,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetProjectDeletionStatusResult> response = await client.GetProjectDeletionStatusAsync("<jobId>");
+            Response<ProjectDeletionJobState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
         }
 
         [Test]
@@ -3123,6 +3178,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("exportedModelName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastExportedModelDateTime").ToString());
@@ -3141,6 +3197,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("exportedModelName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastExportedModelDateTime").ToString());
@@ -3156,7 +3213,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetExportedModelResult> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
+            Response<ExportedTrainedModel> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
         }
 
         [Test]
@@ -3167,7 +3224,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetExportedModelResult> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
+            Response<ExportedTrainedModel> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
         }
 
         [Test]
@@ -3181,6 +3238,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("exportedModelName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastExportedModelDateTime").ToString());
@@ -3199,6 +3257,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("exportedModelName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastExportedModelDateTime").ToString());
@@ -3214,7 +3273,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetExportedModelResult> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
+            Response<ExportedTrainedModel> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
         }
 
         [Test]
@@ -3225,7 +3284,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetExportedModelResult> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
+            Response<ExportedTrainedModel> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
         }
 
         [Test]
@@ -3239,6 +3298,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -3255,6 +3315,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -3268,7 +3329,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetExportedModelJobStatusResult> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
+            Response<ExportedModelJobState> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
         }
 
         [Test]
@@ -3279,7 +3340,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetExportedModelJobStatusResult> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
+            Response<ExportedModelJobState> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
         }
 
         [Test]
@@ -3293,6 +3354,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -3326,6 +3388,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -3356,7 +3419,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetExportedModelJobStatusResult> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
+            Response<ExportedModelJobState> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
         }
 
         [Test]
@@ -3367,7 +3430,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationalAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetConversationalAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<GetExportedModelJobStatusResult> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
+            Response<ExportedModelJobState> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
         }
 
         [Test]

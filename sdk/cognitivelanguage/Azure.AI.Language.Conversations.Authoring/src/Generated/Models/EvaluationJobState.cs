@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
-    /// <summary> Represents the state of a training job. </summary>
-    public partial class TrainingJobState
+    /// <summary> Represents the state of a evaluation job. </summary>
+    public partial class EvaluationJobState
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TrainingJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EvaluationJobState"/>. </summary>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
         /// <param name="status"> The job status. </param>
-        /// <param name="result"> Represents training tasks detailed result. </param>
+        /// <param name="result"> Represents evaluation task detailed result. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="result"/> is null. </exception>
-        internal TrainingJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, JobStatus status, TrainingJobResult result)
+        internal EvaluationJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, JobStatus status, EvaluationJobResult result)
         {
             Argument.AssertNotNull(result, nameof(result));
 
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             Result = result;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrainingJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EvaluationJobState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
@@ -71,9 +71,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <param name="result"> Represents training tasks detailed result. </param>
+        /// <param name="result"> Represents evaluation task detailed result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrainingJobState(string jobId, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, DateTimeOffset? expirationDateTime, JobStatus status, IReadOnlyList<AuthoringConversationsWarning> warnings, IReadOnlyList<AuthoringConversationsError> errors, TrainingJobResult result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EvaluationJobState(string jobId, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, DateTimeOffset? expirationDateTime, JobStatus status, IReadOnlyList<AuthoringConversationsWarning> warnings, IReadOnlyList<AuthoringConversationsError> errors, EvaluationJobResult result, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             CreatedDateTime = createdDateTime;
@@ -86,8 +86,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrainingJobState"/> for deserialization. </summary>
-        internal TrainingJobState()
+        /// <summary> Initializes a new instance of <see cref="EvaluationJobState"/> for deserialization. </summary>
+        internal EvaluationJobState()
         {
         }
 
@@ -105,7 +105,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         public IReadOnlyList<AuthoringConversationsWarning> Warnings { get; }
         /// <summary> The errors encountered while executing the job. </summary>
         public IReadOnlyList<AuthoringConversationsError> Errors { get; }
-        /// <summary> Represents training tasks detailed result. </summary>
-        public TrainingJobResult Result { get; }
+        /// <summary> Represents evaluation task detailed result. </summary>
+        public EvaluationJobResult Result { get; }
     }
 }

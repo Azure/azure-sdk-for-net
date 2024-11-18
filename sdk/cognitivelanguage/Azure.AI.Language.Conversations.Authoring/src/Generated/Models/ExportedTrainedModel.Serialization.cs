@@ -26,8 +26,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("exportedModelName"u8);
-            writer.WriteStringValue(ExportedModelName);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("exportedModelName"u8);
+                writer.WriteStringValue(ExportedModelName);
+            }
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
             writer.WritePropertyName("lastTrainedDateTime"u8);
