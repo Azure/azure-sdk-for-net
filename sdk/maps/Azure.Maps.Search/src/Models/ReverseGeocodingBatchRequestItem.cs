@@ -47,7 +47,9 @@ namespace Azure.Maps.Search.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SerializeCoordinatesValue(Utf8JsonWriter writer)
         {
+#pragma warning disable CS8073 // The result of the expression is always true in net8.0, but not this is not true in netstandard2.0
             if (Coordinates != null)
+#pragma warning restore CS8073
             {
                 writer.WriteStartArray();
                 writer.WriteNumberValue(Coordinates.Longitude);

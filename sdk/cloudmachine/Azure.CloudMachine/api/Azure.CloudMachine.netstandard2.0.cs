@@ -79,6 +79,8 @@ namespace Azure.CloudMachine.OpenAI
     {
         public static void Add(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages, OpenAI.Chat.ChatCompletion completion) { }
         public static void Add(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages, System.Collections.Generic.IEnumerable<Azure.CloudMachine.OpenAI.VectorbaseEntry> entries) { }
+        public static string AsText(this OpenAI.Chat.ChatCompletion completion) { throw null; }
+        public static string AsText(this OpenAI.Chat.ChatMessageContent completion) { throw null; }
         public static OpenAI.Chat.ChatClient GetOpenAIChatClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
         public static OpenAI.Embeddings.EmbeddingClient GetOpenAIEmbeddingsClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
         public static void Trim(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages) { }

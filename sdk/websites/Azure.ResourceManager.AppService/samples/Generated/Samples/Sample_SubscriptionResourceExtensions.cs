@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ValidateAppServiceCertificateOrderPurchaseInformation_ValidateAppServiceCertificatePurchaseInformationBySubscription()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/ValidateAppServiceCertificatePurchaseInformationBySubscription.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/ValidateAppServiceCertificatePurchaseInformationBySubscription.json
             // this example is just showing the usage of "AppServiceCertificateOrders_ValidatePurchaseInformation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,7 +66,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task CheckAppServiceDomainRegistrationAvailability_CheckDomainAvailability()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/CheckDomainAvailability.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/CheckDomainAvailability.json
             // this example is just showing the usage of "Domains_CheckAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetControlCenterSsoRequestDomain_GetDomainControlCenterSsoRequest()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/GetDomainControlCenterSsoRequest.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/GetDomainControlCenterSsoRequest.json
             // this example is just showing the usage of "Domains_GetControlCenterSsoRequest" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,7 +118,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAppServiceDomainRecommendations_ListDomainRecommendations()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/ListDomainRecommendations.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/ListDomainRecommendations.json
             // this example is just showing the usage of "Domains_ListRecommendations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,7 +150,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAllResourceHealthMetadata_ListResourceHealthMetadataForASubscription()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListResourceHealthMetadataBySubscription.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListResourceHealthMetadataBySubscription.json
             // this example is just showing the usage of "ResourceHealthMetadata_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +178,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetCustomHostNameSites_GetCustomHostnamesUnderSubscription()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListCustomHostNameSites.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListCustomHostNameSites.json
             // this example is just showing the usage of "ListCustomHostNameSites" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -205,7 +205,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetCustomHostNameSites_GetSpecificCustomHostnameUnderSubscription()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListCustomSpecificHostNameSites.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListCustomSpecificHostNameSites.json
             // this example is just showing the usage of "ListCustomHostNameSites" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -233,7 +233,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAseRegions_ListAseregions()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListAseRegions.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListAseRegions.json
             // this example is just showing the usage of "ListAseRegions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -260,7 +260,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task VerifyHostingEnvironmentVnet_VerifyHostingEnvironmentVnet()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/VerifyHostingEnvironmentVnet.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/VerifyHostingEnvironmentVnet.json
             // this example is just showing the usage of "VerifyHostingEnvironmentVnet" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -290,7 +290,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetGetUsagesInLocations_GetUsagesInLocationForSubscription()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetUsagesInLocation.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetUsagesInLocation.json
             // this example is just showing the usage of "GetUsagesInLocation_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -318,7 +318,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task PreviewStaticSiteWorkflow_GeneratesAPreviewWorkflowFileForTheStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GenerateStaticSiteWorkflowPreview.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GenerateStaticSiteWorkflowPreview.json
             // this example is just showing the usage of "StaticSites_PreviewWorkflow" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
