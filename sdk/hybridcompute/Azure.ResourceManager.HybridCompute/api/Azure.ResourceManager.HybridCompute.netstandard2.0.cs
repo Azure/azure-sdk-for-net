@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRule HybridComputeAccessRule(string name = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection? direction = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeConfigurationExtension HybridComputeConfigurationExtension(string publisher = null, string configurationExtensionType = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeConnectionDetail HybridComputeConnectionDetail(Azure.Core.ResourceIdentifier id = null, string privateIPAddress = null, string linkIdentifier = null, string groupId = null, string memberName = null) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk HybridComputeDisk(string path = null, string diskType = null, string generatedId = null, System.Guid? id = default(System.Guid?), string name = null, long? maxSizeInBytes = default(long?), long? usedSpaceInBytes = default(long?)) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeDisk HybridComputeDisk(string path = null, string diskType = null, string generatedId = null, Azure.Core.ResourceIdentifier id = null, string name = null, long? maxSizeInBytes = default(long?), long? usedSpaceInBytes = default(long?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueData HybridComputeExtensionValueData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string version = null, string extensionType = null, string publisher = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeHardwareProfile HybridComputeHardwareProfile(long? totalPhysicalMemoryInBytes = default(long?), int? numberOfCpuSockets = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeProcessor> processors = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress HybridComputeIPAddress(string address = null, string ipAddressVersion = null, string subnetAddressPrefix = null) { throw null; }
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionData HybridComputeMachineExtensionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties properties = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface HybridComputeNetworkInterface(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress> ipAddresses) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface HybridComputeNetworkInterface(string macAddress = null, System.Guid? id = default(System.Guid?), string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress> ipAddresses = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface HybridComputeNetworkInterface(string macAddress = null, Azure.Core.ResourceIdentifier id = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress> ipAddresses = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkProfile HybridComputeNetworkProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface> networkInterfaces = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeOSProfile HybridComputeOSProfile(string computerName = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsConfiguration windowsConfiguration = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxConfiguration linuxConfiguration = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputePatchSettingsStatus HybridComputePatchSettingsStatus(Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus? hotpatchEnablementStatus = default(Azure.ResourceManager.HybridCompute.Models.HotpatchEnablementStatus?), Azure.ResponseError error = null) { throw null; }
@@ -1181,7 +1181,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         internal HybridComputeDisk() { }
         public string DiskType { get { throw null; } }
         public string GeneratedId { get { throw null; } }
-        public System.Guid? Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public long? MaxSizeInBytes { get { throw null; } }
         public string Name { get { throw null; } }
         public string Path { get { throw null; } }
@@ -1426,7 +1426,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public partial class HybridComputeNetworkInterface : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkInterface>
     {
         internal HybridComputeNetworkInterface() { }
-        public System.Guid? Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.HybridComputeIPAddress> IPAddresses { get { throw null; } }
         public string MacAddress { get { throw null; } }
         public string Name { get { throw null; } }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HybridCompute.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridCompute.Samples
 {
     public partial class Sample_MachineRunCommandCollection
     {
-        // Create or Update a Run Command
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateARunCommand()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_CreateOrUpdate.json
@@ -68,9 +68,8 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a Run Command
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetARunCommand()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Get.json
@@ -103,9 +102,8 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a Run Command
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetARunCommand()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Get.json
@@ -134,9 +132,8 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a Run Command
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetARunCommand()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Get.json
@@ -165,7 +162,7 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -177,9 +174,8 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
             }
         }
 
-        // GET all Machine Run Commands
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GETAllMachineRunCommands()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_List.json
@@ -211,7 +207,7 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
