@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Vision.Face
 {
-    /// <summary> The detail of face for verification. </summary>
-    public partial class LivenessWithVerifyImage
+    /// <summary> The target from color image used for liveness classification. </summary>
+    public partial class LivenessColorDecisionTarget
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +45,31 @@ namespace Azure.AI.Vision.Face
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyImage"/>. </summary>
-        /// <param name="faceRectangle"> The face region where the comparison image's classification was made. </param>
-        /// <param name="qualityForRecognition"> Quality of face image for recognition. </param>
+        /// <summary> Initializes a new instance of <see cref="LivenessColorDecisionTarget"/>. </summary>
+        /// <param name="faceRectangle"> The face region where the liveness classification was made on. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="faceRectangle"/> is null. </exception>
-        internal LivenessWithVerifyImage(FaceRectangle faceRectangle, QualityForRecognition qualityForRecognition)
+        internal LivenessColorDecisionTarget(FaceRectangle faceRectangle)
         {
             Argument.AssertNotNull(faceRectangle, nameof(faceRectangle));
 
             FaceRectangle = faceRectangle;
-            QualityForRecognition = qualityForRecognition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyImage"/>. </summary>
-        /// <param name="faceRectangle"> The face region where the comparison image's classification was made. </param>
-        /// <param name="qualityForRecognition"> Quality of face image for recognition. </param>
+        /// <summary> Initializes a new instance of <see cref="LivenessColorDecisionTarget"/>. </summary>
+        /// <param name="faceRectangle"> The face region where the liveness classification was made on. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LivenessWithVerifyImage(FaceRectangle faceRectangle, QualityForRecognition qualityForRecognition, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LivenessColorDecisionTarget(FaceRectangle faceRectangle, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FaceRectangle = faceRectangle;
-            QualityForRecognition = qualityForRecognition;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyImage"/> for deserialization. </summary>
-        internal LivenessWithVerifyImage()
+        /// <summary> Initializes a new instance of <see cref="LivenessColorDecisionTarget"/> for deserialization. </summary>
+        internal LivenessColorDecisionTarget()
         {
         }
 
-        /// <summary> The face region where the comparison image's classification was made. </summary>
+        /// <summary> The face region where the liveness classification was made on. </summary>
         public FaceRectangle FaceRectangle { get; }
-        /// <summary> Quality of face image for recognition. </summary>
-        public QualityForRecognition QualityForRecognition { get; }
     }
 }

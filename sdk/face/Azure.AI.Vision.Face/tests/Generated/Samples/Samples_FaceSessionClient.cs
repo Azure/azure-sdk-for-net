@@ -28,7 +28,6 @@ namespace Azure.AI.Vision.Face.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 livenessOperationMode = "Passive",
-                sendResultsToClient = true,
                 deviceCorrelationIdSetInClient = true,
                 deviceCorrelationId = "your_device_correlation_id",
                 authTokenTimeToLiveInSeconds = 60,
@@ -38,6 +37,9 @@ namespace Azure.AI.Vision.Face.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("sessionId").ToString());
             Console.WriteLine(result.GetProperty("authToken").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("attempts")[0].GetProperty("attemptId").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("attempts")[0].GetProperty("attemptStatus").ToString());
         }
 
         [Test]
@@ -51,7 +53,6 @@ namespace Azure.AI.Vision.Face.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 livenessOperationMode = "Passive",
-                sendResultsToClient = true,
                 deviceCorrelationIdSetInClient = true,
                 deviceCorrelationId = "your_device_correlation_id",
                 authTokenTimeToLiveInSeconds = 60,
@@ -61,6 +62,9 @@ namespace Azure.AI.Vision.Face.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("sessionId").ToString());
             Console.WriteLine(result.GetProperty("authToken").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("attempts")[0].GetProperty("attemptId").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("attempts")[0].GetProperty("attemptStatus").ToString());
         }
 
         [Test]
@@ -73,12 +77,11 @@ namespace Azure.AI.Vision.Face.Samples
 
             CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
             {
-                SendResultsToClient = true,
                 DeviceCorrelationIdSetInClient = true,
                 DeviceCorrelationId = "your_device_correlation_id",
                 AuthTokenTimeToLiveInSeconds = 60,
             };
-            Response<CreateLivenessSessionResult> response = client.CreateLivenessSession(body);
+            Response<LivenessSession> response = client.CreateLivenessSession(body);
         }
 
         [Test]
@@ -91,12 +94,11 @@ namespace Azure.AI.Vision.Face.Samples
 
             CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
             {
-                SendResultsToClient = true,
                 DeviceCorrelationIdSetInClient = true,
                 DeviceCorrelationId = "your_device_correlation_id",
                 AuthTokenTimeToLiveInSeconds = 60,
             };
-            Response<CreateLivenessSessionResult> response = await client.CreateLivenessSessionAsync(body);
+            Response<LivenessSession> response = await client.CreateLivenessSessionAsync(body);
         }
 
         [Test]
@@ -136,10 +138,11 @@ namespace Azure.AI.Vision.Face.Samples
             Response response = client.GetLivenessSessionResult("b12e033e-bda7-4b83-a211-e721c661f30e", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("sessionExpired").ToString());
+            Console.WriteLine(result.GetProperty("sessionId").ToString());
+            Console.WriteLine(result.GetProperty("authToken").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("attempts")[0].GetProperty("attemptId").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("attempts")[0].GetProperty("attemptStatus").ToString());
         }
 
         [Test]
@@ -153,10 +156,11 @@ namespace Azure.AI.Vision.Face.Samples
             Response response = await client.GetLivenessSessionResultAsync("b12e033e-bda7-4b83-a211-e721c661f30e", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("sessionExpired").ToString());
+            Console.WriteLine(result.GetProperty("sessionId").ToString());
+            Console.WriteLine(result.GetProperty("authToken").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("attempts")[0].GetProperty("attemptId").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("attempts")[0].GetProperty("attemptStatus").ToString());
         }
 
         [Test]
@@ -179,132 +183,6 @@ namespace Azure.AI.Vision.Face.Samples
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
             Response<LivenessSession> response = await client.GetLivenessSessionResultAsync("b12e033e-bda7-4b83-a211-e721c661f30e");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_LivenessSession_GetLivenessSessions_GetLivenessSessions()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = client.GetLivenessSessions("00000000-0000-0000-0000-000000000000", 20, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionExpired").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_LivenessSession_GetLivenessSessions_GetLivenessSessions_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = await client.GetLivenessSessionsAsync("00000000-0000-0000-0000-000000000000", 20, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionExpired").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_LivenessSession_GetLivenessSessions_GetLivenessSessions_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<IReadOnlyList<LivenessSessionItem>> response = client.GetLivenessSessions();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_LivenessSession_GetLivenessSessions_GetLivenessSessions_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<IReadOnlyList<LivenessSessionItem>> response = await client.GetLivenessSessionsAsync();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_GetLivenessSessionAuditEntries_GetLivenessSessionAuditEntries()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = client.GetLivenessSessionAuditEntries("b12e033e-bda7-4b83-a211-e721c661f30e", "0", 20, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionId").ToString());
-            Console.WriteLine(result[0].GetProperty("requestId").ToString());
-            Console.WriteLine(result[0].GetProperty("clientRequestId").ToString());
-            Console.WriteLine(result[0].GetProperty("receivedDateTime").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("url").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("method").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("contentType").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
-            Console.WriteLine(result[0].GetProperty("digest").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_GetLivenessSessionAuditEntries_GetLivenessSessionAuditEntries_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = await client.GetLivenessSessionAuditEntriesAsync("b12e033e-bda7-4b83-a211-e721c661f30e", "0", 20, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionId").ToString());
-            Console.WriteLine(result[0].GetProperty("requestId").ToString());
-            Console.WriteLine(result[0].GetProperty("clientRequestId").ToString());
-            Console.WriteLine(result[0].GetProperty("receivedDateTime").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("url").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("method").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("contentType").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
-            Console.WriteLine(result[0].GetProperty("digest").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_GetLivenessSessionAuditEntries_GetLivenessSessionAuditEntries_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<IReadOnlyList<LivenessSessionAuditEntry>> response = client.GetLivenessSessionAuditEntries("b12e033e-bda7-4b83-a211-e721c661f30e");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_GetLivenessSessionAuditEntries_GetLivenessSessionAuditEntries_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<IReadOnlyList<LivenessSessionAuditEntry>> response = await client.GetLivenessSessionAuditEntriesAsync("b12e033e-bda7-4b83-a211-e721c661f30e");
         }
 
         [Test]
@@ -344,10 +222,17 @@ namespace Azure.AI.Vision.Face.Samples
             Response response = client.GetLivenessWithVerifySessionResult("b12e033e-bda7-4b83-a211-e721c661f30e", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("sessionExpired").ToString());
+            Console.WriteLine(result.GetProperty("sessionId").ToString());
+            Console.WriteLine(result.GetProperty("authToken").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("verifyReferences")[0].GetProperty("referenceType").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("verifyReferences")[0].GetProperty("faceRectangle").GetProperty("top").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("verifyReferences")[0].GetProperty("faceRectangle").GetProperty("left").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("verifyReferences")[0].GetProperty("faceRectangle").GetProperty("width").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("verifyReferences")[0].GetProperty("faceRectangle").GetProperty("height").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("verifyReferences")[0].GetProperty("qualityForRecognition").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("attempts")[0].GetProperty("attemptId").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("attempts")[0].GetProperty("attemptStatus").ToString());
         }
 
         [Test]
@@ -361,10 +246,17 @@ namespace Azure.AI.Vision.Face.Samples
             Response response = await client.GetLivenessWithVerifySessionResultAsync("b12e033e-bda7-4b83-a211-e721c661f30e", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("sessionExpired").ToString());
+            Console.WriteLine(result.GetProperty("sessionId").ToString());
+            Console.WriteLine(result.GetProperty("authToken").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("verifyReferences")[0].GetProperty("referenceType").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("verifyReferences")[0].GetProperty("faceRectangle").GetProperty("top").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("verifyReferences")[0].GetProperty("faceRectangle").GetProperty("left").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("verifyReferences")[0].GetProperty("faceRectangle").GetProperty("width").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("verifyReferences")[0].GetProperty("faceRectangle").GetProperty("height").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("verifyReferences")[0].GetProperty("qualityForRecognition").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("attempts")[0].GetProperty("attemptId").ToString());
+            Console.WriteLine(result.GetProperty("results").GetProperty("attempts")[0].GetProperty("attemptStatus").ToString());
         }
 
         [Test]
@@ -387,132 +279,6 @@ namespace Azure.AI.Vision.Face.Samples
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
             Response<LivenessWithVerifySession> response = await client.GetLivenessWithVerifySessionResultAsync("b12e033e-bda7-4b83-a211-e721c661f30e");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_LivenessWithVerifySession_GetLivenessWithVerifySessions_GetLivenessWithVerifySessions()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = client.GetLivenessWithVerifySessions("00000000-0000-0000-0000-000000000000", 20, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionExpired").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_LivenessWithVerifySession_GetLivenessWithVerifySessions_GetLivenessWithVerifySessions_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = await client.GetLivenessWithVerifySessionsAsync("00000000-0000-0000-0000-000000000000", 20, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionExpired").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_LivenessWithVerifySession_GetLivenessWithVerifySessions_GetLivenessWithVerifySessions_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<IReadOnlyList<LivenessSessionItem>> response = client.GetLivenessWithVerifySessions();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_LivenessWithVerifySession_GetLivenessWithVerifySessions_GetLivenessWithVerifySessions_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<IReadOnlyList<LivenessSessionItem>> response = await client.GetLivenessWithVerifySessionsAsync();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_GetLivenessWithVerifySessionAuditEntries_GetLivenessWithVerifySessionAuditEntries()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = client.GetLivenessWithVerifySessionAuditEntries("b12e033e-bda7-4b83-a211-e721c661f30e", "0", 20, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionId").ToString());
-            Console.WriteLine(result[0].GetProperty("requestId").ToString());
-            Console.WriteLine(result[0].GetProperty("clientRequestId").ToString());
-            Console.WriteLine(result[0].GetProperty("receivedDateTime").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("url").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("method").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("contentType").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
-            Console.WriteLine(result[0].GetProperty("digest").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_GetLivenessWithVerifySessionAuditEntries_GetLivenessWithVerifySessionAuditEntries_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response response = await client.GetLivenessWithVerifySessionAuditEntriesAsync("b12e033e-bda7-4b83-a211-e721c661f30e", "0", 20, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("sessionId").ToString());
-            Console.WriteLine(result[0].GetProperty("requestId").ToString());
-            Console.WriteLine(result[0].GetProperty("clientRequestId").ToString());
-            Console.WriteLine(result[0].GetProperty("receivedDateTime").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("url").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("method").ToString());
-            Console.WriteLine(result[0].GetProperty("request").GetProperty("contentType").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("body").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("statusCode").ToString());
-            Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMilliseconds").ToString());
-            Console.WriteLine(result[0].GetProperty("digest").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_FaceSessionClient_GetLivenessWithVerifySessionAuditEntries_GetLivenessWithVerifySessionAuditEntries_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<IReadOnlyList<LivenessSessionAuditEntry>> response = client.GetLivenessWithVerifySessionAuditEntries("b12e033e-bda7-4b83-a211-e721c661f30e");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_FaceSessionClient_GetLivenessWithVerifySessionAuditEntries_GetLivenessWithVerifySessionAuditEntries_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
-
-            Response<IReadOnlyList<LivenessSessionAuditEntry>> response = await client.GetLivenessWithVerifySessionAuditEntriesAsync("b12e033e-bda7-4b83-a211-e721c661f30e");
         }
 
         [Test]

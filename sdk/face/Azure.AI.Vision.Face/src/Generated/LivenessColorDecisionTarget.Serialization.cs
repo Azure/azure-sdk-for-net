@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
-    public partial class LivenessOutputsTarget : IUtf8JsonSerializable, IJsonModel<LivenessOutputsTarget>
+    public partial class LivenessColorDecisionTarget : IUtf8JsonSerializable, IJsonModel<LivenessColorDecisionTarget>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LivenessOutputsTarget>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LivenessColorDecisionTarget>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LivenessOutputsTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LivenessColorDecisionTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,20 +28,14 @@ namespace Azure.AI.Vision.Face
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessOutputsTarget>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LivenessColorDecisionTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LivenessOutputsTarget)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LivenessColorDecisionTarget)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("faceRectangle"u8);
             writer.WriteObjectValue(FaceRectangle, options);
-            writer.WritePropertyName("fileName"u8);
-            writer.WriteStringValue(FileName);
-            writer.WritePropertyName("timeOffsetWithinFile"u8);
-            writer.WriteNumberValue(TimeOffsetWithinFile);
-            writer.WritePropertyName("imageType"u8);
-            writer.WriteStringValue(ImageType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -59,19 +53,19 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        LivenessOutputsTarget IJsonModel<LivenessOutputsTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LivenessColorDecisionTarget IJsonModel<LivenessColorDecisionTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessOutputsTarget>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LivenessColorDecisionTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LivenessOutputsTarget)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LivenessColorDecisionTarget)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLivenessOutputsTarget(document.RootElement, options);
+            return DeserializeLivenessColorDecisionTarget(document.RootElement, options);
         }
 
-        internal static LivenessOutputsTarget DeserializeLivenessOutputsTarget(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LivenessColorDecisionTarget DeserializeLivenessColorDecisionTarget(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,9 +74,6 @@ namespace Azure.AI.Vision.Face
                 return null;
             }
             FaceRectangle faceRectangle = default;
-            string fileName = default;
-            int timeOffsetWithinFile = default;
-            FaceImageType imageType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,67 +83,52 @@ namespace Azure.AI.Vision.Face
                     faceRectangle = FaceRectangle.DeserializeFaceRectangle(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("fileName"u8))
-                {
-                    fileName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("timeOffsetWithinFile"u8))
-                {
-                    timeOffsetWithinFile = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("imageType"u8))
-                {
-                    imageType = new FaceImageType(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LivenessOutputsTarget(faceRectangle, fileName, timeOffsetWithinFile, imageType, serializedAdditionalRawData);
+            return new LivenessColorDecisionTarget(faceRectangle, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<LivenessOutputsTarget>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LivenessColorDecisionTarget>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessOutputsTarget>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LivenessColorDecisionTarget>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LivenessOutputsTarget)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LivenessColorDecisionTarget)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LivenessOutputsTarget IPersistableModel<LivenessOutputsTarget>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LivenessColorDecisionTarget IPersistableModel<LivenessColorDecisionTarget>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessOutputsTarget>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LivenessColorDecisionTarget>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeLivenessOutputsTarget(document.RootElement, options);
+                        return DeserializeLivenessColorDecisionTarget(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LivenessOutputsTarget)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LivenessColorDecisionTarget)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LivenessOutputsTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LivenessColorDecisionTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static LivenessOutputsTarget FromResponse(Response response)
+        internal static LivenessColorDecisionTarget FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeLivenessOutputsTarget(document.RootElement);
+            return DeserializeLivenessColorDecisionTarget(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
