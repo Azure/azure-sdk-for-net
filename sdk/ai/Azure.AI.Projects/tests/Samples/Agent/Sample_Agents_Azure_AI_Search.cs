@@ -32,7 +32,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
             throw new InvalidOperationException("No connections found for the Azure AI Search.");
         }
 
-        GetConnectionResponse connection = connections.Value[0];
+        ConnectionResponse connection = connections.Value[0];
 
         ToolResources searchResource = new ToolResources
         {

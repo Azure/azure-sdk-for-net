@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Connection properties for connections with SAS authentication. </summary>
-    internal partial class InternalConnectionPropertiesSASAuth : InternalConnectionProperties
+    internal partial class InternalConnectionPropertiesSASAuth : ConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="InternalConnectionPropertiesSASAuth"/>. </summary>
         /// <param name="category"> Category of the connection. </param>
