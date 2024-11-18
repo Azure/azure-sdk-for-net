@@ -16,7 +16,7 @@ public partial class WebSocketDuplexPipelineTransport
     {
         public override string ContentType => throw new NotImplementedException();
 
-        public override bool IsLastFragment => throw new NotImplementedException();
+        public override bool LastOfMessage => throw new NotImplementedException();
     }
 }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

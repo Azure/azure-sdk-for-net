@@ -14,7 +14,7 @@ public abstract class WebSocketResponse : DuplexPipelineResponse
 
     // Indicates whether this frame is the last fragment of a complete logical
     // transmission from the service.
-    public abstract bool IsLastFragment { get; }
+    public abstract bool LastOfMessage { get; }
 
     // These are only used for Close events, which we should filter out
     //public abstract string StatusCode { get; }

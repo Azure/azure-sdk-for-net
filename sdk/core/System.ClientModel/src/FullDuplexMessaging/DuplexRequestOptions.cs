@@ -21,7 +21,7 @@ public class DuplexRequestOptions
     public CancellationToken CancellationToken { get; set; }
 
     // TODO: is this too WebSocket-specific?
-    public bool? IsLastFragment {  get; set; }
+    public bool? LastOfMessage {  get; set; }
 
     // TODO: content type?
     // Other message-specific metadata (on RequestOptions we have AddHeader)

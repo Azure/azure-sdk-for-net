@@ -309,8 +309,8 @@ namespace System.ClientModel.Primitives.FullDuplexMessaging
         public System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateMessage() { throw null; }
         public void Dispose() { }
         public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
-        public System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse> GetResponseStream() { throw null; }
-        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse> GetResponseStreamAsync() { throw null; }
+        public System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse> GetResponses() { throw null; }
+        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse> GetResponsesAsync() { throw null; }
         public void Send(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest message) { }
         public System.Threading.Tasks.Task SendAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest message) { throw null; }
     }
@@ -395,7 +395,7 @@ namespace System.ClientModel.Primitives.FullDuplexMessaging
     {
         public DuplexRequestOptions() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public bool? IsLastFragment { get { throw null; } set { } }
+        public bool? LastOfMessage { get { throw null; } set { } }
         protected internal void Apply(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest message) { }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
@@ -415,12 +415,12 @@ namespace System.ClientModel.Primitives.FullDuplexMessaging
     public abstract partial class WebSocketRequest : System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest
     {
         protected WebSocketRequest() { }
-        public bool? IsLastFragment { get { throw null; } set { } }
+        public bool? LastOfMessage { get { throw null; } set { } }
     }
     public abstract partial class WebSocketResponse : System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse
     {
         protected WebSocketResponse() { }
         public abstract string ContentType { get; }
-        public abstract bool IsLastFragment { get; }
+        public abstract bool LastOfMessage { get; }
     }
 }

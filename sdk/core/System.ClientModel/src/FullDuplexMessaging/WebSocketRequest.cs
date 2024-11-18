@@ -10,6 +10,6 @@ namespace System.ClientModel.Primitives.FullDuplexMessaging;
 public abstract class WebSocketRequest : DuplexPipelineRequest
 {
     // TODO: should this be on the base type?
-    public bool? IsLastFragment { get; set; }
+    public bool? LastOfMessage { get; set; }
 }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

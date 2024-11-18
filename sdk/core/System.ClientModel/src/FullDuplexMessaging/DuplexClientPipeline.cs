@@ -57,12 +57,14 @@ public sealed class DuplexClientPipeline : IDisposable, IAsyncDisposable
     }
 
     // TODO: What is sync story for recieve - does this work?
-    public IEnumerable<DuplexPipelineResponse> GetResponseStream()
+    // Returns a C# "stream" of service messages
+    public IEnumerable<DuplexPipelineResponse> GetResponses()
     {
         throw new NotImplementedException();
     }
 
-    public IAsyncEnumerable<DuplexPipelineResponse> GetResponseStreamAsync()
+    // Returns a C# "async stream" of service messages
+    public IAsyncEnumerable<DuplexPipelineResponse> GetResponsesAsync()
     {
         throw new NotImplementedException();
     }
