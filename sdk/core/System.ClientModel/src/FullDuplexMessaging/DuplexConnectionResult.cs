@@ -29,7 +29,7 @@ public class DuplexConnectionResult : IDisposable /*TODO: IAsyncDisposable? */
     public DuplexClientPipeline Pipeline => _pipeline ?? throw new ObjectDisposedException("TBD");
 
     // Protocol layer async DuplexClientResult
-    // Note: idea is that convenience method overload will add BidirectionalClientResult<T>
+    // Note: idea is that convenience method overload will add DuplexClientResult<T>
     // and take CancellationToken instead.
     public virtual IAsyncEnumerable<DuplexClientResult> GetResultsAsync(DuplexRequestOptions options)
     {

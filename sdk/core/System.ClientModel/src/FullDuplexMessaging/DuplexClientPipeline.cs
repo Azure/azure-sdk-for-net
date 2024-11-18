@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives.FullDuplexMessaging;
 
+/// <summary>
+/// I feel comfortable calling this a DuplexClientPipeline if it's in a
+/// namespace with the word FullDuplex in it.  If it was a half-duplex
+/// communication channel, we would write "half," but the "full" is implied
+/// the same way you don't put a coefficent of one in front of a variable
+/// in algebraic representations.
+/// </summary>
+
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public sealed class DuplexClientPipeline : IDisposable, IAsyncDisposable
 {
