@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
             }
         }
 
-        // [TestCase]
-        // [RecordedTest]
-        // public async Task CanGetNsp()
-        // {
-        //     NetworkSecurityPerimeterConfigurationData resourceData = await getNsp();
-        //     Assert.AreEqual(perimeterName, resourceData.Name);
-        // }
+        [TestCase]
+        [RecordedTest]
+        public async Task CanGetNsp()
+        {
+            NetworkSecurityPerimeterConfigurationData resourceData = await getNsp();
+            Assert.AreEqual(perimeterName, resourceData.Name);
+        }
 
-        // [TestCase]
-        // [RecordedTest]
-        // public async Task CanGetNspCollection()
-        // {
-        //     NetworkSecurityPerimeterConfigurationCollection resourceCollection = await getNspCollection();
-        //     Assert.IsNotNull(resourceCollection);
-        // }
+        [TestCase]
+        [RecordedTest]
+        public async Task CanGetNspCollection()
+        {
+            NetworkSecurityPerimeterConfigurationCollection resourceCollection = await getNspCollection();
+            Assert.IsNotNull(resourceCollection);
+        }
 
-        // [TestCase]
-        // [RecordedTest]
-        // public async Task CanInvokeNsp()
-        // {
-        //     await invokeNsp();
-        // }
+        [TestCase]
+        [RecordedTest]
+        public async Task CanInvokeNsp()
+        {
+            await invokeNsp();
+        }
     }
 }

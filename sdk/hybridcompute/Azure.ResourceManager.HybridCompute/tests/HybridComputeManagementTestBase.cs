@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         public string perimeterName = "15e77ed0-bfa3-4cfd-b4fb-3e272e6d0f57.testAssociation";
         public string machineNamePaygo = "WIN-IAH3TLSP7A8";
         public string resourceGroupNameProfile = "PayGo_cmdlet";
-        public string hybridComputeLicenseProfileResourceId = "/subscriptions/b24cc8ee-df4f-48ac-94cf-46edf36b0fae/resourceGroups/PayGo_cmdlet/providers/Microsoft.HybridCompute/machines/WIN-IAH3TLSP7A8/licenseProfiles/default";
 
         protected HybridComputeManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -492,7 +491,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
 
         protected async Task<HybridComputeLicenseProfileData> createLicenseProfile()
        {
-            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
+            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameProfile, machineNamePaygo);
             HybridComputeLicenseProfileResource hybridComputeLicenseProfile = ArmClient.GetHybridComputeLicenseProfileResource(hybridComputeLicenseProfileResourceId);
 
             // invoke the operation
@@ -508,8 +507,6 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                         SubscriptionStatus = LicenseProfileSubscriptionStatus.Enabled,
                     }
                 },
-                AssignedLicense = "{LicenseResourceId}",
-                SoftwareAssuranceCustomer = true,
             };
             ArmOperation<HybridComputeLicenseProfileResource> lro = await hybridComputeLicenseProfile.CreateOrUpdateAsync(WaitUntil.Completed, data);
             HybridComputeLicenseProfileResource result = lro.Value;
@@ -544,8 +541,6 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                         SubscriptionStatus = LicenseProfileSubscriptionStatusUpdate.Enable,
                     }
                 },
-                AssignedLicense = "{LicenseResourceId}",
-                SoftwareAssuranceCustomer = true,
             };
             ArmOperation<HybridComputeLicenseProfileResource> lro = await hybridComputeLicenseProfile.UpdateAsync(WaitUntil.Completed, patch);
             HybridComputeLicenseProfileResource result = lro.Value;
