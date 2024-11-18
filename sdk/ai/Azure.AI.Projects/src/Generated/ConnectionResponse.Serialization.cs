@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class GetConnectionResponse : IUtf8JsonSerializable, IJsonModel<GetConnectionResponse>
+    public partial class ConnectionResponse : IUtf8JsonSerializable, IJsonModel<ConnectionResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetConnectionResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GetConnectionResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConnectionResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetConnectionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetConnectionResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionResponse)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("id"u8);
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<InternalConnectionProperties>(Properties, options);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -57,19 +57,19 @@ namespace Azure.AI.Projects
             }
         }
 
-        GetConnectionResponse IJsonModel<GetConnectionResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConnectionResponse IJsonModel<ConnectionResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetConnectionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetConnectionResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGetConnectionResponse(document.RootElement, options);
+            return DeserializeConnectionResponse(document.RootElement, options);
         }
 
-        internal static GetConnectionResponse DeserializeGetConnectionResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ConnectionResponse DeserializeConnectionResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -79,7 +79,7 @@ namespace Azure.AI.Projects
             }
             string id = default;
             string name = default;
-            InternalConnectionProperties properties = default;
+            ConnectionProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = InternalConnectionProperties.DeserializeInternalConnectionProperties(property.Value, options);
+                    properties = ConnectionProperties.DeserializeConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,46 +105,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GetConnectionResponse(id, name, properties, serializedAdditionalRawData);
+            return new ConnectionResponse(id, name, properties, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<GetConnectionResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ConnectionResponse>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetConnectionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionResponse>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetConnectionResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GetConnectionResponse IPersistableModel<GetConnectionResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ConnectionResponse IPersistableModel<ConnectionResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetConnectionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionResponse>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeGetConnectionResponse(document.RootElement, options);
+                        return DeserializeConnectionResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetConnectionResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GetConnectionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConnectionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static GetConnectionResponse FromResponse(Response response)
+        internal static ConnectionResponse FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeGetConnectionResponse(document.RootElement);
+            return DeserializeConnectionResponse(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

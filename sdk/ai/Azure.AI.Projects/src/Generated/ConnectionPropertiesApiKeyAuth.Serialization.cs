@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class InternalConnectionPropertiesApiKeyAuth : IUtf8JsonSerializable, IJsonModel<InternalConnectionPropertiesApiKeyAuth>
+    public partial class ConnectionPropertiesApiKeyAuth : IUtf8JsonSerializable, IJsonModel<ConnectionPropertiesApiKeyAuth>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalConnectionPropertiesApiKeyAuth>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionPropertiesApiKeyAuth>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<InternalConnectionPropertiesApiKeyAuth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConnectionPropertiesApiKeyAuth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionPropertiesApiKeyAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionPropertiesApiKeyAuth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalConnectionPropertiesApiKeyAuth)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionPropertiesApiKeyAuth)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -39,19 +39,19 @@ namespace Azure.AI.Projects
             writer.WriteObjectValue(Credentials, options);
         }
 
-        InternalConnectionPropertiesApiKeyAuth IJsonModel<InternalConnectionPropertiesApiKeyAuth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConnectionPropertiesApiKeyAuth IJsonModel<ConnectionPropertiesApiKeyAuth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionPropertiesApiKeyAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionPropertiesApiKeyAuth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalConnectionPropertiesApiKeyAuth)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionPropertiesApiKeyAuth)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalConnectionPropertiesApiKeyAuth(document.RootElement, options);
+            return DeserializeConnectionPropertiesApiKeyAuth(document.RootElement, options);
         }
 
-        internal static InternalConnectionPropertiesApiKeyAuth DeserializeInternalConnectionPropertiesApiKeyAuth(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ConnectionPropertiesApiKeyAuth DeserializeConnectionPropertiesApiKeyAuth(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,46 +93,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InternalConnectionPropertiesApiKeyAuth(authType, category, target, serializedAdditionalRawData, credentials);
+            return new ConnectionPropertiesApiKeyAuth(authType, category, target, serializedAdditionalRawData, credentials);
         }
 
-        BinaryData IPersistableModel<InternalConnectionPropertiesApiKeyAuth>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ConnectionPropertiesApiKeyAuth>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionPropertiesApiKeyAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionPropertiesApiKeyAuth>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InternalConnectionPropertiesApiKeyAuth)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionPropertiesApiKeyAuth)} does not support writing '{options.Format}' format.");
             }
         }
 
-        InternalConnectionPropertiesApiKeyAuth IPersistableModel<InternalConnectionPropertiesApiKeyAuth>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ConnectionPropertiesApiKeyAuth IPersistableModel<ConnectionPropertiesApiKeyAuth>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionPropertiesApiKeyAuth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionPropertiesApiKeyAuth>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeInternalConnectionPropertiesApiKeyAuth(document.RootElement, options);
+                        return DeserializeConnectionPropertiesApiKeyAuth(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalConnectionPropertiesApiKeyAuth)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionPropertiesApiKeyAuth)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InternalConnectionPropertiesApiKeyAuth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConnectionPropertiesApiKeyAuth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new InternalConnectionPropertiesApiKeyAuth FromResponse(Response response)
+        internal static new ConnectionPropertiesApiKeyAuth FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeInternalConnectionPropertiesApiKeyAuth(document.RootElement);
+            return DeserializeConnectionPropertiesApiKeyAuth(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

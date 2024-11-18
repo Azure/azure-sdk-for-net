@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The credentials needed for API key authentication. </summary>
-    internal partial class CredentialsApiKeyAuth
+    public partial class CredentialsApiKeyAuth
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
