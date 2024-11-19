@@ -220,6 +220,7 @@ namespace Azure.Storage.DataMovement
     {
         public StorageResourceWriteToOffsetOptions() { }
         public string BlockId { get { throw null; } set { } }
+        public bool Initial { get { throw null; } set { } }
         public long? Position { get { throw null; } set { } }
         public Azure.Storage.DataMovement.StorageResourceItemProperties SourceProperties { get { throw null; } set { } }
     }
