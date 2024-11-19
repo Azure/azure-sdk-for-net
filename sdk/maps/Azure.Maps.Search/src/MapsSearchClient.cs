@@ -1,3 +1,4 @@
+
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
@@ -505,7 +506,7 @@ namespace Azure.Maps.Search
             {
                 return null;
             }
-
+            //bybytvyvy
             foreach (GeocodingQuery query in queries)
             {
                 GeocodingBatchRequestItem item = new GeocodingBatchRequestItem();
@@ -517,6 +518,11 @@ namespace Azure.Maps.Search
                 if (query.BoundingBox != null)
                 {
                     item.BoundingBox = new GeoBoundingBox(query.BoundingBox.West, query.BoundingBox.South, query.BoundingBox.East, query.BoundingBox.North);
+                }
+                if(item.Query == item.CountryRegion)
+                {
+                    item.Query = new GeoPosition(Convert.ToDouble(query.Coordinates?.Longitude + query.Locality), Convert.ToDouble(query.Coordinates?.Latitude + query.Locality));
+                }
                 }
                 if (query.LocalizedMapView != null)
                 {
