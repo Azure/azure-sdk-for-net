@@ -11,7 +11,6 @@ using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Models;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
-using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
