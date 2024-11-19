@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,7 +22,7 @@ namespace BasicTypeSpec
         private readonly Uri _endpoint;
         private const string AuthorizationHeader = "my-api-key";
         /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly ApiKeyCredential _keyCredential;
+        private readonly AzureKeyCredential _keyCredential;
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient for mocking. </summary>
         protected BasicTypeSpecClient()
@@ -34,7 +33,7 @@ namespace BasicTypeSpec
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null. </exception>
-        public BasicTypeSpecClient(Uri endpoint, ApiKeyCredential keyCredential) : this(endpoint, keyCredential, new BasicTypeSpecClientOptions())
+        public BasicTypeSpecClient(Uri endpoint, AzureKeyCredential keyCredential) : this(endpoint, keyCredential, new BasicTypeSpecClientOptions())
         {
         }
 
@@ -43,7 +42,7 @@ namespace BasicTypeSpec
         /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null. </exception>
-        public BasicTypeSpecClient(Uri endpoint, ApiKeyCredential keyCredential, BasicTypeSpecClientOptions options)
+        public BasicTypeSpecClient(Uri endpoint, AzureKeyCredential keyCredential, BasicTypeSpecClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(keyCredential, nameof(keyCredential));
@@ -52,7 +51,7 @@ namespace BasicTypeSpec
 
             _endpoint = endpoint;
             _keyCredential = keyCredential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] {  });
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new Azure.Core.AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -68,12 +67,12 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="headParameter"></param>
         /// <param name="queryParameter"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="optionalQuery"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SayHi(string headParameter, string queryParameter, RequestContext context, string optionalQuery = null)
+        public virtual Response SayHi(string headParameter, string queryParameter, string optionalQuery, RequestContext context = null)
         {
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
@@ -92,12 +91,12 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="headParameter"></param>
         /// <param name="queryParameter"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="optionalQuery"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SayHiAsync(string headParameter, string queryParameter, RequestContext context, string optionalQuery = null)
+        public virtual async Task<Response> SayHiAsync(string headParameter, string queryParameter, string optionalQuery, RequestContext context = null)
         {
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
@@ -117,7 +116,7 @@ namespace BasicTypeSpec
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
-            Response result = SayHi(headParameter, queryParameter, null, optionalQuery);
+            Response result = SayHi(headParameter, queryParameter, optionalQuery, null);
             return Response.FromValue((Thing)result, result);
         }
 
@@ -132,7 +131,7 @@ namespace BasicTypeSpec
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
-            Response result = await SayHiAsync(headParameter, queryParameter, null, optionalQuery).ConfigureAwait(false);
+            Response result = await SayHiAsync(headParameter, queryParameter, optionalQuery, null).ConfigureAwait(false);
             return Response.FromValue((Thing)result, result);
         }
 
