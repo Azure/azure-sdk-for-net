@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
@@ -66,24 +64,6 @@ namespace Azure.Core.Samples
             SecretClientOptions options = new SecretClientOptions
             {
                 Transport = new HttpClientTransport(client)
-            };
-
-            #endregion
-        }
-
-        [Test]
-        public void HttpClientProxyConfiguration()
-        {
-            #region Snippet:HttpClientProxyConfiguration
-
-            using HttpClientHandler handler = new HttpClientHandler()
-            {
-                Proxy = new WebProxy(new Uri("http://example.com"))
-            };
-
-            SecretClientOptions options = new SecretClientOptions
-            {
-                Transport = new HttpClientTransport(handler)
             };
 
             #endregion
