@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
 using System;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.EventGrid;
@@ -12,7 +11,6 @@ using Azure.Provisioning.ServiceBus;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.Primitives;
 using System.Collections.Generic;
-using System.ClientModel.TypeSpec;
 using Azure.Provisioning;
 using Azure.Provisioning.CloudMachine;
 
@@ -26,7 +24,8 @@ public class CloudMachineInfrastructure
 
     private Infrastructure _infrastructure = new Infrastructure("cm");
     private List<Provisionable> _resources = new();
-    private List<Type> _endpoints = new();
+    public FeatureCollection Features { get; } = new();
+    internal List<Type> Endpoints { get; } = new();
 
     // storage
     private StorageAccount _storage;
@@ -214,20 +213,22 @@ public class CloudMachineInfrastructure
     {
         _resources.Add(resource);
     }
-    public void AddFeature(CloudMachineFeature resource)
+    public void AddFeature(CloudMachineFeature feature)
     {
-        resource.AddTo(this);
+        feature.AddTo(this);
     }
 
     public void AddEndpoints<T>()
     {
         Type endpointsType = typeof(T);
         if (!endpointsType.IsInterface) throw new InvalidOperationException("Endpoints type must be an interface.");
-        _endpoints.Add(endpointsType);
+        Endpoints.Add(endpointsType);
     }
 
     public ProvisioningPlan Build(ProvisioningBuildOptions? context = null)
     {
+        Features.Emit(this);
+
         // Always add a default location parameter.
         // azd assumes there will be a location parameter for every module.
         // The Infrastructure location resolver will resolve unset Location properties to this parameter.
@@ -281,42 +282,5 @@ public class CloudMachineInfrastructure
         }
 
         return _infrastructure.Build(context);
-    }
-
-    public static bool Configure(string[] args, Action<CloudMachineInfrastructure>? configure = default)
-    {
-        if (args.Length < 1) return false;
-
-        string cmid = AzdHelpers.ReadOrCreateCmid();
-        CloudMachineInfrastructure cmi = new(cmid);
-        if (configure != default)
-        {
-            configure(cmi);
-        }
-
-        if (args[0] == "-bicep")
-        {
-            string infraDirectory = Path.Combine(".", "infra");
-            AzdHelpers.Init(infraDirectory, cmi);
-            return true;
-        }
-
-        if (args[0] == "-tsp")
-        {
-            foreach (Type endpoints in cmi._endpoints)
-            {
-                string name = endpoints.Name;
-                if (name.StartsWith("I")) name = name.Substring(1);
-                string directory = Path.Combine(".", "tsp");
-                string tspFile = Path.Combine(directory, $"{name}.tsp");
-                Directory.CreateDirectory(Path.GetDirectoryName(tspFile));
-                if (File.Exists(tspFile)) File.Delete(tspFile);
-                using FileStream stream = File.OpenWrite(tspFile);
-                TypeSpecWriter.WriteServer(stream, endpoints);
-            }
-            return true;
-        }
-
-        return false;
     }
 }

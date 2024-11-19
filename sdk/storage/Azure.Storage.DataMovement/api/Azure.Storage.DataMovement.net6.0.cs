@@ -238,10 +238,10 @@ namespace Azure.Storage.DataMovement
     }
     public partial class TransferItemFailedEventArgs : Azure.Storage.DataMovement.DataTransferEventArgs
     {
-        public TransferItemFailedEventArgs(string transferId, Azure.Storage.DataMovement.StorageResourceItem sourceResource, Azure.Storage.DataMovement.StorageResourceItem destinationResource, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
-        public Azure.Storage.DataMovement.StorageResourceItem DestinationResource { get { throw null; } }
+        public TransferItemFailedEventArgs(string transferId, Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.StorageResource destinationResource, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
+        public Azure.Storage.DataMovement.StorageResource DestinationResource { get { throw null; } }
         public System.Exception Exception { get { throw null; } }
-        public Azure.Storage.DataMovement.StorageResourceItem SourceResource { get { throw null; } }
+        public Azure.Storage.DataMovement.StorageResource SourceResource { get { throw null; } }
     }
     public partial class TransferItemSkippedEventArgs : Azure.Storage.DataMovement.DataTransferEventArgs
     {

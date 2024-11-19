@@ -16,6 +16,9 @@ namespace Azure.Generator
     public class AzureTypeFactory : ScmTypeFactory
     {
         /// <inheritdoc/>
+        public override CSharpType KeyCredentialType => typeof(AzureKeyCredential);
+
+        /// <inheritdoc/>
         public override CSharpType ClientUriBuilderBaseType => typeof(RequestUriBuilder);
 
         /// <inheritdoc/>

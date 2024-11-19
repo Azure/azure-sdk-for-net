@@ -16,7 +16,7 @@ namespace Azure.Storage.DataMovement
             return Task.CompletedTask;
         }
 
-        public Task AddNewJobPartAsync(string transferId, int partNumber, Stream headerStream, CancellationToken cancellationToken = default)
+        public Task AddNewJobPartAsync(string transferId, int partNumber, JobPartPlanHeader header, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }

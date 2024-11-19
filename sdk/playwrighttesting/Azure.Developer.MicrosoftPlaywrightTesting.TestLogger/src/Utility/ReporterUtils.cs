@@ -3,8 +3,8 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -81,7 +81,18 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
 
         internal static async Task<string> RunCommandAsync(string command, bool async = false)
         {
-            var processInfo = new ProcessStartInfo("cmd", $"/c {command}")
+            string shell, shellArgs;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                shell = "/bin/bash";
+                shellArgs = $"-c \"{command}\"";
+            }
+            else
+            {
+                shell = "cmd";
+                shellArgs = $"/c {command}";
+            }
+            var processInfo = new ProcessStartInfo(shell, shellArgs)
             {
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
@@ -166,7 +177,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                 Uri url = new Uri(sasUri);
                 string query = url.Query;
                 var queryParams = System.Web.HttpUtility.ParseQueryString(query);
-                string expiryTime = queryParams["se"]; // 'se' is the query parameter for the expiry time
+                string? expiryTime = queryParams["se"]; // 'se' is the query parameter for the expiry time
 
                 if (!string.IsNullOrEmpty(expiryTime))
                 {
