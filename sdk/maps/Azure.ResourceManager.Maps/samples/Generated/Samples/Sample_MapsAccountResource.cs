@@ -20,9 +20,61 @@ namespace Azure.ResourceManager.Maps.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateAccountEncryption()
+        {
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2023-06-01/examples/UpdateAccountEncryption.json
+            // this example is just showing the usage of "Accounts_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MapsAccountResource created on azure
+            // for more information of creating MapsAccountResource, please refer to the document of MapsAccountResource
+            string subscriptionId = "21a9967a-e8a9-4656-a70b-96ff1c4d05a0";
+            string resourceGroupName = "myResourceGroup";
+            string accountName = "myMapsAccount";
+            ResourceIdentifier mapsAccountResourceId = MapsAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            MapsAccountResource mapsAccount = client.GetMapsAccountResource(mapsAccountResourceId);
+
+            // invoke the operation
+            MapsAccountPatch patch = new MapsAccountPatch()
+            {
+                Identity = new ManagedServiceIdentity("SystemAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identityName")] = null,
+},
+                },
+                Encryption = new Encryption()
+                {
+                    CustomerManagedKeyEncryption = new CustomerManagedKeyEncryption()
+                    {
+                        KeyEncryptionKeyIdentity = new CustomerManagedKeyEncryptionKeyIdentity()
+                        {
+                            IdentityType = IdentityType.SystemAssignedIdentity,
+                            UserAssignedIdentityResourceId = null,
+                        },
+                        KeyEncryptionKeyUri = new Uri("https://contosovault.vault.azure.net/keys/contosokek"),
+                    },
+                },
+            };
+            MapsAccountResource result = await mapsAccount.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MapsAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAccountManagedIdentities()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/UpdateAccountManagedIdentity.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2023-06-01/examples/UpdateAccountManagedIdentity.json
             // this example is just showing the usage of "Accounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +120,7 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAccountTags()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/UpdateAccount.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2023-06-01/examples/UpdateAccount.json
             // this example is just showing the usage of "Accounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,7 +157,7 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateToGen1Account()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/UpdateAccountGen1.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2023-06-01/examples/UpdateAccountGen1.json
             // this example is just showing the usage of "Accounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -140,7 +192,7 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateToGen2Account()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/UpdateAccountGen2.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2023-06-01/examples/UpdateAccountGen2.json
             // this example is just showing the usage of "Accounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,7 +227,7 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAccount()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/DeleteAccount.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2023-06-01/examples/DeleteAccount.json
             // this example is just showing the usage of "Accounts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -201,7 +253,7 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAccount()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/GetAccount.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2023-06-01/examples/GetAccount.json
             // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -231,7 +283,7 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
         [Ignore("Only validating compilation of examples")]
         public async Task GetMapsAccounts_ListAccountsBySubscription()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/ListAccountsBySubscription.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2023-06-01/examples/ListAccountsBySubscription.json
             // this example is just showing the usage of "Accounts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -262,7 +314,7 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
         [Ignore("Only validating compilation of examples")]
         public async Task GetSas_ListAccountSas()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/AccountListSAS.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2023-06-01/examples/AccountListSAS.json
             // this example is just showing the usage of "Accounts_ListSas" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -295,7 +347,7 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
         [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_ListKeys()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/ListKeys.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2023-06-01/examples/ListKeys.json
             // this example is just showing the usage of "Accounts_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -321,7 +373,7 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
         [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKeys_RegenerateKey()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/RegenerateKey.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2023-06-01/examples/RegenerateKey.json
             // this example is just showing the usage of "Accounts_RegenerateKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
