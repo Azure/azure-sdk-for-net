@@ -42,7 +42,6 @@ namespace Azure.Storage.DataMovement
 
         private long _bytesTransferred;
         private readonly long _expectedLength;
-        private int _chunkTransferred;
 
         /// <summary>
         /// The controller for downloading the chunks to each file.
@@ -70,7 +69,6 @@ namespace Azure.Storage.DataMovement
             // Set bytes transferred to the length of bytes we got back from the initial
             // download request
             _bytesTransferred = currentTransferred;
-            _chunkTransferred = 0;
 
             // The size of the channel should never exceed 50k (limit on blocks in a block blob).
             // and that's in the worst case that we never read from the channel and had a maximum chunk blob.
@@ -129,7 +127,7 @@ namespace Azure.Storage.DataMovement
                             args.Length,
                             content,
                             _expectedLength,
-                            initial: _chunkTransferred == 0).ConfigureAwait(false);
+                            initial: _bytesTransferred == 0).ConfigureAwait(false);
                     }
                     UpdateBytesAndRange(args.Length);
 
@@ -153,7 +151,6 @@ namespace Azure.Storage.DataMovement
         /// <param name="bytesDownloaded"></param>
         private void UpdateBytesAndRange(long bytesDownloaded)
         {
-            _chunkTransferred++;
             _bytesTransferred += bytesDownloaded;
             _reportProgressInBytes(bytesDownloaded);
         }

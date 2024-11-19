@@ -8,7 +8,6 @@ using System.IO;
 using System.Threading;
 using Azure.Core;
 using Azure.Storage.Common;
-using System.Linq;
 
 namespace Azure.Storage.DataMovement
 {
