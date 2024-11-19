@@ -59,8 +59,8 @@ function Install-ModuleIfNotInstalled()
   )
 
   # List of modules+versions we want to replace with internal feed sources for reliability, security, etc.
-  $mirrorFeedOverrides = @{
-    'powershell-yaml;0.4.7' = 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2'
+  $packageFeedOverrides = @{
+    'powershell-yaml' = 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2'
   }
 
   try {
@@ -81,8 +81,8 @@ function Install-ModuleIfNotInstalled()
 
     $repositoryUrl = if ($repositoryUrl) {
       $repositoryUrl
-    } elseif ($mirrorFeedOverrides.Contains("${moduleName};${version}")) {
-      $mirrorFeedOverrides["${moduleName};${version}"]
+    } elseif ($mirrorFeedOverrides.Contains("${moduleName}")) {
+      $mirrorFeedOverrides["${moduleName}"]
     } else {
       $DefaultPSRepositoryUrl
     }
