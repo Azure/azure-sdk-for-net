@@ -4,7 +4,6 @@
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
-using System;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 
