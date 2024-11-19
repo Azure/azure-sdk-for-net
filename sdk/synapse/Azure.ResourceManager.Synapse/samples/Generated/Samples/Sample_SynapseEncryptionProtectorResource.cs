@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseEncryptionProtectorResource synapseEncryptionProtector = client.GetSynapseEncryptionProtectorResource(synapseEncryptionProtectorResourceId);
 
             // invoke the operation
-            SynapseEncryptionProtectorData data = new SynapseEncryptionProtectorData()
+            SynapseEncryptionProtectorData data = new SynapseEncryptionProtectorData
             {
                 ServerKeyName = "someVault_someKey_01234567890123456789012345678901",
                 ServerKeyType = SynapseServerKeyType.AzureKeyVault,
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseEncryptionProtectorResource synapseEncryptionProtector = client.GetSynapseEncryptionProtectorResource(synapseEncryptionProtectorResourceId);
 
             // invoke the operation
-            SynapseEncryptionProtectorData data = new SynapseEncryptionProtectorData()
+            SynapseEncryptionProtectorData data = new SynapseEncryptionProtectorData
             {
                 ServerKeyName = "ServiceManaged",
                 ServerKeyType = SynapseServerKeyType.ServiceManaged,
