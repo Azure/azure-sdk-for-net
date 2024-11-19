@@ -1,5 +1,11 @@
 # Release History
 
+## 3.4.4 (2024-11-19)
+
+### Bugs Fixed
+
+- Return correct `WebHook-Allowed-Origin` response header for CloudEvent schema subscriptions for gov cloud.
+
 ## 3.4.3 (2024-09-10)
 
 ### Bugs Fixed
