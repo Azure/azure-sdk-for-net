@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="corsRulesValue"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
         /// <param name="encryption"> (Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled. </param>
         /// <returns> A new <see cref="Models.MapsAccountProperties"/> instance for mocking. </returns>
-        public static MapsAccountProperties MapsAccountProperties(Guid? uniqueId = null, bool? disableLocalAuth = null, string provisioningState = null, IEnumerable<MapsLinkedResource> linkedResources = null, IEnumerable<MapsCorsRule> corsRulesValue = null, Encryption encryption = null)
+        public static MapsAccountProperties MapsAccountProperties(Guid? uniqueId = null, bool? disableLocalAuth = null, string provisioningState = null, IEnumerable<MapsLinkedResource> linkedResources = null, IEnumerable<MapsCorsRule> corsRulesValue = null, MapsEncryption encryption = null)
         {
             linkedResources ??= new List<MapsLinkedResource>();
             corsRulesValue ??= new List<MapsCorsRule>();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="corsRulesValue"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
         /// <param name="encryption"> (Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled. </param>
         /// <returns> A new <see cref="Models.MapsAccountPatch"/> instance for mocking. </returns>
-        public static MapsAccountPatch MapsAccountPatch(IDictionary<string, string> tags = null, MapsAccountKind? kind = null, MapsSku sku = null, ManagedServiceIdentity identity = null, Guid? uniqueId = null, bool? disableLocalAuth = null, string provisioningState = null, IEnumerable<MapsLinkedResource> linkedResources = null, IEnumerable<MapsCorsRule> corsRulesValue = null, Encryption encryption = null)
+        public static MapsAccountPatch MapsAccountPatch(IDictionary<string, string> tags = null, MapsAccountKind? kind = null, MapsSku sku = null, ManagedServiceIdentity identity = null, Guid? uniqueId = null, bool? disableLocalAuth = null, string provisioningState = null, IEnumerable<MapsLinkedResource> linkedResources = null, IEnumerable<MapsCorsRule> corsRulesValue = null, MapsEncryption encryption = null)
         {
             tags ??= new Dictionary<string, string>();
             linkedResources ??= new List<MapsLinkedResource>();

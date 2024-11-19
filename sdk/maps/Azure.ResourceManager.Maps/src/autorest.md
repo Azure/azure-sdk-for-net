@@ -35,6 +35,9 @@ prepend-rp-prefix:
   - LinkedResource
   - SigningKey
   - CorsRule
+  - Encryption
+  - InfrastructureEncryption
+  - IdentityType
 
 format-by-name-rules:
   'tenantId': 'uuid'

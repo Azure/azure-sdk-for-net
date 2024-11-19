@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            IdentityType? identityType = default;
+            MapsIdentityType? identityType = default;
             ResourceIdentifier userAssignedIdentityResourceId = default;
             Guid? delegatedIdentityClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    identityType = new IdentityType(property.Value.GetString());
+                    identityType = new MapsIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentityResourceId"u8))

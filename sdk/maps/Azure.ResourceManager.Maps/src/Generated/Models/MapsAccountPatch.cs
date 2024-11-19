@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="cors"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
         /// <param name="encryption"> (Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MapsAccountPatch(IDictionary<string, string> tags, MapsAccountKind? kind, MapsSku sku, ManagedServiceIdentity identity, Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IList<MapsLinkedResource> linkedResources, CorsRules cors, Encryption encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MapsAccountPatch(IDictionary<string, string> tags, MapsAccountKind? kind, MapsSku sku, ManagedServiceIdentity identity, Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IList<MapsLinkedResource> linkedResources, CorsRules cors, MapsEncryption encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Kind = kind;
@@ -110,6 +110,6 @@ namespace Azure.ResourceManager.Maps.Models
         }
 
         /// <summary> (Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled. </summary>
-        public Encryption Encryption { get; set; }
+        public MapsEncryption Encryption { get; set; }
     }
 }

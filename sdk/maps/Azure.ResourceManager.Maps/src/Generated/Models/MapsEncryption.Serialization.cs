@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class Encryption : IUtf8JsonSerializable, IJsonModel<Encryption>
+    public partial class MapsEncryption : IUtf8JsonSerializable, IJsonModel<MapsEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Encryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Encryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MapsEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Encryption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MapsEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Encryption)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsEncryption)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(InfrastructureEncryption))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Maps.Models
             }
         }
 
-        Encryption IJsonModel<Encryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MapsEncryption IJsonModel<MapsEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Encryption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MapsEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Encryption)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsEncryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEncryption(document.RootElement, options);
+            return DeserializeMapsEncryption(document.RootElement, options);
         }
 
-        internal static Encryption DeserializeEncryption(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MapsEncryption DeserializeMapsEncryption(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            InfrastructureEncryption? infrastructureEncryption = default;
+            MapsInfrastructureEncryption? infrastructureEncryption = default;
             CustomerManagedKeyEncryption customerManagedKeyEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    infrastructureEncryption = new InfrastructureEncryption(property.Value.GetString());
+                    infrastructureEncryption = new MapsInfrastructureEncryption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("customerManagedKeyEncryption"u8))
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Encryption(infrastructureEncryption, customerManagedKeyEncryption, serializedAdditionalRawData);
+            return new MapsEncryption(infrastructureEncryption, customerManagedKeyEncryption, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Encryption>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MapsEncryption>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Encryption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MapsEncryption>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Encryption)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsEncryption)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Encryption IPersistableModel<Encryption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MapsEncryption IPersistableModel<MapsEncryption>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Encryption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MapsEncryption>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEncryption(document.RootElement, options);
+                        return DeserializeMapsEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Encryption)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsEncryption)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Encryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MapsEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

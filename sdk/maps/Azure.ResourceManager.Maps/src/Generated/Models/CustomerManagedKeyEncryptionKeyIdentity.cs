@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="userAssignedIdentityResourceId"> user assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity and delegatedResourceIdentity. </param>
         /// <param name="delegatedIdentityClientId"> delegated identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity and userAssignedIdentity - internal use only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomerManagedKeyEncryptionKeyIdentity(IdentityType? identityType, ResourceIdentifier userAssignedIdentityResourceId, Guid? delegatedIdentityClientId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomerManagedKeyEncryptionKeyIdentity(MapsIdentityType? identityType, ResourceIdentifier userAssignedIdentityResourceId, Guid? delegatedIdentityClientId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityType = identityType;
             UserAssignedIdentityResourceId = userAssignedIdentityResourceId;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Maps.Models
         }
 
         /// <summary> Values can be systemAssignedIdentity or userAssignedIdentity. </summary>
-        public IdentityType? IdentityType { get; set; }
+        public MapsIdentityType? IdentityType { get; set; }
         /// <summary> user assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity and delegatedResourceIdentity. </summary>
         public ResourceIdentifier UserAssignedIdentityResourceId { get; set; }
         /// <summary> delegated identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity and userAssignedIdentity - internal use only. </summary>

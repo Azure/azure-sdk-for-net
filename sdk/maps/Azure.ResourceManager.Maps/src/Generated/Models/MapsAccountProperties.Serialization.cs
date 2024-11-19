@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Maps.Models
             string provisioningState = default;
             IList<MapsLinkedResource> linkedResources = default;
             CorsRules cors = default;
-            Encryption encryption = default;
+            MapsEncryption encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    encryption = Encryption.DeserializeEncryption(property.Value, options);
+                    encryption = MapsEncryption.DeserializeMapsEncryption(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

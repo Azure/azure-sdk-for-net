@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.Maps.Samples
 [new ResourceIdentifier("/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identityName")] = null,
 },
                 },
-                Encryption = new Encryption()
+                Encryption = new MapsEncryption()
                 {
                     CustomerManagedKeyEncryption = new CustomerManagedKeyEncryption()
                     {
                         KeyEncryptionKeyIdentity = new CustomerManagedKeyEncryptionKeyIdentity()
                         {
-                            IdentityType = IdentityType.SystemAssignedIdentity,
+                            IdentityType = MapsIdentityType.SystemAssignedIdentity,
                             UserAssignedIdentityResourceId = null,
                         },
                         KeyEncryptionKeyUri = new Uri("https://contosovault.vault.azure.net/keys/contosokek"),
