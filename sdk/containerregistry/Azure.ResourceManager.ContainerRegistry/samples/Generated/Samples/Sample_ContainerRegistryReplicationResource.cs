@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             ContainerRegistryReplicationResource containerRegistryReplication = client.GetContainerRegistryReplicationResource(containerRegistryReplicationResourceId);
 
             // invoke the operation
-            ContainerRegistryReplicationPatch patch = new ContainerRegistryReplicationPatch()
+            ContainerRegistryReplicationPatch patch = new ContainerRegistryReplicationPatch
             {
                 Tags =
 {
-["key"] = "value",
+["key"] = "value"
 },
             };
             ArmOperation<ContainerRegistryReplicationResource> lro = await containerRegistryReplication.UpdateAsync(WaitUntil.Completed, patch);
