@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             PartnerNamespaceChannelResource partnerNamespaceChannel = client.GetPartnerNamespaceChannelResource(partnerNamespaceChannelResourceId);
 
             // invoke the operation
-            PartnerNamespaceChannelPatch patch = new PartnerNamespaceChannelPatch()
+            PartnerNamespaceChannelPatch patch = new PartnerNamespaceChannelPatch
             {
                 ExpireOnIfNotActivated = DateTimeOffset.Parse("2022-03-23T23:06:11.785Z"),
             };
