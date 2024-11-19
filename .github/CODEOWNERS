@@ -498,6 +498,12 @@
 # ServiceLabel: %Defender EASM
 # ServiceOwners:                                                   @thang-bit
 
+# PRLabel: %Durable Task
+/sdk/durabletask/                                                  @berndverst @kaibocai @torosent
+
+# ServiceLabel: %Durable Task
+# ServiceOwners:                                                   @berndverst @kaibocai @torosent
+
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @JoshLove-msft @jsquire @m-redding
 
