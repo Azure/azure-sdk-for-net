@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Tests.Scenario
 
         private ResourceGroupResource _testRG;
 
-        public HybridConnectivityPublicCloudConnectorTest(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
+        public HybridConnectivityPublicCloudConnectorTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
