@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Logic.Samples
             LogicWorkflowTriggerResource logicWorkflowTrigger = client.GetLogicWorkflowTriggerResource(logicWorkflowTriggerResourceId);
 
             // invoke the operation
-            LogicWorkflowTriggerStateActionContent content = new LogicWorkflowTriggerStateActionContent(new LogicWorkflowTriggerReference()
+            LogicWorkflowTriggerStateActionContent content = new LogicWorkflowTriggerStateActionContent(new LogicWorkflowTriggerReference
             {
                 Id = new ResourceIdentifier("subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/sourceResGroup/providers/Microsoft.Logic/workflows/sourceWorkflow/triggers/sourceTrigger"),
             });
