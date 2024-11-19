@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.1.0 (Unreleased)
 
 ### Features Added
 
@@ -9,9 +9,7 @@
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Upgrade Maps ARM API version to `2023-06-01`
 
 ## 1.1.0-beta.3 (2023-11-29)
 
