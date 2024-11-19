@@ -331,18 +331,19 @@ namespace System.ClientModel.Primitives.FullDuplexMessaging
     }
     public partial class DuplexConnectionResult : System.IDisposable
     {
-        protected DuplexConnectionResult(System.ClientModel.Primitives.PipelineResponse response, System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineOptions? options = null) { }
+        protected DuplexConnectionResult(System.ClientModel.Primitives.PipelineResponse response, System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineOptions options) { }
         public System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientPipeline Pipeline { get { throw null; } }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        public virtual System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult> GetResults(System.ClientModel.Primitives.FullDuplexMessaging.DuplexRequestOptions options) { throw null; }
-        public virtual System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult> GetResultsAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexRequestOptions options) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult?> GetResults(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult?> GetResultsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected void Send(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.FullDuplexMessaging.DuplexRequestOptions? options = null) { }
         protected System.Threading.Tasks.Task SendAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.FullDuplexMessaging.DuplexRequestOptions? options = null) { throw null; }
     }
     public partial class DuplexPipelineOptions
     {
         public DuplexPipelineOptions() { }
+        public int? HeartbeatMilliseconds { get { throw null; } set { } }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
     }

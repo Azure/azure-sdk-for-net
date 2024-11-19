@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives.FullDuplexMessaging;
@@ -14,16 +15,13 @@ namespace System.ClientModel.Primitives.FullDuplexMessaging;
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class DuplexConnectionResult : IDisposable /*TODO: IAsyncDisposable? */
 {
-    private readonly DuplexPipelineOptions _options;
     private DuplexClientPipeline? _pipeline;
 
     private bool _disposed;
 
-    protected DuplexConnectionResult(PipelineResponse response, DuplexPipelineOptions? options = default)
+    protected DuplexConnectionResult(PipelineResponse response, DuplexPipelineOptions options)
     {
-        _options = options ?? new DuplexPipelineOptions();
-
-        _pipeline = DuplexClientPipeline.Create(response, _options);
+        _pipeline = DuplexClientPipeline.Create(response, options);
     }
 
     public DuplexClientPipeline Pipeline => _pipeline ?? throw new ObjectDisposedException("TBD");
@@ -31,13 +29,17 @@ public class DuplexConnectionResult : IDisposable /*TODO: IAsyncDisposable? */
     // Protocol layer async DuplexClientResult
     // Note: idea is that convenience method overload will add DuplexClientResult<T>
     // and take CancellationToken instead.
-    public virtual IAsyncEnumerable<DuplexClientResult> GetResultsAsync(DuplexRequestOptions options)
+    // Note: this returns a nullable value so that the stream can return null values
+    // as a heartbeat to pump the result stream to give the client notification it
+    // can iterate the event-loop even when no service message has been delivered on
+    // the result stream.
+    public virtual IAsyncEnumerable<DuplexClientResult?> GetResultsAsync(CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
     // Protocol layer sync method
-    public virtual IEnumerable<DuplexClientResult> GetResults(DuplexRequestOptions options)
+    public virtual IEnumerable<DuplexClientResult?> GetResults(CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

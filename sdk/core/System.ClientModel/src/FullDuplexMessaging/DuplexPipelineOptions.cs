@@ -14,6 +14,21 @@ public class DuplexPipelineOptions
     private bool _frozen;
 
     /// <summary>
+    /// Heartbeat to move pipeline response iterator forward at a regular interval.
+    /// Default is one second, but client or application may want to set it to
+    /// a smaller value to make the application more responsive.
+    /// </summary>
+    // TODO: Question: should this go in the pipeline options or be a parameter to
+    // DuplexConnectionResult?  i.e. at what abstraction layer should the hearbeat
+    // be implemented?  There is an argument that it should go in the connection
+    // result so that the pipeline can represent only the sent and received messages
+    // between the client and the service.  There is another argument that the
+    // heartbeat could be implemented as a pipeline policy, and doing so would
+    // enable customization via custom heartbeat policies -- which could be a nice
+    // extensibility feature.
+    public int? HeartbeatMilliseconds { get; set; }
+
+    /// <summary>
     /// Freeze this instance of <see cref="ClientPipelineOptions"/>.  After
     /// this method has been called, any attempt to set properties on the
     /// instance or call methods that would change its state will throw

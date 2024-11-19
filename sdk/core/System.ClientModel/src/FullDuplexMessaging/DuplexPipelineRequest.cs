@@ -28,6 +28,11 @@ public abstract class DuplexPipelineRequest : IDisposable
     private ArrayBackedPropertyBag<ulong, object> PropertyBag => _propertyBag ??= new();
 
     // TODO: Do we need to support the WS text/binary switch for Content?
+    // TODO: Could this be BinaryData instead?  If so, it wouldn't need to be disposed,
+    // But perhaps dispose is not catastrophic, if the contract is that the pipeline
+    // will dispose it?  What is the contract?
+    // I don't think this can be BinaryData, since we need to be able to send arbitrarily
+    // large audio without buffering in-memory.
     public BinaryContent? Content { get; set; }
 
     // TODO: settable here? Or better to use a RequestOptions.Apply paradigm?
