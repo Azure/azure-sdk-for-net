@@ -5,6 +5,7 @@ using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.KeyVault;
+using Azure.Provisioning.Primitives;
 
 namespace Azure.CloudMachine.KeyVault;
 
@@ -20,7 +21,7 @@ public class KeyVaultFeature : CloudMachineFeature
         }
         Sku = sku;
     }
-    public override void AddTo(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitCore(CloudMachineInfrastructure infrastructure)
     {
         // Add a KeyVault to the CloudMachine infrastructure.
         KeyVaultService keyVaultResource = new("cm_kv")
@@ -57,5 +58,7 @@ public class KeyVaultFeature : CloudMachineFeature
         kvMiRoleAssignment.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", KeyVaultBuiltInRole.KeyVaultAdministrator.ToString());
         kvMiRoleAssignment.PrincipalId = infrastructure.Identity.PrincipalId;
         infrastructure.AddResource(kvMiRoleAssignment);
+
+        return keyVaultResource;
     }
 }
