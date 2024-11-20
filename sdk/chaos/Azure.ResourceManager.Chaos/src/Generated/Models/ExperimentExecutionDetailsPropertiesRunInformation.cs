@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> The information of the experiment run. </summary>
-    internal partial class ChaosExperimentRunInformation
+    internal partial class ExperimentExecutionDetailsPropertiesRunInformation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Chaos.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ChaosExperimentRunInformation"/>. </summary>
-        internal ChaosExperimentRunInformation()
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetailsPropertiesRunInformation"/>. </summary>
+        internal ExperimentExecutionDetailsPropertiesRunInformation()
         {
             Steps = new ChangeTrackingList<ChaosExperimentRunStepStatus>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosExperimentRunInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetailsPropertiesRunInformation"/>. </summary>
         /// <param name="steps"> The steps of the experiment run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosExperimentRunInformation(IReadOnlyList<ChaosExperimentRunStepStatus> steps, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExperimentExecutionDetailsPropertiesRunInformation(IReadOnlyList<ChaosExperimentRunStepStatus> steps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Steps = steps;
             _serializedAdditionalRawData = serializedAdditionalRawData;

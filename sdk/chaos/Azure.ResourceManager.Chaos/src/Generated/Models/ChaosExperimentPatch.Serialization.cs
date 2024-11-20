@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -35,11 +34,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 throw new FormatException($"The model {nameof(ChaosExperimentPatch)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -50,6 +44,11 @@ namespace Azure.ResourceManager.Chaos.Models
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,21 +87,12 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
+            ManagedServiceIdentityUpdate identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -117,13 +107,22 @@ namespace Azure.ResourceManager.Chaos.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ManagedServiceIdentityUpdate.DeserializeManagedServiceIdentityUpdate(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ChaosExperimentPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ChaosExperimentPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosExperimentPatch>.Write(ModelReaderWriterOptions options)

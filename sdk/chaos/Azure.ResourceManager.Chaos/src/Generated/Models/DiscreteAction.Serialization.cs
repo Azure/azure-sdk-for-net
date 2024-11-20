@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public partial class ChaosDiscreteAction : IUtf8JsonSerializable, IJsonModel<ChaosDiscreteAction>
+    public partial class DiscreteAction : IUtf8JsonSerializable, IJsonModel<DiscreteAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosDiscreteAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiscreteAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ChaosDiscreteAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiscreteAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosDiscreteAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscreteAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosDiscreteAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscreteAction)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStringValue(SelectorId);
         }
 
-        ChaosDiscreteAction IJsonModel<ChaosDiscreteAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DiscreteAction IJsonModel<DiscreteAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosDiscreteAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscreteAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosDiscreteAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscreteAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChaosDiscreteAction(document.RootElement, options);
+            return DeserializeDiscreteAction(document.RootElement, options);
         }
 
-        internal static ChaosDiscreteAction DeserializeChaosDiscreteAction(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DiscreteAction DeserializeDiscreteAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             IList<ChaosKeyValuePair> parameters = default;
             string selectorId = default;
-            string type = default;
             string name = default;
+            ExperimentActionType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.Chaos.Models
                     selectorId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ExperimentActionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,38 +105,38 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ChaosDiscreteAction(type, name, serializedAdditionalRawData, parameters, selectorId);
+            return new DiscreteAction(name, type, serializedAdditionalRawData, parameters, selectorId);
         }
 
-        BinaryData IPersistableModel<ChaosDiscreteAction>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DiscreteAction>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosDiscreteAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscreteAction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosDiscreteAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscreteAction)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ChaosDiscreteAction IPersistableModel<ChaosDiscreteAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DiscreteAction IPersistableModel<DiscreteAction>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosDiscreteAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscreteAction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeChaosDiscreteAction(document.RootElement, options);
+                        return DeserializeDiscreteAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosDiscreteAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscreteAction)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ChaosDiscreteAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiscreteAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

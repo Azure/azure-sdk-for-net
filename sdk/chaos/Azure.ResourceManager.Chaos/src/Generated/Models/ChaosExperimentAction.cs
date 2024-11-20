@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary>
     /// Model that represents the base action model. 9 total per experiment.
     /// Please note <see cref="ChaosExperimentAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ChaosContinuousAction"/>, <see cref="ChaosDelayAction"/> and <see cref="ChaosDiscreteAction"/>.
+    /// The available derived classes include <see cref="ContinuousAction"/>, <see cref="DelayAction"/> and <see cref="DiscreteAction"/>.
     /// </summary>
     public abstract partial class ChaosExperimentAction
     {
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosExperimentAction"/>. </summary>
-        /// <param name="actionType"> Enum that discriminates between action models. </param>
         /// <param name="name"> String that represents a Capability URN. </param>
+        /// <param name="type"> Chaos experiment action discriminator type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosExperimentAction(string actionType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChaosExperimentAction(string name, ExperimentActionType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ActionType = actionType;
             Name = name;
+            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Chaos.Models
         {
         }
 
-        /// <summary> Enum that discriminates between action models. </summary>
-        internal string ActionType { get; set; }
         /// <summary> String that represents a Capability URN. </summary>
         public string Name { get; set; }
+        /// <summary> Chaos experiment action discriminator type. </summary>
+        internal ExperimentActionType Type { get; set; }
     }
 }

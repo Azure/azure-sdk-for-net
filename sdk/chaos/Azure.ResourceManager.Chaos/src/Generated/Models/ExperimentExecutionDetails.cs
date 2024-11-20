@@ -57,36 +57,24 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> The status of the execution. </param>
-        /// <param name="startedOn"> String that represents the start date time. </param>
-        /// <param name="stoppedOn"> String that represents the stop date time. </param>
         /// <param name="failureReason"> The reason why the execution failed. </param>
         /// <param name="lastActionOn"> String that represents the last action date time. </param>
         /// <param name="runInformation"> The information of the experiment run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, string failureReason, DateTimeOffset? lastActionOn, ChaosExperimentRunInformation runInformation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string failureReason, DateTimeOffset? lastActionOn, ExperimentExecutionDetailsPropertiesRunInformation runInformation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Status = status;
-            StartedOn = startedOn;
-            StoppedOn = stoppedOn;
             FailureReason = failureReason;
             LastActionOn = lastActionOn;
             RunInformation = runInformation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The status of the execution. </summary>
-        public string Status { get; }
-        /// <summary> String that represents the start date time. </summary>
-        public DateTimeOffset? StartedOn { get; }
-        /// <summary> String that represents the stop date time. </summary>
-        public DateTimeOffset? StoppedOn { get; }
         /// <summary> The reason why the execution failed. </summary>
         public string FailureReason { get; }
         /// <summary> String that represents the last action date time. </summary>
         public DateTimeOffset? LastActionOn { get; }
         /// <summary> The information of the experiment run. </summary>
-        internal ChaosExperimentRunInformation RunInformation { get; }
+        internal ExperimentExecutionDetailsPropertiesRunInformation RunInformation { get; }
         /// <summary> The steps of the experiment run. </summary>
         public IReadOnlyList<ChaosExperimentRunStepStatus> RunInformationSteps
         {

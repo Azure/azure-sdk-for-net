@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Chaos
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(AzureRbacActions))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AzureRbacActions))
             {
                 writer.WritePropertyName("azureRbacActions"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Chaos
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AzureRbacDataActions))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AzureRbacDataActions))
             {
                 writer.WritePropertyName("azureRbacDataActions"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Chaos
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RuntimeProperties))
+            if (options.Format != "W" && Optional.IsDefined(RuntimeProperties))
             {
                 writer.WritePropertyName("runtimeProperties"u8);
                 writer.WriteObjectValue(RuntimeProperties, options);
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.Chaos
             string parametersSchema = default;
             string urn = default;
             string kind = default;
-            IList<string> azureRbacActions = default;
-            IList<string> azureRbacDataActions = default;
-            ChaosCapabilityTypeRuntimeProperties runtimeProperties = default;
+            IReadOnlyList<string> azureRbacActions = default;
+            IReadOnlyList<string> azureRbacDataActions = default;
+            CapabilityTypePropertiesRuntimeProperties runtimeProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Chaos
                             {
                                 continue;
                             }
-                            runtimeProperties = ChaosCapabilityTypeRuntimeProperties.DeserializeChaosCapabilityTypeRuntimeProperties(property0.Value, options);
+                            runtimeProperties = CapabilityTypePropertiesRuntimeProperties.DeserializeCapabilityTypePropertiesRuntimeProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -274,7 +274,6 @@ namespace Azure.ResourceManager.Chaos
                 name,
                 type,
                 systemData,
-                location,
                 publisher,
                 targetType,
                 displayName,
@@ -285,6 +284,7 @@ namespace Azure.ResourceManager.Chaos
                 azureRbacActions ?? new ChangeTrackingList<string>(),
                 azureRbacDataActions ?? new ChangeTrackingList<string>(),
                 runtimeProperties,
+                location,
                 serializedAdditionalRawData);
         }
 

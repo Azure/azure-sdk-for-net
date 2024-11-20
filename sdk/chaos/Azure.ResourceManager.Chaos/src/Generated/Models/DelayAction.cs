@@ -11,33 +11,33 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Model that represents a delay action. </summary>
-    public partial class ChaosDelayAction : ChaosExperimentAction
+    public partial class DelayAction : ChaosExperimentAction
     {
-        /// <summary> Initializes a new instance of <see cref="ChaosDelayAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DelayAction"/>. </summary>
         /// <param name="name"> String that represents a Capability URN. </param>
         /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ChaosDelayAction(string name, TimeSpan duration) : base(name)
+        public DelayAction(string name, TimeSpan duration) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Duration = duration;
-            ActionType = "delay";
+            Type = ExperimentActionType.Delay;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosDelayAction"/>. </summary>
-        /// <param name="actionType"> Enum that discriminates between action models. </param>
+        /// <summary> Initializes a new instance of <see cref="DelayAction"/>. </summary>
         /// <param name="name"> String that represents a Capability URN. </param>
+        /// <param name="type"> Chaos experiment action discriminator type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
-        internal ChaosDelayAction(string actionType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan duration) : base(actionType, name, serializedAdditionalRawData)
+        internal DelayAction(string name, ExperimentActionType type, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan duration) : base(name, type, serializedAdditionalRawData)
         {
             Duration = duration;
-            ActionType = actionType ?? "delay";
+            Type = type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosDelayAction"/> for deserialization. </summary>
-        internal ChaosDelayAction()
+        /// <summary> Initializes a new instance of <see cref="DelayAction"/> for deserialization. </summary>
+        internal DelayAction()
         {
         }
 

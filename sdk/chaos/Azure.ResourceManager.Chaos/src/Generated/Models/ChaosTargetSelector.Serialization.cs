@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 throw new FormatException($"The model {nameof(ChaosTargetSelector)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(SelectorType.ToString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);

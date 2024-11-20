@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_GetExecution</description>
+        /// <description>ExperimentExecution_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_GetExecution</description>
+        /// <description>ExperimentExecution_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
+        /// <description>Experiment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
+        /// <description>Experiment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Delete</description>
+        /// <description>Experiment_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -290,11 +290,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Delete</description>
+        /// <description>Experiment_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -332,11 +332,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Update</description>
+        /// <description>Experiment_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Update</description>
+        /// <description>Experiment_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -438,16 +438,16 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> CancelAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PostActionResult>> CancelAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentResource.Cancel");
             scope.Start();
             try
             {
                 var response = await _chaosExperimentExperimentsRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ChaosArmOperation(_chaosExperimentExperimentsClientDiagnostics, Pipeline, _chaosExperimentExperimentsRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ChaosArmOperation<PostActionResult>(new PostActionResultOperationSource(), _chaosExperimentExperimentsClientDiagnostics, Pipeline, _chaosExperimentExperimentsRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -480,16 +480,16 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Cancel(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PostActionResult> Cancel(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentResource.Cancel");
             scope.Start();
             try
             {
                 var response = _chaosExperimentExperimentsRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ChaosArmOperation(_chaosExperimentExperimentsClientDiagnostics, Pipeline, _chaosExperimentExperimentsRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ChaosArmOperation<PostActionResult>(new PostActionResultOperationSource(), _chaosExperimentExperimentsClientDiagnostics, Pipeline, _chaosExperimentExperimentsRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -522,16 +522,16 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PostActionResult>> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentResource.Start");
             scope.Start();
             try
             {
                 var response = await _chaosExperimentExperimentsRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ChaosArmOperation(_chaosExperimentExperimentsClientDiagnostics, Pipeline, _chaosExperimentExperimentsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ChaosArmOperation<PostActionResult>(new PostActionResultOperationSource(), _chaosExperimentExperimentsClientDiagnostics, Pipeline, _chaosExperimentExperimentsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -564,16 +564,16 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PostActionResult> Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentResource.Start");
             scope.Start();
             try
             {
                 var response = _chaosExperimentExperimentsRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ChaosArmOperation(_chaosExperimentExperimentsClientDiagnostics, Pipeline, _chaosExperimentExperimentsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ChaosArmOperation<PostActionResult>(new PostActionResultOperationSource(), _chaosExperimentExperimentsClientDiagnostics, Pipeline, _chaosExperimentExperimentsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -592,11 +592,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
+        /// <description>Experiment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -654,11 +654,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
+        /// <description>Experiment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -716,11 +716,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
+        /// <description>Experiment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -773,11 +773,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
+        /// <description>Experiment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -830,11 +830,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
+        /// <description>Experiment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -890,11 +890,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
+        /// <description>Experiment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -41,26 +41,6 @@ namespace Azure.ResourceManager.Chaos
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            foreach (var item in Properties)
-            {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            writer.WriteEndObject();
         }
 
         ChaosTargetData IJsonModel<ChaosTargetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -84,7 +64,6 @@ namespace Azure.ResourceManager.Chaos
                 return null;
             }
             AzureLocation? location = default;
-            IDictionary<string, BinaryData> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -100,23 +79,6 @@ namespace Azure.ResourceManager.Chaos
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    properties = dictionary;
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -155,7 +117,6 @@ namespace Azure.ResourceManager.Chaos
                 type,
                 systemData,
                 location,
-                properties,
                 serializedAdditionalRawData);
         }
 

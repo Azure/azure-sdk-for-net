@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Chaos.Models
                 return null;
             }
             IList<ChaosTargetReference> targets = default;
-            SelectorType type = default;
             string id = default;
+            SelectorType type = default;
             ChaosTargetFilter filter = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,14 +94,14 @@ namespace Azure.ResourceManager.Chaos.Models
                     targets = array;
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new SelectorType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new SelectorType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("filter"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ChaosTargetListSelector(type, id, filter, additionalProperties, targets);
+            return new ChaosTargetListSelector(id, type, filter, additionalProperties, targets);
         }
 
         BinaryData IPersistableModel<ChaosTargetListSelector>.Write(ModelReaderWriterOptions options)

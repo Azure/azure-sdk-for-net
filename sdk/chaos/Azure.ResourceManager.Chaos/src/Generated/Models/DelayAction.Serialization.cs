@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public partial class ChaosDelayAction : IUtf8JsonSerializable, IJsonModel<ChaosDelayAction>
+    public partial class DelayAction : IUtf8JsonSerializable, IJsonModel<DelayAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosDelayAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DelayAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ChaosDelayAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DelayAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosDelayAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DelayAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosDelayAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DelayAction)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -39,19 +39,19 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStringValue(Duration, "P");
         }
 
-        ChaosDelayAction IJsonModel<ChaosDelayAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DelayAction IJsonModel<DelayAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosDelayAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DelayAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosDelayAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DelayAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChaosDelayAction(document.RootElement, options);
+            return DeserializeDelayAction(document.RootElement, options);
         }
 
-        internal static ChaosDelayAction DeserializeChaosDelayAction(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DelayAction DeserializeDelayAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Chaos.Models
                 return null;
             }
             TimeSpan duration = default;
-            string type = default;
             string name = default;
+            ExperimentActionType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.Chaos.Models
                     duration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ExperimentActionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -87,38 +87,38 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ChaosDelayAction(type, name, serializedAdditionalRawData, duration);
+            return new DelayAction(name, type, serializedAdditionalRawData, duration);
         }
 
-        BinaryData IPersistableModel<ChaosDelayAction>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DelayAction>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosDelayAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DelayAction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosDelayAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DelayAction)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ChaosDelayAction IPersistableModel<ChaosDelayAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DelayAction IPersistableModel<DelayAction>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosDelayAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DelayAction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeChaosDelayAction(document.RootElement, options);
+                        return DeserializeDelayAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosDelayAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DelayAction)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ChaosDelayAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DelayAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

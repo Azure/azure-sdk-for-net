@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             string queryString = default;
             IList<string> subscriptionIds = default;
-            SelectorType type = default;
             string id = default;
+            SelectorType type = default;
             ChaosTargetFilter filter = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -102,14 +102,14 @@ namespace Azure.ResourceManager.Chaos.Models
                     subscriptionIds = array;
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new SelectorType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new SelectorType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("filter"u8))
@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ChaosTargetQuerySelector(
-                type,
                 id,
+                type,
                 filter,
                 additionalProperties,
                 queryString,

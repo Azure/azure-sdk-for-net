@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Runtime properties of this Capability Type. </summary>
-    internal partial class ChaosCapabilityTypeRuntimeProperties
+    /// <summary> Model that represents the post action response. </summary>
+    public partial class PostActionResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,25 @@ namespace Azure.ResourceManager.Chaos.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityTypeRuntimeProperties"/>. </summary>
-        public ChaosCapabilityTypeRuntimeProperties()
+        /// <summary> Initializes a new instance of <see cref="PostActionResult"/>. </summary>
+        internal PostActionResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityTypeRuntimeProperties"/>. </summary>
-        /// <param name="kind"> String of the kind of the resource's action type (continuous or discrete). </param>
+        /// <summary> Initializes a new instance of <see cref="PostActionResult"/>. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="statusUri"> The statusUrl of the post action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosCapabilityTypeRuntimeProperties(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostActionResult(string name, string statusUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Kind = kind;
+            Name = name;
+            StatusUri = statusUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> String of the kind of the resource's action type (continuous or discrete). </summary>
-        public string Kind { get; }
+        /// <summary> The name of the resource. </summary>
+        public string Name { get; }
+        /// <summary> The statusUrl of the post action. </summary>
+        public string StatusUri { get; }
     }
 }

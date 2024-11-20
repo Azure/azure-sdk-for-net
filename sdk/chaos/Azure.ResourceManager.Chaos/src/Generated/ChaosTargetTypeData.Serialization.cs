@@ -189,11 +189,11 @@ namespace Azure.ResourceManager.Chaos
                 name,
                 type,
                 systemData,
-                location,
                 displayName,
                 description,
                 propertiesSchema,
                 resourceTypes ?? new ChangeTrackingList<string>(),
+                location,
                 serializedAdditionalRawData);
         }
 

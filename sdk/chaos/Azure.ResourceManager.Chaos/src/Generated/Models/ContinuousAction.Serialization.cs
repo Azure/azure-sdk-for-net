@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public partial class ChaosContinuousAction : IUtf8JsonSerializable, IJsonModel<ChaosContinuousAction>
+    public partial class ContinuousAction : IUtf8JsonSerializable, IJsonModel<ContinuousAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosContinuousAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContinuousAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ChaosContinuousAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContinuousAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosContinuousAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContinuousAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosContinuousAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContinuousAction)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStringValue(SelectorId);
         }
 
-        ChaosContinuousAction IJsonModel<ChaosContinuousAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContinuousAction IJsonModel<ContinuousAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosContinuousAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContinuousAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosContinuousAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContinuousAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChaosContinuousAction(document.RootElement, options);
+            return DeserializeContinuousAction(document.RootElement, options);
         }
 
-        internal static ChaosContinuousAction DeserializeChaosContinuousAction(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContinuousAction DeserializeContinuousAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Chaos.Models
             TimeSpan duration = default;
             IList<ChaosKeyValuePair> parameters = default;
             string selectorId = default;
-            string type = default;
             string name = default;
+            ExperimentActionType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,14 +97,14 @@ namespace Azure.ResourceManager.Chaos.Models
                     selectorId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ExperimentActionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -113,44 +113,44 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ChaosContinuousAction(
-                type,
+            return new ContinuousAction(
                 name,
+                type,
                 serializedAdditionalRawData,
                 duration,
                 parameters,
                 selectorId);
         }
 
-        BinaryData IPersistableModel<ChaosContinuousAction>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContinuousAction>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosContinuousAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContinuousAction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosContinuousAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContinuousAction)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ChaosContinuousAction IPersistableModel<ChaosContinuousAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContinuousAction IPersistableModel<ContinuousAction>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosContinuousAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContinuousAction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeChaosContinuousAction(document.RootElement, options);
+                        return DeserializeContinuousAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosContinuousAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContinuousAction)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ChaosContinuousAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContinuousAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

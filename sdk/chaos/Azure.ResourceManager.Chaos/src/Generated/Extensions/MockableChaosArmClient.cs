@@ -47,6 +47,18 @@ namespace Azure.ResourceManager.Chaos.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ChaosTargetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosTargetResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosTargetResource"/> object. </returns>
+        public virtual ChaosTargetResource GetChaosTargetResource(ResourceIdentifier id)
+        {
+            ChaosTargetResource.ValidateResourceId(id);
+            return new ChaosTargetResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ChaosCapabilityTypeResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ChaosCapabilityTypeResource.CreateResourceIdentifier" /> to create a <see cref="ChaosCapabilityTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -56,6 +68,18 @@ namespace Azure.ResourceManager.Chaos.Mocking
         {
             ChaosCapabilityTypeResource.ValidateResourceId(id);
             return new ChaosCapabilityTypeResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ChaosTargetTypeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosTargetTypeResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosTargetTypeResource"/> object. </returns>
+        public virtual ChaosTargetTypeResource GetChaosTargetTypeResource(ResourceIdentifier id)
+        {
+            ChaosTargetTypeResource.ValidateResourceId(id);
+            return new ChaosTargetTypeResource(Client, id);
         }
 
         /// <summary>
@@ -80,30 +104,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         {
             ChaosExperimentExecutionResource.ValidateResourceId(id);
             return new ChaosExperimentExecutionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ChaosTargetTypeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ChaosTargetTypeResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosTargetTypeResource"/> object. </returns>
-        public virtual ChaosTargetTypeResource GetChaosTargetTypeResource(ResourceIdentifier id)
-        {
-            ChaosTargetTypeResource.ValidateResourceId(id);
-            return new ChaosTargetTypeResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ChaosTargetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ChaosTargetResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosTargetResource"/> object. </returns>
-        public virtual ChaosTargetResource GetChaosTargetResource(ResourceIdentifier id)
-        {
-            ChaosTargetResource.ValidateResourceId(id);
-            return new ChaosTargetResource(Client, id);
         }
     }
 }

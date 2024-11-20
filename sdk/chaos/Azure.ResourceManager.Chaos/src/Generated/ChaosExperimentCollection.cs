@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_CreateOrUpdate</description>
+        /// <description>Experiment_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_CreateOrUpdate</description>
+        /// <description>Experiment_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
+        /// <description>Experiment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
+        /// <description>Experiment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_List</description>
+        /// <description>Experiment_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -267,8 +267,8 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An async collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ChaosExperimentResource> GetAllAsync(bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosExperimentExperimentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosExperimentExperimentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosExperimentExperimentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosExperimentExperimentsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ChaosExperimentResource(Client, ChaosExperimentData.DeserializeChaosExperimentData(e)), _chaosExperimentExperimentsClientDiagnostics, Pipeline, "ChaosExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -281,11 +281,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_List</description>
+        /// <description>Experiment_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -299,8 +299,8 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ChaosExperimentResource> GetAll(bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosExperimentExperimentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosExperimentExperimentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosExperimentExperimentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosExperimentExperimentsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ChaosExperimentResource(Client, ChaosExperimentData.DeserializeChaosExperimentData(e)), _chaosExperimentExperimentsClientDiagnostics, Pipeline, "ChaosExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -313,11 +313,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
+        /// <description>Experiment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,11 +356,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
+        /// <description>Experiment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -399,11 +399,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
+        /// <description>Experiment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -444,11 +444,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_Get</description>
+        /// <description>Experiment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

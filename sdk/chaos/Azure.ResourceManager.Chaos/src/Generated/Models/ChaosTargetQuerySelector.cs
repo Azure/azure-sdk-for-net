@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Chaos.Models
 
             QueryString = queryString;
             SubscriptionIds = subscriptionIds.ToList();
-            SelectorType = SelectorType.Query;
+            Type = SelectorType.Query;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetQuerySelector"/>. </summary>
-        /// <param name="selectorType"> Enum of the selector type. </param>
         /// <param name="id"> String of the selector ID. </param>
+        /// <param name="type"> Chaos target selector discriminator type. </param>
         /// <param name="filter">
         /// Model that represents available filter types that can be applied to a targets list.
         /// Please note <see cref="ChaosTargetFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="queryString"> Azure Resource Graph (ARG) Query Language query for target resources. </param>
         /// <param name="subscriptionIds"> Subscription id list to scope resource query. </param>
-        internal ChaosTargetQuerySelector(SelectorType selectorType, string id, ChaosTargetFilter filter, IDictionary<string, BinaryData> additionalProperties, string queryString, IList<string> subscriptionIds) : base(selectorType, id, filter, additionalProperties)
+        internal ChaosTargetQuerySelector(string id, SelectorType type, ChaosTargetFilter filter, IDictionary<string, BinaryData> additionalProperties, string queryString, IList<string> subscriptionIds) : base(id, type, filter, additionalProperties)
         {
             QueryString = queryString;
             SubscriptionIds = subscriptionIds;
-            SelectorType = selectorType;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetQuerySelector"/> for deserialization. </summary>

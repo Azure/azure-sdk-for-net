@@ -8,13 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Chaos.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
     /// A class representing the ChaosExperimentExecution data model.
-    /// Model that represents the execution of a Experiment.
+    /// Model that represents the execution of an Experiment.
     /// </summary>
     public partial class ChaosExperimentExecutionData : ResourceData
     {
@@ -63,12 +64,14 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="status"> The status of the execution. </param>
         /// <param name="startedOn"> String that represents the start date time. </param>
         /// <param name="stoppedOn"> String that represents the stop date time. </param>
+        /// <param name="provisioningState"> Experiment execution resource provisioning state. Not currently implemented. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosExperimentExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ChaosExperimentExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, ChaosProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartedOn = startedOn;
             StoppedOn = stoppedOn;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,5 +81,7 @@ namespace Azure.ResourceManager.Chaos
         public DateTimeOffset? StartedOn { get; }
         /// <summary> String that represents the stop date time. </summary>
         public DateTimeOffset? StoppedOn { get; }
+        /// <summary> Experiment execution resource provisioning state. Not currently implemented. </summary>
+        public ChaosProvisioningState? ProvisioningState { get; }
     }
 }

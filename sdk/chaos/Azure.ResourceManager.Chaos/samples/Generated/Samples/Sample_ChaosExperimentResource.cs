@@ -20,68 +20,10 @@ namespace Azure.ResourceManager.Chaos.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetChaosExperiments_ListAllExperimentsInASubscription()
-        {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/ListExperimentsInASubscription.json
-            // this example is just showing the usage of "Experiments_ListAll" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            string continuationToken = null;
-            await foreach (ChaosExperimentResource item in subscriptionResource.GetChaosExperimentsAsync(continuationToken: continuationToken))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ChaosExperimentData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteAExperimentInAResourceGroup()
-        {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/DeleteExperiment.json
-            // this example is just showing the usage of "Experiments_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ChaosExperimentResource created on azure
-            // for more information of creating ChaosExperimentResource, please refer to the document of ChaosExperimentResource
-            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
-            string resourceGroupName = "exampleRG";
-            string experimentName = "exampleExperiment";
-            ResourceIdentifier chaosExperimentResourceId = ChaosExperimentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, experimentName);
-            ChaosExperimentResource chaosExperiment = client.GetChaosExperimentResource(chaosExperimentResourceId);
-
-            // invoke the operation
-            await chaosExperiment.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAExperimentInAResourceGroup()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetExperiment.json
-            // this example is just showing the usage of "Experiments_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/Experiments_Get.json
+            // this example is just showing the usage of "Experiment_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -108,10 +50,10 @@ namespace Azure.ResourceManager.Chaos.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateAnExperimentInAResourceGroup()
+        public async Task Update_UpdateAnExperiment()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/UpdateExperiment.json
-            // this example is just showing the usage of "Experiments_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/Experiments_Update.json
+            // this example is just showing the usage of "Experiment_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -129,18 +71,19 @@ namespace Azure.ResourceManager.Chaos.Samples
             // invoke the operation
             ChaosExperimentPatch patch = new ChaosExperimentPatch()
             {
-                Identity = new ManagedServiceIdentity("UserAssigned")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("/subscriptions/6b052e15-03d3-4f17-b2e1-be7f07588291/resourceGroups/exampleRG/providers/Microsoft.ManagedIdentity/userAssignedIdentity/exampleUMI")] = new UserAssignedIdentity(),
-},
-                },
                 Tags =
 {
 ["key1"] = "value1",
 ["key2"] = "value2",
 },
+                Identity = new ManagedServiceIdentityUpdate()
+                {
+                    Type = ManagedServiceIdentityType.UserAssigned,
+                    UserAssignedIdentities =
+{
+["/subscriptions/6b052e15-03d3-4f17-b2e1-be7f07588291/resourceGroups/exampleRG/providers/Microsoft.ManagedIdentity/userAssignedIdentity/exampleUMI"] = new UserAssignedIdentity(),
+},
+                },
             };
             ArmOperation<ChaosExperimentResource> lro = await chaosExperiment.UpdateAsync(WaitUntil.Completed, patch);
             ChaosExperimentResource result = lro.Value;
@@ -154,9 +97,66 @@ namespace Azure.ResourceManager.Chaos.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteAExperimentInAResourceGroup()
+        {
+            // Generated from example definition: 2025-01-01/Experiments_Delete.json
+            // this example is just showing the usage of "Experiment_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ChaosExperimentResource created on azure
+            // for more information of creating ChaosExperimentResource, please refer to the document of ChaosExperimentResource
+            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
+            string resourceGroupName = "exampleRG";
+            string experimentName = "exampleExperiment";
+            ResourceIdentifier chaosExperimentResourceId = ChaosExperimentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, experimentName);
+            ChaosExperimentResource chaosExperiment = client.GetChaosExperimentResource(chaosExperimentResourceId);
+
+            // invoke the operation
+            await chaosExperiment.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetChaosExperiments_ListAllExperimentsInASubscription()
+        {
+            // Generated from example definition: 2025-01-01/Experiments_ListBySubscription.json
+            // this example is just showing the usage of "Experiment_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (ChaosExperimentResource item in subscriptionResource.GetChaosExperimentsAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ChaosExperimentData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Cancel_CancelARunningExperiment()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/CancelExperiment.json
+            // Generated from example definition: 2025-01-01/Experiments_Cancel.json
             // this example is just showing the usage of "Experiments_Cancel" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,16 +173,17 @@ namespace Azure.ResourceManager.Chaos.Samples
             ChaosExperimentResource chaosExperiment = client.GetChaosExperimentResource(chaosExperimentResourceId);
 
             // invoke the operation
-            await chaosExperiment.CancelAsync(WaitUntil.Completed);
+            ArmOperation<PostActionResult> lro = await chaosExperiment.CancelAsync(WaitUntil.Completed);
+            PostActionResult result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Start_StartAExperiment()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/StartExperiment.json
+            // Generated from example definition: 2025-01-01/Experiments_Start.json
             // this example is just showing the usage of "Experiments_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -199,9 +200,10 @@ namespace Azure.ResourceManager.Chaos.Samples
             ChaosExperimentResource chaosExperiment = client.GetChaosExperimentResource(chaosExperimentResourceId);
 
             // invoke the operation
-            await chaosExperiment.StartAsync(WaitUntil.Completed);
+            ArmOperation<PostActionResult> lro = await chaosExperiment.StartAsync(WaitUntil.Completed);
+            PostActionResult result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }
