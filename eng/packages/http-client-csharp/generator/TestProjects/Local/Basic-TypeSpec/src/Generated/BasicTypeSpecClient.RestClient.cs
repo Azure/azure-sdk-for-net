@@ -32,7 +32,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/hello", false);
             uri.AppendQuery("queryParameter", queryParameter, true);
@@ -51,7 +51,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/againHi/", false);
             uri.AppendPath(p2, true);
@@ -68,7 +68,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/noContentType/", false);
             uri.AppendPath(p2, true);
@@ -85,7 +85,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/demoHi", false);
             request.Uri = uri;
@@ -98,7 +98,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Post;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/literal", false);
             request.Uri = uri;
@@ -113,7 +113,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/helloLiteral/", false);
             uri.AppendPath(123.ToString(), true);
@@ -129,7 +129,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/top/", false);
             uri.AppendPath(action.ToString("O"), true);
@@ -143,7 +143,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/top2", false);
             request.Uri = uri;
@@ -156,7 +156,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Patch;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/patch", false);
             request.Uri = uri;
@@ -171,7 +171,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Post;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/anonymousBody", false);
             request.Uri = uri;
@@ -186,7 +186,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Post;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/friendlyName", false);
             request.Uri = uri;
@@ -201,7 +201,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             request.Uri = uri;
@@ -214,7 +214,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Post;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projectedName", false);
             request.Uri = uri;
@@ -229,7 +229,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Post;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/returnsAnonymousModel", false);
             request.Uri = uri;
@@ -242,7 +242,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/unknown-value", false);
             request.Uri = uri;
@@ -255,7 +255,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Post;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/internalProtocol", false);
             request.Uri = uri;
@@ -270,7 +270,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stillConvenient", false);
             request.Uri = uri;
@@ -282,7 +282,7 @@ namespace BasicTypeSpec
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier2xxAnd4xx);
             Request request = message.Request;
             request.Method = RequestMethod.Head;
-            ClientUriBuilder uri = new ClientUriBuilder();
+            Azure.Core.RawRequestUriBuilder uri = new Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/headAsBoolean/", false);
             uri.AppendPath(id, true);
