@@ -31,7 +31,7 @@ namespace Azure.Health.Deidentification.Samples
             #endregion
 
             #region Snippet:AzHealthDeidSample1_CreateRequest
-            DeidentificationContent content = new("Hello, John!", DeidentificationOperationType.Surrogate, null, null);
+            DeidentificationContent content = new("Hello, John!");
 
             Response<DeidentificationResult> result = client.DeidentifyText(content);
             string outputString = result.Value.OutputText;
