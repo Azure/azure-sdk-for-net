@@ -114,11 +114,52 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="Projects.ListConnectionsResponse"/>. </summary>
         /// <param name="value"> A list of connection list secrets. </param>
         /// <returns> A new <see cref="Projects.ListConnectionsResponse"/> instance for mocking. </returns>
-        public static ListConnectionsResponse ListConnectionsResponse(IEnumerable<GetConnectionResponse> value = null)
+        public static ListConnectionsResponse ListConnectionsResponse(IEnumerable<ConnectionResponse> value = null)
         {
-            value ??= new List<GetConnectionResponse>();
+            value ??= new List<ConnectionResponse>();
 
             return new ListConnectionsResponse(value?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.ConnectionResponse"/>. </summary>
+        /// <param name="id"> A unique identifier for the connection. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="properties">
+        /// The properties of the resource
+        /// Please note <see cref="Projects.ConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Projects.ConnectionPropertiesApiKeyAuth"/>.
+        /// </param>
+        /// <returns> A new <see cref="Projects.ConnectionResponse"/> instance for mocking. </returns>
+        public static ConnectionResponse ConnectionResponse(string id = null, string name = null, ConnectionProperties properties = null)
+        {
+            return new ConnectionResponse(id, name, properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.ConnectionProperties"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="target"> The connection URL to be used for this service. </param>
+        /// <returns> A new <see cref="Projects.ConnectionProperties"/> instance for mocking. </returns>
+        public static ConnectionProperties ConnectionProperties(ConnectionType category = default, string target = null)
+        {
+            return new UnknownInternalConnectionProperties(default, category, target, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.ConnectionPropertiesApiKeyAuth"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="target"> The connection URL to be used for this service. </param>
+        /// <param name="credentials"> Credentials will only be present for authType=ApiKey. </param>
+        /// <returns> A new <see cref="Projects.ConnectionPropertiesApiKeyAuth"/> instance for mocking. </returns>
+        public static ConnectionPropertiesApiKeyAuth ConnectionPropertiesApiKeyAuth(ConnectionType category = default, string target = null, CredentialsApiKeyAuth credentials = null)
+        {
+            return new ConnectionPropertiesApiKeyAuth(AuthenticationType.ApiKey, category, target, serializedAdditionalRawData: null, credentials);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.CredentialsApiKeyAuth"/>. </summary>
+        /// <param name="key"> The API key. </param>
+        /// <returns> A new <see cref="Projects.CredentialsApiKeyAuth"/> instance for mocking. </returns>
+        public static CredentialsApiKeyAuth CredentialsApiKeyAuth(string key = null)
+        {
+            return new CredentialsApiKeyAuth(key, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.ThreadMessageOptions"/>. </summary>

@@ -292,13 +292,13 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<GetConnectionResponse>> GetConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectionResponse>> GetConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetConnectionAsync(connectionName, context).ConfigureAwait(false);
-            return Response.FromValue(GetConnectionResponse.FromResponse(response), response);
+            return Response.FromValue(ConnectionResponse.FromResponse(response), response);
         }
 
         /// <summary> Get the details of a single connection, without credentials. </summary>
@@ -306,13 +306,13 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<GetConnectionResponse> GetConnection(string connectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ConnectionResponse> GetConnection(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetConnection(connectionName, context);
-            return Response.FromValue(GetConnectionResponse.FromResponse(response), response);
+            return Response.FromValue(ConnectionResponse.FromResponse(response), response);
         }
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="ignored"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<GetConnectionResponse>> GetConnectionWithSecretsAsync(string connectionName, string ignored, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectionResponse>> GetConnectionWithSecretsAsync(string connectionName, string ignored, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(ignored, nameof(ignored));
@@ -407,7 +407,7 @@ namespace Azure.AI.Projects
             GetConnectionWithSecretsRequest getConnectionWithSecretsRequest = new GetConnectionWithSecretsRequest(ignored, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetConnectionWithSecretsAsync(connectionName, getConnectionWithSecretsRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(GetConnectionResponse.FromResponse(response), response);
+            return Response.FromValue(ConnectionResponse.FromResponse(response), response);
         }
 
         /// <summary> Get the details of a single connection, including credentials (if available). </summary>
@@ -416,7 +416,7 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="ignored"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<GetConnectionResponse> GetConnectionWithSecrets(string connectionName, string ignored, CancellationToken cancellationToken = default)
+        public virtual Response<ConnectionResponse> GetConnectionWithSecrets(string connectionName, string ignored, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(ignored, nameof(ignored));
@@ -424,7 +424,7 @@ namespace Azure.AI.Projects
             GetConnectionWithSecretsRequest getConnectionWithSecretsRequest = new GetConnectionWithSecretsRequest(ignored, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetConnectionWithSecrets(connectionName, getConnectionWithSecretsRequest.ToRequestContent(), context);
-            return Response.FromValue(GetConnectionResponse.FromResponse(response), response);
+            return Response.FromValue(ConnectionResponse.FromResponse(response), response);
         }
 
         /// <summary>
@@ -515,7 +515,7 @@ namespace Azure.AI.Projects
         /// <param name="includeAll"> Indicates whether to list datastores. Service default: do not list datastores. </param>
         /// <param name="target"> Target of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GetConnectionResponse>> GetDefaultConnectionAsync(ConnectionType category, bool? withCredential = null, bool? includeAll = null, string target = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectionResponse>> GetDefaultConnectionAsync(ConnectionType category, bool? withCredential = null, bool? includeAll = null, string target = null, CancellationToken cancellationToken = default)
         {
             ListConnectionsResponse connections = await GetConnectionsAsync(category, includeAll, target, cancellationToken).ConfigureAwait(false);
 
@@ -536,7 +536,7 @@ namespace Azure.AI.Projects
         /// <param name="includeAll"> Indicates whether to list datastores. Service default: do not list datastores. </param>
         /// <param name="target"> Target of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GetConnectionResponse> GetDefaultConnection(ConnectionType category, bool? withCredential = null, bool? includeAll = null, string target = null, CancellationToken cancellationToken = default)
+        public virtual Response<ConnectionResponse> GetDefaultConnection(ConnectionType category, bool? withCredential = null, bool? includeAll = null, string target = null, CancellationToken cancellationToken = default)
         {
             ListConnectionsResponse connections = GetConnections(category, includeAll, target, cancellationToken);
 

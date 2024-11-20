@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Unknown version of InternalConnectionProperties. </summary>
-    internal partial class UnknownInternalConnectionProperties : InternalConnectionProperties
+    internal partial class UnknownInternalConnectionProperties : ConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownInternalConnectionProperties"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
