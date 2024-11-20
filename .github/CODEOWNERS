@@ -499,10 +499,10 @@
 # ServiceOwners:                                                   @thang-bit
 
 # PRLabel: %Durable Task Scheduler
-/sdk/durabletask/                                                  @berndverst @kaibocai @torosent
+/sdk/durabletask/                                                  @berndverst @kaibocai @torosent @ItalyPaleAle @RyanLettieri @philliphoff
 
 # ServiceLabel: %Durable Task Scheduler
-# ServiceOwners:                                                   @berndverst @kaibocai @torosent
+# ServiceOwners:                                                   @berndverst @kaibocai @torosent @ItalyPaleAle @RyanLettieri @philliphoff
 
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @JoshLove-msft @jsquire @m-redding
