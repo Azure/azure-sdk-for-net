@@ -63,7 +63,7 @@ public class PlaywrightService
             if (_useCloudHostedBrowsers != null)
                 return (bool)_useCloudHostedBrowsers;
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable)))
-                return !bool.Parse(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable));
+                return !bool.Parse(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable)!); // this is checked in the line above
             return true;
         }
         set
@@ -358,6 +358,10 @@ public class PlaywrightService
 
     internal static void SetReportingUrlAndWorkspaceId()
     {
+        if (ServiceEndpoint == null)
+        {
+            throw new ArgumentNullException(nameof(ServiceEndpoint));
+        }
         Match match = Regex.Match(ServiceEndpoint, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/accounts/(?<workspaceId>[\w-]+)/");
         if (!match.Success)
             return;
@@ -377,6 +381,10 @@ public class PlaywrightService
 
     private void ValidateMptPAT()
     {
+        if (ServiceEndpoint == null)
+        {
+            throw new ArgumentNullException(nameof(ServiceEndpoint));
+        }
         try
         {
             string authToken = GetAuthToken()!;

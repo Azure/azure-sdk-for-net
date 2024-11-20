@@ -101,7 +101,7 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
             Dictionary<string, object> obj = body;
             for (int i = 0; i < property.Self!.BicepPath!.Count - 1; i++) // Properties always have Self/BicepPath defined
             {
-                if (!obj.TryGetValue(property.Self.BicepPath[i], out object next) ||
+                if (!obj.TryGetValue(property.Self.BicepPath[i], out object? next) ||
                     next is not Dictionary<string, object> dict)
                 {
                     dict = [];

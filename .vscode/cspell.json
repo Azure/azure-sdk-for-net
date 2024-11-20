@@ -151,6 +151,7 @@
     "southcentralus",
     "structs",
     "Sysctls",
+    "SYSLIB",
     "Uefi",
     "uints",
     "unbilled",
@@ -1198,6 +1199,12 @@
         "capi",
         "kvaio",
         "scvmm"
+      ]
+    },
+    {
+      "filename": "**/sdk/resourcemanager/**/*.cs",
+      "words": [
+        "AZPROVISION"
       ]
     },
     {

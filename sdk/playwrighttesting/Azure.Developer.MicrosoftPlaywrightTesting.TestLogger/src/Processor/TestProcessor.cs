@@ -278,11 +278,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
 
             var result = FailedTestCount > 0 ? TestCaseResultStatus.s_fAILED : TestCaseResultStatus.s_pASSED;
 
+#pragma warning disable CS8073 // The result of the expression is always 'true' since a value of type 'TimeSpan' is never equal to 'null' of type 'TimeSpan?' (net8.0)
             if (e.ElapsedTimeInRunningTests != null)
             {
                 testRunEndedOn = _cloudRunMetadata.TestRunStartTime.Add(e.ElapsedTimeInRunningTests);
                 durationInMs = (long)e.ElapsedTimeInRunningTests.TotalMilliseconds;
             }
+#pragma warning restore CS8073 // The result of the expression is always 'true' since a value of type 'TimeSpan' is never equal to 'null' of type 'TimeSpan?' (net8.0)
+
             TestRunShardDto? testRunShard = _testRunShard;
             // Update Shard End
             if (testRunShard!.Summary == null)
@@ -310,13 +313,13 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
 
 ![skipped](https://img.shields.io/badge/status-skipped-lightgrey) **Skipped:** {SkippedTestCount}
 
-#### For more details, visit the [service dashboard]({Uri.EscapeUriString(_cloudRunMetadata.PortalUrl!)}).
+#### For more details, visit the [service dashboard]({_cloudRunMetadata.PortalUrl}).
 ";
 
-                string filePath = Environment.GetEnvironmentVariable("GITHUB_STEP_SUMMARY");
+                string? filePath = Environment.GetEnvironmentVariable("GITHUB_STEP_SUMMARY");
                 try
                 {
-                    File.WriteAllText(filePath, markdownContent);
+                    File.WriteAllText(filePath ?? string.Empty, markdownContent);
                 }
                 catch (Exception ex)
                 {
@@ -324,6 +327,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 }
             }
         }
-        #endregion
+#endregion
     }
 }
