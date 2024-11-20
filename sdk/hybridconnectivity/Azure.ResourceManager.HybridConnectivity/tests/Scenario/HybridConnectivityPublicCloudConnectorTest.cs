@@ -14,6 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridConnectivity.Tests.Scenario
 {
+    [LiveOnly]
     public class HybridConnectivityPublicCloudConnectorTest : HybridConnectivityManagementTestBase
     {
         private PublicCloudConnectorResource _testConnector;

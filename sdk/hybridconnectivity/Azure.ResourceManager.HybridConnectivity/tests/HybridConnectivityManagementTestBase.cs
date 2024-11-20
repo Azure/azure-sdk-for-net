@@ -17,6 +17,7 @@ using Castle.Components.DictionaryAdapter.Xml;
 
 namespace Azure.ResourceManager.HybridConnectivity.Tests
 {
+    [LiveOnly]
     public abstract class HybridConnectivityManagementTestBase : ManagementRecordedTestBase<HybridconnectivityManagementTestEnvironment>
     {
         protected ArmClient ArmClient { get; private set; }
