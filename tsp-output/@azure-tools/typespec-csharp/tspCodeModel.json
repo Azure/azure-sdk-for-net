@@ -1,0 +1,4520 @@
+{
+ "$id": "1",
+ "Name": "Microsoft.Fabric",
+ "ApiVersions": [
+  "2023-11-01"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "kind": "enum",
+   "name": "Origin",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Origin",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "4",
+     "kind": "enumvalue",
+     "name": "user",
+     "value": "user",
+     "valueType": {
+      "$id": "5",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "description": "Indicates the operation is initiated by a user.",
+     "decorators": []
+    },
+    {
+     "$id": "6",
+     "kind": "enumvalue",
+     "name": "system",
+     "value": "system",
+     "valueType": {
+      "$id": "7",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "description": "Indicates the operation is initiated by a system.",
+     "decorators": []
+    },
+    {
+     "$id": "8",
+     "kind": "enumvalue",
+     "name": "user,system",
+     "value": "user,system",
+     "valueType": {
+      "$id": "9",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "description": "Indicates the operation is initiated by a user or system.",
+     "decorators": []
+    }
+   ],
+   "description": "The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is \"user,system\"",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "10",
+   "kind": "enum",
+   "name": "ActionType",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ActionType",
+   "valueType": {
+    "$id": "11",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "12",
+     "kind": "enumvalue",
+     "name": "Internal",
+     "value": "Internal",
+     "valueType": {
+      "$id": "13",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "10"
+     },
+     "description": "Actions are for internal-only APIs.",
+     "decorators": []
+    }
+   ],
+   "description": "Extensible enum. Indicates the action type. \"Internal\" refers to actions that are for internal only APIs.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "14",
+   "kind": "enum",
+   "name": "FabricProvisioningState",
+   "crossLanguageDefinitionId": "Microsoft.Fabric.ProvisioningState",
+   "valueType": {
+    "$id": "15",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "16",
+     "kind": "enumvalue",
+     "name": "Succeeded",
+     "value": "Succeeded",
+     "valueType": {
+      "$id": "17",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "14"
+     },
+     "description": "Resource has been created.",
+     "decorators": []
+    },
+    {
+     "$id": "18",
+     "kind": "enumvalue",
+     "name": "Failed",
+     "value": "Failed",
+     "valueType": {
+      "$id": "19",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "14"
+     },
+     "description": "Resource creation failed.",
+     "decorators": []
+    },
+    {
+     "$id": "20",
+     "kind": "enumvalue",
+     "name": "Canceled",
+     "value": "Canceled",
+     "valueType": {
+      "$id": "21",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "14"
+     },
+     "description": "Resource creation was canceled.",
+     "decorators": []
+    },
+    {
+     "$id": "22",
+     "kind": "enumvalue",
+     "name": "Deleting",
+     "value": "Deleting",
+     "valueType": {
+      "$id": "23",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "14"
+     },
+     "description": "Resource is deleting",
+     "decorators": []
+    },
+    {
+     "$id": "24",
+     "kind": "enumvalue",
+     "name": "Provisioning",
+     "value": "Provisioning",
+     "valueType": {
+      "$id": "25",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "14"
+     },
+     "description": "Resource is provisioning",
+     "decorators": []
+    },
+    {
+     "$id": "26",
+     "kind": "enumvalue",
+     "name": "Updating",
+     "value": "Updating",
+     "valueType": {
+      "$id": "27",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "14"
+     },
+     "description": "Resource is updating",
+     "decorators": []
+    }
+   ],
+   "description": "The provisioning state of the Fabric capacity resource.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "28",
+   "kind": "enum",
+   "name": "FabricResourceState",
+   "crossLanguageDefinitionId": "Microsoft.Fabric.ResourceState",
+   "valueType": {
+    "$id": "29",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "30",
+     "kind": "enumvalue",
+     "name": "Active",
+     "value": "Active",
+     "valueType": {
+      "$id": "31",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "Resource is active",
+     "decorators": []
+    },
+    {
+     "$id": "32",
+     "kind": "enumvalue",
+     "name": "Provisioning",
+     "value": "Provisioning",
+     "valueType": {
+      "$id": "33",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "Resource is provisioning",
+     "decorators": []
+    },
+    {
+     "$id": "34",
+     "kind": "enumvalue",
+     "name": "Failed",
+     "value": "Failed",
+     "valueType": {
+      "$id": "35",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "Resource is failed",
+     "decorators": []
+    },
+    {
+     "$id": "36",
+     "kind": "enumvalue",
+     "name": "Updating",
+     "value": "Updating",
+     "valueType": {
+      "$id": "37",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "Resource is updating",
+     "decorators": []
+    },
+    {
+     "$id": "38",
+     "kind": "enumvalue",
+     "name": "Deleting",
+     "value": "Deleting",
+     "valueType": {
+      "$id": "39",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "Resource is deleting",
+     "decorators": []
+    },
+    {
+     "$id": "40",
+     "kind": "enumvalue",
+     "name": "Suspending",
+     "value": "Suspending",
+     "valueType": {
+      "$id": "41",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "Resource is suspending",
+     "decorators": []
+    },
+    {
+     "$id": "42",
+     "kind": "enumvalue",
+     "name": "Suspended",
+     "value": "Suspended",
+     "valueType": {
+      "$id": "43",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "Resource is suspended",
+     "decorators": []
+    },
+    {
+     "$id": "44",
+     "kind": "enumvalue",
+     "name": "Pausing",
+     "value": "Pausing",
+     "valueType": {
+      "$id": "45",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "Resource is pausing",
+     "decorators": []
+    },
+    {
+     "$id": "46",
+     "kind": "enumvalue",
+     "name": "Paused",
+     "value": "Paused",
+     "valueType": {
+      "$id": "47",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "Resource is paused",
+     "decorators": []
+    },
+    {
+     "$id": "48",
+     "kind": "enumvalue",
+     "name": "Resuming",
+     "value": "Resuming",
+     "valueType": {
+      "$id": "49",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "Resource is resuming",
+     "decorators": []
+    },
+    {
+     "$id": "50",
+     "kind": "enumvalue",
+     "name": "Scaling",
+     "value": "Scaling",
+     "valueType": {
+      "$id": "51",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "Resource is scaling",
+     "decorators": []
+    },
+    {
+     "$id": "52",
+     "kind": "enumvalue",
+     "name": "Preparing",
+     "value": "Preparing",
+     "valueType": {
+      "$id": "53",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "Resource is preparing",
+     "decorators": []
+    }
+   ],
+   "description": "The state of the Fabric capacity resource.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "54",
+   "kind": "enum",
+   "name": "FabricSkuTier",
+   "crossLanguageDefinitionId": "Microsoft.Fabric.RpSkuTier",
+   "valueType": {
+    "$id": "55",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "56",
+     "kind": "enumvalue",
+     "name": "fabric",
+     "value": "Fabric",
+     "valueType": {
+      "$id": "57",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "54"
+     },
+     "description": "Fabric tier",
+     "decorators": []
+    }
+   ],
+   "description": "The name of the Azure pricing tier to which the SKU applies.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "58",
+   "kind": "enum",
+   "name": "createdByType",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType",
+   "valueType": {
+    "$id": "59",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "60",
+     "kind": "enumvalue",
+     "name": "User",
+     "value": "User",
+     "valueType": {
+      "$id": "61",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "58"
+     },
+     "description": "The entity was created by a user.",
+     "decorators": []
+    },
+    {
+     "$id": "62",
+     "kind": "enumvalue",
+     "name": "Application",
+     "value": "Application",
+     "valueType": {
+      "$id": "63",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "58"
+     },
+     "description": "The entity was created by an application.",
+     "decorators": []
+    },
+    {
+     "$id": "64",
+     "kind": "enumvalue",
+     "name": "ManagedIdentity",
+     "value": "ManagedIdentity",
+     "valueType": {
+      "$id": "65",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "58"
+     },
+     "description": "The entity was created by a managed identity.",
+     "decorators": []
+    },
+    {
+     "$id": "66",
+     "kind": "enumvalue",
+     "name": "Key",
+     "value": "Key",
+     "valueType": {
+      "$id": "67",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "58"
+     },
+     "description": "The entity was created by a key.",
+     "decorators": []
+    }
+   ],
+   "description": "The kind of entity that created the resource.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "68",
+   "kind": "enum",
+   "name": "FabricNameUnavailableReason",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityReason",
+   "valueType": {
+    "$id": "69",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "70",
+     "kind": "enumvalue",
+     "name": "Invalid",
+     "value": "Invalid",
+     "valueType": {
+      "$id": "71",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "68"
+     },
+     "description": "Name is invalid.",
+     "decorators": []
+    },
+    {
+     "$id": "72",
+     "kind": "enumvalue",
+     "name": "AlreadyExists",
+     "value": "AlreadyExists",
+     "valueType": {
+      "$id": "73",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "68"
+     },
+     "description": "Name already exists.",
+     "decorators": []
+    }
+   ],
+   "description": "Possible reasons for a name not being available.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "74",
+   "kind": "enum",
+   "name": "Versions",
+   "crossLanguageDefinitionId": "Microsoft.Fabric.Versions",
+   "valueType": {
+    "$id": "75",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "76",
+     "kind": "enumvalue",
+     "name": "v2023_11_01",
+     "value": "2023-11-01",
+     "valueType": {
+      "$id": "77",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "74"
+     },
+     "description": "2023-11-01 version",
+     "decorators": []
+    }
+   ],
+   "description": "The available API versions.",
+   "isFixed": true,
+   "isFlags": false,
+   "usage": "ApiVersionEnum",
+   "decorators": []
+  }
+ ],
+ "Models": [
+  {
+   "$id": "78",
+   "kind": "model",
+   "name": "OperationListResult",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult",
+   "usage": "Output,Json",
+   "description": "A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "79",
+     "kind": "property",
+     "name": "value",
+     "serializedName": "value",
+     "description": "The Operation items on this page",
+     "type": {
+      "$id": "80",
+      "kind": "array",
+      "name": "ArrayOperation",
+      "valueType": {
+       "$id": "81",
+       "kind": "model",
+       "name": "Operation",
+       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation",
+       "usage": "Output,Json",
+       "description": "Details of a REST API operation, returned from the Resource Provider Operations API",
+       "decorators": [],
+       "properties": [
+        {
+         "$id": "82",
+         "kind": "property",
+         "name": "name",
+         "serializedName": "name",
+         "description": "The name of the operation, as per Resource-Based Access Control (RBAC). Examples: \"Microsoft.Compute/virtualMachines/write\", \"Microsoft.Compute/virtualMachines/capture/action\"",
+         "type": {
+          "$id": "83",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "optional": true,
+         "readOnly": true,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.name"
+        },
+        {
+         "$id": "84",
+         "kind": "property",
+         "name": "isDataAction",
+         "serializedName": "isDataAction",
+         "description": "Whether the operation applies to data-plane. This is \"true\" for data-plane operations and \"false\" for Azure Resource Manager/control-plane operations.",
+         "type": {
+          "$id": "85",
+          "kind": "boolean",
+          "name": "boolean",
+          "crossLanguageDefinitionId": "TypeSpec.boolean",
+          "decorators": []
+         },
+         "optional": true,
+         "readOnly": true,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.isDataAction"
+        },
+        {
+         "$id": "86",
+         "kind": "property",
+         "name": "display",
+         "serializedName": "display",
+         "description": "Localized display information for this particular operation.",
+         "type": {
+          "$id": "87",
+          "kind": "model",
+          "name": "OperationDisplay",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay",
+          "usage": "Output,Json",
+          "description": "Localized display information for and operation.",
+          "decorators": [],
+          "properties": [
+           {
+            "$id": "88",
+            "kind": "property",
+            "name": "provider",
+            "serializedName": "provider",
+            "description": "The localized friendly form of the resource provider name, e.g. \"Microsoft Monitoring Insights\" or \"Microsoft Compute\".",
+            "type": {
+             "$id": "89",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.provider"
+           },
+           {
+            "$id": "90",
+            "kind": "property",
+            "name": "resource",
+            "serializedName": "resource",
+            "description": "The localized friendly name of the resource type related to this operation. E.g. \"Virtual Machines\" or \"Job Schedule Collections\".",
+            "type": {
+             "$id": "91",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.resource"
+           },
+           {
+            "$id": "92",
+            "kind": "property",
+            "name": "operation",
+            "serializedName": "operation",
+            "description": "The concise, localized friendly name for the operation; suitable for dropdowns. E.g. \"Create or Update Virtual Machine\", \"Restart Virtual Machine\".",
+            "type": {
+             "$id": "93",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.operation"
+           },
+           {
+            "$id": "94",
+            "kind": "property",
+            "name": "description",
+            "serializedName": "description",
+            "description": "The short, localized friendly description of the operation; suitable for tool tips and detailed views.",
+            "type": {
+             "$id": "95",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.description"
+           }
+          ]
+         },
+         "optional": true,
+         "readOnly": true,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.display"
+        },
+        {
+         "$id": "96",
+         "kind": "property",
+         "name": "origin",
+         "serializedName": "origin",
+         "description": "The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is \"user,system\"",
+         "type": {
+          "$ref": "2"
+         },
+         "optional": true,
+         "readOnly": true,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.origin"
+        },
+        {
+         "$id": "97",
+         "kind": "property",
+         "name": "actionType",
+         "serializedName": "actionType",
+         "description": "Extensible enum. Indicates the action type. \"Internal\" refers to actions that are for internal only APIs.",
+         "type": {
+          "$ref": "10"
+         },
+         "optional": true,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.actionType"
+        }
+       ]
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult.value"
+    },
+    {
+     "$id": "98",
+     "kind": "property",
+     "name": "nextLink",
+     "serializedName": "nextLink",
+     "description": "The link to the next page of items",
+     "type": {
+      "$id": "99",
+      "kind": "url",
+      "name": "ResourceLocation",
+      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+      "baseType": {
+       "$id": "100",
+       "kind": "url",
+       "name": "url",
+       "crossLanguageDefinitionId": "TypeSpec.url",
+       "decorators": []
+      },
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult.nextLink"
+    }
+   ]
+  },
+  {
+   "$ref": "81"
+  },
+  {
+   "$ref": "87"
+  },
+  {
+   "$id": "101",
+   "kind": "model",
+   "name": "ErrorResponse",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
+   "usage": "Output,Error,Json",
+   "description": "Common error response for all Azure Resource Manager APIs to return error details for failed operations.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "102",
+     "kind": "property",
+     "name": "error",
+     "serializedName": "error",
+     "description": "The error object.",
+     "type": {
+      "$id": "103",
+      "kind": "model",
+      "name": "ErrorDetail",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
+      "usage": "Output,Json",
+      "description": "The error detail.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "104",
+        "kind": "property",
+        "name": "code",
+        "serializedName": "code",
+        "description": "The error code.",
+        "type": {
+         "$id": "105",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.code"
+       },
+       {
+        "$id": "106",
+        "kind": "property",
+        "name": "message",
+        "serializedName": "message",
+        "description": "The error message.",
+        "type": {
+         "$id": "107",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.message"
+       },
+       {
+        "$id": "108",
+        "kind": "property",
+        "name": "target",
+        "serializedName": "target",
+        "description": "The error target.",
+        "type": {
+         "$id": "109",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.target"
+       },
+       {
+        "$id": "110",
+        "kind": "property",
+        "name": "details",
+        "serializedName": "details",
+        "description": "The error details.",
+        "type": {
+         "$id": "111",
+         "kind": "array",
+         "name": "ArrayErrorDetail",
+         "valueType": {
+          "$ref": "103"
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.details"
+       },
+       {
+        "$id": "112",
+        "kind": "property",
+        "name": "additionalInfo",
+        "serializedName": "additionalInfo",
+        "description": "The error additional info.",
+        "type": {
+         "$id": "113",
+         "kind": "array",
+         "name": "ArrayErrorAdditionalInfo",
+         "valueType": {
+          "$id": "114",
+          "kind": "model",
+          "name": "ErrorAdditionalInfo",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
+          "usage": "Output,Json",
+          "description": "The resource management error additional info.",
+          "decorators": [],
+          "properties": [
+           {
+            "$id": "115",
+            "kind": "property",
+            "name": "type",
+            "serializedName": "type",
+            "description": "The additional info type.",
+            "type": {
+             "$id": "116",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.type"
+           },
+           {
+            "$id": "117",
+            "kind": "property",
+            "name": "info",
+            "serializedName": "info",
+            "description": "The additional info.",
+            "type": {
+             "$id": "118",
+             "kind": "model",
+             "name": "ErrorAdditionalInfoInfo",
+             "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.info.anonymous",
+             "usage": "Output,Json",
+             "decorators": [],
+             "properties": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.info"
+           }
+          ]
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.additionalInfo"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse.error"
+    }
+   ]
+  },
+  {
+   "$ref": "103"
+  },
+  {
+   "$ref": "114"
+  },
+  {
+   "$ref": "118"
+  },
+  {
+   "$id": "119",
+   "kind": "model",
+   "name": "FabricCapacity",
+   "crossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacity",
+   "usage": "Input,Output,Json",
+   "description": "Fabric Capacity resource",
+   "decorators": [],
+   "baseModel": {
+    "$id": "120",
+    "kind": "model",
+    "name": "TrackedResource",
+    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource",
+    "usage": "Input,Output,Json",
+    "description": "The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'",
+    "decorators": [],
+    "baseModel": {
+     "$id": "121",
+     "kind": "model",
+     "name": "Resource",
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource",
+     "usage": "Input,Output,Json",
+     "description": "Common fields that are returned in the response for all Azure Resource Manager resources",
+     "decorators": [],
+     "properties": [
+      {
+       "$id": "122",
+       "kind": "property",
+       "name": "id",
+       "serializedName": "id",
+       "description": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}",
+       "type": {
+        "$id": "123",
+        "kind": "string",
+        "name": "armResourceIdentifier",
+        "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
+        "baseType": {
+         "$id": "124",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "optional": true,
+       "readOnly": true,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.id"
+      },
+      {
+       "$id": "125",
+       "kind": "property",
+       "name": "name",
+       "serializedName": "name",
+       "description": "The name of the resource",
+       "type": {
+        "$id": "126",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "optional": true,
+       "readOnly": true,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.name"
+      },
+      {
+       "$id": "127",
+       "kind": "property",
+       "name": "type",
+       "serializedName": "type",
+       "description": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
+       "type": {
+        "$id": "128",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "optional": true,
+       "readOnly": true,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.type"
+      },
+      {
+       "$id": "129",
+       "kind": "property",
+       "name": "systemData",
+       "serializedName": "systemData",
+       "description": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
+       "type": {
+        "$id": "130",
+        "kind": "model",
+        "name": "SystemData",
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData",
+        "usage": "Output,Json",
+        "description": "Metadata pertaining to creation and last modification of the resource.",
+        "decorators": [],
+        "properties": [
+         {
+          "$id": "131",
+          "kind": "property",
+          "name": "createdBy",
+          "serializedName": "createdBy",
+          "description": "The identity that created the resource.",
+          "type": {
+           "$id": "132",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdBy"
+         },
+         {
+          "$id": "133",
+          "kind": "property",
+          "name": "createdByType",
+          "serializedName": "createdByType",
+          "description": "The type of identity that created the resource.",
+          "type": {
+           "$ref": "58"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdByType"
+         },
+         {
+          "$id": "134",
+          "kind": "property",
+          "name": "createdAt",
+          "serializedName": "createdAt",
+          "description": "The timestamp of resource creation (UTC).",
+          "type": {
+           "$id": "135",
+           "kind": "utcDateTime",
+           "name": "utcDateTime",
+           "encode": "rfc3339",
+           "wireType": {
+            "$id": "136",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+           },
+           "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+           "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdAt"
+         },
+         {
+          "$id": "137",
+          "kind": "property",
+          "name": "lastModifiedBy",
+          "serializedName": "lastModifiedBy",
+          "description": "The identity that last modified the resource.",
+          "type": {
+           "$id": "138",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedBy"
+         },
+         {
+          "$id": "139",
+          "kind": "property",
+          "name": "lastModifiedByType",
+          "serializedName": "lastModifiedByType",
+          "description": "The type of identity that last modified the resource.",
+          "type": {
+           "$ref": "58"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedByType"
+         },
+         {
+          "$id": "140",
+          "kind": "property",
+          "name": "lastModifiedAt",
+          "serializedName": "lastModifiedAt",
+          "description": "The timestamp of resource last modification (UTC)",
+          "type": {
+           "$id": "141",
+           "kind": "utcDateTime",
+           "name": "utcDateTime",
+           "encode": "rfc3339",
+           "wireType": {
+            "$id": "142",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+           },
+           "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+           "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedAt"
+         }
+        ]
+       },
+       "optional": true,
+       "readOnly": true,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.systemData"
+      }
+     ]
+    },
+    "properties": [
+     {
+      "$id": "143",
+      "kind": "property",
+      "name": "tags",
+      "serializedName": "tags",
+      "description": "Resource tags.",
+      "type": {
+       "$id": "144",
+       "kind": "dict",
+       "keyType": {
+        "$id": "145",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "valueType": {
+        "$id": "146",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "decorators": []
+      },
+      "optional": true,
+      "readOnly": false,
+      "discriminator": false,
+      "flatten": false,
+      "decorators": [],
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource.tags"
+     },
+     {
+      "$id": "147",
+      "kind": "property",
+      "name": "location",
+      "serializedName": "location",
+      "description": "The geo-location where the resource lives",
+      "type": {
+       "$id": "148",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "optional": false,
+      "readOnly": false,
+      "discriminator": false,
+      "flatten": false,
+      "decorators": [],
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource.location"
+     }
+    ]
+   },
+   "properties": [
+    {
+     "$id": "149",
+     "kind": "property",
+     "name": "properties",
+     "serializedName": "properties",
+     "description": "The resource-specific properties for this resource.",
+     "type": {
+      "$id": "150",
+      "kind": "model",
+      "name": "FabricCapacityProperties",
+      "crossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacityProperties",
+      "usage": "Input,Output,Json",
+      "description": "The Microsoft Fabric capacity properties.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "151",
+        "kind": "property",
+        "name": "provisioningState",
+        "serializedName": "provisioningState",
+        "description": "The current deployment state of Microsoft Fabric resource. The provisioningState is to indicate states for resource provisioning.",
+        "type": {
+         "$ref": "14"
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacityProperties.provisioningState"
+       },
+       {
+        "$id": "152",
+        "kind": "property",
+        "name": "state",
+        "serializedName": "state",
+        "description": "The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning.",
+        "type": {
+         "$ref": "28"
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacityProperties.state"
+       },
+       {
+        "$id": "153",
+        "kind": "property",
+        "name": "administration",
+        "serializedName": "administration",
+        "description": "The capacity administration",
+        "type": {
+         "$id": "154",
+         "kind": "model",
+         "name": "FabricCapacityAdministration",
+         "crossLanguageDefinitionId": "Microsoft.Fabric.CapacityAdministration",
+         "usage": "Input,Output,Json",
+         "description": "The administration properties of the Fabric capacity resource",
+         "decorators": [],
+         "properties": [
+          {
+           "$id": "155",
+           "kind": "property",
+           "name": "members",
+           "serializedName": "members",
+           "description": "An array of administrator user identities.",
+           "type": {
+            "$id": "156",
+            "kind": "array",
+            "name": "Array",
+            "valueType": {
+             "$id": "157",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": false,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "Microsoft.Fabric.CapacityAdministration.members"
+          }
+         ]
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacityProperties.administration"
+       }
+      ]
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacity.properties"
+    },
+    {
+     "$id": "158",
+     "kind": "property",
+     "name": "sku",
+     "serializedName": "sku",
+     "description": "The SKU details",
+     "type": {
+      "$id": "159",
+      "kind": "model",
+      "name": "FabricSku",
+      "crossLanguageDefinitionId": "Microsoft.Fabric.RpSku",
+      "usage": "Input,Output,Json",
+      "description": "Represents the SKU name and Azure pricing tier for Microsoft Fabric capacity resource.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "160",
+        "kind": "property",
+        "name": "name",
+        "serializedName": "name",
+        "description": "The name of the SKU level.",
+        "type": {
+         "$id": "161",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.Fabric.RpSku.name"
+       },
+       {
+        "$id": "162",
+        "kind": "property",
+        "name": "tier",
+        "serializedName": "tier",
+        "description": "The name of the Azure pricing tier to which the SKU applies.",
+        "type": {
+         "$ref": "54"
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.Fabric.RpSku.tier"
+       }
+      ]
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacity.sku"
+    }
+   ]
+  },
+  {
+   "$ref": "150"
+  },
+  {
+   "$ref": "154"
+  },
+  {
+   "$ref": "159"
+  },
+  {
+   "$ref": "120"
+  },
+  {
+   "$ref": "121"
+  },
+  {
+   "$ref": "130"
+  },
+  {
+   "$id": "163",
+   "kind": "model",
+   "name": "FabricCapacityUpdate",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModel",
+   "usage": "Input,Json",
+   "description": "The type used for update operations of the FabricCapacity.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "164",
+     "kind": "property",
+     "name": "sku",
+     "serializedName": "sku",
+     "description": "The SKU details",
+     "type": {
+      "$ref": "159"
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModel.sku"
+    },
+    {
+     "$id": "165",
+     "kind": "property",
+     "name": "tags",
+     "serializedName": "tags",
+     "description": "Resource tags.",
+     "type": {
+      "$id": "166",
+      "kind": "dict",
+      "keyType": {
+       "$id": "167",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "valueType": {
+       "$id": "168",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModel.tags"
+    },
+    {
+     "$id": "169",
+     "kind": "property",
+     "name": "properties",
+     "serializedName": "properties",
+     "description": "The resource-specific properties for this resource.",
+     "type": {
+      "$id": "170",
+      "kind": "model",
+      "name": "FabricCapacityUpdateProperties",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModelProperties",
+      "usage": "Input,Json",
+      "description": "The updatable properties of the FabricCapacity.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "171",
+        "kind": "property",
+        "name": "administration",
+        "serializedName": "administration",
+        "description": "The capacity administration",
+        "type": {
+         "$ref": "154"
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModelProperties.administration"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModel.properties"
+    }
+   ]
+  },
+  {
+   "$ref": "170"
+  },
+  {
+   "$id": "172",
+   "kind": "model",
+   "name": "FabricCapacityListResult",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
+   "usage": "Output,Json",
+   "description": "The response of a FabricCapacity list operation.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "173",
+     "kind": "property",
+     "name": "value",
+     "serializedName": "value",
+     "description": "The FabricCapacity items on this page",
+     "type": {
+      "$id": "174",
+      "kind": "array",
+      "name": "ArrayFabricCapacity",
+      "valueType": {
+       "$ref": "119"
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult.value"
+    },
+    {
+     "$id": "175",
+     "kind": "property",
+     "name": "nextLink",
+     "serializedName": "nextLink",
+     "description": "The link to the next page of items",
+     "type": {
+      "$id": "176",
+      "kind": "url",
+      "name": "ResourceLocation",
+      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+      "baseType": {
+       "$id": "177",
+       "kind": "url",
+       "name": "url",
+       "crossLanguageDefinitionId": "TypeSpec.url",
+       "decorators": []
+      },
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult.nextLink"
+    }
+   ]
+  },
+  {
+   "$id": "178",
+   "kind": "model",
+   "name": "FabricNameAvailabilityContent",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityRequest",
+   "usage": "Input,Json",
+   "description": "The check availability request body.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "179",
+     "kind": "property",
+     "name": "name",
+     "serializedName": "name",
+     "description": "The name of the resource for which availability needs to be checked.",
+     "type": {
+      "$id": "180",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityRequest.name"
+    },
+    {
+     "$id": "181",
+     "kind": "property",
+     "name": "ResourceType",
+     "serializedName": "type",
+     "description": "The resource type.",
+     "type": {
+      "$id": "182",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityRequest.type"
+    }
+   ]
+  },
+  {
+   "$id": "183",
+   "kind": "model",
+   "name": "FabricNameAvailabilityResult",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityResponse",
+   "usage": "Output,Json",
+   "description": "The check availability result.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "184",
+     "kind": "property",
+     "name": "IsNameAvailable",
+     "serializedName": "nameAvailable",
+     "description": "Indicates if the resource name is available.",
+     "type": {
+      "$id": "185",
+      "kind": "boolean",
+      "name": "boolean",
+      "crossLanguageDefinitionId": "TypeSpec.boolean",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityResponse.nameAvailable"
+    },
+    {
+     "$id": "186",
+     "kind": "property",
+     "name": "reason",
+     "serializedName": "reason",
+     "description": "The reason why the given name is not available.",
+     "type": {
+      "$ref": "68"
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityResponse.reason"
+    },
+    {
+     "$id": "187",
+     "kind": "property",
+     "name": "message",
+     "serializedName": "message",
+     "description": "Detailed reason why the given name is not available.",
+     "type": {
+      "$id": "188",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityResponse.message"
+    }
+   ]
+  },
+  {
+   "$id": "189",
+   "kind": "model",
+   "name": "RpSkuEnumerationForExistingResourceResult",
+   "crossLanguageDefinitionId": "Microsoft.Fabric.RpSkuEnumerationForExistingResourceResult",
+   "usage": "Output,Json",
+   "description": "An object that represents enumerating SKUs for existing resources",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "190",
+     "kind": "property",
+     "name": "value",
+     "serializedName": "value",
+     "description": "The SKU details",
+     "type": {
+      "$id": "191",
+      "kind": "array",
+      "name": "ArrayRpSkuDetailsForExistingResource",
+      "valueType": {
+       "$id": "192",
+       "kind": "model",
+       "name": "FabricSkuDetailsForExistingCapacity",
+       "crossLanguageDefinitionId": "Microsoft.Fabric.RpSkuDetailsForExistingResource",
+       "usage": "Output,Json",
+       "description": "An object that represents SKU details for existing resources",
+       "decorators": [],
+       "properties": [
+        {
+         "$id": "193",
+         "kind": "property",
+         "name": "resourceType",
+         "serializedName": "resourceType",
+         "description": "The resource type",
+         "type": {
+          "$id": "194",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Microsoft.Fabric.RpSkuDetailsForExistingResource.resourceType"
+        },
+        {
+         "$id": "195",
+         "kind": "property",
+         "name": "sku",
+         "serializedName": "sku",
+         "description": "The SKU details",
+         "type": {
+          "$ref": "159"
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Microsoft.Fabric.RpSkuDetailsForExistingResource.sku"
+        }
+       ]
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.Fabric.RpSkuEnumerationForExistingResourceResult.value"
+    },
+    {
+     "$id": "196",
+     "kind": "property",
+     "name": "nextLink",
+     "serializedName": "nextLink",
+     "description": "Url for the next page.  Null if no more pages available",
+     "type": {
+      "$id": "197",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.Fabric.RpSkuEnumerationForExistingResourceResult.nextLink"
+    }
+   ]
+  },
+  {
+   "$ref": "192"
+  },
+  {
+   "$id": "198",
+   "kind": "model",
+   "name": "RpSkuEnumerationForNewResourceResult",
+   "crossLanguageDefinitionId": "Microsoft.Fabric.RpSkuEnumerationForNewResourceResult",
+   "usage": "Output,Json",
+   "description": "An object that represents enumerating SKUs for new resources.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "199",
+     "kind": "property",
+     "name": "value",
+     "serializedName": "value",
+     "description": "The collection of available SKUs for new resources",
+     "type": {
+      "$id": "200",
+      "kind": "array",
+      "name": "ArrayRpSkuDetailsForNewResource",
+      "valueType": {
+       "$id": "201",
+       "kind": "model",
+       "name": "FabricSkuDetailsForNewCapacity",
+       "crossLanguageDefinitionId": "Microsoft.Fabric.RpSkuDetailsForNewResource",
+       "usage": "Output,Json",
+       "description": "The SKU details",
+       "decorators": [],
+       "properties": [
+        {
+         "$id": "202",
+         "kind": "property",
+         "name": "resourceType",
+         "serializedName": "resourceType",
+         "description": "The resource type",
+         "type": {
+          "$id": "203",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Microsoft.Fabric.RpSkuDetailsForNewResource.resourceType"
+        },
+        {
+         "$id": "204",
+         "kind": "property",
+         "name": "name",
+         "serializedName": "name",
+         "description": "The SKU's name",
+         "type": {
+          "$id": "205",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Microsoft.Fabric.RpSkuDetailsForNewResource.name"
+        },
+        {
+         "$id": "206",
+         "kind": "property",
+         "name": "locations",
+         "serializedName": "locations",
+         "description": "The list of available locations for the SKU",
+         "type": {
+          "$id": "207",
+          "kind": "array",
+          "name": "Array",
+          "valueType": {
+           "$id": "208",
+           "kind": "string",
+           "name": "azureLocation",
+           "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+           "baseType": {
+            "$id": "209",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+           },
+           "decorators": []
+          },
+          "crossLanguageDefinitionId": "TypeSpec.Array",
+          "decorators": []
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Microsoft.Fabric.RpSkuDetailsForNewResource.locations"
+        }
+       ]
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.Fabric.RpSkuEnumerationForNewResourceResult.value"
+    },
+    {
+     "$id": "210",
+     "kind": "property",
+     "name": "nextLink",
+     "serializedName": "nextLink",
+     "description": "Url for the next page.  Null if no more pages available",
+     "type": {
+      "$id": "211",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.Fabric.RpSkuEnumerationForNewResourceResult.nextLink"
+    }
+   ]
+  },
+  {
+   "$ref": "201"
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "212",
+   "Name": "FabricClient",
+   "Operations": [],
+   "Protocol": {
+    "$id": "213"
+   },
+   "Parameters": [
+    {
+     "$id": "214",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Description": "Service host",
+     "Type": {
+      "$id": "215",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client",
+     "DefaultValue": {
+      "$id": "216",
+      "Type": {
+       "$id": "217",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "Value": "https://management.azure.com"
+     }
+    }
+   ],
+   "Decorators": []
+  },
+  {
+   "$id": "218",
+   "Name": "FabricCapacities",
+   "Operations": [
+    {
+     "$id": "219",
+     "Name": "get",
+     "ResourceName": "FabricCapacity",
+     "Description": "Get a FabricCapacity",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "220",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "221",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "222",
+        "Type": {
+         "$id": "223",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-11-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "224",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Description": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "225",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "226",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "227",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Description": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "228",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "229",
+       "Name": "capacityName",
+       "NameInRequest": "capacityName",
+       "Description": "The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63.",
+       "Type": {
+        "$id": "230",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "231",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "232",
+        "kind": "constant",
+        "valueType": {
+         "$id": "233",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "234",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "119"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacities.get",
+     "Decorators": []
+    },
+    {
+     "$id": "235",
+     "Name": "createOrUpdate",
+     "ResourceName": "FabricCapacity",
+     "Description": "Create a FabricCapacity",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "236",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "237",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "238",
+        "Type": {
+         "$id": "239",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-11-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "240",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Description": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "241",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "242",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "243",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Description": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "244",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "245",
+       "Name": "capacityName",
+       "NameInRequest": "capacityName",
+       "Description": "The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63.",
+       "Type": {
+        "$id": "246",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "247",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "248",
+        "kind": "constant",
+        "valueType": {
+         "$id": "249",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "250",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "251",
+        "kind": "constant",
+        "valueType": {
+         "$id": "252",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "253",
+       "Name": "resource",
+       "NameInRequest": "resource",
+       "Description": "Resource create parameters.",
+       "Type": {
+        "$ref": "119"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "254",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "119"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      },
+      {
+       "$id": "255",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "119"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "256",
+         "Name": "azureAsyncOperation",
+         "NameInResponse": "Azure-AsyncOperation",
+         "Description": "A link to the status monitor",
+         "Type": {
+          "$id": "257",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         }
+        },
+        {
+         "$id": "258",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Description": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "259",
+          "kind": "int32",
+          "name": "int32",
+          "crossLanguageDefinitionId": "TypeSpec.int32",
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "260",
+      "FinalStateVia": 0,
+      "FinalResponse": {
+       "$id": "261",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "119"
+       },
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacities.createOrUpdate",
+     "Decorators": []
+    },
+    {
+     "$id": "262",
+     "Name": "update",
+     "ResourceName": "FabricCapacity",
+     "Description": "Update a FabricCapacity",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "263",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "264",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "265",
+        "Type": {
+         "$id": "266",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-11-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "267",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Description": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "268",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "269",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "270",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Description": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "271",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "272",
+       "Name": "capacityName",
+       "NameInRequest": "capacityName",
+       "Description": "The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63.",
+       "Type": {
+        "$id": "273",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "274",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "275",
+        "kind": "constant",
+        "valueType": {
+         "$id": "276",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "277",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "278",
+        "kind": "constant",
+        "valueType": {
+         "$id": "279",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "280",
+       "Name": "properties",
+       "NameInRequest": "properties",
+       "Description": "The resource properties to be updated.",
+       "Type": {
+        "$ref": "163"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "281",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "119"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      },
+      {
+       "$id": "282",
+       "StatusCodes": [
+        202
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "283",
+         "Name": "location",
+         "NameInResponse": "Location",
+         "Description": "The Location header contains the URL where the status of the long running operation can be checked.",
+         "Type": {
+          "$id": "284",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         }
+        },
+        {
+         "$id": "285",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Description": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "286",
+          "kind": "int32",
+          "name": "int32",
+          "crossLanguageDefinitionId": "TypeSpec.int32",
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "PATCH",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "287",
+      "FinalStateVia": 1,
+      "FinalResponse": {
+       "$id": "288",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "119"
+       },
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false,
+     "CrossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacities.update",
+     "Decorators": []
+    },
+    {
+     "$id": "289",
+     "Name": "delete",
+     "ResourceName": "FabricCapacity",
+     "Description": "Delete a FabricCapacity",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "290",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "291",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "292",
+        "Type": {
+         "$id": "293",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-11-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "294",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Description": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "295",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "296",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "297",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Description": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "298",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "299",
+       "Name": "capacityName",
+       "NameInRequest": "capacityName",
+       "Description": "The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63.",
+       "Type": {
+        "$id": "300",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "301",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "302",
+        "kind": "constant",
+        "valueType": {
+         "$id": "303",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "304",
+       "StatusCodes": [
+        202
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "305",
+         "Name": "location",
+         "NameInResponse": "Location",
+         "Description": "The Location header contains the URL where the status of the long running operation can be checked.",
+         "Type": {
+          "$id": "306",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         }
+        },
+        {
+         "$id": "307",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Description": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "308",
+          "kind": "int32",
+          "name": "int32",
+          "crossLanguageDefinitionId": "TypeSpec.int32",
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "309",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "DELETE",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "310",
+      "FinalStateVia": 1,
+      "FinalResponse": {
+       "$id": "311",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacities.delete",
+     "Decorators": []
+    },
+    {
+     "$id": "312",
+     "Name": "listByResourceGroup",
+     "ResourceName": "FabricCapacity",
+     "Description": "List FabricCapacity resources by resource group",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "313",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "314",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "315",
+        "Type": {
+         "$id": "316",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-11-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "317",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Description": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "318",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "319",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "320",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Description": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "321",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "322",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "323",
+        "kind": "constant",
+        "valueType": {
+         "$id": "324",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "325",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "172"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "326",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacities.listByResourceGroup",
+     "Decorators": []
+    },
+    {
+     "$id": "327",
+     "Name": "listBySubscription",
+     "ResourceName": "FabricCapacity",
+     "Description": "List FabricCapacity resources by subscription ID",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "328",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "329",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "330",
+        "Type": {
+         "$id": "331",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-11-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "332",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Description": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "333",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "334",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "335",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "336",
+        "kind": "constant",
+        "valueType": {
+         "$id": "337",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "338",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "172"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/capacities",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "339",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacities.listBySubscription",
+     "Decorators": []
+    },
+    {
+     "$id": "340",
+     "Name": "resume",
+     "ResourceName": "FabricCapacities",
+     "Description": "Resume operation of the specified Fabric capacity instance.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "341",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "342",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "343",
+        "Type": {
+         "$id": "344",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-11-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "345",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Description": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "346",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "347",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "348",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Description": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "349",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "350",
+       "Name": "capacityName",
+       "NameInRequest": "capacityName",
+       "Description": "The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63.",
+       "Type": {
+        "$id": "351",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "352",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "353",
+        "kind": "constant",
+        "valueType": {
+         "$id": "354",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "355",
+       "StatusCodes": [
+        202
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "356",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Description": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "357",
+          "kind": "int32",
+          "name": "int32",
+          "crossLanguageDefinitionId": "TypeSpec.int32",
+          "decorators": []
+         }
+        },
+        {
+         "$id": "358",
+         "Name": "location",
+         "NameInResponse": "Location",
+         "Description": "The Location header contains the URL where the status of the long running operation can be checked.",
+         "Type": {
+          "$id": "359",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "360",
+       "StatusCodes": [
+        200
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/resume",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "361",
+      "FinalStateVia": 1,
+      "FinalResponse": {
+       "$id": "362",
+       "StatusCodes": [
+        200
+       ],
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacities.resume",
+     "Decorators": []
+    },
+    {
+     "$id": "363",
+     "Name": "suspend",
+     "ResourceName": "FabricCapacities",
+     "Description": "Suspend operation of the specified Fabric capacity instance.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "364",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "365",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "366",
+        "Type": {
+         "$id": "367",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-11-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "368",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Description": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "369",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "370",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "371",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Description": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "372",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "373",
+       "Name": "capacityName",
+       "NameInRequest": "capacityName",
+       "Description": "The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63.",
+       "Type": {
+        "$id": "374",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "375",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "376",
+        "kind": "constant",
+        "valueType": {
+         "$id": "377",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "378",
+       "StatusCodes": [
+        202
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "379",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Description": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "380",
+          "kind": "int32",
+          "name": "int32",
+          "crossLanguageDefinitionId": "TypeSpec.int32",
+          "decorators": []
+         }
+        },
+        {
+         "$id": "381",
+         "Name": "location",
+         "NameInResponse": "Location",
+         "Description": "The Location header contains the URL where the status of the long running operation can be checked.",
+         "Type": {
+          "$id": "382",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "383",
+       "StatusCodes": [
+        200
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/suspend",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "384",
+      "FinalStateVia": 1,
+      "FinalResponse": {
+       "$id": "385",
+       "StatusCodes": [
+        200
+       ],
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacities.suspend",
+     "Decorators": []
+    },
+    {
+     "$id": "386",
+     "Name": "CheckFabricCapacityNameAvailability",
+     "ResourceName": "FabricCapacities",
+     "Description": "Implements local CheckNameAvailability operations",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "387",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "388",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "389",
+        "Type": {
+         "$id": "390",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-11-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "391",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Description": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "392",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "393",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "394",
+       "Name": "location",
+       "NameInRequest": "location",
+       "Description": "The name of the Azure region.",
+       "Type": {
+        "$id": "395",
+        "kind": "string",
+        "name": "azureLocation",
+        "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+        "baseType": {
+         "$id": "396",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "397",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "398",
+        "kind": "constant",
+        "valueType": {
+         "$id": "399",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "400",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "401",
+        "kind": "constant",
+        "valueType": {
+         "$id": "402",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "403",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "The CheckAvailability request",
+       "Type": {
+        "$ref": "178"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "404",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "183"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/locations/{location}/checkNameAvailability",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacities.checkNameAvailability",
+     "Decorators": []
+    },
+    {
+     "$id": "405",
+     "Name": "listSkusForCapacity",
+     "ResourceName": "FabricCapacities",
+     "Description": "List eligible SKUs for a Microsoft Fabric resource",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "406",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "407",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "408",
+        "Type": {
+         "$id": "409",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-11-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "410",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Description": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "411",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "412",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "413",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Description": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "414",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "415",
+       "Name": "capacityName",
+       "NameInRequest": "capacityName",
+       "Description": "The name of the capacity.",
+       "Type": {
+        "$id": "416",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "417",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "418",
+        "kind": "constant",
+        "valueType": {
+         "$id": "419",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "420",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "189"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/skus",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "421",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacities.listSkusForCapacity",
+     "Decorators": []
+    },
+    {
+     "$id": "422",
+     "Name": "listSkus",
+     "ResourceName": "FabricCapacities",
+     "Description": "List eligible SKUs for Microsoft Fabric resource provider",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "423",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "424",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "425",
+        "Type": {
+         "$id": "426",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-11-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "427",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Description": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "428",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "429",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "430",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "431",
+        "kind": "constant",
+        "valueType": {
+         "$id": "432",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "433",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "198"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/skus",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "434",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.Fabric.FabricCapacities.listSkus",
+     "Decorators": []
+    }
+   ],
+   "Protocol": {
+    "$id": "435"
+   },
+   "Parent": "FabricClient",
+   "Parameters": [
+    {
+     "$id": "436",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Description": "Service host",
+     "Type": {
+      "$id": "437",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client",
+     "DefaultValue": {
+      "$id": "438",
+      "Type": {
+       "$id": "439",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "Value": "https://management.azure.com"
+     }
+    }
+   ],
+   "Decorators": []
+  },
+  {
+   "$id": "440",
+   "Name": "Operations",
+   "Operations": [
+    {
+     "$id": "441",
+     "Name": "list",
+     "ResourceName": "Operations",
+     "Description": "List the operations for the provider",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$id": "442",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "443",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "444",
+        "Type": {
+         "$id": "445",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-11-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "446",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "447",
+        "kind": "constant",
+        "valueType": {
+         "$id": "448",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "449",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "78"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/providers/Microsoft.Fabric/operations",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "450",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Azure.ResourceManager.Operations.list",
+     "Decorators": []
+    }
+   ],
+   "Protocol": {
+    "$id": "451"
+   },
+   "Parent": "FabricClient",
+   "Parameters": [
+    {
+     "$id": "452",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Description": "Service host",
+     "Type": {
+      "$id": "453",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client",
+     "DefaultValue": {
+      "$id": "454",
+      "Type": {
+       "$id": "455",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "Value": "https://management.azure.com"
+     }
+    }
+   ],
+   "Decorators": []
+  }
+ ],
+ "Auth": {
+  "$id": "456",
+  "OAuth2": {
+   "$id": "457",
+   "Scopes": [
+    "user_impersonation"
+   ]
+  }
+ }
+}

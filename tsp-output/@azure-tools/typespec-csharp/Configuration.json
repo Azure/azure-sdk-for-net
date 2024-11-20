@@ -1,0 +1,12 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.ResourceManager.Fabric",
+  "library-name": "Azure.ResourceManager.Fabric",
+  "flavor": "azure",
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../../../../../autorest.csharp/node_modules/@autorest/csharp/Generator.Shared",
+    "../../../../../../autorest.csharp/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "azure-arm": true
+}
