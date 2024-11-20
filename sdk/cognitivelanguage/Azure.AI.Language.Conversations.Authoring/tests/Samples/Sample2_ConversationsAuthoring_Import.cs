@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             AuthoringClient client = new AuthoringClient(endpoint, credential);
             ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
 
-            #region Snippet:Sample1_ConversationsAuthoring_Import
+            #region Snippet:Sample2_ConversationsAuthoring_Import
             string projectName = "MyImportedProject";
 
             var projectMetadata = new CreateProjectConfig(

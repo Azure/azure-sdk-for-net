@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
-    public partial class Sample14_ConversationsAuthoring_DeleteDeploymentAsync : SamplesBase<AuthoringClientTestEnvironment>
+    public partial class Sample13_ConversationsAuthoring_DeleteDeploymentAsync : SamplesBase<AuthoringClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]
@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             string projectName = "SampleProject";
             string deploymentName = "SampleDeployment";
 
-            #region Snippet:Sample14_ConversationsAuthoring_DeleteDeploymentAsync
+            #region Snippet:Sample13_ConversationsAuthoring_DeleteDeploymentAsync
             Operation operation = await authoringClient.DeleteDeploymentAsync(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
