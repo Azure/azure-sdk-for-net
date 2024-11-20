@@ -27,8 +27,5 @@
 		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
 	</ItemGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\..\..\..\..\..\..\..\work\typespec\packages\http-client-csharp\generator\Microsoft.Generator.CSharp.ClientModel\src\Microsoft.Generator.CSharp.ClientModel.csproj" />
-	</ItemGroup>
 	
 </Project>
