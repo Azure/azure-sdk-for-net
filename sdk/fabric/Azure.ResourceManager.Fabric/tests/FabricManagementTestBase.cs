@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Fabric.Tests
 {
-    public class fabricManagementTestBase : ManagementRecordedTestBase<fabricManagementTestEnvironment>
+    public class FabricManagementTestBase : ManagementRecordedTestBase<FabricManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected fabricManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected FabricManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected fabricManagementTestBase(bool isAsync)
+        protected FabricManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }

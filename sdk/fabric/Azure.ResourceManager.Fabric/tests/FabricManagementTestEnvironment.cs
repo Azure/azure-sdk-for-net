@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.Fabric.Tests
 {
-    public class fabricManagementTestEnvironment : TestEnvironment
+    public class FabricManagementTestEnvironment : TestEnvironment
     {
     }
 }
