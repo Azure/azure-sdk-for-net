@@ -1,6 +1,5 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup />
-
+<Project Sdk="Microsoft.NET.Sdk"
+>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Fabric.csproj" />
   </ItemGroup>
