@@ -9,7 +9,7 @@ csharp: true
 library-name: HybridConnectivity
 namespace: Azure.ResourceManager.HybridConnectivity
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/3c162c839b8fe17544d9a3be8383a835dd42eb28/specification/hybridconnectivity/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/fe44d3261ff0ea816315126120672ccec78c3074/specification/hybridconnectivity/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -50,6 +50,24 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+  - InventoryResource
+  - CloudNativeType
+  - EndpointProperties
+  - HostType
+  - InventoryProperties
+  - ProvisioningState
+  - ResourceProvisioningState
+  - ServiceName
+
+rename-mapping:
+  # IngressGatewayResource and ManagedProxyResource are not ARM resource but end with Resource suffix which is not allowed, so we need to rename them
+  IngressGatewayResource: IngressGatewayAsset
+  ManagedProxyResource: ManagedProxyAsset
+  # format transform
+  AADProfileProperties.serverId: -|uuid
+  PublicCloudConnectorProperties.connectorPrimaryIdentifier: -|uuid
+
 directive:
   - rename-model:
       from: EndpointAccessResource
@@ -63,5 +81,26 @@ directive:
     where: $.parameters.ResourceUriParameter
     transform: >
       $["x-ms-client-name"] = "scope"
+
+    # To generate as Azure.Core.ResourceIdentifier
+  - from: swagger-document
+    where: $.definitions.ServiceConfigurationProperties.properties.resourceId
+    transform: $['x-ms-format'] = 'arm-id'
+
+  - from: swagger-document
+    where: $.definitions.GenerateAwsTemplateRequest.properties.connectorId
+    transform: $['x-ms-format'] = 'arm-id'
+
+  - from: swagger-document
+    where: $.definitions.InventoryProperties.properties.azureResourceId
+    transform: $['x-ms-format'] = 'arm-id'
+
+  - from: swagger-document
+    where: $.definitions.EndpointProperties.properties.resourceId
+    transform: $['x-ms-format'] = 'arm-id'
+
+  - from: swagger-document
+    where: $.definitions.AADProfileProperties.properties.serverId
+    transform: $['x-ms-format'] = 'arm-id'
 
 ```

@@ -25,7 +25,7 @@ public partial class Sample_Agent_Bing_Grounding : SamplesBase<AIProjectsTestEnv
         clientOptions.AddPolicy(new CustomHeadersPolicy(), HttpPipelinePosition.PerCall);
         var projectClient = new AIProjectClient(connectionString, new DefaultAzureCredential(), clientOptions);
 
-        GetConnectionResponse bingConnection = await projectClient.GetConnectionsClient().GetConnectionAsync(TestEnvironment.BINGCONNECTIONNAME);
+        ConnectionResponse bingConnection = await projectClient.GetConnectionsClient().GetConnectionAsync(TestEnvironment.BINGCONNECTIONNAME);
         var connectionId = bingConnection.Id;
 
         AgentsClient agentClient = projectClient.GetAgentsClient();

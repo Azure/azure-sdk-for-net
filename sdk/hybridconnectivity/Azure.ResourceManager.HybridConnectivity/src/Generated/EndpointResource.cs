@@ -87,6 +87,73 @@ namespace Azure.ResourceManager.HybridConnectivity
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of ServiceConfigurationResources in the EndpointResource. </summary>
+        /// <returns> An object representing collection of ServiceConfigurationResources and their operations over a ServiceConfigurationResource. </returns>
+        public virtual ServiceConfigurationResourceCollection GetServiceConfigurationResources()
+        {
+            return GetCachedClient(client => new ServiceConfigurationResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details about the service to the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/serviceConfigurations/{serviceConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceConfigurationName"> The service name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceConfigurationResource>> GetServiceConfigurationResourceAsync(string serviceConfigurationName, CancellationToken cancellationToken = default)
+        {
+            return await GetServiceConfigurationResources().GetAsync(serviceConfigurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details about the service to the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/serviceConfigurations/{serviceConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceConfigurationName"> The service name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceConfigurationResource> GetServiceConfigurationResource(string serviceConfigurationName, CancellationToken cancellationToken = default)
+        {
+            return GetServiceConfigurationResources().Get(serviceConfigurationName, cancellationToken);
+        }
+
         /// <summary>
         /// Gets the endpoint to the resource.
         /// <list type="bullet">
@@ -100,7 +167,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-06-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -140,7 +207,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-06-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -180,7 +247,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-06-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +291,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-06-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -268,7 +335,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-06-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -310,7 +377,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-06-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -352,7 +419,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-06-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,15 +427,16 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="content"> Object of type ListCredentialsRequest. </param>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TargetResourceEndpointAccess>> GetCredentialsAsync(long? expiresin = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TargetResourceEndpointAccess>> GetCredentialsAsync(ListCredentialsContent content = null, long? expiresin = null, CancellationToken cancellationToken = default)
         {
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.GetCredentials");
             scope.Start();
             try
             {
-                var response = await _endpointResourceEndpointsRestClient.ListCredentialsAsync(Id.Parent, Id.Name, expiresin, cancellationToken).ConfigureAwait(false);
+                var response = await _endpointResourceEndpointsRestClient.ListCredentialsAsync(Id.Parent, Id.Name, content, expiresin, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -391,7 +459,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-06-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -399,15 +467,180 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="content"> Object of type ListCredentialsRequest. </param>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TargetResourceEndpointAccess> GetCredentials(long? expiresin = null, CancellationToken cancellationToken = default)
+        public virtual Response<TargetResourceEndpointAccess> GetCredentials(ListCredentialsContent content = null, long? expiresin = null, CancellationToken cancellationToken = default)
         {
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.GetCredentials");
             scope.Start();
             try
             {
-                var response = _endpointResourceEndpointsRestClient.ListCredentials(Id.Parent, Id.Name, expiresin, cancellationToken);
+                var response = _endpointResourceEndpointsRestClient.ListCredentials(Id.Parent, Id.Name, content, expiresin, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the ingress gateway endpoint credentials
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/listIngressGatewayCredentials</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_ListIngressGatewayCredentials</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Object of type ListIngressGatewayCredentialsRequest. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<IngressGatewayAsset>> GetIngressGatewayCredentialsAsync(ListIngressGatewayCredentialsContent content = null, long? expiresin = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.GetIngressGatewayCredentials");
+            scope.Start();
+            try
+            {
+                var response = await _endpointResourceEndpointsRestClient.ListIngressGatewayCredentialsAsync(Id.Parent, Id.Name, content, expiresin, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the ingress gateway endpoint credentials
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/listIngressGatewayCredentials</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_ListIngressGatewayCredentials</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Object of type ListIngressGatewayCredentialsRequest. </param>
+        /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<IngressGatewayAsset> GetIngressGatewayCredentials(ListIngressGatewayCredentialsContent content = null, long? expiresin = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.GetIngressGatewayCredentials");
+            scope.Start();
+            try
+            {
+                var response = _endpointResourceEndpointsRestClient.ListIngressGatewayCredentials(Id.Parent, Id.Name, content, expiresin, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fetches the managed proxy details
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/listManagedProxyDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_ListManagedProxyDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Object of type ManagedProxyRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ManagedProxyAsset>> GetManagedProxyDetailsAsync(ManagedProxyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.GetManagedProxyDetails");
+            scope.Start();
+            try
+            {
+                var response = await _endpointResourceEndpointsRestClient.ListManagedProxyDetailsAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fetches the managed proxy details
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/listManagedProxyDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_ListManagedProxyDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Object of type ManagedProxyRequest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ManagedProxyAsset> GetManagedProxyDetails(ManagedProxyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.GetManagedProxyDetails");
+            scope.Start();
+            try
+            {
+                var response = _endpointResourceEndpointsRestClient.ListManagedProxyDetails(Id.Parent, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
