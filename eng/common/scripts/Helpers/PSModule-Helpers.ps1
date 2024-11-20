@@ -1,4 +1,3 @@
-$DefaultPSRepositoryUrl = "https://www.powershellgallery.com/api/v2"
 $global:CurrentUserModulePath = ""
 
 function Update-PSModulePathForCI()
@@ -47,6 +46,65 @@ function Update-PSModulePathForCI()
   }
 }
 
+function Get-ModuleRepositories([string]$moduleName) {
+  $DefaultPSRepositoryUrl = "https://www.powershellgallery.com/api/v2"
+  # List of modules+versions we want to replace with internal feed sources for reliability, security, etc.
+  $packageFeedOverrides = @{
+    'powershell-yaml' = 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2'
+  }
+
+  $repoUrls = if ($packageFeedOverrides.Contains("${moduleName}")) {
+    @($packageFeedOverrides["${moduleName}"], $DefaultPSRepositoryUrl)
+  } else {
+    @($DefaultPSRepositoryUrl)
+  }
+
+  return $repoUrls
+}
+
+function moduleIsInstalled([string]$moduleName, [string]$version) {
+  $modules = (Get-Module -ListAvailable $moduleName)
+  if ($version -as [Version]) {
+    $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
+    if ($modules.Count -gt 0)
+    {
+      Write-Host "Using module $($modules[0].Name) with version $($modules[0].Version)."
+      return $modules[0]
+    }
+  }
+  return $null
+}
+
+function installModule([string]$moduleName, [string]$version, $repoUrl) {
+  $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
+  if ($repo.Count -eq 0)
+  {
+    Register-PSRepository -Name $repoUrl -SourceLocation $repoUrl -InstallationPolicy Trusted
+    $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
+    if ($repo.Count -eq 0) {
+      throw "Failed to register package repository $repoUrl."
+    }
+  }
+
+  if ($repo.InstallationPolicy -ne "Trusted") {
+    Set-PSRepository -Name $repo.Name -InstallationPolicy "Trusted"
+  }
+
+  Write-Host "Installing module $moduleName with min version $version from $repoUrl"
+  # Install under CurrentUser scope so that the end up under $CurrentUserModulePath for caching
+  Install-Module $moduleName -MinimumVersion $version -Repository $repo.Name -Scope CurrentUser -Force
+  # Ensure module installed
+  $modules = (Get-Module -ListAvailable $moduleName)
+  if ($version -as [Version]) {
+    $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
+  }
+  if ($modules.Count -eq 0) {
+    throw "Failed to install module $moduleName with version $version"
+  }
+
+  return $modules[0]
+}
+
 # Manual test at eng/common-tests/psmodule-helpers/Install-Module-Parallel.ps1
 # If we want to use another default repository other then PSGallery we can update the default parameters
 function Install-ModuleIfNotInstalled()
@@ -58,72 +116,42 @@ function Install-ModuleIfNotInstalled()
     [string]$repositoryUrl
   )
 
-  # List of modules+versions we want to replace with internal feed sources for reliability, security, etc.
-  $packageFeedOverrides = @{
-    'powershell-yaml' = 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2'
-  }
+  # Check installed modules before after acquiring lock to avoid a big queue
+  $module = moduleIsInstalled -moduleName $moduleName -version $version
+  if ($module) { return $module }
 
   try {
     $mutex = New-Object System.Threading.Mutex($false, "Install-ModuleIfNotInstalled")
     $null = $mutex.WaitOne()
 
-    # Check installed modules again after acquiring lock
-    $modules = (Get-Module -ListAvailable $moduleName)
-    if ($version -as [Version]) {
-      $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
-    }
+    # Check installed modules again after acquiring lock, in case it has been installed
+    $module = moduleIsInstalled -moduleName $moduleName -version $version
+    if ($module) { return $module }
 
-    if ($modules.Count -gt 0)
-    {
-      Write-Host "Using module $($modules[0].Name) with version $($modules[0].Version)."
-      return $modules[0]
-    }
+    $repoUrls = Get-ModuleRepositories $moduleName
 
-    $repositoryUrl = if ($repositoryUrl) {
-      $repositoryUrl
-    } elseif ($mirrorFeedOverrides.Contains("${moduleName}")) {
-      $mirrorFeedOverrides["${moduleName}"]
-    } else {
-      $DefaultPSRepositoryUrl
-    }
-
-    $repositories = (Get-PSRepository).Where({ $_.SourceLocation -eq $repositoryUrl })
-    if ($repositories.Count -eq 0)
-    {
-      Register-PSRepository -Name $repositoryUrl -SourceLocation $repositoryUrl -InstallationPolicy Trusted
-      $repositories = (Get-PSRepository).Where({ $_.SourceLocation -eq $repositoryUrl })
-      if ($repositories.Count -eq 0) {
-        Write-Error "Failed to register package repository $repositoryUrl."
-        return
+    foreach ($url in $repoUrls) {
+      try {
+        $module = installModule -moduleName $moduleName -version $version -repoUrl $url
+      } catch {
+        if ($url -ne $repoUrls[-1]) {
+          Write-Warning "Failed to install powershell module from '$url'. Retrying with fallback repository"
+          Write-Warning $_
+          continue
+        } else {
+          Write-Warning "Failed to install powershell module from $url"
+          throw
+        }
       }
-    }
-    $repository = $repositories[0]
-
-    if ($repository.InstallationPolicy -ne "Trusted") {
-      Set-PSRepository -Name $repository.Name -InstallationPolicy "Trusted"
+      break
     }
 
-    Write-Host "Installing module $moduleName with min version $version from $repositoryUrl"
-    # Install under CurrentUser scope so that the end up under $CurrentUserModulePath for caching
-    Install-Module $moduleName -MinimumVersion $version -Repository $repository.Name -Scope CurrentUser -Force
-
-    # Ensure module installed
-    $modules = (Get-Module -ListAvailable $moduleName)
-    if ($version -as [Version]) {
-      $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
-    }
-
-    if ($modules.Count -eq 0) {
-      Write-Error "Failed to install module $moduleName with version $version"
-      return
-    }
-
-    Write-Host "Using module $($modules[0].Name) with version $($modules[0].Version)."
+    Write-Host "Using module '$($module.Name)' with version '$($module.Version)'."
   } finally {
     $mutex.ReleaseMutex()
   }
 
-  return $modules[0]
+  return $module
 }
 
 if ($null -ne $env:SYSTEM_TEAMPROJECTID) {
