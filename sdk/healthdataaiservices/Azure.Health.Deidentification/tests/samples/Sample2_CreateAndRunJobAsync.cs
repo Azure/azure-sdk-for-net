@@ -34,8 +34,8 @@ namespace Azure.Health.Deidentification.Samples
             DeidentificationJob job = new()
             {
                 SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "folder1/"),
-                TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_path"),
-                Operation = DeidentificationOperationType.Surrogate
+                TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_folder1/"),
+                Operation = DeidentificationOperationType.Redact,
             };
 
             job = (await client.DeidentifyDocumentsAsync(WaitUntil.Completed, "my-job-1", job)).Value;
