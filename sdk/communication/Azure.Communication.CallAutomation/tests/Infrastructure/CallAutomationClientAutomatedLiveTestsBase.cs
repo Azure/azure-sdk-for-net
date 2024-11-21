@@ -40,7 +40,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         private HttpPipeline _pipeline;
 
 #pragma warning disable CS8618
-        public CallAutomationClientAutomatedLiveTestsBase(bool isAsync, RecordedTestMode? mode = RecordedTestMode.Record) : base(isAsync, mode)
+        public CallAutomationClientAutomatedLiveTestsBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
 #pragma warning restore CS8618
         {
             SanitizedHeaders.Add("x-ms-content-sha256");

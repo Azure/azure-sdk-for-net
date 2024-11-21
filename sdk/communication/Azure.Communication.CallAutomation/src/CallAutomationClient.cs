@@ -757,8 +757,9 @@ namespace Azure.Communication.CallAutomation
         {
             return configuration == default
                 ? default
-                : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.MediaStreamingTransport, configuration.MediaStreamingContent,
-                configuration.MediaStreamingAudioChannel, configuration.StartMediaStreaming, configuration.EnableBidirectional, configuration.AudioFormat);
+                : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.MediaStreamingTransport,
+                configuration.MediaStreamingContent, configuration.MediaStreamingAudioChannel, configuration.StartMediaStreaming,
+                configuration.EnableBidirectional, configuration.AudioFormat == null ? AudioFormat.Pcm24KMono : configuration.AudioFormat);
         }
         private static TranscriptionOptionsInternal CreateTranscriptionOptionsInternal(TranscriptionOptions configuration)
         {
