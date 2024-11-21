@@ -7,6 +7,7 @@ using Azure.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
 {
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
                 ClientConnectionPort = 19000,
                 HttpGatewayConnectionPort = 19080
             };
+            data.Tags.Add(new KeyValuePair<string, string>("SFRP.EnableDiagnosticMI", "true"));
 
             serviceFabricManagedCluster = (await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
         }
