@@ -1027,7 +1027,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Plays a file.
+        /// Interrupts current hold audio and plays the announcement passed as a parameter. Resumes the hold audio after announcement completes.
         /// </summary>
         /// <param name="announcementOptions"></param>
         /// <param name="cancellationToken"></param>

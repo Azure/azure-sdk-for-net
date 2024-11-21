@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The play completed event.
+    /// The play started event.
     /// </summary>
     [CodeGenModel("PlayStarted", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class PlayStarted : CallAutomationEventBase
@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public MediaEventReasonCode ReasonCode { get; internal set; }
 
-        /// <summary> Initializes a new instance of PlayCompleted. </summary>
+        /// <summary> Initializes a new instance of PlayStarted. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
@@ -34,10 +34,10 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Deserialize <see cref="PlayCompleted"/> event.
+        /// Deserialize <see cref="PlayStarted"/> event.
         /// </summary>
         /// <param name="content">The json content.</param>
-        /// <returns>The new <see cref="PlayCompleted"/> object.</returns>
+        /// <returns>The new <see cref="PlayStarted"/> object.</returns>
         public static PlayStarted Deserialize(string content)
         {
             using var document = JsonDocument.Parse(content);

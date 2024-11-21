@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public MediaEventReasonCode ReasonCode { get; internal set; }
 
-        /// <summary> Initializes a new instance of PlayCompleted. </summary>
+        /// <summary> Initializes a new instance of PlayPaused. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

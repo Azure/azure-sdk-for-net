@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The play paused event.
+    /// The play resumed event.
     /// </summary>
     [CodeGenModel("PlayResumed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class PlayResumed : CallAutomationEventBase
@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public MediaEventReasonCode ReasonCode { get; internal set; }
 
-        /// <summary> Initializes a new instance of PlayCompleted. </summary>
+        /// <summary> Initializes a new instance of PlayResumed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
