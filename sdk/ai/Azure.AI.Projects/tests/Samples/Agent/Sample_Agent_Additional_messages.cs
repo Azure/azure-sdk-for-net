@@ -16,7 +16,6 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIProjectsTest
     [Test]
     public async Task CreateAdditionalMessageExample()
     {
-        #region Snippet:OverviewCreateAgentClientAdditionalMessages
 #if SNIPPET
         var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 #else
@@ -30,18 +29,14 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIProjectsTest
             new DefaultAzureCredential(),
             clientOptions);
         var agentClient = projectClient.GetAgentsClient();
-        #endregion
 
-        #region Snippet:CreateAgentAdditionalMessages
         Response<Agent> agentResponse = await agentClient.CreateAgentAsync(
             model: "gpt-4-1106-preview",
             name: "Math Tutor",
             instructions: "You are a personal electronics tutor. Write and run code to answer questions.",
             tools: [new CodeInterpreterToolDefinition()]);
         Agent agent = agentResponse.Value;
-        #endregion
 
-        #region Snippet:CreateThreadAndRun
         var threadResponse = await agentClient.CreateThreadAsync();
         var thread= threadResponse.Value;
         Response<ThreadMessage> messageResponse = await agentClient.CreateMessageAsync(
@@ -50,6 +45,7 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIProjectsTest
             "What is the impedance formula?");
         ThreadMessage message = messageResponse.Value;
 
+        #region Snippet:CreateRunWithAdditionalMessages
         var agentRun = await agentClient.CreateRunAsync(
             threadId: thread.Id,
             agent.Id,
@@ -66,7 +62,6 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIProjectsTest
         );
         #endregion
 
-        #region Snippet:OverviewWaitForRunAdditionalMessages
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -74,9 +69,7 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIProjectsTest
         }
         while (agentRun.Value.Status == RunStatus.Queued
             || agentRun.Value.Status == RunStatus.InProgress);
-        #endregion
 
-        #region Snippet:GetResponseFromAgent
         Response<PageableList<ThreadMessage>> afterRunMessagesResponse
             = await agentClient.GetMessagesAsync(thread.Id);
         IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
@@ -98,6 +91,5 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIProjectsTest
                 Console.WriteLine();
             }
         }
-        #endregion
     }
 }
