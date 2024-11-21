@@ -102,6 +102,10 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
     throw "Failed to install module $moduleName with version $version"
   }
 
+  # Unregister repository as it can cause overlap issues with `dotnet tool install`
+  # commands using the same devops feed
+  Unregister-PSRepository -Name $repoUrl
+
   return $modules[0]
 }
 
