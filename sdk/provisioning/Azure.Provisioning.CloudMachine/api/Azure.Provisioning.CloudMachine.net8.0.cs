@@ -78,6 +78,7 @@ namespace Azure.Provisioning.CloudMachine
         protected CloudMachineFeature() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.Primitives.ProvisionableResource Emitted { get { throw null; } protected set { } }
+        protected internal System.Collections.Generic.Dictionary<Azure.Provisioning.Primitives.Provisionable, (string RoleName, string RoleId)[]> RequiredSystemRoles { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual void AddTo(Azure.CloudMachine.CloudMachineInfrastructure cm) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
