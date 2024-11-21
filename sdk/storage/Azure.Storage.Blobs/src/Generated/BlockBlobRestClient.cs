@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2024-08-04". </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2025-01-05". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public BlockBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version)
         {
@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
-        internal HttpMessage CreateUploadRequest(long contentLength, Stream body, int? timeout, byte[] transactionalContentMD5, string blobContentType, string blobContentEncoding, string blobContentLanguage, byte[] blobContentMD5, string blobCacheControl, IDictionary<string, string> metadata, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, AccessTier? tier, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold, byte[] transactionalContentCrc64)
+        internal HttpMessage CreateUploadRequest(long contentLength, Stream body, int? timeout, byte[] transactionalContentMD5, string blobContentType, string blobContentEncoding, string blobContentLanguage, byte[] blobContentMD5, string blobCacheControl, IDictionary<string, string> metadata, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, AccessTier? tier, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold, byte[] transactionalContentCrc64, string structuredBodyType, long? structuredContentLength)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -146,6 +146,14 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-content-crc64", transactionalContentCrc64, "D");
             }
+            if (structuredBodyType != null)
+            {
+                request.Headers.Add("x-ms-structured-body", structuredBodyType);
+            }
+            if (structuredContentLength != null)
+            {
+                request.Headers.Add("x-ms-structured-content-length", structuredContentLength.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             if (transactionalContentMD5 != null)
             {
@@ -185,16 +193,18 @@ namespace Azure.Storage.Blobs
         /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
         /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
+        /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
+        /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlockBlobUploadHeaders>> UploadAsync(long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, AccessTier? tier = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, byte[] transactionalContentCrc64 = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlockBlobUploadHeaders>> UploadAsync(long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, AccessTier? tier = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, byte[] transactionalContentCrc64 = null, string structuredBodyType = null, long? structuredContentLength = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateUploadRequest(contentLength, body, timeout, transactionalContentMD5, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, tier, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, transactionalContentCrc64);
+            using var message = CreateUploadRequest(contentLength, body, timeout, transactionalContentMD5, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, tier, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, transactionalContentCrc64, structuredBodyType, structuredContentLength);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlockBlobUploadHeaders(message.Response);
             switch (message.Response.Status)
@@ -234,16 +244,18 @@ namespace Azure.Storage.Blobs
         /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
         /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
+        /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
+        /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<BlockBlobUploadHeaders> Upload(long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, AccessTier? tier = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, byte[] transactionalContentCrc64 = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlockBlobUploadHeaders> Upload(long contentLength, Stream body, int? timeout = null, byte[] transactionalContentMD5 = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, AccessTier? tier = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, byte[] transactionalContentCrc64 = null, string structuredBodyType = null, long? structuredContentLength = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateUploadRequest(contentLength, body, timeout, transactionalContentMD5, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, tier, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, transactionalContentCrc64);
+            using var message = CreateUploadRequest(contentLength, body, timeout, transactionalContentMD5, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, tier, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, transactionalContentCrc64, structuredBodyType, structuredContentLength);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlockBlobUploadHeaders(message.Response);
             switch (message.Response.Status)
@@ -494,7 +506,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateStageBlockRequest(string blockId, long contentLength, Stream body, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope)
+        internal HttpMessage CreateStageBlockRequest(string blockId, long contentLength, Stream body, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, string structuredBodyType, long? structuredContentLength)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -533,6 +545,14 @@ namespace Azure.Storage.Blobs
                 request.Headers.Add("x-ms-encryption-scope", encryptionScope);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (structuredBodyType != null)
+            {
+                request.Headers.Add("x-ms-structured-body", structuredBodyType);
+            }
+            if (structuredContentLength != null)
+            {
+                request.Headers.Add("x-ms-structured-content-length", structuredContentLength.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Length", contentLength);
             if (transactionalContentMD5 != null)
@@ -556,9 +576,11 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
+        /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blockId"/> or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<BlockBlobStageBlockHeaders>> StageBlockAsync(string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlockBlobStageBlockHeaders>> StageBlockAsync(string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string structuredBodyType = null, long? structuredContentLength = null, CancellationToken cancellationToken = default)
         {
             if (blockId == null)
             {
@@ -569,7 +591,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateStageBlockRequest(blockId, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope);
+            using var message = CreateStageBlockRequest(blockId, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, structuredBodyType, structuredContentLength);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlockBlobStageBlockHeaders(message.Response);
             switch (message.Response.Status)
@@ -593,9 +615,11 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionScope"> Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
+        /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blockId"/> or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<BlockBlobStageBlockHeaders> StageBlock(string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlockBlobStageBlockHeaders> StageBlock(string blockId, long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string structuredBodyType = null, long? structuredContentLength = null, CancellationToken cancellationToken = default)
         {
             if (blockId == null)
             {
@@ -606,7 +630,7 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateStageBlockRequest(blockId, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope);
+            using var message = CreateStageBlockRequest(blockId, contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, structuredBodyType, structuredContentLength);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlockBlobStageBlockHeaders(message.Response);
             switch (message.Response.Status)

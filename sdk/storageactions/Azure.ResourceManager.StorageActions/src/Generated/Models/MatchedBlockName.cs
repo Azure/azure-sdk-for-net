@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         public static bool operator ==(MatchedBlockName left, MatchedBlockName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MatchedBlockName"/> values are not the same. </summary>
         public static bool operator !=(MatchedBlockName left, MatchedBlockName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MatchedBlockName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MatchedBlockName"/>. </summary>
         public static implicit operator MatchedBlockName(string value) => new MatchedBlockName(value);
 
         /// <inheritdoc />

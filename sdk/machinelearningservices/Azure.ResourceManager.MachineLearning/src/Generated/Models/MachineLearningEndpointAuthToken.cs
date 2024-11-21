@@ -52,26 +52,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointAuthToken"/>. </summary>
         /// <param name="accessToken"> Access token for endpoint authentication. </param>
+        /// <param name="tokenType"> Access token type. </param>
         /// <param name="expireOn"> Access token expiry time (UTC). </param>
         /// <param name="refreshOn"> Refresh access token after time (UTC). </param>
-        /// <param name="tokenType"> Access token type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningEndpointAuthToken(string accessToken, DateTimeOffset? expireOn, DateTimeOffset? refreshOn, string tokenType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningEndpointAuthToken(string accessToken, string tokenType, DateTimeOffset? expireOn, DateTimeOffset? refreshOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessToken = accessToken;
+            TokenType = tokenType;
             ExpireOn = expireOn;
             RefreshOn = refreshOn;
-            TokenType = tokenType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Access token for endpoint authentication. </summary>
+        [WirePath("accessToken")]
         public string AccessToken { get; }
+        /// <summary> Access token type. </summary>
+        [WirePath("tokenType")]
+        public string TokenType { get; }
         /// <summary> Access token expiry time (UTC). </summary>
+        [WirePath("expiryTimeUtc")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> Refresh access token after time (UTC). </summary>
+        [WirePath("refreshAfterTimeUtc")]
         public DateTimeOffset? RefreshOn { get; }
-        /// <summary> Access token type. </summary>
-        public string TokenType { get; }
     }
 }

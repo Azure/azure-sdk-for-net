@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -270,7 +269,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,90 +349,6 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Updates the custom services list. The list of custom services provided shall be overwritten
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/customServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compute_UpdateCustomServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningComputeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="customServices"> New list of Custom Services. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customServices"/> is null. </exception>
-        public virtual async Task<Response> UpdateCustomServicesAsync(IEnumerable<CustomService> customServices, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(customServices, nameof(customServices));
-
-            using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.UpdateCustomServices");
-            scope.Start();
-            try
-            {
-                var response = await _machineLearningComputeComputeRestClient.UpdateCustomServicesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customServices, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the custom services list. The list of custom services provided shall be overwritten
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/customServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compute_UpdateCustomServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningComputeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="customServices"> New list of Custom Services. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customServices"/> is null. </exception>
-        public virtual Response UpdateCustomServices(IEnumerable<CustomService> customServices, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(customServices, nameof(customServices));
-
-            using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.UpdateCustomServices");
-            scope.Start();
-            try
-            {
-                var response = _machineLearningComputeComputeRestClient.UpdateCustomServices(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customServices, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Get the details (e.g IP address, port etc) of all the compute nodes in the compute.
         /// <list type="bullet">
         /// <item>
@@ -446,7 +361,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -476,7 +391,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -506,7 +421,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -544,7 +459,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -582,7 +497,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -624,7 +539,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -666,7 +581,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -708,7 +623,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -750,7 +665,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -792,7 +707,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -813,90 +728,6 @@ namespace Azure.ResourceManager.MachineLearning
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the idle shutdown setting of a compute instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/updateIdleShutdownSetting</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compute_UpdateIdleShutdownSetting</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningComputeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="idleShutdownSetting"> The object for updating idle shutdown setting of specified ComputeInstance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="idleShutdownSetting"/> is null. </exception>
-        public virtual async Task<Response> UpdateIdleShutdownSettingAsync(IdleShutdownSetting idleShutdownSetting, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(idleShutdownSetting, nameof(idleShutdownSetting));
-
-            using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.UpdateIdleShutdownSetting");
-            scope.Start();
-            try
-            {
-                var response = await _machineLearningComputeComputeRestClient.UpdateIdleShutdownSettingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, idleShutdownSetting, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the idle shutdown setting of a compute instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/updateIdleShutdownSetting</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compute_UpdateIdleShutdownSetting</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningComputeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="idleShutdownSetting"> The object for updating idle shutdown setting of specified ComputeInstance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="idleShutdownSetting"/> is null. </exception>
-        public virtual Response UpdateIdleShutdownSetting(IdleShutdownSetting idleShutdownSetting, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(idleShutdownSetting, nameof(idleShutdownSetting));
-
-            using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.UpdateIdleShutdownSetting");
-            scope.Start();
-            try
-            {
-                var response = _machineLearningComputeComputeRestClient.UpdateIdleShutdownSetting(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, idleShutdownSetting, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

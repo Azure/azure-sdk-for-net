@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(NetworkWatcherHttpMethod left, NetworkWatcherHttpMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkWatcherHttpMethod"/> values are not the same. </summary>
         public static bool operator !=(NetworkWatcherHttpMethod left, NetworkWatcherHttpMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkWatcherHttpMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkWatcherHttpMethod"/>. </summary>
         public static implicit operator NetworkWatcherHttpMethod(string value) => new NetworkWatcherHttpMethod(value);
 
         /// <inheritdoc />

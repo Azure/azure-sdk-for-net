@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator ==(MySqlServerState left, MySqlServerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlServerState"/> values are not the same. </summary>
         public static bool operator !=(MySqlServerState left, MySqlServerState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlServerState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlServerState"/>. </summary>
         public static implicit operator MySqlServerState(string value) => new MySqlServerState(value);
 
         /// <inheritdoc />

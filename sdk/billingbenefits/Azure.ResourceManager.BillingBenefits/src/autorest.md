@@ -16,7 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-
 list-exception:
 - /providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}
 - /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(OwaspCrsExclusionEntryMatchVariable left, OwaspCrsExclusionEntryMatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OwaspCrsExclusionEntryMatchVariable"/> values are not the same. </summary>
         public static bool operator !=(OwaspCrsExclusionEntryMatchVariable left, OwaspCrsExclusionEntryMatchVariable right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OwaspCrsExclusionEntryMatchVariable"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OwaspCrsExclusionEntryMatchVariable"/>. </summary>
         public static implicit operator OwaspCrsExclusionEntryMatchVariable(string value) => new OwaspCrsExclusionEntryMatchVariable(value);
 
         /// <inheritdoc />

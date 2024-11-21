@@ -19,13 +19,21 @@ namespace Azure.AI.DocumentIntelligence
 
         void IJsonModel<DocumentFieldSchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentFieldSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DocumentFieldSchema)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(Description))
@@ -69,7 +77,6 @@ namespace Azure.AI.DocumentIntelligence
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DocumentFieldSchema IJsonModel<DocumentFieldSchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -96,7 +103,7 @@ namespace Azure.AI.DocumentIntelligence
             string description = default;
             string example = default;
             DocumentFieldSchema items = default;
-            IReadOnlyDictionary<string, DocumentFieldSchema> properties = default;
+            IDictionary<string, DocumentFieldSchema> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the destination. </summary>
+        [WirePath("destination")]
         public string Destination { get; set; }
     }
 }

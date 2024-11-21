@@ -19,7 +19,16 @@ internal static class ResourceExtensions
     private const string DefaultServiceName = "unknown_service";
     private const int Version = 2;
 
-    internal static AzureMonitorResource? CreateAzureMonitorResource(this Resource resource, string? instrumentationKey = null)
+    public static AzureMonitorResource? CreateAzureMonitorResource(this Resource resource, string? instrumentationKey = null)
+    {
+        return resource.CreateAzureMonitorResource(instrumentationKey, DefaultPlatform.Instance);
+    }
+
+    /// <remarks>
+    /// This method should not be called directly in product code.
+    /// This method is primarially intended for unit testing scenarios where providing a mock platform is necessary.
+    /// </remarks>
+    internal static AzureMonitorResource? CreateAzureMonitorResource(this Resource resource, string? instrumentationKey, IPlatform platform)
     {
         if (resource == null)
         {
@@ -128,7 +137,7 @@ internal static class ResourceExtensions
         bool shouldReportMetricTelemetry = false;
         try
         {
-            var exportResource = Environment.GetEnvironmentVariable(EnvironmentVariableConstants.EXPORT_RESOURCE_METRIC); // TODO: CAN THIS BE CHANGED TO USE THE PLATFORM ABSTRACTION?
+            var exportResource = platform.GetEnvironmentVariable(EnvironmentVariableConstants.EXPORT_RESOURCE_METRIC);
             if (exportResource != null && exportResource.Equals("true", StringComparison.OrdinalIgnoreCase))
             {
                 shouldReportMetricTelemetry = true;

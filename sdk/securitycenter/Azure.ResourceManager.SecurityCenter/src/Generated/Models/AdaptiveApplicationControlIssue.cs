@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(AdaptiveApplicationControlIssue left, AdaptiveApplicationControlIssue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdaptiveApplicationControlIssue"/> values are not the same. </summary>
         public static bool operator !=(AdaptiveApplicationControlIssue left, AdaptiveApplicationControlIssue right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AdaptiveApplicationControlIssue"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AdaptiveApplicationControlIssue"/>. </summary>
         public static implicit operator AdaptiveApplicationControlIssue(string value) => new AdaptiveApplicationControlIssue(value);
 
         /// <inheritdoc />

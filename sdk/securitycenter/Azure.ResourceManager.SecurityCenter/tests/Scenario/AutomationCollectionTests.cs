@@ -93,6 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+
         public async Task GetAll()
         {
             string automationName = Recording.GenerateAssetName("automation");

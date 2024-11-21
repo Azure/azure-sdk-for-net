@@ -34,6 +34,21 @@ namespace Azure.AI.Translation.Document
 
         /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/>. </summary>
         /// <param name="document"> Document to be translated in the form. </param>
+        /// <param name="glossaries"> List of glossaries to be used during translation in the form. </param>
+        public DocumentTranslateContent(MultipartFormFileData document, IList<MultipartFormFileData> glossaries)
+        {
+            Argument.AssertNotNull(document, nameof(document));
+            MultipartDocument = document;
+
+            foreach (MultipartFormFileData glossary in glossaries)
+            {
+                Argument.AssertNotNull(glossary, nameof(glossary));
+            }
+            MultipartGlossary = glossaries;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/>. </summary>
+        /// <param name="document"> Document to be translated in the form. </param>
         /// <param name="glossary"> Glossary-translation memory will be used during translation in the form. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DocumentTranslateContent(MultipartFormFileData document, IList<MultipartFormFileData> glossary, IDictionary<string, BinaryData> serializedAdditionalRawData)

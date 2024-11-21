@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator ==(RetrievedInformationIdentifier left, RetrievedInformationIdentifier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RetrievedInformationIdentifier"/> values are not the same. </summary>
         public static bool operator !=(RetrievedInformationIdentifier left, RetrievedInformationIdentifier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RetrievedInformationIdentifier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RetrievedInformationIdentifier"/>. </summary>
         public static implicit operator RetrievedInformationIdentifier(string value) => new RetrievedInformationIdentifier(value);
 
         /// <inheritdoc />

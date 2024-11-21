@@ -72,12 +72,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> the hive that holds the registry key. </summary>
+        [WirePath("properties.hive")]
         public SecurityInsightsRegistryHive? Hive { get; }
         /// <summary> The registry key path. </summary>
+        [WirePath("properties.key")]
         public string Key { get; }
     }
 }

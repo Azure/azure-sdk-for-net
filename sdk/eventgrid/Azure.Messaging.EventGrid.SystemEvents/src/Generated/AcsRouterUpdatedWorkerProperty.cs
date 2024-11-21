@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator ==(AcsRouterUpdatedWorkerProperty left, AcsRouterUpdatedWorkerProperty right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcsRouterUpdatedWorkerProperty"/> values are not the same. </summary>
         public static bool operator !=(AcsRouterUpdatedWorkerProperty left, AcsRouterUpdatedWorkerProperty right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AcsRouterUpdatedWorkerProperty"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsRouterUpdatedWorkerProperty"/>. </summary>
         public static implicit operator AcsRouterUpdatedWorkerProperty(string value) => new AcsRouterUpdatedWorkerProperty(value);
 
         /// <inheritdoc />

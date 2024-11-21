@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-05";
+            _apiVersion = apiVersion ?? "2024-04-03";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Get an application. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="applicationName"> The name of the application within the specified application group. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Get an application. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="applicationName"> The name of the application within the specified application group. </param>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Create or update an application. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="applicationName"> The name of the application within the specified application group. </param>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Create or update an application. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="applicationName"> The name of the application within the specified application group. </param>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Remove an application. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="applicationName"> The name of the application within the specified application group. </param>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Remove an application. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="applicationName"> The name of the application within the specified application group. </param>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Update an application. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="applicationName"> The name of the application within the specified application group. </param>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Update an application. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="applicationName"> The name of the application within the specified application group. </param>
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> List applications. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> List applications. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> List applications. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> List applications. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="pageSize"> Number of items per page. </param>

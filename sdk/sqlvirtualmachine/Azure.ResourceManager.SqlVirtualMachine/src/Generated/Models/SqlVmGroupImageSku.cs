@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static bool operator ==(SqlVmGroupImageSku left, SqlVmGroupImageSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlVmGroupImageSku"/> values are not the same. </summary>
         public static bool operator !=(SqlVmGroupImageSku left, SqlVmGroupImageSku right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlVmGroupImageSku"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlVmGroupImageSku"/>. </summary>
         public static implicit operator SqlVmGroupImageSku(string value) => new SqlVmGroupImageSku(value);
 
         /// <inheritdoc />

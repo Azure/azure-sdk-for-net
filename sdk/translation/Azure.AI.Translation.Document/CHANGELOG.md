@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0-beta.3 (Unreleased)
+## 2.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0 (2024-11-15)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+
+### Other Changes
+- Renamed SingleDocumentTranslationClient's API from `document_translate` to `translate`
 
 ## 2.0.0-beta.2 (2024-07-05)
 

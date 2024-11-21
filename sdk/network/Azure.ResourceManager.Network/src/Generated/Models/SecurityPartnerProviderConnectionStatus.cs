@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(SecurityPartnerProviderConnectionStatus left, SecurityPartnerProviderConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityPartnerProviderConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(SecurityPartnerProviderConnectionStatus left, SecurityPartnerProviderConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityPartnerProviderConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityPartnerProviderConnectionStatus"/>. </summary>
         public static implicit operator SecurityPartnerProviderConnectionStatus(string value) => new SecurityPartnerProviderConnectionStatus(value);
 
         /// <inheritdoc />

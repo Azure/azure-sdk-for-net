@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-02-01";
+            _apiVersion = apiVersion ?? "2024-09-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Creates or updates an existing (overwrite/recreate, with potential downtime) cache cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
-        /// <param name="data"> Parameters supplied to the Create RedisEnterprise operation. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="data"> Parameters supplied to the Create Redis Enterprise operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Creates or updates an existing (overwrite/recreate, with potential downtime) cache cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
-        /// <param name="data"> Parameters supplied to the Create RedisEnterprise operation. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="data"> Parameters supplied to the Create Redis Enterprise operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -166,11 +166,11 @@ namespace Azure.ResourceManager.RedisEnterprise
             return message;
         }
 
-        /// <summary> Updates an existing RedisEnterprise cluster. </summary>
+        /// <summary> Updates an existing Redis Enterprise cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
-        /// <param name="patch"> Parameters supplied to the Update RedisEnterprise operation. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="patch"> Parameters supplied to the Update Redis Enterprise operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
-        /// <summary> Updates an existing RedisEnterprise cluster. </summary>
+        /// <summary> Updates an existing Redis Enterprise cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
-        /// <param name="patch"> Parameters supplied to the Update RedisEnterprise operation. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
+        /// <param name="patch"> Parameters supplied to the Update Redis Enterprise operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -254,10 +254,10 @@ namespace Azure.ResourceManager.RedisEnterprise
             return message;
         }
 
-        /// <summary> Deletes a RedisEnterprise cache cluster. </summary>
+        /// <summary> Deletes a Redis Enterprise cache cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -280,10 +280,10 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
-        /// <summary> Deletes a RedisEnterprise cache cluster. </summary>
+        /// <summary> Deletes a Redis Enterprise cache cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -340,10 +340,10 @@ namespace Azure.ResourceManager.RedisEnterprise
             return message;
         }
 
-        /// <summary> Gets information about a RedisEnterprise cluster. </summary>
+        /// <summary> Gets information about a Redis Enterprise cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -371,10 +371,10 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
-        /// <summary> Gets information about a RedisEnterprise cluster. </summary>
+        /// <summary> Gets information about a Redis Enterprise cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
+        /// <param name="clusterName"> The name of the Redis Enterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             return message;
         }
 
-        /// <summary> Lists all RedisEnterprise clusters in a resource group. </summary>
+        /// <summary> Lists all Redis Enterprise clusters in a resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
-        /// <summary> Lists all RedisEnterprise clusters in a resource group. </summary>
+        /// <summary> Lists all Redis Enterprise clusters in a resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             return message;
         }
 
-        /// <summary> Gets all RedisEnterprise clusters in the specified subscription. </summary>
+        /// <summary> Lists all Redis Enterprise clusters in the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
-        /// <summary> Gets all RedisEnterprise clusters in the specified subscription. </summary>
+        /// <summary> Lists all Redis Enterprise clusters in the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             return message;
         }
 
-        /// <summary> Lists all RedisEnterprise clusters in a resource group. </summary>
+        /// <summary> Lists all Redis Enterprise clusters in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
-        /// <summary> Lists all RedisEnterprise clusters in a resource group. </summary>
+        /// <summary> Lists all Redis Enterprise clusters in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             return message;
         }
 
-        /// <summary> Gets all RedisEnterprise clusters in the specified subscription. </summary>
+        /// <summary> Lists all Redis Enterprise clusters in the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
-        /// <summary> Gets all RedisEnterprise clusters in the specified subscription. </summary>
+        /// <summary> Lists all Redis Enterprise clusters in the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

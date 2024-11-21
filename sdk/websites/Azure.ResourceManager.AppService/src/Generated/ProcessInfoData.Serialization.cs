@@ -23,37 +23,26 @@ namespace Azure.ResourceManager.AppService
 
         void IJsonModel<ProcessInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ProcessInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProcessInfoData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -107,11 +96,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Threads))
+            if (Optional.IsCollectionDefined(ProcessThreads))
             {
                 writer.WritePropertyName("threads"u8);
                 writer.WriteStartArray();
-                foreach (var item in Threads)
+                foreach (var item in ProcessThreads)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -264,22 +253,6 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         ProcessInfoData IJsonModel<ProcessInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -316,7 +289,7 @@ namespace Azure.ResourceManager.AppService
             double? iisProfileTimeoutInSeconds = default;
             string parent = default;
             IList<string> children = default;
-            IList<ProcessThreadInfo> threads = default;
+            IList<WebAppProcessThreadProperties> threads = default;
             IList<string> openFileHandles = default;
             IList<ProcessModuleInfoData> modules = default;
             string fileName = default;
@@ -461,10 +434,10 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            List<ProcessThreadInfo> array = new List<ProcessThreadInfo>();
+                            List<WebAppProcessThreadProperties> array = new List<WebAppProcessThreadProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProcessThreadInfo.DeserializeProcessThreadInfo(item, options));
+                                array.Add(WebAppProcessThreadProperties.DeserializeWebAppProcessThreadProperties(item, options));
                             }
                             threads = array;
                             continue;
@@ -713,7 +686,7 @@ namespace Azure.ResourceManager.AppService
                 iisProfileTimeoutInSeconds,
                 parent,
                 children ?? new ChangeTrackingList<string>(),
-                threads ?? new ChangeTrackingList<ProcessThreadInfo>(),
+                threads ?? new ChangeTrackingList<WebAppProcessThreadProperties>(),
                 openFileHandles ?? new ChangeTrackingList<string>(),
                 modules ?? new ChangeTrackingList<ProcessModuleInfoData>(),
                 fileName,
@@ -1023,7 +996,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Threads), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProcessThreads), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    threads: ");
@@ -1031,13 +1004,13 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsCollectionDefined(Threads))
+                if (Optional.IsCollectionDefined(ProcessThreads))
                 {
-                    if (Threads.Any())
+                    if (ProcessThreads.Any())
                     {
                         builder.Append("    threads: ");
                         builder.AppendLine("[");
-                        foreach (var item in Threads)
+                        foreach (var item in ProcessThreads)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    threads: ");
                         }

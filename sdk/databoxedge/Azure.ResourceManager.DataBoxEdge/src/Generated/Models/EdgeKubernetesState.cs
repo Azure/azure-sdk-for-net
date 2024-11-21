@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(EdgeKubernetesState left, EdgeKubernetesState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeKubernetesState"/> values are not the same. </summary>
         public static bool operator !=(EdgeKubernetesState left, EdgeKubernetesState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EdgeKubernetesState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeKubernetesState"/>. </summary>
         public static implicit operator EdgeKubernetesState(string value) => new EdgeKubernetesState(value);
 
         /// <inheritdoc />

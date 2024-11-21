@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static bool operator ==(ElasticDeploymentStatus left, ElasticDeploymentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticDeploymentStatus"/> values are not the same. </summary>
         public static bool operator !=(ElasticDeploymentStatus left, ElasticDeploymentStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ElasticDeploymentStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticDeploymentStatus"/>. </summary>
         public static implicit operator ElasticDeploymentStatus(string value) => new ElasticDeploymentStatus(value);
 
         /// <inheritdoc />

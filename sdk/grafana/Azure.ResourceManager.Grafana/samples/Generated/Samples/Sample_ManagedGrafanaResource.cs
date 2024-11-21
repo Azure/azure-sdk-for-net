@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Grafana.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Grafana.Samples
 {
     public partial class Sample_ManagedGrafanaResource
     {
-        // Grafana_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetManagedGrafanas_GrafanaList()
         {
             // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/Grafana_List.json
@@ -45,12 +45,11 @@ namespace Azure.ResourceManager.Grafana.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Grafana_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GrafanaGet()
         {
             // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/Grafana_Get.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.Grafana.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Grafana_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_GrafanaUpdate()
         {
             // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/Grafana_Update.json
@@ -151,9 +149,8 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Grafana_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_GrafanaDelete()
         {
             // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/Grafana_Delete.json
@@ -175,12 +172,11 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
             // invoke the operation
             await managedGrafana.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // EnterpriseDetails_Post
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckEnterpriseDetails_EnterpriseDetailsPost()
         {
             // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/EnterpriseDetails_Post.json
@@ -205,9 +201,8 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Grafana_FetchAvailablePlugins
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task FetchAvailablePlugins_GrafanaFetchAvailablePlugins()
         {
             // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/Grafana_FetchAvailablePlugins.json
@@ -232,12 +227,11 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ManagedPrivateEndpoint_Refresh
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RefreshManagedPrivateEndpoint_ManagedPrivateEndpointRefresh()
         {
             // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/ManagedPrivateEndpoints_Refresh.json
@@ -259,7 +253,7 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
             // invoke the operation
             await managedGrafana.RefreshManagedPrivateEndpointAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

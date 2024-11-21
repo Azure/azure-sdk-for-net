@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(EvaluationState left, EvaluationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EvaluationState"/> values are not the same. </summary>
         public static bool operator !=(EvaluationState left, EvaluationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EvaluationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EvaluationState"/>. </summary>
         public static implicit operator EvaluationState(string value) => new EvaluationState(value);
 
         /// <inheritdoc />

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator ==(ServiceFabricManagedResourceProvisioningState left, ServiceFabricManagedResourceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedResourceProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ServiceFabricManagedResourceProvisioningState left, ServiceFabricManagedResourceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceFabricManagedResourceProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedResourceProvisioningState"/>. </summary>
         public static implicit operator ServiceFabricManagedResourceProvisioningState(string value) => new ServiceFabricManagedResourceProvisioningState(value);
 
         /// <inheritdoc />

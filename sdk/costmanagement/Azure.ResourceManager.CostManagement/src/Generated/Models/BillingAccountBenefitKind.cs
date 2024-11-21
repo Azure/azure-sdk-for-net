@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(BillingAccountBenefitKind left, BillingAccountBenefitKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingAccountBenefitKind"/> values are not the same. </summary>
         public static bool operator !=(BillingAccountBenefitKind left, BillingAccountBenefitKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BillingAccountBenefitKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingAccountBenefitKind"/>. </summary>
         public static implicit operator BillingAccountBenefitKind(string value) => new BillingAccountBenefitKind(value);
 
         /// <inheritdoc />

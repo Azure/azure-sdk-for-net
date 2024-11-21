@@ -19,13 +19,21 @@ namespace Azure.AI.DocumentIntelligence
 
         void IJsonModel<OperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<OperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OperationDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
             writer.WritePropertyName("status"u8);
@@ -79,7 +87,6 @@ namespace Azure.AI.DocumentIntelligence
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         OperationDetails IJsonModel<OperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -107,6 +114,7 @@ namespace Azure.AI.DocumentIntelligence
                 switch (discriminator.GetString())
                 {
                     case "documentClassifierBuild": return DocumentClassifierBuildOperationDetails.DeserializeDocumentClassifierBuildOperationDetails(element, options);
+                    case "documentClassifierCopyTo": return DocumentClassifierCopyToOperationDetails.DeserializeDocumentClassifierCopyToOperationDetails(element, options);
                     case "documentModelBuild": return DocumentModelBuildOperationDetails.DeserializeDocumentModelBuildOperationDetails(element, options);
                     case "documentModelCompose": return DocumentModelComposeOperationDetails.DeserializeDocumentModelComposeOperationDetails(element, options);
                     case "documentModelCopyTo": return DocumentModelCopyToOperationDetails.DeserializeDocumentModelCopyToOperationDetails(element, options);

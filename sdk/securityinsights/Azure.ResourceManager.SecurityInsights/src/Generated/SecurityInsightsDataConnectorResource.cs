@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -225,7 +226,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -317,7 +318,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -344,6 +345,166 @@ namespace Azure.ResourceManager.SecurityInsights
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Connects a data connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}/connect</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataConnectors_Connect</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsDataConnectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The data connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> ConnectAsync(DataConnectorConnectContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _securityInsightsDataConnectorDataConnectorsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorResource.Connect");
+            scope.Start();
+            try
+            {
+                var response = await _securityInsightsDataConnectorDataConnectorsRestClient.ConnectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Connects a data connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}/connect</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataConnectors_Connect</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsDataConnectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The data connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response Connect(DataConnectorConnectContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _securityInsightsDataConnectorDataConnectorsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorResource.Connect");
+            scope.Start();
+            try
+            {
+                var response = _securityInsightsDataConnectorDataConnectorsRestClient.Connect(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disconnect a data connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}/disconnect</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataConnectors_Disconnect</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsDataConnectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DisconnectAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _securityInsightsDataConnectorDataConnectorsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorResource.Disconnect");
+            scope.Start();
+            try
+            {
+                var response = await _securityInsightsDataConnectorDataConnectorsRestClient.DisconnectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disconnect a data connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}/disconnect</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataConnectors_Disconnect</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsDataConnectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Disconnect(CancellationToken cancellationToken = default)
+        {
+            using var scope = _securityInsightsDataConnectorDataConnectorsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorResource.Disconnect");
+            scope.Start();
+            try
+            {
+                var response = _securityInsightsDataConnectorDataConnectorsRestClient.Disconnect(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

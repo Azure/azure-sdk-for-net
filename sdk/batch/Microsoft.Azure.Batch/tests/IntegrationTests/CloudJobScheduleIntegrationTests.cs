@@ -15,6 +15,7 @@
     using Microsoft.Azure.Batch.Integration.Tests.Infrastructure;
     using Xunit;
     using Xunit.Abstractions;
+    using Protocol = Microsoft.Azure.Batch.Protocol;
 
     [Collection("SharedPoolCollection")]
     public class CloudJobScheduleIntegrationTests
@@ -127,7 +128,7 @@
                     //Update the bound job schedule Metadata
                     IList<MetadataItem> newMetadata = new List<MetadataItem> { new MetadataItem("Object", "Model") };
                     boundJobSchedule.Metadata = newMetadata;
-
+                    
                     testOutputHelper.WriteLine("Updating Metadata");
                     boundJobSchedule.Commit();
 
@@ -143,7 +144,17 @@
                 }
                 finally
                 {
-                    batchCli.JobScheduleOperations.DeleteJobSchedule(jobScheduleId);
+
+                    // terminate the job with the force option
+                    BatchClientBehavior deleteInterceptor = new Protocol.RequestInterceptor(req =>
+                    {
+                        if (req.Options is Protocol.Models.JobScheduleDeleteOptions typedParams)
+                        {
+                            typedParams.Force = true;
+                        }
+                    });
+
+                    batchCli.JobScheduleOperations.DeleteJobSchedule(jobScheduleId, additionalBehaviors: new[] { deleteInterceptor });
                 }
             }
 
@@ -285,7 +296,13 @@
                         ps.TargetDedicatedComputeNodes = 1;
                         ps.VirtualMachineSize = PoolFixture.VMSize;
 
-                        ps.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily);
+                        var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                        VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                            ubuntuImageDetails.ImageReference,
+                            nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                        ps.VirtualMachineConfiguration = virtualMachineConfiguration;
 
                         ps.Metadata = MakeMetaData("pusMDIName", "pusMDIValue");
 
@@ -392,7 +409,13 @@
                         ps.TargetDedicatedComputeNodes = 1;
                         ps.VirtualMachineSize = PoolFixture.VMSize;
 
-                        ps.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily);
+                        var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                        VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                            ubuntuImageDetails.ImageReference,
+                            nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                        ps.VirtualMachineConfiguration = virtualMachineConfiguration;
 
                         Schedule sched = new Schedule();
 

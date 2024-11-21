@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator ==(IdentityAccessKeyPermission left, IdentityAccessKeyPermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IdentityAccessKeyPermission"/> values are not the same. </summary>
         public static bool operator !=(IdentityAccessKeyPermission left, IdentityAccessKeyPermission right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IdentityAccessKeyPermission"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IdentityAccessKeyPermission"/>. </summary>
         public static implicit operator IdentityAccessKeyPermission(string value) => new IdentityAccessKeyPermission(value);
 
         /// <inheritdoc />

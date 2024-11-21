@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(StorageAccountSasSignedService left, StorageAccountSasSignedService right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountSasSignedService"/> values are not the same. </summary>
         public static bool operator !=(StorageAccountSasSignedService left, StorageAccountSasSignedService right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageAccountSasSignedService"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAccountSasSignedService"/>. </summary>
         public static implicit operator StorageAccountSasSignedService(string value) => new StorageAccountSasSignedService(value);
 
         /// <inheritdoc />

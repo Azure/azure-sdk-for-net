@@ -22,9 +22,9 @@ namespace BatchClientIntegrationTests.Fixtures
             List<ImageInformation> imageInformation = client.PoolOperations.ListSupportedImages().ToList();
 
             static bool ubuntuImageScanner(ImageInformation imageInfo) =>
-                imageInfo.ImageReference.Publisher == "openlogic" &&
-                imageInfo.ImageReference.Offer.Contains("centos") &&
-                imageInfo.ImageReference.Sku.Contains("7_9");
+                imageInfo.ImageReference.Publisher == "microsoftwindowsserver" &&
+              imageInfo.ImageReference.Offer.Contains("windowsserver") &&
+            imageInfo.ImageReference.Sku.Contains("2022-datacenter");
 
             ImageInformation ubuntuImage = imageInformation.First(ubuntuImageScanner);
 
@@ -38,7 +38,7 @@ namespace BatchClientIntegrationTests.Fixtures
             static bool ubuntuImageScanner(ImageInformation imageInfo) =>
                 imageInfo.ImageReference.Publisher.ToLower().Contains("canonical") &&
                imageInfo.ImageReference.Offer.Contains("ubuntu") &&
-               imageInfo.ImageReference.Sku.Contains("20");
+               imageInfo.ImageReference.Sku.Contains("22_04-lts");
 
             ImageInformation ubuntuImage = imageInformation.First(ubuntuImageScanner);
 

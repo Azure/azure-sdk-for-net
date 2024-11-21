@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator ==(SourceControlSyncType left, SourceControlSyncType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceControlSyncType"/> values are not the same. </summary>
         public static bool operator !=(SourceControlSyncType left, SourceControlSyncType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SourceControlSyncType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlSyncType"/>. </summary>
         public static implicit operator SourceControlSyncType(string value) => new SourceControlSyncType(value);
 
         /// <inheritdoc />

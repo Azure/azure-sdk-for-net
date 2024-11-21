@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Array of incident bookmarks. </summary>
+        [WirePath("value")]
         public IReadOnlyList<SecurityInsightsHuntingBookmark> Value { get; }
     }
 }

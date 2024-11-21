@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator ==(AcsEmailDeliveryReportStatus left, AcsEmailDeliveryReportStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcsEmailDeliveryReportStatus"/> values are not the same. </summary>
         public static bool operator !=(AcsEmailDeliveryReportStatus left, AcsEmailDeliveryReportStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AcsEmailDeliveryReportStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsEmailDeliveryReportStatus"/>. </summary>
         public static implicit operator AcsEmailDeliveryReportStatus(string value) => new AcsEmailDeliveryReportStatus(value);
 
         /// <inheritdoc />

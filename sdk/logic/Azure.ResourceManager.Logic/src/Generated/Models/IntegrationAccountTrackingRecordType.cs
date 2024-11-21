@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(IntegrationAccountTrackingRecordType left, IntegrationAccountTrackingRecordType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationAccountTrackingRecordType"/> values are not the same. </summary>
         public static bool operator !=(IntegrationAccountTrackingRecordType left, IntegrationAccountTrackingRecordType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IntegrationAccountTrackingRecordType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationAccountTrackingRecordType"/>. </summary>
         public static implicit operator IntegrationAccountTrackingRecordType(string value) => new IntegrationAccountTrackingRecordType(value);
 
         /// <inheritdoc />

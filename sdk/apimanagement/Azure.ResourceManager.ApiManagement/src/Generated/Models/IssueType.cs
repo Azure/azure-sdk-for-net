@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(IssueType left, IssueType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IssueType"/> values are not the same. </summary>
         public static bool operator !=(IssueType left, IssueType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IssueType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IssueType"/>. </summary>
         public static implicit operator IssueType(string value) => new IssueType(value);
 
         /// <inheritdoc />

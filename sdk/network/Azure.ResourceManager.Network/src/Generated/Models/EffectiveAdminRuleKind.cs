@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(EffectiveAdminRuleKind left, EffectiveAdminRuleKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EffectiveAdminRuleKind"/> values are not the same. </summary>
         public static bool operator !=(EffectiveAdminRuleKind left, EffectiveAdminRuleKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EffectiveAdminRuleKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EffectiveAdminRuleKind"/>. </summary>
         public static implicit operator EffectiveAdminRuleKind(string value) => new EffectiveAdminRuleKind(value);
 
         /// <inheritdoc />

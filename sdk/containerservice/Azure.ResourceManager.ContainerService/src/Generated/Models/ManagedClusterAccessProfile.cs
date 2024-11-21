@@ -74,6 +74,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Base64-encoded Kubernetes configuration file. </summary>
+        [WirePath("properties.kubeConfig")]
         public byte[] KubeConfig { get; set; }
     }
 }

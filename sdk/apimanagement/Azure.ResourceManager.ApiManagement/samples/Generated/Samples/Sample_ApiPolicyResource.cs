@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiPolicyResource
     {
-        // ApiManagementHeadApiPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetEntityTag_ApiManagementHeadApiPolicy()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementHeadApiPolicy.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadApiPolicy.json
             // this example is just showing the usage of "ApiPolicy_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiPolicyResource created on azure
             // for more information of creating ApiPolicyResource, please refer to the document of ApiPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d1f7558aa04f15146d9d8a";
@@ -44,12 +44,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementGetApiPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetApiPolicy()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementGetApiPolicy.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiPolicy.json
             // this example is just showing the usage of "ApiPolicy_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiPolicyResource created on azure
             // for more information of creating ApiPolicyResource, please refer to the document of ApiPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "5600b59475ff190048040001";
@@ -77,12 +76,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateApiPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementCreateApiPolicy()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementCreateApiPolicy.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiPolicy.json
             // this example is just showing the usage of "ApiPolicy_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiPolicyResource created on azure
             // for more information of creating ApiPolicyResource, please refer to the document of ApiPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "5600b57e7e8880006a040001";
@@ -117,12 +115,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateApiPolicyNonXmlEncoded
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementCreateApiPolicyNonXmlEncoded()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementCreateApiPolicyNonXmlEncoded.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiPolicyNonXmlEncoded.json
             // this example is just showing the usage of "ApiPolicy_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiPolicyResource created on azure
             // for more information of creating ApiPolicyResource, please refer to the document of ApiPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "5600b57e7e8880006a040001";
@@ -157,12 +154,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementDeleteApiPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteApiPolicy()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementDeleteApiPolicy.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteApiPolicy.json
             // this example is just showing the usage of "ApiPolicy_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -172,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiPolicyResource created on azure
             // for more information of creating ApiPolicyResource, please refer to the document of ApiPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "loggerId";
@@ -184,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ETag ifMatch = new ETag("*");
             await apiPolicy.DeleteAsync(WaitUntil.Completed, ifMatch);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

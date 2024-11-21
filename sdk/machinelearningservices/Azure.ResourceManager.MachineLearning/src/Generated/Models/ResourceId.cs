@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The ID of the resource. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
     }
 }

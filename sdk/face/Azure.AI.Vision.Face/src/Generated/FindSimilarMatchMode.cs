@@ -33,7 +33,7 @@ namespace Azure.AI.Vision.Face
         public static bool operator ==(FindSimilarMatchMode left, FindSimilarMatchMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FindSimilarMatchMode"/> values are not the same. </summary>
         public static bool operator !=(FindSimilarMatchMode left, FindSimilarMatchMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FindSimilarMatchMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FindSimilarMatchMode"/>. </summary>
         public static implicit operator FindSimilarMatchMode(string value) => new FindSimilarMatchMode(value);
 
         /// <inheritdoc />

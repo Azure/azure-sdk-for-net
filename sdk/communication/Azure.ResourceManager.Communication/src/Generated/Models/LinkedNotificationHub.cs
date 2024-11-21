@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> The resource ID of the notification hub. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
     }
 }

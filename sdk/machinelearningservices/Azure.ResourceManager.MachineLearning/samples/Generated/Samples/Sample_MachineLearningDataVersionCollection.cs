@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MachineLearning.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearning.Samples
 {
     public partial class Sample_MachineLearningDataVersionCollection
     {
-        // List Workspace Data Version Base.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListWorkspaceDataVersionBase()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/DataVersionBase/list.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/DataVersionBase/list.json
             // this example is just showing the usage of "DataVersions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -41,8 +41,10 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningDataVersionCollection collection = machineLearningDataContainer.GetMachineLearningDataVersions();
 
             // invoke the operation and iterate over the result
-            MachineLearningDataVersionCollectionGetAllOptions options = new MachineLearningDataVersionCollectionGetAllOptions() { OrderBy = "string", Top = 1, Tags = "string" };
-            await foreach (MachineLearningDataVersionResource item in collection.GetAllAsync(options))
+            string orderBy = "string";
+            int? top = 1;
+            string tags = "string";
+            await foreach (MachineLearningDataVersionResource item in collection.GetAllAsync(orderBy: orderBy, top: top, tags: tags))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -51,15 +53,14 @@ namespace Azure.ResourceManager.MachineLearning.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Workspace Data Version Base.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWorkspaceDataVersionBase()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/DataVersionBase/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/DataVersionBase/get.json
             // this example is just showing the usage of "DataVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,12 +91,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Workspace Data Version Base.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetWorkspaceDataVersionBase()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/DataVersionBase/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/DataVersionBase/get.json
             // this example is just showing the usage of "DataVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,12 +122,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Workspace Data Version Base.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetWorkspaceDataVersionBase()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/DataVersionBase/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/DataVersionBase/get.json
             // this example is just showing the usage of "DataVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -166,12 +165,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             }
         }
 
-        // CreateOrUpdate Workspace Data Version Base.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateWorkspaceDataVersionBase()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/DataVersionBase/createOrUpdate.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/DataVersionBase/createOrUpdate.json
             // this example is just showing the usage of "DataVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -197,11 +195,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             {
                 IsAnonymous = false,
                 Description = "string",
-                Properties =
+                Tags =
 {
 ["string"] = "string",
 },
-                Tags =
+                Properties =
 {
 ["string"] = "string",
 },

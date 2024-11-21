@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static bool operator ==(EventsObservabilityMode left, EventsObservabilityMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventsObservabilityMode"/> values are not the same. </summary>
         public static bool operator !=(EventsObservabilityMode left, EventsObservabilityMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventsObservabilityMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventsObservabilityMode"/>. </summary>
         public static implicit operator EventsObservabilityMode(string value) => new EventsObservabilityMode(value);
 
         /// <inheritdoc />

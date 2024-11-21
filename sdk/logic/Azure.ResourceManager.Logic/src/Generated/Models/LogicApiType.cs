@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(LogicApiType left, LogicApiType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicApiType"/> values are not the same. </summary>
         public static bool operator !=(LogicApiType left, LogicApiType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogicApiType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogicApiType"/>. </summary>
         public static implicit operator LogicApiType(string value) => new LogicApiType(value);
 
         /// <inheritdoc />

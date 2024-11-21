@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         void IJsonModel<NotificationHubIPRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubIPRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationHubIPRule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("ipMask"u8);
             writer.WriteStringValue(IPMask);
             writer.WritePropertyName("rights"u8);
@@ -50,7 +58,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NotificationHubIPRule IJsonModel<NotificationHubIPRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

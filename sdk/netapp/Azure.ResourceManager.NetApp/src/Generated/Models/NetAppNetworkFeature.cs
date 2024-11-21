@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(NetAppNetworkFeature left, NetAppNetworkFeature right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppNetworkFeature"/> values are not the same. </summary>
         public static bool operator !=(NetAppNetworkFeature left, NetAppNetworkFeature right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppNetworkFeature"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppNetworkFeature"/>. </summary>
         public static implicit operator NetAppNetworkFeature(string value) => new NetAppNetworkFeature(value);
 
         /// <inheritdoc />

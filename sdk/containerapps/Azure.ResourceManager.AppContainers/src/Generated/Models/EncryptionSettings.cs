@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The secret name which is referenced for EncryptionKey. </summary>
+        [WirePath("containerAppAuthEncryptionSecretName")]
         public string ContainerAppAuthEncryptionSecretName { get; set; }
         /// <summary> The secret name which is referenced for SigningKey. </summary>
+        [WirePath("containerAppAuthSigningSecretName")]
         public string ContainerAppAuthSigningSecretName { get; set; }
     }
 }

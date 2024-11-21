@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Gets the aad client id. </summary>
+        [WirePath("properties.aadClientId")]
         public Guid? AadClientId { get; }
         /// <summary> Gets the aad tenant id. </summary>
+        [WirePath("properties.aadTenantId")]
         public Guid? AadTenantId { get; }
         /// <summary> Gets the aad service principal object id. </summary>
+        [WirePath("properties.aadServicePrincipalObjectId")]
         public Guid? AadServicePrincipalObjectId { get; }
         /// <summary> Gets the aad application object id. </summary>
+        [WirePath("properties.aadApplicationObjectId")]
         public Guid? AadApplicationObjectId { get; }
     }
 }

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         void IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskInput)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.DataMigration.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MigrateOracleAzureDBPostgreSqlSyncTaskInput IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

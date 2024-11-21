@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static bool operator ==(AppPlatformBuildProvisioningState left, AppPlatformBuildProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformBuildProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AppPlatformBuildProvisioningState left, AppPlatformBuildProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppPlatformBuildProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppPlatformBuildProvisioningState"/>. </summary>
         public static implicit operator AppPlatformBuildProvisioningState(string value) => new AppPlatformBuildProvisioningState(value);
 
         /// <inheritdoc />

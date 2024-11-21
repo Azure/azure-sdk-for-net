@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(DataFactoryCredentialReferenceType left, DataFactoryCredentialReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFactoryCredentialReferenceType"/> values are not the same. </summary>
         public static bool operator !=(DataFactoryCredentialReferenceType left, DataFactoryCredentialReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataFactoryCredentialReferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactoryCredentialReferenceType"/>. </summary>
         public static implicit operator DataFactoryCredentialReferenceType(string value) => new DataFactoryCredentialReferenceType(value);
 
         /// <inheritdoc />

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +21,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<MachineLearningRecurrenceSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningRecurrenceSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningRecurrenceSchedule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("hours"u8);
             writer.WriteStartArray();
             foreach (var item in Hours)
@@ -40,23 +50,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(MonthDays))
-            {
-                if (MonthDays != null)
-                {
-                    writer.WritePropertyName("monthDays"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in MonthDays)
-                    {
-                        writer.WriteNumberValue(item);
-                    }
-                    writer.WriteEndArray();
-                }
-                else
-                {
-                    writer.WriteNull("monthDays");
-                }
-            }
             if (Optional.IsCollectionDefined(WeekDays))
             {
                 if (WeekDays != null)
@@ -74,6 +67,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("weekDays");
                 }
             }
+            if (Optional.IsCollectionDefined(MonthDays))
+            {
+                if (MonthDays != null)
+                {
+                    writer.WritePropertyName("monthDays"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in MonthDays)
+                    {
+                        writer.WriteNumberValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("monthDays");
+                }
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,7 +99,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MachineLearningRecurrenceSchedule IJsonModel<MachineLearningRecurrenceSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -114,8 +123,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             IList<int> hours = default;
             IList<int> minutes = default;
-            IList<int> monthDays = default;
             IList<MachineLearningDayOfWeek> weekDays = default;
+            IList<int> monthDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,21 +149,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     minutes = array;
                     continue;
                 }
-                if (property.NameEquals("monthDays"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        monthDays = null;
-                        continue;
-                    }
-                    List<int> array = new List<int>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetInt32());
-                    }
-                    monthDays = array;
-                    continue;
-                }
                 if (property.NameEquals("weekDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -170,13 +164,135 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     weekDays = array;
                     continue;
                 }
+                if (property.NameEquals("monthDays"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        monthDays = null;
+                        continue;
+                    }
+                    List<int> array = new List<int>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetInt32());
+                    }
+                    monthDays = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningRecurrenceSchedule(hours, minutes, monthDays ?? new ChangeTrackingList<int>(), weekDays ?? new ChangeTrackingList<MachineLearningDayOfWeek>(), serializedAdditionalRawData);
+            return new MachineLearningRecurrenceSchedule(hours, minutes, weekDays ?? new ChangeTrackingList<MachineLearningDayOfWeek>(), monthDays ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hours), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hours: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Hours))
+                {
+                    if (Hours.Any())
+                    {
+                        builder.Append("  hours: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Hours)
+                        {
+                            builder.AppendLine($"    {item}");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Minutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Minutes))
+                {
+                    if (Minutes.Any())
+                    {
+                        builder.Append("  minutes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Minutes)
+                        {
+                            builder.AppendLine($"    {item}");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WeekDays), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  weekDays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(WeekDays))
+                {
+                    if (WeekDays.Any())
+                    {
+                        builder.Append("  weekDays: ");
+                        builder.AppendLine("[");
+                        foreach (var item in WeekDays)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MonthDays), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  monthDays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MonthDays))
+                {
+                    if (MonthDays.Any())
+                    {
+                        builder.Append("  monthDays: ");
+                        builder.AppendLine("[");
+                        foreach (var item in MonthDays)
+                        {
+                            builder.AppendLine($"    {item}");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningRecurrenceSchedule>.Write(ModelReaderWriterOptions options)
@@ -187,6 +303,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningRecurrenceSchedule)} does not support writing '{options.Format}' format.");
             }

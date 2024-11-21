@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(ClientAuthenticationMethod left, ClientAuthenticationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClientAuthenticationMethod"/> values are not the same. </summary>
         public static bool operator !=(ClientAuthenticationMethod left, ClientAuthenticationMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClientAuthenticationMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClientAuthenticationMethod"/>. </summary>
         public static implicit operator ClientAuthenticationMethod(string value) => new ClientAuthenticationMethod(value);
 
         /// <inheritdoc />

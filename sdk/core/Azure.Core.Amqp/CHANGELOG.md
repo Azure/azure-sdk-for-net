@@ -8,9 +8,14 @@
 
 ### Bugs Fixed
 
-- Fixed the logic used to set the `TimeToLive` value of the `AmqpMessageHeader` for received messages to be based on the difference of the `AbsoluteExpiryTime` and `CreationTime` properties of the `AmqpMessageProperties`.
-
 ### Other Changes
+
+## 1.3.1 (2024-07-30)
+
+### Bugs Fixed
+
+- Fixed serialization of binary application properties.
+- Fixed the logic used to set the `TimeToLive` value of the `AmqpMessageHeader` for received messages to be based on the difference of the `AbsoluteExpiryTime` and `CreationTime` properties of the `AmqpMessageProperties`.
 
 ## 1.3.0 (2023-03-02)
 

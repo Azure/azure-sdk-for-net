@@ -30,9 +30,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                         MaxRetries = maxRetries
                     }
                 };
-            return new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
-                options);
+            return new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options);
         }
 
         protected static async Task SendMessagesAsync(

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(DeploymentStacksDeleteDetachEnum left, DeploymentStacksDeleteDetachEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeploymentStacksDeleteDetachEnum"/> values are not the same. </summary>
         public static bool operator !=(DeploymentStacksDeleteDetachEnum left, DeploymentStacksDeleteDetachEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeploymentStacksDeleteDetachEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeploymentStacksDeleteDetachEnum"/>. </summary>
         public static implicit operator DeploymentStacksDeleteDetachEnum(string value) => new DeploymentStacksDeleteDetachEnum(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlMigrationTriggerCutover left, PostgreSqlMigrationTriggerCutover right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationTriggerCutover"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlMigrationTriggerCutover left, PostgreSqlMigrationTriggerCutover right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationTriggerCutover"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlMigrationTriggerCutover"/>. </summary>
         public static implicit operator PostgreSqlMigrationTriggerCutover(string value) => new PostgreSqlMigrationTriggerCutover(value);
 
         /// <inheritdoc />

@@ -68,14 +68,17 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The immutableId of the corresponding partner registration. </summary>
+        [WirePath("partnerRegistrationImmutableId")]
         public Guid? PartnerRegistrationImmutableId { get; set; }
         /// <summary> The partner name. </summary>
+        [WirePath("partnerName")]
         public string PartnerName { get; set; }
         /// <summary>
         /// Expiration time of the partner authorization. If this timer expires, any request from this partner to create, update or delete resources in subscriber's
         /// context will fail. If specified, the allowed values are between 1 to the value of defaultMaximumExpirationTimeInDays specified in PartnerConfiguration.
         /// If not specified, the default value will be the value of defaultMaximumExpirationTimeInDays specified in PartnerConfiguration or 7 if this value is not specified.
         /// </summary>
+        [WirePath("authorizationExpirationTimeInUtc")]
         public DateTimeOffset? AuthorizationExpireOn { get; set; }
     }
 }

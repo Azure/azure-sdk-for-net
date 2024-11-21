@@ -22,7 +22,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslation()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslation
             try
@@ -48,7 +48,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationOptions()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             try
             {
@@ -74,7 +74,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationBySource()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationBySource
             try
@@ -101,7 +101,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationAutoDetect()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationAutoDetect
             try
@@ -127,7 +127,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetMultipleTextTranslations()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             try
             {
@@ -158,7 +158,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetMultipleTextTranslationsOptions()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetMultipleTextTranslationsOptions
             try
@@ -193,7 +193,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationMatrix()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationMatrix
             try
@@ -225,7 +225,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationMatrixOptions()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationMatrixOptions
             try
@@ -256,7 +256,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationFormat()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationFormat
             try
@@ -285,7 +285,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationFilter()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationFilter
             try
@@ -315,7 +315,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationMarkup()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationMarkup
             try
@@ -345,7 +345,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationProfanity()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationProfanity
             try
@@ -377,7 +377,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationAlignment()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationAlignment
             try
@@ -409,7 +409,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationSentences()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationSentences
             try
@@ -442,7 +442,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationFallback()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationFallback
             try
@@ -472,7 +472,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTranslationTextTransliterated()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTranslationTextTransliterated
             try
@@ -505,7 +505,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTranslationTextTransliteratedOptions()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTranslationTextTransliteratedOptions
             try

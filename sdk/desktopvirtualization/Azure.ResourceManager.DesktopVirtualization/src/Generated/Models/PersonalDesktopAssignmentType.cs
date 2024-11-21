@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator ==(PersonalDesktopAssignmentType left, PersonalDesktopAssignmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PersonalDesktopAssignmentType"/> values are not the same. </summary>
         public static bool operator !=(PersonalDesktopAssignmentType left, PersonalDesktopAssignmentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PersonalDesktopAssignmentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PersonalDesktopAssignmentType"/>. </summary>
         public static implicit operator PersonalDesktopAssignmentType(string value) => new PersonalDesktopAssignmentType(value);
 
         /// <inheritdoc />

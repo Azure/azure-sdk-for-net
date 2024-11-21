@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CosmosDBMinimalTlsVersion left, CosmosDBMinimalTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBMinimalTlsVersion"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBMinimalTlsVersion left, CosmosDBMinimalTlsVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBMinimalTlsVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBMinimalTlsVersion"/>. </summary>
         public static implicit operator CosmosDBMinimalTlsVersion(string value) => new CosmosDBMinimalTlsVersion(value);
 
         /// <inheritdoc />

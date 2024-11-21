@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(MediaJobState left, MediaJobState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaJobState"/> values are not the same. </summary>
         public static bool operator !=(MediaJobState left, MediaJobState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MediaJobState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MediaJobState"/>. </summary>
         public static implicit operator MediaJobState(string value) => new MediaJobState(value);
 
         /// <inheritdoc />

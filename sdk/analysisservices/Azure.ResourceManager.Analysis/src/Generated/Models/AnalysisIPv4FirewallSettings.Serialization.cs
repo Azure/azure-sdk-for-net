@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Analysis.Models
 
         void IJsonModel<AnalysisIPv4FirewallSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisIPv4FirewallSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AnalysisIPv4FirewallSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(FirewallRules))
             {
                 writer.WritePropertyName("firewallRules"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Analysis.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AnalysisIPv4FirewallSettings IJsonModel<AnalysisIPv4FirewallSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

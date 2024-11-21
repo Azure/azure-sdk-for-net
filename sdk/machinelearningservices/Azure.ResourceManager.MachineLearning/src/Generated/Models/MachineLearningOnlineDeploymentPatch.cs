@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
+        [WirePath("sku")]
         public MachineLearningSkuPatch Sku { get; set; }
     }
 }

@@ -24,13 +24,11 @@ namespace Microsoft.Azure.Batch
     {
         private class PropertyContainer : PropertyCollection
         {
-            public readonly PropertyAccessor<IList<string>> ApplicationLicensesProperty;
             public readonly PropertyAccessor<IList<ApplicationPackageReference>> ApplicationPackageReferencesProperty;
             public readonly PropertyAccessor<bool?> AutoScaleEnabledProperty;
             public readonly PropertyAccessor<TimeSpan?> AutoScaleEvaluationIntervalProperty;
             public readonly PropertyAccessor<string> AutoScaleFormulaProperty;
             public readonly PropertyAccessor<IList<CertificateReference>> CertificateReferencesProperty;
-            public readonly PropertyAccessor<CloudServiceConfiguration> CloudServiceConfigurationProperty;
             public readonly PropertyAccessor<string> DisplayNameProperty;
             public readonly PropertyAccessor<bool?> InterComputeNodeCommunicationEnabledProperty;
             public readonly PropertyAccessor<IList<MetadataItem>> MetadataProperty;
@@ -51,13 +49,11 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.ApplicationLicensesProperty = this.CreatePropertyAccessor<IList<string>>(nameof(ApplicationLicenses), BindingAccess.Read | BindingAccess.Write);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>(nameof(ApplicationPackageReferences), BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleEnabledProperty = this.CreatePropertyAccessor<bool?>(nameof(AutoScaleEnabled), BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleEvaluationIntervalProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(AutoScaleEvaluationInterval), BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleFormulaProperty = this.CreatePropertyAccessor<string>(nameof(AutoScaleFormula), BindingAccess.Read | BindingAccess.Write);
                 this.CertificateReferencesProperty = this.CreatePropertyAccessor<IList<CertificateReference>>(nameof(CertificateReferences), BindingAccess.Read | BindingAccess.Write);
-                this.CloudServiceConfigurationProperty = this.CreatePropertyAccessor<CloudServiceConfiguration>(nameof(CloudServiceConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.DisplayNameProperty = this.CreatePropertyAccessor<string>(nameof(DisplayName), BindingAccess.Read | BindingAccess.Write);
                 this.InterComputeNodeCommunicationEnabledProperty = this.CreatePropertyAccessor<bool?>(nameof(InterComputeNodeCommunicationEnabled), BindingAccess.Read | BindingAccess.Write);
                 this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>(nameof(Metadata), BindingAccess.Read | BindingAccess.Write);
@@ -79,10 +75,6 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer(Models.PoolSpecification protocolObject) : base(BindingState.Bound)
             {
-                this.ApplicationLicensesProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CollectionToThreadSafeCollection(protocolObject.ApplicationLicenses, o => o),
-                    nameof(ApplicationLicenses),
-                    BindingAccess.Read | BindingAccess.Write);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
                     ApplicationPackageReference.ConvertFromProtocolCollection(protocolObject.ApplicationPackageReferences),
                     nameof(ApplicationPackageReferences),
@@ -102,10 +94,6 @@ namespace Microsoft.Azure.Batch
                 this.CertificateReferencesProperty = this.CreatePropertyAccessor(
                     CertificateReference.ConvertFromProtocolCollection(protocolObject.CertificateReferences),
                     nameof(CertificateReferences),
-                    BindingAccess.Read | BindingAccess.Write);
-                this.CloudServiceConfigurationProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.CloudServiceConfiguration, o => new CloudServiceConfiguration(o)),
-                    nameof(CloudServiceConfiguration),
                     BindingAccess.Read | BindingAccess.Write);
                 this.DisplayNameProperty = this.CreatePropertyAccessor(
                     protocolObject.DisplayName,
@@ -200,22 +188,6 @@ namespace Microsoft.Azure.Batch
         #region PoolSpecification
 
         /// <summary>
-        /// Gets or sets the list of application licenses the Batch service will make available on each compute node in the 
-        /// pool.
-        /// </summary>
-        /// <remarks>
-        /// The list of application licenses must be a subset of available Batch service application licenses.
-        /// </remarks>
-        public IList<string> ApplicationLicenses
-        {
-            get { return this.propertyContainer.ApplicationLicensesProperty.Value; }
-            set
-            {
-                this.propertyContainer.ApplicationLicensesProperty.Value = ConcurrentChangeTrackedList<string>.TransformEnumerableToConcurrentList(value);
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a list of application package references to be installed on each compute node in the pool.
         /// </summary>
         public IList<ApplicationPackageReference> ApplicationPackageReferences
@@ -278,18 +250,6 @@ namespace Microsoft.Azure.Batch
             {
                 this.propertyContainer.CertificateReferencesProperty.Value = ConcurrentChangeTrackedModifiableList<CertificateReference>.TransformEnumerableToConcurrentModifiableList(value);
             }
-        }
-
-        /// <summary>
-        /// Gets or sets the <see cref="CloudServiceConfiguration"/> for the pool.
-        /// </summary>
-        /// <remarks>
-        /// This property is mutually exclusive with <see cref="VirtualMachineConfiguration"/>.
-        /// </remarks>
-        public CloudServiceConfiguration CloudServiceConfiguration
-        {
-            get { return this.propertyContainer.CloudServiceConfigurationProperty.Value; }
-            set { this.propertyContainer.CloudServiceConfigurationProperty.Value = value; }
         }
 
         /// <summary>
@@ -474,9 +434,6 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets or sets the <see cref="VirtualMachineConfiguration"/> of the pool.
         /// </summary>
-        /// <remarks>
-        /// This property is mutually exclusive with <see cref="CloudServiceConfiguration"/>.
-        /// </remarks>
         public VirtualMachineConfiguration VirtualMachineConfiguration
         {
             get { return this.propertyContainer.VirtualMachineConfigurationProperty.Value; }
@@ -522,13 +479,11 @@ namespace Microsoft.Azure.Batch
         {
             Models.PoolSpecification result = new Models.PoolSpecification()
             {
-                ApplicationLicenses = this.ApplicationLicenses,
                 ApplicationPackageReferences = UtilitiesInternal.ConvertToProtocolCollection(this.ApplicationPackageReferences),
                 EnableAutoScale = this.AutoScaleEnabled,
                 AutoScaleEvaluationInterval = this.AutoScaleEvaluationInterval,
                 AutoScaleFormula = this.AutoScaleFormula,
                 CertificateReferences = UtilitiesInternal.ConvertToProtocolCollection(this.CertificateReferences),
-                CloudServiceConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.CloudServiceConfiguration, (o) => o.GetTransportObject()),
                 DisplayName = this.DisplayName,
                 EnableInterNodeCommunication = this.InterComputeNodeCommunicationEnabled,
                 Metadata = UtilitiesInternal.ConvertToProtocolCollection(this.Metadata),

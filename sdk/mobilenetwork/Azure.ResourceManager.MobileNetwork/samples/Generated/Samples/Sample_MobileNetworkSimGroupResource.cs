@@ -12,17 +12,17 @@ using Azure.Identity;
 using Azure.ResourceManager.MobileNetwork.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MobileNetwork.Samples
 {
     public partial class Sample_MobileNetworkSimGroupResource
     {
-        // Bulk upload SIMs in a SIM group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task BulkUploadSim_BulkUploadSIMsInASIMGroup()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/SimBulkUpload.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimBulkUpload.json
             // this example is just showing the usage of "Sims_BulkUpload" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,12 +81,11 @@ OperatorKeyCode = "00000000000000000000000000000000",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Bulk delete SIMs from a SIM group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task BulkDeleteSim_BulkDeleteSIMsFromASIMGroup()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/SimBulkDelete.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimBulkDelete.json
             // this example is just showing the usage of "Sims_BulkDelete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,12 +112,11 @@ OperatorKeyCode = "00000000000000000000000000000000",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Bulk upload encrypted SIMs to a SIM group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task BulkUploadEncryptedSim_BulkUploadEncryptedSIMsToASIMGroup()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/SimBulkUploadEncrypted.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimBulkUploadEncrypted.json
             // this example is just showing the usage of "Sims_BulkUploadEncrypted" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,12 +173,79 @@ EncryptedCredentials = "ABC123",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Delete SIM group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task MoveSim_MoveListOfSIMsToTargetSIMGroup()
+        {
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimMove.json
+            // this example is just showing the usage of "Sims_Move" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MobileNetworkSimGroupResource created on azure
+            // for more information of creating MobileNetworkSimGroupResource, please refer to the document of MobileNetworkSimGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "testResourceGroupName";
+            string simGroupName = "testSimGroup";
+            ResourceIdentifier mobileNetworkSimGroupResourceId = MobileNetworkSimGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, simGroupName);
+            MobileNetworkSimGroupResource mobileNetworkSimGroup = client.GetMobileNetworkSimGroupResource(mobileNetworkSimGroupResourceId);
+
+            // invoke the operation
+            SimMoveContent content = new SimMoveContent()
+            {
+                Sims =
+{
+"testSim","testSim2"
+},
+            };
+            ArmOperation<AsyncOperationStatus> lro = await mobileNetworkSimGroup.MoveSimAsync(WaitUntil.Completed, content);
+            AsyncOperationStatus result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CloneSim_CloneListOfSIMsToTargetSIMGroup()
+        {
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimClone.json
+            // this example is just showing the usage of "Sims_Clone" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MobileNetworkSimGroupResource created on azure
+            // for more information of creating MobileNetworkSimGroupResource, please refer to the document of MobileNetworkSimGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "testResourceGroupName";
+            string simGroupName = "testSimGroup";
+            ResourceIdentifier mobileNetworkSimGroupResourceId = MobileNetworkSimGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, simGroupName);
+            MobileNetworkSimGroupResource mobileNetworkSimGroup = client.GetMobileNetworkSimGroupResource(mobileNetworkSimGroupResourceId);
+
+            // invoke the operation
+            SimCloneContent content = new SimCloneContent()
+            {
+                Sims =
+{
+"testSim","testSim2"
+},
+            };
+            ArmOperation<AsyncOperationStatus> lro = await mobileNetworkSimGroup.CloneSimAsync(WaitUntil.Completed, content);
+            AsyncOperationStatus result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSIMGroup()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/SimGroupDelete.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimGroupDelete.json
             // this example is just showing the usage of "SimGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -199,15 +264,14 @@ EncryptedCredentials = "ABC123",
             // invoke the operation
             await mobileNetworkSimGroup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get SIM group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSIMGroup()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/SimGroupGet.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimGroupGet.json
             // this example is just showing the usage of "SimGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -233,12 +297,11 @@ EncryptedCredentials = "ABC123",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch SIM group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchSIMGroup()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/SimGroupPatch.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimGroupPatch.json
             // this example is just showing the usage of "SimGroups_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -279,12 +342,11 @@ EncryptedCredentials = "ABC123",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List SIM groups in a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMobileNetworkSimGroups_ListSIMGroupsInASubscription()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/SimGroupListBySubscription.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimGroupListBySubscription.json
             // this example is just showing the usage of "SimGroups_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -308,7 +370,7 @@ EncryptedCredentials = "ABC123",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

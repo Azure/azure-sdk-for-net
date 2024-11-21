@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(StorageApplianceDetailedStatus left, StorageApplianceDetailedStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageApplianceDetailedStatus"/> values are not the same. </summary>
         public static bool operator !=(StorageApplianceDetailedStatus left, StorageApplianceDetailedStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageApplianceDetailedStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageApplianceDetailedStatus"/>. </summary>
         public static implicit operator StorageApplianceDetailedStatus(string value) => new StorageApplianceDetailedStatus(value);
 
         /// <inheritdoc />

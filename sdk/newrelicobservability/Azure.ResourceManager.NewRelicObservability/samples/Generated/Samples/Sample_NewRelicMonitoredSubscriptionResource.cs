@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NewRelicObservability.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NewRelicObservability.Samples
 {
     public partial class Sample_NewRelicMonitoredSubscriptionResource
     {
-        // Monitors_GetMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MonitorsGetMonitoredSubscriptions()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/MonitoredSubscriptions_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_UpdateMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_MonitorsUpdateMonitoredSubscriptions()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/MonitoredSubscriptions_Update.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_DeleteMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_MonitorsDeleteMonitoredSubscriptions()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/MonitoredSubscriptions_Delete.json
@@ -106,7 +104,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation
             await newRelicMonitoredSubscription.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

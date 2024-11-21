@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Maps.Models
 
         void IJsonModel<MapsAccountSasContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MapsAccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MapsAccountSasContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("signingKey"u8);
             writer.WriteStringValue(SigningKey.ToString());
             writer.WritePropertyName("principalId"u8);
@@ -61,7 +69,6 @@ namespace Azure.ResourceManager.Maps.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MapsAccountSasContent IJsonModel<MapsAccountSasContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

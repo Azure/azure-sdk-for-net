@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(ImageAlternativeType left, ImageAlternativeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageAlternativeType"/> values are not the same. </summary>
         public static bool operator !=(ImageAlternativeType left, ImageAlternativeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ImageAlternativeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImageAlternativeType"/>. </summary>
         public static implicit operator ImageAlternativeType(string value) => new ImageAlternativeType(value);
 
         /// <inheritdoc />

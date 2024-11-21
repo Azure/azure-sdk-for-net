@@ -56,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 
         public string Id => this.info.Id;
 
-        public Models.AggregationType? AggregationType => this.info.Aggregation;  // TODO: this was enum. Need to double check new type is parsed and used correctly.
+        public AggregationType? AggregationType => this.info.Aggregation;  // TODO: this was enum. Need to double check new type is parsed and used correctly.
 
         public bool CheckFilters(TTelemetry document, out CollectionConfigurationError[] errors)
         {

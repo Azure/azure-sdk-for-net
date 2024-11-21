@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlFlexibleServerPublicNetworkAccessState left, PostgreSqlFlexibleServerPublicNetworkAccessState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerPublicNetworkAccessState left, PostgreSqlFlexibleServerPublicNetworkAccessState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerPublicNetworkAccessState(string value) => new PostgreSqlFlexibleServerPublicNetworkAccessState(value);
 
         /// <inheritdoc />

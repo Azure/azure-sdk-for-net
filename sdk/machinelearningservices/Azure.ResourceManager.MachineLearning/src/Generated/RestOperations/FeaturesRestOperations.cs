@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.MachineLearning
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01-preview";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description)
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description, MachineLearningListViewType? listViewType, int? pageSize)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -68,10 +68,18 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 uri.AppendQuery("description", description, true);
             }
+            if (listViewType != null)
+            {
+                uri.AppendQuery("listViewType", listViewType.Value.ToString(), true);
+            }
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description, MachineLearningListViewType? listViewType, int? pageSize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 uri.AppendQuery("description", description, true);
             }
+            if (listViewType != null)
+            {
+                uri.AppendQuery("listViewType", listViewType.Value.ToString(), true);
+            }
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -122,10 +138,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="featureName"> feature name. </param>
         /// <param name="description"> Description of the featureset. </param>
+        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="pageSize"> Page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="featuresetName"/> or <paramref name="featuresetVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="featuresetName"/> or <paramref name="featuresetVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FeatureResourceArmPaginatedResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip = null, string tags = null, string featureName = null, string description = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FeatureResourceArmPaginatedResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip = null, string tags = null, string featureName = null, string description = null, MachineLearningListViewType? listViewType = null, int? pageSize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -133,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning
             Argument.AssertNotNullOrEmpty(featuresetName, nameof(featuresetName));
             Argument.AssertNotNullOrEmpty(featuresetVersion, nameof(featuresetVersion));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, featuresetName, featuresetVersion, skip, tags, featureName, description);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, featuresetName, featuresetVersion, skip, tags, featureName, description, listViewType, pageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -159,10 +177,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="featureName"> feature name. </param>
         /// <param name="description"> Description of the featureset. </param>
+        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="pageSize"> Page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="featuresetName"/> or <paramref name="featuresetVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="featuresetName"/> or <paramref name="featuresetVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FeatureResourceArmPaginatedResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip = null, string tags = null, string featureName = null, string description = null, CancellationToken cancellationToken = default)
+        public Response<FeatureResourceArmPaginatedResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip = null, string tags = null, string featureName = null, string description = null, MachineLearningListViewType? listViewType = null, int? pageSize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -170,7 +190,7 @@ namespace Azure.ResourceManager.MachineLearning
             Argument.AssertNotNullOrEmpty(featuresetName, nameof(featuresetName));
             Argument.AssertNotNullOrEmpty(featuresetVersion, nameof(featuresetVersion));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, featuresetName, featuresetVersion, skip, tags, featureName, description);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, featuresetName, featuresetVersion, skip, tags, featureName, description, listViewType, pageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -306,7 +326,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description)
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description, MachineLearningListViewType? listViewType, int? pageSize)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -314,7 +334,7 @@ namespace Azure.ResourceManager.MachineLearning
             return uri;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description, MachineLearningListViewType? listViewType, int? pageSize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -339,10 +359,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="featureName"> feature name. </param>
         /// <param name="description"> Description of the featureset. </param>
+        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="pageSize"> Page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="featuresetName"/> or <paramref name="featuresetVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="featuresetName"/> or <paramref name="featuresetVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FeatureResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip = null, string tags = null, string featureName = null, string description = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FeatureResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip = null, string tags = null, string featureName = null, string description = null, MachineLearningListViewType? listViewType = null, int? pageSize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -351,7 +373,7 @@ namespace Azure.ResourceManager.MachineLearning
             Argument.AssertNotNullOrEmpty(featuresetName, nameof(featuresetName));
             Argument.AssertNotNullOrEmpty(featuresetVersion, nameof(featuresetVersion));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, featuresetName, featuresetVersion, skip, tags, featureName, description);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, featuresetName, featuresetVersion, skip, tags, featureName, description, listViewType, pageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -378,10 +400,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="featureName"> feature name. </param>
         /// <param name="description"> Description of the featureset. </param>
+        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="pageSize"> Page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="featuresetName"/> or <paramref name="featuresetVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="featuresetName"/> or <paramref name="featuresetVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FeatureResourceArmPaginatedResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip = null, string tags = null, string featureName = null, string description = null, CancellationToken cancellationToken = default)
+        public Response<FeatureResourceArmPaginatedResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip = null, string tags = null, string featureName = null, string description = null, MachineLearningListViewType? listViewType = null, int? pageSize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -390,7 +414,7 @@ namespace Azure.ResourceManager.MachineLearning
             Argument.AssertNotNullOrEmpty(featuresetName, nameof(featuresetName));
             Argument.AssertNotNullOrEmpty(featuresetVersion, nameof(featuresetVersion));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, featuresetName, featuresetVersion, skip, tags, featureName, description);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, featuresetName, featuresetVersion, skip, tags, featureName, description, listViewType, pageSize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

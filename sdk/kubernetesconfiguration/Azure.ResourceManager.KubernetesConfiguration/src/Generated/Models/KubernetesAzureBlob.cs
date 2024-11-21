@@ -76,22 +76,30 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> The URL to sync for the flux configuration Azure Blob storage account. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
         /// <summary> The Azure Blob container name to sync from the url endpoint for the flux configuration. </summary>
+        [WirePath("containerName")]
         public string ContainerName { get; set; }
         /// <summary> The maximum time to attempt to reconcile the cluster Azure Blob source with the remote. </summary>
+        [WirePath("timeoutInSeconds")]
         public long? TimeoutInSeconds { get; set; }
         /// <summary> The interval at which to re-reconcile the cluster Azure Blob source with the remote. </summary>
+        [WirePath("syncIntervalInSeconds")]
         public long? SyncIntervalInSeconds { get; set; }
         /// <summary> Parameters to authenticate using Service Principal. </summary>
+        [WirePath("servicePrincipal")]
         public KubernetesServicePrincipal ServicePrincipal { get; set; }
         /// <summary> The account key (shared key) to access the storage account. </summary>
+        [WirePath("accountKey")]
         public string AccountKey { get; set; }
         /// <summary> The Shared Access token to access the storage container. </summary>
+        [WirePath("sasToken")]
         public string SasToken { get; set; }
         /// <summary> Parameters to authenticate using a Managed Identity. </summary>
         internal KubernetesAzureBlobManagedIdentity ManagedIdentity { get; set; }
         /// <summary> The client Id for authenticating a Managed Identity. </summary>
+        [WirePath("managedIdentity.clientId")]
         public Guid? ManagedIdentityClientId
         {
             get => ManagedIdentity is null ? default : ManagedIdentity.ClientId;
@@ -104,6 +112,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </summary>
+        [WirePath("localAuthRef")]
         public string LocalAuthRef { get; set; }
     }
 }

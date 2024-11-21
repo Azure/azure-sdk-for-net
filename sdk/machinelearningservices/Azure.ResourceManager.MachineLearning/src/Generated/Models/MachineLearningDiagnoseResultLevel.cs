@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningDiagnoseResultLevel left, MachineLearningDiagnoseResultLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningDiagnoseResultLevel"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningDiagnoseResultLevel left, MachineLearningDiagnoseResultLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningDiagnoseResultLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningDiagnoseResultLevel"/>. </summary>
         public static implicit operator MachineLearningDiagnoseResultLevel(string value) => new MachineLearningDiagnoseResultLevel(value);
 
         /// <inheritdoc />

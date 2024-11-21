@@ -69,14 +69,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The resource ID of the Key Vault. </summary>
+        [WirePath("keyVaultId")]
         public ResourceIdentifier KeyVaultId { get; set; }
         /// <summary> Intermediate certificate object name in Azure Key Vault. </summary>
+        [WirePath("certObjectName")]
         public string CertObjectName { get; set; }
         /// <summary> Intermediate certificate private key object name in Azure Key Vault. </summary>
+        [WirePath("keyObjectName")]
         public string KeyObjectName { get; set; }
         /// <summary> Root certificate object name in Azure Key Vault. </summary>
+        [WirePath("rootCertObjectName")]
         public string RootCertObjectName { get; set; }
         /// <summary> Certificate chain object name in Azure Key Vault. </summary>
+        [WirePath("certChainObjectName")]
         public string CertChainObjectName { get; set; }
     }
 }

@@ -55,19 +55,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobOutput"/>. </summary>
-        /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
+        /// <param name="description"> Description for the output. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningJobOutput(string description, JobOutputType jobOutputType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningJobOutput(JobOutputType jobOutputType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Description = description;
             JobOutputType = jobOutputType;
+            Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Description for the output. </summary>
-        public string Description { get; set; }
         /// <summary> [Required] Specifies the type of job. </summary>
         internal JobOutputType JobOutputType { get; set; }
+        /// <summary> Description for the output. </summary>
+        [WirePath("description")]
+        public string Description { get; set; }
     }
 }

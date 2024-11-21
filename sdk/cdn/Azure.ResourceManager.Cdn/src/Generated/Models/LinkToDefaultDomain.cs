@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(LinkToDefaultDomain left, LinkToDefaultDomain right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkToDefaultDomain"/> values are not the same. </summary>
         public static bool operator !=(LinkToDefaultDomain left, LinkToDefaultDomain right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LinkToDefaultDomain"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LinkToDefaultDomain"/>. </summary>
         public static implicit operator LinkToDefaultDomain(string value) => new LinkToDefaultDomain(value);
 
         /// <inheritdoc />

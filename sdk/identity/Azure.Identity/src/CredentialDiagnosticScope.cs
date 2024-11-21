@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.ExceptionServices;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -23,15 +24,7 @@ namespace Azure.Identity
             _context = context;
             _scopeHandler = scopeHandler;
         }
-#if PREVIEW_FEATURE_FLAG
-        public CredentialDiagnosticScope(ClientDiagnostics diagnostics, string name, PopTokenRequestContext context, IScopeHandler scopeHandler)
-        {
-            _name = name;
-            _scope = scopeHandler.CreateScope(diagnostics, name);
-            _context = new TokenRequestContext(context.Scopes, context.ParentRequestId, context.Claims);
-            _scopeHandler = scopeHandler;
-        }
-#endif
+
         public void Start()
         {
             AzureIdentityEventSource.Singleton.GetToken(_name, _context);
@@ -46,7 +39,7 @@ namespace Azure.Identity
 
         public Exception FailWrapAndThrow(Exception ex, string additionalMessage = null, bool isCredentialUnavailable = false)
         {
-            var wrapped = TryWrapException(ref ex, additionalMessage);
+            var wrapped = TryWrapException(ref ex, additionalMessage, isCredentialUnavailable);
             RegisterFailed(ex);
 
             if (!wrapped)
@@ -65,7 +58,7 @@ namespace Azure.Identity
 
         private bool TryWrapException(ref Exception exception, string additionalMessageText = null, bool isCredentialUnavailable = false)
         {
-            if (exception is OperationCanceledException || exception is AuthenticationFailedException)
+            if (!isCredentialUnavailable && (exception is OperationCanceledException || exception is AuthenticationFailedException || exception is CredentialUnavailableException))
             {
                 return false;
             }
@@ -79,7 +72,24 @@ namespace Azure.Identity
                     return true;
                 }
             }
-            string exceptionMessage = $"{_name.Substring(0, _name.IndexOf('.'))} authentication failed: {exception.Message}";
+
+            string exceptionMessage = $"{_name.Substring(0, _name.IndexOf('.'))} authentication failed: ";
+
+            if (exception is MsalServiceException mse)
+            {
+                if (mse.ErrorCode == "user_assigned_managed_identity_not_supported")
+                {
+                    exceptionMessage += Constants.MiSourceNoUserAssignedIdentityMessage;
+                }
+                else if (mse.ErrorCode == "managed_identity_request_failed")
+                {
+                    exceptionMessage += mse.Message;
+                }
+            }
+            else
+            {
+                exceptionMessage += exception.Message;
+            }
             if (additionalMessageText != null)
             {
                 exceptionMessage = exceptionMessage + $"\n{additionalMessageText}";

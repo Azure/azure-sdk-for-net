@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The endpoint to be used to make an authorization request. </summary>
+        [WirePath("authorizationEndpoint")]
         public string AuthorizationEndpoint { get; set; }
         /// <summary> The endpoint to be used to request a token. </summary>
+        [WirePath("tokenEndpoint")]
         public string TokenEndpoint { get; set; }
         /// <summary> The endpoint that issues the token. </summary>
+        [WirePath("issuer")]
         public string Issuer { get; set; }
         /// <summary> The endpoint that provides the keys necessary to validate the token. </summary>
+        [WirePath("certificationUri")]
         public Uri CertificationUri { get; set; }
         /// <summary> The endpoint that contains all the configuration endpoints for the provider. </summary>
+        [WirePath("wellKnownOpenIdConfiguration")]
         public string WellKnownOpenIdConfiguration { get; set; }
     }
 }

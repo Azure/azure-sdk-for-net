@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseIntegrationRuntimeEntityReferenceType left, SynapseIntegrationRuntimeEntityReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeEntityReferenceType"/> values are not the same. </summary>
         public static bool operator !=(SynapseIntegrationRuntimeEntityReferenceType left, SynapseIntegrationRuntimeEntityReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseIntegrationRuntimeEntityReferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseIntegrationRuntimeEntityReferenceType"/>. </summary>
         public static implicit operator SynapseIntegrationRuntimeEntityReferenceType(string value) => new SynapseIntegrationRuntimeEntityReferenceType(value);
 
         /// <inheritdoc />

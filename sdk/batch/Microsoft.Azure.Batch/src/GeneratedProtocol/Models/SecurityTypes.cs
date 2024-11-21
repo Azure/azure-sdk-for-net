@@ -26,7 +26,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// techniques.
         /// </summary>
         [EnumMember(Value = "trustedLaunch")]
-        TrustedLaunch
+        TrustedLaunch,
+        /// <summary>
+        /// Azure confidential computing offers confidential VMs are for
+        /// tenants with high security and confidentiality requirements. These
+        /// VMs provide a strong, hardware-enforced boundary to help meet your
+        /// security needs. You can use confidential VMs for migrations without
+        /// making changes to your code, with the platform protecting your VM's
+        /// state from being read or modified.
+        /// </summary>
+        [EnumMember(Value = "confidentialVM")]
+        ConfidentialVM
     }
     internal static class SecurityTypesEnumExtension
     {
@@ -41,6 +51,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             {
                 case SecurityTypes.TrustedLaunch:
                     return "trustedLaunch";
+                case SecurityTypes.ConfidentialVM:
+                    return "confidentialVM";
             }
             return null;
         }
@@ -51,6 +63,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             {
                 case "trustedLaunch":
                     return SecurityTypes.TrustedLaunch;
+                case "confidentialVM":
+                    return SecurityTypes.ConfidentialVM;
             }
             return null;
         }

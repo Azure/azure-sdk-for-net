@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Gets the support plan. </summary>
+        [WirePath("supportPlan")]
         public IReadOnlyList<KubernetesSupportPlan> SupportPlan { get; }
     }
 }

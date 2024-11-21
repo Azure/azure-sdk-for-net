@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static bool operator ==(AllowedReplicationRegion left, AllowedReplicationRegion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AllowedReplicationRegion"/> values are not the same. </summary>
         public static bool operator !=(AllowedReplicationRegion left, AllowedReplicationRegion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AllowedReplicationRegion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AllowedReplicationRegion"/>. </summary>
         public static implicit operator AllowedReplicationRegion(string value) => new AllowedReplicationRegion(value);
 
         /// <inheritdoc />

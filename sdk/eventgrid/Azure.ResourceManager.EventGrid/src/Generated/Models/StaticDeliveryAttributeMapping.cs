@@ -33,8 +33,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Value of the delivery attribute. </summary>
+        [WirePath("properties.value")]
         public string Value { get; set; }
         /// <summary> Boolean flag to tell if the attribute contains sensitive information . </summary>
+        [WirePath("properties.isSecret")]
         public bool? IsSecret { get; set; }
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(SiteRecoverySqlServerLicenseType left, SiteRecoverySqlServerLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SiteRecoverySqlServerLicenseType"/> values are not the same. </summary>
         public static bool operator !=(SiteRecoverySqlServerLicenseType left, SiteRecoverySqlServerLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SiteRecoverySqlServerLicenseType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoverySqlServerLicenseType"/>. </summary>
         public static implicit operator SiteRecoverySqlServerLicenseType(string value) => new SiteRecoverySqlServerLicenseType(value);
 
         /// <inheritdoc />

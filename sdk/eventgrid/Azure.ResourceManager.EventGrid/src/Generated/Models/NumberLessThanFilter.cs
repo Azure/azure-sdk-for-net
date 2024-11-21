@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The filter value. </summary>
+        [WirePath("value")]
         public double? Value { get; set; }
     }
 }

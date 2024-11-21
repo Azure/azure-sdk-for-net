@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         void IJsonModel<RedisEnterpriseRegenerateKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseRegenerateKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisEnterpriseRegenerateKeyContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToSerialString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -43,7 +51,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RedisEnterpriseRegenerateKeyContent IJsonModel<RedisEnterpriseRegenerateKeyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

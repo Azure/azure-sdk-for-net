@@ -111,10 +111,10 @@ function Locate-Assets-Slice($ProxyExe, $AssetsJson, $MountDirectory) {
 
 function Get-Tag-SHA($TagName, $WorkingDirectory) {
     $results = Git-Command "ls-remote origin $TagName" $WorkingDirectory
-    
+
     if ($results -and $lastexitcode -eq 0) {
         $arr = $results -split '\s+'
-        
+
         return $arr[0]
     }
 
@@ -124,7 +124,7 @@ function Get-Tag-SHA($TagName, $WorkingDirectory) {
 
 function Start-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDirectory) {
     $alreadyCombinedTags = Load-Incomplete-Progress $MountDirectory
-    
+
     $TargetTags = $TargetTags | Where-Object { $_ -notin $alreadyCombinedTags }
 
     if ($alreadyCombinedTags) {
@@ -172,7 +172,7 @@ function Finish-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDir
 
     $suffix = if ($len -gt 1) { "s" } else { "" }
 
-    Write-Host "`nSuccessfully combined $len tag$suffix. Invoke `"test-proxy push " -NoNewLine
+    Write-Host "`nSuccessfully combined $len tag$suffix. Invoke `"test-proxy push -a " -NoNewLine
     Write-Host $AssetsJson -ForegroundColor Green -NoNewLine
     Write-Host "`" to push the results as a new tag."
 }
@@ -256,7 +256,7 @@ function Combine-Tags($RemainingTags, $AssetsRepoLocation, $MountDirectory, $Rel
     $pushedTags = Load-Incomplete-Progress $MountDirectory
 
     $testFile = Get-ChildItem -Recurse -Path $AssetsRepoLocation | Where-Object { !$_.PSIsContainer } | Select-Object -First 1
-    Add-Content -Path $testFile -Value "`n"
+    Add-Content -LiteralPath $testFile -Value "`n"
 
     # if we have successfully gotten to the end without any non-zero exit codes...delete the mergeprogress file, we're g2g
     Cleanup-Incomplete-Progress $MountDirectory

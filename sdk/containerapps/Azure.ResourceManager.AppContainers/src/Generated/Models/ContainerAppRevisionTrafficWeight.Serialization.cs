@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppRevisionTrafficWeight>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRevisionTrafficWeight>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppRevisionTrafficWeight)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(RevisionName))
             {
                 writer.WritePropertyName("revisionName"u8);
@@ -61,7 +70,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerAppRevisionTrafficWeight IJsonModel<ContainerAppRevisionTrafficWeight>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -129,6 +137,98 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppRevisionTrafficWeight(revisionName, weight, latestRevision, label, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RevisionName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  revisionName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RevisionName))
+                {
+                    builder.Append("  revisionName: ");
+                    if (RevisionName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RevisionName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RevisionName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Weight), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  weight: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Weight))
+                {
+                    builder.Append("  weight: ");
+                    builder.AppendLine($"{Weight.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLatestRevision), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  latestRevision: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsLatestRevision))
+                {
+                    builder.Append("  latestRevision: ");
+                    var boolValue = IsLatestRevision.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Label), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  label: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Label))
+                {
+                    builder.Append("  label: ");
+                    if (Label.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Label}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Label}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerAppRevisionTrafficWeight>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRevisionTrafficWeight>)this).GetFormatFromOptions(options) : options.Format;
@@ -137,6 +237,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppRevisionTrafficWeight)} does not support writing '{options.Format}' format.");
             }

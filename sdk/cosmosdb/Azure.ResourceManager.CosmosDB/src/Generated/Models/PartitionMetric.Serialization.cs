@@ -21,13 +21,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<PartitionMetric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PartitionMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PartitionMetric)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(PartitionId))
             {
                 writer.WritePropertyName("partitionId"u8);
@@ -38,57 +47,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("partitionKeyRangeId"u8);
                 writer.WriteStringValue(PartitionKeyRangeId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
-            {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(TimeGrain))
-            {
-                writer.WritePropertyName("timeGrain"u8);
-                writer.WriteStringValue(TimeGrain);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
-            {
-                writer.WritePropertyName("unit"u8);
-                writer.WriteStringValue(Unit.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MetricValues))
-            {
-                writer.WritePropertyName("metricValues"u8);
-                writer.WriteStartArray();
-                foreach (var item in MetricValues)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         PartitionMetric IJsonModel<PartitionMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

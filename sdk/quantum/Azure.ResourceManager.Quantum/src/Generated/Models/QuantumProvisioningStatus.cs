@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public static bool operator ==(QuantumProvisioningStatus left, QuantumProvisioningStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QuantumProvisioningStatus"/> values are not the same. </summary>
         public static bool operator !=(QuantumProvisioningStatus left, QuantumProvisioningStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QuantumProvisioningStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QuantumProvisioningStatus"/>. </summary>
         public static implicit operator QuantumProvisioningStatus(string value) => new QuantumProvisioningStatus(value);
 
         /// <inheritdoc />

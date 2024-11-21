@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Threat intelligence metrics. </summary>
+        [WirePath("properties")]
         public ThreatIntelligenceMetric Properties { get; }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static bool operator ==(ConnectionType left, ConnectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionType"/> values are not the same. </summary>
         public static bool operator !=(ConnectionType left, ConnectionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionType"/>. </summary>
         public static implicit operator ConnectionType(string value) => new ConnectionType(value);
 
         /// <inheritdoc />

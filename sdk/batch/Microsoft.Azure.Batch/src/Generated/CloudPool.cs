@@ -26,14 +26,12 @@ namespace Microsoft.Azure.Batch
         {
             public readonly PropertyAccessor<Common.AllocationState?> AllocationStateProperty;
             public readonly PropertyAccessor<DateTime?> AllocationStateTransitionTimeProperty;
-            public readonly PropertyAccessor<IList<string>> ApplicationLicensesProperty;
             public readonly PropertyAccessor<IList<ApplicationPackageReference>> ApplicationPackageReferencesProperty;
             public readonly PropertyAccessor<bool?> AutoScaleEnabledProperty;
             public readonly PropertyAccessor<TimeSpan?> AutoScaleEvaluationIntervalProperty;
             public readonly PropertyAccessor<string> AutoScaleFormulaProperty;
             public readonly PropertyAccessor<AutoScaleRun> AutoScaleRunProperty;
             public readonly PropertyAccessor<IList<CertificateReference>> CertificateReferencesProperty;
-            public readonly PropertyAccessor<CloudServiceConfiguration> CloudServiceConfigurationProperty;
             public readonly PropertyAccessor<DateTime?> CreationTimeProperty;
             public readonly PropertyAccessor<int?> CurrentDedicatedComputeNodesProperty;
             public readonly PropertyAccessor<int?> CurrentLowPriorityComputeNodesProperty;
@@ -69,14 +67,12 @@ namespace Microsoft.Azure.Batch
             {
                 this.AllocationStateProperty = this.CreatePropertyAccessor<Common.AllocationState?>(nameof(AllocationState), BindingAccess.None);
                 this.AllocationStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(AllocationStateTransitionTime), BindingAccess.None);
-                this.ApplicationLicensesProperty = this.CreatePropertyAccessor<IList<string>>(nameof(ApplicationLicenses), BindingAccess.Read | BindingAccess.Write);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>(nameof(ApplicationPackageReferences), BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleEnabledProperty = this.CreatePropertyAccessor<bool?>(nameof(AutoScaleEnabled), BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleEvaluationIntervalProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(AutoScaleEvaluationInterval), BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleFormulaProperty = this.CreatePropertyAccessor<string>(nameof(AutoScaleFormula), BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleRunProperty = this.CreatePropertyAccessor<AutoScaleRun>(nameof(AutoScaleRun), BindingAccess.None);
                 this.CertificateReferencesProperty = this.CreatePropertyAccessor<IList<CertificateReference>>(nameof(CertificateReferences), BindingAccess.Read | BindingAccess.Write);
-                this.CloudServiceConfigurationProperty = this.CreatePropertyAccessor<CloudServiceConfiguration>(nameof(CloudServiceConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.CreationTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(CreationTime), BindingAccess.None);
                 this.CurrentDedicatedComputeNodesProperty = this.CreatePropertyAccessor<int?>(nameof(CurrentDedicatedComputeNodes), BindingAccess.None);
                 this.CurrentLowPriorityComputeNodesProperty = this.CreatePropertyAccessor<int?>(nameof(CurrentLowPriorityComputeNodes), BindingAccess.None);
@@ -84,7 +80,7 @@ namespace Microsoft.Azure.Batch
                 this.DisplayNameProperty = this.CreatePropertyAccessor<string>(nameof(DisplayName), BindingAccess.Read | BindingAccess.Write);
                 this.ETagProperty = this.CreatePropertyAccessor<string>(nameof(ETag), BindingAccess.None);
                 this.IdProperty = this.CreatePropertyAccessor<string>(nameof(Id), BindingAccess.Read | BindingAccess.Write);
-                this.IdentityProperty = this.CreatePropertyAccessor<BatchPoolIdentity>(nameof(Identity), BindingAccess.Read | BindingAccess.Write);
+                this.IdentityProperty = this.CreatePropertyAccessor<BatchPoolIdentity>(nameof(Identity), BindingAccess.Read);
                 this.InterComputeNodeCommunicationEnabledProperty = this.CreatePropertyAccessor<bool?>(nameof(InterComputeNodeCommunicationEnabled), BindingAccess.Read | BindingAccess.Write);
                 this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>(nameof(LastModified), BindingAccess.None);
                 this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>(nameof(Metadata), BindingAccess.Read | BindingAccess.Write);
@@ -119,10 +115,6 @@ namespace Microsoft.Azure.Batch
                     protocolObject.AllocationStateTransitionTime,
                     nameof(AllocationStateTransitionTime),
                     BindingAccess.Read);
-                this.ApplicationLicensesProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CollectionToThreadSafeCollection(protocolObject.ApplicationLicenses, o => o),
-                    nameof(ApplicationLicenses),
-                    BindingAccess.Read);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
                     ApplicationPackageReference.ConvertFromProtocolCollection(protocolObject.ApplicationPackageReferences),
                     nameof(ApplicationPackageReferences),
@@ -147,10 +139,6 @@ namespace Microsoft.Azure.Batch
                     CertificateReference.ConvertFromProtocolCollection(protocolObject.CertificateReferences),
                     nameof(CertificateReferences),
                     BindingAccess.Read | BindingAccess.Write);
-                this.CloudServiceConfigurationProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.CloudServiceConfiguration, o => new CloudServiceConfiguration(o).Freeze()),
-                    nameof(CloudServiceConfiguration),
-                    BindingAccess.Read);
                 this.CreationTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.CreationTime,
                     nameof(CreationTime),
@@ -170,7 +158,7 @@ namespace Microsoft.Azure.Batch
                 this.DisplayNameProperty = this.CreatePropertyAccessor(
                     protocolObject.DisplayName,
                     nameof(DisplayName),
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
                 this.ETagProperty = this.CreatePropertyAccessor(
                     protocolObject.ETag,
                     nameof(ETag),
@@ -180,13 +168,13 @@ namespace Microsoft.Azure.Batch
                     nameof(Id),
                     BindingAccess.Read);
                 this.IdentityProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Identity, o => new BatchPoolIdentity(o)),
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Identity, o => new BatchPoolIdentity(o).Freeze()),
                     nameof(Identity),
-                    BindingAccess.Read | BindingAccess.Write);
+                    BindingAccess.Read);
                 this.InterComputeNodeCommunicationEnabledProperty = this.CreatePropertyAccessor(
                     protocolObject.EnableInterNodeCommunication,
                     nameof(InterComputeNodeCommunicationEnabled),
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
                 this.LastModifiedProperty = this.CreatePropertyAccessor(
                     protocolObject.LastModified,
                     nameof(LastModified),
@@ -198,11 +186,11 @@ namespace Microsoft.Azure.Batch
                 this.MountConfigurationProperty = this.CreatePropertyAccessor(
                     Batch.MountConfiguration.ConvertFromProtocolCollectionAndFreeze(protocolObject.MountConfiguration),
                     nameof(MountConfiguration),
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
                 this.NetworkConfigurationProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NetworkConfiguration, o => new NetworkConfiguration(o).Freeze()),
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NetworkConfiguration, o => new NetworkConfiguration(o)),
                     nameof(NetworkConfiguration),
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
                 this.ResizeErrorsProperty = this.CreatePropertyAccessor(
                     ResizeError.ConvertFromProtocolCollectionReadOnly(protocolObject.ResizeErrors),
                     nameof(ResizeErrors),
@@ -214,7 +202,7 @@ namespace Microsoft.Azure.Batch
                 this.ResourceTagsProperty = this.CreatePropertyAccessor(
                     protocolObject.ResourceTags,
                     nameof(ResourceTags),
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
                 this.StartTaskProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.StartTask, o => new StartTask(o)),
                     nameof(StartTask),
@@ -244,13 +232,13 @@ namespace Microsoft.Azure.Batch
                     nameof(TargetNodeCommunicationMode),
                     BindingAccess.Read | BindingAccess.Write);
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.TaskSchedulingPolicy, o => new TaskSchedulingPolicy(o).Freeze()),
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.TaskSchedulingPolicy, o => new TaskSchedulingPolicy(o)),
                     nameof(TaskSchedulingPolicy),
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
                 this.TaskSlotsPerNodeProperty = this.CreatePropertyAccessor(
                     protocolObject.TaskSlotsPerNode,
                     nameof(TaskSlotsPerNode),
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
                 this.UpgradePolicyProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UpgradePolicy, o => new UpgradePolicy(o)),
                     nameof(UpgradePolicy),
@@ -260,17 +248,17 @@ namespace Microsoft.Azure.Batch
                     nameof(Url),
                     BindingAccess.Read);
                 this.UserAccountsProperty = this.CreatePropertyAccessor(
-                    UserAccount.ConvertFromProtocolCollectionAndFreeze(protocolObject.UserAccounts),
+                    UserAccount.ConvertFromProtocolCollection(protocolObject.UserAccounts),
                     nameof(UserAccounts),
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
                 this.VirtualMachineConfigurationProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.VirtualMachineConfiguration, o => new VirtualMachineConfiguration(o).Freeze()),
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.VirtualMachineConfiguration, o => new VirtualMachineConfiguration(o)),
                     nameof(VirtualMachineConfiguration),
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
                 this.VirtualMachineSizeProperty = this.CreatePropertyAccessor(
                     protocolObject.VmSize,
                     nameof(VirtualMachineSize),
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
             }
         }
 
@@ -345,24 +333,6 @@ namespace Microsoft.Azure.Batch
         public DateTime? AllocationStateTransitionTime
         {
             get { return this.propertyContainer.AllocationStateTransitionTimeProperty.Value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the list of application licenses the Batch service will make available on each compute node in the 
-        /// pool.
-        /// </summary>
-        /// <remarks>
-        /// <para>The list of application licenses must be a subset of available Batch service application licenses.</para><para>The 
-        /// permitted licenses available on the pool are 'maya', 'vray', '3dsmax', 'arnold'. An additional charge applies 
-        /// for each application license added to the pool.</para>
-        /// </remarks>
-        public IList<string> ApplicationLicenses
-        {
-            get { return this.propertyContainer.ApplicationLicensesProperty.Value; }
-            set
-            {
-                this.propertyContainer.ApplicationLicensesProperty.Value = ConcurrentChangeTrackedList<string>.TransformEnumerableToConcurrentList(value);
-            }
         }
 
         /// <summary>
@@ -445,15 +415,6 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="CloudServiceConfiguration"/> for the pool.
-        /// </summary>
-        public CloudServiceConfiguration CloudServiceConfiguration
-        {
-            get { return this.propertyContainer.CloudServiceConfigurationProperty.Value; }
-            set { this.propertyContainer.CloudServiceConfigurationProperty.Value = value; }
-        }
-
-        /// <summary>
         /// Gets the creation time for the pool.
         /// </summary>
         public DateTime? CreationTime
@@ -515,7 +476,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the identity of the Batch pool, if configured.
+        /// Gets the identity of the Batch pool, if configured.
         /// </summary>
         /// <remarks>
         /// The list of user identities associated with the Batch pool. The user identity dictionary key references will 
@@ -524,7 +485,6 @@ namespace Microsoft.Azure.Batch
         public BatchPoolIdentity Identity
         {
             get { return this.propertyContainer.IdentityProperty.Value; }
-            set { this.propertyContainer.IdentityProperty.Value = value; }
         }
 
         /// <summary>
@@ -796,13 +756,11 @@ namespace Microsoft.Azure.Batch
         {
             Models.PoolAddParameter result = new Models.PoolAddParameter()
             {
-                ApplicationLicenses = this.ApplicationLicenses,
                 ApplicationPackageReferences = UtilitiesInternal.ConvertToProtocolCollection(this.ApplicationPackageReferences),
                 EnableAutoScale = this.AutoScaleEnabled,
                 AutoScaleEvaluationInterval = this.AutoScaleEvaluationInterval,
                 AutoScaleFormula = this.AutoScaleFormula,
                 CertificateReferences = UtilitiesInternal.ConvertToProtocolCollection(this.CertificateReferences),
-                CloudServiceConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.CloudServiceConfiguration, (o) => o.GetTransportObject()),
                 DisplayName = this.DisplayName,
                 Id = this.Id,
                 EnableInterNodeCommunication = this.InterComputeNodeCommunicationEnabled,

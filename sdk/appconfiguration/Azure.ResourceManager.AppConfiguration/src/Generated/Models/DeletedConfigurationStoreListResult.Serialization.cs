@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         void IJsonModel<DeletedConfigurationStoreListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DeletedConfigurationStoreListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeletedConfigurationStoreListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DeletedConfigurationStoreListResult IJsonModel<DeletedConfigurationStoreListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

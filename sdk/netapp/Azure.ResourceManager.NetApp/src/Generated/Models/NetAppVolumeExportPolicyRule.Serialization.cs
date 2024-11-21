@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.NetApp.Models
 
         void IJsonModel<NetAppVolumeExportPolicyRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeExportPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(RuleIndex))
             {
                 writer.WritePropertyName("ruleIndex"u8);
@@ -116,7 +124,6 @@ namespace Azure.ResourceManager.NetApp.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NetAppVolumeExportPolicyRule IJsonModel<NetAppVolumeExportPolicyRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

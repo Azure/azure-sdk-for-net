@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(InstallationImpact left, InstallationImpact right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstallationImpact"/> values are not the same. </summary>
         public static bool operator !=(InstallationImpact left, InstallationImpact right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InstallationImpact"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InstallationImpact"/>. </summary>
         public static implicit operator InstallationImpact(string value) => new InstallationImpact(value);
 
         /// <inheritdoc />

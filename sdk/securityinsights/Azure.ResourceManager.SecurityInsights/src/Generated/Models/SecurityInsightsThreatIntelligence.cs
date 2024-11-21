@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Confidence (must be between 0 and 1). </summary>
+        [WirePath("confidence")]
         public double? Confidence { get; }
         /// <summary> Name of the provider from whom this Threat Intelligence information was received. </summary>
+        [WirePath("providerName")]
         public string ProviderName { get; }
         /// <summary> Report link. </summary>
+        [WirePath("reportLink")]
         public string ReportLink { get; }
         /// <summary> Threat description (free text). </summary>
+        [WirePath("threatDescription")]
         public string ThreatDescription { get; }
         /// <summary> Threat name (e.g. "Jedobot malware"). </summary>
+        [WirePath("threatName")]
         public string ThreatName { get; }
         /// <summary> Threat type (e.g. "Botnet"). </summary>
+        [WirePath("threatType")]
         public string ThreatType { get; }
     }
 }

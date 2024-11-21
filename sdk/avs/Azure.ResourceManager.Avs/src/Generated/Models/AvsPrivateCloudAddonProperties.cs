@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudAddonProperties"/>. </summary>
-        /// <param name="addonType"> The type of private cloud addon. </param>
+        /// <param name="addonType"> Addon type. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AvsPrivateCloudAddonProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Avs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of private cloud addon. </summary>
+        /// <summary> Addon type. </summary>
         internal AddonType AddonType { get; set; }
         /// <summary> The state of the addon provisioning. </summary>
         public AddonProvisioningState? ProvisioningState { get; }

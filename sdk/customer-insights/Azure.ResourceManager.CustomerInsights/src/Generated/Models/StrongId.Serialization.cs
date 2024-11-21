@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         void IJsonModel<StrongId>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StrongId>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StrongId)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("keyPropertyNames"u8);
             writer.WriteStartArray();
             foreach (var item in KeyPropertyNames)
@@ -72,7 +80,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StrongId IJsonModel<StrongId>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

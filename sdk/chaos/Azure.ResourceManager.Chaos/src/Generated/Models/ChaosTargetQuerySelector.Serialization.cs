@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.Chaos.Models
 
         void IJsonModel<ChaosTargetQuerySelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetQuerySelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("queryString"u8);
             writer.WriteStringValue(QueryString);
             writer.WritePropertyName("subscriptionIds"u8);
@@ -35,15 +44,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(SelectorType.ToString());
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Filter))
-            {
-                writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter, options);
-            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         ChaosTargetQuerySelector IJsonModel<ChaosTargetQuerySelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CosmosDBServiceType left, CosmosDBServiceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBServiceType"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBServiceType left, CosmosDBServiceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBServiceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBServiceType"/>. </summary>
         public static implicit operator CosmosDBServiceType(string value) => new CosmosDBServiceType(value);
 
         /// <inheritdoc />

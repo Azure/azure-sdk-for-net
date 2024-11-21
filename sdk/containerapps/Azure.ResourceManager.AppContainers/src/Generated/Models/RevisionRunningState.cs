@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static bool operator ==(RevisionRunningState left, RevisionRunningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RevisionRunningState"/> values are not the same. </summary>
         public static bool operator !=(RevisionRunningState left, RevisionRunningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RevisionRunningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RevisionRunningState"/>. </summary>
         public static implicit operator RevisionRunningState(string value) => new RevisionRunningState(value);
 
         /// <inheritdoc />

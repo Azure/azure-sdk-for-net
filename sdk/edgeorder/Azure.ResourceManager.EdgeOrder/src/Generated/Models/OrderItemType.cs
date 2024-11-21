@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator ==(OrderItemType left, OrderItemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrderItemType"/> values are not the same. </summary>
         public static bool operator !=(OrderItemType left, OrderItemType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OrderItemType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OrderItemType"/>. </summary>
         public static implicit operator OrderItemType(string value) => new OrderItemType(value);
 
         /// <inheritdoc />

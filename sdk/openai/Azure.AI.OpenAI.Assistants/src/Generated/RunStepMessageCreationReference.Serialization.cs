@@ -19,13 +19,21 @@ namespace Azure.AI.OpenAI.Assistants
 
         void IJsonModel<RunStepMessageCreationReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RunStepMessageCreationReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RunStepMessageCreationReference)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("message_id"u8);
             writer.WriteStringValue(MessageId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -43,7 +51,6 @@ namespace Azure.AI.OpenAI.Assistants
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RunStepMessageCreationReference IJsonModel<RunStepMessageCreationReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

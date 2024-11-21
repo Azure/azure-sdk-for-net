@@ -7,6 +7,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +21,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<MachineLearningDatastoreCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatastoreCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningDatastoreCredentials)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("credentialsType"u8);
             writer.WriteStringValue(CredentialsType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -43,7 +53,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MachineLearningDatastoreCredentials IJsonModel<MachineLearningDatastoreCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -72,14 +81,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     case "AccountKey": return MachineLearningAccountKeyDatastoreCredentials.DeserializeMachineLearningAccountKeyDatastoreCredentials(element, options);
                     case "Certificate": return MachineLearningCertificateDatastoreCredentials.DeserializeMachineLearningCertificateDatastoreCredentials(element, options);
-                    case "KerberosKeytab": return KerberosKeytabCredentials.DeserializeKerberosKeytabCredentials(element, options);
-                    case "KerberosPassword": return KerberosPasswordCredentials.DeserializeKerberosPasswordCredentials(element, options);
                     case "None": return MachineLearningNoneDatastoreCredentials.DeserializeMachineLearningNoneDatastoreCredentials(element, options);
                     case "Sas": return MachineLearningSasDatastoreCredentials.DeserializeMachineLearningSasDatastoreCredentials(element, options);
                     case "ServicePrincipal": return MachineLearningServicePrincipalDatastoreCredentials.DeserializeMachineLearningServicePrincipalDatastoreCredentials(element, options);
                 }
             }
             return UnknownDatastoreCredentials.DeserializeUnknownDatastoreCredentials(element, options);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CredentialsType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  credentialsType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  credentialsType: ");
+                builder.AppendLine($"'{CredentialsType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningDatastoreCredentials>.Write(ModelReaderWriterOptions options)
@@ -90,6 +124,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningDatastoreCredentials)} does not support writing '{options.Format}' format.");
             }

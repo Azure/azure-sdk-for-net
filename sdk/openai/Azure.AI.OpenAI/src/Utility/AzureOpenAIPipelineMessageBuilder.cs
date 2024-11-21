@@ -57,6 +57,12 @@ internal class AzureOpenAIPipelineMessageBuilder
         where T : struct, IConvertible
             => WithOptionalQueryParameter(name, value.HasValue ? Convert.ChangeType(value.Value, typeof(string)).ToString() : null);
 
+    public AzureOpenAIPipelineMessageBuilder WithCommonListParameters(int? limit, string order, string after, string before)
+        => WithOptionalQueryParameter("limit", limit)
+        .WithOptionalQueryParameter("order", order)
+        .WithOptionalQueryParameter("after", after)
+        .WithOptionalQueryParameter("before", before);
+
     public AzureOpenAIPipelineMessageBuilder WithMethod(string requestMethod)
     {
         _method = requestMethod;
@@ -73,6 +79,12 @@ internal class AzureOpenAIPipelineMessageBuilder
     public AzureOpenAIPipelineMessageBuilder WithHeader(string name, string value)
     {
         _headers[name] = value;
+        return this;
+    }
+
+    public AzureOpenAIPipelineMessageBuilder WithAssistantsHeader()
+    {
+        _headers[s_OpenAIBetaFeatureHeader] = s_OpenAIBetaAssistantsV2HeaderValue;
         return this;
     }
 
@@ -149,4 +161,7 @@ internal class AzureOpenAIPipelineMessageBuilder
 
         request.Uri = uriBuilder.ToUri();
     }
+
+    private static readonly string s_OpenAIBetaFeatureHeader = "OpenAI-Beta";
+    private static readonly string s_OpenAIBetaAssistantsV2HeaderValue = "assistants=v2";
 }

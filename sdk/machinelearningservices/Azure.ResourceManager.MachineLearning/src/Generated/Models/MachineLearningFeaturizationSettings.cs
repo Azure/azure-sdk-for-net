@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Dataset language, useful for the text data. </summary>
+        [WirePath("datasetLanguage")]
         public string DatasetLanguage { get; set; }
     }
 }

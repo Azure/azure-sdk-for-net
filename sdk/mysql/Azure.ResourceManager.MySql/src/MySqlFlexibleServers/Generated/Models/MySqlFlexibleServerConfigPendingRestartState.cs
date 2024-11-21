@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator ==(MySqlFlexibleServerConfigPendingRestartState left, MySqlFlexibleServerConfigPendingRestartState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerConfigPendingRestartState"/> values are not the same. </summary>
         public static bool operator !=(MySqlFlexibleServerConfigPendingRestartState left, MySqlFlexibleServerConfigPendingRestartState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerConfigPendingRestartState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerConfigPendingRestartState"/>. </summary>
         public static implicit operator MySqlFlexibleServerConfigPendingRestartState(string value) => new MySqlFlexibleServerConfigPendingRestartState(value);
 
         /// <inheritdoc />

@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static bool operator ==(LivyStatementStates left, LivyStatementStates right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LivyStatementStates"/> values are not the same. </summary>
         public static bool operator !=(LivyStatementStates left, LivyStatementStates right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LivyStatementStates"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LivyStatementStates"/>. </summary>
         public static implicit operator LivyStatementStates(string value) => new LivyStatementStates(value);
 
         /// <inheritdoc />

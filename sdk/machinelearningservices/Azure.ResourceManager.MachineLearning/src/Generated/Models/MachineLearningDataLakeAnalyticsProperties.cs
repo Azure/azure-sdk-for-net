@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> DataLake Store Account Name. </summary>
+        [WirePath("dataLakeStoreAccountName")]
         public string DataLakeStoreAccountName { get; set; }
     }
 }

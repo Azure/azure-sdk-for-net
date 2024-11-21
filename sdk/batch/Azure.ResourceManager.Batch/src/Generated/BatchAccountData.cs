@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="location"> The location of the resource. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string accountEndpoint, string nodeManagementEndpoint, BatchProvisioningState? provisioningState, BatchAccountPoolAllocationMode? poolAllocationMode, BatchKeyVaultReference keyVaultReference, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile, IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections, BatchAccountAutoStorageConfiguration autoStorage, BatchAccountEncryptionConfiguration encryption, int? dedicatedCoreQuota, int? lowPriorityCoreQuota, IReadOnlyList<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily, bool? isDedicatedCoreQuotaPerVmFamilyEnforced, int? poolQuota, int? activeJobAndJobScheduleQuota, IReadOnlyList<BatchAuthenticationMode> allowedAuthenticationModes, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string accountEndpoint, string nodeManagementEndpoint, BatchProvisioningState? provisioningState, BatchAccountPoolAllocationMode? poolAllocationMode, BatchKeyVaultReference keyVaultReference, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile, IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections, BatchAccountAutoStorageConfiguration autoStorage, BatchAccountEncryptionConfiguration encryption, int? dedicatedCoreQuota, int? lowPriorityCoreQuota, IReadOnlyList<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily, bool? isDedicatedCoreQuotaPerVmFamilyEnforced, int? poolQuota, int? activeJobAndJobScheduleQuota, IReadOnlyList<BatchAuthenticationMode> allowedAuthenticationModes, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             AccountEndpoint = accountEndpoint;
@@ -150,6 +150,6 @@ namespace Azure.ResourceManager.Batch
         /// <summary> The location of the resource. </summary>
         public AzureLocation? Location { get; }
         /// <summary> The tags of the resource. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

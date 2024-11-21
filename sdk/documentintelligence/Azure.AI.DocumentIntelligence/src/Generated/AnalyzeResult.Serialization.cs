@@ -19,13 +19,21 @@ namespace Azure.AI.DocumentIntelligence
 
         void IJsonModel<AnalyzeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AnalyzeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AnalyzeResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("apiVersion"u8);
             writer.WriteStringValue(ApiVersion);
             writer.WritePropertyName("modelId"u8);
@@ -71,16 +79,6 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("figures"u8);
                 writer.WriteStartArray();
                 foreach (var item in Figures)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Lists))
-            {
-                writer.WritePropertyName("lists"u8);
-                writer.WriteStartArray();
-                foreach (var item in Lists)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -136,6 +134,16 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Warnings))
+            {
+                writer.WritePropertyName("warnings"u8);
+                writer.WriteStartArray();
+                foreach (var item in Warnings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -151,7 +159,6 @@ namespace Azure.AI.DocumentIntelligence
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AnalyzeResult IJsonModel<AnalyzeResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -183,12 +190,12 @@ namespace Azure.AI.DocumentIntelligence
             IReadOnlyList<DocumentParagraph> paragraphs = default;
             IReadOnlyList<DocumentTable> tables = default;
             IReadOnlyList<DocumentFigure> figures = default;
-            IReadOnlyList<DocumentList> lists = default;
             IReadOnlyList<DocumentSection> sections = default;
             IReadOnlyList<DocumentKeyValuePair> keyValuePairs = default;
             IReadOnlyList<DocumentStyle> styles = default;
             IReadOnlyList<DocumentLanguage> languages = default;
             IReadOnlyList<AnalyzedDocument> documents = default;
+            IReadOnlyList<DocumentIntelligenceWarning> warnings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,20 +281,6 @@ namespace Azure.AI.DocumentIntelligence
                     figures = array;
                     continue;
                 }
-                if (property.NameEquals("lists"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DocumentList> array = new List<DocumentList>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DocumentList.DeserializeDocumentList(item, options));
-                    }
-                    lists = array;
-                    continue;
-                }
                 if (property.NameEquals("sections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -358,6 +351,20 @@ namespace Azure.AI.DocumentIntelligence
                     documents = array;
                     continue;
                 }
+                if (property.NameEquals("warnings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DocumentIntelligenceWarning> array = new List<DocumentIntelligenceWarning>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentIntelligenceWarning.DeserializeDocumentIntelligenceWarning(item, options));
+                    }
+                    warnings = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -374,12 +381,12 @@ namespace Azure.AI.DocumentIntelligence
                 paragraphs ?? new ChangeTrackingList<DocumentParagraph>(),
                 tables ?? new ChangeTrackingList<DocumentTable>(),
                 figures ?? new ChangeTrackingList<DocumentFigure>(),
-                lists ?? new ChangeTrackingList<DocumentList>(),
                 sections ?? new ChangeTrackingList<DocumentSection>(),
                 keyValuePairs ?? new ChangeTrackingList<DocumentKeyValuePair>(),
                 styles ?? new ChangeTrackingList<DocumentStyle>(),
                 languages ?? new ChangeTrackingList<DocumentLanguage>(),
                 documents ?? new ChangeTrackingList<AnalyzedDocument>(),
+                warnings ?? new ChangeTrackingList<DocumentIntelligenceWarning>(),
                 serializedAdditionalRawData);
         }
 

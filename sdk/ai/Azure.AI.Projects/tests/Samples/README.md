@@ -1,0 +1,1 @@
+The source files in this directory are written as tests to ensure that our samples compile and function correctly.

@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPatch"/>. </summary>
         public VirtualMachineScaleSetPatch()
         {
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPatch"/>. </summary>
@@ -27,6 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sku"> The virtual machine scale set sku. </param>
         /// <param name="plan"> The purchase plan when deploying a virtual machine scale set from VM Marketplace images. </param>
         /// <param name="identity"> The identity of the virtual machine scale set, if configured. </param>
+        /// <param name="zones"> The virtual machine scale set zones. </param>
         /// <param name="upgradePolicy"> The upgrade policy. </param>
         /// <param name="automaticRepairsPolicy"> Policy for automatic repairs. </param>
         /// <param name="virtualMachineProfile"> The virtual machine profile. </param>
@@ -39,11 +41,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="priorityMixPolicy"> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </param>
         /// <param name="spotRestorePolicy"> Specifies the Spot Restore properties for the virtual machine scale set. </param>
         /// <param name="resiliencyPolicy"> Policy for Resiliency. </param>
-        internal VirtualMachineScaleSetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ComputeSku sku, ComputePlan plan, ManagedServiceIdentity identity, VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, bool? singlePlacementGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, WritableSubResource proximityPlacementGroup, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, SpotRestorePolicy spotRestorePolicy, ResiliencyPolicy resiliencyPolicy) : base(tags, serializedAdditionalRawData)
+        /// <param name="zonalPlatformFaultDomainAlignMode"> Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. </param>
+        /// <param name="skuProfile"> Specifies the sku profile for the virtual machine scale set. </param>
+        internal VirtualMachineScaleSetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ComputeSku sku, ComputePlan plan, ManagedServiceIdentity identity, IList<string> zones, VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, bool? singlePlacementGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, WritableSubResource proximityPlacementGroup, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, SpotRestorePolicy spotRestorePolicy, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile) : base(tags, serializedAdditionalRawData)
         {
             Sku = sku;
             Plan = plan;
             Identity = identity;
+            Zones = zones;
             UpgradePolicy = upgradePolicy;
             AutomaticRepairsPolicy = automaticRepairsPolicy;
             VirtualMachineProfile = virtualMachineProfile;
@@ -56,6 +61,8 @@ namespace Azure.ResourceManager.Compute.Models
             PriorityMixPolicy = priorityMixPolicy;
             SpotRestorePolicy = spotRestorePolicy;
             ResiliencyPolicy = resiliencyPolicy;
+            ZonalPlatformFaultDomainAlignMode = zonalPlatformFaultDomainAlignMode;
+            SkuProfile = skuProfile;
         }
 
         /// <summary> The virtual machine scale set sku. </summary>
@@ -64,6 +71,8 @@ namespace Azure.ResourceManager.Compute.Models
         public ComputePlan Plan { get; set; }
         /// <summary> The identity of the virtual machine scale set, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> The virtual machine scale set zones. </summary>
+        public IList<string> Zones { get; }
         /// <summary> The upgrade policy. </summary>
         public VirtualMachineScaleSetUpgradePolicy UpgradePolicy { get; set; }
         /// <summary> Policy for automatic repairs. </summary>
@@ -100,5 +109,9 @@ namespace Azure.ResourceManager.Compute.Models
         public SpotRestorePolicy SpotRestorePolicy { get; set; }
         /// <summary> Policy for Resiliency. </summary>
         public ResiliencyPolicy ResiliencyPolicy { get; set; }
+        /// <summary> Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. </summary>
+        public ZonalPlatformFaultDomainAlignMode? ZonalPlatformFaultDomainAlignMode { get; set; }
+        /// <summary> Specifies the sku profile for the virtual machine scale set. </summary>
+        public ComputeSkuProfile SkuProfile { get; set; }
     }
 }

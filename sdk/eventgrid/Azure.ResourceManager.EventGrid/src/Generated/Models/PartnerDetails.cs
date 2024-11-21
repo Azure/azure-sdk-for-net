@@ -67,13 +67,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> This is short description about the partner. The length of this description should not exceed 256 characters. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Long description for the partner's scenarios and integration.Length of this description should not exceed 2048 characters. </summary>
+        [WirePath("longDescription")]
         public string LongDescription { get; set; }
         /// <summary>
         /// URI of the partner website that can be used by Azure customers to setup Event Grid
         /// integration on an event source.
         /// </summary>
+        [WirePath("setupUri")]
         public Uri SetupUri { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(IsMonitoringEnabled left, IsMonitoringEnabled right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IsMonitoringEnabled"/> values are not the same. </summary>
         public static bool operator !=(IsMonitoringEnabled left, IsMonitoringEnabled right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IsMonitoringEnabled"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IsMonitoringEnabled"/>. </summary>
         public static implicit operator IsMonitoringEnabled(string value) => new IsMonitoringEnabled(value);
 
         /// <inheritdoc />

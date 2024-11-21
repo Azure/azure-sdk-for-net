@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         void IJsonModel<AutoScaleVCoreListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCoreListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoScaleVCoreListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
             foreach (var item in Value)
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AutoScaleVCoreListResult IJsonModel<AutoScaleVCoreListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

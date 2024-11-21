@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(SqlConnectionType left, SqlConnectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlConnectionType"/> values are not the same. </summary>
         public static bool operator !=(SqlConnectionType left, SqlConnectionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlConnectionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlConnectionType"/>. </summary>
         public static implicit operator SqlConnectionType(string value) => new SqlConnectionType(value);
 
         /// <inheritdoc />

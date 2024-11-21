@@ -25,6 +25,6 @@
     <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.7.2" />
     <PackageReference Include="Microsoft.Azure.Batch" />
     <PackageReference Include="Newtonsoft.Json" VersionOverride="13.0.1" />
-    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.13.0" />
+    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.20.0" />
   </ItemGroup>
 </Project>

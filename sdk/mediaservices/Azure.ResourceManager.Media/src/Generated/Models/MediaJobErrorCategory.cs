@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(MediaJobErrorCategory left, MediaJobErrorCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaJobErrorCategory"/> values are not the same. </summary>
         public static bool operator !=(MediaJobErrorCategory left, MediaJobErrorCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MediaJobErrorCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MediaJobErrorCategory"/>. </summary>
         public static implicit operator MediaJobErrorCategory(string value) => new MediaJobErrorCategory(value);
 
         /// <inheritdoc />

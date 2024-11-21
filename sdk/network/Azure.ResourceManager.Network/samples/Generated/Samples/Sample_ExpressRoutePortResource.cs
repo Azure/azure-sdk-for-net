@@ -11,17 +11,17 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_ExpressRoutePortResource
     {
-        // ExpressRoutePortDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ExpressRoutePortDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/ExpressRoutePortDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRoutePortDelete.json
             // this example is just showing the usage of "ExpressRoutePorts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -40,15 +40,14 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             await expressRoutePort.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ExpressRoutePortGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ExpressRoutePortGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/ExpressRoutePortGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRoutePortGet.json
             // this example is just showing the usage of "ExpressRoutePorts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -74,12 +73,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExpressRoutePortUpdateTags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ExpressRoutePortUpdateTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/ExpressRoutePortUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRoutePortUpdateTags.json
             // this example is just showing the usage of "ExpressRoutePorts_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,12 +111,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExpressRoutePortList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetExpressRoutePorts_ExpressRoutePortList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/ExpressRoutePortList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRoutePortList.json
             // this example is just showing the usage of "ExpressRoutePorts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -142,15 +139,14 @@ namespace Azure.ResourceManager.Network.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GenerateExpressRoutePortLOA
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateLoa_GenerateExpressRoutePortLOA()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/GenerateExpressRoutePortsLOA.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/GenerateExpressRoutePortsLOA.json
             // this example is just showing the usage of "ExpressRoutePorts_GenerateLoa" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

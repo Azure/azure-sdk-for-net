@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(LogMetricsGranularity left, LogMetricsGranularity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogMetricsGranularity"/> values are not the same. </summary>
         public static bool operator !=(LogMetricsGranularity left, LogMetricsGranularity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogMetricsGranularity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogMetricsGranularity"/>. </summary>
         public static implicit operator LogMetricsGranularity(string value) => new LogMetricsGranularity(value);
 
         /// <inheritdoc />

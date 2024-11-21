@@ -88,7 +88,6 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(analyzeResult.Paragraphs, Is.Empty);
             Assert.That(analyzeResult.Tables, Is.Empty);
             Assert.That(analyzeResult.Figures, Is.Empty);
-            Assert.That(analyzeResult.Lists, Is.Empty);
             Assert.That(analyzeResult.Sections, Is.Empty);
             Assert.That(analyzeResult.KeyValuePairs, Is.Empty);
             Assert.That(analyzeResult.Styles, Is.Empty);
@@ -107,9 +106,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 Assert.That(page.Lines, Is.Empty);
                 Assert.That(page.Barcodes, Is.Empty);
                 Assert.That(page.Formulas, Is.Empty);
-
-                AssertSingleEmptySpan(page.Spans);
-
+                Assert.That(page.Spans, Is.Empty);
                 Assert.That(page.PageNumber, Is.EqualTo(pageNumber));
             }
 
@@ -120,8 +117,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 Assert.That(document.DocType, Is.Not.Null);
                 Assert.That(document.DocType, Is.Not.Empty);
                 Assert.That(document.Fields, Is.Empty);
-
-                AssertSingleEmptySpan(document.Spans);
+                Assert.That(document.Spans, Is.Empty);
 
                 foreach (var region in document.BoundingRegions)
                 {
@@ -154,14 +150,6 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             Assert.That(document.DocType, Is.EqualTo("IRS-1040-C"));
             Assert.That(document.BoundingRegions.Count, Is.EqualTo(4));
-        }
-
-        private void AssertSingleEmptySpan(IReadOnlyList<DocumentSpan> spans)
-        {
-            var span = spans.Single();
-
-            Assert.That(span.Offset, Is.EqualTo(0));
-            Assert.That(span.Length, Is.EqualTo(0));
         }
     }
 }

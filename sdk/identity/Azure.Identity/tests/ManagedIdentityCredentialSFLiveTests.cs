@@ -17,6 +17,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/43401")]
         public async Task ValidateSystemAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.SFEnable) || !string.IsNullOrEmpty(TestEnvironment.UserAssignedVault))
@@ -45,7 +46,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [RecordedTest]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43401")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/43401")]
         public async Task ValidateUserAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.SFEnable) || string.IsNullOrEmpty(TestEnvironment.UserAssignedVault))
@@ -61,7 +62,7 @@ namespace Azure.Identity.Tests
 
                 CredentialPipeline pipeline = CredentialPipeline.GetInstance(InstrumentClientOptions(new TokenCredentialOptions { Transport = ServiceFabricManagedIdentitySource.GetServiceFabricMITransport() }));
 
-                var cred = new ManagedIdentityCredential(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId, PreserveTransport = true }));
+                var cred = new ManagedIdentityCredential(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId(clientId), PreserveTransport = true }));
 
                 // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
                 var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));

@@ -557,6 +557,7 @@ namespace Azure.AI.Translation.Text.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("Live tests involving secrets will be temporarily disabled.")]
         public async Task TranslateWithAADAuth()
         {
             TextTranslationClient client = GetClient(useAADAuth: true);

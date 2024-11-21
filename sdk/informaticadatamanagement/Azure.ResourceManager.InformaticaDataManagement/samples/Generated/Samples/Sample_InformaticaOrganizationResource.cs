@@ -10,83 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.InformaticaDataManagement.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 {
     public partial class Sample_InformaticaOrganizationResource
     {
-        // Organizations_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetInformaticaOrganizations_OrganizationsListBySubscription()
-        {
-            // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/Organizations_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "Organizations_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (InformaticaOrganizationResource item in subscriptionResource.GetInformaticaOrganizationsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                InformaticaOrganizationData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Organizations_ListBySubscription_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetInformaticaOrganizations_OrganizationsListBySubscriptionMin()
-        {
-            // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/Organizations_ListBySubscription_MinimumSet_Gen.json
-            // this example is just showing the usage of "Organizations_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (InformaticaOrganizationResource item in subscriptionResource.GetInformaticaOrganizationsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                InformaticaOrganizationData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Organizations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_OrganizationsGet()
         {
-            // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/Organizations_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-05-08/Organizations_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "InformaticaOrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -111,13 +46,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Organizations_Get_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_OrganizationsGetMin()
         {
-            // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/Organizations_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-05-08/Organizations_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "InformaticaOrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -142,13 +76,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Organizations_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_OrganizationsUpdate()
         {
-            // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/Organizations_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-05-08/Organizations_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "InformaticaOrganizationResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -214,13 +147,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Organizations_Update_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_OrganizationsUpdateMin()
         {
-            // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/Organizations_Update_MinimumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-05-08/Organizations_Update_MinimumSet_Gen.json
+            // this example is just showing the usage of "InformaticaOrganizationResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -246,13 +178,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Organizations_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_OrganizationsDelete()
         {
-            // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/Organizations_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-05-08/Organizations_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "InformaticaOrganizationResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -270,16 +201,15 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             // invoke the operation
             await informaticaOrganization.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Organizations_Delete_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_OrganizationsDeleteMin()
         {
-            // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/Organizations_Delete_MinimumSet_Gen.json
-            // this example is just showing the usage of "Organizations_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-05-08/Organizations_Delete_MinimumSet_Gen.json
+            // this example is just showing the usage of "InformaticaOrganizationResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -297,69 +227,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             // invoke the operation
             await informaticaOrganization.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Organizations_GetAllServerlessRuntimes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAllServerlessRuntimes_OrganizationsGetAllServerlessRuntimes()
-        {
-            // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/Organizations_GetAllServerlessRuntimes_MaximumSet_Gen.json
-            // this example is just showing the usage of "Organizations_GetAllServerlessRuntimes" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this InformaticaOrganizationResource created on azure
-            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
-            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
-            string resourceGroupName = "rgopenapi";
-            string organizationName = "t";
-            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
-
-            // invoke the operation
-            InformaticaServerlessRuntimeResourceList result = await informaticaOrganization.GetAllServerlessRuntimesAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Organizations_GetAllServerlessRuntimes_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAllServerlessRuntimes_OrganizationsGetAllServerlessRuntimesMin()
-        {
-            // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/Organizations_GetAllServerlessRuntimes_MinimumSet_Gen.json
-            // this example is just showing the usage of "Organizations_GetAllServerlessRuntimes" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this InformaticaOrganizationResource created on azure
-            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
-            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
-            string resourceGroupName = "rgopenapi";
-            string organizationName = "0";
-            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
-
-            // invoke the operation
-            InformaticaServerlessRuntimeResourceList result = await informaticaOrganization.GetAllServerlessRuntimesAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Organizations_GetServerlessMetadata
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetServerlessMetadata_OrganizationsGetServerlessMetadata()
         {
-            // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/Organizations_GetServerlessMetadata_MaximumSet_Gen.json
+            // Generated from example definition: 2024-05-08/Organizations_GetServerlessMetadata_MaximumSet_Gen.json
             // this example is just showing the usage of "Organizations_GetServerlessMetadata" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -381,12 +256,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Organizations_GetServerlessMetadata_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetServerlessMetadata_OrganizationsGetServerlessMetadataMin()
         {
-            // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/Organizations_GetServerlessMetadata_MinimumSet_Gen.json
+            // Generated from example definition: 2024-05-08/Organizations_GetServerlessMetadata_MinimumSet_Gen.json
             // this example is just showing the usage of "Organizations_GetServerlessMetadata" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -404,6 +278,58 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 
             // invoke the operation
             ServerlessMetadataResponse result = await informaticaOrganization.GetServerlessMetadataAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAllServerlessRuntimes_OrganizationsGetAllServerlessRuntimes()
+        {
+            // Generated from example definition: 2024-05-08/Organizations_GetAllServerlessRuntimes_MaximumSet_Gen.json
+            // this example is just showing the usage of "Organizations_GetAllServerlessRuntimes" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this InformaticaOrganizationResource created on azure
+            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
+            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
+            string resourceGroupName = "rgopenapi";
+            string organizationName = "t";
+            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+
+            // invoke the operation
+            InformaticaServerlessRuntimeResourceList result = await informaticaOrganization.GetAllServerlessRuntimesAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAllServerlessRuntimes_OrganizationsGetAllServerlessRuntimesMin()
+        {
+            // Generated from example definition: 2024-05-08/Organizations_GetAllServerlessRuntimes_MinimumSet_Gen.json
+            // this example is just showing the usage of "Organizations_GetAllServerlessRuntimes" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this InformaticaOrganizationResource created on azure
+            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
+            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
+            string resourceGroupName = "rgopenapi";
+            string organizationName = "0";
+            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+
+            // invoke the operation
+            InformaticaServerlessRuntimeResourceList result = await informaticaOrganization.GetAllServerlessRuntimesAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

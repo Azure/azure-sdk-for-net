@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(TrailingSeparatorPolicy left, TrailingSeparatorPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrailingSeparatorPolicy"/> values are not the same. </summary>
         public static bool operator !=(TrailingSeparatorPolicy left, TrailingSeparatorPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TrailingSeparatorPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TrailingSeparatorPolicy"/>. </summary>
         public static implicit operator TrailingSeparatorPolicy(string value) => new TrailingSeparatorPolicy(value);
 
         /// <inheritdoc />

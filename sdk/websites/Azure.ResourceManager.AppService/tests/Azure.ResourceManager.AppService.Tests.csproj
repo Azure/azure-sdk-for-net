@@ -10,4 +10,12 @@
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
     <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="TestsCase\AppServiceTemplates\parameters.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestsCase\AppServiceTemplates\template.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

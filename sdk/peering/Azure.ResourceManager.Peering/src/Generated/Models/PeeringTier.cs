@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static bool operator ==(PeeringTier left, PeeringTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringTier"/> values are not the same. </summary>
         public static bool operator !=(PeeringTier left, PeeringTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PeeringTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PeeringTier"/>. </summary>
         public static implicit operator PeeringTier(string value) => new PeeringTier(value);
 
         /// <inheritdoc />

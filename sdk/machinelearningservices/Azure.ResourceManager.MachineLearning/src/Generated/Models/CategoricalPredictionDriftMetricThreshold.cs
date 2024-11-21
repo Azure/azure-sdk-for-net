@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] The categorical prediction drift metric to calculate. </summary>
+        [WirePath("metric")]
         public CategoricalPredictionDriftMetric Metric { get; set; }
     }
 }

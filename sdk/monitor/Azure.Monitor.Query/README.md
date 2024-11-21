@@ -84,12 +84,16 @@ var metricsQueryClient = new MetricsQueryClient(
     new DefaultAzureCredential(),
     metricsQueryClientOptions);
 
-// LogsQueryClient
+// LogsQueryClient - by default, Azure Public Cloud is used
+var logsQueryClient = new LogsQueryClient(
+    new DefaultAzureCredential());
+
+// LogsQueryClient With Audience Set
 var logsQueryClientOptions = new LogsQueryClientOptions
 {
     Audience = LogsQueryAudience.AzureChina
 };
-var logsQueryClient = new LogsQueryClient(
+var logsQueryClientChina = new LogsQueryClient(
     new DefaultAzureCredential(),
     logsQueryClientOptions);
 ```

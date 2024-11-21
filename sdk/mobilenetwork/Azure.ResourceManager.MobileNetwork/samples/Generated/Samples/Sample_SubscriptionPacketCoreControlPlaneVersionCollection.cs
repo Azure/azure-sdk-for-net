@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MobileNetwork.Samples
 {
     public partial class Sample_SubscriptionPacketCoreControlPlaneVersionCollection
     {
-        // Get packet core control plane version by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPacketCoreControlPlaneVersionBySubscription()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/PacketCoreControlPlaneVersionGetBySubscription.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/PacketCoreControlPlaneVersionGetBySubscription.json
             // this example is just showing the usage of "PacketCoreControlPlaneVersions_GetBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
             SubscriptionPacketCoreControlPlaneVersionCollection collection = subscriptionResource.GetSubscriptionPacketCoreControlPlaneVersions();
 
             // invoke the operation
-            string versionName = "PMN-4-11-1";
+            string versionName = "2404.0-1";
             SubscriptionPacketCoreControlPlaneVersionResource result = await collection.GetAsync(versionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get packet core control plane version by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPacketCoreControlPlaneVersionBySubscription()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/PacketCoreControlPlaneVersionGetBySubscription.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/PacketCoreControlPlaneVersionGetBySubscription.json
             // this example is just showing the usage of "PacketCoreControlPlaneVersions_GetBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -71,18 +70,17 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
             SubscriptionPacketCoreControlPlaneVersionCollection collection = subscriptionResource.GetSubscriptionPacketCoreControlPlaneVersions();
 
             // invoke the operation
-            string versionName = "PMN-4-11-1";
+            string versionName = "2404.0-1";
             bool result = await collection.ExistsAsync(versionName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get packet core control plane version by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPacketCoreControlPlaneVersionBySubscription()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/PacketCoreControlPlaneVersionGetBySubscription.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/PacketCoreControlPlaneVersionGetBySubscription.json
             // this example is just showing the usage of "PacketCoreControlPlaneVersions_GetBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,13 +98,13 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
             SubscriptionPacketCoreControlPlaneVersionCollection collection = subscriptionResource.GetSubscriptionPacketCoreControlPlaneVersions();
 
             // invoke the operation
-            string versionName = "PMN-4-11-1";
+            string versionName = "2404.0-1";
             NullableResponse<SubscriptionPacketCoreControlPlaneVersionResource> response = await collection.GetIfExistsAsync(versionName);
             SubscriptionPacketCoreControlPlaneVersionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -118,12 +116,11 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
             }
         }
 
-        // Get supported packet core control plane versions by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetSupportedPacketCoreControlPlaneVersionsBySubscription()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/PacketCoreControlPlaneVersionListBySubscription.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/PacketCoreControlPlaneVersionListBySubscription.json
             // this example is just showing the usage of "PacketCoreControlPlaneVersions_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,7 +147,7 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,33 +20,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<SparkJobScalaEntry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SparkJobScalaEntry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SparkJobScalaEntry)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("className"u8);
             writer.WriteStringValue(ClassName);
-            writer.WritePropertyName("sparkJobEntryType"u8);
-            writer.WriteStringValue(SparkJobEntryType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         SparkJobScalaEntry IJsonModel<SparkJobScalaEntry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -93,6 +85,56 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new SparkJobScalaEntry(sparkJobEntryType, serializedAdditionalRawData, className);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClassName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  className: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClassName))
+                {
+                    builder.Append("  className: ");
+                    if (ClassName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClassName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClassName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SparkJobEntryType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sparkJobEntryType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  sparkJobEntryType: ");
+                builder.AppendLine($"'{SparkJobEntryType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SparkJobScalaEntry>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SparkJobScalaEntry>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,6 +143,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SparkJobScalaEntry)} does not support writing '{options.Format}' format.");
             }

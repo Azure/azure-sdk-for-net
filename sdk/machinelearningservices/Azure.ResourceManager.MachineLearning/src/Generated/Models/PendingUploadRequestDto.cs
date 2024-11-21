@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> If PendingUploadId = null then random guid will be used. </summary>
+        [WirePath("pendingUploadId")]
         public string PendingUploadId { get; set; }
         /// <summary> TemporaryBlobReference is the only supported type. </summary>
+        [WirePath("pendingUploadType")]
         public PendingUploadType? PendingUploadType { get; set; }
     }
 }

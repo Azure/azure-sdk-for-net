@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(SqlAlwaysEncryptedAkvAuthType left, SqlAlwaysEncryptedAkvAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlAlwaysEncryptedAkvAuthType"/> values are not the same. </summary>
         public static bool operator !=(SqlAlwaysEncryptedAkvAuthType left, SqlAlwaysEncryptedAkvAuthType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlAlwaysEncryptedAkvAuthType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlAlwaysEncryptedAkvAuthType"/>. </summary>
         public static implicit operator SqlAlwaysEncryptedAkvAuthType(string value) => new SqlAlwaysEncryptedAkvAuthType(value);
 
         /// <inheritdoc />

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> scale settings for AML Compute. </summary>
+        [WirePath("scaleSettings")]
         public AmlComputeScaleSettings ScaleSettings { get; set; }
     }
 }

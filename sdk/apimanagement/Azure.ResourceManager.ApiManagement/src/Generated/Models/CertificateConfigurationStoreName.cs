@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(CertificateConfigurationStoreName left, CertificateConfigurationStoreName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CertificateConfigurationStoreName"/> values are not the same. </summary>
         public static bool operator !=(CertificateConfigurationStoreName left, CertificateConfigurationStoreName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CertificateConfigurationStoreName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CertificateConfigurationStoreName"/>. </summary>
         public static implicit operator CertificateConfigurationStoreName(string value) => new CertificateConfigurationStoreName(value);
 
         /// <inheritdoc />

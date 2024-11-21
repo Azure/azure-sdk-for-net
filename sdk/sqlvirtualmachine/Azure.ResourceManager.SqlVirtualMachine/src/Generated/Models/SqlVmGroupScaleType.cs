@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static bool operator ==(SqlVmGroupScaleType left, SqlVmGroupScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlVmGroupScaleType"/> values are not the same. </summary>
         public static bool operator !=(SqlVmGroupScaleType left, SqlVmGroupScaleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlVmGroupScaleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlVmGroupScaleType"/>. </summary>
         public static implicit operator SqlVmGroupScaleType(string value) => new SqlVmGroupScaleType(value);
 
         /// <inheritdoc />

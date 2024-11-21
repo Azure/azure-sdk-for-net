@@ -42,7 +42,7 @@ namespace Azure.Communication.Chat
         public static bool operator ==(ChatMessageType left, ChatMessageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChatMessageType"/> values are not the same. </summary>
         public static bool operator !=(ChatMessageType left, ChatMessageType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChatMessageType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ChatMessageType"/>. </summary>
         public static implicit operator ChatMessageType(string value) => new ChatMessageType(value);
 
         /// <inheritdoc />

@@ -74,20 +74,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> A system assigned id for the schedule. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The current deployment state of schedule. </summary>
+        [WirePath("provisioningStatus")]
         public MachineLearningComputeProvisioningStatus? ProvisioningStatus { get; }
         /// <summary> Is the schedule enabled or disabled?. </summary>
+        [WirePath("status")]
         public MachineLearningScheduleStatus? Status { get; set; }
         /// <summary> [Required] The compute power action. </summary>
+        [WirePath("action")]
         public MachineLearningComputePowerAction? Action { get; set; }
         /// <summary> [Required] The schedule trigger type. </summary>
+        [WirePath("triggerType")]
         public MachineLearningTriggerType? TriggerType { get; set; }
         /// <summary> Required if triggerType is Recurrence. </summary>
+        [WirePath("recurrence")]
         public ComputeStartStopRecurrenceSchedule RecurrenceSchedule { get; set; }
         /// <summary> Required if triggerType is Cron. </summary>
+        [WirePath("cron")]
         public ComputeStartStopCronSchedule CronSchedule { get; set; }
         /// <summary> [Deprecated] Not used any more. </summary>
+        [WirePath("schedule")]
         public MachineLearningScheduleBase Schedule { get; set; }
     }
 }

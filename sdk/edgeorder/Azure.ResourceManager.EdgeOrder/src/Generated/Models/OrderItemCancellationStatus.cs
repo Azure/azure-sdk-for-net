@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator ==(OrderItemCancellationStatus left, OrderItemCancellationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrderItemCancellationStatus"/> values are not the same. </summary>
         public static bool operator !=(OrderItemCancellationStatus left, OrderItemCancellationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OrderItemCancellationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OrderItemCancellationStatus"/>. </summary>
         public static implicit operator OrderItemCancellationStatus(string value) => new OrderItemCancellationStatus(value);
 
         /// <inheritdoc />

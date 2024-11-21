@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public static bool operator ==(LoadTestingProvisioningState left, LoadTestingProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoadTestingProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(LoadTestingProvisioningState left, LoadTestingProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LoadTestingProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LoadTestingProvisioningState"/>. </summary>
         public static implicit operator LoadTestingProvisioningState(string value) => new LoadTestingProvisioningState(value);
 
         /// <inheritdoc />

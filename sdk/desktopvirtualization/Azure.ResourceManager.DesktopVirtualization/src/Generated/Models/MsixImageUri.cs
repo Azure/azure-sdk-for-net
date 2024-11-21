@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> URI to Image. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; set; }
     }
 }

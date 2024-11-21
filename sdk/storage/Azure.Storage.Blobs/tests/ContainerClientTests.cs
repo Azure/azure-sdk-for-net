@@ -429,6 +429,19 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public void ctor_BlobContainerClient_clientSideEncryptionOptions()
+        {
+            var client = new BlobContainerClient(
+                connectionString: "UseDevelopmentStorage=true",
+                blobContainerName: "enc-test",
+                options: new SpecializedBlobClientOptions()
+                {
+                    ClientSideEncryption = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V2_0)
+                });
+            Assert.NotNull(client.ClientSideEncryption);
+        }
+
+        [RecordedTest]
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange
@@ -3515,8 +3528,10 @@ namespace Azure.Storage.Blobs.Test
                     constants.Sas.SharedKeyCredential,
                     GetOptions()));
 
+            string stringToSign = null;
+
             //Act
-            Uri sasUri = containerClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri = containerClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
@@ -3529,6 +3544,7 @@ namespace Azure.Storage.Blobs.Test
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -3554,8 +3570,10 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerName = containerName
             };
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = containerClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = containerClient.GenerateSasUri(sasBuilder, out stringToSign);
 
             // Assert
             BlobSasBuilder sasBuilder2 = new BlobSasBuilder(permissions, expiresOn)
@@ -3568,6 +3586,7 @@ namespace Azure.Storage.Blobs.Test
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -3637,6 +3656,269 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException(
                 () => containerClient.GenerateSasUri(sasBuilder),
                 new InvalidOperationException("SAS Uri cannot be generated. BlobSasBuilder.BlobContainerName does not match Name in the Client. BlobSasBuilder.BlobContainerName must either be left empty or match the Name in the Client"));
+        }
+        #endregion
+
+        #region GenerateUserDelegationSas
+        [RecordedTest]
+        public async Task GenerateUserDelegationSas_RequiredParameters()
+        {
+            // Arrange
+            TestConstants constants = TestConstants.Create(this);
+            string containerName = GetNewContainerName();
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.blob.core.windows.net");
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(serviceUri)
+            {
+                BlobContainerName = containerName,
+            };
+            BlobContainerSasPermissions permissions = BlobContainerSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            BlobContainerClient containerClient = InstrumentClient(
+                new BlobContainerClient(
+                    blobUriBuilder.ToUri(),
+                    GetOptions()));
+
+            string stringToSign = null;
+            Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
+
+            //Act
+            Uri sasUri = containerClient.GenerateUserDelegationSasUri(permissions, expiresOn, userDelegationKey, out stringToSign);
+
+            // Assert
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = containerName,
+            };
+            BlobUriBuilder expectedUri = new BlobUriBuilder(serviceUri)
+            {
+                BlobContainerName = containerName,
+                Sas = sasBuilder.ToSasQueryParameters(userDelegationKey, containerClient.AccountName)
+            };
+            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
+        }
+
+        [RecordedTest]
+        public async Task GenerateUserDelegationSas_Builder()
+        {
+            TestConstants constants = TestConstants.Create(this);
+            string containerName = GetNewContainerName();
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.blob.core.windows.net");
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(serviceUri)
+            {
+                BlobContainerName = containerName
+            };
+            BlobContainerSasPermissions permissions = BlobContainerSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            BlobContainerClient containerClient =
+                InstrumentClient(new BlobContainerClient(
+                    blobUriBuilder.ToUri(),
+                    GetOptions()));
+
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = containerName,
+            };
+
+            string stringToSign = null;
+            Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
+
+            // Act
+            Uri sasUri = containerClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey, out stringToSign);
+
+            // Assert
+            BlobSasBuilder sasBuilder2 = new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = containerName
+            };
+            BlobUriBuilder expectedUri = new BlobUriBuilder(serviceUri)
+            {
+                BlobContainerName = containerName,
+                Sas = sasBuilder2.ToSasQueryParameters(userDelegationKey, containerClient.AccountName)
+            };
+            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
+        }
+
+        [RecordedTest]
+        public async Task GenerateUserDelegationSas_BuilderNull()
+        {
+            TestConstants constants = TestConstants.Create(this);
+            string containerName = GetNewContainerName();
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.blob.core.windows.net");
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(serviceUri)
+            {
+                BlobContainerName = containerName
+            };
+            BlobContainerClient containerClient =
+                InstrumentClient(new BlobContainerClient(
+                    blobUriBuilder.ToUri(),
+                    GetOptions()));
+
+            string stringToSign = null;
+            Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => containerClient.GenerateUserDelegationSasUri(null, userDelegationKey, out stringToSign),
+                 new ArgumentNullException("builder"));
+        }
+
+        [RecordedTest]
+        public void GenerateUserDelegationSas_UserDelegationKeyNull()
+        {
+            TestConstants constants = TestConstants.Create(this);
+            string containerName = GetNewContainerName();
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.blob.core.windows.net");
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(serviceUri)
+            {
+                BlobContainerName = containerName
+            };
+            BlobContainerSasPermissions permissions = BlobContainerSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            BlobContainerClient containerClient =
+                InstrumentClient(new BlobContainerClient(
+                    blobUriBuilder.ToUri(),
+                    GetOptions()));
+
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = containerName
+            };
+
+            string stringToSign = null;
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => containerClient.GenerateUserDelegationSasUri(sasBuilder, null, out stringToSign),
+                 new ArgumentNullException("userDelegationKey"));
+        }
+
+        [RecordedTest]
+        public async Task GenerateUserDelegationSas_BuilderNullName()
+        {
+            TestConstants constants = TestConstants.Create(this);
+            string containerName = GetNewContainerName();
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.blob.core.windows.net");
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(serviceUri)
+            {
+                BlobContainerName = containerName
+            };
+            BlobContainerSasPermissions permissions = BlobContainerSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            BlobContainerClient containerClient =
+                InstrumentClient(new BlobContainerClient(
+                    blobUriBuilder.ToUri(),
+                    GetOptions()));
+
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = null
+            };
+
+            string stringToSign = null;
+            Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
+
+            // Act
+            Uri sasUri = containerClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey, out stringToSign);
+
+            // Assert
+            BlobSasBuilder sasBuilder2 = new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = containerName
+            };
+            BlobUriBuilder expectedUri = new BlobUriBuilder(serviceUri)
+            {
+                BlobContainerName = containerName,
+                Sas = sasBuilder2.ToSasQueryParameters(userDelegationKey, containerClient.AccountName)
+            };
+
+            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
+        }
+
+        [RecordedTest]
+        public async Task GenerateUserDelegationSas_BuilderWrongName()
+        {
+            // Arrange
+            TestConstants constants = TestConstants.Create(this);
+            string containerName = GetNewContainerName();
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.blob.core.windows.net");
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(serviceUri)
+            {
+                BlobContainerName = containerName
+            };
+            BlobSasPermissions permissions = BlobSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            BlobContainerClient containerClient = InstrumentClient(new BlobContainerClient(
+                blobUriBuilder.ToUri(),
+                GetOptions()));
+
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = GetNewContainerName(), // set a different containerName
+                Resource = "b"
+            };
+
+            string stringToSign = null;
+            Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => containerClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey, out stringToSign),
+                new InvalidOperationException("SAS Uri cannot be generated. BlobSasBuilder.BlobContainerName does not match Name in the Client. BlobSasBuilder.BlobContainerName must either be left empty or match the Name in the Client"));
+        }
+
+        [RecordedTest]
+        public async Task GenerateUserDelegationSas_BuilderIncorrectlySettingBlobName()
+        {
+            // Arrange
+            TestConstants constants = TestConstants.Create(this);
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.blob.core.windows.net");
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(serviceUri)
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName
+            };
+            BlobSasPermissions permissions = BlobSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            BlobContainerClient containerClient = InstrumentClient(new BlobContainerClient(
+                blobUriBuilder.ToUri(),
+                GetOptions()));
+
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName
+            };
+
+            string stringToSign = null;
+            Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+            UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => containerClient.GenerateUserDelegationSasUri(sasBuilder, userDelegationKey, out stringToSign),
+                new InvalidOperationException("SAS Uri cannot be generated. builder.BlobName cannot be set to create a Name SAS."));
         }
         #endregion
 

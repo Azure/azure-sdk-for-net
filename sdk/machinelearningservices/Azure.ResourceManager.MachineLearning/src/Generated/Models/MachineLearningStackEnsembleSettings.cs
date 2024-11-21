@@ -51,18 +51,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningStackEnsembleSettings"/>. </summary>
-        /// <param name="stackMetaLearnerKWargs"> Optional parameters to pass to the initializer of the meta-learner. </param>
-        /// <param name="stackMetaLearnerTrainPercentage"> Specifies the proportion of the training set (when choosing train and validation type of training) to be reserved for training the meta-learner. Default value is 0.2. </param>
         /// <param name="stackMetaLearnerType"> The meta-learner is a model trained on the output of the individual heterogeneous models. </param>
+        /// <param name="stackMetaLearnerTrainPercentage"> Specifies the proportion of the training set (when choosing train and validation type of training) to be reserved for training the meta-learner. Default value is 0.2. </param>
+        /// <param name="stackMetaLearnerKWargs"> Optional parameters to pass to the initializer of the meta-learner. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningStackEnsembleSettings(BinaryData stackMetaLearnerKWargs, double? stackMetaLearnerTrainPercentage, MachineLearningStackMetaLearnerType? stackMetaLearnerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningStackEnsembleSettings(MachineLearningStackMetaLearnerType? stackMetaLearnerType, double? stackMetaLearnerTrainPercentage, BinaryData stackMetaLearnerKWargs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            StackMetaLearnerKWargs = stackMetaLearnerKWargs;
-            StackMetaLearnerTrainPercentage = stackMetaLearnerTrainPercentage;
             StackMetaLearnerType = stackMetaLearnerType;
+            StackMetaLearnerTrainPercentage = stackMetaLearnerTrainPercentage;
+            StackMetaLearnerKWargs = stackMetaLearnerKWargs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The meta-learner is a model trained on the output of the individual heterogeneous models. </summary>
+        [WirePath("stackMetaLearnerType")]
+        public MachineLearningStackMetaLearnerType? StackMetaLearnerType { get; set; }
+        /// <summary> Specifies the proportion of the training set (when choosing train and validation type of training) to be reserved for training the meta-learner. Default value is 0.2. </summary>
+        [WirePath("stackMetaLearnerTrainPercentage")]
+        public double? StackMetaLearnerTrainPercentage { get; set; }
         /// <summary>
         /// Optional parameters to pass to the initializer of the meta-learner.
         /// <para>
@@ -93,10 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("stackMetaLearnerKWargs")]
         public BinaryData StackMetaLearnerKWargs { get; set; }
-        /// <summary> Specifies the proportion of the training set (when choosing train and validation type of training) to be reserved for training the meta-learner. Default value is 0.2. </summary>
-        public double? StackMetaLearnerTrainPercentage { get; set; }
-        /// <summary> The meta-learner is a model trained on the output of the individual heterogeneous models. </summary>
-        public MachineLearningStackMetaLearnerType? StackMetaLearnerType { get; set; }
     }
 }

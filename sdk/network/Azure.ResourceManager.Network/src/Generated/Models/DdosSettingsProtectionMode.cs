@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(DdosSettingsProtectionMode left, DdosSettingsProtectionMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DdosSettingsProtectionMode"/> values are not the same. </summary>
         public static bool operator !=(DdosSettingsProtectionMode left, DdosSettingsProtectionMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DdosSettingsProtectionMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DdosSettingsProtectionMode"/>. </summary>
         public static implicit operator DdosSettingsProtectionMode(string value) => new DdosSettingsProtectionMode(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator ==(RecordingChannelType left, RecordingChannelType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecordingChannelType"/> values are not the same. </summary>
         public static bool operator !=(RecordingChannelType left, RecordingChannelType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RecordingChannelType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecordingChannelType"/>. </summary>
         public static implicit operator RecordingChannelType(string value) => new RecordingChannelType(value);
 
         /// <inheritdoc />

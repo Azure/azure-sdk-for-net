@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         }
 
         /// <summary> The IPv6 address of this AAAA record. </summary>
+        [WirePath("ipv6Address")]
         public IPAddress IPv6Address { get; set; }
     }
 }

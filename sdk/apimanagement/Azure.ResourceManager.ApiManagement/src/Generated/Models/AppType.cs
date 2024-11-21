@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(AppType left, AppType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppType"/> values are not the same. </summary>
         public static bool operator !=(AppType left, AppType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppType"/>. </summary>
         public static implicit operator AppType(string value) => new AppType(value);
 
         /// <inheritdoc />

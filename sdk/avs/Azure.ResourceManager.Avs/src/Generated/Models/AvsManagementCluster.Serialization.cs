@@ -19,53 +19,8 @@ namespace Azure.ResourceManager.Avs.Models
 
         void IJsonModel<AvsManagementCluster>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsManagementCluster>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AvsManagementCluster)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterSize))
-            {
-                writer.WritePropertyName("clusterSize"u8);
-                writer.WriteNumberValue(ClusterSize.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
-            {
-                writer.WritePropertyName("clusterId"u8);
-                writer.WriteNumberValue(ClusterId.Value);
-            }
-            if (Optional.IsCollectionDefined(Hosts))
-            {
-                writer.WritePropertyName("hosts"u8);
-                writer.WriteStartArray();
-                foreach (var item in Hosts)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -93,6 +48,7 @@ namespace Azure.ResourceManager.Avs.Models
             AvsPrivateCloudClusterProvisioningState? provisioningState = default;
             int? clusterId = default;
             IList<string> hosts = default;
+            string vsanDatastoreName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,13 +94,24 @@ namespace Azure.ResourceManager.Avs.Models
                     hosts = array;
                     continue;
                 }
+                if (property.NameEquals("vsanDatastoreName"u8))
+                {
+                    vsanDatastoreName = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AvsManagementCluster(clusterSize, provisioningState, clusterId, hosts ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AvsManagementCluster(
+                clusterSize,
+                provisioningState,
+                clusterId,
+                hosts ?? new ChangeTrackingList<string>(),
+                vsanDatastoreName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsManagementCluster>.Write(ModelReaderWriterOptions options)

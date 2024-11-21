@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(BlockedTransformer left, BlockedTransformer right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlockedTransformer"/> values are not the same. </summary>
         public static bool operator !=(BlockedTransformer left, BlockedTransformer right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BlockedTransformer"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BlockedTransformer"/>. </summary>
         public static implicit operator BlockedTransformer(string value) => new BlockedTransformer(value);
 
         /// <inheritdoc />

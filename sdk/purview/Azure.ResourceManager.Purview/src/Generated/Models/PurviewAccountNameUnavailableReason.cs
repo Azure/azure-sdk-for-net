@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static bool operator ==(PurviewAccountNameUnavailableReason left, PurviewAccountNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PurviewAccountNameUnavailableReason"/> values are not the same. </summary>
         public static bool operator !=(PurviewAccountNameUnavailableReason left, PurviewAccountNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PurviewAccountNameUnavailableReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PurviewAccountNameUnavailableReason"/>. </summary>
         public static implicit operator PurviewAccountNameUnavailableReason(string value) => new PurviewAccountNameUnavailableReason(value);
 
         /// <inheritdoc />

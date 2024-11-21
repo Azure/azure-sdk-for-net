@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EventGrid.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Samples
 {
     public partial class Sample_DomainEventSubscriptionCollection
     {
-        // DomainEventSubscriptions_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_DomainEventSubscriptionsGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/DomainEventSubscriptions_Get.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DomainEventSubscriptions_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_DomainEventSubscriptionsGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/DomainEventSubscriptions_Get.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // DomainEventSubscriptions_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DomainEventSubscriptionsGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/DomainEventSubscriptions_Get.json
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -124,9 +122,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             }
         }
 
-        // DomainEventSubscriptions_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DomainEventSubscriptionsCreateOrUpdate()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/DomainEventSubscriptions_CreateOrUpdate.json
@@ -173,9 +170,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DomainEventSubscriptions_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DomainEventSubscriptionsList()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/DomainEventSubscriptions_List.json
@@ -207,7 +203,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

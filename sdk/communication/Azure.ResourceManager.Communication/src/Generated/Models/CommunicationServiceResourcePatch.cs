@@ -32,8 +32,10 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> List of email Domain resource Ids. </summary>
+        [WirePath("properties.linkedDomains")]
         public IList<string> LinkedDomains { get; }
     }
 }

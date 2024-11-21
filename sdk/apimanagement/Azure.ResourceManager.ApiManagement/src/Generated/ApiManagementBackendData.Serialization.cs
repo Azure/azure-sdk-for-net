@@ -22,33 +22,22 @@ namespace Azure.ResourceManager.ApiManagement
 
         void IJsonModel<ApiManagementBackendData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementBackendData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiManagementBackendData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Title))
@@ -86,6 +75,11 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("tls"u8);
                 writer.WriteObjectValue(Tls, options);
             }
+            if (Optional.IsDefined(CircuitBreaker))
+            {
+                writer.WritePropertyName("circuitBreaker"u8);
+                writer.WriteObjectValue(CircuitBreaker, options);
+            }
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
@@ -95,22 +89,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
             writer.WriteEndObject();
         }
@@ -146,6 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
             BackendCredentialsContract credentials = default;
             BackendProxyContract proxy = default;
             BackendTlsProperties tls = default;
+            BackendCircuitBreaker circuitBreaker = default;
             Uri uri = default;
             BackendProtocol? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -240,6 +219,15 @@ namespace Azure.ResourceManager.ApiManagement
                             tls = BackendTlsProperties.DeserializeBackendTlsProperties(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("circuitBreaker"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            circuitBreaker = BackendCircuitBreaker.DeserializeBackendCircuitBreaker(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("url"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -279,6 +267,7 @@ namespace Azure.ResourceManager.ApiManagement
                 credentials,
                 proxy,
                 tls,
+                circuitBreaker,
                 uri,
                 protocol,
                 serializedAdditionalRawData);
@@ -473,6 +462,26 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     builder.Append("    tls: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Tls, options, 4, false, "    tls: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CircuitBreakerRules", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    circuitBreaker: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      circuitBreaker: {");
+                builder.Append("        rules: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(CircuitBreaker))
+                {
+                    builder.Append("    circuitBreaker: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CircuitBreaker, options, 4, false, "    circuitBreaker: ");
                 }
             }
 

@@ -87,6 +87,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="privateIPAddresses"> Private Static Load Balanced IP addresses of the API Management service in Primary region which is deployed in an Internal Virtual Network. Available only for Basic, Standard, Premium and Isolated SKU. </param>
         /// <param name="publicIPAddressId"> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the region. Supported only for Developer and Premium SKU being deployed in Virtual Network. </param>
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this API Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </param>
+        /// <param name="configurationApi"> Configuration API configuration of the API Management service. </param>
         /// <param name="virtualNetworkConfiguration"> Virtual network configuration of the API Management service. </param>
         /// <param name="additionalLocations"> Additional datacenter locations of the API Management service. </param>
         /// <param name="customProperties"> Custom properties of the API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168` will disable the cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA for all TLS(1.0, 1.1 and 1.2).&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11` can be used to disable just TLS 1.1.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10` can be used to disable TLS 1.0 on an API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11` can be used to disable just TLS 1.1 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10` can be used to disable TLS 1.0 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2` can be used to enable HTTP2 protocol on an API Management service.&lt;/br&gt;Not specifying any of these properties on PATCH operation will reset omitted properties' values to their defaults. For all the settings except Http2 the default value is `True` if the service was created on or before April 1, 2018 and `False` otherwise. Http2 setting's default value is `False`.&lt;/br&gt;&lt;/br&gt;You can disable any of the following ciphers by using settings `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA. For example, `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`. The default value is `true` for them.&lt;/br&gt; Note: The following ciphers can't be disabled since they are required by internal platform components: TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256. </param>
@@ -100,11 +101,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="restore"> Undelete Api Management Service if it was previously soft-deleted. If this flag is specified and set to True all other properties will be ignored. </param>
         /// <param name="privateEndpointConnections"> List of Private Endpoint Connections of this service. </param>
         /// <param name="platformVersion"> Compute Platform Version running the service in this location. </param>
+        /// <param name="legacyPortalStatus"> Status of legacy portal in the API Management service. </param>
+        /// <param name="developerPortalStatus"> Status of developer portal in this API Management service. </param>
         /// <param name="publisherEmail"> Publisher email. </param>
         /// <param name="publisherName"> Publisher name. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementServiceSkuProperties sku, ManagedServiceIdentity identity, ETag? etag, IList<string> zones, string notificationSenderEmail, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, Uri gatewayUri, Uri gatewayRegionalUri, Uri portalUri, Uri managementApiUri, Uri scmUri, Uri developerPortalUri, IList<HostnameConfiguration> hostnameConfigurations, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, PublicNetworkAccess? publicNetworkAccess, VirtualNetworkConfiguration virtualNetworkConfiguration, IList<AdditionalLocation> additionalLocations, IDictionary<string, string> customProperties, IList<CertificateConfiguration> certificates, bool? enableClientCertificate, ApiManagementNatGatewayState? natGatewayState, IReadOnlyList<string> outboundPublicIPAddresses, bool? disableGateway, VirtualNetworkType? virtualNetworkType, ApiVersionConstraint apiVersionConstraint, bool? restore, IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, PlatformVersion? platformVersion, string publisherEmail, string publisherName, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementServiceSkuProperties sku, ManagedServiceIdentity identity, ETag? etag, IList<string> zones, string notificationSenderEmail, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, Uri gatewayUri, Uri gatewayRegionalUri, Uri portalUri, Uri managementApiUri, Uri scmUri, Uri developerPortalUri, IList<HostnameConfiguration> hostnameConfigurations, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, PublicNetworkAccess? publicNetworkAccess, ConfigurationApi configurationApi, VirtualNetworkConfiguration virtualNetworkConfiguration, IList<AdditionalLocation> additionalLocations, IDictionary<string, string> customProperties, IList<CertificateConfiguration> certificates, bool? enableClientCertificate, ApiManagementNatGatewayState? natGatewayState, IReadOnlyList<string> outboundPublicIPAddresses, bool? disableGateway, VirtualNetworkType? virtualNetworkType, ApiVersionConstraint apiVersionConstraint, bool? restore, IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, PlatformVersion? platformVersion, LegacyPortalStatus? legacyPortalStatus, DeveloperPortalStatus? developerPortalStatus, string publisherEmail, string publisherName, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Identity = identity;
@@ -125,6 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             PrivateIPAddresses = privateIPAddresses;
             PublicIPAddressId = publicIPAddressId;
             PublicNetworkAccess = publicNetworkAccess;
+            ConfigurationApi = configurationApi;
             VirtualNetworkConfiguration = virtualNetworkConfiguration;
             AdditionalLocations = additionalLocations;
             CustomProperties = customProperties;
@@ -138,6 +142,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Restore = restore;
             PrivateEndpointConnections = privateEndpointConnections;
             PlatformVersion = platformVersion;
+            LegacyPortalStatus = legacyPortalStatus;
+            DeveloperPortalStatus = developerPortalStatus;
             PublisherEmail = publisherEmail;
             PublisherName = publisherName;
             Tags = tags;
@@ -201,6 +207,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Whether or not public endpoint access is allowed for this API Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </summary>
         [WirePath("properties.publicNetworkAccess")]
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Configuration API configuration of the API Management service. </summary>
+        internal ConfigurationApi ConfigurationApi { get; set; }
+        /// <summary> Indication whether or not the legacy Configuration API (v1) should be exposed on the API Management service. Value is optional but must be 'Enabled' or 'Disabled'. If 'Disabled', legacy Configuration API (v1) will not be available for self-hosted gateways. Default value is 'Enabled'. </summary>
+        [WirePath("properties.configurationApi.legacyApi")]
+        public LegacyApiState? LegacyApi
+        {
+            get => ConfigurationApi is null ? default : ConfigurationApi.LegacyApi;
+            set
+            {
+                if (ConfigurationApi is null)
+                    ConfigurationApi = new ConfigurationApi();
+                ConfigurationApi.LegacyApi = value;
+            }
+        }
+
         /// <summary> Virtual network configuration of the API Management service. </summary>
         [WirePath("properties.virtualNetworkConfiguration")]
         public VirtualNetworkConfiguration VirtualNetworkConfiguration { get; set; }
@@ -252,6 +273,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Compute Platform Version running the service in this location. </summary>
         [WirePath("properties.platformVersion")]
         public PlatformVersion? PlatformVersion { get; }
+        /// <summary> Status of legacy portal in the API Management service. </summary>
+        [WirePath("properties.legacyPortalStatus")]
+        public LegacyPortalStatus? LegacyPortalStatus { get; set; }
+        /// <summary> Status of developer portal in this API Management service. </summary>
+        [WirePath("properties.developerPortalStatus")]
+        public DeveloperPortalStatus? DeveloperPortalStatus { get; set; }
         /// <summary> Publisher email. </summary>
         [WirePath("properties.publisherEmail")]
         public string PublisherEmail { get; set; }

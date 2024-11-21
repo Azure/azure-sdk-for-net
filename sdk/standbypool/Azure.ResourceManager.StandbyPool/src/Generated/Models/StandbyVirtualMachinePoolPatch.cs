@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
@@ -54,38 +53,18 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="elasticityProfile"> Specifies the elasticity profile of the standby virtual machine pools. </param>
-        /// <param name="virtualMachineState"> Specifies the desired state of virtual machines in the pool. </param>
-        /// <param name="attachedVirtualMachineScaleSetId"> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolPatch(IDictionary<string, string> tags, StandbyVirtualMachinePoolElasticityPatchProfile elasticityProfile, StandbyVirtualMachineState? virtualMachineState, ResourceIdentifier attachedVirtualMachineScaleSetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachinePoolPatch(IDictionary<string, string> tags, StandbyVirtualMachinePoolUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
-            ElasticityProfile = elasticityProfile;
-            VirtualMachineState = virtualMachineState;
-            AttachedVirtualMachineScaleSetId = attachedVirtualMachineScaleSetId;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Specifies the elasticity profile of the standby virtual machine pools. </summary>
-        internal StandbyVirtualMachinePoolElasticityPatchProfile ElasticityProfile { get; set; }
-        /// <summary> Specifies maximum number of virtual machines in the standby virtual machine pool. </summary>
-        public long? ElasticityMaxReadyCapacity
-        {
-            get => ElasticityProfile is null ? default : ElasticityProfile.MaxReadyCapacity;
-            set
-            {
-                if (ElasticityProfile is null)
-                    ElasticityProfile = new StandbyVirtualMachinePoolElasticityPatchProfile();
-                ElasticityProfile.MaxReadyCapacity = value;
-            }
-        }
-
-        /// <summary> Specifies the desired state of virtual machines in the pool. </summary>
-        public StandbyVirtualMachineState? VirtualMachineState { get; set; }
-        /// <summary> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </summary>
-        public ResourceIdentifier AttachedVirtualMachineScaleSetId { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public StandbyVirtualMachinePoolUpdateProperties Properties { get; set; }
     }
 }

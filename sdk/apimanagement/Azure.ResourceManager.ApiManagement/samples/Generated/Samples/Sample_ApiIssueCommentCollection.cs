@@ -9,17 +9,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiIssueCommentCollection
     {
-        // ApiManagementListApiIssueComments
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ApiManagementListApiIssueComments()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementListApiIssueComments.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListApiIssueComments.json
             // this example is just showing the usage of "ApiIssueComment_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiIssueResource created on azure
             // for more information of creating ApiIssueResource, please refer to the document of ApiIssueResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d1f7558aa04f15146d9d8a";
@@ -50,15 +50,14 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetApiIssueComment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetApiIssueComment()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementGetApiIssueComment.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiIssueComment.json
             // this example is just showing the usage of "ApiIssueComment_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiIssueResource created on azure
             // for more information of creating ApiIssueResource, please refer to the document of ApiIssueResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d2ef278aa04f0888cba3f3";
@@ -90,12 +89,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementGetApiIssueComment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ApiManagementGetApiIssueComment()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementGetApiIssueComment.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiIssueComment.json
             // this example is just showing the usage of "ApiIssueComment_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiIssueResource created on azure
             // for more information of creating ApiIssueResource, please refer to the document of ApiIssueResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d2ef278aa04f0888cba3f3";
@@ -123,12 +121,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementGetApiIssueComment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApiManagementGetApiIssueComment()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementGetApiIssueComment.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiIssueComment.json
             // this example is just showing the usage of "ApiIssueComment_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -138,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiIssueResource created on azure
             // for more information of creating ApiIssueResource, please refer to the document of ApiIssueResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d2ef278aa04f0888cba3f3";
@@ -156,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -168,12 +165,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             }
         }
 
-        // ApiManagementCreateApiIssueComment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateApiIssueComment()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementCreateApiIssueComment.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiIssueComment.json
             // this example is just showing the usage of "ApiIssueComment_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -183,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiIssueResource created on azure
             // for more information of creating ApiIssueResource, please refer to the document of ApiIssueResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d1f7558aa04f15146d9d8a";
@@ -200,7 +196,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 Text = "Issue comment.",
                 CreatedOn = DateTimeOffset.Parse("2018-02-01T22:21:20.467Z"),
-                UserId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/users/1"),
+                UserId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/users/1"),
             };
             ArmOperation<ApiIssueCommentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, commentId, data);
             ApiIssueCommentResource result = lro.Value;

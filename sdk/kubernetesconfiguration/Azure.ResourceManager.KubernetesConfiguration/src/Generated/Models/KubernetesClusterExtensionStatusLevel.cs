@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static bool operator ==(KubernetesClusterExtensionStatusLevel left, KubernetesClusterExtensionStatusLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesClusterExtensionStatusLevel"/> values are not the same. </summary>
         public static bool operator !=(KubernetesClusterExtensionStatusLevel left, KubernetesClusterExtensionStatusLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KubernetesClusterExtensionStatusLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesClusterExtensionStatusLevel"/>. </summary>
         public static implicit operator KubernetesClusterExtensionStatusLevel(string value) => new KubernetesClusterExtensionStatusLevel(value);
 
         /// <inheritdoc />

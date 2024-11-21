@@ -105,38 +105,55 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         }
 
         /// <summary> Scope at which the operator will be installed. </summary>
+        [WirePath("properties.scope")]
         public KubernetesConfigurationScope? Scope { get; set; }
         /// <summary> The namespace to which this configuration is installed to. Maximum of 253 lower case alphanumeric characters, hyphen and period only. </summary>
+        [WirePath("properties.namespace")]
         public string Namespace { get; set; }
         /// <summary> Source Kind to pull the configuration data from. </summary>
+        [WirePath("properties.sourceKind")]
         public KubernetesConfigurationSourceKind? SourceKind { get; set; }
         /// <summary> Whether this configuration should suspend its reconciliation of its kustomizations and sources. </summary>
+        [WirePath("properties.suspend")]
         public bool? IsReconciliationSuspended { get; set; }
         /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
+        [WirePath("properties.gitRepository")]
         public KubernetesGitRepository GitRepository { get; set; }
         /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
+        [WirePath("properties.bucket")]
         public KubernetesBucket Bucket { get; set; }
         /// <summary> Parameters to reconcile to the AzureBlob source kind type. </summary>
+        [WirePath("properties.azureBlob")]
         public KubernetesAzureBlob AzureBlob { get; set; }
         /// <summary> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </summary>
+        [WirePath("properties.kustomizations")]
         public IDictionary<string, Kustomization> Kustomizations { get; set; }
         /// <summary> Key-value pairs of protected configuration settings for the configuration. </summary>
+        [WirePath("properties.configurationProtectedSettings")]
         public IDictionary<string, string> ConfigurationProtectedSettings { get; set; }
         /// <summary> Statuses of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects provisioned by the fluxConfiguration. </summary>
+        [WirePath("properties.statuses")]
         public IReadOnlyList<KubernetesObjectStatus> Statuses { get; }
         /// <summary> Public Key associated with this fluxConfiguration (either generated within the cluster or provided by the user). </summary>
+        [WirePath("properties.repositoryPublicKey")]
         public string RepositoryPublicKey { get; }
         /// <summary> Branch and/or SHA of the source commit synced with the cluster. </summary>
+        [WirePath("properties.sourceSyncedCommitId")]
         public string SourceSyncedCommitId { get; }
         /// <summary> Datetime the fluxConfiguration synced its source on the cluster. </summary>
+        [WirePath("properties.sourceUpdatedAt")]
         public DateTimeOffset? SourceUpdatedOn { get; }
         /// <summary> Datetime the fluxConfiguration synced its status on the cluster with Azure. </summary>
+        [WirePath("properties.statusUpdatedAt")]
         public DateTimeOffset? StatusUpdatedOn { get; }
         /// <summary> Combined status of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects. </summary>
+        [WirePath("properties.complianceState")]
         public KubernetesFluxComplianceState? ComplianceState { get; }
         /// <summary> Status of the creation of the fluxConfiguration. </summary>
+        [WirePath("properties.provisioningState")]
         public KubernetesConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> Error message returned to the user in the case of provisioning failure. </summary>
+        [WirePath("properties.errorMessage")]
         public string ErrorMessage { get; }
     }
 }

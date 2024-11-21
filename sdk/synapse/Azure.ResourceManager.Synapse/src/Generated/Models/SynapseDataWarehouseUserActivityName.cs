@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseDataWarehouseUserActivityName left, SynapseDataWarehouseUserActivityName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseDataWarehouseUserActivityName"/> values are not the same. </summary>
         public static bool operator !=(SynapseDataWarehouseUserActivityName left, SynapseDataWarehouseUserActivityName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseDataWarehouseUserActivityName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseDataWarehouseUserActivityName"/>. </summary>
         public static implicit operator SynapseDataWarehouseUserActivityName(string value) => new SynapseDataWarehouseUserActivityName(value);
 
         /// <inheritdoc />

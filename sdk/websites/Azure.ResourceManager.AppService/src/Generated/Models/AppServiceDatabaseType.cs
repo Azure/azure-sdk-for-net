@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(AppServiceDatabaseType left, AppServiceDatabaseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServiceDatabaseType"/> values are not the same. </summary>
         public static bool operator !=(AppServiceDatabaseType left, AppServiceDatabaseType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppServiceDatabaseType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceDatabaseType"/>. </summary>
         public static implicit operator AppServiceDatabaseType(string value) => new AppServiceDatabaseType(value);
 
         /// <inheritdoc />

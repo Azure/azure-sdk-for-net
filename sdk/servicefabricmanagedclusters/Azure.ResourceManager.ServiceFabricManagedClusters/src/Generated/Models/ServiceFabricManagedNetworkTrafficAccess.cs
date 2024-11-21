@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator ==(ServiceFabricManagedNetworkTrafficAccess left, ServiceFabricManagedNetworkTrafficAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedNetworkTrafficAccess"/> values are not the same. </summary>
         public static bool operator !=(ServiceFabricManagedNetworkTrafficAccess left, ServiceFabricManagedNetworkTrafficAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceFabricManagedNetworkTrafficAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedNetworkTrafficAccess"/>. </summary>
         public static implicit operator ServiceFabricManagedNetworkTrafficAccess(string value) => new ServiceFabricManagedNetworkTrafficAccess(value);
 
         /// <inheritdoc />

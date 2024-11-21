@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         public static bool operator ==(DataProductUserRole left, DataProductUserRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataProductUserRole"/> values are not the same. </summary>
         public static bool operator !=(DataProductUserRole left, DataProductUserRole right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataProductUserRole"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataProductUserRole"/>. </summary>
         public static implicit operator DataProductUserRole(string value) => new DataProductUserRole(value);
 
         /// <inheritdoc />

@@ -96,6 +96,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The maximum delivery count of the events. </summary>
+        [WirePath("maxDeliveryCount")]
         public int? MaxDeliveryCount { get; set; }
         /// <summary>
         /// Time span duration in ISO 8601 format that determines how long messages are available to the subscription from the time the message was published.
@@ -115,16 +116,19 @@ namespace Azure.ResourceManager.EventGrid.Models
         ///     - \'P0DT23H12M\' or \'PT23H12M\': for duration of 23 hours and 12 minutes.
         ///     - \'P1D\' or \'P1DT0H0M0S\': for duration of 1 day.
         /// </summary>
+        [WirePath("eventTimeToLive")]
         public string EventTimeToLive { get; set; }
         /// <summary>
         /// The dead letter destination of the event subscription. Any event that cannot be delivered to its' destination is sent to the dead letter destination.
         /// Uses the managed identity setup on the parent resource (namely, namespace) to acquire the authentication tokens being used during dead-lettering.
         /// </summary>
+        [WirePath("deadLetterDestinationWithResourceIdentity")]
         public DeadLetterWithResourceIdentity DeadLetterDestinationWithResourceIdentity { get; set; }
         /// <summary>
         /// Information about the destination where events have to be delivered for the event subscription.
         /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during delivery.
         /// </summary>
+        [WirePath("deliveryWithResourceIdentity")]
         public DeliveryWithResourceIdentity DeliveryWithResourceIdentity { get; set; }
         /// <summary>
         /// Information about the destination where events have to be delivered for the event subscription.
@@ -132,6 +136,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Please note <see cref="EventSubscriptionDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="MonitorAlertEventSubscriptionDestination"/>, <see cref="NamespaceTopicEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/> and <see cref="WebHookEventSubscriptionDestination"/>.
         /// </summary>
+        [WirePath("destination")]
         public EventSubscriptionDestination Destination { get; set; }
     }
 }

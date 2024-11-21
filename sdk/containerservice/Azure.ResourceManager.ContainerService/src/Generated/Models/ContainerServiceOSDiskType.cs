@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(ContainerServiceOSDiskType left, ContainerServiceOSDiskType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceOSDiskType"/> values are not the same. </summary>
         public static bool operator !=(ContainerServiceOSDiskType left, ContainerServiceOSDiskType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerServiceOSDiskType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceOSDiskType"/>. </summary>
         public static implicit operator ContainerServiceOSDiskType(string value) => new ContainerServiceOSDiskType(value);
 
         /// <inheritdoc />

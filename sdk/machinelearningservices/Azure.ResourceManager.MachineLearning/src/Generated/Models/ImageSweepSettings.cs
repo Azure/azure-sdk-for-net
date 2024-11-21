@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageSweepSettings"/>. </summary>
+        /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>
         /// <param name="earlyTermination">
         /// Type of early termination policy.
         /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </param>
-        /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageSweepSettings(MachineLearningEarlyTerminationPolicy earlyTermination, SamplingAlgorithmType samplingAlgorithm, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImageSweepSettings(SamplingAlgorithmType samplingAlgorithm, MachineLearningEarlyTerminationPolicy earlyTermination, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EarlyTermination = earlyTermination;
             SamplingAlgorithm = samplingAlgorithm;
+            EarlyTermination = earlyTermination;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,13 +72,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+        /// <summary> [Required] Type of the hyperparameter sampling algorithms. </summary>
+        [WirePath("samplingAlgorithm")]
+        public SamplingAlgorithmType SamplingAlgorithm { get; set; }
         /// <summary>
         /// Type of early termination policy.
         /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </summary>
+        [WirePath("earlyTermination")]
         public MachineLearningEarlyTerminationPolicy EarlyTermination { get; set; }
-        /// <summary> [Required] Type of the hyperparameter sampling algorithms. </summary>
-        public SamplingAlgorithmType SamplingAlgorithm { get; set; }
     }
 }

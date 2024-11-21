@@ -74,20 +74,28 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> The URL to sync for the flux configuration git repository. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
         /// <summary> The maximum time to attempt to reconcile the cluster git repository source with the remote. </summary>
+        [WirePath("timeoutInSeconds")]
         public long? TimeoutInSeconds { get; set; }
         /// <summary> The interval at which to re-reconcile the cluster git repository source with the remote. </summary>
+        [WirePath("syncIntervalInSeconds")]
         public long? SyncIntervalInSeconds { get; set; }
         /// <summary> The source reference for the GitRepository object. </summary>
+        [WirePath("repositoryRef")]
         public KubernetesGitRepositoryRef RepositoryRef { get; set; }
         /// <summary> Base64-encoded known_hosts value containing public SSH keys required to access private git repositories over SSH. </summary>
+        [WirePath("sshKnownHosts")]
         public string SshKnownHosts { get; set; }
         /// <summary> Plaintext HTTPS username used to access private git repositories over HTTPS. </summary>
+        [WirePath("httpsUser")]
         public string HttpsUser { get; set; }
         /// <summary> Base64-encoded HTTPS certificate authority contents used to access git private git repositories over HTTPS. </summary>
+        [WirePath("httpsCACert")]
         public string HttpsCACert { get; set; }
         /// <summary> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </summary>
+        [WirePath("localAuthRef")]
         public string LocalAuthRef { get; set; }
     }
 }

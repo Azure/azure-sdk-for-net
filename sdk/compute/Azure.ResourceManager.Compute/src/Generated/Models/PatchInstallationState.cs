@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(PatchInstallationState left, PatchInstallationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PatchInstallationState"/> values are not the same. </summary>
         public static bool operator !=(PatchInstallationState left, PatchInstallationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PatchInstallationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PatchInstallationState"/>. </summary>
         public static implicit operator PatchInstallationState(string value) => new PatchInstallationState(value);
 
         /// <inheritdoc />

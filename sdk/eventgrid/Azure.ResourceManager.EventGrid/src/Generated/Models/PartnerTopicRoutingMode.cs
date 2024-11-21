@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(PartnerTopicRoutingMode left, PartnerTopicRoutingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PartnerTopicRoutingMode"/> values are not the same. </summary>
         public static bool operator !=(PartnerTopicRoutingMode left, PartnerTopicRoutingMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PartnerTopicRoutingMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PartnerTopicRoutingMode"/>. </summary>
         public static implicit operator PartnerTopicRoutingMode(string value) => new PartnerTopicRoutingMode(value);
 
         /// <inheritdoc />

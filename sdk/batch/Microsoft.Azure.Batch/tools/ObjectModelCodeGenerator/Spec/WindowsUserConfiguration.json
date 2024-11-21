@@ -1,0 +1,22 @@
+{
+  "Name": "WindowsUserConfiguration",
+  "ProtocolName": "Models.WindowsUserConfiguration",
+  "SummaryComment": "Properties used to create a user account on a Windows node.",
+  "Properties": [
+    {
+      "Key": {
+        "Type": "Common.LoginMode?",
+        "Name": "LoginMode",
+        "SummaryComment": "The login mode for the user.",
+        "RemarksComment": "The default is 'batch'.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional"
+      },
+      "Value": {
+        "Type": "Models.LoginMode?",
+        "Name": "LoginMode"
+      }
+    }
+  ]
+}

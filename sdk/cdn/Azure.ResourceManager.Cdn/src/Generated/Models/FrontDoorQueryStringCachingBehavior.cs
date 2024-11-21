@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(FrontDoorQueryStringCachingBehavior left, FrontDoorQueryStringCachingBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorQueryStringCachingBehavior"/> values are not the same. </summary>
         public static bool operator !=(FrontDoorQueryStringCachingBehavior left, FrontDoorQueryStringCachingBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FrontDoorQueryStringCachingBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorQueryStringCachingBehavior"/>. </summary>
         public static implicit operator FrontDoorQueryStringCachingBehavior(string value) => new FrontDoorQueryStringCachingBehavior(value);
 
         /// <inheritdoc />

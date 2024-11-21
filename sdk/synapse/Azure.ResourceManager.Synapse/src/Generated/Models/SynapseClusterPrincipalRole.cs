@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseClusterPrincipalRole left, SynapseClusterPrincipalRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseClusterPrincipalRole"/> values are not the same. </summary>
         public static bool operator !=(SynapseClusterPrincipalRole left, SynapseClusterPrincipalRole right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseClusterPrincipalRole"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseClusterPrincipalRole"/>. </summary>
         public static implicit operator SynapseClusterPrincipalRole(string value) => new SynapseClusterPrincipalRole(value);
 
         /// <inheritdoc />

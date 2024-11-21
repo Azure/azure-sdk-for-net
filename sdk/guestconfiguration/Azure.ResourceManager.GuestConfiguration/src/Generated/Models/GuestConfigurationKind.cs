@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static bool operator ==(GuestConfigurationKind left, GuestConfigurationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GuestConfigurationKind"/> values are not the same. </summary>
         public static bool operator !=(GuestConfigurationKind left, GuestConfigurationKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GuestConfigurationKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GuestConfigurationKind"/>. </summary>
         public static implicit operator GuestConfigurationKind(string value) => new GuestConfigurationKind(value);
 
         /// <inheritdoc />

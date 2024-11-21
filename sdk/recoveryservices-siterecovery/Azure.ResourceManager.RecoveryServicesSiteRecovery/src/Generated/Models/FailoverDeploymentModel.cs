@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(FailoverDeploymentModel left, FailoverDeploymentModel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FailoverDeploymentModel"/> values are not the same. </summary>
         public static bool operator !=(FailoverDeploymentModel left, FailoverDeploymentModel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FailoverDeploymentModel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FailoverDeploymentModel"/>. </summary>
         public static implicit operator FailoverDeploymentModel(string value) => new FailoverDeploymentModel(value);
 
         /// <inheritdoc />

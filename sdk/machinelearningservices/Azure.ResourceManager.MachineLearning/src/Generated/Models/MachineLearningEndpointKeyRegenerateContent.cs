@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] Specification for which type of key to generate. Primary or Secondary. </summary>
+        [WirePath("keyType")]
         public MachineLearningKeyType KeyType { get; }
         /// <summary> The value the key is set to. </summary>
+        [WirePath("keyValue")]
         public string KeyValue { get; set; }
     }
 }

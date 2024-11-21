@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The VolumeDefinition. </summary>
+    /// <summary> Describes the volume configuration for the container. </summary>
     public partial class VolumeDefinition
     {
         /// <summary>
@@ -74,20 +74,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe. </summary>
+        [WirePath("type")]
         public VolumeDefinitionType? DefinitionType { get; set; }
         /// <summary> Indicate whether to mount volume as readOnly. Default value for this is false. </summary>
+        [WirePath("readOnly")]
         public bool? ReadOnly { get; set; }
         /// <summary> Source of the mount. For bind mounts this is the host path. </summary>
+        [WirePath("source")]
         public string Source { get; set; }
         /// <summary> Target of the mount. For bind mounts this is the path in the container. </summary>
+        [WirePath("target")]
         public string Target { get; set; }
         /// <summary> Consistency of the volume. </summary>
+        [WirePath("consistency")]
         public string Consistency { get; set; }
         /// <summary> Bind Options of the mount. </summary>
+        [WirePath("bind")]
         public MountBindOptions Bind { get; set; }
         /// <summary> Volume Options of the mount. </summary>
         internal VolumeOptions Volume { get; set; }
         /// <summary> Indicate whether volume is nocopy. </summary>
+        [WirePath("volume.nocopy")]
         public bool? Nocopy
         {
             get => Volume is null ? default : Volume.Nocopy;
@@ -102,6 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> tmpfs option of the mount. </summary>
         internal TmpfsOptions Tmpfs { get; set; }
         /// <summary> Mention the Tmpfs size. </summary>
+        [WirePath("tmpfs.size")]
         public int? TmpfsSize
         {
             get => Tmpfs is null ? default : Tmpfs.Size;

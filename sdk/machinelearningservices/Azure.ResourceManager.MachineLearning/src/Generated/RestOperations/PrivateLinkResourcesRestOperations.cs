@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01-preview";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -72,13 +72,7 @@ namespace Azure.ResourceManager.MachineLearning
             return message;
         }
 
-        /// <summary>
-        /// Called by Client (Portal, CLI, etc) to get available "private link resources" for the workspace.
-        /// Each "private link resource" is a connection endpoint (IP address) to the resource.
-        /// Pre single connection endpoint per workspace: the Data Plane IP address, returned by DNS resolution.
-        /// Other RPs, such as Azure Storage, have multiple - one for Blobs, other for Queues, etc.
-        /// Defined in the "[NRP] Private Endpoint Design" doc, topic "GET API for GroupIds".
-        /// </summary>
+        /// <summary> Gets the private link resources that need to be created for a workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
@@ -107,13 +101,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        /// <summary>
-        /// Called by Client (Portal, CLI, etc) to get available "private link resources" for the workspace.
-        /// Each "private link resource" is a connection endpoint (IP address) to the resource.
-        /// Pre single connection endpoint per workspace: the Data Plane IP address, returned by DNS resolution.
-        /// Other RPs, such as Azure Storage, have multiple - one for Blobs, other for Queues, etc.
-        /// Defined in the "[NRP] Private Endpoint Design" doc, topic "GET API for GroupIds".
-        /// </summary>
+        /// <summary> Gets the private link resources that need to be created for a workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>

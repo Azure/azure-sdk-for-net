@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(DenyStatusMode left, DenyStatusMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DenyStatusMode"/> values are not the same. </summary>
         public static bool operator !=(DenyStatusMode left, DenyStatusMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DenyStatusMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DenyStatusMode"/>. </summary>
         public static implicit operator DenyStatusMode(string value) => new DenyStatusMode(value);
 
         /// <inheritdoc />

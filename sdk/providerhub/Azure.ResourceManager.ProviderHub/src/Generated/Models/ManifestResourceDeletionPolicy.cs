@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static bool operator ==(ManifestResourceDeletionPolicy left, ManifestResourceDeletionPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManifestResourceDeletionPolicy"/> values are not the same. </summary>
         public static bool operator !=(ManifestResourceDeletionPolicy left, ManifestResourceDeletionPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManifestResourceDeletionPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManifestResourceDeletionPolicy"/>. </summary>
         public static implicit operator ManifestResourceDeletionPolicy(string value) => new ManifestResourceDeletionPolicy(value);
 
         /// <inheritdoc />

@@ -69,8 +69,9 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="encryptionProperties"> Encryption Properties describing Key Vault and Identity information. </param>
         /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
         /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
+        /// <param name="enforceDataIntegrityCheckForIscsi"> A boolean indicating whether or not Data Integrity Check is enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ElasticSanProvisioningState? provisioningState, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, NetworkRuleSet networkAcls, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ElasticSanProvisioningState? provisioningState, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, NetworkRuleSet networkAcls, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, bool? enforceDataIntegrityCheckForIscsi, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -79,6 +80,7 @@ namespace Azure.ResourceManager.ElasticSan
             EncryptionProperties = encryptionProperties;
             NetworkAcls = networkAcls;
             PrivateEndpointConnections = privateEndpointConnections;
+            EnforceDataIntegrityCheckForIscsi = enforceDataIntegrityCheckForIscsi;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -107,5 +109,7 @@ namespace Azure.ResourceManager.ElasticSan
 
         /// <summary> The list of Private Endpoint Connections. </summary>
         public IReadOnlyList<ElasticSanPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary> A boolean indicating whether or not Data Integrity Check is enabled. </summary>
+        public bool? EnforceDataIntegrityCheckForIscsi { get; set; }
     }
 }

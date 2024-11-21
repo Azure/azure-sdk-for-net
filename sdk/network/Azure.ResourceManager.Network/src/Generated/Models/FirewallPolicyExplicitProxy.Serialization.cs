@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Network.Models
 
         void IJsonModel<FirewallPolicyExplicitProxy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyExplicitProxy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(EnableExplicitProxy))
             {
                 if (EnableExplicitProxy != null)
@@ -85,7 +93,6 @@ namespace Azure.ResourceManager.Network.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FirewallPolicyExplicitProxy IJsonModel<FirewallPolicyExplicitProxy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

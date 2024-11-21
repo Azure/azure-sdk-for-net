@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
         }
 
         /// <summary> Contains the REP (rendezvous endpoint) and “Sender” access token. </summary>
+        [WirePath("hybridConnectionConfig")]
         public HybridConnectionConfig HybridConnectionConfig { get; }
         /// <summary> Base64-encoded Kubernetes configuration file. </summary>
+        [WirePath("kubeconfigs")]
         public IReadOnlyList<CredentialResult> Kubeconfigs { get; }
     }
 }

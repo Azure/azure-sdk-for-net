@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(MatchProcessingBehavior left, MatchProcessingBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MatchProcessingBehavior"/> values are not the same. </summary>
         public static bool operator !=(MatchProcessingBehavior left, MatchProcessingBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MatchProcessingBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MatchProcessingBehavior"/>. </summary>
         public static implicit operator MatchProcessingBehavior(string value) => new MatchProcessingBehavior(value);
 
         /// <inheritdoc />

@@ -5,26 +5,11 @@
       <example>
 This sample shows how to call AnalyzeTextAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-AnalyzeTextOptions options = new AnalyzeTextOptions("<text>");
-Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(options);
-]]></code>
-This sample shows how to call AnalyzeTextAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
-
-AnalyzeTextOptions options = new AnalyzeTextOptions("<text>")
-{
-    Categories = { TextCategory.Hate },
-    BlocklistNames = { "<blocklistNames>" },
-    HaltOnBlocklistHit = true,
-    OutputType = AnalyzeTextOutputType.FourSeverityLevels,
-};
+AnalyzeTextOptions options = new AnalyzeTextOptions("This is text example");
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(options);
 ]]></code></example>
     </member>
@@ -32,26 +17,11 @@ Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(options);
       <example>
 This sample shows how to call AnalyzeText.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-AnalyzeTextOptions options = new AnalyzeTextOptions("<text>");
-Response<AnalyzeTextResult> response = client.AnalyzeText(options);
-]]></code>
-This sample shows how to call AnalyzeText with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
-
-AnalyzeTextOptions options = new AnalyzeTextOptions("<text>")
-{
-    Categories = { TextCategory.Hate },
-    BlocklistNames = { "<blocklistNames>" },
-    HaltOnBlocklistHit = true,
-    OutputType = AnalyzeTextOutputType.FourSeverityLevels,
-};
+AnalyzeTextOptions options = new AnalyzeTextOptions("This is text example");
 Response<AnalyzeTextResult> response = client.AnalyzeText(options);
 ]]></code></example>
     </member>
@@ -59,118 +29,47 @@ Response<AnalyzeTextResult> response = client.AnalyzeText(options);
       <example>
 This sample shows how to call AnalyzeTextAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    text = "<text>",
+    text = "This is text example",
 });
 Response response = await client.AnalyzeTextAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
-]]></code>
-This sample shows how to call AnalyzeTextAsync with all request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    text = "<text>",
-    categories = new object[]
-    {
-        "Hate"
-    },
-    blocklistNames = new object[]
-    {
-        "<blocklistNames>"
-    },
-    haltOnBlocklistHit = true,
-    outputType = "FourSeverityLevels",
-});
-Response response = await client.AnalyzeTextAsync(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("blocklistsMatch")[0].GetProperty("blocklistName").ToString());
-Console.WriteLine(result.GetProperty("blocklistsMatch")[0].GetProperty("blocklistItemId").ToString());
-Console.WriteLine(result.GetProperty("blocklistsMatch")[0].GetProperty("blocklistItemText").ToString());
-Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("severity").ToString());
 ]]></code></example>
     </member>
     <member name="AnalyzeText(RequestContent,RequestContext)">
       <example>
 This sample shows how to call AnalyzeText and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    text = "<text>",
+    text = "This is text example",
 });
 Response response = client.AnalyzeText(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
-]]></code>
-This sample shows how to call AnalyzeText with all request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    text = "<text>",
-    categories = new object[]
-    {
-        "Hate"
-    },
-    blocklistNames = new object[]
-    {
-        "<blocklistNames>"
-    },
-    haltOnBlocklistHit = true,
-    outputType = "FourSeverityLevels",
-});
-Response response = client.AnalyzeText(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("blocklistsMatch")[0].GetProperty("blocklistName").ToString());
-Console.WriteLine(result.GetProperty("blocklistsMatch")[0].GetProperty("blocklistItemId").ToString());
-Console.WriteLine(result.GetProperty("blocklistsMatch")[0].GetProperty("blocklistItemText").ToString());
-Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("severity").ToString());
 ]]></code></example>
     </member>
     <member name="AnalyzeImageAsync(AnalyzeImageOptions,CancellationToken)">
       <example>
 This sample shows how to call AnalyzeImageAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
 AnalyzeImageOptions options = new AnalyzeImageOptions(new ContentSafetyImageData());
-Response<AnalyzeImageResult> response = await client.AnalyzeImageAsync(options);
-]]></code>
-This sample shows how to call AnalyzeImageAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
-
-AnalyzeImageOptions options = new AnalyzeImageOptions(new ContentSafetyImageData())
-{
-    Categories = { ImageCategory.Hate },
-    OutputType = AnalyzeImageOutputType.FourSeverityLevels,
-};
 Response<AnalyzeImageResult> response = await client.AnalyzeImageAsync(options);
 ]]></code></example>
     </member>
@@ -178,24 +77,11 @@ Response<AnalyzeImageResult> response = await client.AnalyzeImageAsync(options);
       <example>
 This sample shows how to call AnalyzeImage.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
 AnalyzeImageOptions options = new AnalyzeImageOptions(new ContentSafetyImageData());
-Response<AnalyzeImageResult> response = client.AnalyzeImage(options);
-]]></code>
-This sample shows how to call AnalyzeImage with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
-
-AnalyzeImageOptions options = new AnalyzeImageOptions(new ContentSafetyImageData())
-{
-    Categories = { ImageCategory.Hate },
-    OutputType = AnalyzeImageOutputType.FourSeverityLevels,
-};
 Response<AnalyzeImageResult> response = client.AnalyzeImage(options);
 ]]></code></example>
     </member>
@@ -203,22 +89,7 @@ Response<AnalyzeImageResult> response = client.AnalyzeImage(options);
       <example>
 This sample shows how to call AnalyzeImageAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    image = new object(),
-});
-Response response = await client.AnalyzeImageAsync(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
-]]></code>
-This sample shows how to call AnalyzeImageAsync with all request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -226,42 +97,20 @@ using RequestContent content = RequestContent.Create(new
 {
     image = new
     {
-        content = new object(),
-        blobUrl = "http://localhost:3000",
+        content = "Y29udGVudDE=",
     },
-    categories = new object[]
-    {
-        "Hate"
-    },
-    outputType = "FourSeverityLevels",
 });
 Response response = await client.AnalyzeImageAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("severity").ToString());
 ]]></code></example>
     </member>
     <member name="AnalyzeImage(RequestContent,RequestContext)">
       <example>
 This sample shows how to call AnalyzeImage and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    image = new object(),
-});
-Response response = client.AnalyzeImage(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
-]]></code>
-This sample shows how to call AnalyzeImage with all request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -269,20 +118,13 @@ using RequestContent content = RequestContent.Create(new
 {
     image = new
     {
-        content = new object(),
-        blobUrl = "http://localhost:3000",
+        content = "Y29udGVudDE=",
     },
-    categories = new object[]
-    {
-        "Hate"
-    },
-    outputType = "FourSeverityLevels",
 });
 Response response = client.AnalyzeImage(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("severity").ToString());
 ]]></code></example>
     </member>
   </members>

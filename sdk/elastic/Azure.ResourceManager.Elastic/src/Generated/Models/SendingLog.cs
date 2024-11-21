@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static bool operator ==(SendingLog left, SendingLog right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SendingLog"/> values are not the same. </summary>
         public static bool operator !=(SendingLog left, SendingLog right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SendingLog"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SendingLog"/>. </summary>
         public static implicit operator SendingLog(string value) => new SendingLog(value);
 
         /// <inheritdoc />

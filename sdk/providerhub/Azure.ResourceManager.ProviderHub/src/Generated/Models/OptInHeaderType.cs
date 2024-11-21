@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static bool operator ==(OptInHeaderType left, OptInHeaderType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OptInHeaderType"/> values are not the same. </summary>
         public static bool operator !=(OptInHeaderType left, OptInHeaderType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OptInHeaderType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OptInHeaderType"/>. </summary>
         public static implicit operator OptInHeaderType(string value) => new OptInHeaderType(value);
 
         /// <inheritdoc />

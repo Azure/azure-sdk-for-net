@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Quantum.Models
 
         void IJsonModel<ProviderTargetDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ProviderTargetDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProviderTargetDescription)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -76,7 +84,6 @@ namespace Azure.ResourceManager.Quantum.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ProviderTargetDescription IJsonModel<ProviderTargetDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

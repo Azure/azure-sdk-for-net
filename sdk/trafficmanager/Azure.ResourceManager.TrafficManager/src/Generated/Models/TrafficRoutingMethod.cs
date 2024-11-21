@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator ==(TrafficRoutingMethod left, TrafficRoutingMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficRoutingMethod"/> values are not the same. </summary>
         public static bool operator !=(TrafficRoutingMethod left, TrafficRoutingMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TrafficRoutingMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TrafficRoutingMethod"/>. </summary>
         public static implicit operator TrafficRoutingMethod(string value) => new TrafficRoutingMethod(value);
 
         /// <inheritdoc />

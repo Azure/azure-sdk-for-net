@@ -20,58 +20,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<AzureTableStorageLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AzureTableStorageLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureTableStorageLinkedService)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
-            {
-                writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia, options);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteStartObject();
-                foreach (var item in Parameters)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Annotations))
-            {
-                writer.WritePropertyName("annotations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Annotations)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndArray();
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectionString))
@@ -99,6 +63,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
             }
+            if (Optional.IsDefined(ServiceEndpoint))
+            {
+                writer.WritePropertyName("serviceEndpoint"u8);
+                JsonSerializer.Serialize(writer, ServiceEndpoint);
+            }
+            if (Optional.IsDefined(Credential))
+            {
+                writer.WritePropertyName("credential"u8);
+                writer.WriteObjectValue(Credential, options);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -112,7 +86,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         AzureTableStorageLinkedService IJsonModel<AzureTableStorageLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -136,6 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
+            string version = default;
             IntegrationRuntimeReference connectVia = default;
             string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
@@ -145,6 +119,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> sasUri = default;
             DataFactoryKeyVaultSecret sasToken = default;
             string encryptedCredential = default;
+            DataFactoryElement<string> serviceEndpoint = default;
+            DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,6 +128,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("connectVia"u8))
@@ -253,6 +234,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                             encryptedCredential = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("serviceEndpoint"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serviceEndpoint = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("credential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -261,6 +260,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureTableStorageLinkedService(
                 type,
+                version,
                 connectVia,
                 description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
@@ -270,7 +270,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 accountKey,
                 sasUri,
                 sasToken,
-                encryptedCredential);
+                encryptedCredential,
+                serviceEndpoint,
+                credential);
         }
 
         BinaryData IPersistableModel<AzureTableStorageLinkedService>.Write(ModelReaderWriterOptions options)

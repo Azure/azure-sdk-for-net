@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.ComputeFleet.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Compute" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+  </ItemGroup>
+</Project>

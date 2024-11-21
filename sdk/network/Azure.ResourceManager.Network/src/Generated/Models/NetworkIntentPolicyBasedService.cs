@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(NetworkIntentPolicyBasedService left, NetworkIntentPolicyBasedService right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkIntentPolicyBasedService"/> values are not the same. </summary>
         public static bool operator !=(NetworkIntentPolicyBasedService left, NetworkIntentPolicyBasedService right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkIntentPolicyBasedService"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkIntentPolicyBasedService"/>. </summary>
         public static implicit operator NetworkIntentPolicyBasedService(string value) => new NetworkIntentPolicyBasedService(value);
 
         /// <inheritdoc />

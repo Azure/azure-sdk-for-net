@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(RackSkuType left, RackSkuType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RackSkuType"/> values are not the same. </summary>
         public static bool operator !=(RackSkuType left, RackSkuType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RackSkuType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RackSkuType"/>. </summary>
         public static implicit operator RackSkuType(string value) => new RackSkuType(value);
 
         /// <inheritdoc />

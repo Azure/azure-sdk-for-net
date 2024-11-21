@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(VpnClientProtocol left, VpnClientProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VpnClientProtocol"/> values are not the same. </summary>
         public static bool operator !=(VpnClientProtocol left, VpnClientProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VpnClientProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VpnClientProtocol"/>. </summary>
         public static implicit operator VpnClientProtocol(string value) => new VpnClientProtocol(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(ViewMetricType left, ViewMetricType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ViewMetricType"/> values are not the same. </summary>
         public static bool operator !=(ViewMetricType left, ViewMetricType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ViewMetricType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ViewMetricType"/>. </summary>
         public static implicit operator ViewMetricType(string value) => new ViewMetricType(value);
 
         /// <inheritdoc />

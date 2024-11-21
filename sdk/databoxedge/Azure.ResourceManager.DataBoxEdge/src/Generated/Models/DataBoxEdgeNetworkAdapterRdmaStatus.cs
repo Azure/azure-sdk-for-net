@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(DataBoxEdgeNetworkAdapterRdmaStatus left, DataBoxEdgeNetworkAdapterRdmaStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkAdapterRdmaStatus"/> values are not the same. </summary>
         public static bool operator !=(DataBoxEdgeNetworkAdapterRdmaStatus left, DataBoxEdgeNetworkAdapterRdmaStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeNetworkAdapterRdmaStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeNetworkAdapterRdmaStatus"/>. </summary>
         public static implicit operator DataBoxEdgeNetworkAdapterRdmaStatus(string value) => new DataBoxEdgeNetworkAdapterRdmaStatus(value);
 
         /// <inheritdoc />

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         void IJsonModel<ContainerRegistryWebhookEventContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookEventContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -76,7 +85,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerRegistryWebhookEventContent IJsonModel<ContainerRegistryWebhookEventContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -186,6 +194,138 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timestamp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    builder.Append("  timestamp: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Action), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  action: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Action))
+                {
+                    builder.Append("  action: ");
+                    if (Action.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Action}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Action}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Target), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  target: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Target))
+                {
+                    builder.Append("  target: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Target, options, 2, false, "  target: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Request), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  request: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Request))
+                {
+                    builder.Append("  request: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Request, options, 2, false, "  request: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ActorName", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actor: ");
+                builder.AppendLine("{");
+                builder.Append("    name: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Actor))
+                {
+                    builder.Append("  actor: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Actor, options, 2, false, "  actor: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  source: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Source))
+                {
+                    builder.Append("  source: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Source, options, 2, false, "  source: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerRegistryWebhookEventContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookEventContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -194,6 +334,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventContent)} does not support writing '{options.Format}' format.");
             }

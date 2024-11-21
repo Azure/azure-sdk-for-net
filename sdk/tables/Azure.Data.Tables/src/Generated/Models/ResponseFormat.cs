@@ -33,7 +33,7 @@ namespace Azure.Data.Tables.Models
         public static bool operator ==(ResponseFormat left, ResponseFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResponseFormat"/> values are not the same. </summary>
         public static bool operator !=(ResponseFormat left, ResponseFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResponseFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResponseFormat"/>. </summary>
         public static implicit operator ResponseFormat(string value) => new ResponseFormat(value);
 
         /// <inheritdoc />

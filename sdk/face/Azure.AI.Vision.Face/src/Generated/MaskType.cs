@@ -39,7 +39,7 @@ namespace Azure.AI.Vision.Face
         public static bool operator ==(MaskType left, MaskType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaskType"/> values are not the same. </summary>
         public static bool operator !=(MaskType left, MaskType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MaskType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MaskType"/>. </summary>
         public static implicit operator MaskType(string value) => new MaskType(value);
 
         /// <inheritdoc />

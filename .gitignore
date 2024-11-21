@@ -140,7 +140,7 @@ Backup*/
 UpgradeLog*.XML
 
 # NuGet
-packages
+# packages
 packages/repositories.config
 testPackages
 
@@ -164,6 +164,7 @@ pingme.txt
 # TS/Node files
 dist/
 node_modules/
+eng/packages/**/*.tgz
 
 # MSBuild binary log files
 msbuild.binlog
@@ -176,3 +177,6 @@ artifacts
 
 # Temporary typespec folders for typespec generation
 TempTypeSpecFiles/
+
+# Common toolchain intermediate files
+temp

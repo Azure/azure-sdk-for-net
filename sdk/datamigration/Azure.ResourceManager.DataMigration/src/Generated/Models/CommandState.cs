@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(CommandState left, CommandState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommandState"/> values are not the same. </summary>
         public static bool operator !=(CommandState left, CommandState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CommandState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CommandState"/>. </summary>
         public static implicit operator CommandState(string value) => new CommandState(value);
 
         /// <inheritdoc />

@@ -15,8 +15,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task AnalyzeWithPrebuiltModelFromUriAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 #if SNIPPET

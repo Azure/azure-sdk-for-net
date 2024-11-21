@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(WebAppParameterType left, WebAppParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebAppParameterType"/> values are not the same. </summary>
         public static bool operator !=(WebAppParameterType left, WebAppParameterType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebAppParameterType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebAppParameterType"/>. </summary>
         public static implicit operator WebAppParameterType(string value) => new WebAppParameterType(value);
 
         /// <inheritdoc />

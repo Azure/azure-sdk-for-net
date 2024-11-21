@@ -20,19 +20,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningCodeContainerProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="provisioningState"> Provisioning state for the code container. </param>
-        internal MachineLearningCodeContainerProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isArchived, string latestVersion, string nextVersion, RegistryAssetProvisioningState? provisioningState) : base(description, properties, tags, serializedAdditionalRawData, isArchived, latestVersion, nextVersion)
+        internal MachineLearningCodeContainerProperties(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isArchived, string latestVersion, string nextVersion, RegistryAssetProvisioningState? provisioningState) : base(description, tags, properties, serializedAdditionalRawData, isArchived, latestVersion, nextVersion)
         {
             ProvisioningState = provisioningState;
         }
 
         /// <summary> Provisioning state for the code container. </summary>
+        [WirePath("provisioningState")]
         public RegistryAssetProvisioningState? ProvisioningState { get; }
     }
 }

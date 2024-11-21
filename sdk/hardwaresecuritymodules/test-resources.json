@@ -33,7 +33,8 @@
       "allowedValues": [
         "ukwest",
         "centraluseuap",
-        "eastus"
+        "eastus",
+        "australiacentral"
       ],
       "metadata": {
         "description": "The location of the resource. The default is ukwest."
@@ -83,9 +84,9 @@
     }
   },
   "variables": {
-    "cloudHsmApiVersion": "2023-12-10-preview",
+    "cloudHsmApiVersion": "2024-06-30-preview",
     "cloudHsmName": "sdk-test-chsm",
-    "dedicatedhsmApiVersion": "2021-11-30",
+    "dedicatedhsmApiVersion": "2024-06-30-preview",
     "dedicatedHsmName": "sdk-test-dhsm",
     "contributorRoleId": "b24988ac-6180-42a0-ab88-20f7382dd24c",
     "vmName": "dhsm-vnet"

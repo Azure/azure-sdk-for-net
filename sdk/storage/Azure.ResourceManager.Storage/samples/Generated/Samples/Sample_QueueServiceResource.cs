@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Samples
 {
     public partial class Sample_QueueServiceResource
     {
-        // QueueServicesPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_QueueServicesPut()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueServicesPut.json
@@ -90,9 +90,8 @@ CorsRuleAllowedMethod.Get,CorsRuleAllowedMethod.Put
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QueueServicesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_QueueServicesGet()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueServicesGet.json

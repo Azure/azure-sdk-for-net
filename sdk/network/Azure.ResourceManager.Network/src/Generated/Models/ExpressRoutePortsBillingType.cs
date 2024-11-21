@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ExpressRoutePortsBillingType left, ExpressRoutePortsBillingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRoutePortsBillingType"/> values are not the same. </summary>
         public static bool operator !=(ExpressRoutePortsBillingType left, ExpressRoutePortsBillingType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExpressRoutePortsBillingType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRoutePortsBillingType"/>. </summary>
         public static implicit operator ExpressRoutePortsBillingType(string value) => new ExpressRoutePortsBillingType(value);
 
         /// <inheritdoc />

@@ -11,23 +11,22 @@ namespace Azure.Storage.DataMovement
 {
     internal static partial class CheckpointerExtensions
     {
-        internal static TransferCheckpointer GetCheckpointer(this TransferCheckpointStoreOptions options)
+        internal static ITransferCheckpointer BuildCheckpointer(TransferCheckpointStoreOptions options)
         {
-            if (!string.IsNullOrEmpty(options?.CheckpointerPath))
+            if (options?.Enabled == false)
             {
-                return new LocalTransferCheckpointer(options.CheckpointerPath);
+                return new DisabledTransferCheckpointer();
             }
             else
             {
-                // Default TransferCheckpointer
-                return new LocalTransferCheckpointer(default);
+                return new LocalTransferCheckpointer(options?.CheckpointerPath);
             }
         }
 
         internal static bool IsLocalResource(this StorageResource resource) => resource.Uri.IsFile;
 
         internal static async Task<DataTransferStatus> GetJobStatusAsync(
-            this TransferCheckpointer checkpointer,
+            this SerializerTransferCheckpointer checkpointer,
             string transferId,
             CancellationToken cancellationToken = default)
         {
@@ -44,7 +43,7 @@ namespace Azure.Storage.DataMovement
         }
 
         internal static async Task<bool> IsResumableAsync(
-            this TransferCheckpointer checkpointer,
+            this ITransferCheckpointer checkpointer,
             string transferId,
             CancellationToken cancellationToken)
         {
@@ -55,7 +54,7 @@ namespace Azure.Storage.DataMovement
         }
 
         internal static async Task<DataTransferProperties> GetDataTransferPropertiesAsync(
-            this TransferCheckpointer checkpointer,
+            this SerializerTransferCheckpointer checkpointer,
             string transferId,
             CancellationToken cancellationToken)
         {
@@ -83,7 +82,7 @@ namespace Azure.Storage.DataMovement
         }
 
         internal static async Task<bool> IsEnumerationCompleteAsync(
-            this TransferCheckpointer checkpointer,
+            this SerializerTransferCheckpointer checkpointer,
             string transferId,
             CancellationToken cancellationToken = default)
         {
@@ -98,7 +97,7 @@ namespace Azure.Storage.DataMovement
         }
 
         internal static async Task OnEnumerationCompleteAsync(
-            this TransferCheckpointer checkpointer,
+            this SerializerTransferCheckpointer checkpointer,
             string transferId,
             CancellationToken cancellationToken = default)
         {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(IPAddressDeleteOption left, IPAddressDeleteOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IPAddressDeleteOption"/> values are not the same. </summary>
         public static bool operator !=(IPAddressDeleteOption left, IPAddressDeleteOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IPAddressDeleteOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IPAddressDeleteOption"/>. </summary>
         public static implicit operator IPAddressDeleteOption(string value) => new IPAddressDeleteOption(value);
 
         /// <inheritdoc />

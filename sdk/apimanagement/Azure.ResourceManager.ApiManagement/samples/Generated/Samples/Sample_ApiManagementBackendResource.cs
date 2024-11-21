@@ -11,17 +11,17 @@ using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiManagementBackendResource
     {
-        // ApiManagementHeadBackend
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetEntityTag_ApiManagementHeadBackend()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementHeadBackend.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadBackend.json
             // this example is just showing the usage of "Backend_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementBackendResource created on azure
             // for more information of creating ApiManagementBackendResource, please refer to the document of ApiManagementBackendResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string backendId = "sfbackend";
@@ -44,12 +44,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementGetBackend
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetBackend()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementGetBackend.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetBackend.json
             // this example is just showing the usage of "Backend_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementBackendResource created on azure
             // for more information of creating ApiManagementBackendResource, please refer to the document of ApiManagementBackendResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string backendId = "sfbackend";
@@ -76,12 +75,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateBackend
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementUpdateBackend()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementUpdateBackend.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateBackend.json
             // this example is just showing the usage of "Backend_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementBackendResource created on azure
             // for more information of creating ApiManagementBackendResource, please refer to the document of ApiManagementBackendResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string backendId = "proxybackend";
@@ -118,12 +116,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementDeleteBackend
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteBackend()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementDeleteBackend.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteBackend.json
             // this example is just showing the usage of "Backend_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementBackendResource created on azure
             // for more information of creating ApiManagementBackendResource, please refer to the document of ApiManagementBackendResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string backendId = "sfbackend";
@@ -144,15 +141,14 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ETag ifMatch = new ETag("*");
             await apiManagementBackend.DeleteAsync(WaitUntil.Completed, ifMatch);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementBackendReconnect
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Reconnect_ApiManagementBackendReconnect()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementBackendReconnect.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementBackendReconnect.json
             // this example is just showing the usage of "Backend_Reconnect" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -162,7 +158,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementBackendResource created on azure
             // for more information of creating ApiManagementBackendResource, please refer to the document of ApiManagementBackendResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string backendId = "proxybackend";
@@ -176,7 +172,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             };
             await apiManagementBackend.ReconnectAsync(backendReconnectContract: backendReconnectContract);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

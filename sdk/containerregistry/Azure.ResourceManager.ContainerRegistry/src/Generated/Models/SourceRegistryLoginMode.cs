@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(SourceRegistryLoginMode left, SourceRegistryLoginMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceRegistryLoginMode"/> values are not the same. </summary>
         public static bool operator !=(SourceRegistryLoginMode left, SourceRegistryLoginMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SourceRegistryLoginMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceRegistryLoginMode"/>. </summary>
         public static implicit operator SourceRegistryLoginMode(string value) => new SourceRegistryLoginMode(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(AllowASOverride left, AllowASOverride right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AllowASOverride"/> values are not the same. </summary>
         public static bool operator !=(AllowASOverride left, AllowASOverride right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AllowASOverride"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AllowASOverride"/>. </summary>
         public static implicit operator AllowASOverride(string value) => new AllowASOverride(value);
 
         /// <inheritdoc />

@@ -95,30 +95,43 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         }
 
         /// <summary> Url of the SourceControl Repository. </summary>
+        [WirePath("properties.repositoryUrl")]
         public Uri RepositoryUri { get; set; }
         /// <summary> The namespace to which this operator is installed to. Maximum of 253 lower case alphanumeric characters, hyphen and period only. </summary>
+        [WirePath("properties.operatorNamespace")]
         public string OperatorNamespace { get; set; }
         /// <summary> Instance name of the operator - identifying the specific configuration. </summary>
+        [WirePath("properties.operatorInstanceName")]
         public string OperatorInstanceName { get; set; }
         /// <summary> Type of the operator. </summary>
+        [WirePath("properties.operatorType")]
         public KubernetesOperator? OperatorType { get; set; }
         /// <summary> Any Parameters for the Operator instance in string format. </summary>
+        [WirePath("properties.operatorParams")]
         public string OperatorParams { get; set; }
         /// <summary> Name-value pairs of protected configuration settings for the configuration. </summary>
+        [WirePath("properties.configurationProtectedSettings")]
         public IDictionary<string, string> ConfigurationProtectedSettings { get; }
         /// <summary> Scope at which the operator will be installed. </summary>
+        [WirePath("properties.operatorScope")]
         public KubernetesOperatorScope? OperatorScope { get; set; }
         /// <summary> Public Key associated with this SourceControl configuration (either generated within the cluster or provided by the user). </summary>
+        [WirePath("properties.repositoryPublicKey")]
         public string RepositoryPublicKey { get; }
         /// <summary> Base64-encoded known_hosts contents containing public SSH keys required to access private Git instances. </summary>
+        [WirePath("properties.sshKnownHostsContents")]
         public string SshKnownHostsContents { get; set; }
         /// <summary> Option to enable Helm Operator for this git configuration. </summary>
+        [WirePath("properties.enableHelmOperator")]
         public bool? IsHelmOperatorEnabled { get; set; }
         /// <summary> Properties for Helm operator. </summary>
+        [WirePath("properties.helmOperatorProperties")]
         public HelmOperatorProperties HelmOperatorProperties { get; set; }
         /// <summary> The provisioning state of the resource provider. </summary>
+        [WirePath("properties.provisioningState")]
         public KubernetesConfigurationProvisioningStateType? ProvisioningState { get; }
         /// <summary> Compliance Status of the Configuration. </summary>
+        [WirePath("properties.complianceStatus")]
         public KubernetesConfigurationComplianceStatus ComplianceStatus { get; }
     }
 }

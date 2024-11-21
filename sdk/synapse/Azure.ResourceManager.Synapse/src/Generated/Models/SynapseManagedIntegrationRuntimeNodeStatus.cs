@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseManagedIntegrationRuntimeNodeStatus left, SynapseManagedIntegrationRuntimeNodeStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseManagedIntegrationRuntimeNodeStatus"/> values are not the same. </summary>
         public static bool operator !=(SynapseManagedIntegrationRuntimeNodeStatus left, SynapseManagedIntegrationRuntimeNodeStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseManagedIntegrationRuntimeNodeStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseManagedIntegrationRuntimeNodeStatus"/>. </summary>
         public static implicit operator SynapseManagedIntegrationRuntimeNodeStatus(string value) => new SynapseManagedIntegrationRuntimeNodeStatus(value);
 
         /// <inheritdoc />

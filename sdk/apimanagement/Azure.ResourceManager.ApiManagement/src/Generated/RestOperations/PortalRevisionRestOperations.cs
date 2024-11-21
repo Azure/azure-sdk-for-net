@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01";
+            _apiVersion = apiVersion ?? "2023-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists developer portal's revisions. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter">
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists developer portal's revisions. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter">
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the developer portal revision specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the developer portal revision specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the developer portal's revision specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the developer portal's revision specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates a new developer portal's revision by running the portal's publishing. The `isCurrent` property indicates if the revision is publicly accessible. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates a new developer portal's revision by running the portal's publishing. The `isCurrent` property indicates if the revision is publicly accessible. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Updates the description of specified portal revision or makes it current. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Updates the description of specified portal revision or makes it current. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists developer portal's revisions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter">
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists developer portal's revisions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter">

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static bool operator ==(DeviceUpdateProvisioningState left, DeviceUpdateProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceUpdateProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(DeviceUpdateProvisioningState left, DeviceUpdateProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeviceUpdateProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceUpdateProvisioningState"/>. </summary>
         public static implicit operator DeviceUpdateProvisioningState(string value) => new DeviceUpdateProvisioningState(value);
 
         /// <inheritdoc />

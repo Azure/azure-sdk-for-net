@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static bool operator ==(ServerEndpointHealthState left, ServerEndpointHealthState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerEndpointHealthState"/> values are not the same. </summary>
         public static bool operator !=(ServerEndpointHealthState left, ServerEndpointHealthState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServerEndpointHealthState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServerEndpointHealthState"/>. </summary>
         public static implicit operator ServerEndpointHealthState(string value) => new ServerEndpointHealthState(value);
 
         /// <inheritdoc />

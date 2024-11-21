@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable Defender threat detection. </summary>
+        [WirePath("enabled")]
         public bool? IsSecurityMonitoringEnabled { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01";
+            _apiVersion = apiVersion ?? "2023-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists a collection of API Version Sets in the specified service instance. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists a collection of API Version Sets in the specified service instance. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;. </param>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the entity state (Etag) version of the Api Version Set specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the entity state (Etag) version of the Api Version Set specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the Api Version Set specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the Api Version Set specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates or Updates a Api Version Set. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates or Updates a Api Version Set. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Updates the details of the Api VersionSet specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Updates the details of the Api VersionSet specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes specific Api Version Set. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes specific Api Version Set. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists a collection of API Version Sets in the specified service instance. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;. </param>
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists a collection of API Version Sets in the specified service instance. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;. </param>

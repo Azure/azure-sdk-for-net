@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(ContainerRegistryCpuVariant left, ContainerRegistryCpuVariant right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryCpuVariant"/> values are not the same. </summary>
         public static bool operator !=(ContainerRegistryCpuVariant left, ContainerRegistryCpuVariant right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerRegistryCpuVariant"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryCpuVariant"/>. </summary>
         public static implicit operator ContainerRegistryCpuVariant(string value) => new ContainerRegistryCpuVariant(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator ==(PreferredAppGroupType left, PreferredAppGroupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PreferredAppGroupType"/> values are not the same. </summary>
         public static bool operator !=(PreferredAppGroupType left, PreferredAppGroupType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PreferredAppGroupType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PreferredAppGroupType"/>. </summary>
         public static implicit operator PreferredAppGroupType(string value) => new PreferredAppGroupType(value);
 
         /// <inheritdoc />

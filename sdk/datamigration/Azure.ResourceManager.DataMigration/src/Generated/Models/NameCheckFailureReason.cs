@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(NameCheckFailureReason left, NameCheckFailureReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NameCheckFailureReason"/> values are not the same. </summary>
         public static bool operator !=(NameCheckFailureReason left, NameCheckFailureReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NameCheckFailureReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NameCheckFailureReason"/>. </summary>
         public static implicit operator NameCheckFailureReason(string value) => new NameCheckFailureReason(value);
 
         /// <inheritdoc />

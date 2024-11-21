@@ -76,6 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("endpointInvocationDefinition")]
         public BinaryData EndpointInvocationDefinition { get; set; }
     }
 }

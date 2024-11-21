@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the min node count. </summary>
+        [WirePath("minNodeCount")]
         public int? MinNodeCount { get; set; }
         /// <summary> Gets or sets the is enabled. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> Gets or sets the max node count. </summary>
+        [WirePath("maxNodeCount")]
         public int? MaxNodeCount { get; set; }
     }
 }

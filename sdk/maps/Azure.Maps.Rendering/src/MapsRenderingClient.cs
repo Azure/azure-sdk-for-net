@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,7 +46,9 @@ namespace Azure.Maps.Rendering
             var options = new MapsRenderingClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
-            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+            var accept = options.AcceptMediaType.Value != "" ? options.AcceptMediaType : null;
+
+            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version, accept);
         }
 
         /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
@@ -59,7 +62,9 @@ namespace Azure.Maps.Rendering
             options ??= new MapsRenderingClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
-            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+            var accept = options.AcceptMediaType.Value != "" ? options.AcceptMediaType : null;
+
+            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version, accept);
         }
 
         /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
@@ -74,7 +79,9 @@ namespace Azure.Maps.Rendering
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://atlas.microsoft.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
-            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
+            var accept = options.AcceptMediaType.Value != "" ? options.AcceptMediaType : null;
+
+            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version, accept);
         }
 
         /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
@@ -90,7 +97,9 @@ namespace Azure.Maps.Rendering
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://atlas.microsoft.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
-            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
+            var accept = options.AcceptMediaType.Value != "" ? options.AcceptMediaType : null;
+
+            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version, accept);
         }
 
         /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
@@ -104,7 +113,9 @@ namespace Azure.Maps.Rendering
             var options = new MapsRenderingClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
-            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+            var accept = options.AcceptMediaType.Value != "" ? options.AcceptMediaType : null;
+
+            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version, accept);
         }
 
         /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
@@ -119,7 +130,9 @@ namespace Azure.Maps.Rendering
             options ??= new MapsRenderingClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
-            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+            var accept = options.AcceptMediaType.Value != "" ? options.AcceptMediaType : null;
+
+            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version, accept);
         }
 
         /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
@@ -132,7 +145,9 @@ namespace Azure.Maps.Rendering
         internal MapsRenderingClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, MapsRenderingClientOptions.ServiceVersion apiVersion = MapsRenderingClientOptions.LatestVersion)
         {
             var options = new MapsRenderingClientOptions(apiVersion);
-            restClient = new RenderRestClient(clientDiagnostics, pipeline, endpoint, clientId, options.Version);
+            var accept = options.AcceptMediaType.Value != "" ? options.AcceptMediaType : null;
+
+            restClient = new RenderRestClient(clientDiagnostics, pipeline, endpoint, clientId, options.Version, accept);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -189,9 +204,8 @@ namespace Azure.Maps.Rendering
                     }
                 }
                 var response = await restClient.GetMapStaticImageAsync(
-                    RasterTileFormat.Png,
-                    options?.MapImageLayer,
-                    options?.MapImageStyle,
+                    MapTileSetId.MicrosoftBaseRoad,
+                    TrafficTilesetId.MicrosoftTrafficRelativeMain,
                     options?.ZoomLevel,
                     coordinate,
                     boundingBox,
@@ -263,9 +277,8 @@ namespace Azure.Maps.Rendering
                     }
                 }
                 var response = restClient.GetMapStaticImage(
-                    RasterTileFormat.Png,
-                    options?.MapImageLayer,
-                    options?.MapImageStyle,
+                    MapTileSetId.MicrosoftBaseRoad,
+                    TrafficTilesetId.MicrosoftTrafficRelativeMain,
                     options?.ZoomLevel,
                     coordinate,
                     boundingBox,
@@ -361,12 +374,17 @@ namespace Azure.Maps.Rendering
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
+                string language = null;
+                if (options?.Language != null)
+                {
+                    language = options.Language.ToString();
+                }
                 var response = await restClient.GetMapTileAsync(
                     options.MapTileSetId,
                     options?.MapTileIndex,
                     options?.TimeStamp,
                     options?.MapTileSize,
-                    options?.Language.ToString(),
+                    language,
                     localizedMapView,
                     cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
@@ -398,12 +416,17 @@ namespace Azure.Maps.Rendering
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
+                string language = null;
+                if (options?.Language != null)
+                {
+                    language = options.Language.ToString();
+                }
                 var response = restClient.GetMapTile(
                     options.MapTileSetId,
                     options?.MapTileIndex,
                     options?.TimeStamp,
                     options?.MapTileSize,
-                    options?.Language.ToString(),
+                    language,
                     localizedMapView,
                     cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(MapperPolicyRecurrenceFrequencyType left, MapperPolicyRecurrenceFrequencyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapperPolicyRecurrenceFrequencyType"/> values are not the same. </summary>
         public static bool operator !=(MapperPolicyRecurrenceFrequencyType left, MapperPolicyRecurrenceFrequencyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MapperPolicyRecurrenceFrequencyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MapperPolicyRecurrenceFrequencyType"/>. </summary>
         public static implicit operator MapperPolicyRecurrenceFrequencyType(string value) => new MapperPolicyRecurrenceFrequencyType(value);
 
         /// <inheritdoc />

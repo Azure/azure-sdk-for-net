@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +21,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<MachineLearningInstanceTypeSchemaResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningInstanceTypeSchemaResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningInstanceTypeSchemaResources)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
@@ -63,7 +73,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MachineLearningInstanceTypeSchemaResources IJsonModel<MachineLearningInstanceTypeSchemaResources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -129,6 +138,95 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningInstanceTypeSchemaResources(requests ?? new ChangeTrackingDictionary<string, string>(), limits ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Requests), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requests: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Requests))
+                {
+                    if (Requests.Any())
+                    {
+                        builder.Append("  requests: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Requests)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Limits), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  limits: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Limits))
+                {
+                    if (Limits.Any())
+                    {
+                        builder.Append("  limits: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Limits)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MachineLearningInstanceTypeSchemaResources>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningInstanceTypeSchemaResources>)this).GetFormatFromOptions(options) : options.Format;
@@ -137,6 +235,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningInstanceTypeSchemaResources)} does not support writing '{options.Format}' format.");
             }

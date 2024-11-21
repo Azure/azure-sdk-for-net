@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Logic.Models
 
         void IJsonModel<IntegrationServiceEnvironmenEncryptionKeyReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmenEncryptionKeyReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IntegrationServiceEnvironmenEncryptionKeyReference)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(KeyVault))
             {
                 writer.WritePropertyName("keyVault"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Logic.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         IntegrationServiceEnvironmenEncryptionKeyReference IJsonModel<IntegrationServiceEnvironmenEncryptionKeyReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

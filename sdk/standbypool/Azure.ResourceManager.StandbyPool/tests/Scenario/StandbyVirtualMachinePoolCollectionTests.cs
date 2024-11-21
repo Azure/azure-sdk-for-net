@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
     public class StandbyVirtualMachinePoolCollectionTests : StandbyVirtualMachinePoolTestBase
     {
         public StandbyVirtualMachinePoolCollectionTests(bool isAsync)
-            : base(isAsync) //, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         [RecordedTest]
         public async Task ListStandbyVirtualMachinePoolBySubscription()
         {
-            string resourceGroupName = Recording.GenerateAssetName("standbyPoolRG-");
+            string resourceGroupName = Recording.GenerateAssetName("standbyPoolRG-ru-");
             ResourceGroupResource resourceGroup = await CreateResourceGroup(subscription, resourceGroupName, location);
             await this.CreateResources(resourceGroup);
 

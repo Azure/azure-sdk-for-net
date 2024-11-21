@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> The email of the user. </summary>
+        [WirePath("email")]
         public string Email { get; }
         /// <summary> The name of the user. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The object id of the user. </summary>
+        [WirePath("objectId")]
         public Guid? ObjectId { get; set; }
     }
 }

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Support.Models
 
         void IJsonModel<SupportEngineer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SupportEngineer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SupportEngineer)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(EmailAddress))
             {
                 writer.WritePropertyName("emailAddress"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.Support.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SupportEngineer IJsonModel<SupportEngineer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

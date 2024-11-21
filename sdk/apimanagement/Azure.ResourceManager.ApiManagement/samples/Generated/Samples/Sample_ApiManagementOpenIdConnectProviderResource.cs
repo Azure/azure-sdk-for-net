@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiManagementOpenIdConnectProviderResource
     {
-        // ApiManagementHeadOpenIdConnectProvider
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetEntityTag_ApiManagementHeadOpenIdConnectProvider()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementHeadOpenIdConnectProvider.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadOpenIdConnectProvider.json
             // this example is just showing the usage of "OpenIdConnectProvider_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementOpenIdConnectProviderResource created on azure
             // for more information of creating ApiManagementOpenIdConnectProviderResource, please refer to the document of ApiManagementOpenIdConnectProviderResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string openId = "templateOpenIdConnect2";
@@ -43,12 +43,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementGetOpenIdConnectProvider
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetOpenIdConnectProvider()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementGetOpenIdConnectProvider.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetOpenIdConnectProvider.json
             // this example is just showing the usage of "OpenIdConnectProvider_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementOpenIdConnectProviderResource created on azure
             // for more information of creating ApiManagementOpenIdConnectProviderResource, please refer to the document of ApiManagementOpenIdConnectProviderResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string openId = "templateOpenIdConnect2";
@@ -75,12 +74,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateOpenIdConnectProvider
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementUpdateOpenIdConnectProvider()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementUpdateOpenIdConnectProvider.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateOpenIdConnectProvider.json
             // this example is just showing the usage of "OpenIdConnectProvider_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementOpenIdConnectProviderResource created on azure
             // for more information of creating ApiManagementOpenIdConnectProviderResource, please refer to the document of ApiManagementOpenIdConnectProviderResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string openId = "templateOpenIdConnect2";
@@ -114,12 +112,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementDeleteOpenIdConnectProvider
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteOpenIdConnectProvider()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementDeleteOpenIdConnectProvider.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteOpenIdConnectProvider.json
             // this example is just showing the usage of "OpenIdConnectProvider_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementOpenIdConnectProviderResource created on azure
             // for more information of creating ApiManagementOpenIdConnectProviderResource, please refer to the document of ApiManagementOpenIdConnectProviderResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string openId = "templateOpenIdConnect3";
@@ -140,15 +137,14 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ETag ifMatch = new ETag("*");
             await apiManagementOpenIdConnectProvider.DeleteAsync(WaitUntil.Completed, ifMatch);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementOpenidConnectProviderListSecrets
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSecrets_ApiManagementOpenidConnectProviderListSecrets()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementOpenidConnectProviderListSecrets.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementOpenidConnectProviderListSecrets.json
             // this example is just showing the usage of "OpenIdConnectProvider_ListSecrets" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -158,7 +154,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // this example assumes you already have this ApiManagementOpenIdConnectProviderResource created on azure
             // for more information of creating ApiManagementOpenIdConnectProviderResource, please refer to the document of ApiManagementOpenIdConnectProviderResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string openId = "templateOpenIdConnect2";

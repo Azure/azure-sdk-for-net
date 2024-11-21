@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator ==(AdvancedThreatProtectionName left, AdvancedThreatProtectionName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdvancedThreatProtectionName"/> values are not the same. </summary>
         public static bool operator !=(AdvancedThreatProtectionName left, AdvancedThreatProtectionName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AdvancedThreatProtectionName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AdvancedThreatProtectionName"/>. </summary>
         public static implicit operator AdvancedThreatProtectionName(string value) => new AdvancedThreatProtectionName(value);
 
         /// <inheritdoc />

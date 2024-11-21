@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Specifies whether to enable Windows gMSA in the managed cluster. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> Specifies the DNS server for Windows gMSA. &lt;br&gt;&lt;br&gt; Set it to empty if you have configured the DNS server in the vnet which is used to create the managed cluster. </summary>
+        [WirePath("dnsServer")]
         public string DnsServer { get; set; }
         /// <summary> Specifies the root domain name for Windows gMSA. &lt;br&gt;&lt;br&gt; Set it to empty if you have configured the DNS server in the vnet which is used to create the managed cluster. </summary>
+        [WirePath("rootDomainName")]
         public string RootDomainName { get; set; }
     }
 }

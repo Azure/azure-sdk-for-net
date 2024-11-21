@@ -1,14 +1,29 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2024-10-18)
+
+### Features Added
+- Added support for additional media message types: documents, videos, and audio.
+- Introduced the following new models for enhanced media notifications:
+  - `DocumentNotificationContent`: for sending document notifications.
+  - `VideoNotificationContent`: for sending video notifications.
+  - `AudioNotificationContent`: for sending audio notifications.
+  - `ImageNotificationContent`: for sending image notifications.
+
+### Other Changes
+- The `MediaNotificationContent` model, previously used for sending image notifications, is being deprecated. A deprecation warning will inform users to transition to the new `ImageNotificationContent` model for future use.
 
 ## 1.0.0 (2024-02-29)
 

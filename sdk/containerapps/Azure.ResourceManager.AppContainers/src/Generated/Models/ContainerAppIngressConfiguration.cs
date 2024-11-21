@@ -88,26 +88,36 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Hostname. </summary>
+        [WirePath("fqdn")]
         public string Fqdn { get; }
         /// <summary> Bool indicating if app exposes an external http endpoint. </summary>
+        [WirePath("external")]
         public bool? External { get; set; }
         /// <summary> Target Port in containers for traffic from ingress. </summary>
+        [WirePath("targetPort")]
         public int? TargetPort { get; set; }
         /// <summary> Exposed Port in containers for TCP traffic from ingress. </summary>
+        [WirePath("exposedPort")]
         public int? ExposedPort { get; set; }
         /// <summary> Ingress transport protocol. </summary>
+        [WirePath("transport")]
         public ContainerAppIngressTransportMethod? Transport { get; set; }
         /// <summary> Traffic weights for app's revisions. </summary>
+        [WirePath("traffic")]
         public IList<ContainerAppRevisionTrafficWeight> Traffic { get; }
         /// <summary> custom domain bindings for Container Apps' hostnames. </summary>
+        [WirePath("customDomains")]
         public IList<ContainerAppCustomDomain> CustomDomains { get; }
         /// <summary> Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections. </summary>
+        [WirePath("allowInsecure")]
         public bool? AllowInsecure { get; set; }
         /// <summary> Rules to restrict incoming IP address. </summary>
+        [WirePath("ipSecurityRestrictions")]
         public IList<ContainerAppIPSecurityRestrictionRule> IPSecurityRestrictions { get; }
         /// <summary> Sticky Sessions for Single Revision Mode. </summary>
         internal IngressStickySessions StickySessions { get; set; }
         /// <summary> Sticky Session Affinity. </summary>
+        [WirePath("stickySessions.affinity")]
         public Affinity? StickySessionsAffinity
         {
             get => StickySessions is null ? default : StickySessions.Affinity;
@@ -120,10 +130,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Client certificate mode for mTLS authentication. Ignore indicates server drops client certificate on forwarding. Accept indicates server forwards client certificate but does not require a client certificate. Require indicates server requires a client certificate. </summary>
+        [WirePath("clientCertificateMode")]
         public ContainerAppIngressClientCertificateMode? ClientCertificateMode { get; set; }
         /// <summary> CORS policy for container app. </summary>
+        [WirePath("corsPolicy")]
         public ContainerAppCorsPolicy CorsPolicy { get; set; }
         /// <summary> Settings to expose additional ports on container app. </summary>
+        [WirePath("additionalPortMappings")]
         public IList<IngressPortMapping> AdditionalPortMappings { get; }
     }
 }

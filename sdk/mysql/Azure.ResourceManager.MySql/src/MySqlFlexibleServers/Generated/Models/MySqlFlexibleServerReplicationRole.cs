@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator ==(MySqlFlexibleServerReplicationRole left, MySqlFlexibleServerReplicationRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerReplicationRole"/> values are not the same. </summary>
         public static bool operator !=(MySqlFlexibleServerReplicationRole left, MySqlFlexibleServerReplicationRole right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerReplicationRole"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerReplicationRole"/>. </summary>
         public static implicit operator MySqlFlexibleServerReplicationRole(string value) => new MySqlFlexibleServerReplicationRole(value);
 
         /// <inheritdoc />

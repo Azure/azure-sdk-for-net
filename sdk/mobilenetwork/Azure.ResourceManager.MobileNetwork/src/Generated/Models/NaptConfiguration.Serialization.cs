@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         void IJsonModel<NaptConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NaptConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NaptConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
@@ -66,7 +75,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NaptConfiguration IJsonModel<NaptConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -158,6 +166,96 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Enabled))
+                {
+                    builder.Append("  enabled: ");
+                    builder.AppendLine($"'{Enabled.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PortRange), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  portRange: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PortRange))
+                {
+                    builder.Append("  portRange: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PortRange, options, 2, false, "  portRange: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PortReuseHoldTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  portReuseHoldTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PortReuseHoldTime))
+                {
+                    builder.Append("  portReuseHoldTime: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PortReuseHoldTime, options, 2, false, "  portReuseHoldTime: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PinholeLimits), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pinholeLimits: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PinholeLimits))
+                {
+                    builder.Append("  pinholeLimits: ");
+                    builder.AppendLine($"{PinholeLimits.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PinholeTimeouts), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pinholeTimeouts: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PinholeTimeouts))
+                {
+                    builder.Append("  pinholeTimeouts: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PinholeTimeouts, options, 2, false, "  pinholeTimeouts: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<NaptConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NaptConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -166,6 +264,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NaptConfiguration)} does not support writing '{options.Format}' format.");
             }

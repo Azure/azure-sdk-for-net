@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         void IJsonModel<EnableMigrationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<EnableMigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EnableMigrationProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("policyId"u8);
             writer.WriteStringValue(PolicyId);
             writer.WritePropertyName("providerSpecificDetails"u8);
@@ -45,7 +53,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EnableMigrationProperties IJsonModel<EnableMigrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "synapse/resource-manager" -AutoRestVersion "v2" -SpecsRepoBranch main

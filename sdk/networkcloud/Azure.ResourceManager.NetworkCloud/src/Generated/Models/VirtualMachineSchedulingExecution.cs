@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(VirtualMachineSchedulingExecution left, VirtualMachineSchedulingExecution right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachineSchedulingExecution"/> values are not the same. </summary>
         public static bool operator !=(VirtualMachineSchedulingExecution left, VirtualMachineSchedulingExecution right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualMachineSchedulingExecution"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineSchedulingExecution"/>. </summary>
         public static implicit operator VirtualMachineSchedulingExecution(string value) => new VirtualMachineSchedulingExecution(value);
 
         /// <inheritdoc />

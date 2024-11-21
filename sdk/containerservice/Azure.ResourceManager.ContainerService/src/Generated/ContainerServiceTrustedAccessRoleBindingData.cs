@@ -88,10 +88,13 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> The current provisioning state of trusted access role binding. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerServiceTrustedAccessRoleBindingProvisioningState? ProvisioningState { get; }
         /// <summary> The ARM resource ID of source resource that trusted access is configured for. </summary>
+        [WirePath("properties.sourceResourceId")]
         public ResourceIdentifier SourceResourceId { get; set; }
         /// <summary> A list of roles to bind, each item is a resource type qualified role name. For example: 'Microsoft.MachineLearningServices/workspaces/reader'. </summary>
+        [WirePath("properties.roles")]
         public IList<string> Roles { get; }
     }
 }

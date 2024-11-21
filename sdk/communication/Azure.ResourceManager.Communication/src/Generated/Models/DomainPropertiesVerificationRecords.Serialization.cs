@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.Communication.Models
 
         void IJsonModel<DomainPropertiesVerificationRecords>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DomainPropertiesVerificationRecords>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("Domain"u8);
@@ -66,7 +75,6 @@ namespace Azure.ResourceManager.Communication.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DomainPropertiesVerificationRecords IJsonModel<DomainPropertiesVerificationRecords>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -158,6 +166,96 @@ namespace Azure.ResourceManager.Communication.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Domain), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  Domain: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Domain))
+                {
+                    builder.Append("  Domain: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Domain, options, 2, false, "  Domain: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Spf), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  SPF: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Spf))
+                {
+                    builder.Append("  SPF: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Spf, options, 2, false, "  SPF: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dkim), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  DKIM: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Dkim))
+                {
+                    builder.Append("  DKIM: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Dkim, options, 2, false, "  DKIM: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dkim2), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  DKIM2: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Dkim2))
+                {
+                    builder.Append("  DKIM2: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Dkim2, options, 2, false, "  DKIM2: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dmarc), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  DMARC: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Dmarc))
+                {
+                    builder.Append("  DMARC: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Dmarc, options, 2, false, "  DMARC: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DomainPropertiesVerificationRecords>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DomainPropertiesVerificationRecords>)this).GetFormatFromOptions(options) : options.Format;
@@ -166,6 +264,8 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support writing '{options.Format}' format.");
             }

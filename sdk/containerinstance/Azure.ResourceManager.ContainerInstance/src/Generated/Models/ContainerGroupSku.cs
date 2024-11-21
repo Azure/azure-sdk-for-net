@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static bool operator ==(ContainerGroupSku left, ContainerGroupSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerGroupSku"/> values are not the same. </summary>
         public static bool operator !=(ContainerGroupSku left, ContainerGroupSku right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerGroupSku"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerGroupSku"/>. </summary>
         public static implicit operator ContainerGroupSku(string value) => new ContainerGroupSku(value);
 
         /// <inheritdoc />

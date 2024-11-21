@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Azure subscription ID of the resource. </summary>
+        [WirePath("azureSubscriptionId")]
         public string AzureSubscriptionId { get; set; }
         /// <summary> Azure Resource Group of the resource. </summary>
+        [WirePath("resourceGroupName")]
         public string ResourceGroupName { get; set; }
         /// <summary> UTC timestamp of when the resource was changed. </summary>
+        [WirePath("changedTimeUtc")]
         public DateTimeOffset? ChangedTimeUtc { get; set; }
     }
 }

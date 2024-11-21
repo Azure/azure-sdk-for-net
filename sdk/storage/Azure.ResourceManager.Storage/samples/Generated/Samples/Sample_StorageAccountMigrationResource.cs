@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Samples
 {
     public partial class Sample_StorageAccountMigrationResource
     {
-        // StorageAccountGetMigrationFailed
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetMigrationFailed()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetMigrationFailed.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountGetMigrationInProgress
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetMigrationInProgress()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetMigrationInProgress.json

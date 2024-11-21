@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The threshold value. If null, the set default is dependent on the metric type. </summary>
+        [WirePath("value")]
         public double? Value { get; set; }
     }
 }

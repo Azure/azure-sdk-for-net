@@ -30,7 +30,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static bool operator ==(GeoJsonGeometryType left, GeoJsonGeometryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GeoJsonGeometryType"/> values are not the same. </summary>
         public static bool operator !=(GeoJsonGeometryType left, GeoJsonGeometryType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GeoJsonGeometryType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GeoJsonGeometryType"/>. </summary>
         public static implicit operator GeoJsonGeometryType(string value) => new GeoJsonGeometryType(value);
 
         /// <inheritdoc />

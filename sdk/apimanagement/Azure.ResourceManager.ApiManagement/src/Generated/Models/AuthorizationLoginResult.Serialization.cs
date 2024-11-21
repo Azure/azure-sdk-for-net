@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         void IJsonModel<AuthorizationLoginResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationLoginResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AuthorizationLoginResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(LoginLink))
             {
                 writer.WritePropertyName("loginLink"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AuthorizationLoginResult IJsonModel<AuthorizationLoginResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> SKU parameters supplied to the create RedisEnterprise operation. </summary>
+    /// <summary> SKU parameters supplied to the create Redis Enterprise cluster operation. </summary>
     public partial class RedisEnterpriseSku
     {
         /// <summary>
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseSku"/>. </summary>
-        /// <param name="name"> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </param>
+        /// <param name="name"> The level of Redis Enterprise cluster to deploy. Possible values: ('Balanced_B5', 'MemoryOptimized_M10', 'ComputeOptimized_X5', etc.). For more information on SKUs see the latest pricing documentation. Note that additional SKUs may become supported in the future. </param>
         public RedisEnterpriseSku(RedisEnterpriseSkuName name)
         {
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseSku"/>. </summary>
-        /// <param name="name"> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </param>
-        /// <param name="capacity"> The size of the RedisEnterprise cluster. Defaults to 2 or 3 depending on SKU. Valid values are (2, 4, 6, ...) for Enterprise SKUs and (3, 9, 15, ...) for Flash SKUs. </param>
+        /// <param name="name"> The level of Redis Enterprise cluster to deploy. Possible values: ('Balanced_B5', 'MemoryOptimized_M10', 'ComputeOptimized_X5', etc.). For more information on SKUs see the latest pricing documentation. Note that additional SKUs may become supported in the future. </param>
+        /// <param name="capacity"> This property is only used with Enterprise and EnterpriseFlash SKUs. Determines the size of the cluster. Valid values are (2, 4, 6, ...) for Enterprise SKUs and (3, 9, 15, ...) for EnterpriseFlash SKUs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RedisEnterpriseSku(RedisEnterpriseSkuName name, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,9 +68,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         {
         }
 
-        /// <summary> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </summary>
+        /// <summary> The level of Redis Enterprise cluster to deploy. Possible values: ('Balanced_B5', 'MemoryOptimized_M10', 'ComputeOptimized_X5', etc.). For more information on SKUs see the latest pricing documentation. Note that additional SKUs may become supported in the future. </summary>
+        [WirePath("name")]
         public RedisEnterpriseSkuName Name { get; set; }
-        /// <summary> The size of the RedisEnterprise cluster. Defaults to 2 or 3 depending on SKU. Valid values are (2, 4, 6, ...) for Enterprise SKUs and (3, 9, 15, ...) for Flash SKUs. </summary>
+        /// <summary> This property is only used with Enterprise and EnterpriseFlash SKUs. Determines the size of the cluster. Valid values are (2, 4, 6, ...) for Enterprise SKUs and (3, 9, 15, ...) for EnterpriseFlash SKUs. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets the error message. </summary>
+        [WirePath("errorMessage")]
         public string ErrorMessage { get; }
         /// <summary> Gets the status code. </summary>
+        [WirePath("statusCode")]
         public int? StatusCode { get; }
     }
 }

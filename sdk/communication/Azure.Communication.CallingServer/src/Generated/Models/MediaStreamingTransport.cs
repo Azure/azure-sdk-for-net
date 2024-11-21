@@ -30,7 +30,7 @@ namespace Azure.Communication.CallingServer
         public static bool operator ==(MediaStreamingTransport left, MediaStreamingTransport right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaStreamingTransport"/> values are not the same. </summary>
         public static bool operator !=(MediaStreamingTransport left, MediaStreamingTransport right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MediaStreamingTransport"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MediaStreamingTransport"/>. </summary>
         public static implicit operator MediaStreamingTransport(string value) => new MediaStreamingTransport(value);
 
         /// <inheritdoc />

@@ -16,6 +16,7 @@ $EngScriptsDir = Join-Path $EngDir "scripts"
 . (Join-Path $EngCommonScriptsDir artifact-metadata-parsing.ps1)
 . (Join-Path $EngCommonScriptsDir "Helpers" git-helpers.ps1)
 . (Join-Path $EngCommonScriptsDir "Helpers" Package-Helpers.ps1)
+. (Join-Path $EngCommonScriptsDir "Helpers" CommandInvocation-Helpers.ps1)
 
 # Setting expected from common languages settings
 $Language = "Unknown"
@@ -62,7 +63,8 @@ $GetEmitterAdditionalOptionsFn = "Get-${Language}-EmitterAdditionalOptions"
 $GetEmitterNameFn = "Get-${Language}-EmitterName"
 $GetDirectoriesForGenerationFn = "Get-${Language}-DirectoriesForGeneration"
 $UpdateGeneratedSdksFn = "Update-${Language}-GeneratedSdks"
-$IsApiviewStatusCheckRequiredFn = "Get-${Language}-ApiviewStatusCheckRequirement" 
+$IsApiviewStatusCheckRequiredFn = "Get-${Language}-ApiviewStatusCheckRequirement"
+$AdditionalValidationPackagesFromPackageSetFn = "Get-${Language}-AdditionalValidationPackagesFromPackageSet"
 
 # Expected to be set in eng/scripts/docs/Docs-Onboarding.ps1
 $SetDocsPackageOnboarding = "Set-${Language}-DocsPackageOnboarding"

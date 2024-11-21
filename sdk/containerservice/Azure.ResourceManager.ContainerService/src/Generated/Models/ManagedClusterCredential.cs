@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The name of the credential. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Base64-encoded Kubernetes configuration file. </summary>
+        [WirePath("value")]
         public byte[] Value { get; }
     }
 }

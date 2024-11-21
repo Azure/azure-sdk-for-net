@@ -69,7 +69,7 @@ namespace Azure.AI.Language.QuestionAnswering
         public static bool operator ==(ErrorCode left, ErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ErrorCode"/> values are not the same. </summary>
         public static bool operator !=(ErrorCode left, ErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ErrorCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ErrorCode"/>. </summary>
         public static implicit operator ErrorCode(string value) => new ErrorCode(value);
 
         /// <inheritdoc />

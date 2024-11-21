@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator ==(EventHubsPrivateLinkConnectionStatus left, EventHubsPrivateLinkConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsPrivateLinkConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(EventHubsPrivateLinkConnectionStatus left, EventHubsPrivateLinkConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventHubsPrivateLinkConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsPrivateLinkConnectionStatus"/>. </summary>
         public static implicit operator EventHubsPrivateLinkConnectionStatus(string value) => new EventHubsPrivateLinkConnectionStatus(value);
 
         /// <inheritdoc />

@@ -11,17 +11,17 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Samples
 {
     public partial class Sample_MonitorWorkspaceResource
     {
-        // List workspaces by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetMonitorWorkspaceResources_ListWorkspacesBySubscription()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetMonitorWorkspaceResources_ListAzureMonitorWorkspacesBySubscription()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/examples/AzureMonitorWorkspacesListBySubscription.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/AzureMonitorWorkspacesListBySubscription.json
             // this example is just showing the usage of "AzureMonitorWorkspaces_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -45,15 +45,14 @@ namespace Azure.ResourceManager.Monitor.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get workspace
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetWorkspace()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_RetrievesAnAzureMonitorWorkspace()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/examples/AzureMonitorWorkspacesGet.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/AzureMonitorWorkspaceGet.json
             // this example is just showing the usage of "AzureMonitorWorkspaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,12 +78,11 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update workspace
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateWorkspace()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdatesAnAzureMonitorWorkspace()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/examples/AzureMonitorWorkspacesUpdate.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/AzureMonitorWorkspaceUpdate.json
             // this example is just showing the usage of "AzureMonitorWorkspaces_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,12 +117,11 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete workspace
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteWorkspace()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeletesAnAzureMonitorWorkspaceAsynchronously()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/stable/2023-04-03/examples/AzureMonitorWorkspacesDelete.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Monitor/preview/2023-10-01-preview/examples/AzureMonitorWorkspaceDelete.json
             // this example is just showing the usage of "AzureMonitorWorkspaces_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -143,7 +140,7 @@ namespace Azure.ResourceManager.Monitor.Samples
             // invoke the operation
             await monitorWorkspaceResource.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

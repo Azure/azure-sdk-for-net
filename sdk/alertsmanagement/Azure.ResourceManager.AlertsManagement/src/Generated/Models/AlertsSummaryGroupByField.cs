@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator ==(AlertsSummaryGroupByField left, AlertsSummaryGroupByField right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertsSummaryGroupByField"/> values are not the same. </summary>
         public static bool operator !=(AlertsSummaryGroupByField left, AlertsSummaryGroupByField right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AlertsSummaryGroupByField"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AlertsSummaryGroupByField"/>. </summary>
         public static implicit operator AlertsSummaryGroupByField(string value) => new AlertsSummaryGroupByField(value);
 
         /// <inheritdoc />

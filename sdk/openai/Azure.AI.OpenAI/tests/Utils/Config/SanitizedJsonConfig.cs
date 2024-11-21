@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests.Utils.Config
 {
@@ -144,7 +143,7 @@ namespace Azure.AI.OpenAI.Tests.Utils.Config
             else
             {
                 value = MaskData(key, value);
-                JsonElement json = JsonHelpers.SerializeToElement(value, JsonConfig.JSON_OPTIONS);
+                JsonElement json = JsonSerializer.SerializeToElement(value, JsonConfig.JSON_OPTIONS);
                 ExtensionData[key] = json;
             }
         }

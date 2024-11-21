@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         void IJsonModel<KubernetesBucketUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesBucketUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesBucketUpdateContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
@@ -125,7 +133,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         KubernetesBucketUpdateContent IJsonModel<KubernetesBucketUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

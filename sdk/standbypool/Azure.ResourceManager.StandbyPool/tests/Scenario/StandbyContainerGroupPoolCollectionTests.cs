@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
     public class StandbyContainerGroupPoolCollectionTests : StandbyContainerGroupPoolTestBase
     {
         public StandbyContainerGroupPoolCollectionTests(bool isAsync)
-            : base(isAsync) //, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 

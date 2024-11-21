@@ -86,26 +86,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The azure resource id of the VM. </summary>
+        [WirePath("properties.azureID")]
         public ResourceIdentifier AzureId { get; }
         /// <summary> The DNS domain that this host belongs to. Should contain the compete DNS suffix for the domain. </summary>
+        [WirePath("properties.dnsDomain")]
         public string DnsDomain { get; }
         /// <summary> The hostname without the domain suffix. </summary>
+        [WirePath("properties.hostName")]
         public string HostName { get; }
         /// <summary> Determines whether this host belongs to a domain. </summary>
+        [WirePath("properties.isDomainJoined")]
         public bool? IsDomainJoined { get; }
         /// <summary> The host name (pre-windows2000). </summary>
+        [WirePath("properties.netBiosName")]
         public string NetBiosName { get; }
         /// <summary> The NT domain that this host belongs to. </summary>
+        [WirePath("properties.ntDomain")]
         public string NtDomain { get; }
         /// <summary> The OMS agent id, if the host has OMS agent installed. </summary>
+        [WirePath("properties.omsAgentID")]
         public string OmsAgentId { get; }
         /// <summary> The operating system type. </summary>
+        [WirePath("properties.osFamily")]
         public SecurityInsightsHostOSFamily? OSFamily { get; set; }
         /// <summary> A free text representation of the operating system. This field is meant to hold specific versions the are more fine grained than OSFamily or future values not supported by OSFamily enumeration. </summary>
+        [WirePath("properties.osVersion")]
         public string OSVersion { get; }
     }
 }

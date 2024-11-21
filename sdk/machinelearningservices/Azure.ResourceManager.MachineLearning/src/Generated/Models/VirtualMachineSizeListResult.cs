@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The list of virtual machine sizes supported by AmlCompute. </summary>
+        [WirePath("value")]
         public IReadOnlyList<MachineLearningVmSize> Value { get; }
     }
 }

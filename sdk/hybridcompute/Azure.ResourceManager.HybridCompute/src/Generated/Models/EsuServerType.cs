@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(EsuServerType left, EsuServerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EsuServerType"/> values are not the same. </summary>
         public static bool operator !=(EsuServerType left, EsuServerType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EsuServerType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EsuServerType"/>. </summary>
         public static implicit operator EsuServerType(string value) => new EsuServerType(value);
 
         /// <inheritdoc />

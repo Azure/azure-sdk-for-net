@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public static bool operator ==(ChaosTargetReferenceType left, ChaosTargetReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChaosTargetReferenceType"/> values are not the same. </summary>
         public static bool operator !=(ChaosTargetReferenceType left, ChaosTargetReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChaosTargetReferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ChaosTargetReferenceType"/>. </summary>
         public static implicit operator ChaosTargetReferenceType(string value) => new ChaosTargetReferenceType(value);
 
         /// <inheritdoc />

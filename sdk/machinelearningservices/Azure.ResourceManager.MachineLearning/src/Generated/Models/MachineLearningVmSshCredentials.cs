@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Username of admin account. </summary>
+        [WirePath("username")]
         public string Username { get; set; }
         /// <summary> Password of admin account. </summary>
+        [WirePath("password")]
         public string Password { get; set; }
         /// <summary> Public key data. </summary>
+        [WirePath("publicKeyData")]
         public string PublicKeyData { get; set; }
         /// <summary> Private key data. </summary>
+        [WirePath("privateKeyData")]
         public string PrivateKeyData { get; set; }
     }
 }

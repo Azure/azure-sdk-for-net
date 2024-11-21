@@ -10,6 +10,11 @@
 
 ### Other Changes
 
+## 1.3.1 (2024-09-19)
+
+### Bugs Fixed
+Security patch, update to Azure.Core to 1.43.0.
+
 ## 1.3.0 (2024-04-15)
 
 ### Features Added

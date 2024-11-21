@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(IntegrationServiceEnvironmentAccessEndpointType left, IntegrationServiceEnvironmentAccessEndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentAccessEndpointType"/> values are not the same. </summary>
         public static bool operator !=(IntegrationServiceEnvironmentAccessEndpointType left, IntegrationServiceEnvironmentAccessEndpointType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IntegrationServiceEnvironmentAccessEndpointType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationServiceEnvironmentAccessEndpointType"/>. </summary>
         public static implicit operator IntegrationServiceEnvironmentAccessEndpointType(string value) => new IntegrationServiceEnvironmentAccessEndpointType(value);
 
         /// <inheritdoc />

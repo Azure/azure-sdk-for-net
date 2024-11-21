@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(CategoricalPredictionDriftMetric left, CategoricalPredictionDriftMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CategoricalPredictionDriftMetric"/> values are not the same. </summary>
         public static bool operator !=(CategoricalPredictionDriftMetric left, CategoricalPredictionDriftMetric right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CategoricalPredictionDriftMetric"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CategoricalPredictionDriftMetric"/>. </summary>
         public static implicit operator CategoricalPredictionDriftMetric(string value) => new CategoricalPredictionDriftMetric(value);
 
         /// <inheritdoc />

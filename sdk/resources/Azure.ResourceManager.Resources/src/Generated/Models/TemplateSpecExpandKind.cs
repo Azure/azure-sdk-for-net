@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(TemplateSpecExpandKind left, TemplateSpecExpandKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TemplateSpecExpandKind"/> values are not the same. </summary>
         public static bool operator !=(TemplateSpecExpandKind left, TemplateSpecExpandKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TemplateSpecExpandKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TemplateSpecExpandKind"/>. </summary>
         public static implicit operator TemplateSpecExpandKind(string value) => new TemplateSpecExpandKind(value);
 
         /// <inheritdoc />

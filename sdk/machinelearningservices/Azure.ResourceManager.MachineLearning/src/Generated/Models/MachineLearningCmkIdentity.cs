@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Identity object used for encryption. </summary>
+    /// <summary> Identity that will be used to access key vault for encryption at rest. </summary>
     internal partial class MachineLearningCmkIdentity
     {
         /// <summary>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningCmkIdentity"/>. </summary>
-        /// <param name="userAssignedIdentity"> UserAssignedIdentity to be used to fetch the encryption key from keyVault. </param>
+        /// <param name="userAssignedIdentity"> The ArmId of the user assigned identity that will be used to access the customer managed key vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningCmkIdentity(ResourceIdentifier userAssignedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +60,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> UserAssignedIdentity to be used to fetch the encryption key from keyVault. </summary>
+        /// <summary> The ArmId of the user assigned identity that will be used to access the customer managed key vault. </summary>
+        [WirePath("userAssignedIdentity")]
         public ResourceIdentifier UserAssignedIdentity { get; set; }
     }
 }

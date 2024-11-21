@@ -10,6 +10,16 @@
 
 ### Other Changes
 
+## 5.3.3 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 5.3.2 (2024-09-19)
+
+### Other Changes
+- This release contains bug fixes to improve quality.
+- 
 ## 5.3.1 (2024-07-17)
 
 ### Bugs Fixed

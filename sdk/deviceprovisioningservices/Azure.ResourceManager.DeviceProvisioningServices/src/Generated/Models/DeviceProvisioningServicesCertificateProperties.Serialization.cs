@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         void IJsonModel<DeviceProvisioningServicesCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
@@ -90,7 +98,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DeviceProvisioningServicesCertificateProperties IJsonModel<DeviceProvisioningServicesCertificateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

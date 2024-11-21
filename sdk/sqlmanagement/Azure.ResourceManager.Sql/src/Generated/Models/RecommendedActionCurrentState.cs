@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(RecommendedActionCurrentState left, RecommendedActionCurrentState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecommendedActionCurrentState"/> values are not the same. </summary>
         public static bool operator !=(RecommendedActionCurrentState left, RecommendedActionCurrentState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RecommendedActionCurrentState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecommendedActionCurrentState"/>. </summary>
         public static implicit operator RecommendedActionCurrentState(string value) => new RecommendedActionCurrentState(value);
 
         /// <inheritdoc />

@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         private ContainerGroupsRestOperations _containerGroupRestClient;
         private ClientDiagnostics _locationClientDiagnostics;
         private LocationRestOperations _locationRestClient;
+        private ClientDiagnostics _containerGroupProfileClientDiagnostics;
+        private ContainerGroupProfilesRestOperations _containerGroupProfileRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableContainerInstanceSubscriptionResource"/> class for mocking. </summary>
         protected MockableContainerInstanceSubscriptionResource()
@@ -37,6 +39,8 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         private ContainerGroupsRestOperations ContainerGroupRestClient => _containerGroupRestClient ??= new ContainerGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerGroupResource.ResourceType));
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationRestOperations LocationRestClient => _locationRestClient ??= new LocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ContainerGroupProfileClientDiagnostics => _containerGroupProfileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ContainerGroupProfileResource.ResourceType.Namespace, Diagnostics);
+        private ContainerGroupProfilesRestOperations ContainerGroupProfileRestClient => _containerGroupProfileRestClient ??= new ContainerGroupProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerGroupProfileResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -87,7 +91,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -117,11 +121,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The identifier for the physical azure location. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerInstanceUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerInstanceUsage> GetUsagesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
@@ -143,11 +147,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The identifier for the physical azure location. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerInstanceUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerInstanceUsage> GetUsagesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
@@ -169,11 +173,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The identifier for the physical azure location. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CachedImages"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CachedImages> GetCachedImagesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
@@ -196,11 +200,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The identifier for the physical azure location. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CachedImages"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CachedImages> GetCachedImagesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
@@ -223,11 +227,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The identifier for the physical azure location. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerCapabilities"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerCapabilities> GetCapabilitiesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
@@ -250,11 +254,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The identifier for the physical azure location. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerCapabilities"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerCapabilities> GetCapabilitiesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
@@ -262,6 +266,66 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListCapabilitiesRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListCapabilitiesNextPageRequest(nextLink, Id.SubscriptionId, location);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ContainerCapabilities.DeserializeContainerCapabilities(e), LocationClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of container group profiles in the specified subscription. This operation returns properties of each container group profile including containers, image registry credentials, restart policy, IP address type, OS type,volumes,current revision number, etc.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroupProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerGroupProfiles_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerGroupProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerGroupProfileResource> GetContainerGroupProfilesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerGroupProfileRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerGroupProfileRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupProfileResource(Client, ContainerGroupProfileData.DeserializeContainerGroupProfileData(e)), ContainerGroupProfileClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of container group profiles in the specified subscription. This operation returns properties of each container group profile including containers, image registry credentials, restart policy, IP address type, OS type,volumes,current revision number, etc.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroupProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerGroupProfiles_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerGroupProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerGroupProfileResource> GetContainerGroupProfiles(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerGroupProfileRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerGroupProfileRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupProfileResource(Client, ContainerGroupProfileData.DeserializeContainerGroupProfileData(e)), ContainerGroupProfileClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles", "value", "nextLink", cancellationToken);
         }
     }
 }

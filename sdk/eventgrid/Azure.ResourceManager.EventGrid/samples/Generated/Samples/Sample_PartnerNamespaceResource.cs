@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Samples
 {
     public partial class Sample_PartnerNamespaceResource
     {
-        // PartnerNamespaces_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PartnerNamespacesGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerNamespaces_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PartnerNamespaces_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PartnerNamespacesDelete()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerNamespaces_Delete.json
@@ -71,12 +70,11 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // invoke the operation
             await partnerNamespace.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PartnerNamespaces_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PartnerNamespacesUpdate()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerNamespaces_Update.json
@@ -105,12 +103,11 @@ namespace Azure.ResourceManager.EventGrid.Samples
             };
             await partnerNamespace.UpdateAsync(WaitUntil.Completed, patch);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PartnerNamespaces_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPartnerNamespaces_PartnerNamespacesListBySubscription()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerNamespaces_ListBySubscription.json
@@ -137,12 +134,11 @@ namespace Azure.ResourceManager.EventGrid.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PartnerNamespaces_ListSharedAccessKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSharedAccessKeys_PartnerNamespacesListSharedAccessKeys()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerNamespaces_ListSharedAccessKeys.json
@@ -167,9 +163,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PartnerNamespaces_RegenerateKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKey_PartnerNamespacesRegenerateKey()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerNamespaces_RegenerateKey.json

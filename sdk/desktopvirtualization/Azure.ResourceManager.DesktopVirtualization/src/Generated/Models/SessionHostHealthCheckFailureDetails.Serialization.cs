@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         void IJsonModel<SessionHostHealthCheckFailureDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostHealthCheckFailureDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SessionHostHealthCheckFailureDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
@@ -56,7 +65,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SessionHostHealthCheckFailureDetails IJsonModel<SessionHostHealthCheckFailureDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -118,6 +126,75 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostHealthCheckFailureDetails(message, errorCode, lastHealthCheckDateTime, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Message), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  message: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    builder.Append("  message: ");
+                    if (Message.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Message}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Message}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorCode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  errorCode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ErrorCode))
+                {
+                    builder.Append("  errorCode: ");
+                    builder.AppendLine($"{ErrorCode.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastHealthCheckOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastHealthCheckDateTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastHealthCheckOn))
+                {
+                    builder.Append("  lastHealthCheckDateTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastHealthCheckOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SessionHostHealthCheckFailureDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostHealthCheckFailureDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,6 +203,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SessionHostHealthCheckFailureDetails)} does not support writing '{options.Format}' format.");
             }

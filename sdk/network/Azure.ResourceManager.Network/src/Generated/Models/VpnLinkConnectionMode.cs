@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(VpnLinkConnectionMode left, VpnLinkConnectionMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VpnLinkConnectionMode"/> values are not the same. </summary>
         public static bool operator !=(VpnLinkConnectionMode left, VpnLinkConnectionMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VpnLinkConnectionMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VpnLinkConnectionMode"/>. </summary>
         public static implicit operator VpnLinkConnectionMode(string value) => new VpnLinkConnectionMode(value);
 
         /// <inheritdoc />

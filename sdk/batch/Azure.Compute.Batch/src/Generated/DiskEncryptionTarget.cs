@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(DiskEncryptionTarget left, DiskEncryptionTarget right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskEncryptionTarget"/> values are not the same. </summary>
         public static bool operator !=(DiskEncryptionTarget left, DiskEncryptionTarget right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiskEncryptionTarget"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskEncryptionTarget"/>. </summary>
         public static implicit operator DiskEncryptionTarget(string value) => new DiskEncryptionTarget(value);
 
         /// <inheritdoc />

@@ -39,7 +39,7 @@ namespace Azure.Identity
         {
             _credential = new ChainedTokenCredential(
                 environmentCredential ?? new EnvironmentCredential(options),
-                managedIdentityCredential ?? new ManagedIdentityCredential(options.ManagedIdentityClientId)
+                managedIdentityCredential ?? new ManagedIdentityCredential(options.ManagedIdentityId._userAssignedId)
             );
         }
 

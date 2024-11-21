@@ -20,18 +20,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TruncationSelectionPolicy"/>. </summary>
-        /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
-        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="policyType"> [Required] Name of policy configuration. </param>
+        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
+        /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="truncationPercentage"> The percentage of runs to cancel at each evaluation interval. </param>
-        internal TruncationSelectionPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? truncationPercentage) : base(delayEvaluation, evaluationInterval, policyType, serializedAdditionalRawData)
+        internal TruncationSelectionPolicy(EarlyTerminationPolicyType policyType, int? evaluationInterval, int? delayEvaluation, IDictionary<string, BinaryData> serializedAdditionalRawData, int? truncationPercentage) : base(policyType, evaluationInterval, delayEvaluation, serializedAdditionalRawData)
         {
             TruncationPercentage = truncationPercentage;
             PolicyType = policyType;
         }
 
         /// <summary> The percentage of runs to cancel at each evaluation interval. </summary>
+        [WirePath("truncationPercentage")]
         public int? TruncationPercentage { get; set; }
     }
 }

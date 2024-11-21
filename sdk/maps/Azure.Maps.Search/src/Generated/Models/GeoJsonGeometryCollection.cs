@@ -22,7 +22,7 @@ namespace Azure.Maps.Search.Models
         /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="geometries"/> is null. </exception>
-        public GeoJsonGeometryCollection(IEnumerable<GeoJsonGeometry> geometries)
+        internal GeoJsonGeometryCollection(IEnumerable<GeoJsonGeometry> geometries)
         {
             Argument.AssertNotNull(geometries, nameof(geometries));
 
@@ -32,12 +32,13 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonGeometryCollection"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="geometries">
         /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </param>
-        internal GeoJsonGeometryCollection(GeoJsonObjectType type, IList<GeoJsonGeometry> geometries) : base(type)
+        internal GeoJsonGeometryCollection(GeoJsonObjectType type, IReadOnlyList<double> boundingBox, IReadOnlyList<GeoJsonGeometry> geometries) : base(type, boundingBox)
         {
             Geometries = geometries;
             Type = type;
@@ -48,6 +49,6 @@ namespace Azure.Maps.Search.Models
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </summary>
-        public IList<GeoJsonGeometry> Geometries { get; }
+        public IReadOnlyList<GeoJsonGeometry> Geometries { get; }
     }
 }

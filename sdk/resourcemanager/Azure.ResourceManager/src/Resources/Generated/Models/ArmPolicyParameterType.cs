@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(ArmPolicyParameterType left, ArmPolicyParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArmPolicyParameterType"/> values are not the same. </summary>
         public static bool operator !=(ArmPolicyParameterType left, ArmPolicyParameterType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ArmPolicyParameterType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ArmPolicyParameterType"/>. </summary>
         public static implicit operator ArmPolicyParameterType(string value) => new ArmPolicyParameterType(value);
 
         /// <inheritdoc />

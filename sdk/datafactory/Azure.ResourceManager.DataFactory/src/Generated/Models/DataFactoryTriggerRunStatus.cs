@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(DataFactoryTriggerRunStatus left, DataFactoryTriggerRunStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFactoryTriggerRunStatus"/> values are not the same. </summary>
         public static bool operator !=(DataFactoryTriggerRunStatus left, DataFactoryTriggerRunStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataFactoryTriggerRunStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactoryTriggerRunStatus"/>. </summary>
         public static implicit operator DataFactoryTriggerRunStatus(string value) => new DataFactoryTriggerRunStatus(value);
 
         /// <inheritdoc />

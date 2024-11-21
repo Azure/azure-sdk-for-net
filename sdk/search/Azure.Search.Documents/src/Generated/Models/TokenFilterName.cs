@@ -129,7 +129,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(TokenFilterName left, TokenFilterName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TokenFilterName"/> values are not the same. </summary>
         public static bool operator !=(TokenFilterName left, TokenFilterName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TokenFilterName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TokenFilterName"/>. </summary>
         public static implicit operator TokenFilterName(string value) => new TokenFilterName(value);
 
         /// <inheritdoc />

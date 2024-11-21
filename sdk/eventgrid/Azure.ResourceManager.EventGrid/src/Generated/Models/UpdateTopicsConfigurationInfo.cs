@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Custom domain info for topics configuration. </summary>
+        [WirePath("customDomains")]
         public IList<CustomDomainConfiguration> CustomDomains { get; }
     }
 }

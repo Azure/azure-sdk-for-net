@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Arm id for network security perimeter. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> Network security perimeter guid. </summary>
+        [WirePath("perimeterGuid")]
         public string PerimeterGuid { get; set; }
         /// <summary> Network security perimeter location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
     }
 }

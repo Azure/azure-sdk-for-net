@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(QueryMetricUnitType left, QueryMetricUnitType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryMetricUnitType"/> values are not the same. </summary>
         public static bool operator !=(QueryMetricUnitType left, QueryMetricUnitType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QueryMetricUnitType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryMetricUnitType"/>. </summary>
         public static implicit operator QueryMetricUnitType(string value) => new QueryMetricUnitType(value);
 
         /// <inheritdoc />

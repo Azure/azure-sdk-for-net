@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Public IP Address of this ComputeInstance. </summary>
+        [WirePath("publicIpAddress")]
         public string PublicIPAddress { get; }
         /// <summary> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </summary>
+        [WirePath("privateIpAddress")]
         public string PrivateIPAddress { get; }
     }
 }

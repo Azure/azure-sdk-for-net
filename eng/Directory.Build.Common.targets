@@ -98,6 +98,15 @@
 
   </ItemGroup>
 
+  <!-- Remove packages built into the .NET 6+ runtime -->
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
+    <PackageReference Remove="System.Buffers" />
+    <PackageReference Remove="System.Net.Http" />
+    <PackageReference Remove="System.Threading.Channels" />
+    <PackageReference Remove="System.Text.Encodings.Web" />
+    <PackageReference Remove="System.Text.Json" />
+  </ItemGroup>
+
   <!-- Add Package Icon to DataPlane Packages -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true'">
     <None Include="$(PackageIconPath)" Pack="true" PackagePath=""/>
@@ -170,7 +179,7 @@
 
   <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
     <!-- Find all non-management projects -->
-    <AzureProjects Include="$(RepoRoot)/sdk/**/src/*.csproj" Exclude="$(RepoRoot)/sdk/**/src/*.Management.*.csproj" ProjectPath="%(Identity)" />
+    <AzureProjects Include="$(RepoRoot)/sdk/**/src/*.csproj" ProjectPath="%(Identity)" />
     <PossibleProjectsToConvert Include="@(AzureProjects -> '%(Filename)')"/>
 
     <!-- Compute set of projects that intersect with the PackageReference's -->

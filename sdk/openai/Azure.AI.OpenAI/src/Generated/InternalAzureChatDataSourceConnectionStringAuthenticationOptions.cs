@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI.Chat
         /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceConnectionStringAuthenticationOptions"/>. </summary>
         /// <param name="connectionString"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        internal InternalAzureChatDataSourceConnectionStringAuthenticationOptions(string connectionString)
+        public InternalAzureChatDataSourceConnectionStringAuthenticationOptions(string connectionString)
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
 
@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI.Chat
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceConnectionStringAuthenticationOptions"/>. </summary>
-        /// <param name="type"></param>
+        /// <param name="type"> Discriminator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionString"></param>
         internal InternalAzureChatDataSourceConnectionStringAuthenticationOptions(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectionString) : base(type, serializedAdditionalRawData)

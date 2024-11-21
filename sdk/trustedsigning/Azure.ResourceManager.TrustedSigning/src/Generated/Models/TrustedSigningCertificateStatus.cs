@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public static bool operator ==(TrustedSigningCertificateStatus left, TrustedSigningCertificateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrustedSigningCertificateStatus"/> values are not the same. </summary>
         public static bool operator !=(TrustedSigningCertificateStatus left, TrustedSigningCertificateStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TrustedSigningCertificateStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TrustedSigningCertificateStatus"/>. </summary>
         public static implicit operator TrustedSigningCertificateStatus(string value) => new TrustedSigningCertificateStatus(value);
 
         /// <inheritdoc />

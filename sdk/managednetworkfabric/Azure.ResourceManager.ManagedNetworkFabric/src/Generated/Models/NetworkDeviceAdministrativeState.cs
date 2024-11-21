@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(NetworkDeviceAdministrativeState left, NetworkDeviceAdministrativeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkDeviceAdministrativeState"/> values are not the same. </summary>
         public static bool operator !=(NetworkDeviceAdministrativeState left, NetworkDeviceAdministrativeState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkDeviceAdministrativeState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkDeviceAdministrativeState"/>. </summary>
         public static implicit operator NetworkDeviceAdministrativeState(string value) => new NetworkDeviceAdministrativeState(value);
 
         /// <inheritdoc />

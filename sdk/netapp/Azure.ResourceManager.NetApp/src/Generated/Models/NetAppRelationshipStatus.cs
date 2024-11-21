@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(NetAppRelationshipStatus left, NetAppRelationshipStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppRelationshipStatus"/> values are not the same. </summary>
         public static bool operator !=(NetAppRelationshipStatus left, NetAppRelationshipStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppRelationshipStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppRelationshipStatus"/>. </summary>
         public static implicit operator NetAppRelationshipStatus(string value) => new NetAppRelationshipStatus(value);
 
         /// <inheritdoc />

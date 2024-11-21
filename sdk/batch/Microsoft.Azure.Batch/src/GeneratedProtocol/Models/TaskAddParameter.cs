@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// "/bin/sh -c MyCommand" in Linux. If the command line refers to file
         /// paths, it should use a relative path (relative to the Task working
         /// directory), or use the Batch provided environment variable
-        /// (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
+        /// (https://docs.microsoft.com/azure/batch/batch-compute-node-environment-variables).
         /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }

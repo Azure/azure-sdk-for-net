@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.PrivateDns.Models
         }
 
         /// <summary> The domain name of the authoritative name server for this SOA record. </summary>
+        [WirePath("host")]
         public string Host { get; set; }
         /// <summary> The email contact for this SOA record. </summary>
+        [WirePath("email")]
         public string Email { get; set; }
         /// <summary> The serial number for this SOA record. </summary>
+        [WirePath("serialNumber")]
         public long? SerialNumber { get; set; }
         /// <summary> The refresh value for this SOA record. </summary>
+        [WirePath("refreshTime")]
         public long? RefreshTimeInSeconds { get; set; }
         /// <summary> The retry time for this SOA record. </summary>
+        [WirePath("retryTime")]
         public long? RetryTimeInSeconds { get; set; }
         /// <summary> The expire time for this SOA record. </summary>
+        [WirePath("expireTime")]
         public long? ExpireTimeInSeconds { get; set; }
         /// <summary> The minimum value for this SOA record. By convention this is used to determine the negative caching duration. </summary>
+        [WirePath("minimumTtl")]
         public long? MinimumTtlInSeconds { get; set; }
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(EventGridPublicNetworkAccess left, EventGridPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventGridPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(EventGridPublicNetworkAccess left, EventGridPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventGridPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventGridPublicNetworkAccess"/>. </summary>
         public static implicit operator EventGridPublicNetworkAccess(string value) => new EventGridPublicNetworkAccess(value);
 
         /// <inheritdoc />

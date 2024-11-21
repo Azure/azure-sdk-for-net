@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(SharingProfileGroupType left, SharingProfileGroupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SharingProfileGroupType"/> values are not the same. </summary>
         public static bool operator !=(SharingProfileGroupType left, SharingProfileGroupType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SharingProfileGroupType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SharingProfileGroupType"/>. </summary>
         public static implicit operator SharingProfileGroupType(string value) => new SharingProfileGroupType(value);
 
         /// <inheritdoc />

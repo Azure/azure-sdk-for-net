@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MonitorComputeIdentityType left, MonitorComputeIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorComputeIdentityType"/> values are not the same. </summary>
         public static bool operator !=(MonitorComputeIdentityType left, MonitorComputeIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitorComputeIdentityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorComputeIdentityType"/>. </summary>
         public static implicit operator MonitorComputeIdentityType(string value) => new MonitorComputeIdentityType(value);
 
         /// <inheritdoc />

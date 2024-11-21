@@ -37,7 +37,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the request to enable or disable the Host Encryption for the
         /// virtual machine or virtual machine scale set. This will enable the
         /// encryption for all the disks including Resource/Temp disk at host
-        /// itself.</param>
+        /// itself. For more information on encryption at host requirements,
+        /// please refer to
+        /// https://learn.microsoft.com/azure/virtual-machines/disk-encryption#supported-vm-sizes.</param>
         /// <param name="uefiSettings">Specifies the security settings like
         /// secure boot and vTPM used while creating the virtual
         /// machine.</param>
@@ -59,7 +61,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// has to be set to any specified value to enable UefiSettings.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'trustedLaunch'
+        /// Possible values include: 'trustedLaunch', 'confidentialVM'
         /// </remarks>
         [JsonProperty(PropertyName = "securityType")]
         public SecurityTypes? SecurityType { get; set; }
@@ -68,7 +70,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets this property can be used by user in the request to
         /// enable or disable the Host Encryption for the virtual machine or
         /// virtual machine scale set. This will enable the encryption for all
-        /// the disks including Resource/Temp disk at host itself.
+        /// the disks including Resource/Temp disk at host itself. For more
+        /// information on encryption at host requirements, please refer to
+        /// https://learn.microsoft.com/azure/virtual-machines/disk-encryption#supported-vm-sizes.
         /// </summary>
         [JsonProperty(PropertyName = "encryptionAtHost")]
         public bool? EncryptionAtHost { get; set; }

@@ -10,7 +10,7 @@ function Generate-AadToken ($TenantId, $ClientId, $ClientSecret)
         "grant_type" = "client_credentials"
         "client_id" = $ClientId
         "client_secret" = $ClientSecret
-        "resource" = "api://2789159d-8d8b-4d13-b90b-ca29c1707afd"
+        "resource" = "api://2efaf292-00a0-426c-ba7d-f5d2b214b8fc"
     }
     Write-Host "Generating aad token..."
     $resp = Invoke-RestMethod $LoginAPIBaseURI -Method 'POST' -Headers $headers -Body $body

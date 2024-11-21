@@ -25,7 +25,7 @@ namespace Azure.Storage.DataMovement.Tests
         private TransferManagerOptions GetDefaultManagerOptions(string checkpointerPath) =>
             new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerPath)
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerPath)
             };
 
         private void AssertListTransfersEquals(IList<DataTransfer> expected, IList<DataTransfer> actual)
@@ -50,7 +50,6 @@ namespace Azure.Storage.DataMovement.Tests
         {
             return new DataTransfer(
                 id: Guid.NewGuid().ToString(),
-                transferManager: new(),
                 status: status);
         }
 
@@ -124,11 +123,11 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act
-            DataTransferStatus status = new DataTransferStatus(state, hasFailedItems, hasSkippedItems);
+            DataTransferStatus[] status = { new DataTransferStatus(state, hasFailedItems, hasSkippedItems) };
             IList<DataTransfer> result = await manager.GetTransfersAsync(status).ToListAsync();
 
             // Assert
-            AssertListTransfersEquals(storedTransfers.Where(d => d.TransferStatus == status).ToList(), result);
+            AssertListTransfersEquals(storedTransfers.Where(d => d.TransferStatus == status.First()).ToList(), result);
         }
 
         [Test]
@@ -217,15 +216,16 @@ namespace Azure.Storage.DataMovement.Tests
             // Build TransferManager with the stored transfers
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(test.DirectoryPath)
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(test.DirectoryPath)
             };
             TransferManager manager = new TransferManager(options);
 
             // Act
             IList<DataTransfer> result = await manager.GetTransfersAsync().ToListAsync();
+            List<string> resultIds = result.Select(t => t.Id).ToList();
 
             // Assert
-            Assert.AreEqual(checkpointerTransfers, result.Select(d => d.Id).ToList());
+            Assert.IsTrue(Enumerable.SequenceEqual(checkpointerTransfers.OrderBy(id => id), result.Select(t => t.Id).OrderBy(id => id)));
         }
 
         [Test]
@@ -258,7 +258,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Build TransferManager with the stored transfers
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(test.DirectoryPath)
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(test.DirectoryPath)
             };
             TransferManager manager = new TransferManager(options);
 
@@ -297,7 +297,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Build TransferManager with the stored transfers
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(test.DirectoryPath)
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(test.DirectoryPath)
             };
             TransferManager manager = new TransferManager(options);
 

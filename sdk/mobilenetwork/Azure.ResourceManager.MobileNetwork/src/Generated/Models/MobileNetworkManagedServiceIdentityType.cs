@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Type of managed service identity (currently only UserAssigned allowed). </summary>
+    /// <summary>
+    /// Type of managed service identity (currently only UserAssigned allowed).
+    /// Serialized Name: ManagedServiceIdentityType
+    /// </summary>
     public readonly partial struct MobileNetworkManagedServiceIdentityType : IEquatable<MobileNetworkManagedServiceIdentityType>
     {
         private readonly string _value;
@@ -25,15 +28,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string NoneValue = "None";
         private const string UserAssignedValue = "UserAssigned";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: ManagedServiceIdentityType.None
+        /// </summary>
         public static MobileNetworkManagedServiceIdentityType None { get; } = new MobileNetworkManagedServiceIdentityType(NoneValue);
-        /// <summary> UserAssigned. </summary>
+        /// <summary>
+        /// UserAssigned
+        /// Serialized Name: ManagedServiceIdentityType.UserAssigned
+        /// </summary>
         public static MobileNetworkManagedServiceIdentityType UserAssigned { get; } = new MobileNetworkManagedServiceIdentityType(UserAssignedValue);
         /// <summary> Determines if two <see cref="MobileNetworkManagedServiceIdentityType"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkManagedServiceIdentityType left, MobileNetworkManagedServiceIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkManagedServiceIdentityType"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkManagedServiceIdentityType left, MobileNetworkManagedServiceIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkManagedServiceIdentityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkManagedServiceIdentityType"/>. </summary>
         public static implicit operator MobileNetworkManagedServiceIdentityType(string value) => new MobileNetworkManagedServiceIdentityType(value);
 
         /// <inheritdoc />

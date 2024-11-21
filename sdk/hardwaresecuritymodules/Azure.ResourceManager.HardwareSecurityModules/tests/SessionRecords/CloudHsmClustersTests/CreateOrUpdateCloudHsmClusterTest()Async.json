@@ -1,42 +1,41 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867?api-version=2022-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9d719b900cd96a6f5894df88629f9732-69aecf2dbd6d4d75-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "b68a05ae3d23f2a9791982c028b60ad4",
+        "traceparent": "00-72bac9f278e7a26b3cdbf5e33504f48d-5fb1316e3a30c9d6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 6.0.35; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "448",
+        "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 16:57:49 GMT",
+        "Date": "Fri, 18 Oct 2024 13:59:16 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a54393ad-797f-4aa9-a0bd-2c0f7f952d33",
-        "x-ms-ratelimit-remaining-subscription-reads": "11973",
-        "x-ms-request-id": "a54393ad-797f-4aa9-a0bd-2c0f7f952d33",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T165749Z:a54393ad-797f-4aa9-a0bd-2c0f7f952d33"
+        "x-ms-correlation-request-id": "928253ae-59f9-4145-8d12-f4bad50a5f4b",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "928253ae-59f9-4145-8d12-f4bad50a5f4b",
+        "x-ms-routing-request-id": "NORTHEUROPE:20241018T135917Z:928253ae-59f9-4145-8d12-f4bad50a5f4b",
+        "X-MSEdge-Ref": "Ref A: D7E3633A09FD4B91A3695B615E592D67 Ref B: AMS231020615025 Ref C: 2024-10-18T13:59:17Z"
       },
       "ResponseBody": {
         "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867",
         "authorizationSource": "RoleBased",
-        "managedByTenants": [
-          {
-            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
-          }
-        ],
+        "managedByTenants": [],
         "subscriptionId": "75e96d09-a291-40e1-a5e6-cda78233d867",
-        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "tenantId": "00000000-0000-0000-0000-000000000000",
         "displayName": "susolank Projects",
         "state": "Enabled",
         "subscriptionPolicies": {
@@ -47,42 +46,41 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867?api-version=2022-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-cc51343005e78fddb5ddd9fc79e64982-f04aad003afaf2af-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "852aead8e383802a3ad02d55c3a7c72f",
+        "traceparent": "00-f126930d86ea0a3fdbee83e038328df2-2fb43607fda7abeb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 6.0.35; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "448",
+        "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 16:57:49 GMT",
+        "Date": "Fri, 18 Oct 2024 13:59:22 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ccc6698b-0fea-4447-ac8e-3cecb3e48be9",
-        "x-ms-ratelimit-remaining-subscription-reads": "11972",
-        "x-ms-request-id": "ccc6698b-0fea-4447-ac8e-3cecb3e48be9",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T165749Z:ccc6698b-0fea-4447-ac8e-3cecb3e48be9"
+        "x-ms-correlation-request-id": "8fad10cc-0cf0-4138-a783-97a49f801284",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "8fad10cc-0cf0-4138-a783-97a49f801284",
+        "x-ms-routing-request-id": "NORTHEUROPE:20241018T135923Z:8fad10cc-0cf0-4138-a783-97a49f801284",
+        "X-MSEdge-Ref": "Ref A: 9042A753FAAA4BE3BCDD5D471B18790A Ref B: AMS231020615025 Ref C: 2024-10-18T13:59:23Z"
       },
       "ResponseBody": {
         "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867",
         "authorizationSource": "RoleBased",
-        "managedByTenants": [
-          {
-            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
-          }
-        ],
+        "managedByTenants": [],
         "subscriptionId": "75e96d09-a291-40e1-a5e6-cda78233d867",
-        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "tenantId": "00000000-0000-0000-0000-000000000000",
         "displayName": "susolank Projects",
         "state": "Enabled",
         "subscriptionPolicies": {
@@ -93,16 +91,380 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourcegroups/sdkTestsRg4537?api-version=**",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourcegroups/chsmSdkTest2216?api-version=2022-09-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "21",
         "Content-Type": "application/json",
-        "traceparent": "00-409b9938976018564c9715c139185b72-d15d7493acf9c272-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "4035d6f9124d65aa0bbd40a61ebf3f3e",
+        "traceparent": "00-90308ec765c893dde0a1d5038ed6e76c-82e5e296b7e16677-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 6.0.35; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "227",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 18 Oct 2024 13:59:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6a2bc947-dff9-45de-94ef-027ed8d2a241",
+        "x-ms-ratelimit-remaining-subscription-global-writes": "11999",
+        "x-ms-ratelimit-remaining-subscription-writes": "799",
+        "x-ms-request-id": "6a2bc947-dff9-45de-94ef-027ed8d2a241",
+        "x-ms-routing-request-id": "NORTHEUROPE:20241018T135925Z:6a2bc947-dff9-45de-94ef-027ed8d2a241",
+        "X-MSEdge-Ref": "Ref A: ACAC2F44427342E9998C5FF27B047FC7 Ref B: AMS231020615025 Ref C: 2024-10-18T13:59:23Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest2216",
+        "name": "chsmSdkTest2216",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.ManagedIdentity?api-version=2022-09-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-460cc8b4eeec8deeb6d06091f3629c83-26699cd31a9a1a65-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 6.0.35; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "4445",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 18 Oct 2024 13:59:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ecf0b528-ca87-4d5a-aa32-ca6a51574123",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "ecf0b528-ca87-4d5a-aa32-ca6a51574123",
+        "x-ms-routing-request-id": "NORTHEUROPE:20241018T135925Z:ecf0b528-ca87-4d5a-aa32-ca6a51574123",
+        "X-MSEdge-Ref": "Ref A: A7FF767C36F64C3E8CE4C28562EB98FF Ref B: AMS231020615025 Ref C: 2024-10-18T13:59:25Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.ManagedIdentity",
+        "namespace": "Microsoft.ManagedIdentity",
+        "resourceTypes": [
+          {
+            "resourceType": "Identities",
+            "locations": [
+              "Global",
+              "Asia",
+              "Australia",
+              "Brazil",
+              "Canada",
+              "Europe",
+              "France",
+              "Germany",
+              "India",
+              "Japan",
+              "Korea",
+              "Norway",
+              "South Africa",
+              "Sweden",
+              "Switzerland",
+              "UAE",
+              "UK",
+              "United States",
+              "Singapore",
+              "South Africa North",
+              "South Africa West",
+              "UAE North",
+              "Australia Central",
+              "Australia East",
+              "Australia Southeast",
+              "Canada Central",
+              "Canada East",
+              "Brazil South",
+              "Central India",
+              "West India",
+              "Jio India West",
+              "South India",
+              "Japan West",
+              "Japan East",
+              "East Asia",
+              "Southeast Asia",
+              "Israel Central",
+              "Italy North",
+              "Korea Central",
+              "Korea South",
+              "North Europe",
+              "Poland Central",
+              "Qatar Central",
+              "West Europe",
+              "UK West",
+              "UK South",
+              "Sweden Central",
+              "Switzerland West",
+              "Switzerland North",
+              "Germany West Central",
+              "Central US",
+              "North Central US",
+              "East US",
+              "East US 2",
+              "South Central US",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West Central US",
+              "France Central",
+              "Norway East",
+              "Mexico Central",
+              "Spain Central",
+              "New Zealand",
+              "Italy",
+              "Israel",
+              "Poland",
+              "Qatar",
+              "United States EUAP",
+              "East US 2 EUAP",
+              "Central US EUAP"
+            ],
+            "apiVersions": [
+              "2023-07-31-PREVIEW",
+              "2023-01-31",
+              "2022-01-31-PREVIEW",
+              "2021-09-30-PREVIEW",
+              "2018-11-30",
+              "2015-08-31-PREVIEW"
+            ],
+            "defaultApiVersion": "2023-01-31",
+            "capabilities": "SupportsExtension"
+          },
+          {
+            "resourceType": "userAssignedIdentities",
+            "locations": [
+              "South Africa North",
+              "South Africa West",
+              "UAE North",
+              "Australia Central",
+              "Australia East",
+              "Australia Southeast",
+              "Canada Central",
+              "Canada East",
+              "Brazil South",
+              "Central India",
+              "West India",
+              "Jio India West",
+              "South India",
+              "Japan West",
+              "Japan East",
+              "East Asia",
+              "Israel Central",
+              "Italy North",
+              "Southeast Asia",
+              "Korea Central",
+              "Korea South",
+              "North Europe",
+              "Poland Central",
+              "Qatar Central",
+              "West Europe",
+              "UK West",
+              "UK South",
+              "Sweden Central",
+              "Switzerland West",
+              "Switzerland North",
+              "Germany West Central",
+              "Central US",
+              "North Central US",
+              "East US",
+              "East US 2",
+              "South Central US",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West Central US",
+              "France Central",
+              "Norway East",
+              "Mexico Central",
+              "Spain Central",
+              "New Zealand",
+              "Italy",
+              "Israel",
+              "Poland",
+              "Qatar",
+              "East US 2 EUAP",
+              "Central US EUAP"
+            ],
+            "apiVersions": [
+              "2023-07-31-PREVIEW",
+              "2023-01-31",
+              "2022-01-31-PREVIEW",
+              "2021-09-30-PREVIEW",
+              "2018-11-30",
+              "2015-08-31-PREVIEW"
+            ],
+            "defaultApiVersion": "2023-01-31",
+            "capabilities": "SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "operations",
+            "locations": [
+              "South Africa North",
+              "South Africa West",
+              "UAE North",
+              "Australia Central",
+              "Australia East",
+              "Australia Southeast",
+              "Canada Central",
+              "Canada East",
+              "Brazil South",
+              "Central India",
+              "West India",
+              "Jio India West",
+              "South India",
+              "Japan West",
+              "Japan East",
+              "East Asia",
+              "Israel Central",
+              "Italy North",
+              "Southeast Asia",
+              "Korea Central",
+              "Korea South",
+              "North Europe",
+              "Poland Central",
+              "Qatar Central",
+              "West Europe",
+              "UK West",
+              "UK South",
+              "Sweden Central",
+              "Switzerland West",
+              "Switzerland North",
+              "Germany West Central",
+              "Central US",
+              "North Central US",
+              "East US",
+              "East US 2",
+              "South Central US",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West Central US",
+              "France Central",
+              "Norway East",
+              "Mexico Central",
+              "Spain Central",
+              "New Zealand",
+              "Italy",
+              "Israel",
+              "Poland",
+              "Qatar",
+              "East US 2 EUAP",
+              "Central US EUAP"
+            ],
+            "apiVersions": [
+              "2023-07-31-PREVIEW",
+              "2023-01-31",
+              "2022-01-31-PREVIEW",
+              "2021-09-30-PREVIEW",
+              "2018-11-30",
+              "2015-08-31-PREVIEW"
+            ],
+            "defaultApiVersion": "2023-01-31",
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "userAssignedIdentities/federatedIdentityCredentials",
+            "locations": [
+              "South Africa North",
+              "South Africa West",
+              "UAE North",
+              "Australia Central",
+              "Australia East",
+              "Australia Southeast",
+              "Canada Central",
+              "Canada East",
+              "Brazil South",
+              "Central India",
+              "West India",
+              "Jio India West",
+              "South India",
+              "Japan West",
+              "Japan East",
+              "East Asia",
+              "Israel Central",
+              "Italy North",
+              "Southeast Asia",
+              "Korea Central",
+              "Korea South",
+              "North Europe",
+              "Poland Central",
+              "Qatar Central",
+              "West Europe",
+              "UK West",
+              "UK South",
+              "Sweden Central",
+              "Switzerland West",
+              "Switzerland North",
+              "Germany West Central",
+              "Central US",
+              "North Central US",
+              "East US",
+              "East US 2",
+              "South Central US",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West Central US",
+              "France Central",
+              "Norway East",
+              "Mexico Central",
+              "Spain Central",
+              "New Zealand",
+              "Italy",
+              "Israel",
+              "Poland",
+              "Qatar",
+              "East US 2 EUAP",
+              "Central US EUAP"
+            ],
+            "apiVersions": [
+              "2023-07-31-PREVIEW",
+              "2023-01-31",
+              "2022-01-31-PREVIEW"
+            ],
+            "defaultApiVersion": "2023-01-31",
+            "capabilities": "None"
+          }
+        ],
+        "registrationState": "Registered",
+        "registrationPolicy": "RegistrationRequired"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest2216/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testRi-40?api-version=2023-07-31-PREVIEW",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-460cc8b4eeec8deeb6d06091f3629c83-f1296188940f3c99-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 6.0.35; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -111,1923 +473,412 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "225",
+        "Content-Length": "435",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 16:57:50 GMT",
+        "Date": "Fri, 18 Oct 2024 13:59:27 GMT",
         "Expires": "-1",
+        "Location": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourcegroups/chsmSdkTest2216/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testRi-40",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "337be453-11ad-4066-bdf8-8f9756dc3a73",
-        "x-ms-ratelimit-remaining-subscription-writes": "1197",
-        "x-ms-request-id": "337be453-11ad-4066-bdf8-8f9756dc3a73",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T165750Z:337be453-11ad-4066-bdf8-8f9756dc3a73"
+        "x-ms-correlation-request-id": "a1579fbf-74d7-42ab-b196-efedf8fffb96",
+        "x-ms-ratelimit-remaining-subscription-global-writes": "11999",
+        "x-ms-ratelimit-remaining-subscription-writes": "799",
+        "x-ms-request-id": "a1579fbf-74d7-42ab-b196-efedf8fffb96",
+        "x-ms-routing-request-id": "NORTHEUROPE:20241018T135928Z:a1579fbf-74d7-42ab-b196-efedf8fffb96",
+        "X-MSEdge-Ref": "Ref A: 3EA891E2C82142949EA467B02CC3863F Ref B: AMS231020615025 Ref C: 2024-10-18T13:59:25Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537",
-        "name": "sdkTestsRg4537",
-        "type": "Microsoft.Resources/resourceGroups",
         "location": "ukwest",
+        "tags": {},
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourcegroups/chsmSdkTest2216/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testRi-40",
+        "name": "testRi-40",
+        "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
         "properties": {
-          "provisioningState": "Succeeded"
+          "tenantId": "00000000-0000-0000-0000-000000000000",
+          "principalId": "00000000-0000-0000-0000-000000000000",
+          "clientId": "00000000-0000-0000-0000-000000000000"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourcegroups/chsmSdkTest2216/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testRi-40?api-version=2023-07-31-PREVIEW",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-460cc8b4eeec8deeb6d06091f3629c83-6fa3dccb4942babe-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 6.0.35; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "435",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 18 Oct 2024 13:59:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6dc83fc4-d405-4919-9dfb-4ed0ac0b796d",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "6dc83fc4-d405-4919-9dfb-4ed0ac0b796d",
+        "x-ms-routing-request-id": "NORTHEUROPE:20241018T135928Z:6dc83fc4-d405-4919-9dfb-4ed0ac0b796d",
+        "X-MSEdge-Ref": "Ref A: 5D2C576FFC284930A3D5DFD91A1FE2BB Ref B: AMS231020615025 Ref C: 2024-10-18T13:59:28Z"
+      },
+      "ResponseBody": {
+        "location": "ukwest",
+        "tags": {},
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourcegroups/chsmSdkTest2216/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testRi-40",
+        "name": "testRi-40",
+        "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+        "properties": {
+          "tenantId": "00000000-0000-0000-0000-000000000000",
+          "principalId": "00000000-0000-0000-0000-000000000000",
+          "clientId": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest2216/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8351?api-version=2024-06-30-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "152",
+        "Content-Length": "147",
         "Content-Type": "application/json",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-66ee45bbbdbc250a-00",
-        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20230705.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "46cbba8ecb090ada7c5310532ed25252",
+        "traceparent": "00-4cb88495adf3d02e97b928107e3268cf-7d5183810f18eb71-00",
+        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20241018.1 (.NET 6.0.35; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df",
+          "UseMockHfc": "true",
+          "MockHfcDelayInMs": "1"
+        },
+        "location": "ukwest",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "location": "ukwest",
-        "properties": {
-          "securityDomain": {
-            "fipsState": 2
-          }
         }
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "865",
+        "Content-Length": "839",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 16:57:54 GMT",
+        "Date": "Fri, 18 Oct 2024 13:59:31 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a8b3373e-ddd5-47e1-a964-2c1447e263a1",
-        "x-ms-ratelimit-remaining-subscription-writes": "1196",
-        "x-ms-request-id": "a8b3373e-ddd5-47e1-a964-2c1447e263a1",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T165755Z:a8b3373e-ddd5-47e1-a964-2c1447e263a1"
+        "x-ms-correlation-request-id": "f476a169-f605-45aa-91e2-5b3ef2e59530",
+        "x-ms-ratelimit-remaining-subscription-global-writes": "11999",
+        "x-ms-ratelimit-remaining-subscription-writes": "799",
+        "x-ms-request-id": "46c927b9-98bf-40cb-90e4-baff37c26011",
+        "x-ms-routing-request-id": "NORTHEUROPE:20241018T135931Z:f476a169-f605-45aa-91e2-5b3ef2e59530",
+        "X-MSEdge-Ref": "Ref A: 4D0DA36344424815B22FADC27A99B62D Ref B: AMS231020615025 Ref C: 2024-10-18T13:59:28Z"
       },
       "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
+        "name": "sdkT8351",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
         "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest2216/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8351",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
+          "statusMessage": null,
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
+          "fipsApprovedMode": false,
+          "activationState": "NotDefined",
           "hsms": [],
           "privateEndpointConnections": [],
           "publicNetworkAccess": "Disabled"
         },
         "tags": {
           "Dept": "SDK Testing",
-          "Env": "df"
+          "Env": "df",
+          "UseMockHfc": "true",
+          "MockHfcDelayInMs": "1"
         },
         "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
+          "createdBy": "Sanitized",
+          "createdByType": "User",
+          "createdAt": "2024-10-18T13:59:29.662Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-10-18T13:59:29.662Z"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest2216/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8351?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-632be910777811a5-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "0d18c117c8630bef5a35d1be9911dceb",
+        "traceparent": "00-4cb88495adf3d02e97b928107e3268cf-4cc5714703a86ad8-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 6.0.35; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "865",
+        "Content-Length": "839",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 16:57:55 GMT",
+        "Date": "Fri, 18 Oct 2024 13:59:31 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "6c472665-cda2-46e1-8e37-51b5b2566a33",
-        "x-ms-ratelimit-remaining-subscription-reads": "11971",
-        "x-ms-request-id": "6c472665-cda2-46e1-8e37-51b5b2566a33",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T165755Z:6c472665-cda2-46e1-8e37-51b5b2566a33"
+        "x-ms-correlation-request-id": "dbb71950-d3e8-4953-a4ff-0c008c3dce86",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "f0b48e92-b1c3-41cb-9629-0cc2c3a84f34",
+        "x-ms-routing-request-id": "NORTHEUROPE:20241018T135932Z:dbb71950-d3e8-4953-a4ff-0c008c3dce86",
+        "X-MSEdge-Ref": "Ref A: 9623F8DD15FA4114AAC62B97979AF996 Ref B: AMS231020615025 Ref C: 2024-10-18T13:59:32Z"
       },
       "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
+        "name": "sdkT8351",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
         "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest2216/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8351",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
+          "statusMessage": null,
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
+          "fipsApprovedMode": false,
+          "activationState": "NotDefined",
           "hsms": [],
           "privateEndpointConnections": [],
           "publicNetworkAccess": "Disabled"
         },
         "tags": {
           "Dept": "SDK Testing",
-          "Env": "df"
+          "Env": "df",
+          "UseMockHfc": "true",
+          "MockHfcDelayInMs": "1"
         },
         "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
+          "createdBy": "Sanitized",
+          "createdByType": "User",
+          "createdAt": "2024-10-18T13:59:29.662Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-10-18T13:59:29.662Z"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest2216/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8351?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-d07da5020629747d-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8f6c54ee695f046de24b2691a5f13060",
+        "traceparent": "00-4cb88495adf3d02e97b928107e3268cf-3ce8c6d19d60602d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 6.0.35; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "865",
+        "Content-Length": "872",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 16:57:56 GMT",
+        "Date": "Fri, 18 Oct 2024 13:59:32 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a980492f-4ef4-4675-b3d1-d1624e84754d",
-        "x-ms-ratelimit-remaining-subscription-reads": "11970",
-        "x-ms-request-id": "a980492f-4ef4-4675-b3d1-d1624e84754d",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T165756Z:a980492f-4ef4-4675-b3d1-d1624e84754d"
+        "x-ms-correlation-request-id": "2b60f144-5e8e-4c32-a844-6d58ffc57e0a",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "9e3dc915-044f-42ce-9b01-da035d523e80",
+        "x-ms-routing-request-id": "NORTHEUROPE:20241018T135933Z:2b60f144-5e8e-4c32-a844-6d58ffc57e0a",
+        "X-MSEdge-Ref": "Ref A: 29642C04B1FD40BB9AB76C1072D45FAE Ref B: AMS231020615025 Ref C: 2024-10-18T13:59:33Z"
       },
       "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
+        "name": "sdkT8351",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
         "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-02a46b32fdb07d0c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "6d3c234244bae8ee40d47a5eb819e50d",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "865",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 16:57:57 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0e0a344e-3303-4fa7-a203-99d57b0d6cd4",
-        "x-ms-ratelimit-remaining-subscription-reads": "11969",
-        "x-ms-request-id": "0e0a344e-3303-4fa7-a203-99d57b0d6cd4",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T165758Z:0e0a344e-3303-4fa7-a203-99d57b0d6cd4"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-a0ccd2a1219833de-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "85fa3a9a81afae8d53142b17a25d6568",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "865",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 16:57:59 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "712377ab-dd3c-42a7-8efc-90e98b193833",
-        "x-ms-ratelimit-remaining-subscription-reads": "11968",
-        "x-ms-request-id": "712377ab-dd3c-42a7-8efc-90e98b193833",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T165759Z:712377ab-dd3c-42a7-8efc-90e98b193833"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-3914c91d666e735a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "767c71056fd5aa3065844f8aee0f4bc8",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "865",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 16:58:01 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "27e544e7-2bac-45de-bee5-c7104e3b281a",
-        "x-ms-ratelimit-remaining-subscription-reads": "11967",
-        "x-ms-request-id": "27e544e7-2bac-45de-bee5-c7104e3b281a",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T165801Z:27e544e7-2bac-45de-bee5-c7104e3b281a"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-089ec6d0e3e30753-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "6bf71866abf7c0b0958e19a619d646e2",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "865",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 16:58:05 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0f88f97c-7a93-49d4-8860-04f4b850d6e3",
-        "x-ms-ratelimit-remaining-subscription-reads": "11966",
-        "x-ms-request-id": "0f88f97c-7a93-49d4-8860-04f4b850d6e3",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T165805Z:0f88f97c-7a93-49d4-8860-04f4b850d6e3"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-1b2347702eadcee4-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "4759116f6e9d2b3809501f2b3203bf44",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "865",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 16:58:13 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a5e233cd-783f-466c-bd91-463fce665ea3",
-        "x-ms-ratelimit-remaining-subscription-reads": "11965",
-        "x-ms-request-id": "a5e233cd-783f-466c-bd91-463fce665ea3",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T165813Z:a5e233cd-783f-466c-bd91-463fce665ea3"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-6fcb41c737c8b770-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "89b162c9fa665971c0bbe146558a908e",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "865",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 16:58:29 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0be918cc-f919-4410-9ee9-93b83cd017dc",
-        "x-ms-ratelimit-remaining-subscription-reads": "11964",
-        "x-ms-request-id": "0be918cc-f919-4410-9ee9-93b83cd017dc",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T165829Z:0be918cc-f919-4410-9ee9-93b83cd017dc"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-8f80f80f71937c11-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "dc1b6c3d03b5f72be0cb61a68c858e91",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "865",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 16:59:01 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "12d14e44-e92b-41e1-aa9d-5d2059793a35",
-        "x-ms-ratelimit-remaining-subscription-reads": "11963",
-        "x-ms-request-id": "12d14e44-e92b-41e1-aa9d-5d2059793a35",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T165902Z:12d14e44-e92b-41e1-aa9d-5d2059793a35"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-42f37daaa50ae4e6-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "b7dcd4cebd25747ba0ff87e28df1d57f",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "865",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 16:59:33 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "6ac579c4-6953-4958-9b0d-0d73dcbb4370",
-        "x-ms-ratelimit-remaining-subscription-reads": "11962",
-        "x-ms-request-id": "6ac579c4-6953-4958-9b0d-0d73dcbb4370",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T165934Z:6ac579c4-6953-4958-9b0d-0d73dcbb4370"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-f968df8f37e4d197-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "c6ed90bfe3e7c58e37baa99b99cacd3a",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "865",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:00:05 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7a4eab97-295b-4968-9138-b426ef99ee19",
-        "x-ms-ratelimit-remaining-subscription-reads": "11961",
-        "x-ms-request-id": "7a4eab97-295b-4968-9138-b426ef99ee19",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170006Z:7a4eab97-295b-4968-9138-b426ef99ee19"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-ab217f356b510192-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8178502dd9ad8069f0a73cb57c496aee",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "865",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:00:38 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "77575535-cb66-41bf-b287-68d5b9cfbd62",
-        "x-ms-ratelimit-remaining-subscription-reads": "11960",
-        "x-ms-request-id": "77575535-cb66-41bf-b287-68d5b9cfbd62",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170038Z:77575535-cb66-41bf-b287-68d5b9cfbd62"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-96af5776d4e4986b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "fbe6e2f5c898eaaa45177f6a14e0dbd5",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "865",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:01:10 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "905da248-53b3-41b1-a43e-07386c0b6af5",
-        "x-ms-ratelimit-remaining-subscription-reads": "11959",
-        "x-ms-request-id": "905da248-53b3-41b1-a43e-07386c0b6af5",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170110Z:905da248-53b3-41b1-a43e-07386c0b6af5"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-4fd3eecaef9879f7-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "3cb44c325479e6d1276dd540a7d849ee",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "865",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:01:42 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ca4ce70b-0085-4ef9-98bb-8c732eea53f2",
-        "x-ms-ratelimit-remaining-subscription-reads": "11958",
-        "x-ms-request-id": "ca4ce70b-0085-4ef9-98bb-8c732eea53f2",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170142Z:ca4ce70b-0085-4ef9-98bb-8c732eea53f2"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-b9692ec6bd66ca5c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "b7a5ba50d2e365a2a68d3b9659ff6c10",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1170",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:02:14 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "3c7523c0-d133-4cf4-8b3d-393f16f15cb0",
-        "x-ms-ratelimit-remaining-subscription-reads": "11957",
-        "x-ms-request-id": "3c7523c0-d133-4cf4-8b3d-393f16f15cb0",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170214Z:3c7523c0-d133-4cf4-8b3d-393f16f15cb0"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [
-            {
-              "fqdn": "hsm1.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "InitialProvisioning"
-            },
-            {
-              "fqdn": "hsm2.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "InitialProvisioning"
-            },
-            {
-              "fqdn": "hsm3.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "InitialProvisioning"
-            }
-          ],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-4c9dd2e0dd549e52-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "2f8366cc2d94a1741000d42bf269436c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1170",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:02:46 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f50f1d7a-c016-402a-9cba-c5b6ce2a4bc6",
-        "x-ms-ratelimit-remaining-subscription-reads": "11956",
-        "x-ms-request-id": "f50f1d7a-c016-402a-9cba-c5b6ce2a4bc6",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170246Z:f50f1d7a-c016-402a-9cba-c5b6ce2a4bc6"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [
-            {
-              "fqdn": "hsm1.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "InitialProvisioning"
-            },
-            {
-              "fqdn": "hsm2.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "InitialProvisioning"
-            },
-            {
-              "fqdn": "hsm3.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "InitialProvisioning"
-            }
-          ],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-434d635e1b8f2458-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "591991cd233b60f1aa4f96ec193b8d27",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1159",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:03:18 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "dd515ed6-613c-4b47-9372-986806b326bf",
-        "x-ms-ratelimit-remaining-subscription-reads": "11955",
-        "x-ms-request-id": "dd515ed6-613c-4b47-9372-986806b326bf",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170318Z:dd515ed6-613c-4b47-9372-986806b326bf"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [
-            {
-              "fqdn": "hsm1.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm2.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "InitialProvisioning"
-            },
-            {
-              "fqdn": "hsm3.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "InitialProvisioning"
-            }
-          ],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-e531d56ac8ad14a5-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "4074c5001955235a4503a6e3fe76723c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1137",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:03:50 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "91a8e400-44b3-4195-90f0-88956ad4c84a",
-        "x-ms-ratelimit-remaining-subscription-reads": "11954",
-        "x-ms-request-id": "91a8e400-44b3-4195-90f0-88956ad4c84a",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170351Z:91a8e400-44b3-4195-90f0-88956ad4c84a"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [
-            {
-              "fqdn": "hsm1.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm2.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm3.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            }
-          ],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-4e2541a777030bea-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "c7c8ce4912e5a8d474228544968888d5",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1137",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:04:22 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9c9d3696-d5d4-446b-8502-97a5413ab217",
-        "x-ms-ratelimit-remaining-subscription-reads": "11953",
-        "x-ms-request-id": "9c9d3696-d5d4-446b-8502-97a5413ab217",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170423Z:9c9d3696-d5d4-446b-8502-97a5413ab217"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [
-            {
-              "fqdn": "hsm1.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm2.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm3.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            }
-          ],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-9d2585da8f773854-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "2d2aac7202f5b41737f613377d0d6233",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1137",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:04:55 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "5c033f67-2233-4dbb-a383-09f61e7ad555",
-        "x-ms-ratelimit-remaining-subscription-reads": "11952",
-        "x-ms-request-id": "5c033f67-2233-4dbb-a383-09f61e7ad555",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170455Z:5c033f67-2233-4dbb-a383-09f61e7ad555"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [
-            {
-              "fqdn": "hsm1.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm2.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm3.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            }
-          ],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-263cb08b76bb57f9-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "4ba25addc672ed42f0cccc3294158cbc",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1137",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:05:27 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c671d9c2-abc5-4f65-964a-656327b62844",
-        "x-ms-ratelimit-remaining-subscription-reads": "11951",
-        "x-ms-request-id": "c671d9c2-abc5-4f65-964a-656327b62844",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170527Z:c671d9c2-abc5-4f65-964a-656327b62844"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [
-            {
-              "fqdn": "hsm1.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm2.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm3.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            }
-          ],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-1291b6596b8c25d2-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "5171d17b444c4747b61490eeff9c2b66",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1137",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:05:59 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f47cf396-9d67-41c4-a4ba-526b5bc98e4f",
-        "x-ms-ratelimit-remaining-subscription-reads": "11950",
-        "x-ms-request-id": "f47cf396-9d67-41c4-a4ba-526b5bc98e4f",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170559Z:f47cf396-9d67-41c4-a4ba-526b5bc98e4f"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [
-            {
-              "fqdn": "hsm1.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm2.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm3.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            }
-          ],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-e2986ab8ad894881-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "3c6751c03de6ac62693c3c2936e41f21",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1137",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:06:30 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ff0c8d24-3490-41ce-8897-4167aead0fef",
-        "x-ms-ratelimit-remaining-subscription-reads": "11949",
-        "x-ms-request-id": "ff0c8d24-3490-41ce-8897-4167aead0fef",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170631Z:ff0c8d24-3490-41ce-8897-4167aead0fef"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [
-            {
-              "fqdn": "hsm1.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm2.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm3.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            }
-          ],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-4e057267f9dd67d1-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "abbb566a109c98e7135b945e3653ee53",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1137",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:07:02 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7b42880d-f507-448c-a2d3-770922fa6fee",
-        "x-ms-ratelimit-remaining-subscription-reads": "11948",
-        "x-ms-request-id": "7b42880d-f507-448c-a2d3-770922fa6fee",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170703Z:7b42880d-f507-448c-a2d3-770922fa6fee"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [
-            {
-              "fqdn": "hsm1.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm2.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm3.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Starting"
-            }
-          ],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-8235ed21815d6a454c934e853f50f7f9-7a851e0fb21c3125-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "427265a050ae3ed66fc5e70f071d10d2",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1131",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:07:35 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f4b9861a-1d8a-46bc-9e34-b7bae53f8184",
-        "x-ms-ratelimit-remaining-subscription-reads": "11947",
-        "x-ms-request-id": "f4b9861a-1d8a-46bc-9e34-b7bae53f8184",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170735Z:f4b9861a-1d8a-46bc-9e34-b7bae53f8184"
-      },
-      "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest2216/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8351",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Succeeded",
+          "statusMessage": "HSM cluster provisioning successful.",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [
-            {
-              "fqdn": "hsm1.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Started"
-            },
-            {
-              "fqdn": "hsm2.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Started"
-            },
-            {
-              "fqdn": "hsm3.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Started"
-            }
-          ],
+          "fipsApprovedMode": false,
+          "activationState": "NotActivated",
+          "hsms": [],
           "privateEndpointConnections": [],
           "publicNetworkAccess": "Disabled"
         },
         "tags": {
           "Dept": "SDK Testing",
-          "Env": "df"
+          "Env": "df",
+          "UseMockHfc": "true",
+          "MockHfcDelayInMs": "1"
         },
         "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
+          "createdBy": "Sanitized",
+          "createdByType": "User",
+          "createdAt": "2024-10-18T13:59:29.662Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-10-18T13:59:29.662Z"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest2216/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8351?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e64abf850ca6723738b46bcfd6a510a4-84011bdd30a14442-00",
-        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20230705.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "a8846ef47fe1afca6ace288ba8037516",
+        "traceparent": "00-0e35629bfa479670c6d684a616c5aaf1-48023d8ea0497c03-00",
+        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20241018.1 (.NET 6.0.35; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1131",
+        "Content-Length": "872",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:07:35 GMT",
+        "Date": "Fri, 18 Oct 2024 13:59:33 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ba801bf1-0e83-4781-a1b0-7176ceca73af",
-        "x-ms-ratelimit-remaining-subscription-reads": "11946",
-        "x-ms-request-id": "ba801bf1-0e83-4781-a1b0-7176ceca73af",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170735Z:ba801bf1-0e83-4781-a1b0-7176ceca73af"
+        "x-ms-correlation-request-id": "f2964a5c-78e2-4431-a192-5694bf36f841",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "6a93251c-f63e-4df0-8d68-6f5ca75d761b",
+        "x-ms-routing-request-id": "NORTHEUROPE:20241018T135933Z:f2964a5c-78e2-4431-a192-5694bf36f841",
+        "X-MSEdge-Ref": "Ref A: F2AD0AAC08844140AA18CC53DA1CAA6B Ref B: AMS231020615025 Ref C: 2024-10-18T13:59:33Z"
       },
       "ResponseBody": {
-        "name": "CloudhsmSDKTest8307",
+        "name": "sdkT8351",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
         "location": "ukwest",
-        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest2216/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8351",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Succeeded",
+          "statusMessage": "HSM cluster provisioning successful.",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "securityDomain": {
-            "fipsState": 2,
-            "activationStatus": null
-          },
-          "hsms": [
-            {
-              "fqdn": "hsm1.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Started"
-            },
-            {
-              "fqdn": "hsm2.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Started"
-            },
-            {
-              "fqdn": "hsm3.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-              "state": "Started"
-            }
-          ],
+          "fipsApprovedMode": false,
+          "activationState": "NotActivated",
+          "hsms": [],
           "privateEndpointConnections": [],
           "publicNetworkAccess": "Disabled"
         },
         "tags": {
           "Dept": "SDK Testing",
-          "Env": "df"
+          "Env": "df",
+          "UseMockHfc": "true",
+          "MockHfcDelayInMs": "1"
         },
         "systemData": {
-          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "createdByType": "Application",
-          "createdAt": "2023-07-05T16:57:50.544Z",
-          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-07-05T16:57:50.544Z"
+          "createdBy": "Sanitized",
+          "createdByType": "User",
+          "createdAt": "2024-10-18T13:59:29.662Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-10-18T13:59:29.662Z"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest2216/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20230705.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d188e94ddd721973807c3cd729d791f5",
+        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20241018.1 (.NET 6.0.35; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1143",
+        "Content-Length": "884",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 05 Jul 2023 17:07:35 GMT",
+        "Date": "Fri, 18 Oct 2024 13:59:33 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c5e036cb-a0ac-4e2d-9a92-12634369fc77",
-        "x-ms-ratelimit-remaining-subscription-reads": "11945",
-        "x-ms-request-id": "c5e036cb-a0ac-4e2d-9a92-12634369fc77",
-        "x-ms-routing-request-id": "NORTHEUROPE:20230705T170735Z:c5e036cb-a0ac-4e2d-9a92-12634369fc77"
+        "x-ms-correlation-request-id": "ef7571f5-4607-4ab1-bfce-728e657888a2",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "c008b71b-7370-4ba1-b0b2-ced11c4c0018",
+        "x-ms-routing-request-id": "NORTHEUROPE:20241018T135934Z:ef7571f5-4607-4ab1-bfce-728e657888a2",
+        "X-MSEdge-Ref": "Ref A: FE00CB007C7B4DBAA537B2EED091ED71 Ref B: AMS231020615025 Ref C: 2024-10-18T13:59:34Z"
       },
       "ResponseBody": {
         "value": [
           {
-            "name": "CloudhsmSDKTest8307",
+            "name": "sdkT8351",
             "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
             "location": "ukwest",
-            "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg4537/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest8307",
+            "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest2216/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8351",
             "sku": {
               "family": "B",
               "name": "Standard_B1"
             },
             "properties": {
               "provisioningState": "Succeeded",
+              "statusMessage": "HSM cluster provisioning successful.",
               "autoGeneratedDomainNameLabelScope": "TenantReuse",
-              "securityDomain": {
-                "fipsState": 2,
-                "activationStatus": null
-              },
-              "hsms": [
-                {
-                  "fqdn": "hsm1.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-                  "state": "Started"
-                },
-                {
-                  "fqdn": "hsm2.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-                  "state": "Started"
-                },
-                {
-                  "fqdn": "hsm3.cloudhsmsdktest8307-f3d0cge9dff8a6hx.cloudhsm.azure.net",
-                  "state": "Started"
-                }
-              ],
+              "fipsApprovedMode": false,
+              "activationState": "NotActivated",
+              "hsms": [],
               "privateEndpointConnections": [],
               "publicNetworkAccess": "Disabled"
             },
             "tags": {
               "Dept": "SDK Testing",
-              "Env": "df"
+              "Env": "df",
+              "UseMockHfc": "true",
+              "MockHfcDelayInMs": "1"
             },
             "systemData": {
-              "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-              "createdByType": "Application",
-              "createdAt": "2023-07-05T16:57:50.544Z",
-              "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
-              "lastModifiedByType": "Application",
-              "lastModifiedAt": "2023-07-05T16:57:50.544Z"
+              "createdBy": "Sanitized",
+              "createdByType": "User",
+              "createdAt": "2024-10-18T13:59:29.662Z",
+              "lastModifiedBy": "Sanitized",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2024-10-18T13:59:29.662Z"
             }
           }
         ]
@@ -2035,8 +886,7 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1846014645",
+    "RandomSeed": "1278685139",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "75e96d09-a291-40e1-a5e6-cda78233d867"
   }

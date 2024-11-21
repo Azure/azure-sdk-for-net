@@ -19,13 +19,21 @@ namespace Azure.AI.OpenAI.Assistants
 
         void IJsonModel<SubmitToolOutputsToRunRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SubmitToolOutputsToRunRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SubmitToolOutputsToRunRequest)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("tool_outputs"u8);
             writer.WriteStartArray();
             foreach (var item in ToolOutputs)
@@ -48,7 +56,6 @@ namespace Azure.AI.OpenAI.Assistants
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SubmitToolOutputsToRunRequest IJsonModel<SubmitToolOutputsToRunRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -71,7 +78,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            IList<ToolOutput> toolOutputs = default;
+            IReadOnlyList<ToolOutput> toolOutputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

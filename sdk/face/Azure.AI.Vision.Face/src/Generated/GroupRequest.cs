@@ -49,7 +49,7 @@ namespace Azure.AI.Vision.Face
         /// <summary> Initializes a new instance of <see cref="GroupRequest"/>. </summary>
         /// <param name="faceIds"> Array of candidate faceIds created by "Detect". The maximum is 1000 faces. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="faceIds"/> is null. </exception>
-        public GroupRequest(IEnumerable<Guid> faceIds)
+        internal GroupRequest(IEnumerable<Guid> faceIds)
         {
             Argument.AssertNotNull(faceIds, nameof(faceIds));
 
@@ -59,7 +59,7 @@ namespace Azure.AI.Vision.Face
         /// <summary> Initializes a new instance of <see cref="GroupRequest"/>. </summary>
         /// <param name="faceIds"> Array of candidate faceIds created by "Detect". The maximum is 1000 faces. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupRequest(IList<Guid> faceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GroupRequest(IReadOnlyList<Guid> faceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FaceIds = faceIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Array of candidate faceIds created by "Detect". The maximum is 1000 faces. </summary>
-        public IList<Guid> FaceIds { get; }
+        public IReadOnlyList<Guid> FaceIds { get; }
     }
 }

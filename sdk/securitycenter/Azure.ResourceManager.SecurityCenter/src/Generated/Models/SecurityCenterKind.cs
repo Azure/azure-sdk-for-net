@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(SecurityCenterKind left, SecurityCenterKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityCenterKind"/> values are not the same. </summary>
         public static bool operator !=(SecurityCenterKind left, SecurityCenterKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityCenterKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityCenterKind"/>. </summary>
         public static implicit operator SecurityCenterKind(string value) => new SecurityCenterKind(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(MonitorPrivateEndpointServiceConnectionStatus left, MonitorPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(MonitorPrivateEndpointServiceConnectionStatus left, MonitorPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitorPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorPrivateEndpointServiceConnectionStatus"/>. </summary>
         public static implicit operator MonitorPrivateEndpointServiceConnectionStatus(string value) => new MonitorPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc />

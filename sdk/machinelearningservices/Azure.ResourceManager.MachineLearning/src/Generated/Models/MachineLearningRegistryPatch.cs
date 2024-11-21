@@ -66,10 +66,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
+        [WirePath("sku")]
         public MachineLearningSkuPatch Sku { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

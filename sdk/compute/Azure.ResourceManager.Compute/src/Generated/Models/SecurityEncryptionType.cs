@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(SecurityEncryptionType left, SecurityEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityEncryptionType"/> values are not the same. </summary>
         public static bool operator !=(SecurityEncryptionType left, SecurityEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityEncryptionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityEncryptionType"/>. </summary>
         public static implicit operator SecurityEncryptionType(string value) => new SecurityEncryptionType(value);
 
         /// <inheritdoc />

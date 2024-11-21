@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Monitor.Models
 
         void IJsonModel<DataContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataContainer)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("workspace"u8);
             writer.WriteObjectValue(Workspace, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -43,7 +51,6 @@ namespace Azure.ResourceManager.Monitor.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataContainer IJsonModel<DataContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

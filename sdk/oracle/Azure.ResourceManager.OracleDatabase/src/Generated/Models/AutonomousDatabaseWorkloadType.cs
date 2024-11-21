@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(AutonomousDatabaseWorkloadType left, AutonomousDatabaseWorkloadType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutonomousDatabaseWorkloadType"/> values are not the same. </summary>
         public static bool operator !=(AutonomousDatabaseWorkloadType left, AutonomousDatabaseWorkloadType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutonomousDatabaseWorkloadType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutonomousDatabaseWorkloadType"/>. </summary>
         public static implicit operator AutonomousDatabaseWorkloadType(string value) => new AutonomousDatabaseWorkloadType(value);
 
         /// <inheritdoc />

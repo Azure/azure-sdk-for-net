@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-07-01";
+            _apiVersion = apiVersion ?? "2023-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Creates or updates an inbound endpoint for a DNS resolver. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Creates or updates an inbound endpoint for a DNS resolver. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Updates an inbound endpoint for a DNS resolver. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Updates an inbound endpoint for a DNS resolver. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Deletes an inbound endpoint for a DNS resolver. WARNING: This operation cannot be undone. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Deletes an inbound endpoint for a DNS resolver. WARNING: This operation cannot be undone. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Gets properties of an inbound endpoint for a DNS resolver. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Gets properties of an inbound endpoint for a DNS resolver. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists inbound endpoints for a DNS resolver. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists inbound endpoints for a DNS resolver. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists inbound endpoints for a DNS resolver. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists inbound endpoints for a DNS resolver. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>

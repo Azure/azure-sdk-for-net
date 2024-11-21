@@ -1,8 +1,6 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
-using System;
-using System.Collections.Generic;
 using OpenTelemetry.Trace;
 
 namespace OpenTelemetry.Resources.Azure;
@@ -12,35 +10,38 @@ namespace OpenTelemetry.Resources.Azure;
 /// </summary>
 internal sealed class AzureContainerAppsResourceDetector : IResourceDetector
 {
-    internal static readonly IReadOnlyDictionary<string, string> AzureContainerResourceAttributes = new Dictionary<string, string>
+    internal static readonly IReadOnlyDictionary<string, string> AzureContainerAppResourceAttributes = new Dictionary<string, string>
     {
         { ResourceSemanticConventions.AttributeServiceInstance, ResourceAttributeConstants.AzureContainerAppsReplicaNameEnvVar },
         { ResourceSemanticConventions.AttributeServiceVersion, ResourceAttributeConstants.AzureContainerAppsRevisionEnvVar },
     };
 
+    internal static readonly IReadOnlyDictionary<string, string> AzureContainerAppJobResourceAttributes = new Dictionary<string, string>
+    {
+        { ResourceSemanticConventions.AttributeServiceInstance, ResourceAttributeConstants.AzureContainerAppsReplicaNameEnvVar },
+        { ResourceSemanticConventions.AttributeServiceVersion, ResourceAttributeConstants.AzureContainerAppJobExecutionNameEnvVar },
+    };
+
     /// <inheritdoc/>
     public Resource Detect()
     {
-        List<KeyValuePair<string, object>> attributeList = new();
-
+        List<KeyValuePair<string, object>> attributeList = new List<KeyValuePair<string, object>>();
         try
         {
             var containerAppName = Environment.GetEnvironmentVariable(ResourceAttributeConstants.AzureContainerAppsNameEnvVar);
+            var containerAppJobName = Environment.GetEnvironmentVariable(ResourceAttributeConstants.AzureContainerAppJobNameEnvVar);
 
             if (containerAppName != null)
             {
-                attributeList.Add(new KeyValuePair<string, object>(ResourceSemanticConventions.AttributeServiceName, containerAppName));
-                attributeList.Add(new KeyValuePair<string, object>(ResourceSemanticConventions.AttributeCloudProvider, ResourceAttributeConstants.AzureCloudProviderValue));
-                attributeList.Add(new KeyValuePair<string, object>(ResourceSemanticConventions.AttributeCloudPlatform, ResourceAttributeConstants.AzureContainerAppsPlatformValue));
+                AddBaseAttributes(attributeList, containerAppName);
 
-                foreach (var kvp in AzureContainerResourceAttributes)
-                {
-                    var attributeValue = Environment.GetEnvironmentVariable(kvp.Value);
-                    if (attributeValue != null)
-                    {
-                        attributeList.Add(new KeyValuePair<string, object>(kvp.Key, attributeValue));
-                    }
-                }
+                AddResourceAttributes(attributeList, AzureContainerAppResourceAttributes);
+            }
+            else if (containerAppJobName != null)
+            {
+                AddBaseAttributes(attributeList, containerAppJobName);
+
+                AddResourceAttributes(attributeList, AzureContainerAppJobResourceAttributes);
             }
         }
         catch
@@ -50,5 +51,24 @@ internal sealed class AzureContainerAppsResourceDetector : IResourceDetector
         }
 
         return new Resource(attributeList);
+    }
+
+    private static void AddResourceAttributes(List<KeyValuePair<string, object>> attributeList, IReadOnlyDictionary<string, string> resourceAttributes)
+    {
+        foreach (var kvp in resourceAttributes)
+        {
+            var attributeValue = Environment.GetEnvironmentVariable(kvp.Value);
+            if (attributeValue != null)
+            {
+                attributeList.Add(new KeyValuePair<string, object>(kvp.Key, attributeValue));
+            }
+        }
+    }
+
+    private static void AddBaseAttributes(List<KeyValuePair<string, object>> attributeList, string serviceName)
+    {
+        attributeList.Add(new KeyValuePair<string, object>(ResourceSemanticConventions.AttributeServiceName, serviceName));
+        attributeList.Add(new KeyValuePair<string, object>(ResourceSemanticConventions.AttributeCloudProvider, ResourceAttributeConstants.AzureCloudProviderValue));
+        attributeList.Add(new KeyValuePair<string, object>(ResourceSemanticConventions.AttributeCloudPlatform, ResourceAttributeConstants.AzureContainerAppsPlatformValue));
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         void IJsonModel<ManagedClusterSecurityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Defender))
             {
                 writer.WritePropertyName("defender"u8);
@@ -61,7 +70,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagedClusterSecurityProfile IJsonModel<ManagedClusterSecurityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -137,6 +145,84 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterSecurityProfile(defender, azureKeyVaultKms, workloadIdentity, imageCleaner, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Defender), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defender: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Defender))
+                {
+                    builder.Append("  defender: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Defender, options, 2, false, "  defender: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureKeyVaultKms), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureKeyVaultKms: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureKeyVaultKms))
+                {
+                    builder.Append("  azureKeyVaultKms: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureKeyVaultKms, options, 2, false, "  azureKeyVaultKms: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsWorkloadIdentityEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  workloadIdentity: ");
+                builder.AppendLine("{");
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkloadIdentity))
+                {
+                    builder.Append("  workloadIdentity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, WorkloadIdentity, options, 2, false, "  workloadIdentity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImageCleaner), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  imageCleaner: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImageCleaner))
+                {
+                    builder.Append("  imageCleaner: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ImageCleaner, options, 2, false, "  imageCleaner: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedClusterSecurityProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +231,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support writing '{options.Format}' format.");
             }

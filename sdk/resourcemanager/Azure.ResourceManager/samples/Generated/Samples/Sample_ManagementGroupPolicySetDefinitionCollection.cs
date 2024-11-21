@@ -12,14 +12,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_ManagementGroupPolicySetDefinitionCollection
     {
-        // Create or update a policy set definition at management group level
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicySetDefinitionAtManagementGroupLevel()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/createOrUpdatePolicySetDefinitionAtManagementGroup.json
@@ -88,9 +88,8 @@ PolicyDefinitionReferenceId = "Resource_Naming",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a policy set definition with groups at management group level
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicySetDefinitionWithGroupsAtManagementGroupLevel()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/createOrUpdatePolicySetDefinitionWithGroupsAtManagementGroup.json
@@ -179,9 +178,8 @@ Description = "Policies that help enforce resource organization standards within
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy set definition at management group level
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicySetDefinitionAtManagementGroupLevel()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicySetDefinitionAtManagementGroup.json
@@ -212,9 +210,8 @@ Description = "Policies that help enforce resource organization standards within
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy set definition at management group level
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAPolicySetDefinitionAtManagementGroupLevel()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicySetDefinitionAtManagementGroup.json
@@ -241,9 +238,8 @@ Description = "Policies that help enforce resource organization standards within
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Retrieve a policy set definition at management group level
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAPolicySetDefinitionAtManagementGroupLevel()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicySetDefinitionAtManagementGroup.json
@@ -270,7 +266,7 @@ Description = "Policies that help enforce resource organization standards within
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -282,9 +278,8 @@ Description = "Policies that help enforce resource organization standards within
             }
         }
 
-        // List policy set definitions at management group level
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPolicySetDefinitionsAtManagementGroupLevel()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/listPolicySetDefinitionsByManagementGroup.json
@@ -314,7 +309,7 @@ Description = "Policies that help enforce resource organization standards within
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

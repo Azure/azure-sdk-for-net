@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyTitle>Azure.Monitor.OpenTelemetry.Exporter shared code library</AssemblyTitle>
+    <Version>1.0.0</Version>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsShippingLibrary>false</IsShippingLibrary>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+  
+</Project>

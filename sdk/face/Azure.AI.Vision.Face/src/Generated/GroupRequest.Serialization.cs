@@ -19,13 +19,21 @@ namespace Azure.AI.Vision.Face
 
         void IJsonModel<GroupRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<GroupRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GroupRequest)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("faceIds"u8);
             writer.WriteStartArray();
             foreach (var item in FaceIds)
@@ -48,7 +56,6 @@ namespace Azure.AI.Vision.Face
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         GroupRequest IJsonModel<GroupRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -71,7 +78,7 @@ namespace Azure.AI.Vision.Face
             {
                 return null;
             }
-            IList<Guid> faceIds = default;
+            IReadOnlyList<Guid> faceIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

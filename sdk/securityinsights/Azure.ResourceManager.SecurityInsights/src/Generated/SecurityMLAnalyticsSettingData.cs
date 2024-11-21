@@ -76,6 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> The kind of security ML Analytics Settings. </summary>
         internal SecurityMLAnalyticsSettingsKind Kind { get; set; }
         /// <summary> Etag of the azure resource. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

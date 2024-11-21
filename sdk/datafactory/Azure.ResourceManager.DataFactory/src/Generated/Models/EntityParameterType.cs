@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(EntityParameterType left, EntityParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EntityParameterType"/> values are not the same. </summary>
         public static bool operator !=(EntityParameterType left, EntityParameterType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EntityParameterType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EntityParameterType"/>. </summary>
         public static implicit operator EntityParameterType(string value) => new EntityParameterType(value);
 
         /// <inheritdoc />

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The Kubernetes version (major.minor.patch). </summary>
+        [WirePath("kubernetesVersion")]
         public string KubernetesVersion { get; }
         /// <summary> Whether the Kubernetes version is currently in preview. </summary>
+        [WirePath("isPreview")]
         public bool? IsPreview { get; }
     }
 }

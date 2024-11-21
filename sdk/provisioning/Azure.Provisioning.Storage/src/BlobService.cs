@@ -2,56 +2,62 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.ResourceManager.Storage;
-using Azure.ResourceManager.Storage.Models;
+using System.Collections.Generic;
+using System.ComponentModel;
+using Azure.Core;
+using Azure.Provisioning.Expressions;
+using Azure.Provisioning.Primitives;
+using Azure.Storage.Blobs;
 
-namespace Azure.Provisioning.Storage
+namespace Azure.Provisioning.Storage;
+
+// Customize the generated BlobService resource.
+public partial class BlobService
+#if EXPERIMENTAL_PROVISIONING
+    : IClientCreator<BlobServiceClient, BlobClientOptions>
+#endif
 {
     /// <summary>
-    /// Represents a blob service.
+    /// Get the default value for the Name property.
     /// </summary>
-    public class BlobService : Resource<BlobServiceData>
+    private partial BicepValue<string> GetNameDefaultValue() =>
+        new StringLiteralExpression("default");
+
+#if EXPERIMENTAL_PROVISIONING
+    /// <inheritdoc/>
+    IEnumerable<ProvisioningOutput> IClientCreator.GetOutputs()
     {
-        private const string ResourceTypeName = "Microsoft.Storage/storageAccounts/blobServices";
-        private static BlobServiceData Empty(string name) => ArmStorageModelFactory.BlobServiceData();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlobService"/>.
-        /// </summary>
-        /// <param name="scope">The scope.</param>
-        /// <param name="parent">The parent.</param>
-        /// <param name="version">The version.</param>
-        public BlobService(IConstruct scope, StorageAccount? parent = null, string version = StorageAccount.DefaultVersion)
-            : this(scope, parent, "default", version, (name) => ArmStorageModelFactory.BlobServiceData(
-                name: name,
-                resourceType: ResourceTypeName))
+        yield return new ProvisioningOutput($"{BicepIdentifier}_endpoint", typeof(string))
         {
-        }
-
-        private BlobService(IConstruct scope,
-            StorageAccount? parent,
-            string name,
-            string version = StorageAccount.DefaultVersion,
-            Func<string, BlobServiceData>? creator = null,
-            bool isExisting = false)
-            : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="BlobService"/> class referencing an existing instance.
-        /// </summary>
-        /// <param name="scope">The scope.</param>
-        /// <param name="name">The resource name.</param>
-        /// <param name="parent">The resource group.</param>
-        /// <returns>The BlobService instance.</returns>
-        public static BlobService FromExisting(IConstruct scope, string name, StorageAccount parent)
-            => new BlobService(scope, parent: parent, name: name, isExisting: true);
-
-        /// <inheritdoc/>
-        protected override Resource? FindParentInScope(IConstruct scope)
-        {
-            return scope.GetSingleResource<StorageAccount>() ?? new StorageAccount(scope, StorageKind.BlockBlobStorage, StorageSkuName.PremiumLrs);
-        }
+            Value = Parent!.PrimaryEndpoints.Value!.BlobUri
+        };
     }
+
+    /// <summary>
+    /// Create a <see cref="BlobServiceClient"/> after deploying a
+    /// <see cref="BlobService"/> resource.
+    /// </summary>
+    /// <param name="deploymentOutputs">The deployment outputs.</param>
+    /// <param name="credential">A credential to use for creating the client.</param>
+    /// <param name="options">
+    /// Optional <see cref="BlobClientOptions"/> to use for configuring the
+    /// <see cref="BlobServiceClient"/>.
+    /// </param>
+    /// <returns>
+    /// A <see cref="BlobServiceClient"/> client for the provisioned
+    /// <see cref="BlobService"/> resource.
+    /// </returns>
+    BlobServiceClient IClientCreator<BlobServiceClient, BlobClientOptions>.CreateClient(
+        IReadOnlyDictionary<string, object?> deploymentOutputs,
+        TokenCredential credential,
+        BlobClientOptions? options)
+    {
+        // TODO: Move into a shared helper off ProvCtx's namescoping
+        string qualifiedName = $"{BicepIdentifier}_endpoint";
+        string endpoint = (deploymentOutputs.TryGetValue(qualifiedName, out object? raw) && raw is string value) ?
+            value :
+            throw new InvalidOperationException($"Could not find output value {qualifiedName} to construct {GetType().Name} resource {BicepIdentifier}.");
+        return new BlobServiceClient(new Uri(endpoint), credential, options);
+    }
+#endif
 }

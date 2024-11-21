@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator ==(RunbookState left, RunbookState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunbookState"/> values are not the same. </summary>
         public static bool operator !=(RunbookState left, RunbookState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RunbookState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RunbookState"/>. </summary>
         public static implicit operator RunbookState(string value) => new RunbookState(value);
 
         /// <inheritdoc />

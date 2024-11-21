@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(SecurityCenterConnectionType left, SecurityCenterConnectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityCenterConnectionType"/> values are not the same. </summary>
         public static bool operator !=(SecurityCenterConnectionType left, SecurityCenterConnectionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityCenterConnectionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityCenterConnectionType"/>. </summary>
         public static implicit operator SecurityCenterConnectionType(string value) => new SecurityCenterConnectionType(value);
 
         /// <inheritdoc />

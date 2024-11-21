@@ -79,15 +79,19 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Provisioning state of the namespace topic. </summary>
+        [WirePath("properties.provisioningState")]
         public NamespaceTopicProvisioningState? ProvisioningState { get; }
         /// <summary> Publisher type of the namespace topic. </summary>
+        [WirePath("properties.publisherType")]
         public PublisherType? PublisherType { get; set; }
         /// <summary> This determines the format that is expected for incoming events published to the topic. </summary>
+        [WirePath("properties.inputSchema")]
         public EventInputSchema? InputSchema { get; set; }
         /// <summary>
         /// Event retention for the namespace topic expressed in days. The property default value is 1 day.
         /// Min event retention duration value is 1 day and max event retention duration value is 1 day.
         /// </summary>
+        [WirePath("properties.eventRetentionInDays")]
         public int? EventRetentionInDays { get; set; }
     }
 }

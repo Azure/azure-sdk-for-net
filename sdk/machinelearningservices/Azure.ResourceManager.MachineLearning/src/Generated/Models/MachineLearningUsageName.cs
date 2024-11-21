@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The name of the resource. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> The localized name of the resource. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

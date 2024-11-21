@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> How to authenticate users who access local diagnostics APIs. </summary>
+    /// <summary>
+    /// How to authenticate users who access local diagnostics APIs.
+    /// Serialized Name: AuthenticationType
+    /// </summary>
     public readonly partial struct MobileNetworkAuthenticationType : IEquatable<MobileNetworkAuthenticationType>
     {
         private readonly string _value;
@@ -25,15 +28,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string AadValue = "AAD";
         private const string PasswordValue = "Password";
 
-        /// <summary> Use AAD SSO to authenticate the user (this requires internet access). </summary>
+        /// <summary>
+        /// Use AAD SSO to authenticate the user (this requires internet access).
+        /// Serialized Name: AuthenticationType.AAD
+        /// </summary>
         public static MobileNetworkAuthenticationType Aad { get; } = new MobileNetworkAuthenticationType(AadValue);
-        /// <summary> Use locally stored passwords to authenticate the user. </summary>
+        /// <summary>
+        /// Use locally stored passwords to authenticate the user.
+        /// Serialized Name: AuthenticationType.Password
+        /// </summary>
         public static MobileNetworkAuthenticationType Password { get; } = new MobileNetworkAuthenticationType(PasswordValue);
         /// <summary> Determines if two <see cref="MobileNetworkAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkAuthenticationType left, MobileNetworkAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkAuthenticationType left, MobileNetworkAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkAuthenticationType"/>. </summary>
         public static implicit operator MobileNetworkAuthenticationType(string value) => new MobileNetworkAuthenticationType(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(PreferredRoutingGateway left, PreferredRoutingGateway right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PreferredRoutingGateway"/> values are not the same. </summary>
         public static bool operator !=(PreferredRoutingGateway left, PreferredRoutingGateway right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PreferredRoutingGateway"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PreferredRoutingGateway"/>. </summary>
         public static implicit operator PreferredRoutingGateway(string value) => new PreferredRoutingGateway(value);
 
         /// <inheritdoc />

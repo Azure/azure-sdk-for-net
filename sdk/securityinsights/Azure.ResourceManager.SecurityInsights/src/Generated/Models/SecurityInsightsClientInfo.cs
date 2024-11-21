@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsClientInfo"/>. </summary>
-        internal SecurityInsightsClientInfo()
+        public SecurityInsightsClientInfo()
         {
         }
 
@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> The email of the client. </summary>
-        public string Email { get; }
+        [WirePath("email")]
+        public string Email { get; set; }
         /// <summary> The name of the client. </summary>
-        public string Name { get; }
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> The object id of the client. </summary>
-        public Guid? ObjectId { get; }
+        [WirePath("objectId")]
+        public Guid? ObjectId { get; set; }
         /// <summary> The user principal name of the client. </summary>
-        public string UserPrincipalName { get; }
+        [WirePath("userPrincipalName")]
+        public string UserPrincipalName { get; set; }
     }
 }

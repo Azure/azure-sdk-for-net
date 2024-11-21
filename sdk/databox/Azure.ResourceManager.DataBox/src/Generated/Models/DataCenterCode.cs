@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public static bool operator ==(DataCenterCode left, DataCenterCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataCenterCode"/> values are not the same. </summary>
         public static bool operator !=(DataCenterCode left, DataCenterCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataCenterCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataCenterCode"/>. </summary>
         public static implicit operator DataCenterCode(string value) => new DataCenterCode(value);
 
         /// <inheritdoc />

@@ -70,10 +70,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Set a version of the package to be active across hostpool. </summary>
+        [WirePath("properties.isActive")]
         public bool? IsActive { get; set; }
         /// <summary> Set Registration mode. Regular or Delayed. </summary>
+        [WirePath("properties.isRegularRegistration")]
         public bool? IsRegularRegistration { get; set; }
         /// <summary> Display name for MSIX Package. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
     }
 }

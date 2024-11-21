@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         void IJsonModel<HybridConnectionConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<HybridConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ExpirationTime))
             {
                 writer.WritePropertyName("expirationTime"u8);
@@ -61,7 +70,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         HybridConnectionConfig IJsonModel<HybridConnectionConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -125,6 +133,105 @@ namespace Azure.ResourceManager.Kubernetes.Models
             return new HybridConnectionConfig(expirationTime, hybridConnectionName, relay, token, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpirationTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  expirationTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpirationTime))
+                {
+                    builder.Append("  expirationTime: ");
+                    builder.AppendLine($"'{ExpirationTime.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HybridConnectionName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hybridConnectionName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HybridConnectionName))
+                {
+                    builder.Append("  hybridConnectionName: ");
+                    if (HybridConnectionName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HybridConnectionName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HybridConnectionName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Relay), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  relay: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Relay))
+                {
+                    builder.Append("  relay: ");
+                    if (Relay.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Relay}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Relay}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Token), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  token: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Token))
+                {
+                    builder.Append("  token: ");
+                    if (Token.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Token}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Token}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<HybridConnectionConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HybridConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -133,6 +240,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support writing '{options.Format}' format.");
             }

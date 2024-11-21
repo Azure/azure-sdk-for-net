@@ -65,11 +65,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary>
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
         /// </summary>
+        [WirePath("runtimeVersion")]
         public string RuntimeVersion { get; set; }
     }
 }

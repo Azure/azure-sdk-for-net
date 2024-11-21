@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(FailoverGroupReplicationRole left, FailoverGroupReplicationRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FailoverGroupReplicationRole"/> values are not the same. </summary>
         public static bool operator !=(FailoverGroupReplicationRole left, FailoverGroupReplicationRole right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FailoverGroupReplicationRole"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FailoverGroupReplicationRole"/>. </summary>
         public static implicit operator FailoverGroupReplicationRole(string value) => new FailoverGroupReplicationRole(value);
 
         /// <inheritdoc />

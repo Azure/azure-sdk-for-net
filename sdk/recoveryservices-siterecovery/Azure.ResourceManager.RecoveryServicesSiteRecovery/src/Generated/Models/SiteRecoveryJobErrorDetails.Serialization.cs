@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         void IJsonModel<SiteRecoveryJobErrorDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteRecoveryJobErrorDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ServiceErrorDetails))
             {
                 writer.WritePropertyName("serviceErrorDetails"u8);
@@ -66,7 +74,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SiteRecoveryJobErrorDetails IJsonModel<SiteRecoveryJobErrorDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

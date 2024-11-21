@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator ==(ComponentRequestSource left, ComponentRequestSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComponentRequestSource"/> values are not the same. </summary>
         public static bool operator !=(ComponentRequestSource left, ComponentRequestSource right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComponentRequestSource"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComponentRequestSource"/>. </summary>
         public static implicit operator ComponentRequestSource(string value) => new ComponentRequestSource(value);
 
         /// <inheritdoc />

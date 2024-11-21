@@ -711,6 +711,13 @@ namespace Azure.Storage.Files.Shares
                 Metadata = response.Headers.Metadata,
                 EnableSnapshotVirtualDirectoryAccess = response.Headers.EnableSnapshotVirtualDirectoryAccess,
                 QuotaInGB = response.Headers.Quota,
+                EnablePaidBursting = response.Headers.PaidBurstingEnabled,
+                PaidBurstingMaxIops = response.Headers.PaidBurstingMaxIops,
+                PaidBurstingMaxBandwidthMibps = response.Headers.PaidBurstingMaxBandwidthMibps,
+                IncludedBurstIops = response.Headers.IncludedBurstIops,
+                MaxBurstCreditsForIops = response.Headers.MaxBurstCreditsForIops,
+                NextAllowedProvisionedIopsDowngradeTime = response.Headers.NextAllowedProvisionedIopsDowngradeTime,
+                NextAllowedProvisionedBandwidthDowngradeTime = response.Headers.NextAllowedProvisionedBandwidthDowngradeTime,
             };
         }
 
@@ -825,6 +832,13 @@ namespace Azure.Storage.Files.Shares
                 Metadata = metadata,
                 EnableSnapshotVirtualDirectoryAccess = sharePropertiesInternal.EnableSnapshotVirtualDirectoryAccess,
                 QuotaInGB = sharePropertiesInternal.Quota,
+                EnablePaidBursting = sharePropertiesInternal.PaidBurstingEnabled,
+                PaidBurstingMaxIops = sharePropertiesInternal.PaidBurstingMaxIops,
+                PaidBurstingMaxBandwidthMibps = sharePropertiesInternal.PaidBurstingMaxBandwidthMibps,
+                IncludedBurstIops = sharePropertiesInternal.IncludedBurstIops,
+                MaxBurstCreditsForIops = sharePropertiesInternal.MaxBurstCreditsForIops,
+                NextAllowedProvisionedIopsDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedIopsDowngradeTime,
+                NextAllowedProvisionedBandwidthDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedBandwidthDowngradeTime,
             };
         }
 
@@ -973,6 +987,17 @@ namespace Azure.Storage.Files.Shares
             }
 
             return lastModified;
+        }
+
+        internal static Response<ShareFilePermission> ToShareFilePermission(this ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders> response)
+        {
+            return Response.FromValue(
+                new ShareFilePermission
+                {
+                    Permission = response.Value.Permission,
+                    PermissionFormat = response.Value.Format
+                },
+                response.GetRawResponse());
         }
     }
 }

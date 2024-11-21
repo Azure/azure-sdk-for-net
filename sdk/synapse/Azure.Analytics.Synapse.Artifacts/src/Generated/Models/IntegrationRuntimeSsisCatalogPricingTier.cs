@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(IntegrationRuntimeSsisCatalogPricingTier left, IntegrationRuntimeSsisCatalogPricingTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeSsisCatalogPricingTier"/> values are not the same. </summary>
         public static bool operator !=(IntegrationRuntimeSsisCatalogPricingTier left, IntegrationRuntimeSsisCatalogPricingTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IntegrationRuntimeSsisCatalogPricingTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationRuntimeSsisCatalogPricingTier"/>. </summary>
         public static implicit operator IntegrationRuntimeSsisCatalogPricingTier(string value) => new IntegrationRuntimeSsisCatalogPricingTier(value);
 
         /// <inheritdoc />

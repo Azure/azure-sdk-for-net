@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator ==(WindowsUpdateClassification left, WindowsUpdateClassification right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WindowsUpdateClassification"/> values are not the same. </summary>
         public static bool operator !=(WindowsUpdateClassification left, WindowsUpdateClassification right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WindowsUpdateClassification"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WindowsUpdateClassification"/>. </summary>
         public static implicit operator WindowsUpdateClassification(string value) => new WindowsUpdateClassification(value);
 
         /// <inheritdoc />

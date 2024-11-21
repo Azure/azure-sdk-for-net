@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(BatchNodeDisableSchedulingOption left, BatchNodeDisableSchedulingOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchNodeDisableSchedulingOption"/> values are not the same. </summary>
         public static bool operator !=(BatchNodeDisableSchedulingOption left, BatchNodeDisableSchedulingOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchNodeDisableSchedulingOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchNodeDisableSchedulingOption"/>. </summary>
         public static implicit operator BatchNodeDisableSchedulingOption(string value) => new BatchNodeDisableSchedulingOption(value);
 
         /// <inheritdoc />

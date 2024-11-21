@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="SftpServerLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="passPhrase"> The password to decrypt the SSH private key if the SSH private key is encrypted. </param>
         /// <param name="skipHostKeyValidation"> If true, skip the SSH host key validation. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="hostKeyFingerprint"> The host key finger-print of the SFTP server. When SkipHostKeyValidation is false, HostKeyFingerprint should be specified. Type: string (or Expression with resultType string). </param>
-        internal SftpServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<int> port, SftpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential, DataFactoryElement<string> privateKeyPath, DataFactorySecret privateKeyContent, DataFactorySecret passPhrase, DataFactoryElement<bool> skipHostKeyValidation, DataFactoryElement<string> hostKeyFingerprint) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SftpServerLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<int> port, SftpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential, DataFactoryElement<string> privateKeyPath, DataFactorySecret privateKeyContent, DataFactorySecret passPhrase, DataFactoryElement<bool> skipHostKeyValidation, DataFactoryElement<string> hostKeyFingerprint) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             Port = port;

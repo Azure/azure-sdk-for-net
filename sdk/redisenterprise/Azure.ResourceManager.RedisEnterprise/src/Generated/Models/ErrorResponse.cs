@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The error object. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

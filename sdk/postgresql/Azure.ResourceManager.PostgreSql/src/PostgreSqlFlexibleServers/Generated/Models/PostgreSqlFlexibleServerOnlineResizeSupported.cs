@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlFlexibleServerOnlineResizeSupported left, PostgreSqlFlexibleServerOnlineResizeSupported right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerOnlineResizeSupported"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerOnlineResizeSupported left, PostgreSqlFlexibleServerOnlineResizeSupported right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerOnlineResizeSupported"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerOnlineResizeSupported"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerOnlineResizeSupported(string value) => new PostgreSqlFlexibleServerOnlineResizeSupported(value);
 
         /// <inheritdoc />

@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Reservations.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Reservations.Samples
 {
     public partial class Sample_ReservationOrderResource
     {
-        // Split
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SplitReservation_Split()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/SplitReservation.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Merge
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MergeReservation_Merge()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/MergeReservations.json
@@ -83,9 +82,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CalculatePrice
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CalculateReservationOrder_CalculatePrice()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/CalculateReservationOrder.json
@@ -122,9 +120,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Purchase
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_Purchase()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/PurchaseReservationOrder.json
@@ -169,9 +166,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetReservationOrder
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetReservationOrder()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/GetReservationOrderDetails.json
@@ -198,9 +194,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetReservationWithExpandPayments
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetReservationWithExpandPayments()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/GetReservationOrderDetailsWithExpandPlanInformation.json
@@ -228,9 +223,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ChangeDirectory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ChangeDirectory_ChangeDirectory()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/ChangeDirectoryReservationOrder.json
@@ -257,9 +251,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CalculateRefund
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CalculateRefund_CalculateRefund()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/CalculateRefund.json
@@ -295,9 +288,8 @@ namespace Azure.ResourceManager.Reservations.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Return a reservation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Return_ReturnAReservation()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/Return.json

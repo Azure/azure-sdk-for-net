@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Service principal certificate. </summary>
+        [WirePath("certificate")]
         public string Certificate { get; set; }
     }
 }

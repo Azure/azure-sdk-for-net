@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Alternative authentication name sources related to client authentication settings for namespace resource. </summary>
+        [WirePath("alternativeAuthenticationNameSources")]
         public IList<AlternativeAuthenticationNameSource> AlternativeAuthenticationNameSources { get; }
         /// <summary> Custom JWT authentication settings for namespace resource. </summary>
+        [WirePath("customJwtAuthentication")]
         public CustomJwtAuthenticationSettings CustomJwtAuthentication { get; set; }
     }
 }

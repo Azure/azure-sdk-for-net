@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Kill chainName name. </summary>
+        [WirePath("killChainName")]
         public string KillChainName { get; set; }
         /// <summary> Phase name. </summary>
+        [WirePath("phaseName")]
         public string PhaseName { get; set; }
     }
 }

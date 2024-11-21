@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static bool operator ==(PurviewPrivateLinkServiceStatus left, PurviewPrivateLinkServiceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PurviewPrivateLinkServiceStatus"/> values are not the same. </summary>
         public static bool operator !=(PurviewPrivateLinkServiceStatus left, PurviewPrivateLinkServiceStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PurviewPrivateLinkServiceStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PurviewPrivateLinkServiceStatus"/>. </summary>
         public static implicit operator PurviewPrivateLinkServiceStatus(string value) => new PurviewPrivateLinkServiceStatus(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static bool operator ==(NewRelicObservabilityMarketplaceSubscriptionStatus left, NewRelicObservabilityMarketplaceSubscriptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NewRelicObservabilityMarketplaceSubscriptionStatus"/> values are not the same. </summary>
         public static bool operator !=(NewRelicObservabilityMarketplaceSubscriptionStatus left, NewRelicObservabilityMarketplaceSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NewRelicObservabilityMarketplaceSubscriptionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NewRelicObservabilityMarketplaceSubscriptionStatus"/>. </summary>
         public static implicit operator NewRelicObservabilityMarketplaceSubscriptionStatus(string value) => new NewRelicObservabilityMarketplaceSubscriptionStatus(value);
 
         /// <inheritdoc />

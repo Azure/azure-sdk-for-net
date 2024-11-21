@@ -77,12 +77,16 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Gets the group id. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId { get; }
         /// <summary> Gets the display name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> Gets the required members. </summary>
+        [WirePath("properties.requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> Gets the required zone names. </summary>
+        [WirePath("properties.requiredZoneNames")]
         public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

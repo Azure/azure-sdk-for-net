@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(BatchPoolIdentityType left, BatchPoolIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchPoolIdentityType"/> values are not the same. </summary>
         public static bool operator !=(BatchPoolIdentityType left, BatchPoolIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchPoolIdentityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchPoolIdentityType"/>. </summary>
         public static implicit operator BatchPoolIdentityType(string value) => new BatchPoolIdentityType(value);
 
         /// <inheritdoc />

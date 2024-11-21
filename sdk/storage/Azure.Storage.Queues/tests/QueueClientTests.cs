@@ -1790,8 +1790,10 @@ namespace Azure.Storage.Queues.Test
                     constants.Sas.SharedKeyCredential,
                     GetOptions()));
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri =  queueClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri =  queueClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
@@ -1804,6 +1806,7 @@ namespace Azure.Storage.Queues.Test
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -1830,8 +1833,10 @@ namespace Azure.Storage.Queues.Test
                 QueueName = queueName
             };
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = queueClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = queueClient.GenerateSasUri(sasBuilder, out stringToSign);
 
             // Assert
             QueueSasBuilder sasBuilder2 = new QueueSasBuilder(permissions, expiresOn)
@@ -1844,6 +1849,7 @@ namespace Azure.Storage.Queues.Test
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -1915,6 +1921,29 @@ namespace Azure.Storage.Queues.Test
                 new InvalidOperationException("SAS Uri cannot be generated. QueueSasBuilder.QueueName does not match Name in the Client. QueueSasBuilder.QueueName must either be left empty or match the Name in the Client"));
         }
         #endregion
+
+        [Test]
+        [TestCase(null, false)]
+        [TestCase("QueueNotFound", true)]
+        [TestCase("QueueDisabled", false)]
+        [TestCase("", false)]
+        public void QueueErrorCode_EqualityOperatorOverloadTest(string errorCode, bool expected)
+        {
+            var ex = new RequestFailedException(status: 404, message: "Some error.", errorCode: errorCode, innerException: null);
+
+            bool result1 = QueueErrorCode.QueueNotFound == ex.ErrorCode;
+            bool result2 = ex.ErrorCode == QueueErrorCode.QueueNotFound;
+            Assert.AreEqual(expected, result1);
+            Assert.AreEqual(expected, result2);
+
+            bool result3 = QueueErrorCode.QueueNotFound != ex.ErrorCode;
+            bool result4 = ex.ErrorCode != QueueErrorCode.QueueNotFound;
+            Assert.AreEqual(!expected, result3);
+            Assert.AreEqual(!expected, result4);
+
+            bool result5 = QueueErrorCode.QueueNotFound.Equals(ex.ErrorCode);
+            Assert.AreEqual(expected, result5);
+        }
 
         [RecordedTest]
         public void CanMockQueueServiceClientRetrieval()

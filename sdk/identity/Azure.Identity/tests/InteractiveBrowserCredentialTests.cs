@@ -25,7 +25,7 @@ namespace Azure.Identity.Tests
         {
             // Configure mock cache to return a token for the expected user
             string resolvedTenantId = config.RequestContext.TenantId ?? config.TenantId ?? TenantId;
-            var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, resolvedTenantId, "token", "refreshToken");
+            var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, resolvedTenantId, "token", "refreshToken", config.AuthorityHost.Host);
             var tokenCacheOptions = new MockTokenCache(
                 () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
                 args => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes));
@@ -37,6 +37,7 @@ namespace Azure.Identity.Tests
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{resolvedTenantId}", resolvedTenantId, ClientId),
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
             };
             if (config.Transport != null)
             {

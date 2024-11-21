@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(NetAppMirrorState left, NetAppMirrorState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppMirrorState"/> values are not the same. </summary>
         public static bool operator !=(NetAppMirrorState left, NetAppMirrorState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppMirrorState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppMirrorState"/>. </summary>
         public static implicit operator NetAppMirrorState(string value) => new NetAppMirrorState(value);
 
         /// <inheritdoc />

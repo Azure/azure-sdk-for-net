@@ -36,7 +36,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static bool operator ==(CardinalityValue left, CardinalityValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CardinalityValue"/> values are not the same. </summary>
         public static bool operator !=(CardinalityValue left, CardinalityValue right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CardinalityValue"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CardinalityValue"/>. </summary>
         public static implicit operator CardinalityValue(string value) => new CardinalityValue(value);
 
         /// <inheritdoc />

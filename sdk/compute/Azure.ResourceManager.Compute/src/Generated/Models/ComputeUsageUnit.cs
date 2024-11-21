@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(ComputeUsageUnit left, ComputeUsageUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeUsageUnit"/> values are not the same. </summary>
         public static bool operator !=(ComputeUsageUnit left, ComputeUsageUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeUsageUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeUsageUnit"/>. </summary>
         public static implicit operator ComputeUsageUnit(string value) => new ComputeUsageUnit(value);
 
         /// <inheritdoc />

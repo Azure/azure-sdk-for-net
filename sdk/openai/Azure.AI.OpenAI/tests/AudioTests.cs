@@ -1,26 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using OpenAI.Audio;
+using OpenAI.TestFramework;
 
 namespace Azure.AI.OpenAI.Tests;
 
-public class AudioTests : AoaiTestBase<AudioClient>
+public class AudioTests(bool isAsync) : AoaiTestBase<AudioClient>(isAsync)
 {
-    public AudioTests(bool isAsync) : base(isAsync)
-    {
-        DisableRequestBodyRecording(nameof(AudioClient.TranscribeAudioAsync));
-        DisableRequestBodyRecording(nameof(AudioClient.TranslateAudioAsync));
-    }
-
     [Test]
     [Category("Smoke")]
     public void CanCreateClient() => Assert.That(GetTestClient(), Is.InstanceOf<AudioClient>());
@@ -41,23 +33,33 @@ public class AudioTests : AoaiTestBase<AudioClient>
         Assert.That(translation?.Text, Is.Not.Null.Or.Empty);
     }
 
+#if !AZURE_OPENAI_GA
     [RecordedTest]
     public async Task TextToSpeechWorks()
     {
         AudioClient audioClient = GetTestClient("tts");
-        BinaryData ttsData = await audioClient.GenerateSpeechFromTextAsync(
+        BinaryData ttsData = await audioClient.GenerateSpeechAsync(
             "hello, world!",
             GeneratedSpeechVoice.Alloy);
         Assert.That(ttsData, Is.Not.Null);
     }
+#else
+    [Test]
+    public void VersionNotSupportedTextToSpeechThrows()
+    {
+        AudioClient audioClient = GetTestClient("tts");
+        Assert.ThrowsAsync<InvalidOperationException>(async ()
+            => await audioClient.GenerateSpeechAsync("hello, world!", GeneratedSpeechVoice.Alloy));
+    }
+#endif
 
     [RecordedTest]
-    [TestCase(AudioTranscriptionFormat.Simple)]
-    [TestCase(AudioTranscriptionFormat.Verbose)]
-    [TestCase(AudioTranscriptionFormat.Srt)]
-    [TestCase(AudioTranscriptionFormat.Vtt)]
+    [TestCase("json")]
+    [TestCase("verbose_json")]
+    [TestCase("srt")]
+    [TestCase("vtt")]
     [TestCase(null)]
-    public async Task TranscriptionWorksWithFormat(AudioTranscriptionFormat? format)
+    public async Task TranscriptionWorksWithFormat(string responseFormat)
     {
         AudioClient client = GetTestClient();
 
@@ -66,7 +68,15 @@ public class AudioTests : AoaiTestBase<AudioClient>
         AudioTranscriptionOptions options = new()
         {
             Temperature = 0.25f,
-            ResponseFormat = format,
+            ResponseFormat = responseFormat switch
+            {
+                "text" => AudioTranscriptionFormat.Text,
+                "json" => AudioTranscriptionFormat.Simple,
+                "verbose_json" => AudioTranscriptionFormat.Verbose,
+                "srt" => AudioTranscriptionFormat.Srt,
+                "vtt" => AudioTranscriptionFormat.Vtt,
+                _ => (AudioTranscriptionFormat?)null
+            }
         };
 
         AudioTranscription transcription = await client.TranscribeAudioAsync(
@@ -75,13 +85,13 @@ public class AudioTests : AoaiTestBase<AudioClient>
         Assert.That(transcription, Is.Not.Null);
         Assert.That(transcription.Text, Is.Not.Null.Or.Empty);
 
-        if (format == AudioTranscriptionFormat.Simple)
+        if (options.ResponseFormat == AudioTranscriptionFormat.Simple)
         {
             Assert.That(transcription.Duration, Is.Null);
             Assert.That(transcription.Language, Is.Null);
             Assert.That(transcription.Segments, Is.Null.Or.Empty);
         }
-        else if (format == AudioTranscriptionFormat.Verbose)
+        else if (options.ResponseFormat == AudioTranscriptionFormat.Verbose)
         {
             Assert.That(transcription.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
             Assert.That(transcription.Language, Is.Not.Null.Or.Empty);
@@ -90,8 +100,8 @@ public class AudioTests : AoaiTestBase<AudioClient>
             TranscribedSegment firstSegment = transcription.Segments[0];
             Assert.That(firstSegment, Is.Not.Null);
             Assert.That(firstSegment.Id, Is.EqualTo(0));
-            Assert.That(firstSegment.Start, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(0)));
-            Assert.That(firstSegment.End, Is.GreaterThan(firstSegment.Start));
+            Assert.That(firstSegment.StartTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(0)));
+            Assert.That(firstSegment.EndTime, Is.GreaterThan(firstSegment.StartTime));
             Assert.That(firstSegment.Text, Is.Not.Null.Or.Empty);
         }
     }
@@ -108,7 +118,7 @@ public class AudioTests : AoaiTestBase<AudioClient>
         using Stream audioFileStream = File.OpenRead(audioInfo.RelativePath);
         AudioTranscriptionOptions options = new()
         {
-            Granularities = granularityFlags,
+            TimestampGranularities = granularityFlags,
             ResponseFormat = AudioTranscriptionFormat.Verbose,
         };
         ClientResult<AudioTranscription> transcriptionResult = await client.TranscribeAudioAsync(
@@ -130,12 +140,12 @@ public class AudioTests : AoaiTestBase<AudioClient>
     }
 
     [RecordedTest]
-    [TestCase(AudioTranslationFormat.Simple)]
-    [TestCase(AudioTranslationFormat.Verbose)]
-    [TestCase(AudioTranslationFormat.Srt)]
-    [TestCase(AudioTranslationFormat.Vtt)]
+    [TestCase("json")]
+    [TestCase("verbose")]
+    [TestCase("srt")]
+    [TestCase("vtt")]
     [TestCase(null)]
-    public async Task TranslationWorksWithFormat(AudioTranslationFormat? format)
+    public async Task TranslationWorksWithFormat(string responseFormat)
     {
         AudioClient client = GetTestClient();
 
@@ -143,7 +153,15 @@ public class AudioTests : AoaiTestBase<AudioClient>
         using Stream audioFileStream = File.OpenRead(audioInfo.RelativePath);
         AudioTranslationOptions options = new()
         {
-            ResponseFormat = format,
+            ResponseFormat = responseFormat switch
+            {
+                "text" => AudioTranslationFormat.Text,
+                "json" => AudioTranslationFormat.Simple,
+                "verbose_json" => AudioTranslationFormat.Verbose,
+                "srt" => AudioTranslationFormat.Srt,
+                "vtt" => AudioTranslationFormat.Vtt,
+                _ => (AudioTranslationFormat?)null
+            }
         };
 
         AudioTranslation translation = await client.TranslateAudioAsync(
@@ -152,13 +170,13 @@ public class AudioTests : AoaiTestBase<AudioClient>
         Assert.That(translation, Is.Not.Null);
         Assert.That(translation.Text, Is.Not.Null.Or.Empty);
 
-        if (format == AudioTranslationFormat.Simple)
+        if (options.ResponseFormat == AudioTranslationFormat.Simple)
         {
             Assert.That(translation.Duration, Is.Null);
             Assert.That(translation.Language, Is.Null);
             Assert.That(translation.Segments, Is.Null.Or.Empty);
         }
-        else if (format == AudioTranslationFormat.Verbose)
+        else if (options.ResponseFormat == AudioTranslationFormat.Verbose)
         {
             Assert.That(translation.Duration, Is.GreaterThan(TimeSpan.FromSeconds(0)));
             Assert.That(translation.Language, Is.Not.Null.Or.Empty);
@@ -167,8 +185,8 @@ public class AudioTests : AoaiTestBase<AudioClient>
             TranscribedSegment firstSegment = translation.Segments[0];
             Assert.That(firstSegment, Is.Not.Null);
             Assert.That(firstSegment.Id, Is.EqualTo(0));
-            Assert.That(firstSegment.Start, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(0)));
-            Assert.That(firstSegment.End, Is.GreaterThan(firstSegment.Start));
+            Assert.That(firstSegment.StartTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(0)));
+            Assert.That(firstSegment.EndTime, Is.GreaterThan(firstSegment.StartTime));
             Assert.That(firstSegment.Text, Is.Not.Null.Or.Empty);
         }
     }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(LayerEntropyMode left, LayerEntropyMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LayerEntropyMode"/> values are not the same. </summary>
         public static bool operator !=(LayerEntropyMode left, LayerEntropyMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LayerEntropyMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LayerEntropyMode"/>. </summary>
         public static implicit operator LayerEntropyMode(string value) => new LayerEntropyMode(value);
 
         /// <inheritdoc />

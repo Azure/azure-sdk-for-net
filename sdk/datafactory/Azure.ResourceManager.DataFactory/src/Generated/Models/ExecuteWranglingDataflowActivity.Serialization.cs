@@ -20,56 +20,26 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<ExecuteWranglingDataflowActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ExecuteWranglingDataflowActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExecuteWranglingDataflowActivity)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy, options);
-            }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (Optional.IsDefined(OnInactiveMarkAs))
-            {
-                writer.WritePropertyName("onInactiveMarkAs"u8);
-                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(DependsOn))
-            {
-                writer.WritePropertyName("dependsOn"u8);
-                writer.WriteStartArray();
-                foreach (var item in DependsOn)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(UserProperties))
-            {
-                writer.WritePropertyName("userProperties"u8);
-                writer.WriteStartArray();
-                foreach (var item in UserProperties)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
@@ -84,6 +54,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("integrationRuntime"u8);
                 writer.WriteObjectValue(IntegrationRuntime, options);
+            }
+            if (Optional.IsDefined(ContinuationSettings))
+            {
+                writer.WritePropertyName("continuationSettings"u8);
+                writer.WriteObjectValue(ContinuationSettings, options);
             }
             if (Optional.IsDefined(Compute))
             {
@@ -144,7 +119,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         ExecuteWranglingDataflowActivity IJsonModel<ExecuteWranglingDataflowActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -178,6 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFlowReference dataFlow = default;
             DataFlowStagingInfo staging = default;
             IntegrationRuntimeReference integrationRuntime = default;
+            ContinuationSettingsReference continuationSettings = default;
             ExecuteDataFlowActivityComputeType compute = default;
             DataFactoryElement<string> traceLevel = default;
             DataFactoryElement<bool> continueOnError = default;
@@ -291,6 +266,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             integrationRuntime = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("continuationSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            continuationSettings = ContinuationSettingsReference.DeserializeContinuationSettingsReference(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("compute"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -383,6 +367,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dataFlow,
                 staging,
                 integrationRuntime,
+                continuationSettings,
                 compute,
                 traceLevel,
                 continueOnError,

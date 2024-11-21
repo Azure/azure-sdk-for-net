@@ -229,8 +229,8 @@ namespace Azure.Data.SchemaRegistry.Tests
             var format = new SchemaFormat("UnknownType");
             Assert.That(
                 async () => await client.GetSchemaPropertiesAsync(groupName, schemaName, "Hello", format),
-                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(404)
-                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("ItemNotFound"));
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415)
+                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("InvalidSchemaType"));
         }
 
         [RecordedTest]

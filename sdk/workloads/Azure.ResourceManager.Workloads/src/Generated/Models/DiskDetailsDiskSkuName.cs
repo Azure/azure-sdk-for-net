@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator ==(DiskDetailsDiskSkuName left, DiskDetailsDiskSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskDetailsDiskSkuName"/> values are not the same. </summary>
         public static bool operator !=(DiskDetailsDiskSkuName left, DiskDetailsDiskSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiskDetailsDiskSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskDetailsDiskSkuName"/>. </summary>
         public static implicit operator DiskDetailsDiskSkuName(string value) => new DiskDetailsDiskSkuName(value);
 
         /// <inheritdoc />

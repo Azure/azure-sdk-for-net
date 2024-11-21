@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static bool operator ==(AmlFileSystemProvisioningStateType left, AmlFileSystemProvisioningStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AmlFileSystemProvisioningStateType"/> values are not the same. </summary>
         public static bool operator !=(AmlFileSystemProvisioningStateType left, AmlFileSystemProvisioningStateType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AmlFileSystemProvisioningStateType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AmlFileSystemProvisioningStateType"/>. </summary>
         public static implicit operator AmlFileSystemProvisioningStateType(string value) => new AmlFileSystemProvisioningStateType(value);
 
         /// <inheritdoc />

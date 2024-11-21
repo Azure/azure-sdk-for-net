@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01";
+            _apiVersion = apiVersion ?? "2023-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Returns list of access infos - for Git and Management endpoints. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter"> Not used. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Returns list of access infos - for Git and Management endpoints. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter"> Not used. </param>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Tenant access metadata. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Tenant access metadata. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Get tenant access information details without secrets. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Get tenant access information details without secrets. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Update tenant access information details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Update tenant access information details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Update tenant access information details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Update tenant access information details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Regenerate primary access key. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Regenerate primary access key. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Regenerate secondary access key. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Regenerate secondary access key. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Get tenant access information details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Get tenant access information details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Returns list of access infos - for Git and Management endpoints. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter"> Not used. </param>
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Returns list of access infos - for Git and Management endpoints. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter"> Not used. </param>

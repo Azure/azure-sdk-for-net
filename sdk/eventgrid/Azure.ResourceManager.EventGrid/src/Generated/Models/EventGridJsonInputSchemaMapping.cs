@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> The mapping information for the Id property of the Event Grid Event. </summary>
         internal JsonField Id { get; set; }
         /// <summary> Name of a field in the input event schema that's to be used as the source of a mapping. </summary>
+        [WirePath("properties.id.sourceField")]
         public string IdSourceField
         {
             get => Id is null ? default : Id.SourceField;
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> The mapping information for the Topic property of the Event Grid Event. </summary>
         internal JsonField Topic { get; set; }
         /// <summary> Name of a field in the input event schema that's to be used as the source of a mapping. </summary>
+        [WirePath("properties.topic.sourceField")]
         public string TopicSourceField
         {
             get => Topic is null ? default : Topic.SourceField;
@@ -70,6 +72,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> The mapping information for the EventTime property of the Event Grid Event. </summary>
         internal JsonField EventTime { get; set; }
         /// <summary> Name of a field in the input event schema that's to be used as the source of a mapping. </summary>
+        [WirePath("properties.eventTime.sourceField")]
         public string EventTimeSourceField
         {
             get => EventTime is null ? default : EventTime.SourceField;
@@ -82,10 +85,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The mapping information for the EventType property of the Event Grid Event. </summary>
+        [WirePath("properties.eventType")]
         public JsonFieldWithDefault EventType { get; set; }
         /// <summary> The mapping information for the Subject property of the Event Grid Event. </summary>
+        [WirePath("properties.subject")]
         public JsonFieldWithDefault Subject { get; set; }
         /// <summary> The mapping information for the DataVersion property of the Event Grid Event. </summary>
+        [WirePath("properties.dataVersion")]
         public JsonFieldWithDefault DataVersion { get; set; }
     }
 }

@@ -15,9 +15,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task ClassifyDocumentFromUriAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            var adminClient = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
+            var adminClient = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), TestEnvironment.Credential);
 
             string setupClassifierId = Guid.NewGuid().ToString();
             Uri blobContainerUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);

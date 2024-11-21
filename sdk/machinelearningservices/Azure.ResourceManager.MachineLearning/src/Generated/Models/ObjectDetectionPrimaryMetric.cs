@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ObjectDetectionPrimaryMetric left, ObjectDetectionPrimaryMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ObjectDetectionPrimaryMetric"/> values are not the same. </summary>
         public static bool operator !=(ObjectDetectionPrimaryMetric left, ObjectDetectionPrimaryMetric right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ObjectDetectionPrimaryMetric"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ObjectDetectionPrimaryMetric"/>. </summary>
         public static implicit operator ObjectDetectionPrimaryMetric(string value) => new ObjectDetectionPrimaryMetric(value);
 
         /// <inheritdoc />

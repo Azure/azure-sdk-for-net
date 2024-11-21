@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseDataSourceScaleType left, SynapseDataSourceScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseDataSourceScaleType"/> values are not the same. </summary>
         public static bool operator !=(SynapseDataSourceScaleType left, SynapseDataSourceScaleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseDataSourceScaleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseDataSourceScaleType"/>. </summary>
         public static implicit operator SynapseDataSourceScaleType(string value) => new SynapseDataSourceScaleType(value);
 
         /// <inheritdoc />

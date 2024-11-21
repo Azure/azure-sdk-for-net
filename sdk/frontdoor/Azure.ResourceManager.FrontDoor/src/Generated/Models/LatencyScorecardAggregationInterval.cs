@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(LatencyScorecardAggregationInterval left, LatencyScorecardAggregationInterval right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LatencyScorecardAggregationInterval"/> values are not the same. </summary>
         public static bool operator !=(LatencyScorecardAggregationInterval left, LatencyScorecardAggregationInterval right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LatencyScorecardAggregationInterval"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LatencyScorecardAggregationInterval"/>. </summary>
         public static implicit operator LatencyScorecardAggregationInterval(string value) => new LatencyScorecardAggregationInterval(value);
 
         /// <inheritdoc />

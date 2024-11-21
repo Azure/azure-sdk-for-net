@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static bool operator ==(AppInstanceHttpSchemeType left, AppInstanceHttpSchemeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppInstanceHttpSchemeType"/> values are not the same. </summary>
         public static bool operator !=(AppInstanceHttpSchemeType left, AppInstanceHttpSchemeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppInstanceHttpSchemeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppInstanceHttpSchemeType"/>. </summary>
         public static implicit operator AppInstanceHttpSchemeType(string value) => new AppInstanceHttpSchemeType(value);
 
         /// <inheritdoc />

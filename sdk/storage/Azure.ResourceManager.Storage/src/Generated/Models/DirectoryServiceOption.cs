@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(DirectoryServiceOption left, DirectoryServiceOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DirectoryServiceOption"/> values are not the same. </summary>
         public static bool operator !=(DirectoryServiceOption left, DirectoryServiceOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DirectoryServiceOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DirectoryServiceOption"/>. </summary>
         public static implicit operator DirectoryServiceOption(string value) => new DirectoryServiceOption(value);
 
         /// <inheritdoc />

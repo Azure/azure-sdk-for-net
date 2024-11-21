@@ -12,14 +12,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Logic.Samples
 {
     public partial class Sample_LogicWorkflowResource
     {
-        // List all workflows in a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLogicWorkflows_ListAllWorkflowsInASubscription()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_ListBySubscription.json
@@ -46,12 +46,11 @@ namespace Azure.ResourceManager.Logic.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_Get.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.Logic.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_CreateOrUpdate.json
@@ -189,9 +187,8 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_Delete.json
@@ -213,12 +210,11 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             // invoke the operation
             await logicWorkflow.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Disable a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Disable_DisableAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_Disable.json
@@ -240,12 +236,11 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             // invoke the operation
             await logicWorkflow.DisableAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Enable a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Enable_EnableAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_Enable.json
@@ -267,12 +262,11 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             // invoke the operation
             await logicWorkflow.EnableAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Generate an upgraded definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateUpgradedDefinition_GenerateAnUpgradedDefinition()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_GenerateUpgradedDefinition.json
@@ -301,9 +295,8 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get callback url
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCallbackUrl_GetCallbackUrl()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_ListCallbackUrl.json
@@ -333,9 +326,8 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the swagger for a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSwagger_GetTheSwaggerForAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_ListSwagger.json
@@ -360,9 +352,8 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Move a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Move_MoveAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_Move.json
@@ -388,12 +379,11 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             };
             await logicWorkflow.MoveAsync(WaitUntil.Completed, move);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Regenerate the callback URL access key for request triggers
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateAccessKey_RegenerateTheCallbackURLAccessKeyForRequestTriggers()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_RegenerateAccessKey.json
@@ -419,12 +409,11 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             };
             await logicWorkflow.RegenerateAccessKeyAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Validate a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateByResourceGroup_ValidateAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_ValidateByResourceGroup.json
@@ -473,12 +462,11 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             };
             await logicWorkflow.ValidateByResourceGroupAsync(data);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Validate a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateByLocationWorkflow_ValidateAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_ValidateByLocation.json
@@ -528,7 +516,7 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             };
             await resourceGroupResource.ValidateByLocationWorkflowAsync(location, workflowName, data);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

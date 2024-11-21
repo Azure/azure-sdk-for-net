@@ -18,7 +18,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of <see cref="GeoJsonMultiPolygon"/>. </summary>
         /// <param name="coordinates"> Contains a list of valid `GeoJSON Polygon` objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public GeoJsonMultiPolygon(IEnumerable<IList<IList<IList<double>>>> coordinates)
+        internal GeoJsonMultiPolygon(IEnumerable<IList<IList<IList<double>>>> coordinates)
         {
             Argument.AssertNotNull(coordinates, nameof(coordinates));
 
@@ -28,14 +28,15 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonMultiPolygon"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="coordinates"> Contains a list of valid `GeoJSON Polygon` objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </param>
-        internal GeoJsonMultiPolygon(GeoJsonObjectType type, IList<IList<IList<IList<double>>>> coordinates) : base(type)
+        internal GeoJsonMultiPolygon(GeoJsonObjectType type, IReadOnlyList<double> boundingBox, IReadOnlyList<IList<IList<IList<double>>>> coordinates) : base(type, boundingBox)
         {
             Coordinates = coordinates;
             Type = type;
         }
 
         /// <summary> Contains a list of valid `GeoJSON Polygon` objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </summary>
-        public IList<IList<IList<IList<double>>>> Coordinates { get; }
+        public IReadOnlyList<IList<IList<IList<double>>>> Coordinates { get; }
     }
 }

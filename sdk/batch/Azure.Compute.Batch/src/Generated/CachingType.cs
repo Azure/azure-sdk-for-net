@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(CachingType left, CachingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CachingType"/> values are not the same. </summary>
         public static bool operator !=(CachingType left, CachingType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CachingType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CachingType"/>. </summary>
         public static implicit operator CachingType(string value) => new CachingType(value);
 
         /// <inheritdoc />

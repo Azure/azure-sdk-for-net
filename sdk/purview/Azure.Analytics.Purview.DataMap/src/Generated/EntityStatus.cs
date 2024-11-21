@@ -33,7 +33,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static bool operator ==(EntityStatus left, EntityStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EntityStatus"/> values are not the same. </summary>
         public static bool operator !=(EntityStatus left, EntityStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EntityStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EntityStatus"/>. </summary>
         public static implicit operator EntityStatus(string value) => new EntityStatus(value);
 
         /// <inheritdoc />

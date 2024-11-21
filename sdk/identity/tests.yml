@@ -8,6 +8,8 @@ extends:
         displayName: Set OIDC variables
         env:
           ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
+          ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+          ARM_TENANT_ID: $(ARM_TENANT_ID)
         inputs:
           azureSubscription: azure-sdk-tests
           scriptType: pscore
@@ -27,10 +29,9 @@ extends:
     CloudConfig:
       Public:
         SubscriptionConfigurations:
-          - $(sub-config-azure-cloud-test-resources)
           # Contains alternate tenant, AAD app and cert info for testing
           - $(sub-config-identity-test-resources)
-        ServiceConnection: azure-sdk-tests
     EnvVars:
       ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
-    UseFederatedAuth: true
+      ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+      ARM_TENANT_ID: $(ARM_TENANT_ID)

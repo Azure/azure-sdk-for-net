@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(AppDaprLogLevel left, AppDaprLogLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppDaprLogLevel"/> values are not the same. </summary>
         public static bool operator !=(AppDaprLogLevel left, AppDaprLogLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppDaprLogLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppDaprLogLevel"/>. </summary>
         public static implicit operator AppDaprLogLevel(string value) => new AppDaprLogLevel(value);
 
         /// <inheritdoc />

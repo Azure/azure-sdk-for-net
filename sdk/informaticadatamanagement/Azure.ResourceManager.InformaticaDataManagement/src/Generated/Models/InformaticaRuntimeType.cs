@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         public static bool operator ==(InformaticaRuntimeType left, InformaticaRuntimeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InformaticaRuntimeType"/> values are not the same. </summary>
         public static bool operator !=(InformaticaRuntimeType left, InformaticaRuntimeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InformaticaRuntimeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InformaticaRuntimeType"/>. </summary>
         public static implicit operator InformaticaRuntimeType(string value) => new InformaticaRuntimeType(value);
 
         /// <inheritdoc />

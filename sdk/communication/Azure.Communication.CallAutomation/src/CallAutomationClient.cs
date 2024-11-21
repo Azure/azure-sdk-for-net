@@ -35,6 +35,14 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public CommunicationUserIdentifier Source { get; }
 
+        /// <summary>
+        /// MicrosoftTeamsAppIdentifier that makes the outbound call.
+        /// This can be provided by providing CallAutomationClientOption during construction of CallAutomationClient.
+        /// If left blank, Source is the default outbound call identity.
+        /// This should be mutual exclusive with Source.
+        /// </summary>
+        public MicrosoftTeamsAppIdentifier OPSSource { get; }
+
         #region public constructors
         /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
@@ -117,6 +125,7 @@ namespace Azure.Communication.CallAutomation
             CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             EventProcessor = new CallAutomationEventProcessor();
             Source = options.Source;
+            OPSSource = options.OPSSource;
         }
 
         private CallAutomationClient(
@@ -254,6 +263,9 @@ namespace Azure.Communication.CallAutomation
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
+            request.CustomCallingContext = new CustomCallingContextInternal(
+                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>());
 
             return request;
         }
@@ -711,6 +723,7 @@ namespace Azure.Communication.CallAutomation
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.CallInvite?.SourceDisplayName,
                 Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                OpsSource = OPSSource == null ? null : new MicrosoftTeamsAppIdentifierModel(OPSSource.AppId),
             };
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
@@ -741,6 +754,7 @@ namespace Azure.Communication.CallAutomation
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
                 Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                OpsSource = OPSSource == null ? null : new MicrosoftTeamsAppIdentifierModel(OPSSource.AppId)
             };
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name

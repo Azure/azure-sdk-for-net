@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         void IJsonModel<SimDeleteList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SimDeleteList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SimDeleteList)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("sims"u8);
             writer.WriteStartArray();
             foreach (var item in Sims)
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SimDeleteList IJsonModel<SimDeleteList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

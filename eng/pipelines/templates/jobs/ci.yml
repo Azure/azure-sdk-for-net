@@ -60,8 +60,11 @@ jobs:
       SDKType: ${{ parameters.SDKType }}
 
     steps:
-      - checkout: self
-        fetchDepth: 0
+      - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+        parameters:
+          Paths:
+            - "/*"
+            - "!SessionRecords"
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
         parameters:
@@ -96,14 +99,14 @@ jobs:
           echo "##vso[task.setvariable variable=VersioningProperties]$versioningProperties"
         displayName: "Setup .NET specific versioning properties"
       - task: UsePythonVersion@0
-        displayName: 'Use Python 3.9'
+        displayName: 'Use Python 3.11'
         inputs:
-          versionSpec: '3.9'
+          versionSpec: '3.11'
       - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
       - script: >-
-          dotnet pack eng/service.proj
+          dotnet pack eng/service.proj -warnaserror
           /p:ValidateRunApiCompat=true
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
@@ -239,7 +242,7 @@ jobs:
           LogFilePath: $(Build.ArtifactStagingDirectory)/rebuild.binlog
 
       - script: >-
-          dotnet build eng/service.proj
+          dotnet build eng/service.proj -warnaserror
           /t:rebuild
           /p:DebugType=none
           /p:SDKType=${{ parameters.SDKType }}
@@ -264,9 +267,9 @@ jobs:
         os: windows
       steps:
         - task: UsePythonVersion@0
-          displayName: "Use Python 3.9"
+          displayName: "Use Python 3.11"
           inputs:
-            versionSpec: "3.9"
+            versionSpec: "3.11"
 
         - template: /eng/common/pipelines/templates/steps/validate-filename.yml
 
@@ -342,4 +345,3 @@ jobs:
             TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
             # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
             ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
-

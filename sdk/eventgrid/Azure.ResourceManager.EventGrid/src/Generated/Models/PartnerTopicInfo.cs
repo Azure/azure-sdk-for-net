@@ -84,24 +84,29 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Azure subscription ID of the subscriber. The partner topic associated with the channel will be
         /// created under this Azure subscription.
         /// </summary>
+        [WirePath("azureSubscriptionId")]
         public Guid? AzureSubscriptionId { get; set; }
         /// <summary>
         /// Azure Resource Group of the subscriber. The partner topic associated with the channel will be
         /// created under this resource group.
         /// </summary>
+        [WirePath("resourceGroupName")]
         public string ResourceGroupName { get; set; }
         /// <summary> Name of the partner topic associated with the channel. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary>
         /// Event Type Information for the partner topic. This information is provided by the publisher and can be used by the
         /// subscriber to view different types of events that are published.
         /// </summary>
+        [WirePath("eventTypeInfo")]
         public PartnerTopicEventTypeInfo EventTypeInfo { get; set; }
         /// <summary>
         /// The source information is provided by the publisher to determine the scope or context from which the events
         /// are originating. This information can be used by the subscriber during the approval process of the
         /// created partner topic.
         /// </summary>
+        [WirePath("source")]
         public string Source { get; set; }
     }
 }

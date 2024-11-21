@@ -33,7 +33,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator ==(TwinStatus left, TwinStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TwinStatus"/> values are not the same. </summary>
         public static bool operator !=(TwinStatus left, TwinStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TwinStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TwinStatus"/>. </summary>
         public static implicit operator TwinStatus(string value) => new TwinStatus(value);
 
         /// <inheritdoc />

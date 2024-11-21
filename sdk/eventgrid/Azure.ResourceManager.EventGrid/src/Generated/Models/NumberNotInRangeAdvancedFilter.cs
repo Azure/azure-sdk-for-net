@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The set of filter values. </summary>
+        [WirePath("values")]
         public IList<IList<double>> Values { get; }
     }
 }

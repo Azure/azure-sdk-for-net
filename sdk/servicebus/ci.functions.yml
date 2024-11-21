@@ -11,6 +11,8 @@ trigger:
     - sdk/servicebus/service.projects
     - sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus
     - sdk/servicebus/ci.functions.yml
+    - sdk/servicebus/Azure.Messaging.ServiceBus/tests/Infrastructure
+    - sdk/servicebus/test-resources.json
 
 pr:
   branches:

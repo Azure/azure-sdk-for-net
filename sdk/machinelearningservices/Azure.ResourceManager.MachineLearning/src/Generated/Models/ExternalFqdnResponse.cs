@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets the value. </summary>
+        [WirePath("value")]
         public IReadOnlyList<MachineLearningFqdnEndpoints> Value { get; }
     }
 }

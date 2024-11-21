@@ -4,11 +4,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
+using Azure.Core.Json;
 
 namespace Azure.Core.Serialization
 {
@@ -17,6 +19,10 @@ namespace Azure.Core.Serialization
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 
+        internal const string SerializationRequiresUnreferencedCode = "This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.";
+
+        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
+        [RequiresDynamicCode(SerializationRequiresUnreferencedCode)]
         private class MetaObject : DynamicMetaObject
         {
             private DynamicData _value;

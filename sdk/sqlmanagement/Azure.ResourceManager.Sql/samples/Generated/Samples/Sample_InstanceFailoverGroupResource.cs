@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_InstanceFailoverGroupResource
     {
-        // Get failover group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFailoverGroup()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create failover group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateFailoverGroup()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupCreateOrUpdate.json
@@ -104,9 +103,8 @@ PartnerManagedInstanceId = new ResourceIdentifier("/subscriptions/00000000-1111-
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete failover group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteFailoverGroup()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupDelete.json
@@ -129,12 +127,11 @@ PartnerManagedInstanceId = new ResourceIdentifier("/subscriptions/00000000-1111-
             // invoke the operation
             await instanceFailoverGroup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Planned failover of a failover group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Failover_PlannedFailoverOfAFailoverGroup()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupFailover.json
@@ -165,9 +162,8 @@ PartnerManagedInstanceId = new ResourceIdentifier("/subscriptions/00000000-1111-
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Forced failover of a failover group allowing data loss
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ForceFailoverAllowDataLoss_ForcedFailoverOfAFailoverGroupAllowingDataLoss()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InstanceFailoverGroupForceFailoverAllowDataLoss.json

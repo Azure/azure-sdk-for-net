@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Initializes a new instance of <see cref="BillingAmount"/>. </summary>
         /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> Amount value. </param>
+        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BillingAmount(string currency, float? value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The currency for the amount value. </summary>
+        [WirePath("currency")]
         public string Currency { get; }
-        /// <summary> Amount value. </summary>
+        /// <summary> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </summary>
+        [WirePath("value")]
         public float? Value { get; }
     }
 }

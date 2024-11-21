@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(UpgradeMode left, UpgradeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpgradeMode"/> values are not the same. </summary>
         public static bool operator !=(UpgradeMode left, UpgradeMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UpgradeMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UpgradeMode"/>. </summary>
         public static implicit operator UpgradeMode(string value) => new UpgradeMode(value);
 
         /// <inheritdoc />

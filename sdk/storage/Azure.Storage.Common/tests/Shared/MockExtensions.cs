@@ -62,5 +62,17 @@ namespace Azure.Storage
                     .Throws<NotSupportedException>();
             }
         }
+
+        public static void VerifyDisposal<T>(this Mock<T> mock)
+            where T : class, IDisposable
+        {
+            mock.Verify(m => m.Dispose(), Times.Once);
+        }
+
+        public static void VerifyAsyncDisposal<T>(this Mock<T> mock)
+            where T : class, IAsyncDisposable
+        {
+            mock.Verify(m => m.DisposeAsync(), Times.Once);
+        }
     }
 }

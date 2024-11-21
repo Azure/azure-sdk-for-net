@@ -129,7 +129,7 @@ namespace Azure.Security.KeyVault.Administration
         public static bool operator ==(KeyVaultDataAction left, KeyVaultDataAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultDataAction"/> values are not the same. </summary>
         public static bool operator !=(KeyVaultDataAction left, KeyVaultDataAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KeyVaultDataAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultDataAction"/>. </summary>
         public static implicit operator KeyVaultDataAction(string value) => new KeyVaultDataAction(value);
 
         /// <inheritdoc />

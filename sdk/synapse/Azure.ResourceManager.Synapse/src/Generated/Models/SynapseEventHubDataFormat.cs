@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseEventHubDataFormat left, SynapseEventHubDataFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseEventHubDataFormat"/> values are not the same. </summary>
         public static bool operator !=(SynapseEventHubDataFormat left, SynapseEventHubDataFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseEventHubDataFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseEventHubDataFormat"/>. </summary>
         public static implicit operator SynapseEventHubDataFormat(string value) => new SynapseEventHubDataFormat(value);
 
         /// <inheritdoc />

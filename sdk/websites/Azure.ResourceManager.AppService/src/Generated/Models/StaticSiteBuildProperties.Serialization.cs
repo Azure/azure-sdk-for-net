@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<StaticSiteBuildProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteBuildProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StaticSiteBuildProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
@@ -82,7 +90,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StaticSiteBuildProperties IJsonModel<StaticSiteBuildProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

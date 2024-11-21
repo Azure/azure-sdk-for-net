@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         void IJsonModel<RulesEngineHeaderAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RulesEngineHeaderAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RulesEngineHeaderAction)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("headerActionType"u8);
             writer.WriteStringValue(HeaderActionType.ToString());
             writer.WritePropertyName("headerName"u8);
@@ -50,7 +58,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RulesEngineHeaderAction IJsonModel<RulesEngineHeaderAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

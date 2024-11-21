@@ -21,6 +21,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public ITransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions)
         {
+            return Get(azureMonitorExporterOptions, DefaultPlatform.Instance);
+        }
+
+        /// <remarks>
+        /// This method should not be called directly in product code.
+        /// This method is primarially intended for unit testing scenarios where providing a mock platform is necessary.
+        /// </remarks>
+        internal ITransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions, IPlatform platform)
+        {
             var key = azureMonitorExporterOptions.ConnectionString ?? string.Empty;
 
             if (!_transmitters.TryGetValue(key, out ITransmitter? transmitter))
@@ -29,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     if (!_transmitters.TryGetValue(key, out transmitter))
                     {
-                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, new DefaultPlatform());
+                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, platform);
 
                         _transmitters.Add(key, transmitter);
                     }

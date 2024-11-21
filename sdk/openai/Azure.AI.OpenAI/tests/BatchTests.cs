@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
@@ -15,12 +13,13 @@ using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Models;
 using Azure.AI.OpenAI.Tests.Utils;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using Azure.AI.OpenAI.Tests.Utils.Pipeline;
-using Azure.Core.TestFramework;
 using OpenAI.Batch;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
 using OpenAI.Files;
+using OpenAI.TestFramework;
+using OpenAI.TestFramework.Mocks;
+using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -29,6 +28,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
     public BatchTests(bool isAsync) : base(isAsync)
     { }
 
+#if !AZURE_OPENAI_GA
     [Test]
     [Category("Smoke")]
     public void CanCreateClient() => Assert.That(GetTestClient(), Is.InstanceOf<BatchClient>());
@@ -57,15 +57,13 @@ public class BatchTests : AoaiTestBase<BatchClient>
             }
         }.ToBinaryContent();
 
-        ClientResult response = await batchClient.CreateBatchAsync(requestContent);
-        BatchObject batchObj = ExtractAndValidateBatchObj(response);
+        CreateBatchOperation operation = await batchClient.CreateBatchAsync(requestContent, true);
 
         // Poll until we've completed, failed, or were canceled
-        while ("completed" != batchObj.Status)
-        {
-            response = await batchClient.GetBatchAsync(batchObj.Id, new());
-            batchObj = ExtractAndValidateBatchObj(response);
-        }
+        operation.WaitForCompletion();
+
+        ClientResult response = operation.GetBatch(null);
+        BatchObject batchObj = ExtractAndValidateBatchObj(response);
 
         Assert.That(batchObj.OutputFileID, Is.Not.Null.Or.Empty);
         BinaryData outputData = await ops.DownloadAndValidateResultAsync(batchObj.OutputFileID!);
@@ -84,6 +82,14 @@ public class BatchTests : AoaiTestBase<BatchClient>
         }
 
     }
+#else
+    [Test]
+    [SyncOnly]
+    public void UnsupportedVersionBatchClientThrows()
+    {
+        Assert.Throws<InvalidOperationException>(() => GetTestClient());
+    }
+#endif
 
     #region helper methods
 
@@ -93,7 +99,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
         PipelineResponse response = result.GetRawResponse();
         Assert.That(response, Is.Not.Null);
         Assert.That(response.Status, Is.GreaterThanOrEqualTo(200).And.LessThan(300));
-        Assert.That(response.Headers.GetFirstValueOrDefault("Content-Type"), Does.StartWith("application/json"));
+        Assert.That(response.Headers.GetFirstOrDefault("Content-Type"), Does.StartWith("application/json"));
 
         return response.Content;
     }
@@ -120,26 +126,26 @@ public class BatchTests : AoaiTestBase<BatchClient>
 
     private class BatchOperations : IAsyncDisposable
     {
-        private MockPipeline _pipeline;
+        private MockHttpMessageHandler _handler;
         private List<BatchOperation> _operations;
         private string? _uploadId;
-        private FileClient _fileClient;
+        private OpenAIFileClient _fileClient;
 
         public BatchOperations(AoaiTestBase<BatchClient> testBase, BatchClient batchClient)
         {
-            _pipeline = new MockPipeline(MockPipeline.ReturnEmptyJson);
-            _pipeline.OnRequest += HandleRequest;
+            _handler = new(MockHttpMessageHandler.ReturnEmptyJson);
+            _handler.OnRequest += HandleRequest;
             _operations = new();
 
             BatchFileName = "batch-" + Guid.NewGuid().ToString("D") + ".json";
 
-            _fileClient = testBase.GetTestClientFrom<FileClient>(batchClient);
+            _fileClient = testBase.GetTestClientFrom<OpenAIFileClient>(batchClient);
 
             // Generate the fake pipeline to capture requests and save them to a file later
             AzureOpenAIClient fakeTopLevel = new AzureOpenAIClient(
                 new Uri("https://not.a.real.endpoint.fake"),
                 new ApiKeyCredential("not.a.real.key"),
-                new() { Transport = _pipeline.Transport });
+                new() { Transport = _handler.Transport });
 
             ChatClient = fakeTopLevel.GetChatClient(testBase.TestConfig.GetConfig<ChatClient>().DeploymentOrThrow("chat client"));
             EmbeddingClient = fakeTopLevel.GetEmbeddingClient(testBase.TestConfig.GetConfig<EmbeddingClient>().DeploymentOrThrow("embedding client"));
@@ -158,13 +164,13 @@ public class BatchTests : AoaiTestBase<BatchClient>
             }
 
             using MemoryStream stream = new MemoryStream();
-            JsonHelpers.Serialize(stream, _operations, JsonHelpers.OpenAIJsonOptions);
+            JsonSerializer.Serialize(stream, _operations, JsonOptions.OpenAIJsonOptions);
             stream.Seek(0, SeekOrigin.Begin);
             var data = BinaryData.FromStream(stream);
 
             using var content = BinaryContent.Create(data);
 
-            OpenAIFileInfo file = await _fileClient.UploadFileAsync(data, BatchFileName, FileUploadPurpose.Batch);
+            OpenAIFile file = await _fileClient.UploadFileAsync(data, BatchFileName, FileUploadPurpose.Batch);
             _uploadId = file.Id;
             Assert.That(_uploadId, Is.Not.Null.Or.Empty);
             return _uploadId;
@@ -186,8 +192,8 @@ public class BatchTests : AoaiTestBase<BatchClient>
                 await _fileClient.DeleteFileAsync(_uploadId);
             }
 
-            _pipeline.OnRequest -= HandleRequest;
-            _pipeline.Dispose();
+            _handler.OnRequest -= HandleRequest;
+            _handler.Dispose();
             _operations.Clear();
         }
 

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Code for workspace setup error. </summary>
+        [WirePath("code")]
         public string Code { get; }
         /// <summary> Level of workspace setup error. </summary>
+        [WirePath("level")]
         public MachineLearningDiagnoseResultLevel? Level { get; }
         /// <summary> Message of workspace setup error. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator ==(ScheduleFrequency left, ScheduleFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduleFrequency"/> values are not the same. </summary>
         public static bool operator !=(ScheduleFrequency left, ScheduleFrequency right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScheduleFrequency"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduleFrequency"/>. </summary>
         public static implicit operator ScheduleFrequency(string value) => new ScheduleFrequency(value);
 
         /// <inheritdoc />

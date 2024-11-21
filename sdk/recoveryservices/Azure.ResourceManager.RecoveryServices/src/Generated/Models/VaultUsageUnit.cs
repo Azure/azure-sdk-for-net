@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static bool operator ==(VaultUsageUnit left, VaultUsageUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VaultUsageUnit"/> values are not the same. </summary>
         public static bool operator !=(VaultUsageUnit left, VaultUsageUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VaultUsageUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VaultUsageUnit"/>. </summary>
         public static implicit operator VaultUsageUnit(string value) => new VaultUsageUnit(value);
 
         /// <inheritdoc />

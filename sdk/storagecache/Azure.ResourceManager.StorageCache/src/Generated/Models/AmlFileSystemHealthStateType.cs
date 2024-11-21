@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static bool operator ==(AmlFileSystemHealthStateType left, AmlFileSystemHealthStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AmlFileSystemHealthStateType"/> values are not the same. </summary>
         public static bool operator !=(AmlFileSystemHealthStateType left, AmlFileSystemHealthStateType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AmlFileSystemHealthStateType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AmlFileSystemHealthStateType"/>. </summary>
         public static implicit operator AmlFileSystemHealthStateType(string value) => new AmlFileSystemHealthStateType(value);
 
         /// <inheritdoc />

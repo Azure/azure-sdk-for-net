@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(NetAppVolumeStorageToNetworkProximity left, NetAppVolumeStorageToNetworkProximity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppVolumeStorageToNetworkProximity"/> values are not the same. </summary>
         public static bool operator !=(NetAppVolumeStorageToNetworkProximity left, NetAppVolumeStorageToNetworkProximity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppVolumeStorageToNetworkProximity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppVolumeStorageToNetworkProximity"/>. </summary>
         public static implicit operator NetAppVolumeStorageToNetworkProximity(string value) => new NetAppVolumeStorageToNetworkProximity(value);
 
         /// <inheritdoc />

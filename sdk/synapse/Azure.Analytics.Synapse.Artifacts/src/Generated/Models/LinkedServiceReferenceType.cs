@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         public static bool operator ==(LinkedServiceReferenceType left, LinkedServiceReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkedServiceReferenceType"/> values are not the same. </summary>
         public static bool operator !=(LinkedServiceReferenceType left, LinkedServiceReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LinkedServiceReferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LinkedServiceReferenceType"/>. </summary>
         public static implicit operator LinkedServiceReferenceType(string value) => new LinkedServiceReferenceType(value);
 
         /// <inheritdoc />

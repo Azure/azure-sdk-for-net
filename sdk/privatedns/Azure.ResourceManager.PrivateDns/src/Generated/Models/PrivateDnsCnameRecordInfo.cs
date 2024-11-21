@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         }
 
         /// <summary> The canonical name for this CNAME record. </summary>
+        [WirePath("cname")]
         public string Cname { get; set; }
     }
 }

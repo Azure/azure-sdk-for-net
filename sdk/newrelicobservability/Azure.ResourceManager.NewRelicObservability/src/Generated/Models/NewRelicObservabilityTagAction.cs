@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static bool operator ==(NewRelicObservabilityTagAction left, NewRelicObservabilityTagAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NewRelicObservabilityTagAction"/> values are not the same. </summary>
         public static bool operator !=(NewRelicObservabilityTagAction left, NewRelicObservabilityTagAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NewRelicObservabilityTagAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NewRelicObservabilityTagAction"/>. </summary>
         public static implicit operator NewRelicObservabilityTagAction(string value) => new NewRelicObservabilityTagAction(value);
 
         /// <inheritdoc />

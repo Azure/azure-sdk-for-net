@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<NotebookParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NotebookParameter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotebookParameter)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
                 if (Value != null)
@@ -59,7 +67,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NotebookParameter IJsonModel<NotebookParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

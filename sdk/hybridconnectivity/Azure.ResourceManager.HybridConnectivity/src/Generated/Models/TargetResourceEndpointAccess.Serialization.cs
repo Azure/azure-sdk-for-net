@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         void IJsonModel<TargetResourceEndpointAccess>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TargetResourceEndpointAccess>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TargetResourceEndpointAccess)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("relay"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(NamespaceName))
@@ -53,6 +61,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 writer.WritePropertyName("expiresOn"u8);
                 writer.WriteNumberValue(ExpiresOn.Value);
             }
+            if (Optional.IsDefined(ServiceConfigurationToken))
+            {
+                writer.WritePropertyName("serviceConfigurationToken"u8);
+                writer.WriteStringValue(ServiceConfigurationToken);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +82,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TargetResourceEndpointAccess IJsonModel<TargetResourceEndpointAccess>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -97,6 +109,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             string hybridConnectionName = default;
             string accessKey = default;
             long? expiresOn = default;
+            string serviceConfigurationToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,6 +152,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                             expiresOn = property0.Value.GetInt64();
                             continue;
                         }
+                        if (property0.NameEquals("serviceConfigurationToken"u8))
+                        {
+                            serviceConfigurationToken = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -154,6 +172,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 hybridConnectionName,
                 accessKey,
                 expiresOn,
+                serviceConfigurationToken,
                 serializedAdditionalRawData);
         }
 

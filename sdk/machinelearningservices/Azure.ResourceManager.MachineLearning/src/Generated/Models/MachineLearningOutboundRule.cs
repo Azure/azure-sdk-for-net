@@ -68,8 +68,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Category of a managed network Outbound Rule of a machine learning workspace. </summary>
+        [WirePath("category")]
         public OutboundRuleCategory? Category { get; set; }
         /// <summary> Type of a managed network Outbound Rule of a machine learning workspace. </summary>
+        [WirePath("status")]
         public OutboundRuleStatus? Status { get; set; }
         /// <summary> Type of a managed network Outbound Rule of a machine learning workspace. </summary>
         internal OutboundRuleType OutboundRuleType { get; set; }

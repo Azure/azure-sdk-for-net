@@ -7,6 +7,7 @@ using System.Diagnostics.Tracing;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
+using Azure.Identity;
 using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
 
@@ -33,13 +34,19 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Sample10_ConsoleListener
 #if SNIPPET
-            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var credential = new DefaultAzureCredential();
 #else
-            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
             var eventHubName = scope.EventHubName;
+            var credential = EventHubsTestEnvironment.Instance.Credential;
 #endif
-            var producer = new EventHubProducerClient(connectionString, eventHubName);
+
+            var producer = new EventHubProducerClient(
+                fullyQualifiedNamespace,
+                eventHubName,
+                credential);
 
             using AzureEventSourceListener consoleListener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.LogAlways);
 
@@ -71,13 +78,19 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Sample10_TraceListener
 #if SNIPPET
-            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var credential = new DefaultAzureCredential();
 #else
-            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
             var eventHubName = scope.EventHubName;
+            var credential = EventHubsTestEnvironment.Instance.Credential;
 #endif
-            var producer = new EventHubProducerClient(connectionString, eventHubName);
+
+            var producer = new EventHubProducerClient(
+                fullyQualifiedNamespace,
+                eventHubName,
+                credential);
 
             using AzureEventSourceListener traceListener = AzureEventSourceListener.CreateTraceLogger(EventLevel.LogAlways);
 
@@ -109,13 +122,19 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Sample10_CustomListenerWithFilter
 #if SNIPPET
-            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var credential = new DefaultAzureCredential();
 #else
-            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
             var eventHubName = scope.EventHubName;
+            var credential = EventHubsTestEnvironment.Instance.Credential;
 #endif
-            var producer = new EventHubProducerClient(connectionString, eventHubName);
+
+            var producer = new EventHubProducerClient(
+                fullyQualifiedNamespace,
+                eventHubName,
+                credential);
 
             using AzureEventSourceListener customListener = new AzureEventSourceListener((args, message) =>
             {
@@ -164,18 +183,23 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Sample10_CustomListenerWithFile
 #if SNIPPET
-            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            var producer = new EventHubProducerClient(connectionString, eventHubName);
+            var credential = new DefaultAzureCredential();
 
             using Stream stream = new FileStream("<< PATH TO THE FILE >>", FileMode.OpenOrCreate, FileAccess.Write);
 #else
-            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
             var eventHubName = scope.EventHubName;
-            var producer = new EventHubProducerClient(connectionString, eventHubName);
+            var credential = EventHubsTestEnvironment.Instance.Credential;
 
             using Stream stream = new MemoryStream();
 #endif
+
+            var producer = new EventHubProducerClient(
+                fullyQualifiedNamespace,
+                eventHubName,
+                credential);
 
             using StreamWriter streamWriter = new StreamWriter(stream)
             {

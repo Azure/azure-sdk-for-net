@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Nginx.Models
 
         void IJsonModel<NginxDeploymentPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NginxDeploymentPatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -73,7 +81,6 @@ namespace Azure.ResourceManager.Nginx.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NginxDeploymentPatch IJsonModel<NginxDeploymentPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

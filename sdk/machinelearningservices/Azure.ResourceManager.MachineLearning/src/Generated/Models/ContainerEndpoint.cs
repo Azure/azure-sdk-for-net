@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ContainerEndpoint. </summary>
+    /// <summary> Describes the endpoint configuration for the container. </summary>
     public partial class ContainerEndpoint
     {
         /// <summary>
@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Protocol over which communication will happen over this endpoint. </summary>
+        [WirePath("protocol")]
         public ContainerCommunicationProtocol? Protocol { get; set; }
         /// <summary> Name of the Endpoint. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Application port inside the container. </summary>
+        [WirePath("target")]
         public int? Target { get; set; }
         /// <summary> Port over which the application is exposed from container. </summary>
+        [WirePath("published")]
         public int? Published { get; set; }
         /// <summary> Host IP over which the application is exposed from the container. </summary>
+        [WirePath("hostIp")]
         public string HostIP { get; set; }
     }
 }

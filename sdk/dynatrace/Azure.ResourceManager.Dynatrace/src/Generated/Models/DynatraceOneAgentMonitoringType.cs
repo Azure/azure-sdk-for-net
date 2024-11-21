@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator ==(DynatraceOneAgentMonitoringType left, DynatraceOneAgentMonitoringType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceOneAgentMonitoringType"/> values are not the same. </summary>
         public static bool operator !=(DynatraceOneAgentMonitoringType left, DynatraceOneAgentMonitoringType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DynatraceOneAgentMonitoringType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynatraceOneAgentMonitoringType"/>. </summary>
         public static implicit operator DynatraceOneAgentMonitoringType(string value) => new DynatraceOneAgentMonitoringType(value);
 
         /// <inheritdoc />

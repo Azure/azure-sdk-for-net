@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(OutboundRuleType left, OutboundRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OutboundRuleType"/> values are not the same. </summary>
         public static bool operator !=(OutboundRuleType left, OutboundRuleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OutboundRuleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OutboundRuleType"/>. </summary>
         public static implicit operator OutboundRuleType(string value) => new OutboundRuleType(value);
 
         /// <inheritdoc />

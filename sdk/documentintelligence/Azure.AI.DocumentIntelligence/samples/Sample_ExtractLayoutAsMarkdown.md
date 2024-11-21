@@ -12,8 +12,8 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 
 ```C# Snippet:CreateDocumentIntelligenceClient
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var credential = new DefaultAzureCredential();
+var client = new DocumentIntelligenceClient(new Uri(endpoint), credential);
 ```
 
 ## Extract the layout of a document as Markdown

@@ -117,7 +117,8 @@ namespace Azure.Identity.Samples
                 var credential = new InteractiveBrowserCredential(
                     new InteractiveBrowserCredentialOptions
                     {
-                        TokenCachePersistenceOptions = new TokenCachePersistenceOptions(), AuthenticationRecord = authRecord
+                        TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
+                        AuthenticationRecord = authRecord
                     });
 
                 #endregion

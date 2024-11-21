@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> Provisioning state of the monitoring tag rules. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> Rules for sending logs. </summary>
         public LogRules LogRules { get; set; }
     }

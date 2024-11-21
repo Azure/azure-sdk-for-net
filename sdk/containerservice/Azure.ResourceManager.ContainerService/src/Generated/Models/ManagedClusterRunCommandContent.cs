@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The command to run. </summary>
+        [WirePath("command")]
         public string Command { get; }
         /// <summary> A base64 encoded zip file containing the files required by the command. </summary>
+        [WirePath("context")]
         public string Context { get; set; }
         /// <summary> AuthToken issued for AKS AAD Server App. </summary>
+        [WirePath("clusterToken")]
         public string ClusterToken { get; set; }
     }
 }

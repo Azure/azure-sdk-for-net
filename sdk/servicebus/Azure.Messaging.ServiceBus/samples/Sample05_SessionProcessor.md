@@ -7,10 +7,10 @@ This sample demonstrates how to use the session processor. The session processor
 Processing session messages is performed with a `ServiceBusSessionProcessor`. This type derives from `ServiceBusProcessor` and exposes session-related functionality.
 
 ```C# Snippet:ServiceBusProcessSessionMessages
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
@@ -42,7 +42,7 @@ var options = new ServiceBusSessionProcessorOptions
     MaxConcurrentSessions = 5,
 
     // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
-    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
+    // Set AutoCompleteMessages to false to [settle messages](https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
     // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
     MaxConcurrentCallsPerSession = 2,
 

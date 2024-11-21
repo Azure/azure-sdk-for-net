@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ApplicationGatewayCustomErrorStatusCode left, ApplicationGatewayCustomErrorStatusCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayCustomErrorStatusCode"/> values are not the same. </summary>
         public static bool operator !=(ApplicationGatewayCustomErrorStatusCode left, ApplicationGatewayCustomErrorStatusCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationGatewayCustomErrorStatusCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayCustomErrorStatusCode"/>. </summary>
         public static implicit operator ApplicationGatewayCustomErrorStatusCode(string value) => new ApplicationGatewayCustomErrorStatusCode(value);
 
         /// <inheritdoc />

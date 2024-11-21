@@ -33,7 +33,7 @@ namespace Azure.Communication.Messages.Models.Channels
         public static bool operator ==(WhatsAppMessageButtonSubType left, WhatsAppMessageButtonSubType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WhatsAppMessageButtonSubType"/> values are not the same. </summary>
         public static bool operator !=(WhatsAppMessageButtonSubType left, WhatsAppMessageButtonSubType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WhatsAppMessageButtonSubType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WhatsAppMessageButtonSubType"/>. </summary>
         public static implicit operator WhatsAppMessageButtonSubType(string value) => new WhatsAppMessageButtonSubType(value);
 
         /// <inheritdoc />

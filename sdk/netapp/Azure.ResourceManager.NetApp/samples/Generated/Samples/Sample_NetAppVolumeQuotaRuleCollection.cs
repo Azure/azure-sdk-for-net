@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetApp.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Samples
 {
     public partial class Sample_NetAppVolumeQuotaRuleCollection
     {
-        // VolumeQuotaRules_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VolumeQuotaRulesList()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-11-01/examples/VolumeQuotaRules_List.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeQuotaRules_List.json
             // this example is just showing the usage of "VolumeQuotaRules_ListByVolume" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,15 +51,14 @@ namespace Azure.ResourceManager.NetApp.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VolumeQuotaRules_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeQuotaRulesGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-11-01/examples/VolumeQuotaRules_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeQuotaRules_Get.json
             // this example is just showing the usage of "VolumeQuotaRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,12 +90,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VolumeQuotaRules_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_VolumeQuotaRulesGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-11-01/examples/VolumeQuotaRules_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeQuotaRules_Get.json
             // this example is just showing the usage of "VolumeQuotaRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,12 +122,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VolumeQuotaRules_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VolumeQuotaRulesGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-11-01/examples/VolumeQuotaRules_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeQuotaRules_Get.json
             // this example is just showing the usage of "VolumeQuotaRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -157,7 +154,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -169,12 +166,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             }
         }
 
-        // VolumeQuotaRules_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VolumeQuotaRulesCreate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-11-01/examples/VolumeQuotaRules_Create.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeQuotaRules_Create.json
             // this example is just showing the usage of "VolumeQuotaRules_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -199,7 +195,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             string volumeQuotaRuleName = "rule-0004";
             NetAppVolumeQuotaRuleData data = new NetAppVolumeQuotaRuleData(new AzureLocation("westus"))
             {
-                QuotaSizeInKiBs = 100005,
+                QuotaSizeInKiBs = 100005L,
                 QuotaType = NetAppVolumeQuotaType.IndividualUserQuota,
                 QuotaTarget = "1821",
             };

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(VaultDedupState left, VaultDedupState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VaultDedupState"/> values are not the same. </summary>
         public static bool operator !=(VaultDedupState left, VaultDedupState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VaultDedupState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VaultDedupState"/>. </summary>
         public static implicit operator VaultDedupState(string value) => new VaultDedupState(value);
 
         /// <inheritdoc />

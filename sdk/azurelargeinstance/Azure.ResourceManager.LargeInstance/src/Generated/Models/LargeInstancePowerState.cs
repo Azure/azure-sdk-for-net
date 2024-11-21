@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public static bool operator ==(LargeInstancePowerState left, LargeInstancePowerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LargeInstancePowerState"/> values are not the same. </summary>
         public static bool operator !=(LargeInstancePowerState left, LargeInstancePowerState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LargeInstancePowerState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LargeInstancePowerState"/>. </summary>
         public static implicit operator LargeInstancePowerState(string value) => new LargeInstancePowerState(value);
 
         /// <inheritdoc />

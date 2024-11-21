@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the include spark. </summary>
+        [WirePath("includeSpark")]
         public bool? IncludeSpark { get; set; }
     }
 }

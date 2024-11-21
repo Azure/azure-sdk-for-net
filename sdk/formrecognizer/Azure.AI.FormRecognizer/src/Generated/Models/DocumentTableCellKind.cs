@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static bool operator ==(DocumentTableCellKind left, DocumentTableCellKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentTableCellKind"/> values are not the same. </summary>
         public static bool operator !=(DocumentTableCellKind left, DocumentTableCellKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DocumentTableCellKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentTableCellKind"/>. </summary>
         public static implicit operator DocumentTableCellKind(string value) => new DocumentTableCellKind(value);
 
         /// <inheritdoc />

@@ -24,16 +24,19 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string SqlValue = "SQL";
         private const string WindowsValue = "Windows";
+        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
 
         /// <summary> SQL. </summary>
         public static SqlServerAuthenticationType Sql { get; } = new SqlServerAuthenticationType(SqlValue);
         /// <summary> Windows. </summary>
         public static SqlServerAuthenticationType Windows { get; } = new SqlServerAuthenticationType(WindowsValue);
+        /// <summary> UserAssignedManagedIdentity. </summary>
+        public static SqlServerAuthenticationType UserAssignedManagedIdentity { get; } = new SqlServerAuthenticationType(UserAssignedManagedIdentityValue);
         /// <summary> Determines if two <see cref="SqlServerAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(SqlServerAuthenticationType left, SqlServerAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlServerAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(SqlServerAuthenticationType left, SqlServerAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlServerAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlServerAuthenticationType"/>. </summary>
         public static implicit operator SqlServerAuthenticationType(string value) => new SqlServerAuthenticationType(value);
 
         /// <inheritdoc />

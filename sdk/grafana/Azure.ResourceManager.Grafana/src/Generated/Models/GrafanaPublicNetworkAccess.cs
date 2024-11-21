@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static bool operator ==(GrafanaPublicNetworkAccess left, GrafanaPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GrafanaPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(GrafanaPublicNetworkAccess left, GrafanaPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GrafanaPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GrafanaPublicNetworkAccess"/>. </summary>
         public static implicit operator GrafanaPublicNetworkAccess(string value) => new GrafanaPublicNetworkAccess(value);
 
         /// <inheritdoc />

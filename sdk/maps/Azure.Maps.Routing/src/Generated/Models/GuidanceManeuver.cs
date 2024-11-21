@@ -126,7 +126,7 @@ namespace Azure.Maps.Routing.Models
         public static bool operator ==(GuidanceManeuver left, GuidanceManeuver right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GuidanceManeuver"/> values are not the same. </summary>
         public static bool operator !=(GuidanceManeuver left, GuidanceManeuver right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GuidanceManeuver"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GuidanceManeuver"/>. </summary>
         public static implicit operator GuidanceManeuver(string value) => new GuidanceManeuver(value);
 
         /// <inheritdoc />

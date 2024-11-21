@@ -40,8 +40,7 @@ namespace Azure.AI.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="ContentFilterProtectedMaterialResult"/>. </summary>
         /// <param name="filtered"> Whether the content detection resulted in a content filtering action. </param>
         /// <param name="detected"> Whether the labeled content category was detected in the content. </param>
@@ -56,12 +55,12 @@ namespace Azure.AI.OpenAI
         /// <param name="detected"> Whether the labeled content category was detected in the content. </param>
         /// <param name="citation"> If available, the citation details describing the associated license and its location. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContentFilterProtectedMaterialResult(bool filtered, bool detected, ContentFilterProtectedMaterialCitedResult citation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContentFilterProtectedMaterialResult(bool filtered, bool detected, ContentFilterProtectedMaterialCitationResult citation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Filtered = filtered;
             Detected = detected;
             Citation = citation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentFilterProtectedMaterialResult"/> for deserialization. </summary>
@@ -74,6 +73,6 @@ namespace Azure.AI.OpenAI
         /// <summary> Whether the labeled content category was detected in the content. </summary>
         public bool Detected { get; }
         /// <summary> If available, the citation details describing the associated license and its location. </summary>
-        public ContentFilterProtectedMaterialCitedResult Citation { get; }
+        public ContentFilterProtectedMaterialCitationResult Citation { get; }
     }
 }

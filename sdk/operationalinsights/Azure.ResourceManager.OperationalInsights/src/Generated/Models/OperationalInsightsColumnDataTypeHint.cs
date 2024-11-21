@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static bool operator ==(OperationalInsightsColumnDataTypeHint left, OperationalInsightsColumnDataTypeHint right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsColumnDataTypeHint"/> values are not the same. </summary>
         public static bool operator !=(OperationalInsightsColumnDataTypeHint left, OperationalInsightsColumnDataTypeHint right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OperationalInsightsColumnDataTypeHint"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsColumnDataTypeHint"/>. </summary>
         public static implicit operator OperationalInsightsColumnDataTypeHint(string value) => new OperationalInsightsColumnDataTypeHint(value);
 
         /// <inheritdoc />

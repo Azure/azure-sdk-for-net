@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CosmosDBBackupStorageRedundancy left, CosmosDBBackupStorageRedundancy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBBackupStorageRedundancy"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBBackupStorageRedundancy left, CosmosDBBackupStorageRedundancy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBBackupStorageRedundancy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBBackupStorageRedundancy"/>. </summary>
         public static implicit operator CosmosDBBackupStorageRedundancy(string value) => new CosmosDBBackupStorageRedundancy(value);
 
         /// <inheritdoc />

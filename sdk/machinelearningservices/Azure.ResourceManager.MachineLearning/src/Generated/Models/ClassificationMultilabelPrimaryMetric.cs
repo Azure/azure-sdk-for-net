@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ClassificationMultilabelPrimaryMetric left, ClassificationMultilabelPrimaryMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClassificationMultilabelPrimaryMetric"/> values are not the same. </summary>
         public static bool operator !=(ClassificationMultilabelPrimaryMetric left, ClassificationMultilabelPrimaryMetric right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClassificationMultilabelPrimaryMetric"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClassificationMultilabelPrimaryMetric"/>. </summary>
         public static implicit operator ClassificationMultilabelPrimaryMetric(string value) => new ClassificationMultilabelPrimaryMetric(value);
 
         /// <inheritdoc />

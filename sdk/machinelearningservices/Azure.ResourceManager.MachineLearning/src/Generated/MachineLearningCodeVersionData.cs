@@ -80,6 +80,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary> [Required] Additional attributes of the entity. </summary>
+        [WirePath("properties")]
         public MachineLearningCodeVersionProperties Properties { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(NetworkSecurityPerimeterProfileAccessRuleDirection left, NetworkSecurityPerimeterProfileAccessRuleDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkSecurityPerimeterProfileAccessRuleDirection"/> values are not the same. </summary>
         public static bool operator !=(NetworkSecurityPerimeterProfileAccessRuleDirection left, NetworkSecurityPerimeterProfileAccessRuleDirection right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterProfileAccessRuleDirection"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkSecurityPerimeterProfileAccessRuleDirection"/>. </summary>
         public static implicit operator NetworkSecurityPerimeterProfileAccessRuleDirection(string value) => new NetworkSecurityPerimeterProfileAccessRuleDirection(value);
 
         /// <inheritdoc />

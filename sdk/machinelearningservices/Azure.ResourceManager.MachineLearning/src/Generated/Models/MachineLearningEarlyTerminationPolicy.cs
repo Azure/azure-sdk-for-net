@@ -55,23 +55,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEarlyTerminationPolicy"/>. </summary>
-        /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
-        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="policyType"> [Required] Name of policy configuration. </param>
+        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
+        /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningEarlyTerminationPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningEarlyTerminationPolicy(EarlyTerminationPolicyType policyType, int? evaluationInterval, int? delayEvaluation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DelayEvaluation = delayEvaluation;
-            EvaluationInterval = evaluationInterval;
             PolicyType = policyType;
+            EvaluationInterval = evaluationInterval;
+            DelayEvaluation = delayEvaluation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Number of intervals by which to delay the first evaluation. </summary>
-        public int? DelayEvaluation { get; set; }
-        /// <summary> Interval (number of runs) between policy evaluations. </summary>
-        public int? EvaluationInterval { get; set; }
         /// <summary> [Required] Name of policy configuration. </summary>
         internal EarlyTerminationPolicyType PolicyType { get; set; }
+        /// <summary> Interval (number of runs) between policy evaluations. </summary>
+        [WirePath("evaluationInterval")]
+        public int? EvaluationInterval { get; set; }
+        /// <summary> Number of intervals by which to delay the first evaluation. </summary>
+        [WirePath("delayEvaluation")]
+        public int? DelayEvaluation { get; set; }
     }
 }

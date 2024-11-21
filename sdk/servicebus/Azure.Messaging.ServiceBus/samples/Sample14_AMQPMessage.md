@@ -30,7 +30,7 @@ else if (amqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> data)
 If you needed to send a value body, you could do the following:
 
 ```C# Snippet:ServiceBusSendValueBody
-var client = new ServiceBusClient(connectionString);
+var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 var message = new ServiceBusMessage();
@@ -43,7 +43,7 @@ await sender.SendMessageAsync(message);
 You can also set various properties on the AMQP message that are not exposed on the `ServiceBusMessage` type. These values are not granted special meaning by the Service Bus broker and therefore do not impact the Service Bus service behavior. However, since these are standard AMQP properties, they could impact the behavior of other message brokers that may receive these messages.
 
 ```C# Snippet:ServiceBusSetMiscellaneousProperties
-var client = new ServiceBusClient(connectionString);
+var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 var message = new ServiceBusMessage("message with AMQP properties set");

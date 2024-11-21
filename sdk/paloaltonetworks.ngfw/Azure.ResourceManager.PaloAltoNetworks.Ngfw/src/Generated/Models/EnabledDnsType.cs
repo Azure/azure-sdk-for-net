@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static bool operator ==(EnabledDnsType left, EnabledDnsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnabledDnsType"/> values are not the same. </summary>
         public static bool operator !=(EnabledDnsType left, EnabledDnsType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EnabledDnsType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EnabledDnsType"/>. </summary>
         public static implicit operator EnabledDnsType(string value) => new EnabledDnsType(value);
 
         /// <inheritdoc />

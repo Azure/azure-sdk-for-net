@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> Status of the verification operation. </summary>
+        [WirePath("status")]
         public DomainRecordVerificationStatus? Status { get; }
         /// <summary> Error code. This property will only be present if the status is UnableToVerify. </summary>
+        [WirePath("errorCode")]
         public string ErrorCode { get; }
     }
 }

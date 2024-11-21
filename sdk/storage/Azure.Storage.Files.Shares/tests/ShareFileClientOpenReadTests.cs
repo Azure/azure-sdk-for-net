@@ -97,6 +97,9 @@ namespace Azure.Storage.Files.Shares.Tests
                 Conditions = conditions
             });
 
+        protected override async Task<Stream> OpenReadAsyncOverload(ShareFileClient client, int? bufferSize = null, long position = 0, bool allowModifications = false)
+            => await client.OpenReadAsync(allowModifications, position, bufferSize);
+
         protected override async Task StageDataAsync(ShareFileClient client, Stream data)
         {
             await client.CreateAsync(data.Length);
@@ -108,12 +111,12 @@ namespace Azure.Storage.Files.Shares.Tests
             switch (mode)
             {
                 case ModifyDataMode.Replace:
-                    await client.SetHttpHeadersAsync(newSize: data.Length);
+                    await client.SetHttpHeadersAsync(new ShareFileSetHttpHeadersOptions() { NewSize = data.Length});
                     await client.UploadAsync(data);
                     break;
                 case ModifyDataMode.Append:
                     long currentBlobLength = (await client.GetPropertiesAsync()).Value.ContentLength;
-                    await client.SetHttpHeadersAsync(newSize: currentBlobLength + data.Length);
+                    await client.SetHttpHeadersAsync(new ShareFileSetHttpHeadersOptions() { NewSize = currentBlobLength + data.Length });
                     await client.UploadRangeAsync(new HttpRange(currentBlobLength, data.Length),  data);
                     break;
                 default:

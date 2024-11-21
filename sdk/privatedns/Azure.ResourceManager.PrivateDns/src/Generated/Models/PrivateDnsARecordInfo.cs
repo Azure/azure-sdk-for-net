@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         }
 
         /// <summary> The IPv4 address of this A record. </summary>
+        [WirePath("ipv4Address")]
         public IPAddress IPv4Address { get; set; }
     }
 }

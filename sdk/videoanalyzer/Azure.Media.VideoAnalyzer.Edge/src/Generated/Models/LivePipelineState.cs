@@ -39,7 +39,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static bool operator ==(LivePipelineState left, LivePipelineState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LivePipelineState"/> values are not the same. </summary>
         public static bool operator !=(LivePipelineState left, LivePipelineState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LivePipelineState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LivePipelineState"/>. </summary>
         public static implicit operator LivePipelineState(string value) => new LivePipelineState(value);
 
         /// <inheritdoc />

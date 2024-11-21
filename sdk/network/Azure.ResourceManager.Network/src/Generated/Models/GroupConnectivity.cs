@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(GroupConnectivity left, GroupConnectivity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GroupConnectivity"/> values are not the same. </summary>
         public static bool operator !=(GroupConnectivity left, GroupConnectivity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GroupConnectivity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GroupConnectivity"/>. </summary>
         public static implicit operator GroupConnectivity(string value) => new GroupConnectivity(value);
 
         /// <inheritdoc />

@@ -86,14 +86,19 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Identity information for the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the system topic. </summary>
+        [WirePath("properties.provisioningState")]
         public EventGridResourceProvisioningState? ProvisioningState { get; }
         /// <summary> Source for the system topic. </summary>
+        [WirePath("properties.source")]
         public ResourceIdentifier Source { get; set; }
         /// <summary> TopicType for the system topic. </summary>
+        [WirePath("properties.topicType")]
         public string TopicType { get; set; }
         /// <summary> Metric resource id for the system topic. </summary>
+        [WirePath("properties.metricResourceId")]
         public Guid? MetricResourceId { get; }
     }
 }

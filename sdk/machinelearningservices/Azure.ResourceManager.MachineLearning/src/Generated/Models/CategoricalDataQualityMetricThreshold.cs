@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] The categorical data quality metric to calculate. </summary>
+        [WirePath("metric")]
         public CategoricalDataQualityMetric Metric { get; set; }
     }
 }

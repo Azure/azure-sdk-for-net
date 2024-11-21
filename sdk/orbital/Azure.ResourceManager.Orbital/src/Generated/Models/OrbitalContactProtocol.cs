@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public static bool operator ==(OrbitalContactProtocol left, OrbitalContactProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrbitalContactProtocol"/> values are not the same. </summary>
         public static bool operator !=(OrbitalContactProtocol left, OrbitalContactProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OrbitalContactProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OrbitalContactProtocol"/>. </summary>
         public static implicit operator OrbitalContactProtocol(string value) => new OrbitalContactProtocol(value);
 
         /// <inheritdoc />

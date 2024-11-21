@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         void IJsonModel<OperationalInsightsWorkspacePurgeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePurgeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePurgeResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationStringId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -44,7 +52,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         OperationalInsightsWorkspacePurgeResult IJsonModel<OperationalInsightsWorkspacePurgeResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

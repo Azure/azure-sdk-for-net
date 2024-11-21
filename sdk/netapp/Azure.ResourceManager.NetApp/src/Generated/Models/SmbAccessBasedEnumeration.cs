@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(SmbAccessBasedEnumeration left, SmbAccessBasedEnumeration right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SmbAccessBasedEnumeration"/> values are not the same. </summary>
         public static bool operator !=(SmbAccessBasedEnumeration left, SmbAccessBasedEnumeration right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SmbAccessBasedEnumeration"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SmbAccessBasedEnumeration"/>. </summary>
         public static implicit operator SmbAccessBasedEnumeration(string value) => new SmbAccessBasedEnumeration(value);
 
         /// <inheritdoc />

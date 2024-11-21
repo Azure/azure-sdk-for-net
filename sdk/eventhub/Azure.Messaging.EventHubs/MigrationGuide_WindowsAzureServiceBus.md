@@ -164,10 +164,14 @@ finally
 In the `Azure.Messaging.EventHubs` library, the `EventHubProducerClient` is used as the publisher for a batch created with its default configuration.
 
 ```C# Snippet:EventHubs_Sample04_AutomaticRouting
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -227,10 +231,14 @@ finally
 In the `Azure.Messaging.EventHubs` library, the `EventHubProducerClient` is used as the publisher for a batch created with a partition key specified as an option.
 
 ```C# Snippet:EventHubs_Sample04_PartitionKey
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -299,10 +307,14 @@ finally
 In the `Azure.Messaging.EventHubs` library, the `EventHubProducerClient` is used as the publisher for a batch created with a partition identifier specified as an option.
 
 ```C# Snippet:EventHubs_Sample04_PartitionId
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -588,14 +600,16 @@ finally
 In the `Azure.Messaging.EventHubs` library, the `EventHubConsumerClient` can be used to read events from a partition in a streaming manner using the asynchronous enumerator pattern.
 
 ```C# Snippet:EventHubs_Sample05_ReadPartition
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
 var consumer = new EventHubConsumerClient(
     consumerGroup,
-    connectionString,
-    eventHubName);
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -630,8 +644,9 @@ finally
 For those that prefer a batched approach to reading, `Azure.Messaging.EventHubs` also offers a `PartitionReceiver` that follows pull-based semantics.
 
 ```C# Snippet:EventHubs_Sample05_ReadPartitionWithReceiver
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
 using CancellationTokenSource cancellationSource = new CancellationTokenSource();
@@ -639,7 +654,10 @@ cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
 string firstPartition;
 
-await using (var producer = new EventHubProducerClient(connectionString, eventHubName))
+await using (var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential))
 {
     firstPartition = (await producer.GetPartitionIdsAsync()).First();
 }
@@ -648,8 +666,9 @@ var receiver = new PartitionReceiver(
     consumerGroup,
     firstPartition,
     EventPosition.Earliest,
-    connectionString,
-    eventHubName);
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {

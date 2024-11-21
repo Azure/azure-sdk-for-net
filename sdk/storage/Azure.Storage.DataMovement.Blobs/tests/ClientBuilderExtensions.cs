@@ -4,6 +4,7 @@ extern alias BaseBlobs;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Test.Shared;
 using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
     BaseBlobs::Azure.Storage.Blobs.BlobServiceClient,
@@ -19,8 +20,18 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public static string GetNewContainerName(this BlobsClientBuilder clientBuilder)
             => $"test-container-{clientBuilder.Recording.Random.NewGuid()}";
 
+        public static string GetNewBlobDirectoryName(this BlobsClientBuilder clientBuilder)
+            => $"test-directory-{clientBuilder.Recording.Random.NewGuid()}";
+        public static string GetNewBlobName(this BlobsClientBuilder clientBuilder)
+            => $"test-blob-{clientBuilder.Recording.Random.NewGuid()}";
+        public static string GetNewBlockName(this BlobsClientBuilder clientBuilder)
+            => $"test-block-{clientBuilder.Recording.Random.NewGuid()}";
+
         public static BlobServiceClient GetServiceClient_SharedKey(this BlobsClientBuilder clientBuilder, BlobClientOptions options = default)
             => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
+
+        public static BlobServiceClient GetServiceClient_OAuth(this BlobsClientBuilder clientBuilder, TokenCredential tokenCredential)
+            => clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth, tokenCredential);
 
         /// <summary>
         /// Creates a new <see cref="ClientBuilder{TServiceClient, TServiceClientOptions}"/>
@@ -57,6 +68,27 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingBlobContainer(container);
+        }
+
+        public static async Task<BlobContainerClient> GetContainerAsync(
+            this BlobsClientBuilder clientBuilder,
+            BlobServiceClient service = default,
+            string containerName = default,
+            IDictionary<string, string> metadata = default,
+            PublicAccessType? publicAccessType = default,
+            bool premium = default)
+        {
+            containerName ??= clientBuilder.GetNewContainerName();
+            service ??= clientBuilder.GetServiceClient_SharedKey();
+
+            if (publicAccessType == default)
+            {
+                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
+            }
+
+            BlobContainerClient container = service.GetBlobContainerClient(containerName);
+            await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
+            return container;
         }
     }
 }

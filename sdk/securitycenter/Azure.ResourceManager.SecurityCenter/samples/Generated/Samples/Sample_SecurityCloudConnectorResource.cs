@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.SecurityCenter.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_SecurityCloudConnectorResource
     {
-        // Details of a specific cloud account connector
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_DetailsOfASpecificCloudAccountConnector()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/Connectors/GetConnectorSubscription_example.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AwsAssumeRole - Create a cloud account connector for a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AwsAssumeRoleCreateACloudAccountConnectorForASubscription()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/Connectors/CreateUpdateAwsAssumeRoleConnectorSubscription_example.json
@@ -95,9 +94,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AwsCred - Create a cloud account connector for a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AwsCredCreateACloudAccountConnectorForASubscription()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/Connectors/CreateUpdateAwsCredConnectorSubscription_example.json
@@ -145,9 +143,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // gcpCredentials - Create a cloud account connector for a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_GcpCredentialsCreateACloudAccountConnectorForASubscription()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/Connectors/CreateUpdateGcpCredentialsConnectorSubscription_example.json
@@ -181,9 +178,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a cloud account connector from a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteACloudAccountConnectorFromASubscription()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/Connectors/DeleteConnectorSubscription_example.json
@@ -204,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // invoke the operation
             await securityCloudConnector.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="value">
         /// Array of alert rule templates.
         /// Please note <see cref="SecurityInsightsAlertRuleTemplateData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsFusionAlertRuleTemplate"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/> and <see cref="ScheduledAlertRuleTemplate"/>.
+        /// The available derived classes include <see cref="SecurityInsightsFusionAlertRuleTemplate"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/>, <see cref="MLBehaviorAnalyticsAlertRuleTemplate"/>, <see cref="NrtAlertRuleTemplate"/>, <see cref="ScheduledAlertRuleTemplate"/> and <see cref="ThreatIntelligenceAlertRuleTemplate"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AlertRuleTemplatesList(IEnumerable<SecurityInsightsAlertRuleTemplateData> value)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="value">
         /// Array of alert rule templates.
         /// Please note <see cref="SecurityInsightsAlertRuleTemplateData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsFusionAlertRuleTemplate"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/> and <see cref="ScheduledAlertRuleTemplate"/>.
+        /// The available derived classes include <see cref="SecurityInsightsFusionAlertRuleTemplate"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/>, <see cref="MLBehaviorAnalyticsAlertRuleTemplate"/>, <see cref="NrtAlertRuleTemplate"/>, <see cref="ScheduledAlertRuleTemplate"/> and <see cref="ThreatIntelligenceAlertRuleTemplate"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AlertRuleTemplatesList(string nextLink, IReadOnlyList<SecurityInsightsAlertRuleTemplateData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary>
         /// Array of alert rule templates.
         /// Please note <see cref="SecurityInsightsAlertRuleTemplateData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsFusionAlertRuleTemplate"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/> and <see cref="ScheduledAlertRuleTemplate"/>.
+        /// The available derived classes include <see cref="SecurityInsightsFusionAlertRuleTemplate"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/>, <see cref="MLBehaviorAnalyticsAlertRuleTemplate"/>, <see cref="NrtAlertRuleTemplate"/>, <see cref="ScheduledAlertRuleTemplate"/> and <see cref="ThreatIntelligenceAlertRuleTemplate"/>.
         /// </summary>
         public IReadOnlyList<SecurityInsightsAlertRuleTemplateData> Value { get; }
     }

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Communication.Models
 
         void IJsonModel<RegenerateCommunicationServiceKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RegenerateCommunicationServiceKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RegenerateCommunicationServiceKeyContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("keyType"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.Communication.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RegenerateCommunicationServiceKeyContent IJsonModel<RegenerateCommunicationServiceKeyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

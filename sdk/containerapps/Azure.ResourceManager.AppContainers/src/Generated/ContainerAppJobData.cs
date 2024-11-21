@@ -93,20 +93,28 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Managed identities needed by a container app job to interact with other Azure services to not maintain any secrets or credentials in code. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the Container Apps Job. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerAppJobProvisioningState? ProvisioningState { get; }
         /// <summary> Resource ID of environment. </summary>
+        [WirePath("properties.environmentId")]
         public string EnvironmentId { get; set; }
         /// <summary> Workload profile name to pin for container apps job execution. </summary>
+        [WirePath("properties.workloadProfileName")]
         public string WorkloadProfileName { get; set; }
         /// <summary> Container Apps Job configuration properties. </summary>
+        [WirePath("properties.configuration")]
         public ContainerAppJobConfiguration Configuration { get; set; }
         /// <summary> Container Apps job definition. </summary>
+        [WirePath("properties.template")]
         public ContainerAppJobTemplate Template { get; set; }
         /// <summary> Outbound IP Addresses of a container apps job. </summary>
+        [WirePath("properties.outboundIpAddresses")]
         public IReadOnlyList<string> OutboundIPAddresses { get; }
         /// <summary> The endpoint of the eventstream of the container apps job. </summary>
+        [WirePath("properties.eventStreamEndpoint")]
         public string EventStreamEndpoint { get; }
     }
 }

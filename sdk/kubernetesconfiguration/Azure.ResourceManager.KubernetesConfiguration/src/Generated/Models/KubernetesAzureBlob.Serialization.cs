@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         void IJsonModel<KubernetesAzureBlob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesAzureBlob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesAzureBlob)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
@@ -149,7 +158,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         KubernetesAzureBlob IJsonModel<KubernetesAzureBlob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -294,6 +302,191 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  url: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Uri))
+                {
+                    builder.Append("  url: ");
+                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  containerName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerName))
+                {
+                    builder.Append("  containerName: ");
+                    if (ContainerName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContainerName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContainerName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeoutInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeoutInSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeoutInSeconds))
+                {
+                    builder.Append("  timeoutInSeconds: ");
+                    builder.AppendLine($"'{TimeoutInSeconds.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncIntervalInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  syncIntervalInSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SyncIntervalInSeconds))
+                {
+                    builder.Append("  syncIntervalInSeconds: ");
+                    builder.AppendLine($"'{SyncIntervalInSeconds.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServicePrincipal), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  servicePrincipal: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServicePrincipal))
+                {
+                    builder.Append("  servicePrincipal: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ServicePrincipal, options, 2, false, "  servicePrincipal: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  accountKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccountKey))
+                {
+                    builder.Append("  accountKey: ");
+                    if (AccountKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AccountKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AccountKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SasToken), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sasToken: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SasToken))
+                {
+                    builder.Append("  sasToken: ");
+                    if (SasToken.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SasToken}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SasToken}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ManagedIdentityClientId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  managedIdentity: ");
+                builder.AppendLine("{");
+                builder.Append("    clientId: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedIdentity))
+                {
+                    builder.Append("  managedIdentity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ManagedIdentity, options, 2, false, "  managedIdentity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalAuthRef), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  localAuthRef: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LocalAuthRef))
+                {
+                    builder.Append("  localAuthRef: ");
+                    if (LocalAuthRef.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LocalAuthRef}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LocalAuthRef}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<KubernetesAzureBlob>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesAzureBlob>)this).GetFormatFromOptions(options) : options.Format;
@@ -302,6 +495,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KubernetesAzureBlob)} does not support writing '{options.Format}' format.");
             }

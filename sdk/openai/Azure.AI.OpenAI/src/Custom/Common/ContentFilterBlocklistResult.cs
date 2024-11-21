@@ -1,10 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+
 #nullable disable
 
 namespace Azure.AI.OpenAI;
 
+[Experimental("AOAI001")]
 [CodeGenModel("AzureContentFilterBlocklistResult")]
 public partial class ContentFilterBlocklistResult
 {

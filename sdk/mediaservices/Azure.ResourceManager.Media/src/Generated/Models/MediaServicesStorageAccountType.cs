@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(MediaServicesStorageAccountType left, MediaServicesStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaServicesStorageAccountType"/> values are not the same. </summary>
         public static bool operator !=(MediaServicesStorageAccountType left, MediaServicesStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MediaServicesStorageAccountType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MediaServicesStorageAccountType"/>. </summary>
         public static implicit operator MediaServicesStorageAccountType(string value) => new MediaServicesStorageAccountType(value);
 
         /// <inheritdoc />

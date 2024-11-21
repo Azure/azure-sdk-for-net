@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
 
         void IJsonModel<InformaticaMarketplaceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<InformaticaMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InformaticaMarketplaceDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(MarketplaceSubscriptionId))
             {
                 writer.WritePropertyName("marketplaceSubscriptionId"u8);
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         InformaticaMarketplaceDetails IJsonModel<InformaticaMarketplaceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

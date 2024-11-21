@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(ChannelMapping left, ChannelMapping right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChannelMapping"/> values are not the same. </summary>
         public static bool operator !=(ChannelMapping left, ChannelMapping right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChannelMapping"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ChannelMapping"/>. </summary>
         public static implicit operator ChannelMapping(string value) => new ChannelMapping(value);
 
         /// <inheritdoc />

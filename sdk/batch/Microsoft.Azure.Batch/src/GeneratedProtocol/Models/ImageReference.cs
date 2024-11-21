@@ -51,7 +51,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// image or marketplace image used to create the node. This read-only
         /// field differs from 'version' only if the value specified for
         /// 'version' when the pool was created was 'latest'.</param>
-        public ImageReference(string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string), string virtualMachineImageId = default(string), string exactVersion = default(string))
+        /// <param name="sharedGalleryImageId">The shared gallery image unique
+        /// identifier</param>
+        /// <param name="communityGalleryImageId">The community gallery image
+        /// unique identifier</param>
+        public ImageReference(string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string), string virtualMachineImageId = default(string), string exactVersion = default(string), string sharedGalleryImageId = default(string), string communityGalleryImageId = default(string))
         {
             Publisher = publisher;
             Offer = offer;
@@ -59,6 +63,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             Version = version;
             VirtualMachineImageId = virtualMachineImageId;
             ExactVersion = exactVersion;
+            SharedGalleryImageId = sharedGalleryImageId;
+            CommunityGalleryImageId = communityGalleryImageId;
             CustomInit();
         }
 
@@ -125,7 +131,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// imageId, the latest version will be used. For information about the
         /// firewall settings for the Batch Compute Node agent to communicate
         /// with the Batch service see
-        /// https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
+        /// https://docs.microsoft.com/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
         /// </remarks>
         [JsonProperty(PropertyName = "virtualMachineImageId")]
         public string VirtualMachineImageId { get; set; }
@@ -138,6 +144,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "exactVersion")]
         public string ExactVersion { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the shared gallery image unique identifier
+        /// </summary>
+        /// <remarks>
+        /// This property is mutually exclusive with other properties and can
+        /// be fetched from shared gallery image GET call.
+        /// </remarks>
+        [JsonProperty(PropertyName = "sharedGalleryImageId")]
+        public string SharedGalleryImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the community gallery image unique identifier
+        /// </summary>
+        /// <remarks>
+        /// This property is mutually exclusive with other properties and can
+        /// be fetched from community gallery image GET call.
+        /// </remarks>
+        [JsonProperty(PropertyName = "communityGalleryImageId")]
+        public string CommunityGalleryImageId { get; set; }
 
     }
 }

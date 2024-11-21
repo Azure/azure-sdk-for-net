@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkEncryption"/>. </summary>
         /// <param name="isEnabled"> Indicates if encryption is enabled on the virtual network. </param>
-        /// <param name="enforcement"> If the encrypted VNet allows VM that does not support encryption. </param>
+        /// <param name="enforcement"> If the encrypted VNet allows VM that does not support encryption. This field is for future support, AllowUnencrypted is the only supported value at general availability. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualNetworkEncryption(bool isEnabled, VirtualNetworkEncryptionEnforcement? enforcement, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Indicates if encryption is enabled on the virtual network. </summary>
         public bool IsEnabled { get; set; }
-        /// <summary> If the encrypted VNet allows VM that does not support encryption. </summary>
+        /// <summary> If the encrypted VNet allows VM that does not support encryption. This field is for future support, AllowUnencrypted is the only supported value at general availability. </summary>
         public VirtualNetworkEncryptionEnforcement? Enforcement { get; set; }
     }
 }

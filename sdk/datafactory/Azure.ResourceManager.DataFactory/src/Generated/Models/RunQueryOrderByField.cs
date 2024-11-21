@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(RunQueryOrderByField left, RunQueryOrderByField right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunQueryOrderByField"/> values are not the same. </summary>
         public static bool operator !=(RunQueryOrderByField left, RunQueryOrderByField right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RunQueryOrderByField"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RunQueryOrderByField"/>. </summary>
         public static implicit operator RunQueryOrderByField(string value) => new RunQueryOrderByField(value);
 
         /// <inheritdoc />

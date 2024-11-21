@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Kusto.Models
 
         void IJsonModel<EndpointDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<EndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EndpointDetail)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Kusto.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EndpointDetail IJsonModel<EndpointDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

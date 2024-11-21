@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CosmosDBMetricUnitType left, CosmosDBMetricUnitType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBMetricUnitType"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBMetricUnitType left, CosmosDBMetricUnitType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBMetricUnitType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBMetricUnitType"/>. </summary>
         public static implicit operator CosmosDBMetricUnitType(string value) => new CosmosDBMetricUnitType(value);
 
         /// <inheritdoc />

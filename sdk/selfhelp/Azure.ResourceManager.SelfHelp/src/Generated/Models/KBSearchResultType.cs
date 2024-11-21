@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator ==(KBSearchResultType left, KBSearchResultType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KBSearchResultType"/> values are not the same. </summary>
         public static bool operator !=(KBSearchResultType left, KBSearchResultType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KBSearchResultType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KBSearchResultType"/>. </summary>
         public static implicit operator KBSearchResultType(string value) => new KBSearchResultType(value);
 
         /// <inheritdoc />

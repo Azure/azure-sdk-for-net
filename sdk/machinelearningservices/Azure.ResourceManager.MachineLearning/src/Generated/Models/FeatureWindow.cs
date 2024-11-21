@@ -51,19 +51,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FeatureWindow"/>. </summary>
-        /// <param name="featureWindowEnd"> Specifies the feature window end time. </param>
         /// <param name="featureWindowStart"> Specifies the feature window start time. </param>
+        /// <param name="featureWindowEnd"> Specifies the feature window end time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureWindow(DateTimeOffset? featureWindowEnd, DateTimeOffset? featureWindowStart, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FeatureWindow(DateTimeOffset? featureWindowStart, DateTimeOffset? featureWindowEnd, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FeatureWindowEnd = featureWindowEnd;
             FeatureWindowStart = featureWindowStart;
+            FeatureWindowEnd = featureWindowEnd;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies the feature window end time. </summary>
-        public DateTimeOffset? FeatureWindowEnd { get; set; }
         /// <summary> Specifies the feature window start time. </summary>
+        [WirePath("featureWindowStart")]
         public DateTimeOffset? FeatureWindowStart { get; set; }
+        /// <summary> Specifies the feature window end time. </summary>
+        [WirePath("featureWindowEnd")]
+        public DateTimeOffset? FeatureWindowEnd { get; set; }
     }
 }

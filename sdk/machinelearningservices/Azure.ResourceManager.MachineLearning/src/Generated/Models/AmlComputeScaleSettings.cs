@@ -71,10 +71,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Max number of nodes to use. </summary>
+        [WirePath("maxNodeCount")]
         public int MaxNodeCount { get; set; }
         /// <summary> Min number of nodes to use. </summary>
+        [WirePath("minNodeCount")]
         public int? MinNodeCount { get; set; }
         /// <summary> Node Idle Time before scaling down amlCompute. This string needs to be in the RFC Format. </summary>
+        [WirePath("nodeIdleTimeBeforeScaleDown")]
         public TimeSpan? NodeIdleTimeBeforeScaleDown { get; set; }
     }
 }

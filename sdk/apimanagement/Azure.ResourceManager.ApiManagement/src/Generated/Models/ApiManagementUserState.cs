@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(ApiManagementUserState left, ApiManagementUserState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiManagementUserState"/> values are not the same. </summary>
         public static bool operator !=(ApiManagementUserState left, ApiManagementUserState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApiManagementUserState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiManagementUserState"/>. </summary>
         public static implicit operator ApiManagementUserState(string value) => new ApiManagementUserState(value);
 
         /// <inheritdoc />

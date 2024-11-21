@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         void IJsonModel<BackupInstanceSyncContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BackupInstanceSyncContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupInstanceSyncContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SyncType))
             {
                 writer.WritePropertyName("syncType"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BackupInstanceSyncContent IJsonModel<BackupInstanceSyncContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

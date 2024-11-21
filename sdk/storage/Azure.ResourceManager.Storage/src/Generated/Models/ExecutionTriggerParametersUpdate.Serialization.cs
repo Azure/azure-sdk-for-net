@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<ExecutionTriggerParametersUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ExecutionTriggerParametersUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExecutionTriggerParametersUpdate)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(StartFrom))
             {
                 writer.WritePropertyName("startFrom"u8);
@@ -66,7 +74,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ExecutionTriggerParametersUpdate IJsonModel<ExecutionTriggerParametersUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

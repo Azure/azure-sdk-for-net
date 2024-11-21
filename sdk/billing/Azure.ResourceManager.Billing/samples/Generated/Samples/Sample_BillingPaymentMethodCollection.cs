@@ -9,17 +9,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingPaymentMethodCollection
     {
-        // ListPaymentMethodOwnedByUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPaymentMethodOwnedByUser()
         {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/PaymentMethodOwnedByUser_List.json
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentMethodsListByUser.json
             // this example is just showing the usage of "PaymentMethods_ListByUser" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -44,15 +44,14 @@ namespace Azure.ResourceManager.Billing.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GetPaymentMethodOwnedByUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPaymentMethodOwnedByUser()
         {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/PaymentMethodOwnedByUser_Get.json
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentMethodsGetByUser.json
             // this example is just showing the usage of "PaymentMethods_GetByUser" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,12 +77,11 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetPaymentMethodOwnedByUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPaymentMethodOwnedByUser()
         {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/PaymentMethodOwnedByUser_Get.json
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentMethodsGetByUser.json
             // this example is just showing the usage of "PaymentMethods_GetByUser" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,12 +103,11 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetPaymentMethodOwnedByUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPaymentMethodOwnedByUser()
         {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/PaymentMethodOwnedByUser_Get.json
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentMethodsGetByUser.json
             // this example is just showing the usage of "PaymentMethods_GetByUser" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +129,7 @@ namespace Azure.ResourceManager.Billing.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

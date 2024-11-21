@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the spark ready. </summary>
+        [WirePath("sparkReady")]
         public bool? SparkReady { get; set; }
         /// <summary> Status for the managed network of a machine learning workspace. </summary>
+        [WirePath("status")]
         public ManagedNetworkStatus? Status { get; set; }
     }
 }

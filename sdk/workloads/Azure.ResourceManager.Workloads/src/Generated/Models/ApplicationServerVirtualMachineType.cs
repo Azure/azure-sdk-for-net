@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator ==(ApplicationServerVirtualMachineType left, ApplicationServerVirtualMachineType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationServerVirtualMachineType"/> values are not the same. </summary>
         public static bool operator !=(ApplicationServerVirtualMachineType left, ApplicationServerVirtualMachineType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationServerVirtualMachineType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationServerVirtualMachineType"/>. </summary>
         public static implicit operator ApplicationServerVirtualMachineType(string value) => new ApplicationServerVirtualMachineType(value);
 
         /// <inheritdoc />

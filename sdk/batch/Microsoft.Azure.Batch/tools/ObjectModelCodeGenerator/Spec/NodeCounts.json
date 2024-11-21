@@ -1,0 +1,195 @@
+{
+  "Name": "NodeCounts",
+  "ProtocolName": "Models.NodeCounts",
+  "SummaryComment": "The number of nodes in each node state.",
+  "ConstructorAccess": "internal",
+  "Properties": [
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Creating",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.Creating\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Idle",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.Idle\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Offline",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.Offline\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Preempted",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.Preempted\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Rebooting",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.Rebooting\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Reimaging",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.Reimaging\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Running",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.Running\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Starting",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.Starting\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "StartTaskFailed",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.StartTaskFailed\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Unknown",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.Unknown\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Unusable",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.Unusable\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "WaitingForStartTask",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.WaitingForStartTask\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "LeavingPool",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.LeavingPool\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "UpgradingOS",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.UpgradingOS\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Deallocated",
+        "SummaryComment": "The number of Compute Nodes in the deallocated state.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Deallocating",
+        "SummaryComment": "The number of Compute Nodes in the deallocating state.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Total",
+        "SummaryComment": "The total number of nodes.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    }
+  ]
+}

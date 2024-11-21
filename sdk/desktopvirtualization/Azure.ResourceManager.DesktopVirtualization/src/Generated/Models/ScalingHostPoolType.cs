@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator ==(ScalingHostPoolType left, ScalingHostPoolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScalingHostPoolType"/> values are not the same. </summary>
         public static bool operator !=(ScalingHostPoolType left, ScalingHostPoolType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScalingHostPoolType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScalingHostPoolType"/>. </summary>
         public static implicit operator ScalingHostPoolType(string value) => new ScalingHostPoolType(value);
 
         /// <inheritdoc />

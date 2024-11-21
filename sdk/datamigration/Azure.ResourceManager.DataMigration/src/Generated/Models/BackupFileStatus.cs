@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(BackupFileStatus left, BackupFileStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupFileStatus"/> values are not the same. </summary>
         public static bool operator !=(BackupFileStatus left, BackupFileStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupFileStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupFileStatus"/>. </summary>
         public static implicit operator BackupFileStatus(string value) => new BackupFileStatus(value);
 
         /// <inheritdoc />

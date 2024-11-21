@@ -1,0 +1,6 @@
+package-lock.json
+TempTypeSpecFiles/
+tests/SessionRecords
+external/
+**/Generated/cadl.json
+**/Generated/configuration.json

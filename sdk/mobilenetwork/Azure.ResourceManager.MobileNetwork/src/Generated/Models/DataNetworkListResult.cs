@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Response for data network API service call. </summary>
+    /// <summary>
+    /// Response for data network API service call.
+    /// Serialized Name: DataNetworkListResult
+    /// </summary>
     internal partial class DataNetworkListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataNetworkListResult"/>. </summary>
-        /// <param name="value"> A list of data networks. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// A list of data networks.
+        /// Serialized Name: DataNetworkListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: DataNetworkListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataNetworkListResult(IReadOnlyList<MobileDataNetworkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of data networks. </summary>
+        /// <summary>
+        /// A list of data networks.
+        /// Serialized Name: DataNetworkListResult.value
+        /// </summary>
         public IReadOnlyList<MobileDataNetworkData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: DataNetworkListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

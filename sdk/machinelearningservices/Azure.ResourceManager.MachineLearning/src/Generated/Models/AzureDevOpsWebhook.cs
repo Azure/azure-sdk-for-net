@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDevOpsWebhook"/>. </summary>
-        /// <param name="eventType"> Send callback on a specified notification event. </param>
         /// <param name="webhookType"> [Required] Specifies the type of service to send a callback. </param>
+        /// <param name="eventType"> Send callback on a specified notification event. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureDevOpsWebhook(string eventType, MachineLearningWebhookType webhookType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(eventType, webhookType, serializedAdditionalRawData)
+        internal AzureDevOpsWebhook(MachineLearningWebhookType webhookType, string eventType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(webhookType, eventType, serializedAdditionalRawData)
         {
             WebhookType = webhookType;
         }

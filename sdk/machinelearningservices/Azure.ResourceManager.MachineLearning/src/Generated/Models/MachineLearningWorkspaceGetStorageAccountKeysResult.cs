@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetStorageAccountKeysResult"/>. </summary>
-        /// <param name="userStorageKey"> The access key of the storage. </param>
+        /// <param name="userStorageKey"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningWorkspaceGetStorageAccountKeysResult(string userStorageKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The access key of the storage. </summary>
+        /// <summary> Gets the user storage key. </summary>
+        [WirePath("userStorageKey")]
         public string UserStorageKey { get; }
     }
 }

@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The description for the inline event. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> The displayName for the inline event. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> The documentationUrl for the inline event. </summary>
+        [WirePath("documentationUrl")]
         public Uri DocumentationUri { get; set; }
         /// <summary> The dataSchemaUrl for the inline event. </summary>
+        [WirePath("dataSchemaUrl")]
         public Uri DataSchemaUri { get; set; }
     }
 }

@@ -70,16 +70,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The start time in yyyy-MM-ddTHH:mm:ss format. </summary>
+        [WirePath("startTime")]
         public string StartTime { get; set; }
         /// <summary>
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </summary>
+        [WirePath("timeZone")]
         public string TimeZone { get; set; }
         /// <summary>
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
         /// </summary>
+        [WirePath("expression")]
         public string Expression { get; set; }
     }
 }

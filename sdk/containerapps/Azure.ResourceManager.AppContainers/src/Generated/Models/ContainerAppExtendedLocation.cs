@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The name of the extended location. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The type of the extended location. </summary>
+        [WirePath("type")]
         public ContainerAppExtendedLocationType? ExtendedLocationType { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(AutonomousDatabaseComputeModel left, AutonomousDatabaseComputeModel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutonomousDatabaseComputeModel"/> values are not the same. </summary>
         public static bool operator !=(AutonomousDatabaseComputeModel left, AutonomousDatabaseComputeModel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutonomousDatabaseComputeModel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutonomousDatabaseComputeModel"/>. </summary>
         public static implicit operator AutonomousDatabaseComputeModel(string value) => new AutonomousDatabaseComputeModel(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CosmosDBAccountRestoreMode left, CosmosDBAccountRestoreMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBAccountRestoreMode"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBAccountRestoreMode left, CosmosDBAccountRestoreMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBAccountRestoreMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBAccountRestoreMode"/>. </summary>
         public static implicit operator CosmosDBAccountRestoreMode(string value) => new CosmosDBAccountRestoreMode(value);
 
         /// <inheritdoc />

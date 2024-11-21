@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(BatchNodePlacementPolicyType left, BatchNodePlacementPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchNodePlacementPolicyType"/> values are not the same. </summary>
         public static bool operator !=(BatchNodePlacementPolicyType left, BatchNodePlacementPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchNodePlacementPolicyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchNodePlacementPolicyType"/>. </summary>
         public static implicit operator BatchNodePlacementPolicyType(string value) => new BatchNodePlacementPolicyType(value);
 
         /// <inheritdoc />

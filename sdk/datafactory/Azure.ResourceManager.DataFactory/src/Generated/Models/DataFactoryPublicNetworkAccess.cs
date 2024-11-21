@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(DataFactoryPublicNetworkAccess left, DataFactoryPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFactoryPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(DataFactoryPublicNetworkAccess left, DataFactoryPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataFactoryPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactoryPublicNetworkAccess"/>. </summary>
         public static implicit operator DataFactoryPublicNetworkAccess(string value) => new DataFactoryPublicNetworkAccess(value);
 
         /// <inheritdoc />

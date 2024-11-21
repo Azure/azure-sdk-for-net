@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public static bool operator ==(ChaosProvisioningState left, ChaosProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChaosProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ChaosProvisioningState left, ChaosProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChaosProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ChaosProvisioningState"/>. </summary>
         public static implicit operator ChaosProvisioningState(string value) => new ChaosProvisioningState(value);
 
         /// <inheritdoc />

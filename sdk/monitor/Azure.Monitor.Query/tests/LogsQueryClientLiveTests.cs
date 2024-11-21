@@ -707,7 +707,7 @@ namespace Azure.Monitor.Query.Tests
                     // or a partial failure 200 response
                     if (exception.Status == 200)
                     {
-                        StringAssert.Contains("Query cancelled by the user's request", exception.Message);
+                        StringAssert.Contains("PartialError", exception.Message);
                     }
                     else
                     {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningEnvironmentType left, MachineLearningEnvironmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningEnvironmentType"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningEnvironmentType left, MachineLearningEnvironmentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningEnvironmentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningEnvironmentType"/>. </summary>
         public static implicit operator MachineLearningEnvironmentType(string value) => new MachineLearningEnvironmentType(value);
 
         /// <inheritdoc />

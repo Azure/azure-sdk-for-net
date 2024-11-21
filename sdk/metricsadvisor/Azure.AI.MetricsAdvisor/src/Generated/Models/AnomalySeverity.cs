@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator ==(AnomalySeverity left, AnomalySeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnomalySeverity"/> values are not the same. </summary>
         public static bool operator !=(AnomalySeverity left, AnomalySeverity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnomalySeverity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AnomalySeverity"/>. </summary>
         public static implicit operator AnomalySeverity(string value) => new AnomalySeverity(value);
 
         /// <inheritdoc />

@@ -70,20 +70,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
         /// Please note <see cref="MachineLearningOnlineDeploymentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
         /// </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningOnlineDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningOnlineDeploymentProperties properties, MachineLearningSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal MachineLearningOnlineDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineLearningOnlineDeploymentProperties properties, string kind, ManagedServiceIdentity identity, MachineLearningSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
-            Kind = kind;
             Properties = properties;
+            Kind = kind;
+            Identity = identity;
             Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -93,17 +93,21 @@ namespace Azure.ResourceManager.MachineLearning
         {
         }
 
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
-        public string Kind { get; set; }
         /// <summary>
         /// [Required] Additional attributes of the entity.
         /// Please note <see cref="MachineLearningOnlineDeploymentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
         /// </summary>
+        [WirePath("properties")]
         public MachineLearningOnlineDeploymentProperties Properties { get; set; }
+        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
+        [WirePath("sku")]
         public MachineLearningSku Sku { get; set; }
     }
 }

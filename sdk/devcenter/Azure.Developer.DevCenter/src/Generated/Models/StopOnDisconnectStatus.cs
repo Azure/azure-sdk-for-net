@@ -33,7 +33,7 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator ==(StopOnDisconnectStatus left, StopOnDisconnectStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StopOnDisconnectStatus"/> values are not the same. </summary>
         public static bool operator !=(StopOnDisconnectStatus left, StopOnDisconnectStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StopOnDisconnectStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StopOnDisconnectStatus"/>. </summary>
         public static implicit operator StopOnDisconnectStatus(string value) => new StopOnDisconnectStatus(value);
 
         /// <inheritdoc />

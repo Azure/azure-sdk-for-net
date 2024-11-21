@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Peering.Samples
 {
     public partial class Sample_ConnectionMonitorTestResource
     {
-        // Get Connection Monitor Test
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetConnectionMonitorTest()
         {
             // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetConnectionMonitorTest.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.Peering.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or Update Connection Monitor Test
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateConnectionMonitorTest()
         {
             // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/CreateOrUpdateConnectionMonitorTest.json
@@ -86,9 +85,8 @@ namespace Azure.ResourceManager.Peering.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Connection Monitor Test
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteConnectionMonitorTest()
         {
             // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/DeleteConnectionMonitorTest.json
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.Peering.Samples
             // invoke the operation
             await connectionMonitorTest.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

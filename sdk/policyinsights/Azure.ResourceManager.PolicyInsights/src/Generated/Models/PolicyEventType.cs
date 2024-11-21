@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static bool operator ==(PolicyEventType left, PolicyEventType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyEventType"/> values are not the same. </summary>
         public static bool operator !=(PolicyEventType left, PolicyEventType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PolicyEventType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyEventType"/>. </summary>
         public static implicit operator PolicyEventType(string value) => new PolicyEventType(value);
 
         /// <inheritdoc />

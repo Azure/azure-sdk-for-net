@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator ==(ServiceAccountUsageUnitType left, ServiceAccountUsageUnitType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAccountUsageUnitType"/> values are not the same. </summary>
         public static bool operator !=(ServiceAccountUsageUnitType left, ServiceAccountUsageUnitType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceAccountUsageUnitType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceAccountUsageUnitType"/>. </summary>
         public static implicit operator ServiceAccountUsageUnitType(string value) => new ServiceAccountUsageUnitType(value);
 
         /// <inheritdoc />

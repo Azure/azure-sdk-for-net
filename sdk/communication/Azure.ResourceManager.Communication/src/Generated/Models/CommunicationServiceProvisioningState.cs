@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static bool operator ==(CommunicationServiceProvisioningState left, CommunicationServiceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationServiceProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(CommunicationServiceProvisioningState left, CommunicationServiceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CommunicationServiceProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CommunicationServiceProvisioningState"/>. </summary>
         public static implicit operator CommunicationServiceProvisioningState(string value) => new CommunicationServiceProvisioningState(value);
 
         /// <inheritdoc />

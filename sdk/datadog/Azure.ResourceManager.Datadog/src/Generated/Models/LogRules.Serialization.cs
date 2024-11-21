@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Datadog.Models
 
         void IJsonModel<LogRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<LogRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LogRules)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SendAadLogs))
             {
                 writer.WritePropertyName("sendAadLogs"u8);
@@ -66,7 +74,6 @@ namespace Azure.ResourceManager.Datadog.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         LogRules IJsonModel<LogRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

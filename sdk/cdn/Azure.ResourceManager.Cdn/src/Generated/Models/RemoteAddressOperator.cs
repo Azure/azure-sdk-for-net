@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(RemoteAddressOperator left, RemoteAddressOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RemoteAddressOperator"/> values are not the same. </summary>
         public static bool operator !=(RemoteAddressOperator left, RemoteAddressOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RemoteAddressOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RemoteAddressOperator"/>. </summary>
         public static implicit operator RemoteAddressOperator(string value) => new RemoteAddressOperator(value);
 
         /// <inheritdoc />

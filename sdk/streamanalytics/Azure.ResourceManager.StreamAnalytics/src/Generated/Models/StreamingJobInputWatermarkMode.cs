@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator ==(StreamingJobInputWatermarkMode left, StreamingJobInputWatermarkMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingJobInputWatermarkMode"/> values are not the same. </summary>
         public static bool operator !=(StreamingJobInputWatermarkMode left, StreamingJobInputWatermarkMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StreamingJobInputWatermarkMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StreamingJobInputWatermarkMode"/>. </summary>
         public static implicit operator StreamingJobInputWatermarkMode(string value) => new StreamingJobInputWatermarkMode(value);
 
         /// <inheritdoc />

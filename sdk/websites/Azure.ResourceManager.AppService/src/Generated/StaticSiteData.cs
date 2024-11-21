@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="enterpriseGradeCdnStatus"> State indicating the status of the enterprise grade CDN serving traffic to the static web app. </param>
         /// <param name="publicNetworkAccess"> State indicating whether public traffic are allowed or not for a static web app. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
         /// <param name="databaseConnections"> Database connections for the static site. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ManagedServiceIdentity identity, string defaultHostname, Uri repositoryUri, string branch, IReadOnlyList<string> customDomains, string repositoryToken, StaticSiteBuildProperties buildProperties, IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections, StagingEnvironmentPolicy? stagingEnvironmentPolicy, bool? allowConfigFileUpdates, StaticSiteTemplate templateProperties, string contentDistributionEndpoint, string keyVaultReferenceIdentity, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends, string provider, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus, string publicNetworkAccess, IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Database connections for the static site. </summary>
         [WirePath("properties.databaseConnections")]
         public IReadOnlyList<StaticSiteDatabaseConnectionOverview> DatabaseConnections { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

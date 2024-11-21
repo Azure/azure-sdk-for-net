@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         void IJsonModel<AvailableUpgrade>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AvailableUpgrade>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AvailableUpgrade)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(AvailabilityLifecycle))
             {
                 writer.WritePropertyName("availabilityLifecycle"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AvailableUpgrade IJsonModel<AvailableUpgrade>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

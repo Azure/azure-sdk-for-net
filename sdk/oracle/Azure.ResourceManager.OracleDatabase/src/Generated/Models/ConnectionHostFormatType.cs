@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(ConnectionHostFormatType left, ConnectionHostFormatType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionHostFormatType"/> values are not the same. </summary>
         public static bool operator !=(ConnectionHostFormatType left, ConnectionHostFormatType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectionHostFormatType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionHostFormatType"/>. </summary>
         public static implicit operator ConnectionHostFormatType(string value) => new ConnectionHostFormatType(value);
 
         /// <inheritdoc />

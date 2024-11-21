@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(ExportRunExecutionStatus left, ExportRunExecutionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExportRunExecutionStatus"/> values are not the same. </summary>
         public static bool operator !=(ExportRunExecutionStatus left, ExportRunExecutionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExportRunExecutionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExportRunExecutionStatus"/>. </summary>
         public static implicit operator ExportRunExecutionStatus(string value) => new ExportRunExecutionStatus(value);
 
         /// <inheritdoc />

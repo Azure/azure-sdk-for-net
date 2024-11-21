@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ApplicationGatewayTierType left, ApplicationGatewayTierType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayTierType"/> values are not the same. </summary>
         public static bool operator !=(ApplicationGatewayTierType left, ApplicationGatewayTierType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationGatewayTierType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayTierType"/>. </summary>
         public static implicit operator ApplicationGatewayTierType(string value) => new ApplicationGatewayTierType(value);
 
         /// <inheritdoc />

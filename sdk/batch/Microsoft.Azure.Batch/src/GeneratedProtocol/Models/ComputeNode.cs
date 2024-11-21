@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// values include: 'idle', 'rebooting', 'reimaging', 'running',
         /// 'unusable', 'creating', 'starting', 'waitingForStartTask',
         /// 'startTaskFailed', 'unknown', 'leavingPool', 'offline',
-        /// 'preempted', 'upgradingOS'
+        /// 'preempted', 'upgradingOS', 'deallocated', 'deallocating'
         /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public ComputeNodeState? State { get; set; }

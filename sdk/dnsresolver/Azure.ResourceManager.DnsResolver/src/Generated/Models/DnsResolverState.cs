@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static bool operator ==(DnsResolverState left, DnsResolverState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsResolverState"/> values are not the same. </summary>
         public static bool operator !=(DnsResolverState left, DnsResolverState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DnsResolverState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsResolverState"/>. </summary>
         public static implicit operator DnsResolverState(string value) => new DnsResolverState(value);
 
         /// <inheritdoc />

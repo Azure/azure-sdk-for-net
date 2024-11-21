@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static bool operator ==(AssignmentProvisioningState left, AssignmentProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssignmentProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AssignmentProvisioningState left, AssignmentProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AssignmentProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AssignmentProvisioningState"/>. </summary>
         public static implicit operator AssignmentProvisioningState(string value) => new AssignmentProvisioningState(value);
 
         /// <inheritdoc />

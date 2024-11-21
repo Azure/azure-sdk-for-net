@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         public static bool operator ==(DataProductControlState left, DataProductControlState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataProductControlState"/> values are not the same. </summary>
         public static bool operator !=(DataProductControlState left, DataProductControlState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataProductControlState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataProductControlState"/>. </summary>
         public static implicit operator DataProductControlState(string value) => new DataProductControlState(value);
 
         /// <inheritdoc />

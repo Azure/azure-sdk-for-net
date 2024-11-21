@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(AdvancedFilterOperatorType left, AdvancedFilterOperatorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdvancedFilterOperatorType"/> values are not the same. </summary>
         public static bool operator !=(AdvancedFilterOperatorType left, AdvancedFilterOperatorType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AdvancedFilterOperatorType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AdvancedFilterOperatorType"/>. </summary>
         public static implicit operator AdvancedFilterOperatorType(string value) => new AdvancedFilterOperatorType(value);
 
         /// <inheritdoc />

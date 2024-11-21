@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MonitorComputeType left, MonitorComputeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorComputeType"/> values are not the same. </summary>
         public static bool operator !=(MonitorComputeType left, MonitorComputeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitorComputeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorComputeType"/>. </summary>
         public static implicit operator MonitorComputeType(string value) => new MonitorComputeType(value);
 
         /// <inheritdoc />

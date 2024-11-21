@@ -121,56 +121,82 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Set of days of the week on which this schedule is active. </summary>
+        [WirePath("properties.daysOfWeek")]
         public IList<DesktopVirtualizationDayOfWeek> DaysOfWeek { get; }
         /// <summary> Starting time for ramp up period. </summary>
+        [WirePath("properties.rampUpStartTime")]
         public ScalingActionTime RampUpStartTime { get; set; }
         /// <summary> The desired startup behavior during the ramp up period for personal vms in the hostpool. </summary>
+        [WirePath("properties.rampUpAutoStartHosts")]
         public StartupBehavior? RampUpAutoStartHosts { get; set; }
         /// <summary> The desired configuration of Start VM On Connect for the hostpool during the ramp up phase. If this is disabled, session hosts must be turned on using rampUpAutoStartHosts or by turning them on manually. </summary>
+        [WirePath("properties.rampUpStartVMOnConnect")]
         public SetStartVmOnConnect? RampUpStartVmOnConnect { get; set; }
         /// <summary> Action to be taken after a user disconnect during the ramp up period. </summary>
+        [WirePath("properties.rampUpActionOnDisconnect")]
         public SessionHandlingOperation? RampUpActionOnDisconnect { get; set; }
         /// <summary> The time in minutes to wait before performing the desired session handling action when a user disconnects during the ramp up period. </summary>
+        [WirePath("properties.rampUpMinutesToWaitOnDisconnect")]
         public int? RampUpMinutesToWaitOnDisconnect { get; set; }
         /// <summary> Action to be taken after a logoff during the ramp up period. </summary>
+        [WirePath("properties.rampUpActionOnLogoff")]
         public SessionHandlingOperation? RampUpActionOnLogoff { get; set; }
         /// <summary> The time in minutes to wait before performing the desired session handling action when a user logs off during the ramp up period. </summary>
+        [WirePath("properties.rampUpMinutesToWaitOnLogoff")]
         public int? RampUpMinutesToWaitOnLogoff { get; set; }
         /// <summary> Starting time for peak period. </summary>
+        [WirePath("properties.peakStartTime")]
         public ScalingActionTime PeakStartTime { get; set; }
         /// <summary> The desired configuration of Start VM On Connect for the hostpool during the peak phase. </summary>
+        [WirePath("properties.peakStartVMOnConnect")]
         public SetStartVmOnConnect? PeakStartVmOnConnect { get; set; }
         /// <summary> Action to be taken after a user disconnect during the peak period. </summary>
+        [WirePath("properties.peakActionOnDisconnect")]
         public SessionHandlingOperation? PeakActionOnDisconnect { get; set; }
         /// <summary> The time in minutes to wait before performing the desired session handling action when a user disconnects during the peak period. </summary>
+        [WirePath("properties.peakMinutesToWaitOnDisconnect")]
         public int? PeakMinutesToWaitOnDisconnect { get; set; }
         /// <summary> Action to be taken after a logoff during the peak period. </summary>
+        [WirePath("properties.peakActionOnLogoff")]
         public SessionHandlingOperation? PeakActionOnLogoff { get; set; }
         /// <summary> The time in minutes to wait before performing the desired session handling action when a user logs off during the peak period. </summary>
+        [WirePath("properties.peakMinutesToWaitOnLogoff")]
         public int? PeakMinutesToWaitOnLogoff { get; set; }
         /// <summary> Starting time for ramp down period. </summary>
+        [WirePath("properties.rampDownStartTime")]
         public ScalingActionTime RampDownStartTime { get; set; }
         /// <summary> The desired configuration of Start VM On Connect for the hostpool during the ramp down phase. </summary>
+        [WirePath("properties.rampDownStartVMOnConnect")]
         public SetStartVmOnConnect? RampDownStartVmOnConnect { get; set; }
         /// <summary> Action to be taken after a user disconnect during the ramp down period. </summary>
+        [WirePath("properties.rampDownActionOnDisconnect")]
         public SessionHandlingOperation? RampDownActionOnDisconnect { get; set; }
         /// <summary> The time in minutes to wait before performing the desired session handling action when a user disconnects during the ramp down period. </summary>
+        [WirePath("properties.rampDownMinutesToWaitOnDisconnect")]
         public int? RampDownMinutesToWaitOnDisconnect { get; set; }
         /// <summary> Action to be taken after a logoff during the ramp down period. </summary>
+        [WirePath("properties.rampDownActionOnLogoff")]
         public SessionHandlingOperation? RampDownActionOnLogoff { get; set; }
         /// <summary> The time in minutes to wait before performing the desired session handling action when a user logs off during the ramp down period. </summary>
+        [WirePath("properties.rampDownMinutesToWaitOnLogoff")]
         public int? RampDownMinutesToWaitOnLogoff { get; set; }
         /// <summary> Starting time for off-peak period. </summary>
+        [WirePath("properties.offPeakStartTime")]
         public ScalingActionTime OffPeakStartTime { get; set; }
         /// <summary> The desired configuration of Start VM On Connect for the hostpool during the off-peak phase. </summary>
+        [WirePath("properties.offPeakStartVMOnConnect")]
         public SetStartVmOnConnect? OffPeakStartVmOnConnect { get; set; }
         /// <summary> Action to be taken after a user disconnect during the off-peak period. </summary>
+        [WirePath("properties.offPeakActionOnDisconnect")]
         public SessionHandlingOperation? OffPeakActionOnDisconnect { get; set; }
         /// <summary> The time in minutes to wait before performing the desired session handling action when a user disconnects during the off-peak period. </summary>
+        [WirePath("properties.offPeakMinutesToWaitOnDisconnect")]
         public int? OffPeakMinutesToWaitOnDisconnect { get; set; }
         /// <summary> Action to be taken after a logoff during the off-peak period. </summary>
+        [WirePath("properties.offPeakActionOnLogoff")]
         public SessionHandlingOperation? OffPeakActionOnLogoff { get; set; }
         /// <summary> The time in minutes to wait before performing the desired session handling action when a user logs off during the off-peak period. </summary>
+        [WirePath("properties.offPeakMinutesToWaitOnLogoff")]
         public int? OffPeakMinutesToWaitOnLogoff { get; set; }
     }
 }

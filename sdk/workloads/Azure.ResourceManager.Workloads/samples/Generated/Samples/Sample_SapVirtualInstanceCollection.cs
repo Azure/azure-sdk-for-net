@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Workloads.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Workloads.Samples
 {
     public partial class Sample_SapVirtualInstanceCollection
     {
-        // Create Infrastructure (with OS configuration) with custom resource names for Distributed System
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationWithCustomResourceNamesForDistributedSystem()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_CustomFullResourceNames_Distributed.json
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1)
+                }), 1L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -242,9 +242,8 @@ DataDiskNames =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure (with OS configuration) with custom resource names for HA System with Availability Set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationWithCustomResourceNamesForHASystemWithAvailabilitySet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_CustomFullResourceNames_HA_AvSet.json
@@ -288,7 +287,7 @@ DataDiskNames =
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -306,7 +305,7 @@ DataDiskNames =
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -324,7 +323,7 @@ DataDiskNames =
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -539,9 +538,8 @@ DataDiskNames =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure (with OS configuration) with custom resource names for HA system with Availability Zone
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationWithCustomResourceNamesForHASystemWithAvailabilityZone()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_CustomFullResourceNames_HA_AvZone.json
@@ -585,7 +583,7 @@ DataDiskNames =
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -603,7 +601,7 @@ DataDiskNames =
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -621,7 +619,7 @@ DataDiskNames =
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -833,9 +831,8 @@ DataDiskNames =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure (with OS configuration) with custom resource names for Single Server System
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationWithCustomResourceNamesForSingleServerSystem()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_CustomFullResourceNames_SingleServer.json
@@ -904,9 +901,8 @@ DataDiskNames =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure only for Distributed System
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureOnlyForDistributedSystem()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_Distributed.json
@@ -952,7 +948,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -972,7 +968,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -992,7 +988,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 1)
+                }), 1L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 }),
@@ -1012,9 +1008,8 @@ KeyData = "ssh-rsa public key",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure only for HA System with Availability Set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureOnlyForHASystemWithAvailabilitySet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_HA_AvSet.json
@@ -1060,7 +1055,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1080,7 +1075,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 5), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 5L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1100,7 +1095,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -1123,9 +1118,8 @@ KeyData = "ssh-rsa public key",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure only for HA System with Availability Zone
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureOnlyForHASystemWithAvailabilityZone()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_HA_AvZone.json
@@ -1171,7 +1165,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1191,7 +1185,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1211,7 +1205,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -1234,9 +1228,8 @@ KeyData = "ssh-rsa public key",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure only for Single Server System
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureOnlyForSingleServerSystem()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_SingleServer.json
@@ -1303,9 +1296,8 @@ KeyData = "ssh-rsa public key",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure with Disk and OS configuration for Distributed System (Recommended)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithDiskAndOSConfigurationForDistributedSystemRecommended()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_DiskDetails_Distributed.json
@@ -1349,7 +1341,7 @@ KeyData = "ssh-rsa public key",
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1367,7 +1359,7 @@ KeyData = "ssh-rsa public key",
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1385,45 +1377,45 @@ KeyData = "ssh-rsa public key",
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1)
+                }), 1L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                     DiskVolumeConfigurations =
 {
 ["backup"] = new DiskVolumeConfiguration()
 {
-Count = 2,
-SizeInGB = 256,
+Count = 2L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["hana/data"] = new DiskVolumeConfiguration()
 {
-Count = 4,
-SizeInGB = 128,
+Count = 4L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/log"] = new DiskVolumeConfiguration()
 {
-Count = 3,
-SizeInGB = 128,
+Count = 3L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/shared"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 256,
+Count = 1L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["os"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 64,
+Count = 1L,
+SizeInGB = 64L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["usr/sap"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 128,
+Count = 1L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 },
@@ -1448,9 +1440,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure with Disk and OS configuration for HA System with Availability Set (Recommended)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithDiskAndOSConfigurationForHASystemWithAvailabilitySetRecommended()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_DiskDetails_HA_AvSet.json
@@ -1494,7 +1485,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1512,7 +1503,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1530,45 +1521,45 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                     DiskVolumeConfigurations =
 {
 ["backup"] = new DiskVolumeConfiguration()
 {
-Count = 2,
-SizeInGB = 256,
+Count = 2L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["hana/data"] = new DiskVolumeConfiguration()
 {
-Count = 4,
-SizeInGB = 128,
+Count = 4L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/log"] = new DiskVolumeConfiguration()
 {
-Count = 3,
-SizeInGB = 128,
+Count = 3L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/shared"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 256,
+Count = 1L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["os"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 64,
+Count = 1L,
+SizeInGB = 64L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["usr/sap"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 128,
+Count = 1L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 },
@@ -1596,9 +1587,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure with Disk and OS configuration for HA System with Availability Zone (Recommended)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithDiskAndOSConfigurationForHASystemWithAvailabilityZoneRecommended()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_DiskDetails_HA_AvZone.json
@@ -1642,7 +1632,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1660,7 +1650,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1678,45 +1668,45 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                     DiskVolumeConfigurations =
 {
 ["backup"] = new DiskVolumeConfiguration()
 {
-Count = 2,
-SizeInGB = 256,
+Count = 2L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["hana/data"] = new DiskVolumeConfiguration()
 {
-Count = 4,
-SizeInGB = 128,
+Count = 4L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/log"] = new DiskVolumeConfiguration()
 {
-Count = 3,
-SizeInGB = 128,
+Count = 3L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/shared"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 256,
+Count = 1L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["os"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 64,
+Count = 1L,
+SizeInGB = 64L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["usr/sap"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 128,
+Count = 1L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 },
@@ -1744,9 +1734,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure with Disk and OS configurations for Single Server System (Recommended)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithDiskAndOSConfigurationsForSingleServerSystemRecommended()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_DiskDetails_SingleServer.json
@@ -1798,38 +1787,38 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 {
 ["backup"] = new DiskVolumeConfiguration()
 {
-Count = 2,
-SizeInGB = 256,
+Count = 2L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["hana/data"] = new DiskVolumeConfiguration()
 {
-Count = 4,
-SizeInGB = 128,
+Count = 4L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/log"] = new DiskVolumeConfiguration()
 {
-Count = 3,
-SizeInGB = 128,
+Count = 3L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/shared"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 256,
+Count = 1L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["os"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 64,
+Count = 1L,
+SizeInGB = 64L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["usr/sap"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 128,
+Count = 1L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 },
@@ -1854,9 +1843,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure with OS configuration for Distributed System (Recommended)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationForDistributedSystemRecommended()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_WithOSConfig_Distributed.json
@@ -1900,7 +1888,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1918,7 +1906,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1936,7 +1924,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1)
+                }), 1L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 }),
@@ -1960,9 +1948,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure with OS configuration for HA System with Availability Set (Recommended)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationForHASystemWithAvailabilitySetRecommended()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_WithOSConfig_HA_AvSet.json
@@ -2006,7 +1993,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2024,7 +2011,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2042,7 +2029,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -2069,9 +2056,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure with OS configuration for HA System with Availability Zone (Recommended)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationForHASystemWithAvailabilityZoneRecommended()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_WithOSConfig_HA_AvZone.json
@@ -2115,7 +2101,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2133,7 +2119,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2151,7 +2137,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -2178,9 +2164,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure with OS configuration for Single Server System (Recommended)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithOSConfigurationForSingleServerSystemRecommended()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_WithOSConfig_SingleServer.json
@@ -2249,9 +2234,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure with a new SAP Transport Directory Fileshare
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithANewSAPTransportDirectoryFileshare()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_Distributed_CreateTransport.json
@@ -2295,7 +2279,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2313,7 +2297,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2331,7 +2315,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1)
+                }), 1L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -2362,9 +2346,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure with an existing SAP Transport Directory Fileshare
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithAnExistingSAPTransportDirectoryFileshare()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_Distributed_MountTransport.json
@@ -2408,7 +2391,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2426,7 +2409,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2444,7 +2427,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1)
+                }), 1L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -2471,9 +2454,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Infrastructure without a SAP Transport Directory Fileshare
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateInfrastructureWithoutASAPTransportDirectoryFileshare()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_Distributed_SkipTransport.json
@@ -2517,7 +2499,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2535,7 +2517,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2553,7 +2535,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1)
+                }), 1L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -2580,9 +2562,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Detect SAP Software Installation on a Distributed System
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DetectSAPSoftwareInstallationOnADistributedSystem()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_DetectInstallation_Distributed.json
@@ -2626,7 +2607,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "{{privateKey}}",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_E4ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_E4ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -2644,7 +2625,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "{{privateKey}}",
                         },
                     },
-                }), 2), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 2L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -2662,7 +2643,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "{{privateKey}}",
                         },
                     },
-                }), 1))
+                }), 1L))
                 {
                     IsSecondaryIPEnabled = true,
                 },
@@ -2691,9 +2672,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Detect SAP Software Installation on a Single Server System
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DetectSAPSoftwareInstallationOnASingleServerSystem()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_DetectInstallation_SingleServer.json
@@ -2766,9 +2746,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Detect SAP Software Installation on an HA System with Availability Set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DetectSAPSoftwareInstallationOnAnHASystemWithAvailabilitySet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_DetectInstallation_HA_AvSet.json
@@ -2812,7 +2791,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -2830,7 +2809,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -2848,7 +2827,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -2879,9 +2858,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Detect SAP Software Installation on an HA System with Availability Zone
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DetectSAPSoftwareInstallationOnAnHASystemWithAvailabilityZone()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_DetectInstallation_HA_AvZone.json
@@ -2925,7 +2903,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -2943,7 +2921,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -2961,7 +2939,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -2992,9 +2970,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Install SAP Software on Distributed System
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_InstallSAPSoftwareOnDistributedSystem()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Install_Distributed.json
@@ -3038,7 +3015,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "{{privateKey}}",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_E4ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_E4ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -3056,7 +3033,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "{{privateKey}}",
                         },
                     },
-                }), 2), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 2L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -3074,7 +3051,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "{{privateKey}}",
                         },
                     },
-                }), 1))
+                }), 1L))
                 {
                     IsSecondaryIPEnabled = true,
                 },
@@ -3100,9 +3077,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Install SAP Software on Single Server System
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_InstallSAPSoftwareOnSingleServerSystem()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Install_SingleServer.json
@@ -3168,9 +3144,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Register existing SAP system as Virtual Instance for SAP solutions with optional customizations.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RegisterExistingSAPSystemAsVirtualInstanceForSAPSolutionsWithOptionalCustomizations()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_Discover_CustomMrgStorageAccountName.json
@@ -3215,9 +3190,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Register existing SAP system as Virtual Instance for SAP solutions.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RegisterExistingSAPSystemAsVirtualInstanceForSAPSolutions()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Create_Discover.json
@@ -3261,9 +3235,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SAPVirtualInstances_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SAPVirtualInstancesGet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Get.json
@@ -3295,9 +3268,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SAPVirtualInstances_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_SAPVirtualInstancesGet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Get.json
@@ -3325,9 +3297,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SAPVirtualInstances_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SAPVirtualInstancesGet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_Get.json
@@ -3355,7 +3326,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -3367,9 +3338,8 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
             }
         }
 
-        // SAPVirtualInstances_ListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SAPVirtualInstancesListByResourceGroup()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPVirtualInstances_ListByResourceGroup.json
@@ -3400,7 +3370,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

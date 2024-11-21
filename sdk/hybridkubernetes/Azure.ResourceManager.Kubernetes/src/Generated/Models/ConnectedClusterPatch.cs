@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary>
         /// Describes the connected cluster resource properties that can be updated during PATCH operation.
@@ -94,6 +95,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public BinaryData Properties { get; set; }
     }
 }

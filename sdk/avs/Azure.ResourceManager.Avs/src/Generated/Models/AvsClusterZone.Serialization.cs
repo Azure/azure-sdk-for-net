@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Avs.Models
 
         void IJsonModel<AvsClusterZone>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AvsClusterZone>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AvsClusterZone)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsCollectionDefined(Hosts))
             {
                 writer.WritePropertyName("hosts"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Avs.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AvsClusterZone IJsonModel<AvsClusterZone>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

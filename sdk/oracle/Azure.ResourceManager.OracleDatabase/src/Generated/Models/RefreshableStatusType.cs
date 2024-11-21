@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(RefreshableStatusType left, RefreshableStatusType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RefreshableStatusType"/> values are not the same. </summary>
         public static bool operator !=(RefreshableStatusType left, RefreshableStatusType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RefreshableStatusType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RefreshableStatusType"/>. </summary>
         public static implicit operator RefreshableStatusType(string value) => new RefreshableStatusType(value);
 
         /// <inheritdoc />

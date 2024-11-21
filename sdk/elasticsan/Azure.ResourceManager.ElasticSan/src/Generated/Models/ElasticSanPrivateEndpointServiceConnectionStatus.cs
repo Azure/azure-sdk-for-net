@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static bool operator ==(ElasticSanPrivateEndpointServiceConnectionStatus left, ElasticSanPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticSanPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(ElasticSanPrivateEndpointServiceConnectionStatus left, ElasticSanPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ElasticSanPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticSanPrivateEndpointServiceConnectionStatus"/>. </summary>
         public static implicit operator ElasticSanPrivateEndpointServiceConnectionStatus(string value) => new ElasticSanPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc />

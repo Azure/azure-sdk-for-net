@@ -39,7 +39,7 @@ namespace Azure.AI.AnomalyDetector
         public static bool operator ==(ModelStatus left, ModelStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ModelStatus"/> values are not the same. </summary>
         public static bool operator !=(ModelStatus left, ModelStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ModelStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ModelStatus"/>. </summary>
         public static implicit operator ModelStatus(string value) => new ModelStatus(value);
 
         /// <inheritdoc />

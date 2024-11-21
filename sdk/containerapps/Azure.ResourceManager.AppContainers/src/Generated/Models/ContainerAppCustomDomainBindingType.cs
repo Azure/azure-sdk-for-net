@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static bool operator ==(ContainerAppCustomDomainBindingType left, ContainerAppCustomDomainBindingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppCustomDomainBindingType"/> values are not the same. </summary>
         public static bool operator !=(ContainerAppCustomDomainBindingType left, ContainerAppCustomDomainBindingType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerAppCustomDomainBindingType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppCustomDomainBindingType"/>. </summary>
         public static implicit operator ContainerAppCustomDomainBindingType(string value) => new ContainerAppCustomDomainBindingType(value);
 
         /// <inheritdoc />

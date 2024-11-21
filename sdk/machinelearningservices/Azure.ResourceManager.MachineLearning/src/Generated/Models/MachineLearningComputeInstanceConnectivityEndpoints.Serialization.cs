@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<MachineLearningComputeInstanceConnectivityEndpoints>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceConnectivityEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningComputeInstanceConnectivityEndpoints)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
                 if (PublicIPAddress != null)
@@ -65,7 +74,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MachineLearningComputeInstanceConnectivityEndpoints IJsonModel<MachineLearningComputeInstanceConnectivityEndpoints>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -123,6 +131,67 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningComputeInstanceConnectivityEndpoints(publicIPAddress, privateIPAddress, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicIPAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  publicIpAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicIPAddress))
+                {
+                    builder.Append("  publicIpAddress: ");
+                    if (PublicIPAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PublicIPAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PublicIPAddress}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateIPAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  privateIpAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateIPAddress))
+                {
+                    builder.Append("  privateIpAddress: ");
+                    if (PrivateIPAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrivateIPAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrivateIPAddress}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MachineLearningComputeInstanceConnectivityEndpoints>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceConnectivityEndpoints>)this).GetFormatFromOptions(options) : options.Format;
@@ -131,6 +200,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningComputeInstanceConnectivityEndpoints)} does not support writing '{options.Format}' format.");
             }

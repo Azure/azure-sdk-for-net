@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the client id. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
         /// <summary> Gets or sets the client secret. </summary>
+        [WirePath("clientSecret")]
         public string ClientSecret { get; set; }
         /// <summary> Gets or sets the tenant id. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
     }
 }

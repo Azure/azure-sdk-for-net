@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         void IJsonModel<StreamAnalyticsQueryCompilationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsQueryCompilationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
@@ -91,7 +99,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StreamAnalyticsQueryCompilationResult IJsonModel<StreamAnalyticsQueryCompilationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

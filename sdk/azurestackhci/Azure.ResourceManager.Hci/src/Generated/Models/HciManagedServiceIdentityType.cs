@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(HciManagedServiceIdentityType left, HciManagedServiceIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciManagedServiceIdentityType"/> values are not the same. </summary>
         public static bool operator !=(HciManagedServiceIdentityType left, HciManagedServiceIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HciManagedServiceIdentityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HciManagedServiceIdentityType"/>. </summary>
         public static implicit operator HciManagedServiceIdentityType(string value) => new HciManagedServiceIdentityType(value);
 
         /// <inheritdoc />

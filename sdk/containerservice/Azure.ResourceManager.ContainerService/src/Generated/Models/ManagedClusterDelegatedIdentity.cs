@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The ARM resource id of the delegated resource - internal use only. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The tenant id of the delegated resource - internal use only. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> The delegation id of the referral delegation (optional) - internal use only. </summary>
+        [WirePath("referralResource")]
         public string ReferralResource { get; set; }
         /// <summary> The source resource location - internal use only. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
     }
 }

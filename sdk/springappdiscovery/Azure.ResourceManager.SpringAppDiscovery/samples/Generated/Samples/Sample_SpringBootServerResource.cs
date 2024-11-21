@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SpringAppDiscovery.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 {
     public partial class Sample_SpringBootServerResource
     {
-        // springbootservers_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SpringbootserversGetMaximumSetGen()
         {
             // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/springbootservers_Get_MaximumSet_Gen.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // springbootservers_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SpringbootserversGetMinimumSetGen()
         {
             // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/springbootservers_Get_MinimumSet_Gen.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // springbootservers_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SpringbootserversDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/springbootservers_Delete_MaximumSet_Gen.json
@@ -105,12 +103,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // invoke the operation
             await springBootServer.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // springbootservers_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SpringbootserversDeleteMinimumSetGen()
         {
             // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/springbootservers_Delete_MinimumSet_Gen.json
@@ -133,12 +130,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // invoke the operation
             await springBootServer.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // springbootservers_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SpringbootserversUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/springbootservers_Update_MaximumSet_Gen.json
@@ -170,9 +166,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // springbootservers_Update_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SpringbootserversUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/springbootservers_Update_MinimumSet_Gen.json
@@ -204,9 +199,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // springbootservers_ListBySubscription_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSpringBootServers_SpringbootserversListBySubscriptionMaximumSetGen()
         {
             // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/springbootservers_ListBySubscription_MaximumSet_Gen.json
@@ -234,12 +228,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // springbootservers_ListBySubscription_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSpringBootServers_SpringbootserversListBySubscriptionMinimumSetGen()
         {
             // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/springbootservers_ListBySubscription_MinimumSet_Gen.json
@@ -267,7 +260,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

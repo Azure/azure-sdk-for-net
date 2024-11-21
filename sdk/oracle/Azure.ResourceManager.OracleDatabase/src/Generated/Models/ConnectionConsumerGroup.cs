@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(ConnectionConsumerGroup left, ConnectionConsumerGroup right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionConsumerGroup"/> values are not the same. </summary>
         public static bool operator !=(ConnectionConsumerGroup left, ConnectionConsumerGroup right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectionConsumerGroup"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionConsumerGroup"/>. </summary>
         public static implicit operator ConnectionConsumerGroup(string value) => new ConnectionConsumerGroup(value);
 
         /// <inheritdoc />

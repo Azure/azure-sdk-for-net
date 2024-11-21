@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(ContainerRegistrySecretObjectType left, ContainerRegistrySecretObjectType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistrySecretObjectType"/> values are not the same. </summary>
         public static bool operator !=(ContainerRegistrySecretObjectType left, ContainerRegistrySecretObjectType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerRegistrySecretObjectType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistrySecretObjectType"/>. </summary>
         public static implicit operator ContainerRegistrySecretObjectType(string value) => new ContainerRegistrySecretObjectType(value);
 
         /// <inheritdoc />

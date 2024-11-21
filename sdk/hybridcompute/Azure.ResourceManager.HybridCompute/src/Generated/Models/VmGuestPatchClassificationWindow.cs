@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(VmGuestPatchClassificationWindow left, VmGuestPatchClassificationWindow right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmGuestPatchClassificationWindow"/> values are not the same. </summary>
         public static bool operator !=(VmGuestPatchClassificationWindow left, VmGuestPatchClassificationWindow right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VmGuestPatchClassificationWindow"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VmGuestPatchClassificationWindow"/>. </summary>
         public static implicit operator VmGuestPatchClassificationWindow(string value) => new VmGuestPatchClassificationWindow(value);
 
         /// <inheritdoc />

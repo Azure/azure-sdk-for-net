@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(RoutingIdentityType left, RoutingIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoutingIdentityType"/> values are not the same. </summary>
         public static bool operator !=(RoutingIdentityType left, RoutingIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RoutingIdentityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutingIdentityType"/>. </summary>
         public static implicit operator RoutingIdentityType(string value) => new RoutingIdentityType(value);
 
         /// <inheritdoc />

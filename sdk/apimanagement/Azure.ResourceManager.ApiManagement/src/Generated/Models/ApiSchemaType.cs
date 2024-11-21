@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(ApiSchemaType left, ApiSchemaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiSchemaType"/> values are not the same. </summary>
         public static bool operator !=(ApiSchemaType left, ApiSchemaType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApiSchemaType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiSchemaType"/>. </summary>
         public static implicit operator ApiSchemaType(string value) => new ApiSchemaType(value);
 
         /// <inheritdoc />

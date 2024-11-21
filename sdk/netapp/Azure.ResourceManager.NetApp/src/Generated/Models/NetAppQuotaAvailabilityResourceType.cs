@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(NetAppQuotaAvailabilityResourceType left, NetAppQuotaAvailabilityResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppQuotaAvailabilityResourceType"/> values are not the same. </summary>
         public static bool operator !=(NetAppQuotaAvailabilityResourceType left, NetAppQuotaAvailabilityResourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppQuotaAvailabilityResourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppQuotaAvailabilityResourceType"/>. </summary>
         public static implicit operator NetAppQuotaAvailabilityResourceType(string value) => new NetAppQuotaAvailabilityResourceType(value);
 
         /// <inheritdoc />

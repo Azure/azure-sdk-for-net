@@ -34,6 +34,7 @@
     "*.user",
     ".vscode/cspell.json",
     "assets.json",
+    "eng/Packages.Data.props",
     "sdk/confidentialledger/Azure.Security.CodeTransparency/tests/TestFiles/*",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
@@ -47,49 +48,73 @@
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/Azure.ResourceManager.Monitor/api/*.cs",
-    "sdk/monitor/Microsoft.Azure.Management.Monitor/**/*.cs",
     "sdk/objectanchors/*/api/*.cs",
+    "sdk/openai/Azure.AI.OpenAI/tests/Assets/playback_test_config.json",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
     "sdk/videoanalyzer/*/api/*.cs",
     "sdk/newrelicobservability/*/api/*.cs",
-    "sdk/paloaltonetworks.ngfw/*/api/*.cs"
+    "sdk/paloaltonetworks.ngfw/*/api/*.cs",
+    "sdk/servicefabricmanagedclusters/*/api/*.cs"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
   "words": [
+    "AADDS",
+    "AADKERB",
     "apos",
     "azsdk",
     "blazor",
+    "Byok",
     "centralus",
+    "Colls",
     "contoso",
     "cpus",
     "cref",
+    "Dapr",
     "deduplication",
+    "deletesas",
     "deserializable",
     "deserializes",
     "diagnoser",
     "dicom",
+    "Diffie",
     "distro",
+    "Dmarc",
     "dont",
     "dotnetcli",
     "dtmf",
     "eastus",
     "entra",
     "epsg",
+    "Exfiltration",
     "expando",
     "fhir",
     "finalizer",
     "finalizers",
+    "Fips",
     "flac",
+    "getsas",
+    "Gmsa",
+    "GZRS",
     "hnsw",
     "ienumerable",
     "illumos",
     "imds",
+    "Inotify",
     "interventional",
     "ints",
+    "Intvl",
+    "Istio",
+    "Itsm",
+    "Keda",
+    "Kubelet",
+    "Kubenet",
     "kubernetes",
     "kusto",
+    "Kustomization",
+    "Kustomizations",
+    "listsas",
     "lucene",
     "mgmt",
     "miscs",
@@ -107,17 +132,26 @@
     "personalizer",
     "petabit",
     "picometer",
+    "Pids",
     "pkcs",
     "pstn",
+    "Puid",
     "pwsh",
+    "RAGRS",
+    "RAGZRS",
     "referer",
     "renormalize",
     "retriable",
+    "Servfail",
+    "setsas",
     "signalr",
     "signup",
     "skus",
+    "Somaxconn",
     "southcentralus",
     "structs",
+    "Sysctls",
+    "SYSLIB",
     "Uefi",
     "uints",
     "unbilled",
@@ -125,6 +159,8 @@
     "unformattable",
     "unhold",
     "uninstrumented",
+    "Unparked",
+    "Unprovisioning",
     "vcpus",
     "Vectorizable",
     "Vectorize",
@@ -135,8 +171,11 @@
     "vmss",
     "vmuuid",
     "vnet",
+    "VSTSRM",
+    "Wasi",
     "westcentralus",
     "westus",
+    "Wmem",
     "xunit"
   ],
   "overrides": [
@@ -144,6 +183,12 @@
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": [
         "warnaserror"
+      ]
+    },
+    {
+      "filename": "**/sdk/ai/**/*.cs",
+      "words": [
+        "Ubinary"
       ]
     },
     {
@@ -203,7 +248,8 @@
         "nsxt",
         "vcenter",
         "vcsa",
-        "vmotion"
+        "vmotion",
+        "Iscsi"
       ]
     },
     {
@@ -211,7 +257,17 @@
       "words": [
         "cref",
         "imds",
-        "IMDS"
+        "IMDS",
+        "Wdac",
+        "Adou",
+        "Drtm",
+        "Hvci"
+      ]
+    },
+	  {
+      "filename": "**/sdk/computefleet/**/*.cs",
+      "words": [
+        "Rdma"
       ]
     },
     {
@@ -223,6 +279,14 @@
         "Reimaging",
         "reimaging",
         "SSDLRS"
+      ]
+    },
+    {
+      "filename": "**/sdk/billing/**/*.cs",
+      "words": [
+        "puid",
+        "resellee",
+        "cnpj"
       ]
     },
     {
@@ -265,6 +329,14 @@
       ]
     },
     {
+      "filename": "**/sdk/computefleet/**/*.cs",
+      "words": [
+        "mbps",
+        "unattend",
+        "nvme"
+      ]
+    },
+    {
       "filename": "**/sdk/confidentialledger/**/*.cs",
       "words": [
         "cbor",
@@ -277,10 +349,35 @@
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
+        "armn",
+        "bangla",
+        "dbauth",
+        "ethi",
+        "gebr",
+        "geor",
+        "grek",
+        "gujr",
+        "gurmukhi",
+        "hebr",
+        "inclusivity",
+        "jpan",
+        "khmr",
+        "knda",
+        "laoo",
+        "mlym",
+        "mymr",
         "nigiri",
-        "qnas",
+        "odia",
+        "orya",
         "petabit",
-        "Picometer"
+        "picometer",
+        "qnas",
+        "regon",
+        "taml",
+        "telu",
+        "thaa",
+        "thaana",
+        "tibt"
       ]
     },
     {
@@ -380,6 +477,13 @@
       "filename": "**/sdk/datadog/**/*.cs",
       "words": [
         "liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/devopsinfrastructure/**/*.cs",
+      "words": [
+        "Reimage",
+        "Reimaging"
       ]
     },
     {
@@ -571,6 +675,17 @@
         "SSDZRS",
         "HDDLRS",
         "trino"
+      ]
+    },
+    {
+      "filename": "**/sdk/hdinsightcontainers/**/*.cs",
+      "words": [
+        "trino",
+        "flink",
+        "llap",
+        "SSDLRS",
+        "SSDZRS",
+        "HDDLRS"
       ]
     },
     {
@@ -802,6 +917,22 @@
       ]
     },
     {
+      "filename": "**/sdk/maps/Azure.Maps.TimeZone/**/*.cs",
+      "words": [
+        "Posix",
+        "posix",
+        "POSIX"
+      ]
+    },
+    {
+      "filename": "**/sdk/maps/Azure.Maps.Weather/**/*.cs",
+      "words": [
+        "Actuals",
+        "Bangla",
+        "Hecto"
+      ]
+    },
+    {
       "filename": "**/sdk/mediaservices/**/*.cs",
       "words": [
         "cabac",
@@ -868,6 +999,25 @@
       "filename": "**/sdk/networkfunction/**/*.cs",
       "words": [
         "ipfix"
+      ]
+    },
+    {
+      "filename": "**/sdk/openai/**/*",
+      "words": [
+        "AOAI",
+        "Arrr",
+        "Dall",
+        "Dalle",
+        "Dall-E",
+        "devcert",
+        "Filip",
+        "Filip's",
+        "granularities",
+        "haikus",
+        "msdocs",
+        "OpenAI",
+        "Pavleski",
+        "Tekakwitha"
       ]
     },
     {
@@ -954,6 +1104,7 @@
     {
       "filename": "**/sdk/postgresql/**/*.cs",
       "words": [
+        "awsec",
         "byok",
         "vcore",
         "vcores"
@@ -1051,6 +1202,12 @@
       ]
     },
     {
+      "filename": "**/sdk/resourcemanager/**/*.cs",
+      "words": [
+        "AZPROVISION"
+      ]
+    },
+    {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": [
         "Puid",
@@ -1145,7 +1302,8 @@
         "Puid",
         "Stix",
         "Whois",
-        "Nlstext"
+        "Nlstext",
+        "Criterias"
       ]
     },
     {
@@ -1219,7 +1377,9 @@
         "Rehydrated",
         "Undelete",
         "Aadkerb",
-        "Nfsv"
+        "Mibps",
+        "Nfsv",
+        "Sddl"
       ]
     },
     {
@@ -1434,6 +1594,16 @@
         "nfvi",
         "NFVIs",
         "nfvis"
+      ]
+    },
+    {
+      "filename": "**/sdk/healthdataaiservices/**/*",
+      "words": [
+        "Deidentification",
+        "Deidentify",
+        "Deidentified",
+        "Deid",
+        "HEALTHDATAAISERVICES"
       ]
     },
     {

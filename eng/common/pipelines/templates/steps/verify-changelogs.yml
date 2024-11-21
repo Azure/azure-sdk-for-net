@@ -1,0 +1,16 @@
+parameters:
+- name: PackagePropertiesFolder
+  type: string
+- name: Condition
+  type: string
+  default: succeeded()
+
+steps:
+  - task: Powershell@2
+    inputs:
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Verify-ChangeLogs.ps1
+      arguments: >
+        -PackagePropertiesFolder '${{ parameters.PackagePropertiesFolder }}'
+      pwsh: true
+    displayName: Verify ChangeLogEntries
+    condition: ${{ parameters.Condition }}

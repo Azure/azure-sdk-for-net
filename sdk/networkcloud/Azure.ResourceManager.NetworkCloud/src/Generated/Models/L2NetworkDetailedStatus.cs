@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(L2NetworkDetailedStatus left, L2NetworkDetailedStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="L2NetworkDetailedStatus"/> values are not the same. </summary>
         public static bool operator !=(L2NetworkDetailedStatus left, L2NetworkDetailedStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="L2NetworkDetailedStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="L2NetworkDetailedStatus"/>. </summary>
         public static implicit operator L2NetworkDetailedStatus(string value) => new L2NetworkDetailedStatus(value);
 
         /// <inheritdoc />

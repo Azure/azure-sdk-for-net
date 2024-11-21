@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(RequestSchemeOperator left, RequestSchemeOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestSchemeOperator"/> values are not the same. </summary>
         public static bool operator !=(RequestSchemeOperator left, RequestSchemeOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RequestSchemeOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RequestSchemeOperator"/>. </summary>
         public static implicit operator RequestSchemeOperator(string value) => new RequestSchemeOperator(value);
 
         /// <inheritdoc />

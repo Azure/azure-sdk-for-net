@@ -84,11 +84,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] URI of the Docker build context used to build the image. Supports blob URIs on environment creation and may return blob or Git URIs.
         /// &lt;seealso href="https://docs.docker.com/engine/reference/commandline/build/#extended-description" /&gt;
         /// </summary>
+        [WirePath("contextUri")]
         public Uri ContextUri { get; set; }
         /// <summary>
         /// Path to the Dockerfile in the build context.
         /// &lt;seealso href="https://docs.docker.com/engine/reference/builder/" /&gt;
         /// </summary>
+        [WirePath("dockerfilePath")]
         public string DockerfilePath { get; set; }
     }
 }

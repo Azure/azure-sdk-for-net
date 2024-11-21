@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         void IJsonModel<AlertProcessingRuleWeeklyRecurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AlertProcessingRuleWeeklyRecurrence)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("daysOfWeek"u8);
             writer.WriteStartArray();
             foreach (var item in DaysOfWeek)
@@ -33,34 +42,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("recurrenceType"u8);
-            writer.WriteStringValue(RecurrenceType.ToString());
-            if (Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "T");
-            }
-            if (Optional.IsDefined(EndOn))
-            {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "T");
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         AlertProcessingRuleWeeklyRecurrence IJsonModel<AlertProcessingRuleWeeklyRecurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

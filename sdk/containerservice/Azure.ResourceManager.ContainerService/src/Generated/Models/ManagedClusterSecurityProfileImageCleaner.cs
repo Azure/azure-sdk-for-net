@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable Image Cleaner on AKS cluster. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> Image Cleaner scanning interval in hours. </summary>
+        [WirePath("intervalHours")]
         public int? IntervalHours { get; set; }
     }
 }

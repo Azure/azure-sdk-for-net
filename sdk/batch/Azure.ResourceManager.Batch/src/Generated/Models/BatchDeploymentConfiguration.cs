@@ -51,19 +51,15 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchDeploymentConfiguration"/>. </summary>
-        /// <param name="cloudServiceConfiguration"> This property and virtualMachineConfiguration are mutually exclusive and one of the properties must be specified. This property cannot be specified if the Batch account was created with its poolAllocationMode property set to 'UserSubscription'. </param>
-        /// <param name="vmConfiguration"> This property and cloudServiceConfiguration are mutually exclusive and one of the properties must be specified. </param>
+        /// <param name="vmConfiguration"> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchDeploymentConfiguration(BatchCloudServiceConfiguration cloudServiceConfiguration, BatchVmConfiguration vmConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchDeploymentConfiguration(BatchVmConfiguration vmConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CloudServiceConfiguration = cloudServiceConfiguration;
             VmConfiguration = vmConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> This property and virtualMachineConfiguration are mutually exclusive and one of the properties must be specified. This property cannot be specified if the Batch account was created with its poolAllocationMode property set to 'UserSubscription'. </summary>
-        public BatchCloudServiceConfiguration CloudServiceConfiguration { get; set; }
-        /// <summary> This property and cloudServiceConfiguration are mutually exclusive and one of the properties must be specified. </summary>
+        /// <summary> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </summary>
         public BatchVmConfiguration VmConfiguration { get; set; }
     }
 }

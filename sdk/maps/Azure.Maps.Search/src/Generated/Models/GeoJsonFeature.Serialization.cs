@@ -5,50 +5,33 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonFeature : IUtf8JsonSerializable
+    internal partial class GeoJsonFeature
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue(Geometry);
-            if (Common.Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<object>(Properties);
-            }
-            if (Common.Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Common.Optional.IsDefined(FeatureType))
-            {
-                writer.WritePropertyName("featureType"u8);
-                writer.WriteStringValue(FeatureType);
-            }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonFeature DeserializeGeoJsonFeature(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Boundary": return BoundaryInternal.DeserializeBoundaryInternal(element);
+                }
+            }
             GeoJsonGeometry geometry = default;
             object properties = default;
             string id = default;
             string featureType = default;
-            GeoJsonObjectType type = default;
+            GeoJsonObjectType type = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
+            IReadOnlyList<double> bbox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("geometry"u8))
@@ -77,11 +60,31 @@ namespace Azure.Maps.Search.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString().ToGeoJsonObjectType();
+                    type = new GeoJsonObjectType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("bbox"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<double> array = new List<double>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetDouble());
+                    }
+                    bbox = array;
                     continue;
                 }
             }
-            return new GeoJsonFeature(type, geometry, properties, id, featureType);
+            return new GeoJsonFeature(
+                type,
+                bbox ?? new ChangeTrackingList<double>(),
+                geometry,
+                properties,
+                id,
+                featureType);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
@@ -90,14 +93,6 @@ namespace Azure.Maps.Search.Models
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeGeoJsonFeature(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(ApiManagementNatGatewayState left, ApiManagementNatGatewayState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiManagementNatGatewayState"/> values are not the same. </summary>
         public static bool operator !=(ApiManagementNatGatewayState left, ApiManagementNatGatewayState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApiManagementNatGatewayState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiManagementNatGatewayState"/>. </summary>
         public static implicit operator ApiManagementNatGatewayState(string value) => new ApiManagementNatGatewayState(value);
 
         /// <inheritdoc />

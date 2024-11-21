@@ -1,4 +1,9 @@
-﻿{
+﻿{    
+    "tags": {
+        "key1": "value1",
+        "key2": "value2"
+    },
+    "location": "eastus",
     "plan": {
         "name": "NameForPlan",
         "publisher": "PublisherForPlan",
@@ -15,10 +20,5 @@
         "family": "FamilyForSku",
         "model": "ModelForSku",
         "capacity": 15464547
-    },
-    "tags": {
-        "key1": "value1",
-        "key2": "value2"
-    },
-    "location": "eastus"
+    }
 }

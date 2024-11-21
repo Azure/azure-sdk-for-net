@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(BatchNodeFillType left, BatchNodeFillType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchNodeFillType"/> values are not the same. </summary>
         public static bool operator !=(BatchNodeFillType left, BatchNodeFillType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchNodeFillType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchNodeFillType"/>. </summary>
         public static implicit operator BatchNodeFillType(string value) => new BatchNodeFillType(value);
 
         /// <inheritdoc />

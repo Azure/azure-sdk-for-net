@@ -72,10 +72,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// Type of the custom scale rule
         /// eg: azure-servicebus, redis etc.
         /// </summary>
+        [WirePath("type")]
         public string CustomScaleRuleType { get; set; }
         /// <summary> Metadata properties to describe custom scale rule. </summary>
+        [WirePath("metadata")]
         public IDictionary<string, string> Metadata { get; }
         /// <summary> Authentication secrets for the custom scale rule. </summary>
+        [WirePath("auth")]
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
     }
 }

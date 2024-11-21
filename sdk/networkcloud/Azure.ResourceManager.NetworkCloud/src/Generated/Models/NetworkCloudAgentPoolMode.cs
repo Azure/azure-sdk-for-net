@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(NetworkCloudAgentPoolMode left, NetworkCloudAgentPoolMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkCloudAgentPoolMode"/> values are not the same. </summary>
         public static bool operator !=(NetworkCloudAgentPoolMode left, NetworkCloudAgentPoolMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkCloudAgentPoolMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkCloudAgentPoolMode"/>. </summary>
         public static implicit operator NetworkCloudAgentPoolMode(string value) => new NetworkCloudAgentPoolMode(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(DynamicThresholdOperator left, DynamicThresholdOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicThresholdOperator"/> values are not the same. </summary>
         public static bool operator !=(DynamicThresholdOperator left, DynamicThresholdOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DynamicThresholdOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynamicThresholdOperator"/>. </summary>
         public static implicit operator DynamicThresholdOperator(string value) => new DynamicThresholdOperator(value);
 
         /// <inheritdoc />

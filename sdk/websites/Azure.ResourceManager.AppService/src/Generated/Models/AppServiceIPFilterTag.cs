@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(AppServiceIPFilterTag left, AppServiceIPFilterTag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServiceIPFilterTag"/> values are not the same. </summary>
         public static bool operator !=(AppServiceIPFilterTag left, AppServiceIPFilterTag right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppServiceIPFilterTag"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceIPFilterTag"/>. </summary>
         public static implicit operator AppServiceIPFilterTag(string value) => new AppServiceIPFilterTag(value);
 
         /// <inheritdoc />

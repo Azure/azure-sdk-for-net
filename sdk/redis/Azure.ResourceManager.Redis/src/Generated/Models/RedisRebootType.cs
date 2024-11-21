@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Redis.Models
         public static bool operator ==(RedisRebootType left, RedisRebootType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisRebootType"/> values are not the same. </summary>
         public static bool operator !=(RedisRebootType left, RedisRebootType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedisRebootType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisRebootType"/>. </summary>
         public static implicit operator RedisRebootType(string value) => new RedisRebootType(value);
 
         /// <inheritdoc />

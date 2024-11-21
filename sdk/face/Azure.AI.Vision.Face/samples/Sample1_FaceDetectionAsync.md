@@ -37,7 +37,7 @@ foreach (var detectedFace in detectedFaces)
 {
     Console.WriteLine($"Face Rectangle: left={detectedFace.FaceRectangle.Left}, top={detectedFace.FaceRectangle.Top}, width={detectedFace.FaceRectangle.Width}, height={detectedFace.FaceRectangle.Height}");
     Console.WriteLine($"Head pose: pitch={detectedFace.FaceAttributes.HeadPose.Pitch}, roll={detectedFace.FaceAttributes.HeadPose.Roll}, yaw={detectedFace.FaceAttributes.HeadPose.Yaw}");
-    Console.WriteLine($"Mask: {detectedFace.FaceAttributes.Mask}");
+    Console.WriteLine($"Mask: NoseAndMouthCovered={detectedFace.FaceAttributes.Mask.NoseAndMouthCovered}, Type={detectedFace.FaceAttributes.Mask.Type}");
     Console.WriteLine($"Quality: {detectedFace.FaceAttributes.QualityForRecognition}");
     Console.WriteLine($"Recognition model: {detectedFace.RecognitionModel}");
     Console.WriteLine($"Landmarks: ");

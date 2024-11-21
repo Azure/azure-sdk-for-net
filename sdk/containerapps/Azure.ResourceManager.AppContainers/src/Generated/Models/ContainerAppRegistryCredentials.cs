@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Container Registry Server. </summary>
+        [WirePath("server")]
         public string Server { get; set; }
         /// <summary> Container Registry Username. </summary>
+        [WirePath("username")]
         public string Username { get; set; }
         /// <summary> The name of the Secret that contains the registry login password. </summary>
+        [WirePath("passwordSecretRef")]
         public string PasswordSecretRef { get; set; }
         /// <summary> A Managed Identity to use to authenticate with Azure Container Registry. For user-assigned identities, use the full user-assigned identity Resource ID. For system-assigned identities, use 'system'. </summary>
+        [WirePath("identity")]
         public string Identity { get; set; }
     }
 }

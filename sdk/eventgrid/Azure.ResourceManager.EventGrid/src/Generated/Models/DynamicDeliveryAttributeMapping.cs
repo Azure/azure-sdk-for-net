@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> JSON path in the event which contains attribute value. </summary>
+        [WirePath("properties.sourceField")]
         public string SourceField { get; set; }
     }
 }

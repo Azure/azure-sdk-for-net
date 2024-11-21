@@ -87,32 +87,41 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Indicate if Topic Spaces Configuration is enabled for the namespace. Default is Disabled. </summary>
+        [WirePath("state")]
         public TopicSpacesConfigurationState? State { get; set; }
         /// <summary>
         /// Fully qualified Azure Resource Id for the Event Grid Topic to which events will be routed to from TopicSpaces under a namespace.
         /// This property should be in the following format '/subscriptions/{subId}/resourcegroups/{resourceGroupName}/providers/microsoft.EventGrid/topics/{topicName}'.
         /// This topic should reside in the same region where namespace is located.
         /// </summary>
+        [WirePath("routeTopicResourceId")]
         public string RouteTopicResourceId { get; set; }
         /// <summary> The endpoint for the topic spaces configuration. This is a read-only property. </summary>
+        [WirePath("hostname")]
         public string Hostname { get; }
         /// <summary> Routing enrichments for topic spaces configuration. </summary>
+        [WirePath("routingEnrichments")]
         public RoutingEnrichments RoutingEnrichments { get; set; }
         /// <summary> Client authentication settings for topic spaces configuration. </summary>
+        [WirePath("clientAuthentication")]
         public ClientAuthenticationSettings ClientAuthentication { get; set; }
         /// <summary>
         /// The maximum session expiry in hours. The property default value is 1 hour.
         /// Min allowed value is 1 hour and max allowed value is 8 hours.
         /// </summary>
+        [WirePath("maximumSessionExpiryInHours")]
         public int? MaximumSessionExpiryInHours { get; set; }
         /// <summary>
         /// The maximum number of sessions per authentication name. The property default value is 1.
         /// Min allowed value is 1 and max allowed value is 100.
         /// </summary>
+        [WirePath("maximumClientSessionsPerAuthenticationName")]
         public int? MaximumClientSessionsPerAuthenticationName { get; set; }
         /// <summary> Routing identity info for topic spaces configuration. </summary>
+        [WirePath("routingIdentityInfo")]
         public RoutingIdentityInfo RoutingIdentityInfo { get; set; }
         /// <summary> List of custom domain configurations for the namespace. </summary>
+        [WirePath("customDomains")]
         public IList<CustomDomainConfiguration> CustomDomains { get; }
     }
 }

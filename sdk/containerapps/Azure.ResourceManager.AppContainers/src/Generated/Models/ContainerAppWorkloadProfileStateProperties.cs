@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Minimum count of instances. </summary>
+        [WirePath("minimumCount")]
         public int? MinimumCount { get; set; }
         /// <summary> Maximum count of nodes. </summary>
+        [WirePath("maximumCount")]
         public int? MaximumCount { get; set; }
         /// <summary> Current count of nodes. </summary>
+        [WirePath("currentCount")]
         public int? CurrentCount { get; set; }
     }
 }

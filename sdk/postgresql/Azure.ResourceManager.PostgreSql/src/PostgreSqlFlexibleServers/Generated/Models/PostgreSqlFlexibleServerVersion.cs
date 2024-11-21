@@ -22,16 +22,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string SixteenValue = "16";
         private const string Ver15Value = "15";
         private const string Ver14Value = "14";
         private const string Ver13Value = "13";
         private const string Ver12Value = "12";
         private const string Ver11Value = "11";
+
+        /// <summary> 16. </summary>
+        public static PostgreSqlFlexibleServerVersion Sixteen { get; } = new PostgreSqlFlexibleServerVersion(SixteenValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerVersion"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerVersion left, PostgreSqlFlexibleServerVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerVersion"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerVersion left, PostgreSqlFlexibleServerVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerVersion"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerVersion(string value) => new PostgreSqlFlexibleServerVersion(value);
 
         /// <inheritdoc />

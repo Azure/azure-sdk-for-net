@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HybridContainerService.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridContainerService.Samples
 {
     public partial class Sample_HybridContainerServiceVirtualNetworkResource
     {
-        // GetVirtualNetwork
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetwork()
         {
             // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/GetVirtualNetwork.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteVirtualNetwork
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteVirtualNetwork()
         {
             // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/DeleteVirtualNetwork.json
@@ -71,12 +70,11 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
             // invoke the operation
             await hybridContainerServiceVirtualNetwork.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // UpdateVirtualNetwork
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateVirtualNetwork()
         {
             // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/UpdateVirtualNetwork.json
@@ -113,9 +111,8 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ListVirtualNetworkBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHybridContainerServiceVirtualNetworks_ListVirtualNetworkBySubscription()
         {
             // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/ListVirtualNetworkBySubscription.json
@@ -142,7 +139,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

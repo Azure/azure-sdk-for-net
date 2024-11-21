@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             _genericResourceCollection = Client.GetGenericResources();
             subscription = await Client.GetDefaultSubscriptionAsync();
-            location = AzureLocation.EastUS;
+            location = AzureLocation.EastAsia;
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgName, AzureLocation location)

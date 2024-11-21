@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Plugin certificates information for Service Mesh. </summary>
+        [WirePath("plugin")]
         public IstioPluginCertificateAuthority Plugin { get; set; }
     }
 }

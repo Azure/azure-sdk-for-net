@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(MaintenancePatchingMode left, MaintenancePatchingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaintenancePatchingMode"/> values are not the same. </summary>
         public static bool operator !=(MaintenancePatchingMode left, MaintenancePatchingMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MaintenancePatchingMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MaintenancePatchingMode"/>. </summary>
         public static implicit operator MaintenancePatchingMode(string value) => new MaintenancePatchingMode(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Models
         public static bool operator ==(SemanticErrorMode left, SemanticErrorMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SemanticErrorMode"/> values are not the same. </summary>
         public static bool operator !=(SemanticErrorMode left, SemanticErrorMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SemanticErrorMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SemanticErrorMode"/>. </summary>
         public static implicit operator SemanticErrorMode(string value) => new SemanticErrorMode(value);
 
         /// <inheritdoc />

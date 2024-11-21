@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(ClientPortOperator left, ClientPortOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClientPortOperator"/> values are not the same. </summary>
         public static bool operator !=(ClientPortOperator left, ClientPortOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClientPortOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClientPortOperator"/>. </summary>
         public static implicit operator ClientPortOperator(string value) => new ClientPortOperator(value);
 
         /// <inheritdoc />

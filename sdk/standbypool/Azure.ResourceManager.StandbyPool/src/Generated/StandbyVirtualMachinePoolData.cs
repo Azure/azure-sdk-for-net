@@ -64,17 +64,11 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="elasticityProfile"> Specifies the elasticity profile of the standby virtual machine pools. </param>
-        /// <param name="virtualMachineState"> Specifies the desired state of virtual machines in the pool. </param>
-        /// <param name="attachedVirtualMachineScaleSetId"> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StandbyVirtualMachinePoolElasticityProfile elasticityProfile, StandbyVirtualMachineState? virtualMachineState, ResourceIdentifier attachedVirtualMachineScaleSetId, StandbyPoolProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal StandbyVirtualMachinePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StandbyVirtualMachinePoolProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            ElasticityProfile = elasticityProfile;
-            VirtualMachineState = virtualMachineState;
-            AttachedVirtualMachineScaleSetId = attachedVirtualMachineScaleSetId;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,23 +77,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
         }
 
-        /// <summary> Specifies the elasticity profile of the standby virtual machine pools. </summary>
-        internal StandbyVirtualMachinePoolElasticityProfile ElasticityProfile { get; set; }
-        /// <summary> Specifies maximum number of virtual machines in the standby virtual machine pool. </summary>
-        public long? ElasticityMaxReadyCapacity
-        {
-            get => ElasticityProfile is null ? default(long?) : ElasticityProfile.MaxReadyCapacity;
-            set
-            {
-                ElasticityProfile = value.HasValue ? new StandbyVirtualMachinePoolElasticityProfile(value.Value) : null;
-            }
-        }
-
-        /// <summary> Specifies the desired state of virtual machines in the pool. </summary>
-        public StandbyVirtualMachineState? VirtualMachineState { get; set; }
-        /// <summary> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </summary>
-        public ResourceIdentifier AttachedVirtualMachineScaleSetId { get; set; }
-        /// <summary> The status of the last operation. </summary>
-        public StandbyPoolProvisioningState? ProvisioningState { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public StandbyVirtualMachinePoolProperties Properties { get; set; }
     }
 }

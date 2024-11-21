@@ -173,8 +173,9 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="scalingProperties"> Information on how the deployment will be scaled. </param>
         /// <param name="upgradeChannel"> Autoupgrade settings of a deployment. </param>
         /// <param name="userPreferredEmail"></param>
+        /// <param name="nginxAppProtect"> Settings for NGINX App Protect (NAP). </param>
         /// <returns> A new <see cref="Models.NginxDeploymentProperties"/> instance for mocking. </returns>
-        public static NginxDeploymentProperties NginxDeploymentProperties(NginxProvisioningState? provisioningState = null, string nginxVersion = null, string managedResourceGroup = null, NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = null, NginxStorageAccount loggingStorageAccount = null, NginxDeploymentScalingProperties scalingProperties = null, string upgradeChannel = null, string userPreferredEmail = null)
+        public static NginxDeploymentProperties NginxDeploymentProperties(NginxProvisioningState? provisioningState = null, string nginxVersion = null, string managedResourceGroup = null, NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = null, NginxStorageAccount loggingStorageAccount = null, NginxDeploymentScalingProperties scalingProperties = null, string upgradeChannel = null, string userPreferredEmail = null, NginxDeploymentPropertiesNginxAppProtect nginxAppProtect = null)
         {
             return new NginxDeploymentProperties(
                 provisioningState,
@@ -187,7 +188,46 @@ namespace Azure.ResourceManager.Nginx.Models
                 scalingProperties,
                 upgradeChannel != null ? new AutoUpgradeProfile(upgradeChannel, serializedAdditionalRawData: null) : null,
                 userPreferredEmail != null ? new NginxDeploymentUserProfile(userPreferredEmail, serializedAdditionalRawData: null) : null,
+                nginxAppProtect,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NginxDeploymentPropertiesNginxAppProtect"/>. </summary>
+        /// <param name="webApplicationFirewallActivationState"> Settings for the NGINX App Protect Web Application Firewall (WAF). </param>
+        /// <param name="webApplicationFirewallStatus"> The status of the NGINX App Protect Web Application Firewall. </param>
+        /// <returns> A new <see cref="Models.NginxDeploymentPropertiesNginxAppProtect"/> instance for mocking. </returns>
+        public static NginxDeploymentPropertiesNginxAppProtect NginxDeploymentPropertiesNginxAppProtect(WebApplicationFirewallActivationState? webApplicationFirewallActivationState = null, WebApplicationFirewallStatus webApplicationFirewallStatus = null)
+        {
+            return new NginxDeploymentPropertiesNginxAppProtect(webApplicationFirewallActivationState != null ? new WebApplicationFirewallSettings(webApplicationFirewallActivationState, serializedAdditionalRawData: null) : null, webApplicationFirewallStatus, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WebApplicationFirewallStatus"/>. </summary>
+        /// <param name="attackSignaturesPackage"> Package containing attack signatures for the NGINX App Protect Web Application Firewall (WAF). </param>
+        /// <param name="botSignaturesPackage"> Package containing bot signatures for the NGINX App Protect Web Application Firewall (WAF). </param>
+        /// <param name="threatCampaignsPackage"> Package containing threat campaigns for the NGINX App Protect Web Application Firewall (WAF). </param>
+        /// <param name="componentVersions"> Versions of the NGINX App Protect Web Application Firewall (WAF) components. </param>
+        /// <returns> A new <see cref="Models.WebApplicationFirewallStatus"/> instance for mocking. </returns>
+        public static WebApplicationFirewallStatus WebApplicationFirewallStatus(WebApplicationFirewallPackage attackSignaturesPackage = null, WebApplicationFirewallPackage botSignaturesPackage = null, WebApplicationFirewallPackage threatCampaignsPackage = null, WebApplicationFirewallComponentVersions componentVersions = null)
+        {
+            return new WebApplicationFirewallStatus(attackSignaturesPackage, botSignaturesPackage, threatCampaignsPackage, componentVersions, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WebApplicationFirewallPackage"/>. </summary>
+        /// <param name="version"> The version of the NGINX App Protect Web Application Firewall (WAF) package. </param>
+        /// <param name="revisionDatetime"> The date and time of the package revision. </param>
+        /// <returns> A new <see cref="Models.WebApplicationFirewallPackage"/> instance for mocking. </returns>
+        public static WebApplicationFirewallPackage WebApplicationFirewallPackage(string version = null, DateTimeOffset revisionDatetime = default)
+        {
+            return new WebApplicationFirewallPackage(version, revisionDatetime, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WebApplicationFirewallComponentVersions"/>. </summary>
+        /// <param name="wafEngineVersion"> The version of the NGINX App Protect Web Application Firewall (WAF) engine. </param>
+        /// <param name="wafNginxVersion"> The version of the NGINX App Protect Web Application Firewall (WAF) module for NGINX. </param>
+        /// <returns> A new <see cref="Models.WebApplicationFirewallComponentVersions"/> instance for mocking. </returns>
+        public static WebApplicationFirewallComponentVersions WebApplicationFirewallComponentVersions(string wafEngineVersion = null, string wafNginxVersion = null)
+        {
+            return new WebApplicationFirewallComponentVersions(wafEngineVersion, wafNginxVersion, serializedAdditionalRawData: null);
         }
     }
 }

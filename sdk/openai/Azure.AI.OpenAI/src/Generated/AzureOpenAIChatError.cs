@@ -40,8 +40,7 @@ namespace Azure.AI.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIChatError"/>. </summary>
         internal AzureOpenAIChatError()
         {
@@ -61,7 +60,7 @@ namespace Azure.AI.OpenAI
             Param = param;
             Type = type;
             InnerError = innerError;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The distinct, machine-generated identifier for the error. </summary>

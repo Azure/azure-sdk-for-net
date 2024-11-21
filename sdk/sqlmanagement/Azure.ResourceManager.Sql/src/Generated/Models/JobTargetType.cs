@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(JobTargetType left, JobTargetType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobTargetType"/> values are not the same. </summary>
         public static bool operator !=(JobTargetType left, JobTargetType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobTargetType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobTargetType"/>. </summary>
         public static implicit operator JobTargetType(string value) => new JobTargetType(value);
 
         /// <inheritdoc />

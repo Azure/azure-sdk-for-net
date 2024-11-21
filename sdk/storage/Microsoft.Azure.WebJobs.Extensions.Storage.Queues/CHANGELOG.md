@@ -10,12 +10,24 @@
 
 ### Other Changes
 
+## 5.3.3 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 5.3.2 (2024-09-19)
+
+### Bugs Fixed
+- When grabbing Queue Metrics for amount of messages, will now use the QueueTriggerMetrics.QueueLength instead of the ApproximateMessagesCount for less stale metrics.
+
+### Other Changes
+- Improvement in logging exceptions when retrieving queue metrics.
+
 ## 5.3.1 (2024-07-17)
 
 ### Bugs Fixed
 - Rely on PeekMessagesAsync when calculating message queue length
 - Fixing target base scale instance concurrency for queues
-- When grabbing Queue Metrics for amount of messages, will now use the QueueTriggerMetrics.QueueLength instead of the ApproximateMessagesCount for less stale metrics.
 
 ## 5.3.0 (2024-04-18)
 - Includes all features from 5.3.0-beta.1.

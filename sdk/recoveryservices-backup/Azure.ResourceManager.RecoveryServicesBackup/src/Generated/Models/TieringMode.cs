@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(TieringMode left, TieringMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TieringMode"/> values are not the same. </summary>
         public static bool operator !=(TieringMode left, TieringMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TieringMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TieringMode"/>. </summary>
         public static implicit operator TieringMode(string value) => new TieringMode(value);
 
         /// <inheritdoc />

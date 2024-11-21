@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The IP tag type. Example: RoutingPreference. </summary>
+        [WirePath("ipTagType")]
         public string IPTagType { get; set; }
         /// <summary> The value of the IP tag associated with the public IP. Example: Internet. </summary>
+        [WirePath("tag")]
         public string Tag { get; set; }
     }
 }

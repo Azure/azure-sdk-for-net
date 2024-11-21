@@ -46,22 +46,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
-        /// <param name="upgradeType">
-        /// The upgrade type.
-        /// Full requires the KubernetesVersion property to be set.
-        /// NodeImageOnly requires the KubernetesVersion property not to be set.
-        /// </param>
+        /// <param name="upgradeType"> ManagedClusterUpgradeType is the type of upgrade to be applied. </param>
         public ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType)
         {
             UpgradeType = upgradeType;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
-        /// <param name="upgradeType">
-        /// The upgrade type.
-        /// Full requires the KubernetesVersion property to be set.
-        /// NodeImageOnly requires the KubernetesVersion property not to be set.
-        /// </param>
+        /// <param name="upgradeType"> ManagedClusterUpgradeType is the type of upgrade to be applied. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version to upgrade the member clusters to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType, string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -76,11 +68,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         {
         }
 
-        /// <summary>
-        /// The upgrade type.
-        /// Full requires the KubernetesVersion property to be set.
-        /// NodeImageOnly requires the KubernetesVersion property not to be set.
-        /// </summary>
+        /// <summary> ManagedClusterUpgradeType is the type of upgrade to be applied. </summary>
         public ContainerServiceFleetManagedClusterUpgradeType UpgradeType { get; set; }
         /// <summary> The Kubernetes version to upgrade the member clusters to. </summary>
         public string KubernetesVersion { get; set; }

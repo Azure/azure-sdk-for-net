@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(ContainerRegistryIPRuleAction left, ContainerRegistryIPRuleAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryIPRuleAction"/> values are not the same. </summary>
         public static bool operator !=(ContainerRegistryIPRuleAction left, ContainerRegistryIPRuleAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerRegistryIPRuleAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryIPRuleAction"/>. </summary>
         public static implicit operator ContainerRegistryIPRuleAction(string value) => new ContainerRegistryIPRuleAction(value);
 
         /// <inheritdoc />

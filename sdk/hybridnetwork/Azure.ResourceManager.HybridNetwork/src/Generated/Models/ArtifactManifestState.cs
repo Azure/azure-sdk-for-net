@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static bool operator ==(ArtifactManifestState left, ArtifactManifestState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArtifactManifestState"/> values are not the same. </summary>
         public static bool operator !=(ArtifactManifestState left, ArtifactManifestState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ArtifactManifestState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ArtifactManifestState"/>. </summary>
         public static implicit operator ArtifactManifestState(string value) => new ArtifactManifestState(value);
 
         /// <inheritdoc />

@@ -46,7 +46,7 @@ namespace Azure.Developer.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevBoxStorageProfile"/>. </summary>
-        internal DevBoxStorageProfile()
+        public DevBoxStorageProfile()
         {
         }
 
@@ -60,6 +60,6 @@ namespace Azure.Developer.DevCenter.Models
         }
 
         /// <summary> Settings for the operating system disk. </summary>
-        public OSDisk OSDisk { get; }
+        public OSDisk OSDisk { get; set; }
     }
 }

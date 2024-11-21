@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static bool operator ==(ImportStatusType left, ImportStatusType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImportStatusType"/> values are not the same. </summary>
         public static bool operator !=(ImportStatusType left, ImportStatusType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ImportStatusType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImportStatusType"/>. </summary>
         public static implicit operator ImportStatusType(string value) => new ImportStatusType(value);
 
         /// <inheritdoc />

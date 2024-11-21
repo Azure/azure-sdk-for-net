@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static bool operator ==(ContainerGroupRestartPolicy left, ContainerGroupRestartPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerGroupRestartPolicy"/> values are not the same. </summary>
         public static bool operator !=(ContainerGroupRestartPolicy left, ContainerGroupRestartPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerGroupRestartPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerGroupRestartPolicy"/>. </summary>
         public static implicit operator ContainerGroupRestartPolicy(string value) => new ContainerGroupRestartPolicy(value);
 
         /// <inheritdoc />

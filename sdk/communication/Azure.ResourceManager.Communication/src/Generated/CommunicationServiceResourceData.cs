@@ -93,20 +93,28 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public CommunicationServicesProvisioningState? ProvisioningState { get; }
         /// <summary> FQDN of the CommunicationService instance. </summary>
+        [WirePath("properties.hostName")]
         public string HostName { get; }
         /// <summary> The location where the communication service stores its data at rest. </summary>
+        [WirePath("properties.dataLocation")]
         public string DataLocation { get; set; }
         /// <summary> Resource ID of an Azure Notification Hub linked to this resource. </summary>
+        [WirePath("properties.notificationHubId")]
         public ResourceIdentifier NotificationHubId { get; }
         /// <summary> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </summary>
+        [WirePath("properties.version")]
         public string Version { get; }
         /// <summary> The immutable resource Id of the communication service. </summary>
+        [WirePath("properties.immutableResourceId")]
         public Guid? ImmutableResourceId { get; }
         /// <summary> List of email Domain resource Ids. </summary>
+        [WirePath("properties.linkedDomains")]
         public IList<string> LinkedDomains { get; }
     }
 }

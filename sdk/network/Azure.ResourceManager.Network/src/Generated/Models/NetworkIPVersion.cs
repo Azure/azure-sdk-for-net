@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(NetworkIPVersion left, NetworkIPVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkIPVersion"/> values are not the same. </summary>
         public static bool operator !=(NetworkIPVersion left, NetworkIPVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkIPVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkIPVersion"/>. </summary>
         public static implicit operator NetworkIPVersion(string value) => new NetworkIPVersion(value);
 
         /// <inheritdoc />

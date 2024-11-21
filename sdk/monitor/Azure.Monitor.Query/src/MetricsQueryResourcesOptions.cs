@@ -14,9 +14,10 @@ namespace Azure.Monitor.Query
     public class MetricsQueryResourcesOptions
     {
         /// <summary>
-        /// Gets or sets the timespan over which the metric will be queried.
+        /// Gets or sets the timespan over which the metric will be queried. If only the starttime is set, the endtime default becomes the current time. When the endtime is specified, the starttime is necessary as well. Duration is disregarded.
         /// </summary>
         [CodeGenMember("TimeSpan")]
+        // TODO: https://github.com/Azure/azure-sdk-for-net/issues/46454
         public QueryTimeRange? TimeRange { get; set; }
 
         /// <summary>

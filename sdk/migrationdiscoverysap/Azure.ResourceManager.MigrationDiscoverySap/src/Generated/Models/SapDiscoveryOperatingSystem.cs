@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public static bool operator ==(SapDiscoveryOperatingSystem left, SapDiscoveryOperatingSystem right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapDiscoveryOperatingSystem"/> values are not the same. </summary>
         public static bool operator !=(SapDiscoveryOperatingSystem left, SapDiscoveryOperatingSystem right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapDiscoveryOperatingSystem"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapDiscoveryOperatingSystem"/>. </summary>
         public static implicit operator SapDiscoveryOperatingSystem(string value) => new SapDiscoveryOperatingSystem(value);
 
         /// <inheritdoc />

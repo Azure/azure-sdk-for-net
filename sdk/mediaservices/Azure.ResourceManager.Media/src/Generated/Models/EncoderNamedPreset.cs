@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(EncoderNamedPreset left, EncoderNamedPreset right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EncoderNamedPreset"/> values are not the same. </summary>
         public static bool operator !=(EncoderNamedPreset left, EncoderNamedPreset right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EncoderNamedPreset"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EncoderNamedPreset"/>. </summary>
         public static implicit operator EncoderNamedPreset(string value) => new EncoderNamedPreset(value);
 
         /// <inheritdoc />

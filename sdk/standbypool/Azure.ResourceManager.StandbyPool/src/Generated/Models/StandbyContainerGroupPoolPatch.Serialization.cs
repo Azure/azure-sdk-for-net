@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         void IJsonModel<StandbyContainerGroupPoolPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StandbyContainerGroupPoolPatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -37,19 +45,11 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ElasticityProfile))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("elasticityProfile"u8);
-                writer.WriteObjectValue(ElasticityProfile, options);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(ContainerGroupProperties))
-            {
-                writer.WritePropertyName("containerGroupProperties"u8);
-                writer.WriteObjectValue(ContainerGroupProperties, options);
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StandbyContainerGroupPoolPatch IJsonModel<StandbyContainerGroupPoolPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -89,8 +88,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            StandbyContainerGroupPoolElasticityPatchProfile elasticityProfile = default;
-            StandbyContainerGroupPatchProperties containerGroupProperties = default;
+            StandbyContainerGroupPoolUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,30 +111,9 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("elasticityProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            elasticityProfile = StandbyContainerGroupPoolElasticityPatchProfile.DeserializeStandbyContainerGroupPoolElasticityPatchProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("containerGroupProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            containerGroupProperties = StandbyContainerGroupPatchProperties.DeserializeStandbyContainerGroupPatchProperties(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    properties = StandbyContainerGroupPoolUpdateProperties.DeserializeStandbyContainerGroupPoolUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +122,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StandbyContainerGroupPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), elasticityProfile, containerGroupProperties, serializedAdditionalRawData);
+            return new StandbyContainerGroupPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StandbyContainerGroupPoolPatch>.Write(ModelReaderWriterOptions options)

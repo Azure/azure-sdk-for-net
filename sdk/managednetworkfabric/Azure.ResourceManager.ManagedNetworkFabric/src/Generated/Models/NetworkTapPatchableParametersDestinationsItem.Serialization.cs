@@ -19,54 +19,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         void IJsonModel<NetworkTapPatchableParametersDestinationsItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTapPatchableParametersDestinationsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkTapPatchableParametersDestinationsItem)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(DestinationType))
-            {
-                writer.WritePropertyName("destinationType"u8);
-                writer.WriteStringValue(DestinationType.Value.ToString());
-            }
-            if (Optional.IsDefined(DestinationId))
-            {
-                writer.WritePropertyName("destinationId"u8);
-                writer.WriteStringValue(DestinationId);
-            }
-            if (Optional.IsDefined(IsolationDomainProperties))
-            {
-                writer.WritePropertyName("isolationDomainProperties"u8);
-                writer.WriteObjectValue(IsolationDomainProperties, options);
-            }
-            if (Optional.IsDefined(DestinationTapRuleId))
-            {
-                writer.WritePropertyName("destinationTapRuleId"u8);
-                writer.WriteStringValue(DestinationTapRuleId);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         NetworkTapPatchableParametersDestinationsItem IJsonModel<NetworkTapPatchableParametersDestinationsItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

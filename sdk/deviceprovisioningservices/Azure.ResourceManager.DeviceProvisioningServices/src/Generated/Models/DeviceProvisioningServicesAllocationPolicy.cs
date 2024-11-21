@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static bool operator ==(DeviceProvisioningServicesAllocationPolicy left, DeviceProvisioningServicesAllocationPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesAllocationPolicy"/> values are not the same. </summary>
         public static bool operator !=(DeviceProvisioningServicesAllocationPolicy left, DeviceProvisioningServicesAllocationPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesAllocationPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceProvisioningServicesAllocationPolicy"/>. </summary>
         public static implicit operator DeviceProvisioningServicesAllocationPolicy(string value) => new DeviceProvisioningServicesAllocationPolicy(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator ==(EdgeOrderProductImageType left, EdgeOrderProductImageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeOrderProductImageType"/> values are not the same. </summary>
         public static bool operator !=(EdgeOrderProductImageType left, EdgeOrderProductImageType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EdgeOrderProductImageType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeOrderProductImageType"/>. </summary>
         public static implicit operator EdgeOrderProductImageType(string value) => new EdgeOrderProductImageType(value);
 
         /// <inheritdoc />

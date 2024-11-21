@@ -66,7 +66,7 @@ namespace Azure.AI.Vision.Face
         public static bool operator ==(FaceAttributeType left, FaceAttributeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FaceAttributeType"/> values are not the same. </summary>
         public static bool operator !=(FaceAttributeType left, FaceAttributeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FaceAttributeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FaceAttributeType"/>. </summary>
         public static implicit operator FaceAttributeType(string value) => new FaceAttributeType(value);
 
         /// <inheritdoc />

@@ -53,7 +53,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroups"> IpGroups associated with AzureFirewall. </param>
         /// <param name="sku"> The Azure Firewall Resource SKU. </param>
         /// <param name="additionalProperties"> The additional properties used to further config this azure firewall. </param>
-        internal AzureFirewallData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, ETag? etag, IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IList<AzureFirewallNatRuleCollectionData> natRuleCollections, IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, WritableSubResource virtualHub, WritableSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="autoscaleConfiguration"> Properties to provide a custom autoscale configuration to this azure firewall. </param>
+        internal AzureFirewallData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, ETag? etag, IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IList<AzureFirewallNatRuleCollectionData> natRuleCollections, IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, WritableSubResource virtualHub, WritableSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, AzureFirewallAutoscaleConfiguration autoscaleConfiguration) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Zones = zones;
             ETag = etag;
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.Network
             IPGroups = ipGroups;
             Sku = sku;
             AdditionalProperties = additionalProperties;
+            AutoscaleConfiguration = autoscaleConfiguration;
         }
 
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
@@ -126,5 +128,7 @@ namespace Azure.ResourceManager.Network
         public AzureFirewallSku Sku { get; set; }
         /// <summary> The additional properties used to further config this azure firewall. </summary>
         public IDictionary<string, string> AdditionalProperties { get; }
+        /// <summary> Properties to provide a custom autoscale configuration to this azure firewall. </summary>
+        public AzureFirewallAutoscaleConfiguration AutoscaleConfiguration { get; set; }
     }
 }
