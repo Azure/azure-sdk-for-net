@@ -2775,7 +2775,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.IsNotNull(connectionProperties);
             Assert.IsNotNull(connectionProperties.Value.TranscriptionSubscription);
             Assert.AreEqual(connectionProperties.Value.TranscriptionSubscription.State, TranscriptionSubscriptionState.Active);
-           
 
             //Stop Transcription
             StopTranscriptionOptions stopTranscriptionOptions = new StopTranscriptionOptions() { OperationContext = "StopTranscription" };
@@ -2789,7 +2788,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.IsNotNull(connectionProperties);
             Assert.IsNotNull(connectionProperties.Value.TranscriptionSubscription);
             Assert.AreEqual(connectionProperties.Value.TranscriptionSubscription.State, TranscriptionSubscriptionState.Inactive);
-            
 
             // try hangup
             await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
