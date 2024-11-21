@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // invoke the operation
             DefenderForStorageSettingName settingName0 = DefenderForStorageSettingName.Current;
-            DefenderForStorageSettingData data = new DefenderForStorageSettingData()
+            DefenderForStorageSettingData data = new DefenderForStorageSettingData
             {
                 IsEnabled = true,
                 IsOverrideSubscriptionLevelSettingsEnabled = true,
