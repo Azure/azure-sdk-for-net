@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using System.Reflection.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
@@ -328,11 +329,38 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         {
             Assert.NotNull(returnedResult);
             Assert.AreEqual(true, returnedResult.IsSuccess);
-            Assert.NotNull(returnedResult.SuccessResult);
-            Assert.IsNull(returnedResult.FailureResult);
-            Assert.AreEqual(expectedType, returnedResult.SuccessResult.GetType());
-            Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
-            Assert.AreEqual(expectedOperationContext, returnedResult.SuccessResult.OperationContext);
+
+            if (expectedType == typeof(PlayResumed))
+            {
+                Assert.IsNotNull(returnedResult.ResumeResult);
+                Assert.AreEqual(CallConnectionId, returnedResult.ResumeResult.CallConnectionId);
+                Assert.AreEqual(expectedOperationContext, returnedResult.ResumeResult.OperationContext);
+                return;
+            }
+
+            if (expectedType == typeof(PlayStarted))
+            {
+                Assert.IsNotNull(returnedResult.StartResult);
+                Assert.AreEqual(CallConnectionId, returnedResult.StartResult.CallConnectionId);
+                Assert.AreEqual(expectedOperationContext, returnedResult.StartResult.OperationContext);
+                return;
+            }
+
+            if (expectedType == typeof(PlayCompleted))
+            {
+                Assert.IsNotNull(returnedResult.SuccessResult);
+                Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
+                Assert.AreEqual(expectedOperationContext, returnedResult.SuccessResult.OperationContext);
+                return;
+            }
+
+            if (expectedType == typeof(PlayPaused))
+            {
+                Assert.IsNotNull(returnedResult.PauseResult);
+                Assert.AreEqual(CallConnectionId, returnedResult.PauseResult.CallConnectionId);
+                Assert.AreEqual(expectedOperationContext, returnedResult.PauseResult.OperationContext);
+                return;
+            }
         }
 
         [Test]
