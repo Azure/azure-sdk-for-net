@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.Compute.Samples
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD2SV3,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "Canonical",
                         Offer = "UbuntuServer",
@@ -61,36 +61,33 @@ namespace Azure.ResourceManager.Compute.Samples
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.PremiumLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
-                    LinuxConfiguration = new LinuxConfiguration()
+                    LinuxConfiguration = new LinuxConfiguration
                     {
                         ProvisionVmAgent = true,
-                        PatchSettings = new LinuxPatchSettings()
+                        PatchSettings = new LinuxPatchSettings
                         {
                             AssessmentMode = LinuxPatchAssessmentMode.ImageDefault,
                         },
                     },
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -129,13 +126,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD2SV3,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "Canonical",
                         Offer = "UbuntuServer",
@@ -146,25 +143,25 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.PremiumLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
-                    LinuxConfiguration = new LinuxConfiguration()
+                    LinuxConfiguration = new LinuxConfiguration
                     {
                         ProvisionVmAgent = true,
-                        PatchSettings = new LinuxPatchSettings()
+                        PatchSettings = new LinuxPatchSettings
                         {
                             PatchMode = LinuxVmGuestPatchMode.AutomaticByPlatform,
                             AssessmentMode = LinuxPatchAssessmentMode.AutomaticByPlatform,
-                            AutomaticByPlatformSettings = new LinuxVmGuestPatchAutomaticByPlatformSettings()
+                            AutomaticByPlatformSettings = new LinuxVmGuestPatchAutomaticByPlatformSettings
                             {
                                 RebootSetting = LinuxVmGuestPatchAutomaticByPlatformRebootSetting.Never,
                                 BypassPlatformSafetyChecksOnUserSchedule = true,
@@ -172,16 +169,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                         },
                     },
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -220,13 +214,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD2SV3,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "Canonical",
                         Offer = "UbuntuServer",
@@ -237,36 +231,33 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.PremiumLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
-                    LinuxConfiguration = new LinuxConfiguration()
+                    LinuxConfiguration = new LinuxConfiguration
                     {
                         ProvisionVmAgent = true,
-                        PatchSettings = new LinuxPatchSettings()
+                        PatchSettings = new LinuxPatchSettings
                         {
                             PatchMode = LinuxVmGuestPatchMode.ImageDefault,
                         },
                     },
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -305,13 +296,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD2SV3,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "Canonical",
                         Offer = "UbuntuServer",
@@ -322,37 +313,34 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.PremiumLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
-                    LinuxConfiguration = new LinuxConfiguration()
+                    LinuxConfiguration = new LinuxConfiguration
                     {
                         ProvisionVmAgent = true,
-                        PatchSettings = new LinuxPatchSettings()
+                        PatchSettings = new LinuxPatchSettings
                         {
                             PatchMode = LinuxVmGuestPatchMode.AutomaticByPlatform,
                             AssessmentMode = LinuxPatchAssessmentMode.AutomaticByPlatform,
                         },
                     },
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -391,13 +379,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         CommunityGalleryImageId = "/CommunityGalleries/galleryPublicName/Images/communityGalleryImageName/Versions/communityGalleryImageVersionName",
                     },
@@ -405,28 +393,25 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -465,13 +450,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         SharedGalleryImageUniqueId = "/SharedGalleries/sharedGalleryName/Images/sharedGalleryImageName/Versions/sharedGalleryImageVersionName",
                     },
@@ -479,28 +464,25 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -539,22 +521,22 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD4V3,
                 },
-                ScheduledEventsPolicy = new ScheduledEventsPolicy()
+                ScheduledEventsPolicy = new ScheduledEventsPolicy
                 {
-                    UserInitiatedRedeploy = new UserInitiatedRedeploy()
+                    UserInitiatedRedeploy = new UserInitiatedRedeploy
                     {
                         AutomaticallyApprove = true,
                     },
                     AutomaticallyApprove = true,
                     Enable = true,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -565,31 +547,28 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                     DiskControllerType = DiskControllerType.NVMe,
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                BootDiagnostics = new BootDiagnostics()
+                BootDiagnostics = new BootDiagnostics
                 {
                     Enabled = true,
                     StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
@@ -632,13 +611,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "{vm-name}";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("eastus2euap"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD2SV3,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -649,34 +628,31 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "vmOSdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                AdditionalCapabilities = new AdditionalCapabilities()
+                AdditionalCapabilities = new AdditionalCapabilities
                 {
                     HibernationEnabled = true,
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "{vm-name}",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                BootDiagnostics = new BootDiagnostics()
+                BootDiagnostics = new BootDiagnostics
                 {
                     Enabled = true,
                     StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
@@ -718,13 +694,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD2SV3,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -735,32 +711,29 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadOnly,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardSsdLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                SecurityProfile = new SecurityProfile()
+                SecurityProfile = new SecurityProfile
                 {
-                    ProxyAgentSettings = new ProxyAgentSettings()
+                    ProxyAgentSettings = new ProxyAgentSettings
                     {
                         Enabled = true,
                         Mode = Mode.Enforce,
@@ -803,13 +776,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD2SV3,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "windowsserver-gen2preview-preview",
@@ -820,32 +793,29 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadOnly,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardSsdLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                SecurityProfile = new SecurityProfile()
+                SecurityProfile = new SecurityProfile
                 {
-                    UefiSettings = new UefiSettings()
+                    UefiSettings = new UefiSettings
                     {
                         IsSecureBootEnabled = true,
                         IsVirtualTpmEnabled = true,
@@ -889,13 +859,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "{vm-name}";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -906,30 +876,27 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "vmOSdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "{vm-name}",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                BootDiagnostics = new BootDiagnostics()
+                BootDiagnostics = new BootDiagnostics
                 {
                     Enabled = true,
                     StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
@@ -972,18 +939,18 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD4V3,
-                    VmSizeProperties = new VirtualMachineSizeProperties()
+                    VmSizeProperties = new VirtualMachineSizeProperties
                     {
                         VCpusAvailable = 1,
                         VCpusPerCore = 1,
                     },
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -994,30 +961,27 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                BootDiagnostics = new BootDiagnostics()
+                BootDiagnostics = new BootDiagnostics
                 {
                     Enabled = true,
                     StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
@@ -1064,16 +1028,16 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myIdentity")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myIdentity")] = new UserAssignedIdentity()
 },
                 },
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD2SV3,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -1084,30 +1048,27 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadOnly,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardSsdLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                SecurityProfile = new SecurityProfile()
+                SecurityProfile = new SecurityProfile
                 {
                     UserAssignedIdentityResourceId = "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myIdentity",
                 },
@@ -1148,13 +1109,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -1165,35 +1126,31 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
                     NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,
-                    NetworkInterfaceConfigurations =
-{
-new VirtualMachineNetworkInterfaceConfiguration("{nic-config-name}")
+                    NetworkInterfaceConfigurations = {new VirtualMachineNetworkInterfaceConfiguration("{nic-config-name}")
 {
 Primary = true,
 DeleteOption = ComputeDeleteOption.Delete,
-IPConfigurations =
-{
-new VirtualMachineNetworkInterfaceIPConfiguration("{ip-config-name}")
+IPConfigurations = {new VirtualMachineNetworkInterfaceIPConfiguration("{ip-config-name}")
 {
 Primary = true,
 PublicIPAddressConfiguration = new VirtualMachinePublicIPAddressConfiguration("{publicIP-config-name}")
 {
-Sku = new ComputePublicIPAddressSku()
+Sku = new ComputePublicIPAddressSku
 {
 Name = ComputePublicIPAddressSkuName.Basic,
 Tier = ComputePublicIPAddressSkuTier.Global,
@@ -1201,10 +1158,8 @@ Tier = ComputePublicIPAddressSkuTier.Global,
 DeleteOption = ComputeDeleteOption.Detach,
 PublicIPAllocationMethod = PublicIPAllocationMethod.Static,
 },
-}
-},
-}
-},
+}},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -1243,13 +1198,13 @@ PublicIPAllocationMethod = PublicIPAllocationMethod.Static,
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -1260,35 +1215,31 @@ PublicIPAllocationMethod = PublicIPAllocationMethod.Static,
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
                     NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,
-                    NetworkInterfaceConfigurations =
-{
-new VirtualMachineNetworkInterfaceConfiguration("{nic-config-name}")
+                    NetworkInterfaceConfigurations = {new VirtualMachineNetworkInterfaceConfiguration("{nic-config-name}")
 {
 Primary = true,
 DeleteOption = ComputeDeleteOption.Delete,
-IPConfigurations =
-{
-new VirtualMachineNetworkInterfaceIPConfiguration("{ip-config-name}")
+IPConfigurations = {new VirtualMachineNetworkInterfaceIPConfiguration("{ip-config-name}")
 {
 Primary = true,
 PublicIPAddressConfiguration = new VirtualMachinePublicIPAddressConfiguration("{publicIP-config-name}")
 {
-Sku = new ComputePublicIPAddressSku()
+Sku = new ComputePublicIPAddressSku
 {
 Name = ComputePublicIPAddressSkuName.Basic,
 Tier = ComputePublicIPAddressSkuTier.Global,
@@ -1300,10 +1251,8 @@ DomainNameLabelScope = DomainNameLabelScopeType.TenantReuse,
 },
 PublicIPAllocationMethod = PublicIPAllocationMethod.Static,
 },
-}
-},
-}
-},
+}},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -1342,13 +1291,13 @@ PublicIPAllocationMethod = PublicIPAllocationMethod.Static,
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = new VirtualMachineSizeType("Standard_DC2as_v5"),
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "2019-datacenter-cvm",
@@ -1359,10 +1308,10 @@ PublicIPAllocationMethod = PublicIPAllocationMethod.Static,
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadOnly,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardSsdLrs,
-                            SecurityProfile = new VirtualMachineDiskSecurityProfile()
+                            SecurityProfile = new VirtualMachineDiskSecurityProfile
                             {
                                 SecurityEncryptionType = SecurityEncryptionType.DiskWithVmGuestState,
                                 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
@@ -1370,26 +1319,23 @@ PublicIPAllocationMethod = PublicIPAllocationMethod.Static,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                SecurityProfile = new SecurityProfile()
+                SecurityProfile = new SecurityProfile
                 {
-                    UefiSettings = new UefiSettings()
+                    UefiSettings = new UefiSettings
                     {
                         IsSecureBootEnabled = true,
                         IsVirtualTpmEnabled = true,
@@ -1433,13 +1379,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = new VirtualMachineSizeType("Standard_DC2es_v5"),
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "UbuntuServer",
                         Offer = "2022-datacenter-cvm",
@@ -1450,36 +1396,33 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadOnly,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardSsdLrs,
-                            SecurityProfile = new VirtualMachineDiskSecurityProfile()
+                            SecurityProfile = new VirtualMachineDiskSecurityProfile
                             {
                                 SecurityEncryptionType = SecurityEncryptionType.NonPersistedTPM,
                             },
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                SecurityProfile = new SecurityProfile()
+                SecurityProfile = new SecurityProfile
                 {
-                    UefiSettings = new UefiSettings()
+                    UefiSettings = new UefiSettings
                     {
                         IsSecureBootEnabled = false,
                         IsVirtualTpmEnabled = true,
@@ -1523,13 +1466,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = new VirtualMachineSizeType("Standard_DC2as_v5"),
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "2019-datacenter-cvm",
@@ -1540,36 +1483,33 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadOnly,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardSsdLrs,
-                            SecurityProfile = new VirtualMachineDiskSecurityProfile()
+                            SecurityProfile = new VirtualMachineDiskSecurityProfile
                             {
                                 SecurityEncryptionType = SecurityEncryptionType.DiskWithVmGuestState,
                             },
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                SecurityProfile = new SecurityProfile()
+                SecurityProfile = new SecurityProfile
                 {
-                    UefiSettings = new UefiSettings()
+                    UefiSettings = new UefiSettings
                     {
                         IsSecureBootEnabled = true,
                         IsVirtualTpmEnabled = true,
@@ -1613,13 +1553,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -1630,37 +1570,34 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.PremiumLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
-                    WindowsConfiguration = new WindowsConfiguration()
+                    WindowsConfiguration = new WindowsConfiguration
                     {
                         ProvisionVmAgent = true,
                         IsAutomaticUpdatesEnabled = true,
-                        PatchSettings = new PatchSettings()
+                        PatchSettings = new PatchSettings
                         {
                             AssessmentMode = WindowsPatchAssessmentMode.ImageDefault,
                         },
                     },
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -1699,13 +1636,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -1716,37 +1653,34 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.PremiumLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
-                    WindowsConfiguration = new WindowsConfiguration()
+                    WindowsConfiguration = new WindowsConfiguration
                     {
                         ProvisionVmAgent = true,
                         IsAutomaticUpdatesEnabled = true,
-                        PatchSettings = new PatchSettings()
+                        PatchSettings = new PatchSettings
                         {
                             PatchMode = WindowsVmGuestPatchMode.AutomaticByOS,
                         },
                     },
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -1785,13 +1719,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -1802,26 +1736,26 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.PremiumLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
-                    WindowsConfiguration = new WindowsConfiguration()
+                    WindowsConfiguration = new WindowsConfiguration
                     {
                         ProvisionVmAgent = true,
                         IsAutomaticUpdatesEnabled = true,
-                        PatchSettings = new PatchSettings()
+                        PatchSettings = new PatchSettings
                         {
                             PatchMode = WindowsVmGuestPatchMode.AutomaticByPlatform,
                             AssessmentMode = WindowsPatchAssessmentMode.AutomaticByPlatform,
-                            AutomaticByPlatformSettings = new WindowsVmGuestPatchAutomaticByPlatformSettings()
+                            AutomaticByPlatformSettings = new WindowsVmGuestPatchAutomaticByPlatformSettings
                             {
                                 RebootSetting = WindowsVmGuestPatchAutomaticByPlatformRebootSetting.Never,
                                 BypassPlatformSafetyChecksOnUserSchedule = false,
@@ -1829,16 +1763,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                         },
                     },
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -1877,13 +1808,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -1894,38 +1825,35 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.PremiumLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
-                    WindowsConfiguration = new WindowsConfiguration()
+                    WindowsConfiguration = new WindowsConfiguration
                     {
                         ProvisionVmAgent = true,
                         IsAutomaticUpdatesEnabled = true,
-                        PatchSettings = new PatchSettings()
+                        PatchSettings = new PatchSettings
                         {
                             PatchMode = WindowsVmGuestPatchMode.AutomaticByPlatform,
                             EnableHotpatching = true,
                         },
                     },
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -1964,13 +1892,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -1981,37 +1909,34 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.PremiumLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
-                    WindowsConfiguration = new WindowsConfiguration()
+                    WindowsConfiguration = new WindowsConfiguration
                     {
                         ProvisionVmAgent = true,
                         IsAutomaticUpdatesEnabled = true,
-                        PatchSettings = new PatchSettings()
+                        PatchSettings = new PatchSettings
                         {
                             PatchMode = WindowsVmGuestPatchMode.Manual,
                         },
                     },
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -2050,13 +1975,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -2067,38 +1992,35 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.PremiumLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
-                    WindowsConfiguration = new WindowsConfiguration()
+                    WindowsConfiguration = new WindowsConfiguration
                     {
                         ProvisionVmAgent = true,
                         IsAutomaticUpdatesEnabled = true,
-                        PatchSettings = new PatchSettings()
+                        PatchSettings = new PatchSettings
                         {
                             PatchMode = WindowsVmGuestPatchMode.AutomaticByPlatform,
                             AssessmentMode = WindowsPatchAssessmentMode.AutomaticByPlatform,
                         },
                     },
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -2137,11 +2059,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "{vm-name}";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
                     OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
                     {
@@ -2152,22 +2074,19 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                         Caching = CachingType.ReadWrite,
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -2206,13 +2125,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "{vm-name}";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD2V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -2225,35 +2144,29 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                         VhdUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk.vhd"),
                         Caching = CachingType.ReadWrite,
                     },
-                    DataDisks =
-{
-new VirtualMachineDataDisk(0,DiskCreateOptionType.Empty)
+                    DataDisks = {new VirtualMachineDataDisk(0, DiskCreateOptionType.Empty)
 {
 VhdUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk0.vhd"),
 DiskSizeGB = 1023,
-},new VirtualMachineDataDisk(1,DiskCreateOptionType.Empty)
+}, new VirtualMachineDataDisk(1, DiskCreateOptionType.Empty)
 {
 VhdUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk1.vhd"),
 DiskSizeGB = 1023,
-}
-},
+}},
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -2292,13 +2205,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
                     },
@@ -2306,28 +2219,25 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -2366,13 +2276,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
                     },
@@ -2380,28 +2290,25 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -2440,13 +2347,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
                     },
@@ -2454,22 +2361,19 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -2508,13 +2412,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -2525,28 +2429,25 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
                 VirtualMachineScaleSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{existing-flex-vmss-name-with-platformFaultDomainCount-greater-than-1}"),
                 PlatformFaultDomain = 1,
@@ -2587,13 +2488,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -2604,28 +2505,25 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
                 AvailabilitySetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/availabilitySets/{existing-availability-set-name}"),
             };
@@ -2665,13 +2563,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "{image_publisher}",
                         Offer = "{image_offer}",
@@ -2682,40 +2580,34 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                GalleryApplications =
-{
-new VirtualMachineGalleryApplication("/subscriptions/32c17a9e-aa7b-4ba5-a45b-e324116b6fdb/resourceGroups/myresourceGroupName2/providers/Microsoft.Compute/galleries/myGallery1/applications/MyApplication1/versions/1.0")
+                GalleryApplications = {new VirtualMachineGalleryApplication("/subscriptions/32c17a9e-aa7b-4ba5-a45b-e324116b6fdb/resourceGroups/myresourceGroupName2/providers/Microsoft.Compute/galleries/myGallery1/applications/MyApplication1/versions/1.0")
 {
 Tags = "myTag1",
 Order = 1,
 ConfigurationReference = "https://mystorageaccount.blob.core.windows.net/configurations/settings.config",
 TreatFailureAsDeploymentFailure = false,
 EnableAutomaticUpgrade = false,
-},new VirtualMachineGalleryApplication("/subscriptions/32c17a9e-aa7b-4ba5-a45b-e324116b6fdg/resourceGroups/myresourceGroupName3/providers/Microsoft.Compute/galleries/myGallery2/applications/MyApplication2/versions/1.1")
-},
+}, new VirtualMachineGalleryApplication("/subscriptions/32c17a9e-aa7b-4ba5-a45b-e324116b6fdg/resourceGroups/myresourceGroupName3/providers/Microsoft.Compute/galleries/myGallery2/applications/MyApplication2/versions/1.1")},
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
             VirtualMachineResource result = lro.Value;
@@ -2753,13 +2645,13 @@ EnableAutomaticUpgrade = false,
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
                     },
@@ -2767,52 +2659,46 @@ EnableAutomaticUpgrade = false,
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                             DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
                         },
                     },
-                    DataDisks =
-{
-new VirtualMachineDataDisk(0,DiskCreateOptionType.Empty)
+                    DataDisks = {new VirtualMachineDataDisk(0, DiskCreateOptionType.Empty)
 {
 Caching = CachingType.ReadWrite,
 DiskSizeGB = 1023,
-ManagedDisk = new VirtualMachineManagedDisk()
+ManagedDisk = new VirtualMachineManagedDisk
 {
 StorageAccountType = StorageAccountType.StandardLrs,
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
 },
-},new VirtualMachineDataDisk(1,DiskCreateOptionType.Attach)
+}, new VirtualMachineDataDisk(1, DiskCreateOptionType.Attach)
 {
 Caching = CachingType.ReadWrite,
 DiskSizeGB = 1023,
-ManagedDisk = new VirtualMachineManagedDisk()
+ManagedDisk = new VirtualMachineManagedDisk
 {
 StorageAccountType = StorageAccountType.StandardLrs,
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/{existing-managed-disk-name}"),
 },
-}
-},
+}},
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -2851,19 +2737,19 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                Plan = new ComputePlan()
+                Plan = new ComputePlan
                 {
                     Name = "windows2016",
                     Publisher = "microsoft-ads",
                     Product = "windows-data-science-vm",
                 },
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardDS1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "microsoft-ads",
                         Offer = "windows-data-science-vm",
@@ -2874,30 +2760,27 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadOnly,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                SecurityProfile = new SecurityProfile()
+                SecurityProfile = new SecurityProfile
                 {
                     EncryptionAtHost = true,
                 },
@@ -2938,22 +2821,22 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                ScheduledEventsPolicy = new ScheduledEventsPolicy()
+                ScheduledEventsPolicy = new ScheduledEventsPolicy
                 {
-                    UserInitiatedRedeploy = new UserInitiatedRedeploy()
+                    UserInitiatedRedeploy = new UserInitiatedRedeploy
                     {
                         AutomaticallyApprove = true,
                     },
                     AutomaticallyApprove = true,
                     Enable = true,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -2964,42 +2847,39 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                BootDiagnostics = new BootDiagnostics()
+                BootDiagnostics = new BootDiagnostics
                 {
                     Enabled = true,
                     StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
                 },
-                ScheduledEventsProfile = new ComputeScheduledEventsProfile()
+                ScheduledEventsProfile = new ComputeScheduledEventsProfile
                 {
-                    TerminateNotificationProfile = new TerminateNotificationProfile()
+                    TerminateNotificationProfile = new TerminateNotificationProfile
                     {
                         NotBeforeTimeout = "PT10M",
                         Enable = true,
                     },
-                    OSImageNotificationProfile = new OSImageNotificationProfile()
+                    OSImageNotificationProfile = new OSImageNotificationProfile
                     {
                         NotBeforeTimeout = "PT15M",
                         Enable = true,
@@ -3042,19 +2922,19 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                Plan = new ComputePlan()
+                Plan = new ComputePlan
                 {
                     Name = "windows2016",
                     Publisher = "microsoft-ads",
                     Product = "windows-data-science-vm",
                 },
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "microsoft-ads",
                         Offer = "windows-data-science-vm",
@@ -3065,28 +2945,25 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -3125,13 +3002,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -3142,30 +3019,27 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                BootDiagnostics = new BootDiagnostics()
+                BootDiagnostics = new BootDiagnostics
                 {
                     Enabled = true,
                     StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
@@ -3208,13 +3082,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -3225,30 +3099,27 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                BootDiagnostics = new BootDiagnostics()
+                BootDiagnostics = new BootDiagnostics
                 {
                     Enabled = true,
                     StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
@@ -3290,13 +3161,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD2V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -3307,44 +3178,38 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
-                    DataDisks =
-{
-new VirtualMachineDataDisk(0,DiskCreateOptionType.Copy)
+                    DataDisks = {new VirtualMachineDataDisk(0, DiskCreateOptionType.Copy)
 {
 DiskSizeGB = 1023,
 SourceResourceId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/{existing-snapshot-name}"),
-},new VirtualMachineDataDisk(1,DiskCreateOptionType.Copy)
+}, new VirtualMachineDataDisk(1, DiskCreateOptionType.Copy)
 {
 DiskSizeGB = 1023,
 SourceResourceId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/{existing-disk-name}"),
-},new VirtualMachineDataDisk(2,DiskCreateOptionType.Restore)
+}, new VirtualMachineDataDisk(2, DiskCreateOptionType.Restore)
 {
 DiskSizeGB = 1023,
 SourceResourceId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/{existing-rpc-name}/restorePoints/{existing-rp-name}/diskRestorePoints/{existing-disk-restore-point-name}"),
-}
-},
+}},
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -3383,13 +3248,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD2V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -3400,38 +3265,32 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
-                    DataDisks =
-{
-new VirtualMachineDataDisk(0,DiskCreateOptionType.Empty)
+                    DataDisks = {new VirtualMachineDataDisk(0, DiskCreateOptionType.Empty)
 {
 DiskSizeGB = 1023,
-},new VirtualMachineDataDisk(1,DiskCreateOptionType.Empty)
+}, new VirtualMachineDataDisk(1, DiskCreateOptionType.Empty)
 {
 DiskSizeGB = 1023,
-}
-},
+}},
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -3470,19 +3329,19 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                Plan = new ComputePlan()
+                Plan = new ComputePlan
                 {
                     Name = "windows2016",
                     Publisher = "microsoft-ads",
                     Product = "windows-data-science-vm",
                 },
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardDS1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "microsoft-ads",
                         Offer = "windows-data-science-vm",
@@ -3493,33 +3352,30 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadOnly,
-                        DiffDiskSettings = new DiffDiskSettings()
+                        DiffDiskSettings = new DiffDiskSettings
                         {
                             Option = DiffDiskOption.Local,
                             Placement = DiffDiskPlacement.CacheDisk,
                         },
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -3558,19 +3414,19 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                Plan = new ComputePlan()
+                Plan = new ComputePlan
                 {
                     Name = "windows2016",
                     Publisher = "microsoft-ads",
                     Product = "windows-data-science-vm",
                 },
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardDS1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "microsoft-ads",
                         Offer = "windows-data-science-vm",
@@ -3581,33 +3437,30 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadOnly,
-                        DiffDiskSettings = new DiffDiskSettings()
+                        DiffDiskSettings = new DiffDiskSettings
                         {
                             Option = DiffDiskOption.Local,
                             Placement = DiffDiskPlacement.NvmeDisk,
                         },
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -3646,19 +3499,19 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                Plan = new ComputePlan()
+                Plan = new ComputePlan
                 {
                     Name = "windows2016",
                     Publisher = "microsoft-ads",
                     Product = "windows-data-science-vm",
                 },
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardDS1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "microsoft-ads",
                         Offer = "windows-data-science-vm",
@@ -3669,33 +3522,30 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadOnly,
-                        DiffDiskSettings = new DiffDiskSettings()
+                        DiffDiskSettings = new DiffDiskSettings
                         {
                             Option = DiffDiskOption.Local,
                             Placement = DiffDiskPlacement.ResourceDisk,
                         },
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -3734,19 +3584,19 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                Plan = new ComputePlan()
+                Plan = new ComputePlan
                 {
                     Name = "windows2016",
                     Publisher = "microsoft-ads",
                     Product = "windows-data-science-vm",
                 },
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardDS1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "microsoft-ads",
                         Offer = "windows-data-science-vm",
@@ -3757,32 +3607,29 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadOnly,
-                        DiffDiskSettings = new DiffDiskSettings()
+                        DiffDiskSettings = new DiffDiskSettings
                         {
                             Option = DiffDiskOption.Local,
                         },
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -3821,13 +3668,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -3838,30 +3685,27 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
-                BootDiagnostics = new BootDiagnostics()
+                BootDiagnostics = new BootDiagnostics
                 {
                     Enabled = true,
                 },
@@ -3902,13 +3746,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -3919,28 +3763,25 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -3979,13 +3820,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "MicrosoftWindowsServer",
                         Offer = "WindowsServer",
@@ -3996,28 +3837,25 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.PremiumLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -4056,13 +3894,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardD1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "{image_publisher}",
                         Offer = "{image_offer}",
@@ -4073,39 +3911,33 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
-                    LinuxConfiguration = new LinuxConfiguration()
+                    LinuxConfiguration = new LinuxConfiguration
                     {
                         IsPasswordAuthenticationDisabled = true,
-                        SshPublicKeys =
-{
-new SshPublicKeyConfiguration()
+                        SshPublicKeys = {new SshPublicKeyConfiguration
 {
 Path = "/home/{your-username}/.ssh/authorized_keys",
 KeyData = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1",
-}
-},
+}},
                     },
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
             };
             ArmOperation<VirtualMachineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, data);
@@ -4144,19 +3976,19 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             string vmName = "myVM";
             VirtualMachineData data = new VirtualMachineData(new AzureLocation("westus"))
             {
-                Plan = new ComputePlan()
+                Plan = new ComputePlan
                 {
                     Name = "windows2016",
                     Publisher = "microsoft-ads",
                     Product = "windows-data-science-vm",
                 },
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardDS1V2,
                 },
-                StorageProfile = new VirtualMachineStorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile
                 {
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReference
                     {
                         Publisher = "microsoft-ads",
                         Offer = "windows-data-science-vm",
@@ -4167,28 +3999,25 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
                     {
                         Name = "myVMosdisk",
                         Caching = CachingType.ReadOnly,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        ManagedDisk = new VirtualMachineManagedDisk
                         {
                             StorageAccountType = StorageAccountType.StandardLrs,
                         },
                     },
                 },
-                OSProfile = new VirtualMachineOSProfile()
+                OSProfile = new VirtualMachineOSProfile
                 {
                     ComputerName = "myVM",
                     AdminUsername = "{your-username}",
                     AdminPassword = "{your-password}",
                 },
-                NetworkProfile = new VirtualMachineNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile
                 {
-                    NetworkInterfaces =
-{
-new VirtualMachineNetworkInterfaceReference()
+                    NetworkInterfaces = {new VirtualMachineNetworkInterfaceReference
 {
 Primary = true,
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-}
-},
+}},
                 },
                 CapacityReservationGroupId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/CapacityReservationGroups/{crgName}"),
             };
@@ -4238,78 +4067,6 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAVirtualMachine()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this VirtualMachineResource
-            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
-
-            // invoke the operation
-            string vmName = "myVM";
-            InstanceViewType? expand = InstanceViewType.UserData;
-            bool result = await collection.ExistsAsync(vmName, expand: expand);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetAVirtualMachine()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this VirtualMachineResource
-            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
-
-            // invoke the operation
-            string vmName = "myVM";
-            InstanceViewType? expand = InstanceViewType.UserData;
-            NullableResponse<VirtualMachineResource> response = await collection.GetIfExistsAsync(vmName, expand: expand);
-            VirtualMachineResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
@@ -4339,76 +4096,6 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this VirtualMachineResource
-            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
-
-            // invoke the operation
-            string vmName = "myVM";
-            bool result = await collection.ExistsAsync(vmName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this VirtualMachineResource
-            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
-
-            // invoke the operation
-            string vmName = "myVM";
-            NullableResponse<VirtualMachineResource> response = await collection.GetIfExistsAsync(vmName);
-            VirtualMachineResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
         }
 
         [Test]
@@ -4447,78 +4134,6 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAVirtualMachineWithDiskControllerTypeProperties()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this VirtualMachineResource
-            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
-
-            // invoke the operation
-            string vmName = "myVM";
-            InstanceViewType? expand = InstanceViewType.UserData;
-            bool result = await collection.ExistsAsync(vmName, expand: expand);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetAVirtualMachineWithDiskControllerTypeProperties()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this VirtualMachineResource
-            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
-
-            // invoke the operation
-            string vmName = "myVM";
-            InstanceViewType? expand = InstanceViewType.UserData;
-            NullableResponse<VirtualMachineResource> response = await collection.GetIfExistsAsync(vmName, expand: expand);
-            VirtualMachineResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachineWithVMSizeProperties()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
@@ -4548,76 +4163,6 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             VirtualMachineData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAVirtualMachineWithVMSizeProperties()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this VirtualMachineResource
-            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
-
-            // invoke the operation
-            string vmName = "myVM";
-            bool result = await collection.ExistsAsync(vmName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetAVirtualMachineWithVMSizeProperties()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this VirtualMachineResource
-            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
-
-            // invoke the operation
-            string vmName = "myVM";
-            NullableResponse<VirtualMachineResource> response = await collection.GetIfExistsAsync(vmName);
-            VirtualMachineResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
         }
 
         [Test]
@@ -4689,6 +4234,290 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             }
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAVirtualMachine()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get.json
+            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineResource
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+
+            // invoke the operation
+            string vmName = "myVM";
+            InstanceViewType? expand = InstanceViewType.UserData;
+            bool result = await collection.ExistsAsync(vmName, expand: expand);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
+            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineResource
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+
+            // invoke the operation
+            string vmName = "myVM";
+            bool result = await collection.ExistsAsync(vmName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAVirtualMachineWithDiskControllerTypeProperties()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
+            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineResource
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+
+            // invoke the operation
+            string vmName = "myVM";
+            InstanceViewType? expand = InstanceViewType.UserData;
+            bool result = await collection.ExistsAsync(vmName, expand: expand);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAVirtualMachineWithVMSizeProperties()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
+            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineResource
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+
+            // invoke the operation
+            string vmName = "myVM";
+            bool result = await collection.ExistsAsync(vmName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAVirtualMachine()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get.json
+            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineResource
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+
+            // invoke the operation
+            string vmName = "myVM";
+            InstanceViewType? expand = InstanceViewType.UserData;
+            NullableResponse<VirtualMachineResource> response = await collection.GetIfExistsAsync(vmName, expand: expand);
+            VirtualMachineResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualMachineData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
+            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineResource
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+
+            // invoke the operation
+            string vmName = "myVM";
+            NullableResponse<VirtualMachineResource> response = await collection.GetIfExistsAsync(vmName);
+            VirtualMachineResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualMachineData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAVirtualMachineWithDiskControllerTypeProperties()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
+            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineResource
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+
+            // invoke the operation
+            string vmName = "myVM";
+            InstanceViewType? expand = InstanceViewType.UserData;
+            NullableResponse<VirtualMachineResource> response = await collection.GetIfExistsAsync(vmName, expand: expand);
+            VirtualMachineResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualMachineData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAVirtualMachineWithVMSizeProperties()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
+            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualMachineResource
+            VirtualMachineCollection collection = resourceGroupResource.GetVirtualMachines();
+
+            // invoke the operation
+            string vmName = "myVM";
+            NullableResponse<VirtualMachineResource> response = await collection.GetIfExistsAsync(vmName);
+            VirtualMachineResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualMachineData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }
