@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LabServices.Samples
             LabVirtualMachineImageResource labVirtualMachineImage = client.GetLabVirtualMachineImageResource(labVirtualMachineImageResourceId);
 
             // invoke the operation
-            LabVirtualMachineImagePatch patch = new LabVirtualMachineImagePatch()
+            LabVirtualMachineImagePatch patch = new LabVirtualMachineImagePatch
             {
                 EnabledState = LabServicesEnableState.Enabled,
             };
