@@ -313,6 +313,8 @@ namespace Azure.Communication.CallAutomation
         public virtual string CallConnectionId { get { throw null; } }
         public virtual Azure.Response<Azure.Communication.CallAutomation.CancelAllMediaOperationsResult> CancelAllMediaOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.CancelAllMediaOperationsResult>> CancelAllMediaOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallAutomation.InterruptAudioAndAnnounceResult> InterruptAudioAndAnnounce(Azure.Communication.CallAutomation.InterruptAudioAndAnnounceOptions announcementOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.InterruptAudioAndAnnounceResult>> InterruptAudioAndAnnounceAsync(Azure.Communication.CallAutomation.InterruptAudioAndAnnounceOptions announcementOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.PlayResult> Play(Azure.Communication.CallAutomation.PlayOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.PlayResult> Play(Azure.Communication.CallAutomation.PlaySource playSource, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> playTo, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.PlayResult>> PlayAsync(Azure.Communication.CallAutomation.PlayOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -762,6 +764,20 @@ namespace Azure.Communication.CallAutomation
         public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class InterruptAudioAndAnnounceOptions
+    {
+        public InterruptAudioAndAnnounceOptions(Azure.Communication.CallAutomation.PlaySource announcement, Azure.Communication.CommunicationIdentifier playTo) { }
+        public InterruptAudioAndAnnounceOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.PlaySource> announcement, Azure.Communication.CommunicationIdentifier playTo) { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.PlaySource> Announcement { get { throw null; } }
+        public string OperationContext { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier PlayTo { get { throw null; } }
+    }
+    public partial class InterruptAudioAndAnnounceResult
+    {
+        internal InterruptAudioAndAnnounceResult() { }
+        public Azure.Communication.CallAutomation.PlayEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.PlayEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaEventReasonCode : System.IEquatable<Azure.Communication.CallAutomation.MediaEventReasonCode>
     {
@@ -830,7 +846,7 @@ namespace Azure.Communication.CallAutomation
         internal PlayEventResult() { }
         public Azure.Communication.CallAutomation.PlayFailed FailureResult { get { throw null; } }
         public bool IsSuccess { get { throw null; } }
-        public Azure.Communication.CallAutomation.PlayCompleted SuccessResult { get { throw null; } }
+        public Azure.Communication.CallAutomation.CallAutomationEventBase SuccessResult { get { throw null; } }
     }
     public partial class PlayFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -848,16 +864,34 @@ namespace Azure.Communication.CallAutomation
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.PlaySource> PlaySources { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CommunicationIdentifier> PlayTo { get { throw null; } }
     }
+    public partial class PlayPaused : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal PlayPaused() { }
+        public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
+        public static Azure.Communication.CallAutomation.PlayPaused Deserialize(string content) { throw null; }
+    }
     public partial class PlayResult
     {
         internal PlayResult() { }
         public Azure.Communication.CallAutomation.PlayEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.PlayEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class PlayResumed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal PlayResumed() { }
+        public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
+        public static Azure.Communication.CallAutomation.PlayResumed Deserialize(string content) { throw null; }
+    }
     public abstract partial class PlaySource
     {
         protected PlaySource() { }
         public string PlaySourceCacheId { get { throw null; } set { } }
+    }
+    public partial class PlayStarted : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal PlayStarted() { }
+        public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
+        public static Azure.Communication.CallAutomation.PlayStarted Deserialize(string content) { throw null; }
     }
     public partial class PlayToAllOptions
     {

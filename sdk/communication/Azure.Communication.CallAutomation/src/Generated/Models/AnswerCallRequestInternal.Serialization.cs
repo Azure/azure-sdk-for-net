@@ -39,11 +39,6 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("transcriptionConfiguration"u8);
                 writer.WriteObjectValue(TranscriptionConfiguration);
             }
-            if (Optional.IsDefined(StartInConferenceMode))
-            {
-                writer.WritePropertyName("startInConferenceMode"u8);
-                writer.WriteBooleanValue(StartInConferenceMode.Value);
-            }
             writer.WriteEndObject();
         }
 
