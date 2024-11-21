@@ -17,6 +17,39 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_InventoryGet()
+        {
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/PublicCloud/stable/2024-12-01/examples/Inventory_Get.json
+            // this example is just showing the usage of "Inventory_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SolutionConfigurationResource created on azure
+            // for more information of creating SolutionConfigurationResource, please refer to the document of SolutionConfigurationResource
+            string resourceUri = "ymuj";
+            string solutionConfiguration = "zarfsraogroxlaqjjnwixtn";
+            ResourceIdentifier solutionConfigurationResourceId = SolutionConfigurationResource.CreateResourceIdentifier(resourceUri, solutionConfiguration);
+            SolutionConfigurationResource solutionConfiguration0 = client.GetSolutionConfigurationResource(solutionConfigurationResourceId);
+
+            // get the collection of this HybridConnectivityInventoryResource
+            HybridConnectivityInventoryResourceCollection collection = solutionConfiguration0.GetHybridConnectivityInventoryResources();
+
+            // invoke the operation
+            string inventoryId = "xofprmcboosrbd";
+            HybridConnectivityInventoryResource result = await collection.GetAsync(inventoryId);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HybridConnectivityInventoryResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_InventoryListBySolutionConfiguration()
         {
             // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/PublicCloud/stable/2024-12-01/examples/Inventory_ListBySolutionConfiguration.json
@@ -48,39 +81,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             }
 
             Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_InventoryGet()
-        {
-            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/PublicCloud/stable/2024-12-01/examples/Inventory_Get.json
-            // this example is just showing the usage of "Inventory_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SolutionConfigurationResource created on azure
-            // for more information of creating SolutionConfigurationResource, please refer to the document of SolutionConfigurationResource
-            string resourceUri = "ymuj";
-            string solutionConfiguration = "zarfsraogroxlaqjjnwixtn";
-            ResourceIdentifier solutionConfigurationResourceId = SolutionConfigurationResource.CreateResourceIdentifier(resourceUri, solutionConfiguration);
-            SolutionConfigurationResource solutionConfiguration0 = client.GetSolutionConfigurationResource(solutionConfigurationResourceId);
-
-            // get the collection of this HybridConnectivityInventoryResource
-            HybridConnectivityInventoryResourceCollection collection = solutionConfiguration0.GetHybridConnectivityInventoryResources();
-
-            // invoke the operation
-            string inventoryId = "xofprmcboosrbd";
-            HybridConnectivityInventoryResource result = await collection.GetAsync(inventoryId);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HybridConnectivityInventoryResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
