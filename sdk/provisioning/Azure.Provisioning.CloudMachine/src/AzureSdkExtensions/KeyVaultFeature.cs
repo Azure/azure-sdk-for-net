@@ -48,18 +48,6 @@ public class KeyVaultFeature : CloudMachineFeature
         infrastructure.AddResource(keyVaultResource);
         RequiredSystemRoles.Add(keyVaultResource, [(KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator), KeyVaultBuiltInRole.KeyVaultAdministrator.ToString())]);
 
-        // RoleAssignment ra = keyVaultResource.CreateRoleAssignment(KeyVaultBuiltInRole.KeyVaultAdministrator, RoleManagementPrincipalType.User, infrastructure.PrincipalIdParameter);
-        // infrastructure.AddResource(ra);
-
-        // necessary until ResourceName is settable via AssignRole.
-        // RoleAssignment kvMiRoleAssignment = new RoleAssignment(keyVaultResource.BicepIdentifier + "_" + infrastructure.Identity.BicepIdentifier + "_" + KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator));
-        // kvMiRoleAssignment.Name = BicepFunction.CreateGuid(keyVaultResource.Id, infrastructure.Identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", KeyVaultBuiltInRole.KeyVaultAdministrator.ToString()));
-        // kvMiRoleAssignment.Scope = new IdentifierExpression(keyVaultResource.BicepIdentifier);
-        // kvMiRoleAssignment.PrincipalType = RoleManagementPrincipalType.ServicePrincipal;
-        // kvMiRoleAssignment.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", KeyVaultBuiltInRole.KeyVaultAdministrator.ToString());
-        // kvMiRoleAssignment.PrincipalId = infrastructure.Identity.PrincipalId;
-        // infrastructure.AddResource(kvMiRoleAssignment);
-
         return keyVaultResource;
     }
 }

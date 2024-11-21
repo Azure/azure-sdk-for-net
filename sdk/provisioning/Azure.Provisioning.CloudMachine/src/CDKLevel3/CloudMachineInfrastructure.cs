@@ -3,17 +3,12 @@
 
 using System;
 using Azure.Provisioning.Authorization;
-using Azure.Provisioning.EventGrid;
 using Azure.Provisioning.Expressions;
-using Azure.Provisioning.Resources;
 using Azure.Provisioning.Roles;
-using Azure.Provisioning.ServiceBus;
-using Azure.Provisioning.Storage;
 using Azure.Provisioning.Primitives;
 using System.Collections.Generic;
 using Azure.Provisioning;
 using Azure.Provisioning.CloudMachine;
-using System.Linq;
 
 namespace Azure.CloudMachine;
 
@@ -82,7 +77,7 @@ public class CloudMachineInfrastructure
         Features.Emit(this);
 
         // This must occur after the features have been emitted.
-        context.InfrastructureResolvers.Add(new RoleResolver(Features.RoleAnnotations, Identity));
+        context.InfrastructureResolvers.Add(new RoleResolver(Features.RoleAnnotations, [Identity], [PrincipalIdParameter]));
 
         // Always add a default location parameter.
         // azd assumes there will be a location parameter for every module.
@@ -102,7 +97,7 @@ public class CloudMachineInfrastructure
         return _infrastructure.Build(context);
     }
 
-    internal class RoleResolver(Dictionary<Provisionable, (string RoleName, string RoleId)[]> annotations, UserAssignedIdentity identity) : InfrastructureResolver
+    internal class RoleResolver(Dictionary<Provisionable, (string RoleName, string RoleId)[]> annotations, IEnumerable<UserAssignedIdentity> managedIdentities, IEnumerable<BicepValue<Guid>> userPrincipals) : InfrastructureResolver
     {
         public override IEnumerable<Provisionable> ResolveResources(IEnumerable<Provisionable> resources, ProvisioningBuildOptions options)
         {
@@ -113,14 +108,29 @@ public class CloudMachineInfrastructure
                 {
                     foreach ((string RoleName, string RoleId) role in roles)
                     {
-                        yield return new RoleAssignment($"{resource.BicepIdentifier}_{identity.BicepIdentifier}_{role.RoleName}")
+                        foreach (BicepValue<Guid> userPrincipal in userPrincipals)
                         {
-                            Name = BicepFunction.CreateGuid(resource.BicepIdentifier, identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.RoleId)),
-                            Scope = new IdentifierExpression(resource.BicepIdentifier),
-                            PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
-                            RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.RoleId),
-                            PrincipalId = identity.PrincipalId
-                        };
+                            yield return new RoleAssignment($"{resource.BicepIdentifier}_{userPrincipal.Value.ToString().Replace('-', '_')}_{role.RoleName}")
+                            {
+                                Name = BicepFunction.CreateGuid(resource.BicepIdentifier, userPrincipal, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.RoleId)),
+                                Scope = new IdentifierExpression(resource.BicepIdentifier),
+                                PrincipalType = RoleManagementPrincipalType.User,
+                                RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.RoleId),
+                                PrincipalId = userPrincipal
+                            };
+                        }
+
+                        foreach (UserAssignedIdentity identity in managedIdentities)
+                        {
+                            yield return new RoleAssignment($"{resource.BicepIdentifier}_{identity.BicepIdentifier}_{role.RoleName}")
+                            {
+                                Name = BicepFunction.CreateGuid(resource.BicepIdentifier, identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.RoleId)),
+                                Scope = new IdentifierExpression(resource.BicepIdentifier),
+                                PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
+                                RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.RoleId),
+                                PrincipalId = identity.PrincipalId
+                            };
+                        }
                     }
                 }
             }

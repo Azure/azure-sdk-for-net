@@ -158,24 +158,25 @@ internal class CloudMachineCoreFeature : CloudMachineFeature
         };
 
         infrastructure.AddResource(infrastructure.PrincipalIdParameter);
-        //Add(PrincipalTypeParameter);
-        //Add(PrincipalNameParameter);
-
         infrastructure.AddResource(infrastructure.Identity);
         infrastructure.AddResource(_storage);
-        infrastructure.AddResource(_storage.CreateRoleAssignment(StorageBuiltInRole.StorageBlobDataContributor, RoleManagementPrincipalType.User, infrastructure.PrincipalIdParameter));
-        infrastructure.AddResource(_storage.CreateRoleAssignment(StorageBuiltInRole.StorageTableDataContributor, RoleManagementPrincipalType.User, infrastructure.PrincipalIdParameter));
+        RequiredSystemRoles.Add(
+            _storage,
+            [
+                (StorageBuiltInRole.GetBuiltInRoleName(StorageBuiltInRole.StorageBlobDataContributor),StorageBuiltInRole.StorageBlobDataContributor.ToString()),
+                (StorageBuiltInRole.GetBuiltInRoleName(StorageBuiltInRole.StorageTableDataContributor), StorageBuiltInRole.StorageTableDataContributor.ToString())
+            ]);
+
         infrastructure.AddResource(_container);
         infrastructure.AddResource(_blobs);
         infrastructure.AddResource(_serviceBusNamespace);
-        infrastructure.AddResource(_serviceBusNamespace.CreateRoleAssignment(ServiceBusBuiltInRole.AzureServiceBusDataOwner, RoleManagementPrincipalType.User, infrastructure.PrincipalIdParameter));
-        infrastructure.AddResource(_serviceBusNamespaceAuthorizationRule);
-        infrastructure.AddResource(_serviceBusTopic_private);
-        infrastructure.AddResource(_serviceBusTopic_default);
-        infrastructure.AddResource(_serviceBusSubscription_private);
-        infrastructure.AddResource(_serviceBusSubscription_default);
 
-        // This is necessary until SystemTopic adds an AssignRole method.
+        RequiredSystemRoles.Add(
+            _serviceBusNamespace,
+            [
+                (ServiceBusBuiltInRole.GetBuiltInRoleName(ServiceBusBuiltInRole.AzureServiceBusDataOwner), ServiceBusBuiltInRole.AzureServiceBusDataOwner.ToString()),
+            ]);
+
         var role = ServiceBusBuiltInRole.AzureServiceBusDataSender;
         RoleAssignment roleAssignment = new RoleAssignment("cm_servicebus_role");
         roleAssignment.Name = BicepFunction.CreateGuid(_serviceBusNamespace.Id, infrastructure.Identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
@@ -184,10 +185,16 @@ internal class CloudMachineCoreFeature : CloudMachineFeature
         roleAssignment.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString());
         roleAssignment.PrincipalId = infrastructure.Identity.PrincipalId;
         infrastructure.AddResource(roleAssignment);
+
         // the role assignment must exist before the system topic event subscription is created.
         _eventGridSubscription_blobs.DependsOn.Add(roleAssignment);
-        infrastructure.AddResource(_eventGridSubscription_blobs);
 
+        infrastructure.AddResource(_serviceBusNamespaceAuthorizationRule);
+        infrastructure.AddResource(_serviceBusTopic_private);
+        infrastructure.AddResource(_serviceBusTopic_default);
+        infrastructure.AddResource(_serviceBusSubscription_private);
+        infrastructure.AddResource(_serviceBusSubscription_default);
+        infrastructure.AddResource(_eventGridSubscription_blobs);
         infrastructure.AddResource(_eventGridTopic_blobs);
 
         // Placeholders for now.

@@ -28,4 +28,10 @@ public abstract class CloudMachineFeature
     public ProvisionableResource Emitted { get; protected set; } = default!;
 
     protected internal Dictionary<Provisionable, (string RoleName, string RoleId)[]> RequiredSystemRoles { get; } = [];
+
+    /// <summary>
+    /// A collection of dependency mappings.
+    /// The key is the dependent resource and the value is the resource it depends on.
+    /// </summary>
+    protected internal Dictionary<Provisionable, Provisionable> DependencyMapping { get; } = [];
 }
