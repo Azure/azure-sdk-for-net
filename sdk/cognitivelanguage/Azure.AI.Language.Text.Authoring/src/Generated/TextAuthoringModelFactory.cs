@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Language.Text.Authoring.Models;
 
-namespace Azure.AI.Language.Text.Authoring.Models
+namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AILanguageTextAuthoringModelFactory
+    public static partial class TextAuthoringModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.ProjectMetadata"/>. </summary>
         /// <param name="createdDateTime"> Represents the project creation datetime. </param>
