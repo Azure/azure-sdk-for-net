@@ -16,11 +16,7 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIProjectsTest
     [Test]
     public async Task CreateAdditionalMessageExample()
     {
-#if SNIPPET
-        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-#else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-#endif
         var clientOptions = new AIProjectClientOptions();
 
         clientOptions.AddPolicy(new CustomHeadersPolicy(), HttpPipelinePosition.PerCall);
@@ -45,7 +41,6 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIProjectsTest
             "What is the impedance formula?");
         ThreadMessage message = messageResponse.Value;
 
-        #region Snippet:CreateRunWithAdditionalMessages
         var agentRun = await agentClient.CreateRunAsync(
             threadId: thread.Id,
             agent.Id,
@@ -60,7 +55,6 @@ public partial class Sample_Agent_Multiple_Messages : SamplesBase<AIProjectsTest
                 ),
             ]
         );
-        #endregion
 
         do
         {

@@ -113,24 +113,6 @@ Response<ThreadRun> runResponse = await client.CreateRunAsync(
 ThreadRun run = runResponse.Value;
 ```
 
-Alternatively the run can be provided with additional messages, created by user or agent:
-```C# Snippet:CreateRunWithAdditionalMessages
-var agentRun = await agentClient.CreateRunAsync(
-    threadId: thread.Id,
-    agent.Id,
-    additionalMessages: [
-        new ThreadMessageOptions(
-            role: MessageRole.Agent,
-            content: "E=mc^2"
-        ),
-        new ThreadMessageOptions(
-            role: MessageRole.User,
-            content: "What is the impedance formula?"
-        ),
-    ]
-);
-```
-
 Once the run has started, it should then be polled until it reaches a terminal status:
 ```C# Snippet:OverviewWaitForRun
 do
