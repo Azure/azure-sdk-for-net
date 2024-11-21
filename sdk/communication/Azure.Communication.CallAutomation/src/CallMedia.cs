@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -379,6 +380,110 @@ namespace Azure.Communication.CallAutomation
                 result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
                 return Response.FromValue(result, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Hold participant from the call.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> HoldAsync(HoldOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Hold)}");
+            scope.Start();
+            try
+            {
+                var request = new HoldRequestInternal(
+                    CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
+                {
+                    OperationContext = options.OperationContext,
+                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySourceInfo),
+                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
+                };
+
+                return await CallMediaRestClient.HoldAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Hold participant from the call.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response Hold(HoldOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Hold)}");
+            scope.Start();
+            try
+            {
+                var request = new HoldRequestInternal(
+                    CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
+                {
+                    OperationContext = options.OperationContext,
+                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySourceInfo),
+                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
+                };
+
+                return CallMediaRestClient.Hold(CallConnectionId, request, cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Remove hold from participant.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> UnholdAsync(UnholdOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Unhold)}");
+            scope.Start();
+            try
+            {
+                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+
+                return await CallMediaRestClient.UnholdAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Remove hold from participant.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response Unhold(UnholdOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Unhold)}");
+            scope.Start();
+            try
+            {
+                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+
+                return CallMediaRestClient.Unhold(CallConnectionId, request, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
