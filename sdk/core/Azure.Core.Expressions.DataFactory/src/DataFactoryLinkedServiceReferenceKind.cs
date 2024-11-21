@@ -31,7 +31,7 @@ namespace Azure.Core.Expressions.DataFactory
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DataFactoryLinkedServiceReferenceKind other && Equals(other);
+        public override bool Equals(object? obj) => obj is DataFactoryLinkedServiceReferenceKind other && Equals(other);
         /// <inheritdoc />
         public bool Equals(DataFactoryLinkedServiceReferenceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 

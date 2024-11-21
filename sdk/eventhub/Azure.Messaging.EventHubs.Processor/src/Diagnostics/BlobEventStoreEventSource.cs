@@ -392,7 +392,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                   string consumerGroup,
                                                   string partitionId,
                                                   string clientIdentifier,
-                                                  DateTimeOffset lastModified)
+                                                  string lastModified)
         {
             if (IsEnabled())
             {

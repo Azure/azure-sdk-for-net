@@ -1003,23 +1003,17 @@
 # ServiceLabel: %Large Instance %Mgmt
 # ServiceOwners:                                                   @8Gitbrix
 
-# PRLabel: %Network - CDN
-/sdk/cdn/Azure.ResourceManager.*/                                  @ptnan7
+# PRLabel: %Neon Postgres
+/sdk/neonpostgres/Azure.ResourceManager.*/                         @archerzz @ArcturusZhang @ArthurMa1978
 
-# ServiceLabel: %Network - CDN %Mgmt
-# ServiceOwners:                                                   @ptnan7
+# PRLabel: %Network - CDN
+/sdk/cdn/Azure.ResourceManager.*/                                  @archerzz @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Network - Front Door
-/sdk/frontdoor/Azure.ResourceManager.*/                            @ptnan7
-
-# ServiceLabel: %Network - Front Door %Mgmt
-# ServiceOwners:                                                   @ptnan7
+/sdk/frontdoor/Azure.ResourceManager.*/                            @archerzz @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Network - Mobile
-/sdk/mobilenetwork/Azure.ResourceManager.*/                        @ArthurMa1978
-
-# ServiceLabel: %Network - Mobile %Mgmt
-# ServiceOwners:                                                   @ArthurMa1978
+/sdk/mobilenetwork/Azure.ResourceManager.*/                        @archerzz @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Network - DNS Private Resolver
 /sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
