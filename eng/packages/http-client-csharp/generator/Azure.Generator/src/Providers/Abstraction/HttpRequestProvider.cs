@@ -22,6 +22,8 @@ namespace Azure.Generator.Providers
         {
         }
 
+        public override Type UriBuilderType => typeof(RawRequestUriBuilder);
+
         public override ValueExpression Content()
             => Original.Property(nameof(Request.Content));
 
@@ -102,8 +104,5 @@ namespace Azure.Generator.Providers
 
             return null;
         }
-
-        public override MethodBodyStatement DeclareUri(out ScopedApi uri)
-            => Declare("uri", New.Instance<RawRequestUriBuilder>(), out uri);
     }
 }
