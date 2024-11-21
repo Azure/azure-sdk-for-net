@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingTransferDetailResource billingTransferDetail = client.GetBillingTransferDetailResource(billingTransferDetailResourceId);
 
             // invoke the operation
-            BillingTransferDetailCreateOrUpdateContent content = new BillingTransferDetailCreateOrUpdateContent()
+            BillingTransferDetailCreateOrUpdateContent content = new BillingTransferDetailCreateOrUpdateContent
             {
                 RecipientEmailId = "user@contoso.com",
             };

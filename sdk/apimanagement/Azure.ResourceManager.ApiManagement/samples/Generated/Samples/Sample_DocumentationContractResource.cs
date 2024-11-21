@@ -18,33 +18,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetEntityTag_ApiManagementHeadDocumentation()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadDocumentation.json
-            // this example is just showing the usage of "Documentation_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DocumentationContractResource created on azure
-            // for more information of creating DocumentationContractResource, please refer to the document of DocumentationContractResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string documentationId = "57d1f7558aa04f15146d9d8a";
-            ResourceIdentifier documentationContractResourceId = DocumentationContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, documentationId);
-            DocumentationContractResource documentationContract = client.GetDocumentationContractResource(documentationContractResourceId);
-
-            // invoke the operation
-            bool result = await documentationContract.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetDocumentation()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetDocumentation.json
@@ -76,43 +49,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_ApiManagementUpdateDocumentation()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateDocumentation.json
-            // this example is just showing the usage of "Documentation_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DocumentationContractResource created on azure
-            // for more information of creating DocumentationContractResource, please refer to the document of DocumentationContractResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string documentationId = "57d1f7558aa04f15146d9d8a";
-            ResourceIdentifier documentationContractResourceId = DocumentationContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, documentationId);
-            DocumentationContractResource documentationContract = client.GetDocumentationContractResource(documentationContractResourceId);
-
-            // invoke the operation
-            ETag ifMatch = default /* Warning: No value is provided for ifMatch in example 'ApiManagementUpdateDocumentation'. Please consider adding a proper example value for it in swagger*/;
-            DocumentationContractPatch patch = new DocumentationContractPatch()
-            {
-                Title = "Title updated",
-                Content = "content updated",
-            };
-            DocumentationContractResource result = await documentationContract.UpdateAsync(ifMatch, patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DocumentationContractData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteDocumentation()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteDocumentation.json
@@ -133,10 +69,74 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             DocumentationContractResource documentationContract = client.GetDocumentationContractResource(documentationContractResourceId);
 
             // invoke the operation
-            ETag ifMatch = default /* Warning: No value is provided for ifMatch in example 'ApiManagementDeleteDocumentation'. Please consider adding a proper example value for it in swagger*/;
+            ETag ifMatch = default;
             await documentationContract.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiManagementUpdateDocumentation()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateDocumentation.json
+            // this example is just showing the usage of "Documentation_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DocumentationContractResource created on azure
+            // for more information of creating DocumentationContractResource, please refer to the document of DocumentationContractResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string documentationId = "57d1f7558aa04f15146d9d8a";
+            ResourceIdentifier documentationContractResourceId = DocumentationContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, documentationId);
+            DocumentationContractResource documentationContract = client.GetDocumentationContractResource(documentationContractResourceId);
+
+            // invoke the operation
+            ETag ifMatch = default;
+            DocumentationContractPatch patch = new DocumentationContractPatch
+            {
+                Title = "Title updated",
+                Content = "content updated",
+            };
+            DocumentationContractResource result = await documentationContract.UpdateAsync(ifMatch, patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DocumentationContractData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadDocumentation()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadDocumentation.json
+            // this example is just showing the usage of "Documentation_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DocumentationContractResource created on azure
+            // for more information of creating DocumentationContractResource, please refer to the document of DocumentationContractResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string documentationId = "57d1f7558aa04f15146d9d8a";
+            ResourceIdentifier documentationContractResourceId = DocumentationContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, documentationId);
+            DocumentationContractResource documentationContract = client.GetDocumentationContractResource(documentationContractResourceId);
+
+            // invoke the operation
+            bool result = await documentationContract.GetEntityTagAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }
