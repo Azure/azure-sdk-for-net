@@ -51,52 +51,77 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         [RecordedTest]
         public async Task ImportProjectAsync()
         {
-            string projectName = "MyNewImportAsync";
+            string projectName = "Test-data-labels";
 
+            // Create metadata based on JSON data
             var projectMetadata = new CreateProjectConfig(
                 projectKind: "Conversation",
                 projectName: projectName,
                 language: "en-us"
             )
             {
-                Settings = new ProjectSettings(0.7F),
-                Multilingual = true,
-                Description = "Trying out CLU with assets"
+                Settings = new ProjectSettings(0.0F), // ConfidenceThreshold set to 0
+                Multilingual = false,
+                Description = string.Empty
             };
 
+            // Create assets based on JSON data
             var projectAssets = new ConversationExportedProjectAssets();
 
-            projectAssets.Intents.Add(new ConversationExportedIntent(category: "intent1"));
-            projectAssets.Intents.Add(new ConversationExportedIntent(category: "intent2"));
+            projectAssets.Intents.Add(new ConversationExportedIntent(category: "None"));
+            projectAssets.Intents.Add(new ConversationExportedIntent(category: "Buy"));
 
-            projectAssets.Entities.Add(new ConversationExportedEntity(category: "entity1"));
+            var entity = new ConversationExportedEntity(category: "product")
+            {
+                CompositionSetting = CompositionSetting.CombineComponents
+            };
+            projectAssets.Entities.Add(entity);
 
             projectAssets.Utterances.Add(new ConversationExportedUtterance(
-                text: "text1",
-                intent: "intent1"
+                text: "I want to buy a house",
+                intent: "Buy"
             )
             {
-                Language = "en",
-                Dataset = "dataset1"
+                Language = "en-us",
+                Dataset = "Train"
             });
-
-            projectAssets.Utterances[projectAssets.Utterances.Count - 1].Entities.Add(new ExportedUtteranceEntityLabel(
-                category: "entity1",
-                offset: 5,
+            projectAssets.Utterances[0].Entities.Add(new ExportedUtteranceEntityLabel(
+                category: "product",
+                offset: 16,
                 length: 5
             ));
 
             projectAssets.Utterances.Add(new ConversationExportedUtterance(
-                text: "text2",
-                intent: "intent2"
+                text: "I want to buy surface pro",
+                intent: "Buy"
             )
             {
-                Language = "en",
-                Dataset = "dataset1"
+                Language = "en-us",
+                Dataset = "Train"
             });
+            projectAssets.Utterances[1].Entities.Add(new ExportedUtteranceEntityLabel(
+                category: "product",
+                offset: 14,
+                length: 11
+            ));
 
+            projectAssets.Utterances.Add(new ConversationExportedUtterance(
+                text: "I want to buy xbox",
+                intent: "Buy"
+            )
+            {
+                Language = "en-us",
+                Dataset = "Train"
+            });
+            projectAssets.Utterances[2].Entities.Add(new ExportedUtteranceEntityLabel(
+                category: "product",
+                offset: 14,
+                length: 4
+            ));
+
+            // Build the exported project
             var exportedProject = new ExportedProject(
-                projectFileVersion: "2023-04-01",
+                projectFileVersion: "2022-10-01-preview",
                 stringIndexType: StringIndexType.Utf16CodeUnit,
                 metadata: projectMetadata
             )
@@ -104,6 +129,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
                 Assets = projectAssets
             };
 
+            // Call the ImportAsync function
             Operation operation = await client.ImportAsync(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
@@ -117,8 +143,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             // Extract and check the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
-            //Assert.IsNotNull(operationLocation, "Expected operation-location header to be present.");
-
             Console.WriteLine($"Operation Location: {operationLocation}");
             Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");
         }
