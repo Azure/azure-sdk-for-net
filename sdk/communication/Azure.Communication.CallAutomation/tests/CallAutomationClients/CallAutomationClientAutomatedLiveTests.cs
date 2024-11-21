@@ -11,7 +11,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 {
     internal class CallAutomationClientAutomatedLiveTests : CallAutomationClientAutomatedLiveTestsBase
     {
-        public CallAutomationClientAutomatedLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+        public CallAutomationClientAutomatedLiveTests(bool isAsync) : base(isAsync)
         {
         }
 

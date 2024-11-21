@@ -998,10 +998,12 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class OutStreamingData
     {
-        public OutStreamingData(Azure.Communication.CallAutomation.MediaKind kind) { }
-        public Azure.Communication.CallAutomation.AudioData AudioData { get { throw null; } set { } }
+        internal OutStreamingData() { }
+        public Azure.Communication.CallAutomation.AudioData AudioData { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaKind Kind { get { throw null; } }
-        public Azure.Communication.CallAutomation.StopAudio StopAudio { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.StopAudio StopAudio { get { throw null; } }
+        public static string GetAudioDataForOutbound(byte[] audioData) { throw null; }
+        public static string GetStopAudioForOutbound() { throw null; }
     }
     public partial class ParticipantsUpdated : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -1442,12 +1444,17 @@ namespace Azure.Communication.CallAutomation
     public abstract partial class StreamingData
     {
         protected StreamingData() { }
+        public static Azure.Communication.CallAutomation.StreamingDataKind Kind { get { throw null; } }
+        public static Azure.Communication.CallAutomation.StreamingData Parse(string data) { throw null; }
+        public static T Parse<T>(string data) where T : Azure.Communication.CallAutomation.StreamingData { throw null; }
     }
-    public static partial class StreamingDataParser
+    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+    public enum StreamingDataKind
     {
-        public static Azure.Communication.CallAutomation.StreamingData Parse(System.BinaryData binaryData) { throw null; }
-        public static Azure.Communication.CallAutomation.StreamingData Parse(byte[] receivedBytes) { throw null; }
-        public static Azure.Communication.CallAutomation.StreamingData Parse(string stringJson) { throw null; }
+        AudioData = 0,
+        AudioMetadata = 1,
+        TranscriptionData = 2,
+        TranscriptionMetadata = 3,
     }
     public enum TextFormat
     {
