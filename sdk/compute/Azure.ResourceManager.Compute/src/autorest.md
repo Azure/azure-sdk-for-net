@@ -396,9 +396,16 @@ directive:
     where: $.definitions.VirtualMachineScaleSetProperties
     transform: >
       $.additionalProperties = true;
+  - from: virtualMachineScaleSet.json
+    where: $.definitions.VirtualMachineScaleSet.properties
+    transform: >
+      $.properties["x-ms-client-flatten"] = false;
+  - from: virtualMachineScaleSet.json
+    where: $.definitions.UpgradePolicy
+    transform: >
+      $.additionalProperties = true;
   - from: computeRPCommon.json
     where: $.definitions.VMSizeProperties
     transform: >
       $.additionalProperties = true;
-
 ```
