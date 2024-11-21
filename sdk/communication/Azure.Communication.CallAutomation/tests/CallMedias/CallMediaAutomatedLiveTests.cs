@@ -2286,7 +2286,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
-                        new Uri("wss://4847-2607-fb91-1527-a3d4-c57c-15d7-455e-afc5.ngrok-free.app"),
+                        new Uri(TestEnvironment.TransportUrl),
                         MediaStreamingContent.Audio,
                         MediaStreamingAudioChannel.Mixed,
                         MediaStreamingTransport.Websocket,
@@ -2351,7 +2351,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
-                        new Uri("wss://4847-2607-fb91-1527-a3d4-c57c-15d7-455e-afc5.ngrok-free.app"),
+                        new Uri(TestEnvironment.TransportUrl),
                         MediaStreamingContent.Audio,
                         MediaStreamingAudioChannel.Mixed,
                         MediaStreamingTransport.Websocket,
@@ -2416,7 +2416,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
-                        new Uri("wss://4847-2607-fb91-1527-a3d4-c57c-15d7-455e-afc5.ngrok-free.app"),
+                        new Uri(TestEnvironment.TransportUrl),
                         MediaStreamingContent.Audio,
                         MediaStreamingAudioChannel.Unmixed,
                         MediaStreamingTransport.Websocket,
@@ -2482,7 +2482,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     // create call and assert response
                     TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
-                        new Uri("wss://4847-2607-fb91-1527-a3d4-c57c-15d7-455e-afc5.ngrok-free.app"),
+                        new Uri(TestEnvironment.TransportUrl),
                         "en-CA",
                         false);
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
@@ -2545,7 +2545,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     // create call and assert response
                     TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
-                        new Uri("wss://4847-2607-fb91-1527-a3d4-c57c-15d7-455e-afc5.ngrok-free.app"),
+                        new Uri(TestEnvironment.TransportUrl),
                         "en-CA",
                         false);
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
