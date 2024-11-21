@@ -204,9 +204,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine("Succeeded");
         }
 
-        // Volumes_SplitClone
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SplitCloneFromParent_VolumesSplitClone()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Volumes_SplitClone.json
@@ -230,12 +229,9 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             await netAppVolume.SplitCloneFromParentAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_BreakFileLocks
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task BreakFileLocks_VolumesBreakFileLocks()
@@ -299,9 +295,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListQuotaReport
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetQuotaReport_ListQuotaReport()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Volumes_ListQuotaReport.json
@@ -329,9 +324,6 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Volumes_BreakReplication
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task BreakReplication_VolumesBreakReplication()

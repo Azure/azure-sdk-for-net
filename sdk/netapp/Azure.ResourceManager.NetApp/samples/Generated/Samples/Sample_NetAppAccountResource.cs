@@ -168,9 +168,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine("Succeeded");
         }
 
-        // Accounts_MigrateEncryptionKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TransitionToCmk_AccountsMigrateEncryptionKey()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Accounts_TransitionEncryptionKey.json
@@ -193,12 +192,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             EncryptionTransitionContent content = new EncryptionTransitionContent(new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/virtualNetworks/vnet1"), new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/privateEndpoints/privip1"));
             await netAppAccount.TransitionToCmkAsync(WaitUntil.Completed, content: content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Accounts_GetChangeKeyVaultInformation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetChangeKeyVaultInformation_AccountsGetChangeKeyVaultInformation()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Accounts_GetChangeKeyVaultInformation.json
@@ -220,12 +218,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             await netAppAccount.GetChangeKeyVaultInformationAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Accounts_ChangeKeyVault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ChangeKeyVault_AccountsChangeKeyVault()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Accounts_ChangeKeyVault.json
@@ -258,12 +255,9 @@ PrivateEndpointId = "/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourc
             };
             await netAppAccount.ChangeKeyVaultAsync(WaitUntil.Completed, body: body);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VolumeGroups_List_Oracle
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task GetVolumeGroups_VolumeGroupsListOracle()
