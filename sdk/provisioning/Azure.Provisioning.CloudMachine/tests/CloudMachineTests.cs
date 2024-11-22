@@ -3,6 +3,7 @@
 
 #nullable enable
 
+using System;
 using System.IO;
 using Azure.CloudMachine.KeyVault;
 using Azure.CloudMachine.OpenAI;
@@ -25,7 +26,7 @@ public class CloudMachineTests
         }, exitProcessIfHandled: false);
 
         string actualBicep = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Infra", "cm.bicep"));
-        string expectedBicep = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "GenerateBicep.bicep"));
+        string expectedBicep = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "GenerateBicep.bicep")).Replace("\r\n", Environment.NewLine);
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
