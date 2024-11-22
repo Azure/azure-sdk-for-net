@@ -394,21 +394,12 @@ directive:
       };
   # add additionalproperties to a few models to support private properties supported by the service
   - from: virtualMachineScaleSet.json
-    where: $.definitions.VirtualMachineScaleSetProperties
+    where: $.definitions
     transform: >
-      $.additionalProperties = true;
-  - from: virtualMachineScaleSet.json
-    where: $.definitions.VirtualMachineScaleSet.properties
-    transform: >
-      $.properties["x-ms-client-flatten"] = false;
-  - from: virtualMachineScaleSet.json
-    where: $.definitions.VirtualMachineScaleSetUpdate.properties
-    transform: >
-      $.properties["x-ms-client-flatten"] = false;
-  - from: virtualMachineScaleSet.json
-    where: $.definitions.UpgradePolicy
-    transform: >
-      $.additionalProperties = true;
+      $.VirtualMachineScaleSetProperties.additionalProperties = true;
+      $.VirtualMachineScaleSet.properties.properties["x-ms-client-flatten"] = false;
+      $.VirtualMachineScaleSetUpdate.properties.properties["x-ms-client-flatten"] = false;
+      $.UpgradePolicy.additionalProperties = true;
   - from: computeRPCommon.json
     where: $.definitions.VMSizeProperties
     transform: >
