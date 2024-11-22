@@ -1,15 +1,23 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
-
+## 1.3.0 (2024-11-22)
+ 
 ### Features Added
 
 - Support multiple play sources for Play and Recognize
 - Support for PlayStarted event in Play/Recognize
 - Hold and Unhold the participant
+- CallDisconnected now includes more information on why the call has ended
 - Support to manage the rooms/servercall/group call using connect API
 - Expose original PSTN number target from incoming call event in call connection properties
-- Support for VoIP to PSTN transfer scenario
+- Support for VoIP to PSTN transfer scenario 
+ 
+### Breaking Changes
+ 
+### Bugs Fixed
+ 
+### Other Changes
+ 
 - Added CreateCallFailed event to signify when create call API fails to establish a call
 - Added AnswerFailed event to signify when answer call API fails to answer a call
 
