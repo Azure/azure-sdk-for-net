@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (Optional.IsDefined(ConstrainedMaximumCapacity))
+            if (Optional.IsDefined(IsMaximumCapacityConstrained))
             {
                 writer.WritePropertyName("constrainedMaximumCapacity"u8);
-                writer.WriteBooleanValue(ConstrainedMaximumCapacity.Value);
+                writer.WriteBooleanValue(IsMaximumCapacityConstrained.Value);
             }
             if (Optional.IsDefined(ResiliencyPolicy))
             {
