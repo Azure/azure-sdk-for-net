@@ -262,6 +262,7 @@ rename-mapping:
   AlternativeOption: ImageAlternativeOption
   AlternativeType: ImageAlternativeType
   VirtualMachineScaleSetProperties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
+  VirtualMachineScaleSetUpdateProperties: VirtualMachineScaleSetPatchProperties
   RollingUpgradePolicy.maxSurge : IsMaxSurgeEnabled
   ScheduledEventsProfile: ComputeScheduledEventsProfile
   ExpandTypeForListVMs: GetVirtualMachineExpandType
@@ -398,6 +399,10 @@ directive:
       $.additionalProperties = true;
   - from: virtualMachineScaleSet.json
     where: $.definitions.VirtualMachineScaleSet.properties
+    transform: >
+      $.properties["x-ms-client-flatten"] = false;
+  - from: virtualMachineScaleSet.json
+    where: $.definitions.VirtualMachineScaleSetUpdate.properties
     transform: >
       $.properties["x-ms-client-flatten"] = false;
   - from: virtualMachineScaleSet.json

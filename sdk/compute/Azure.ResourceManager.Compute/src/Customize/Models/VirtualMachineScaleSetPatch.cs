@@ -3,15 +3,12 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetData : TrackedResourceData
+    public partial class VirtualMachineScaleSetPatch : ComputeResourcePatch
     {
         /// <summary> The upgrade policy. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -22,24 +19,9 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
                 Properties.UpgradePolicy = value;
-            }
-        }
-
-        /// <summary> The ScheduledEventsPolicy. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ScheduledEventsPolicy ScheduledEventsPolicy
-        {
-            get => Properties?.ScheduledEventsPolicy;
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineScaleSetProperties();
-                }
-                Properties.ScheduledEventsPolicy = value;
             }
         }
 
@@ -52,7 +34,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
                 Properties.AutomaticRepairsPolicy = value;
             }
@@ -60,22 +42,18 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The virtual machine profile. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public VirtualMachineScaleSetVmProfile VirtualMachineProfile
+        public VirtualMachineScaleSetUpdateVmProfile VirtualMachineProfile
         {
             get => Properties?.VirtualMachineProfile;
             set
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
                 Properties.VirtualMachineProfile = value;
             }
         }
-
-        /// <summary> The provisioning state, which only appears in the response. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string ProvisioningState => Properties?.ProvisioningState;
 
         /// <summary> Specifies whether the Virtual Machine Scale Set should be overprovisioned. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -86,7 +64,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
                 Properties.Overprovision = value;
             }
@@ -101,15 +79,11 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
                 Properties.DoNotRunExtensionsOnOverprovisionedVms = value;
             }
         }
-
-        /// <summary> Specifies the ID which uniquely identifies a Virtual Machine Scale Set. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string UniqueId => Properties?.UniqueId;
 
         /// <summary> When true this limits the scale set to a single placement group, of max size 100 virtual machines. NOTE: If singlePlacementGroup is true, it may be modified to false. However, if singlePlacementGroup is false, it may not be modified to true. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -120,69 +94,9 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
                 Properties.SinglePlacementGroup = value;
-            }
-        }
-
-        /// <summary> Whether to force strictly even Virtual Machine distribution cross x-zones in case there is zone outage. zoneBalance property can only be set if the zones property of the scale set contains more than one zone. If there are no zones or only one zone specified, then zoneBalance property should not be set. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? ZoneBalance
-        {
-            get => Properties?.ZoneBalance;
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineScaleSetProperties();
-                }
-                Properties.ZoneBalance = value;
-            }
-        }
-
-        /// <summary> Fault Domain count for each placement group. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public int? PlatformFaultDomainCount
-        {
-            get => Properties?.PlatformFaultDomainCount;
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineScaleSetProperties();
-                }
-                Properties.PlatformFaultDomainCount = value;
-            }
-        }
-
-        /// <summary> Gets or sets Id. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResourceIdentifier ProximityPlacementGroupId
-        {
-            get => Properties?.ProximityPlacementGroupId;
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineScaleSetProperties();
-                }
-                Properties.ProximityPlacementGroupId = value;
-            }
-        }
-
-        /// <summary> Gets or sets Id. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResourceIdentifier HostGroupId
-        {
-            get => Properties?.HostGroupId;
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineScaleSetProperties();
-                }
-                Properties.HostGroupId = value;
             }
         }
 
@@ -195,7 +109,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
                 Properties.AdditionalCapabilities = value;
             }
@@ -210,39 +124,24 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
                 Properties.ScaleInPolicy = value;
             }
         }
 
-        /// <summary> Specifies the orchestration mode for the virtual machine scale set. </summary>
+        /// <summary> Gets or sets Id. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public OrchestrationMode? OrchestrationMode
+        public ResourceIdentifier ProximityPlacementGroupId
         {
-            get => Properties?.OrchestrationMode;
+            get => Properties?.ProximityPlacementGroupId;
             set
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
-                Properties.OrchestrationMode = value;
-            }
-        }
-
-        /// <summary> Specifies the Spot Restore properties for the virtual machine scale set. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public SpotRestorePolicy SpotRestorePolicy
-        {
-            get => Properties?.SpotRestorePolicy;
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineScaleSetProperties();
-                }
-                Properties.SpotRestorePolicy = value;
+                Properties.ProximityPlacementGroupId = value;
             }
         }
 
@@ -255,28 +154,24 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
                 Properties.PriorityMixPolicy = value;
             }
         }
 
-        /// <summary> Specifies the time at which the Virtual Machine Scale Set resource was created. Minimum api-version: 2021-11-01. </summary>
+        /// <summary> Specifies the Spot Restore properties for the virtual machine scale set. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public DateTimeOffset? TimeCreated => Properties?.TimeCreated;
-
-        /// <summary> Optional property which must either be set to True or omitted. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsMaximumCapacityConstrained
+        public SpotRestorePolicy SpotRestorePolicy
         {
-            get => Properties?.IsMaximumCapacityConstrained;
+            get => Properties?.SpotRestorePolicy;
             set
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
-                Properties.IsMaximumCapacityConstrained = value;
+                Properties.SpotRestorePolicy = value;
             }
         }
 
@@ -289,7 +184,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
                 Properties.ResiliencyPolicy = value;
             }
@@ -304,7 +199,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
                 Properties.ZonalPlatformFaultDomainAlignMode = value;
             }
@@ -319,7 +214,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
                 Properties.SkuProfile = value;
             }
