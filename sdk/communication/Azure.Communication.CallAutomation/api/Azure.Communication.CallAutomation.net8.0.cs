@@ -68,6 +68,12 @@ namespace Azure.Communication.CallAutomation
         internal AnswerFailed() { }
         public static Azure.Communication.CallAutomation.AnswerFailed Deserialize(string content) { throw null; }
     }
+    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+    public enum AudioChannel
+    {
+        Unknown = 0,
+        Mono = 1,
+    }
     public partial class AudioData : Azure.Communication.CallAutomation.StreamingData
     {
         public AudioData(byte[] data) { }
@@ -96,16 +102,11 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class AudioMetadata : Azure.Communication.CallAutomation.StreamingData
     {
-        public AudioMetadata() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("channels")]
-        public int Channels { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("encoding")]
+        internal AudioMetadata() { }
+        public Azure.Communication.CallAutomation.AudioChannel Channels { get { throw null; } set { } }
         public string Encoding { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("length")]
         public int Length { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("subscriptionId")]
         public string MediaSubscriptionId { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sampleRate")]
         public int SampleRate { get { throw null; } set { } }
     }
     public partial class CallAutomationClient

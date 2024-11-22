@@ -8,7 +8,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Internal Metadata model for Audio Streaming.
     /// </summary>
-    public class AudioMetadataInternal
+    internal class AudioMetadataInternal
     {
         /// <summary>
         /// A unique identifier for the media subscription.
