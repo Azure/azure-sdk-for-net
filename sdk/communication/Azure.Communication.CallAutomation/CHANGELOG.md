@@ -12,10 +12,6 @@
 - Expose original PSTN number target from incoming call event in call connection properties
 - Support for VoIP to PSTN transfer scenario 
  
-### Breaking Changes
- 
-### Bugs Fixed
- 
 ### Other Changes
  
 - Added CreateCallFailed event to signify when create call API fails to establish a call
