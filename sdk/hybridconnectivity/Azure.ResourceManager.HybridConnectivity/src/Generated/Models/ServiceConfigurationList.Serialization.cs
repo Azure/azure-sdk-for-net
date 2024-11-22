@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 return null;
             }
-            IReadOnlyList<ServiceConfigurationResourceData> value = default;
+            IReadOnlyList<HybridConnectivityServiceConfigurationData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     {
                         continue;
                     }
-                    List<ServiceConfigurationResourceData> array = new List<ServiceConfigurationResourceData>();
+                    List<HybridConnectivityServiceConfigurationData> array = new List<HybridConnectivityServiceConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceConfigurationResourceData.DeserializeServiceConfigurationResourceData(item, options));
+                        array.Add(HybridConnectivityServiceConfigurationData.DeserializeHybridConnectivityServiceConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServiceConfigurationList(value ?? new ChangeTrackingList<ServiceConfigurationResourceData>(), nextLink, serializedAdditionalRawData);
+            return new ServiceConfigurationList(value ?? new ChangeTrackingList<HybridConnectivityServiceConfigurationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceConfigurationList>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="expiresOn"> The expiration of access key in unix time. </param>
         /// <param name="serviceConfigurationToken"> The token to access the enabled service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IngressGatewayAsset(string hostname, ResourceIdentifier serverId, Guid? tenantId, string namespaceName, string namespaceNameSuffix, string hybridConnectionName, string accessKey, long? expiresOn, string serviceConfigurationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IngressGatewayAsset(string hostname, Guid? serverId, Guid? tenantId, string namespaceName, string namespaceNameSuffix, string hybridConnectionName, string accessKey, long? expiresOn, string serviceConfigurationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Hostname = hostname;
             ServerId = serverId;
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <summary> The ingress hostname. </summary>
         public string Hostname { get; }
         /// <summary> The arc ingress gateway server app id. </summary>
-        public ResourceIdentifier ServerId { get; }
+        public Guid? ServerId { get; }
         /// <summary> The target resource home tenant id. </summary>
         public Guid? TenantId { get; }
         /// <summary> The namespace name. </summary>
