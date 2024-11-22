@@ -41,6 +41,7 @@ public class CloudMachineWorkspace : ClientWorkspace
         }
         else
         {
+            // This environment variable is set by the CloudMachine App Service feature during provisioning.
             Credential = Environment.GetEnvironmentVariable("CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID") switch
             {
                 string clientId when !string.IsNullOrEmpty(clientId) => new ManagedIdentityCredential(clientId),
