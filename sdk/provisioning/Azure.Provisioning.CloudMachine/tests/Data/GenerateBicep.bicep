@@ -4,12 +4,12 @@ param location string = resourceGroup().location
 param principalId string
 
 resource cm_identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: 'cme1e30df16a5142a'
+  name: 'cm0c420d2f21084cd'
   location: location
 }
 
 resource cm_storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-  name: 'cme1e30df16a5142a'
+  name: 'cm0c420d2f21084cd'
   kind: 'StorageV2'
   location: location
   sku: {
@@ -78,7 +78,7 @@ resource cm_storage_blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-0
 }
 
 resource cm_servicebus 'Microsoft.ServiceBus/namespaces@2024-01-01' = {
-  name: 'cme1e30df16a5142a'
+  name: 'cm0c420d2f21084cd'
   location: location
   sku: {
     name: 'Standard'
@@ -222,7 +222,7 @@ resource cm_eventgrid_subscription_blob 'Microsoft.EventGrid/systemTopics/eventS
 }
 
 resource cm_eventgrid_topic_blob 'Microsoft.EventGrid/systemTopics@2022-06-15' = {
-  name: 'cme1e30df16a5142a'
+  name: 'cm0c420d2f21084cd'
   location: location
   identity: {
     type: 'UserAssigned'
@@ -237,7 +237,7 @@ resource cm_eventgrid_topic_blob 'Microsoft.EventGrid/systemTopics@2022-06-15' =
 }
 
 resource cm_kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
-  name: 'cme1e30df16a5142a'
+  name: 'cm0c420d2f21084cd'
   location: location
   properties: {
     tenantId: subscription().tenantId
@@ -282,11 +282,11 @@ resource cm_kv_cm_identity_KeyVaultAdministrator 'Microsoft.Authorization/roleAs
 }
 
 resource openai 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
-  name: 'cme1e30df16a5142a'
+  name: 'cm0c420d2f21084cd'
   location: location
   kind: 'OpenAI'
   properties: {
-    customSubDomainName: 'cme1e30df16a5142a'
+    customSubDomainName: 'cm0c420d2f21084cd'
     publicNetworkAccess: 'Enabled'
   }
   sku: {
@@ -314,8 +314,8 @@ resource openai_cm_identity_CognitiveServicesOpenAIContributor 'Microsoft.Author
   scope: openai
 }
 
-resource openai_cme1e30df16a5142a_chat 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-preview' = {
-  name: 'cme1e30df16a5142a_chat'
+resource openai_cm0c420d2f21084cd_chat 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-preview' = {
+  name: 'cm0c420d2f21084cd_chat'
   properties: {
     model: {
       format: 'OpenAI'
@@ -332,8 +332,8 @@ resource openai_cme1e30df16a5142a_chat 'Microsoft.CognitiveServices/accounts/dep
   parent: openai
 }
 
-resource openai_cme1e30df16a5142a_embedding 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-preview' = {
-  name: 'cme1e30df16a5142a_embedding'
+resource openai_cm0c420d2f21084cd_embedding 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-preview' = {
+  name: 'cm0c420d2f21084cd_embedding'
   properties: {
     model: {
       format: 'OpenAI'
@@ -349,7 +349,7 @@ resource openai_cme1e30df16a5142a_embedding 'Microsoft.CognitiveServices/account
   }
   parent: openai
   dependsOn: [
-    openai_cme1e30df16a5142a_chat
+    openai_cm0c420d2f21084cd_chat
   ]
 }
 

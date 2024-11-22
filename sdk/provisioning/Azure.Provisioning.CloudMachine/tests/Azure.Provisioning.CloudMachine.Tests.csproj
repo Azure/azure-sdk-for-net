@@ -10,5 +10,6 @@
 
   <ItemGroup>
     <None Update="Data\*" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
