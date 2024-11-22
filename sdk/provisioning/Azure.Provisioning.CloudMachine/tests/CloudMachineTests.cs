@@ -3,6 +3,7 @@
 
 #nullable enable
 
+using Azure.CloudMachine.AppService;
 using Azure.CloudMachine.KeyVault;
 using Azure.CloudMachine.OpenAI;
 using NUnit.Framework;
@@ -19,6 +20,7 @@ public class CloudMachineTests
             infrastructure.AddFeature(new KeyVaultFeature());
             infrastructure.AddFeature(new OpenAIModel("gpt-35-turbo", "0125"));
             infrastructure.AddFeature(new OpenAIModel("text-embedding-ada-002", "2", AIModelKind.Embedding));
+            infrastructure.AddFeature(new AppServiceFeature());
         }, exitProcessIfHandled:false);
     }
 

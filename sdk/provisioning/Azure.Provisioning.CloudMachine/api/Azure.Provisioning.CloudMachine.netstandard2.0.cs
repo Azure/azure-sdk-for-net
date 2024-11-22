@@ -46,6 +46,15 @@ namespace Azure.CloudMachine
         public System.Collections.Generic.IEnumerable<T> FindAll<T>() where T : Azure.Provisioning.CloudMachine.CloudMachineFeature { throw null; }
     }
 }
+namespace Azure.CloudMachine.AppService
+{
+    public partial class AppServiceFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
+    {
+        public AppServiceFeature(Azure.Provisioning.AppService.AppServiceSkuDescription? sku = null) { }
+        public Azure.Provisioning.AppService.AppServiceSkuDescription Sku { get { throw null; } set { } }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure infrastructure) { throw null; }
+    }
+}
 namespace Azure.CloudMachine.KeyVault
 {
     public partial class KeyVaultFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
