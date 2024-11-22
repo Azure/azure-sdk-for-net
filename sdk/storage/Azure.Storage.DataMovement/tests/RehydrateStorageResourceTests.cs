@@ -58,7 +58,6 @@ namespace Azure.Storage.DataMovement.Tests
             [Values(true, false)] bool isSource)
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             Random random = new();
             string transferId = GetNewTransferId();
             string sourcePath = string.Concat("/", random.NextString(20));
@@ -87,7 +86,6 @@ namespace Azure.Storage.DataMovement.Tests
             [Values(true, false)] bool isSource)
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             Random random = new();
             string transferId = GetNewTransferId();
             string sourceParentPath = string.Concat("/", random.NextString(20));

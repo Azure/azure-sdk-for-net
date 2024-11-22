@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
             SiteLoadBalancing.WeightedTotalTraffic => "WeightedTotalTraffic",
             SiteLoadBalancing.RequestHash => "RequestHash",
             SiteLoadBalancing.PerSiteRoundRobin => "PerSiteRoundRobin",
+            SiteLoadBalancing.LeastRequestsWithTieBreaker => "LeastRequestsWithTieBreaker",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SiteLoadBalancing value.")
         };
 
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "WeightedTotalTraffic")) return SiteLoadBalancing.WeightedTotalTraffic;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "RequestHash")) return SiteLoadBalancing.RequestHash;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "PerSiteRoundRobin")) return SiteLoadBalancing.PerSiteRoundRobin;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LeastRequestsWithTieBreaker")) return SiteLoadBalancing.LeastRequestsWithTieBreaker;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SiteLoadBalancing value.");
         }
     }

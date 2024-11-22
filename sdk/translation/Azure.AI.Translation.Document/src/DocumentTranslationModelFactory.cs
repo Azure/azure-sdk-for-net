@@ -80,13 +80,13 @@ namespace Azure.AI.Translation.Document
         /// <param name="lastModified">Sets the <see cref="TranslationStatusResult.LastModified"/> property.</param>
         /// <param name="status">Sets the <see cref="TranslationStatusResult.Status"/> property.</param>
         /// <param name="error">Sets the <see cref="TranslationStatusResult.Error"/> property.</param>
-        /// <param name="total">Sets the <see cref="StatusSummary.Total"/> and the <see cref="TranslationStatusResult.DocumentsTotal"/> properties.</param>
-        /// <param name="failed">Sets the <see cref="StatusSummary.Failed"/> and the <see cref="TranslationStatusResult.DocumentsFailed"/> properties.</param>
-        /// <param name="success">Sets the <see cref="StatusSummary.Success"/> and the <see cref="TranslationStatusResult.DocumentsSucceeded"/> properties.</param>
-        /// <param name="inProgress">Sets the <see cref="StatusSummary.InProgress"/> and the <see cref="TranslationStatusResult.DocumentsInProgress"/> properties.</param>
-        /// <param name="notYetStarted">Sets the <see cref="StatusSummary.NotYetStarted"/> and the <see cref="TranslationStatusResult.DocumentsNotStarted"/> properties.</param>
-        /// <param name="canceled">Sets the <see cref="StatusSummary.Cancelled"/> and the <see cref="TranslationStatusResult.DocumentsCanceled"/> properties.</param>
-        /// <param name="totalCharacterCharged">Sets the <see cref="StatusSummary.TotalCharacterCharged"/> and the <see cref="TranslationStatusResult.TotalCharactersCharged"/> properties.</param>
+        /// <param name="total">Sets the <see cref="TranslationStatusSummary.Total"/> and the <see cref="TranslationStatusResult.DocumentsTotal"/> properties.</param>
+        /// <param name="failed">Sets the <see cref="TranslationStatusSummary.Failed"/> and the <see cref="TranslationStatusResult.DocumentsFailed"/> properties.</param>
+        /// <param name="success">Sets the <see cref="TranslationStatusSummary.Success"/> and the <see cref="TranslationStatusResult.DocumentsSucceeded"/> properties.</param>
+        /// <param name="inProgress">Sets the <see cref="TranslationStatusSummary.InProgress"/> and the <see cref="TranslationStatusResult.DocumentsInProgress"/> properties.</param>
+        /// <param name="notYetStarted">Sets the <see cref="TranslationStatusSummary.NotYetStarted"/> and the <see cref="TranslationStatusResult.DocumentsNotStarted"/> properties.</param>
+        /// <param name="canceled">Sets the <see cref="TranslationStatusSummary.Cancelled"/> and the <see cref="TranslationStatusResult.DocumentsCanceled"/> properties.</param>
+        /// <param name="totalCharacterCharged">Sets the <see cref="TranslationStatusSummary.TotalCharacterCharged"/> and the <see cref="TranslationStatusResult.TotalCharactersCharged"/> properties.</param>
         /// <returns>A new instance of <see cref="Document.TranslationStatusResult"/> for mocking purposes.</returns>
         public static TranslationStatusResult TranslationStatusResult(
             string id,
@@ -103,7 +103,7 @@ namespace Azure.AI.Translation.Document
             long totalCharacterCharged
             )
         {
-            StatusSummary newSummary = new StatusSummary(total, failed, success, inProgress, notYetStarted, canceled, totalCharacterCharged);
+            TranslationStatusSummary newSummary = new TranslationStatusSummary(total, failed, success, inProgress, notYetStarted, canceled, totalCharacterCharged);
             JsonElement errorJson = error.ToObjectFromJson<JsonElement>();
             return new TranslationStatusResult(id, createdOn, lastModified, status, errorJson, newSummary);
         }

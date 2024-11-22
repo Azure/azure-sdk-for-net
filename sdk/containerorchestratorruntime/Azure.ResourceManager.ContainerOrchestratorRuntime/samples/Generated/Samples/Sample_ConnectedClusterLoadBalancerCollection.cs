@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
 {
     public partial class Sample_ConnectedClusterLoadBalancerCollection
     {
-        // LoadBalancers_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_LoadBalancersGet()
         {
             // Generated from example definition: 2024-03-01/LoadBalancers_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LoadBalancers_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_LoadBalancersGet()
         {
             // Generated from example definition: 2024-03-01/LoadBalancers_Get.json
@@ -75,9 +74,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // LoadBalancers_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_LoadBalancersGet()
         {
             // Generated from example definition: 2024-03-01/LoadBalancers_Get.json
@@ -103,7 +101,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -115,9 +113,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             }
         }
 
-        // LoadBalancers_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_LoadBalancersCreateOrUpdate()
         {
             // Generated from example definition: 2024-03-01/LoadBalancers_CreateOrUpdate.json
@@ -161,9 +158,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LoadBalancers_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_LoadBalancersList()
         {
             // Generated from example definition: 2024-03-01/LoadBalancers_List.json
@@ -192,7 +188,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

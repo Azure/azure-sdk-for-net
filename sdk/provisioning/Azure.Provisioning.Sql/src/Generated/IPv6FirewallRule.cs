@@ -19,33 +19,52 @@ public partial class IPv6FirewallRule : ProvisionableResource
     /// <summary>
     /// The name of the firewall rule.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The end IP address of the firewall rule. Must be IPv6 format. Must be
     /// greater than or equal to startIpv6Address.
     /// </summary>
-    public BicepValue<string> EndIPv6Address { get => _endIPv6Address; set => _endIPv6Address.Assign(value); }
-    private readonly BicepValue<string> _endIPv6Address;
+    public BicepValue<string> EndIPv6Address 
+    {
+        get { Initialize(); return _endIPv6Address!; }
+        set { Initialize(); _endIPv6Address!.Assign(value); }
+    }
+    private BicepValue<string>? _endIPv6Address;
 
     /// <summary>
     /// The start IP address of the firewall rule. Must be IPv6 format.
     /// </summary>
-    public BicepValue<string> StartIPv6Address { get => _startIPv6Address; set => _startIPv6Address.Assign(value); }
-    private readonly BicepValue<string> _startIPv6Address;
+    public BicepValue<string> StartIPv6Address 
+    {
+        get { Initialize(); return _startIPv6Address!; }
+        set { Initialize(); _startIPv6Address!.Assign(value); }
+    }
+    private BicepValue<string>? _startIPv6Address;
 
     /// <summary>
     /// Resource ID.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServer.
     /// </summary>
-    public SqlServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlServer> _parent;
+    public SqlServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlServer>? _parent;
 
     /// <summary>
     /// Creates a new IPv6FirewallRule.
@@ -60,11 +79,18 @@ public partial class IPv6FirewallRule : ProvisionableResource
     public IPv6FirewallRule(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/servers/ipv6FirewallRules", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _endIPv6Address = BicepValue<string>.DefineProperty(this, "EndIPv6Address", ["properties", "endIPv6Address"]);
-        _startIPv6Address = BicepValue<string>.DefineProperty(this, "StartIPv6Address", ["properties", "startIPv6Address"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _parent = ResourceReference<SqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of IPv6FirewallRule.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _endIPv6Address = DefineProperty<string>("EndIPv6Address", ["properties", "endIPv6Address"]);
+        _startIPv6Address = DefineProperty<string>("StartIPv6Address", ["properties", "startIPv6Address"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _parent = DefineResource<SqlServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

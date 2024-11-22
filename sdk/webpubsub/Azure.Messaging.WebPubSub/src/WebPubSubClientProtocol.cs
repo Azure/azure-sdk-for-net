@@ -17,4 +17,9 @@ public enum WebPubSubClientProtocol
     /// MQTT client protocol, whose access endpoint starts with "/clients/mqtt".
     /// </summary>
     Mqtt,
+
+    /// <summary>
+    /// SocketIO client protocol, whose access endpoint starts with "/clients/socketio".
+    /// </summary>
+    SocketIO,
 }

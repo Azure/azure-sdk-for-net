@@ -2,5 +2,4 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics.CodeAnalysis;
-
-[assembly: Experimental("AZPROVISION001")]
+using System.Runtime.CompilerServices;

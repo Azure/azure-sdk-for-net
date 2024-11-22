@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Reflection;
@@ -385,6 +386,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void PeekMessageStartCore(int eventId, string identifier, long? sequenceNumber, int messageCount)
         {
             fixed (char* identifierPtr = identifier)
@@ -1094,6 +1096,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void ProcessorMessageHandlerExceptionCore(int eventId, string identifier, long sequenceNumber, string exception, string lockToken)
         {
             fixed (char* identifierPtr = identifier)
@@ -1254,6 +1257,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void LinkStateLostCore(int eventId, string identifier, string receiveLinkName, string receiveLinkState, bool isSessionReceiver, string exception)
         {
             fixed (char* identifierPtr = identifier)
@@ -1807,6 +1811,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void TransactionDischargedCore(int eventId, string transactionId, string amqpTransactionId, bool rollback)
         {
             fixed (char* transactionIdPtr = transactionId)
@@ -1909,6 +1914,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="arg3">The third argument.</param>
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId, string arg1, int arg2, string arg3)
         {
             fixed (char* arg1Ptr = arg1)
@@ -1940,6 +1946,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="arg3">The third argument.</param>
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId, string arg1, long arg2, string arg3)
         {
             fixed (char* arg1Ptr = arg1)
@@ -1971,6 +1978,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="arg4">The fourth argument.</param>
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId, string arg1, string arg2, string arg3, string arg4)
         {
             fixed (char* arg1Ptr = arg1)

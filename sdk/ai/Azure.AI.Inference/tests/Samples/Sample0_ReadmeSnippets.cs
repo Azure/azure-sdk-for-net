@@ -25,7 +25,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var credential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 #endif
 
-            var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+            var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
             #endregion
         }
 
@@ -42,7 +42,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var credential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 #endif
 
-            var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+            var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
             Response<ModelInfo> modelInfo = client.GetModelInfo();
 
             Console.WriteLine($"Model name: {modelInfo.Value.ModelName}");
@@ -64,7 +64,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var credential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 #endif
 
-            var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+            var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
             var requestOptions = new ChatCompletionsOptions()
             {
@@ -80,7 +80,7 @@ namespace Azure.AI.Inference.Tests.Samples
             requestOptions = ModelReaderWriter.Read<ChatCompletionsOptions>(messages);
 
             Response<ChatCompletions> response = client.Complete(requestOptions);
-            System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+            System.Console.WriteLine(response.Value.Content);
             #endregion
         }
 
@@ -97,7 +97,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var credential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 #endif
 
-            var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+            var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
             var requestOptions = new ChatCompletionsOptions()
             {
@@ -135,7 +135,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var credential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 #endif
 
-            var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+            var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
             var requestOptions = new ChatCompletionsOptions()
             {
                 Messages =

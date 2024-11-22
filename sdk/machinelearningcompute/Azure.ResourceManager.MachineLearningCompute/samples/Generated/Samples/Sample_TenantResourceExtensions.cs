@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MachineLearningCompute.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {
-        // Machine Learning Compute List Available Operations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableOperationsMachineLearningComputes_MachineLearningComputeListAvailableOperations()
         {
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/MachineLearningCompute_ListAvailableOperations.json
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

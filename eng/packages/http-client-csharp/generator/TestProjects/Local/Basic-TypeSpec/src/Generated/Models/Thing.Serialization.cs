@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Core;
 using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
@@ -197,7 +198,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        optionalLiteralString = null;
                         continue;
                     }
                     optionalLiteralString = new ThingOptionalLiteralString(prop.Value.GetString());
@@ -207,7 +207,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        optionalLiteralInt = null;
                         continue;
                     }
                     optionalLiteralInt = new ThingOptionalLiteralInt(prop.Value.GetInt32());
@@ -217,7 +216,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        optionalLiteralFloat = null;
                         continue;
                     }
                     optionalLiteralFloat = new ThingOptionalLiteralFloat(prop.Value.GetSingle());
@@ -227,7 +225,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        optionalLiteralBool = null;
                         continue;
                     }
                     optionalLiteralBool = prop.Value.GetBoolean();
@@ -325,16 +322,22 @@ namespace BasicTypeSpec.Models
 
         string IPersistableModel<Thing>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="thing"> The <see cref="Thing"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(Thing thing)
+        /// <param name="thing"> The <see cref="Thing"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(Thing thing)
         {
-            return BinaryContent.Create(thing, ModelSerializationExtensions.WireOptions);
+            if (thing == null)
+            {
+                return null;
+            }
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(thing, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="Thing"/> from. </param>
-        public static explicit operator Thing(ClientResult result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="Thing"/> from. </param>
+        public static explicit operator Thing(Response result)
         {
-            using PipelineResponse response = result.GetRawResponse();
+            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeThing(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

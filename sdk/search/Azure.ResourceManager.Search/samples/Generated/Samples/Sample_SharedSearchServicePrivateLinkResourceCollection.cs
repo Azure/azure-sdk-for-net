@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Search.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Search.Samples
 {
     public partial class Sample_SharedSearchServicePrivateLinkResourceCollection
     {
-        // SharedPrivateLinkResourceCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SharedPrivateLinkResourceCreateOrUpdate()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/CreateOrUpdateSharedPrivateLinkResource.json
@@ -61,9 +61,8 @@ namespace Azure.ResourceManager.Search.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SharedPrivateLinkResourceGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SharedPrivateLinkResourceGet()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/GetSharedPrivateLinkResource.json
@@ -96,9 +95,8 @@ namespace Azure.ResourceManager.Search.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SharedPrivateLinkResourceGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_SharedPrivateLinkResourceGet()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/GetSharedPrivateLinkResource.json
@@ -127,9 +125,8 @@ namespace Azure.ResourceManager.Search.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SharedPrivateLinkResourceGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SharedPrivateLinkResourceGet()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/GetSharedPrivateLinkResource.json
@@ -158,7 +155,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -170,9 +167,8 @@ namespace Azure.ResourceManager.Search.Samples
             }
         }
 
-        // ListSharedPrivateLinkResourcesByService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSharedPrivateLinkResourcesByService()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/ListSharedPrivateLinkResourcesByService.json
@@ -204,7 +200,7 @@ namespace Azure.ResourceManager.Search.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

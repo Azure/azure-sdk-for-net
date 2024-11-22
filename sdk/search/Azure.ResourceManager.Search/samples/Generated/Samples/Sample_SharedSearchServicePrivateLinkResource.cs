@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Search.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Search.Samples
 {
     public partial class Sample_SharedSearchServicePrivateLinkResource
     {
-        // SharedPrivateLinkResourceCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SharedPrivateLinkResourceCreateOrUpdate()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/CreateOrUpdateSharedPrivateLinkResource.json
@@ -58,9 +58,8 @@ namespace Azure.ResourceManager.Search.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SharedPrivateLinkResourceGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SharedPrivateLinkResourceGet()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/GetSharedPrivateLinkResource.json
@@ -90,9 +89,8 @@ namespace Azure.ResourceManager.Search.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SharedPrivateLinkResourceDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SharedPrivateLinkResourceDelete()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/DeleteSharedPrivateLinkResource.json
@@ -115,7 +113,7 @@ namespace Azure.ResourceManager.Search.Samples
             // invoke the operation
             await sharedSearchServicePrivateLinkResource.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

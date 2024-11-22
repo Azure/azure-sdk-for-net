@@ -9,7 +9,7 @@ Azure.Provisioning.ContainerRegistry simplifies declarative resource provisionin
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.ContainerRegistry --prerelease
+dotnet add package Azure.Provisioning.ContainerRegistry
 ```
 
 ### Prerequisites

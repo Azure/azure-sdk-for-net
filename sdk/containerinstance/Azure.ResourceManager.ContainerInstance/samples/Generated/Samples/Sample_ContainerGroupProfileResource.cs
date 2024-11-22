@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerInstance.Samples
 {
     public partial class Sample_ContainerGroupProfileResource
     {
-        // ContainerGroupProfilesList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContainerGroupProfiles_ContainerGroupProfilesList()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesList.json
@@ -45,12 +45,11 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ContainerGroupProfilesGetWithPriority
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ContainerGroupProfilesGetWithPriority()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesGetPriority.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ContainerGroupProfilesGet_Succeeded
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ContainerGroupProfilesGetSucceeded()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesGet.json
@@ -110,9 +108,8 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ContainerGroupProfilesPatch
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ContainerGroupProfilesPatch()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesPatch.json
@@ -149,9 +146,8 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ContainerGroupProfilesDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ContainerGroupProfilesDelete()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesDelete.json
@@ -173,7 +169,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             // invoke the operation
             await containerGroupProfile.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

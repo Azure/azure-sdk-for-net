@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_NetworkVirtualApplianceConnectionResource
     {
-        // NetworkVirtualApplianceConnectionPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_NetworkVirtualApplianceConnectionPut()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkVirtualApplianceConnectionPut.json
@@ -81,9 +81,8 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkVirtualApplianceConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkVirtualApplianceConnectionGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkVirtualApplianceConnectionGet.json
@@ -113,9 +112,8 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkVirtualApplianceConnectionDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_NetworkVirtualApplianceConnectionDelete()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkVirtualApplianceConnectionDelete.json
@@ -138,7 +136,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
             // invoke the operation
             await networkVirtualApplianceConnection.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -38,38 +38,48 @@ namespace Azure.Storage.DataMovement.JobPlan
             string checkpointerPath,
             string id,
             int jobPart,
-            Stream headerStream)
+            JobPartPlanHeader header,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(checkpointerPath, nameof(checkpointerPath));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(jobPart, nameof(jobPart));
-            Argument.AssertNotNull(headerStream, nameof(headerStream));
+            Argument.AssertNotNull(header, nameof(header));
 
             JobPartPlanFileName fileName = new JobPartPlanFileName(checkpointerPath: checkpointerPath, id: id, jobPartNumber: jobPart);
-            JobPartPlanFile result = new JobPartPlanFile()
-            {
-                FileName = fileName
-            };
-            using (FileStream fileStream = File.Create(result.FileName.ToString()))
-            {
-                await headerStream.CopyToAsync(fileStream).ConfigureAwait(false);
-            }
-            return result;
+            return await CreateJobPartPlanFileAsync(fileName, header, cancellationToken).ConfigureAwait(false);
         }
 
         public static async Task<JobPartPlanFile> CreateJobPartPlanFileAsync(
             JobPartPlanFileName fileName,
-            Stream headerStream)
+            JobPartPlanHeader header,
+            CancellationToken cancellationToken = default)
         {
             JobPartPlanFile result = new JobPartPlanFile()
             {
                 FileName = fileName
             };
 
-            using (FileStream fileStream = File.Create(result.FileName.ToString()))
+            try
             {
-                await headerStream.CopyToAsync(fileStream).ConfigureAwait(false);
+                using (FileStream fileStream = File.Create(result.FileName.ToString()))
+                using (MemoryStream ms = new())
+                {
+                    header.Serialize(ms);
+                    ms.Position = 0;
+                    await ms.CopyToAsync(
+                        fileStream,
+                        DataMovementConstants.DefaultStreamCopyBufferSize,
+                        cancellationToken).ConfigureAwait(false);
+                }
             }
+            catch (Exception)
+            {
+                // will handle if file has not been created yet
+                File.Delete(result.FileName.ToString());
+                throw;
+            }
+
             return result;
         }
 

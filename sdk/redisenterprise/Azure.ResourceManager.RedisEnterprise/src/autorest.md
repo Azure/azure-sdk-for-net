@@ -20,7 +20,6 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
 use-model-reader-writer: true
-use-write-core: true
 enable-bicep-serialization: true
 
 # mgmt-debug:

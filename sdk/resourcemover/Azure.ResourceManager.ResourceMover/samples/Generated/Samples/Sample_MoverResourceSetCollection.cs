@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ResourceMover.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ResourceMover.Samples
 {
     public partial class Sample_MoverResourceSetCollection
     {
-        // MoveCollections_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_MoveCollectionsCreate()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Create.json
@@ -62,9 +62,8 @@ namespace Azure.ResourceManager.ResourceMover.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // MoveCollections_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MoveCollectionsGet()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Get.json
@@ -96,9 +95,8 @@ namespace Azure.ResourceManager.ResourceMover.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // MoveCollections_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_MoveCollectionsGet()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Get.json
@@ -126,9 +124,8 @@ namespace Azure.ResourceManager.ResourceMover.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // MoveCollections_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_MoveCollectionsGet()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Get.json
@@ -156,7 +153,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -168,9 +165,8 @@ namespace Azure.ResourceManager.ResourceMover.Samples
             }
         }
 
-        // MoveCollections_ListMoveCollectionsByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_MoveCollectionsListMoveCollectionsByResourceGroup()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_ListMoveCollectionsByResourceGroup.json
@@ -201,7 +197,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

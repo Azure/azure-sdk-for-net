@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             return capactiyPoolResource1;
         }
 
-        public async Task<NetAppVolumeResource> CreateVolume(string location, NetAppFileServiceLevel serviceLevel, long? usageThreshold, string volumeName, ResourceIdentifier subnetId = null, List<string> protocolTypes = null, NetAppVolumeExportPolicyRule exportPolicyRule = null, NetAppVolumeCollection volumeCollection = null, NetAppVolumeDataProtection dataProtection = null, string snapshotId = "", string backupId = "")
+        public async Task<NetAppVolumeResource> CreateVolume(string location, NetAppFileServiceLevel serviceLevel, long? usageThreshold, string volumeName, ResourceIdentifier subnetId = null, List<string> protocolTypes = null, NetAppVolumeExportPolicyRule exportPolicyRule = null, NetAppVolumeCollection volumeCollection = null, NetAppVolumeDataProtection dataProtection = null, string snapshotId = "", string backupId = "", string volumeType = "")
         {
             location = string.IsNullOrEmpty(location) ? DefaultLocationString : location;
             if (volumeCollection == null)
@@ -312,6 +312,10 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
                 {
                     volumeData.ProtocolTypes.Add(protocolType);
                 }
+            }
+            if (!string.IsNullOrWhiteSpace(volumeType))
+            {
+                volumeData.VolumeType = volumeType;
             }
             volumeData.Tags.InitializeFrom(DefaultTags);
             NetAppVolumeResource volumeResource = (await volumeCollection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, volumeData)).Value;

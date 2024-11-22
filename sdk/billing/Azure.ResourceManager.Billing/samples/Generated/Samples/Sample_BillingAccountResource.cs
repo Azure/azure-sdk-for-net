@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Billing.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingAccountResource
     {
-        // AvailableBalanceGetByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingAccountAvailableBalance_AvailableBalanceGetByBillingAccount()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/availableBalanceGetByBillingAccount.json
@@ -41,9 +41,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PaymentTermsAdd
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AddPaymentTerms_PaymentTermsAdd()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentTermsAdd.json
@@ -80,9 +79,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PaymentTermsCancel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CancelPaymentTerms_PaymentTermsCancel()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentTermsCancel.json
@@ -111,9 +109,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingAccountsConfirmTransition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ConfirmTransition_BillingAccountsConfirmTransition()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingAccountsConfirmTransition.json
@@ -136,9 +133,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // InvoiceSectionsWithCreateSubscriptionPermissionList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetInvoiceSectionsByCreateSubscriptionPermission_InvoiceSectionsWithCreateSubscriptionPermissionList()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoiceSectionsWithCreateSubscriptionPermissionList.json
@@ -161,12 +157,11 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PaymentTermInvalid
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidatePaymentTerms_PaymentTermInvalid()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentTermInvalid.json
@@ -198,9 +193,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PaymentTermValid
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidatePaymentTerms_PaymentTermValid()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentTermValid.json
@@ -232,9 +226,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BillingAccountWithExpandForPONumber
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BillingAccountWithExpandForPONumber()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingAccountWithExpandForPONumber.json
@@ -261,9 +254,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingAccountWithRegistrationNumberWithDefaultType
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BillingAccountWithRegistrationNumberWithDefaultType()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingAccountWithRegistrationNumberWithDefaultType.json
@@ -290,9 +282,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingAccountWithRegistrationNumberWithType
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BillingAccountWithRegistrationNumberWithType()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingAccountWithRegistrationNumberWithType.json
@@ -319,9 +310,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingAccountsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BillingAccountsGet()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingAccountsGet.json
@@ -348,9 +338,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingAccountsGetEA
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BillingAccountsGetEA()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingAccountsGetEA.json
@@ -377,9 +366,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingAccountsGetWithExpand
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BillingAccountsGetWithExpand()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingAccountsGetWithExpand.json
@@ -406,9 +394,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingAccountUpdateWithPONumber
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_BillingAccountUpdateWithPONumber()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingAccountUpdateWithPONumber.json
@@ -446,9 +433,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingAccountsUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_BillingAccountsUpdate()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingAccountsUpdate.json
@@ -490,9 +476,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingPermissionsListByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingPermissions_BillingPermissionsListByBillingAccount()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingPermissionsListByBillingAccount.json
@@ -515,12 +500,11 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CheckAccessByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckAccessBillingPermissions_CheckAccessByBillingAccount()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/checkAccessByBillingAccount.json
@@ -550,12 +534,11 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BillingRequestsListByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingRequests_BillingRequestsListByBillingAccount()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRequestsListByBillingAccount.json
@@ -583,12 +566,11 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BillingRoleAssignmentCreateByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateByBillingAccountBillingRoleAssignment_BillingRoleAssignmentCreateByBillingAccount()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRoleAssignmentCreateByBillingAccount.json
@@ -619,9 +601,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded on id: {result.Id}");
         }
 
-        // ResolveBillingRoleAssignmentByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResolveByBillingAccountBillingRoleAssignment_ResolveBillingRoleAssignmentByBillingAccount()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/resolveBillingRoleAssignmentByBillingAccount.json
@@ -645,9 +626,8 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SavingsPlansList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetByBillingAccountSavingsPlan_SavingsPlansList()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/savingsPlansListByBillingAccount.json
@@ -675,12 +655,11 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // InvoicesDownloadDocumentsByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DownloadDocumentsByBillingAccountInvoice_InvoicesDownloadDocumentsByBillingAccount()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoicesDownloadDocumentsByBillingAccount.json
@@ -716,9 +695,8 @@ InvoiceName = "G987654321",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // reservationsListByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReservations_ReservationsListByBillingAccount()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/reservationsListByBillingAccount.json
@@ -746,7 +724,7 @@ InvoiceName = "G987654321",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

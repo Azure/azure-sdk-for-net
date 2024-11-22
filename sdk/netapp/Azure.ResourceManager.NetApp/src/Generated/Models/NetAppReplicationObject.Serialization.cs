@@ -49,8 +49,16 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("replicationSchedule"u8);
                 writer.WriteStringValue(ReplicationSchedule.Value.ToString());
             }
-            writer.WritePropertyName("remoteVolumeResourceId"u8);
-            writer.WriteStringValue(RemoteVolumeResourceId);
+            if (Optional.IsDefined(RemoteVolumeResourceId))
+            {
+                writer.WritePropertyName("remoteVolumeResourceId"u8);
+                writer.WriteStringValue(RemoteVolumeResourceId);
+            }
+            if (Optional.IsDefined(RemotePath))
+            {
+                writer.WritePropertyName("remotePath"u8);
+                writer.WriteObjectValue(RemotePath, options);
+            }
             if (Optional.IsDefined(RemoteVolumeRegion))
             {
                 writer.WritePropertyName("remoteVolumeRegion"u8);
@@ -97,6 +105,7 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppEndpointType? endpointType = default;
             NetAppReplicationSchedule? replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
+            RemotePath remotePath = default;
             string remoteVolumeRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +136,20 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (property.NameEquals("remoteVolumeResourceId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     remoteVolumeResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("remotePath"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remotePath = RemotePath.DeserializeRemotePath(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("remoteVolumeRegion"u8))
@@ -146,6 +168,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 endpointType,
                 replicationSchedule,
                 remoteVolumeResourceId,
+                remotePath,
                 remoteVolumeRegion,
                 serializedAdditionalRawData);
         }

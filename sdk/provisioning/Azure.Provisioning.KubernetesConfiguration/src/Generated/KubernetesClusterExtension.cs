@@ -25,133 +25,205 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// <summary>
     /// Name of the Extension.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Identity of the Extension resource in an AKS cluster. Current supported
     /// identity types: SystemAssigned, UserAssigned.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> AksAssignedIdentity { get => _aksAssignedIdentity; set => _aksAssignedIdentity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _aksAssignedIdentity;
+    public ManagedServiceIdentity AksAssignedIdentity 
+    {
+        get { Initialize(); return _aksAssignedIdentity!; }
+        set { Initialize(); AssignOrReplace(ref _aksAssignedIdentity, value); }
+    }
+    private ManagedServiceIdentity? _aksAssignedIdentity;
 
     /// <summary>
     /// Flag to note if this extension participates in auto upgrade of minor
     /// version, or not.
     /// </summary>
-    public BicepValue<bool> AutoUpgradeMinorVersion { get => _autoUpgradeMinorVersion; set => _autoUpgradeMinorVersion.Assign(value); }
-    private readonly BicepValue<bool> _autoUpgradeMinorVersion;
+    public BicepValue<bool> AutoUpgradeMinorVersion 
+    {
+        get { Initialize(); return _autoUpgradeMinorVersion!; }
+        set { Initialize(); _autoUpgradeMinorVersion!.Assign(value); }
+    }
+    private BicepValue<bool>? _autoUpgradeMinorVersion;
 
     /// <summary>
     /// Configuration settings that are sensitive, as name-value pairs for
     /// configuring this extension.
     /// </summary>
-    public BicepDictionary<string> ConfigurationProtectedSettings { get => _configurationProtectedSettings; set => _configurationProtectedSettings.Assign(value); }
-    private readonly BicepDictionary<string> _configurationProtectedSettings;
+    public BicepDictionary<string> ConfigurationProtectedSettings 
+    {
+        get { Initialize(); return _configurationProtectedSettings!; }
+        set { Initialize(); _configurationProtectedSettings!.Assign(value); }
+    }
+    private BicepDictionary<string>? _configurationProtectedSettings;
 
     /// <summary>
     /// Configuration settings, as name-value pairs for configuring this
     /// extension.
     /// </summary>
-    public BicepDictionary<string> ConfigurationSettings { get => _configurationSettings; set => _configurationSettings.Assign(value); }
-    private readonly BicepDictionary<string> _configurationSettings;
+    public BicepDictionary<string> ConfigurationSettings 
+    {
+        get { Initialize(); return _configurationSettings!; }
+        set { Initialize(); _configurationSettings!.Assign(value); }
+    }
+    private BicepDictionary<string>? _configurationSettings;
 
     /// <summary>
     /// Type of the Extension, of which this resource is an instance of.  It
     /// must be one of the Extension Types registered with
     /// Microsoft.KubernetesConfiguration by the Extension publisher.
     /// </summary>
-    public BicepValue<string> ExtensionType { get => _extensionType; set => _extensionType.Assign(value); }
-    private readonly BicepValue<string> _extensionType;
+    public BicepValue<string> ExtensionType 
+    {
+        get { Initialize(); return _extensionType!; }
+        set { Initialize(); _extensionType!.Assign(value); }
+    }
+    private BicepValue<string>? _extensionType;
 
     /// <summary>
     /// Identity of the Extension resource. Current supported identity types:
     /// SystemAssigned.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// The plan information.
     /// </summary>
-    public BicepValue<ArmPlan> Plan { get => _plan; set => _plan.Assign(value); }
-    private readonly BicepValue<ArmPlan> _plan;
+    public ArmPlan Plan 
+    {
+        get { Initialize(); return _plan!; }
+        set { Initialize(); AssignOrReplace(ref _plan, value); }
+    }
+    private ArmPlan? _plan;
 
     /// <summary>
     /// ReleaseTrain this extension participates in for auto-upgrade (e.g.
     /// Stable, Preview, etc.) - only if autoUpgradeMinorVersion is
     /// &apos;true&apos;.
     /// </summary>
-    public BicepValue<string> ReleaseTrain { get => _releaseTrain; set => _releaseTrain.Assign(value); }
-    private readonly BicepValue<string> _releaseTrain;
+    public BicepValue<string> ReleaseTrain 
+    {
+        get { Initialize(); return _releaseTrain!; }
+        set { Initialize(); _releaseTrain!.Assign(value); }
+    }
+    private BicepValue<string>? _releaseTrain;
 
     /// <summary>
     /// Scope at which the extension is installed.
     /// </summary>
-    public BicepValue<KubernetesClusterExtensionScope> Scope { get => _scope; set => _scope.Assign(value); }
-    private readonly BicepValue<KubernetesClusterExtensionScope> _scope;
+    public KubernetesClusterExtensionScope Scope 
+    {
+        get { Initialize(); return _scope!; }
+        set { Initialize(); AssignOrReplace(ref _scope, value); }
+    }
+    private KubernetesClusterExtensionScope? _scope;
 
     /// <summary>
     /// Status from this extension.
     /// </summary>
-    public BicepList<KubernetesClusterExtensionStatus> Statuses { get => _statuses; set => _statuses.Assign(value); }
-    private readonly BicepList<KubernetesClusterExtensionStatus> _statuses;
+    public BicepList<KubernetesClusterExtensionStatus> Statuses 
+    {
+        get { Initialize(); return _statuses!; }
+        set { Initialize(); _statuses!.Assign(value); }
+    }
+    private BicepList<KubernetesClusterExtensionStatus>? _statuses;
 
     /// <summary>
     /// User-specified version of the extension for this extension to
     /// &apos;pin&apos;. To use &apos;version&apos;, autoUpgradeMinorVersion
     /// must be &apos;false&apos;.
     /// </summary>
-    public BicepValue<string> Version { get => _version; set => _version.Assign(value); }
-    private readonly BicepValue<string> _version;
+    public BicepValue<string> Version 
+    {
+        get { Initialize(); return _version!; }
+        set { Initialize(); _version!.Assign(value); }
+    }
+    private BicepValue<string>? _version;
 
     /// <summary>
     /// Currently installed version of the extension.
     /// </summary>
-    public BicepValue<string> CurrentVersion { get => _currentVersion; }
-    private readonly BicepValue<string> _currentVersion;
+    public BicepValue<string> CurrentVersion 
+    {
+        get { Initialize(); return _currentVersion!; }
+    }
+    private BicepValue<string>? _currentVersion;
 
     /// <summary>
     /// Custom Location settings properties.
     /// </summary>
-    public BicepDictionary<string> CustomLocationSettings { get => _customLocationSettings; }
-    private readonly BicepDictionary<string> _customLocationSettings;
+    public BicepDictionary<string> CustomLocationSettings 
+    {
+        get { Initialize(); return _customLocationSettings!; }
+    }
+    private BicepDictionary<string>? _customLocationSettings;
 
     /// <summary>
     /// Error information from the Agent - e.g. errors during installation.
     /// </summary>
-    public BicepValue<ResponseError> ErrorInfo { get => _errorInfo; }
-    private readonly BicepValue<ResponseError> _errorInfo;
+    public BicepValue<ResponseError> ErrorInfo 
+    {
+        get { Initialize(); return _errorInfo!; }
+    }
+    private BicepValue<ResponseError>? _errorInfo;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Flag to note if this extension is a system extension.
     /// </summary>
-    public BicepValue<bool> IsSystemExtension { get => _isSystemExtension; }
-    private readonly BicepValue<bool> _isSystemExtension;
+    public BicepValue<bool> IsSystemExtension 
+    {
+        get { Initialize(); return _isSystemExtension!; }
+    }
+    private BicepValue<bool>? _isSystemExtension;
 
     /// <summary>
     /// Uri of the Helm package.
     /// </summary>
-    public BicepValue<Uri> PackageUri { get => _packageUri; }
-    private readonly BicepValue<Uri> _packageUri;
+    public BicepValue<Uri> PackageUri 
+    {
+        get { Initialize(); return _packageUri!; }
+    }
+    private BicepValue<Uri>? _packageUri;
 
     /// <summary>
     /// Status of installation of this extension.
     /// </summary>
-    public BicepValue<KubernetesConfigurationProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<KubernetesConfigurationProvisioningState> _provisioningState;
+    public BicepValue<KubernetesConfigurationProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<KubernetesConfigurationProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new KubernetesClusterExtension.
@@ -166,26 +238,33 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     public KubernetesClusterExtension(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/extensions", resourceVersion ?? "2023-05-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _aksAssignedIdentity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "AksAssignedIdentity", ["properties", "aksAssignedIdentity"]);
-        _autoUpgradeMinorVersion = BicepValue<bool>.DefineProperty(this, "AutoUpgradeMinorVersion", ["properties", "autoUpgradeMinorVersion"]);
-        _configurationProtectedSettings = BicepDictionary<string>.DefineProperty(this, "ConfigurationProtectedSettings", ["properties", "configurationProtectedSettings"]);
-        _configurationSettings = BicepDictionary<string>.DefineProperty(this, "ConfigurationSettings", ["properties", "configurationSettings"]);
-        _extensionType = BicepValue<string>.DefineProperty(this, "ExtensionType", ["properties", "extensionType"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _plan = BicepValue<ArmPlan>.DefineProperty(this, "Plan", ["plan"]);
-        _releaseTrain = BicepValue<string>.DefineProperty(this, "ReleaseTrain", ["properties", "releaseTrain"]);
-        _scope = BicepValue<KubernetesClusterExtensionScope>.DefineProperty(this, "Scope", ["properties", "scope"]);
-        _statuses = BicepList<KubernetesClusterExtensionStatus>.DefineProperty(this, "Statuses", ["properties", "statuses"]);
-        _version = BicepValue<string>.DefineProperty(this, "Version", ["properties", "version"]);
-        _currentVersion = BicepValue<string>.DefineProperty(this, "CurrentVersion", ["properties", "currentVersion"], isOutput: true);
-        _customLocationSettings = BicepDictionary<string>.DefineProperty(this, "CustomLocationSettings", ["properties", "customLocationSettings"], isOutput: true);
-        _errorInfo = BicepValue<ResponseError>.DefineProperty(this, "ErrorInfo", ["properties", "errorInfo"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _isSystemExtension = BicepValue<bool>.DefineProperty(this, "IsSystemExtension", ["properties", "isSystemExtension"], isOutput: true);
-        _packageUri = BicepValue<Uri>.DefineProperty(this, "PackageUri", ["properties", "packageUri"], isOutput: true);
-        _provisioningState = BicepValue<KubernetesConfigurationProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of KubernetesClusterExtension.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _aksAssignedIdentity = DefineModelProperty<ManagedServiceIdentity>("AksAssignedIdentity", ["properties", "aksAssignedIdentity"]);
+        _autoUpgradeMinorVersion = DefineProperty<bool>("AutoUpgradeMinorVersion", ["properties", "autoUpgradeMinorVersion"]);
+        _configurationProtectedSettings = DefineDictionaryProperty<string>("ConfigurationProtectedSettings", ["properties", "configurationProtectedSettings"]);
+        _configurationSettings = DefineDictionaryProperty<string>("ConfigurationSettings", ["properties", "configurationSettings"]);
+        _extensionType = DefineProperty<string>("ExtensionType", ["properties", "extensionType"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _plan = DefineModelProperty<ArmPlan>("Plan", ["plan"]);
+        _releaseTrain = DefineProperty<string>("ReleaseTrain", ["properties", "releaseTrain"]);
+        _scope = DefineModelProperty<KubernetesClusterExtensionScope>("Scope", ["properties", "scope"]);
+        _statuses = DefineListProperty<KubernetesClusterExtensionStatus>("Statuses", ["properties", "statuses"]);
+        _version = DefineProperty<string>("Version", ["properties", "version"]);
+        _currentVersion = DefineProperty<string>("CurrentVersion", ["properties", "currentVersion"], isOutput: true);
+        _customLocationSettings = DefineDictionaryProperty<string>("CustomLocationSettings", ["properties", "customLocationSettings"], isOutput: true);
+        _errorInfo = DefineProperty<ResponseError>("ErrorInfo", ["properties", "errorInfo"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _isSystemExtension = DefineProperty<bool>("IsSystemExtension", ["properties", "isSystemExtension"], isOutput: true);
+        _packageUri = DefineProperty<Uri>("PackageUri", ["properties", "packageUri"], isOutput: true);
+        _provisioningState = DefineProperty<KubernetesConfigurationProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>

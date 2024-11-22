@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.MigrationDiscoverySap.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
 {
     public partial class Sample_SapDiscoverySiteResource
     {
-        // List SAP Migration discovery site resources in a subscription.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSapDiscoverySites_ListSAPMigrationDiscoverySiteResourcesInASubscription()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/SAPDiscoverySites_ListBySubscription.json
@@ -46,12 +46,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GET a SAP Migration discovery site resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GETASAPMigrationDiscoverySiteResource()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/SAPDiscoverySites_Get.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Updates a SAP Migration discovery site resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesASAPMigrationDiscoverySiteResource()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/SAPDiscoverySites_Update.json
@@ -118,9 +116,8 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes a SAP Migration discovery site resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesASAPMigrationDiscoverySiteResource()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/SAPDiscoverySites_Delete.json
@@ -142,12 +139,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
             // invoke the operation
             await sapDiscoverySite.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Import a SAP Migration discovery site resource and it's child resources.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ImportEntities_ImportASAPMigrationDiscoverySiteResourceAndItSChildResources()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/SAPDiscoverySites_ImportEntities.json

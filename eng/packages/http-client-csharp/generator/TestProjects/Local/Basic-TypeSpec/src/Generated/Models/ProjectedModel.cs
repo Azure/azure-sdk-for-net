@@ -14,7 +14,7 @@ namespace BasicTypeSpec.Models
     public partial class ProjectedModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         internal ProjectedModel(string name)
         {
@@ -28,6 +28,6 @@ namespace BasicTypeSpec.Models
         }
 
         /// <summary> name of the ModelWithProjectedName. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
     }
 }

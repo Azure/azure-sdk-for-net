@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 {
     public partial class Sample_SiteRecoveryRecoveryPlanResource
     {
-        // Gets the requested recovery plan.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheRequestedRecoveryPlan()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationRecoveryPlans_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes the specified recovery plan.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesTheSpecifiedRecoveryPlan()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationRecoveryPlans_Delete.json
@@ -72,12 +71,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             await siteRecoveryRecoveryPlan.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Updates the given recovery plan.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesTheGivenRecoveryPlan()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationRecoveryPlans_Update.json
@@ -169,9 +167,8 @@ EndGroupActions =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute cancel failover of the recovery plan.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task FailoverCancel_ExecuteCancelFailoverOfTheRecoveryPlan()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationRecoveryPlans_FailoverCancel.json
@@ -202,9 +199,8 @@ EndGroupActions =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute commit failover of the recovery plan.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task FailoverCommit_ExecuteCommitFailoverOfTheRecoveryPlan()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationRecoveryPlans_FailoverCommit.json
@@ -235,9 +231,8 @@ EndGroupActions =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute planned failover of the recovery plan.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PlannedFailover_ExecutePlannedFailoverOfTheRecoveryPlan()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationRecoveryPlans_PlannedFailover.json
@@ -275,9 +270,8 @@ new RecoveryPlanHyperVReplicaAzureFailoverContent()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute reprotect of the recovery plan.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Reprotect_ExecuteReprotectOfTheRecoveryPlan()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationRecoveryPlans_Reprotect.json
@@ -308,9 +302,8 @@ new RecoveryPlanHyperVReplicaAzureFailoverContent()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute test failover of the recovery plan.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TestFailover_ExecuteTestFailoverOfTheRecoveryPlan()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationRecoveryPlans_TestFailover.json
@@ -349,9 +342,8 @@ new RecoveryPlanHyperVReplicaAzureFailoverContent()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute test failover cleanup of the recovery plan.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TestFailoverCleanup_ExecuteTestFailoverCleanupOfTheRecoveryPlan()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationRecoveryPlans_TestFailoverCleanup.json
@@ -386,9 +378,8 @@ new RecoveryPlanHyperVReplicaAzureFailoverContent()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Execute unplanned failover of the recovery plan.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UnplannedFailover_ExecuteUnplannedFailoverOfTheRecoveryPlan()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-08-01/examples/ReplicationRecoveryPlans_UnplannedFailover.json

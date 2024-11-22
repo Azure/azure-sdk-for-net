@@ -20,32 +20,50 @@ public partial class CosmosDBSqlClientEncryptionKey : ProvisionableResource
     /// <summary>
     /// Cosmos DB ClientEncryptionKey name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The standard JSON format of a ClientEncryptionKey.
     /// </summary>
-    public BicepValue<CosmosDBSqlClientEncryptionKeyResourceInfo> Resource { get => _resource; set => _resource.Assign(value); }
-    private readonly BicepValue<CosmosDBSqlClientEncryptionKeyResourceInfo> _resource;
+    public CosmosDBSqlClientEncryptionKeyResourceInfo Resource 
+    {
+        get { Initialize(); return _resource!; }
+        set { Initialize(); AssignOrReplace(ref _resource, value); }
+    }
+    private CosmosDBSqlClientEncryptionKeyResourceInfo? _resource;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent CosmosDBSqlDatabase.
     /// </summary>
-    public CosmosDBSqlDatabase? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<CosmosDBSqlDatabase> _parent;
+    public CosmosDBSqlDatabase? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<CosmosDBSqlDatabase>? _parent;
 
     /// <summary>
     /// Creates a new CosmosDBSqlClientEncryptionKey.
@@ -60,11 +78,19 @@ public partial class CosmosDBSqlClientEncryptionKey : ProvisionableResource
     public CosmosDBSqlClientEncryptionKey(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/clientEncryptionKeys", resourceVersion ?? "2024-08-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _resource = BicepValue<CosmosDBSqlClientEncryptionKeyResourceInfo>.DefineProperty(this, "Resource", ["properties", "resource"], isRequired: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<CosmosDBSqlDatabase>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// CosmosDBSqlClientEncryptionKey.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _resource = DefineModelProperty<CosmosDBSqlClientEncryptionKeyResourceInfo>("Resource", ["properties", "resource"], isRequired: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<CosmosDBSqlDatabase>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

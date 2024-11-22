@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MongoCluster.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MongoCluster.Samples
 {
     public partial class Sample_MongoClusterResource
     {
-        // Gets a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Updates the disk size on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesTheDiskSizeOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PatchDiskSize.json
@@ -86,9 +85,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Disables public network access on a Mongo Cluster resource with a private endpoint connection.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_DisablesPublicNetworkAccessOnAMongoClusterResourceWithAPrivateEndpointConnection()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PatchPrivateNetworkAccess.json
@@ -125,9 +123,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Resets the administrator login password.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ResetsTheAdministratorLoginPassword()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_ResetPassword.json
@@ -168,9 +165,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Updates a Mongo Cluster resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Update.json
@@ -219,9 +215,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Delete.json
@@ -243,12 +238,11 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             // invoke the operation
             await mongoCluster.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Lists the Mongo Cluster resources in a subscription.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMongoClusters_ListsTheMongoClusterResourcesInASubscription()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_List.json
@@ -275,12 +269,11 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List the available connection strings for the Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConnectionStrings_ListTheAvailableConnectionStringsForTheMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_ListConnectionStrings.json
@@ -305,9 +298,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Checks and confirms the Mongo Cluster name is availability for use.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckMongoClusterNameAvailability_ChecksAndConfirmsTheMongoClusterNameIsAvailabilityForUse()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_NameAvailability.json
@@ -336,9 +328,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Checks and returns that the Mongo Cluster name is already in-use.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckMongoClusterNameAvailability_ChecksAndReturnsThatTheMongoClusterNameIsAlreadyInUse()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_NameAvailability_AlreadyExists.json
@@ -367,9 +358,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Promotes a replica Mongo Cluster resource to a primary role.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Promote_PromotesAReplicaMongoClusterResourceToAPrimaryRole()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_ForcePromoteReplica.json
@@ -395,12 +385,11 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             };
             await mongoCluster.PromoteAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Lists the private link resources available on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinks_ListsThePrivateLinkResourcesAvailableOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PrivateLinkResourceList.json
@@ -425,12 +414,11 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List the replicas linked to a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReplicasByParent_ListTheReplicasLinkedToAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_ReplicaList.json
@@ -455,7 +443,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

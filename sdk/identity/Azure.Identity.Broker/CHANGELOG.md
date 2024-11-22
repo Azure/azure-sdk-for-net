@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,7 +10,12 @@
 
 ### Other Changes
 
+## 1.2.0 (2024-11-18)
+
+### Other Changes
+
 - Support for Proof of Possession (PoP) tokens for `InteractiveBrowserCredential` has migrated out of Azure.Core.Experimental to Azure.Core. This feature is enabled via the `IsProofOfPossessionEnabled` property on `TokenRequestContext`.
+- Updating package dependencies.
 
 ## 1.2.0-beta.1 (2024-04-24)
 

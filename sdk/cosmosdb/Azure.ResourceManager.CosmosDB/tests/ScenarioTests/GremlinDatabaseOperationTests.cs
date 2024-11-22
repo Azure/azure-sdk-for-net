@@ -40,9 +40,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public async Task GlobalTeardown()
         {
-            if (_databaseAccountIdentifier != null)
+            if (Mode != RecordedTestMode.Playback)
             {
-                await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).DeleteAsync(WaitUntil.Completed);
+                if (_databaseAccountIdentifier != null)
+                {
+                    await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
@@ -55,12 +58,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await GremlinDatabaseCollection.ExistsAsync(_databaseName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = GremlinDatabaseCollection.Id;
-                id = GremlinDatabaseResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
-                GremlinDatabaseResource database = ArmClient.GetGremlinDatabaseResource(id);
-                await database.DeleteAsync(WaitUntil.Completed);
+                if (await GremlinDatabaseCollection.ExistsAsync(_databaseName))
+                {
+                    var id = GremlinDatabaseCollection.Id;
+                    id = GremlinDatabaseResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
+                    GremlinDatabaseResource database = ArmClient.GetGremlinDatabaseResource(id);
+                    await database.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 

@@ -21,47 +21,72 @@ public partial class ContainerServiceTrustedAccessRoleBinding : ProvisionableRes
     /// <summary>
     /// The name of trusted access role binding.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// A list of roles to bind, each item is a resource type qualified role
     /// name. For example:
     /// &apos;Microsoft.MachineLearningServices/workspaces/reader&apos;.
     /// </summary>
-    public BicepList<string> Roles { get => _roles; set => _roles.Assign(value); }
-    private readonly BicepList<string> _roles;
+    public BicepList<string> Roles 
+    {
+        get { Initialize(); return _roles!; }
+        set { Initialize(); _roles!.Assign(value); }
+    }
+    private BicepList<string>? _roles;
 
     /// <summary>
     /// The ARM resource ID of source resource that trusted access is
     /// configured for.
     /// </summary>
-    public BicepValue<ResourceIdentifier> SourceResourceId { get => _sourceResourceId; set => _sourceResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _sourceResourceId;
+    public BicepValue<ResourceIdentifier> SourceResourceId 
+    {
+        get { Initialize(); return _sourceResourceId!; }
+        set { Initialize(); _sourceResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _sourceResourceId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The current provisioning state of trusted access role binding.
     /// </summary>
-    public BicepValue<ContainerServiceTrustedAccessRoleBindingProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ContainerServiceTrustedAccessRoleBindingProvisioningState> _provisioningState;
+    public BicepValue<ContainerServiceTrustedAccessRoleBindingProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ContainerServiceTrustedAccessRoleBindingProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerServiceManagedCluster.
     /// </summary>
-    public ContainerServiceManagedCluster? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerServiceManagedCluster> _parent;
+    public ContainerServiceManagedCluster? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerServiceManagedCluster>? _parent;
 
     /// <summary>
     /// Creates a new ContainerServiceTrustedAccessRoleBinding.
@@ -77,13 +102,21 @@ public partial class ContainerServiceTrustedAccessRoleBinding : ProvisionableRes
     public ContainerServiceTrustedAccessRoleBinding(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings", resourceVersion ?? "2024-08-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _roles = BicepList<string>.DefineProperty(this, "Roles", ["properties", "roles"], isRequired: true);
-        _sourceResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SourceResourceId", ["properties", "sourceResourceId"], isRequired: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<ContainerServiceTrustedAccessRoleBindingProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerServiceManagedCluster>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ContainerServiceTrustedAccessRoleBinding.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _roles = DefineListProperty<string>("Roles", ["properties", "roles"], isRequired: true);
+        _sourceResourceId = DefineProperty<ResourceIdentifier>("SourceResourceId", ["properties", "sourceResourceId"], isRequired: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<ContainerServiceTrustedAccessRoleBindingProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerServiceManagedCluster>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

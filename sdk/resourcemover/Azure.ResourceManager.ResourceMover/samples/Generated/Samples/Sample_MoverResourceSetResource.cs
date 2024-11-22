@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ResourceMover.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ResourceMover.Samples
 {
     public partial class Sample_MoverResourceSetResource
     {
-        // MoveCollections_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_MoveCollectionsUpdate()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Update.json
@@ -56,9 +56,8 @@ namespace Azure.ResourceManager.ResourceMover.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // MoveCollections_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_MoveCollectionsDelete()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Delete.json
@@ -84,9 +83,8 @@ namespace Azure.ResourceManager.ResourceMover.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // MoveCollections_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MoveCollectionsGet()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Get.json
@@ -115,9 +113,8 @@ namespace Azure.ResourceManager.ResourceMover.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // MoveCollections_Prepare
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Prepare_MoveCollectionsPrepare()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Prepare.json
@@ -150,9 +147,8 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // MoveCollections_InitiateMove
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task InitiateMove_MoveCollectionsInitiateMove()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_InitiateMove.json
@@ -185,9 +181,8 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // MoveCollections_Commit
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Commit_MoveCollectionsCommit()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Commit.json
@@ -220,9 +215,8 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // MoveCollections_Discard
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Discard_MoveCollectionsDiscard()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Discard.json
@@ -255,9 +249,8 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // MoveCollections_ResolveDependencies
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResolveDependencies_MoveCollectionsResolveDependencies()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_ResolveDependencies.json
@@ -283,9 +276,8 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // MoveCollections_BulkRemove
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task BulkRemove_MoveCollectionsBulkRemove()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_BulkRemove.json
@@ -319,9 +311,8 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // MoveCollections_ListMoveCollectionsBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMoverResourceSets_MoveCollectionsListMoveCollectionsBySubscription()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_ListMoveCollectionsBySubscription.json
@@ -348,12 +339,11 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RequiredFor_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRequiredForResources_RequiredForGet()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/RequiredFor_Get.json
@@ -379,9 +369,8 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // UnresolvedDependencies_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUnresolvedDependencies_UnresolvedDependenciesGet()
         {
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/UnresolvedDependencies_Get.json
@@ -406,7 +395,7 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

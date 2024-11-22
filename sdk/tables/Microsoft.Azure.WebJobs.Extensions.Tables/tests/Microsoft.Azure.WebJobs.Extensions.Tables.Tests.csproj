@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);SA1636;SA1649</NoWarn>
+		<WarningsNotAsErrors>$(WarningsNotAsErrors);NETSDK1206</WarningsNotAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

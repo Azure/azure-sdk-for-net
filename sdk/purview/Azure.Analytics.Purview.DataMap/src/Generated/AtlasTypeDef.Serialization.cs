@@ -19,13 +19,21 @@ namespace Azure.Analytics.Purview.DataMap
 
         void IJsonModel<AtlasTypeDef>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AtlasTypeDef>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AtlasTypeDef)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
@@ -202,7 +210,6 @@ namespace Azure.Analytics.Purview.DataMap
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AtlasTypeDef IJsonModel<AtlasTypeDef>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

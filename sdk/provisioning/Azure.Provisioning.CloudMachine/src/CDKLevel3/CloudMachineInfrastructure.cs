@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.CloudMachine;
-using System.IO;
 using System;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.EventGrid;
@@ -13,9 +11,10 @@ using Azure.Provisioning.ServiceBus;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.Primitives;
 using System.Collections.Generic;
-using System.Security.Principal;
+using Azure.Provisioning;
+using Azure.Provisioning.CloudMachine;
 
-namespace Azure.Provisioning.CloudMachine;
+namespace Azure.CloudMachine;
 
 public class CloudMachineInfrastructure
 {
@@ -25,6 +24,8 @@ public class CloudMachineInfrastructure
 
     private Infrastructure _infrastructure = new Infrastructure("cm");
     private List<Provisionable> _resources = new();
+    public FeatureCollection Features { get; } = new();
+    internal List<Type> Endpoints { get; } = new();
 
     // storage
     private StorageAccount _storage;
@@ -166,7 +167,11 @@ public class CloudMachineInfrastructure
         {
             TopicType = "Microsoft.Storage.StorageAccounts",
             Source = _storage.Id,
-            Identity = managedServiceIdentity,
+            Identity = new()
+            {
+                ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned,
+                UserAssignedIdentities = { { BicepFunction.Interpolate($"{Identity.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
+            },
             Name = _cmid
         };
         _eventGridSubscription_blobs = new("cm_eventgrid_subscription_blob", "2022-06-15")
@@ -208,13 +213,22 @@ public class CloudMachineInfrastructure
     {
         _resources.Add(resource);
     }
-    public void AddFeature(CloudMachineFeature resource)
+    public void AddFeature(CloudMachineFeature feature)
     {
-        resource.AddTo(this);
+        feature.AddTo(this);
+    }
+
+    public void AddEndpoints<T>()
+    {
+        Type endpointsType = typeof(T);
+        if (!endpointsType.IsInterface) throw new InvalidOperationException("Endpoints type must be an interface.");
+        Endpoints.Add(endpointsType);
     }
 
     public ProvisioningPlan Build(ProvisioningBuildOptions? context = null)
     {
+        Features.Emit(this);
+
         // Always add a default location parameter.
         // azd assumes there will be a location parameter for every module.
         // The Infrastructure location resolver will resolve unset Location properties to this parameter.
@@ -268,25 +282,5 @@ public class CloudMachineInfrastructure
         }
 
         return _infrastructure.Build(context);
-    }
-
-    public static bool Configure(string[] args, Action<CloudMachineInfrastructure>? configure = default)
-    {
-        if (args.Length < 1 || args[0] != "--init")
-        {
-            return false;
-        }
-
-        string cmid = Azd.ReadOrCreateCmid();
-
-        CloudMachineInfrastructure cmi = new(cmid);
-        if (configure != default)
-        {
-            configure(cmi);
-        }
-
-        string infraDirectory = Path.Combine(".", "infra");
-        Azd.Init(infraDirectory, cmi);
-        return true;
     }
 }

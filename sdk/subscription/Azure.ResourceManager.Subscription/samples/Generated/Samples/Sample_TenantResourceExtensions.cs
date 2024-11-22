@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Subscription.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Subscription.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {
-        // AcceptOwnership
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AcceptSubscriptionOwnership_AcceptOwnership()
         {
             // Generated from example definition: specification/subscription/resource-manager/Microsoft.Subscription/stable/2021-10-01/examples/acceptSubscriptionOwnership.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.Subscription.Samples
             };
             await tenantResource.AcceptSubscriptionOwnershipAsync(WaitUntil.Completed, subscriptionId, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AcceptOwnershipStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAcceptOwnershipStatus_AcceptOwnershipStatus()
         {
             // Generated from example definition: specification/subscription/resource-manager/Microsoft.Subscription/stable/2021-10-01/examples/acceptOwnershipStatus.json

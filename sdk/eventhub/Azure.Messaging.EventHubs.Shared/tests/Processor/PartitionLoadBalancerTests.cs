@@ -540,7 +540,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Verify that no attempts to steal were logged.
 
-            mockLog.Verify(log => log.ShouldStealPartition(It.IsAny<string>()), Times.Never);
+            mockLog.Verify(log => log.ShouldStealPartition(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
         }
 
         /// <summary>
@@ -597,7 +597,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Verify that no attempts to steal were logged.
 
-            mockLog.Verify(log => log.ShouldStealPartition(It.IsAny<string>()), Times.Never);
+            mockLog.Verify(log => log.ShouldStealPartition(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
         }
 
         /// <summary>
@@ -678,7 +678,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Verify that no attempts to steal were logged.
 
-            mockLog.Verify(log => log.ShouldStealPartition(It.IsAny<string>()), Times.Never);
+            mockLog.Verify(log => log.ShouldStealPartition(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
         }
 
         /// <summary>
@@ -902,14 +902,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await loadbalancer.RelinquishOwnershipAsync(CancellationToken.None);
 
-            mockLog.Verify(m => m.RenewOwnershipStart(loadbalancer.OwnerIdentifier));
-            mockLog.Verify(m => m.RenewOwnershipComplete(loadbalancer.OwnerIdentifier));
-            mockLog.Verify(m => m.ClaimOwnershipStart(It.Is<string>(p => partitionIds.Contains(p))));
-            mockLog.Verify(m => m.MinimumPartitionsPerEventProcessor(MinimumpartitionCount));
-            mockLog.Verify(m => m.CurrentOwnershipCount(MinimumpartitionCount, loadbalancer.OwnerIdentifier));
-            mockLog.Verify(m => m.StealPartition(It.IsAny<string>(), It.IsAny<string>(), loadbalancer.OwnerIdentifier));
-            mockLog.Verify(m => m.ShouldStealPartition(loadbalancer.OwnerIdentifier));
-            mockLog.Verify(m => m.UnclaimedPartitions(It.Is<HashSet<string>>(set => set.Count == 0 || set.All(item => partitionIds.Contains(item)))));
+            mockLog.Verify(m => m.RenewOwnershipStart(loadbalancer.OwnerIdentifier, loadbalancer.EventHubName));
+            mockLog.Verify(m => m.RenewOwnershipComplete(loadbalancer.OwnerIdentifier, loadbalancer.EventHubName));
+            mockLog.Verify(m => m.ClaimOwnershipStart(It.Is<string>(p => partitionIds.Contains(p)), loadbalancer.EventHubName));
+            mockLog.Verify(m => m.MinimumPartitionsPerEventProcessor(MinimumpartitionCount, loadbalancer.EventHubName));
+            mockLog.Verify(m => m.CurrentOwnershipCount(MinimumpartitionCount, loadbalancer.OwnerIdentifier, loadbalancer.EventHubName));
+            mockLog.Verify(m => m.StealPartition(It.IsAny<string>(), It.IsAny<string>(), loadbalancer.OwnerIdentifier, loadbalancer.EventHubName));
+            mockLog.Verify(m => m.ShouldStealPartition(loadbalancer.OwnerIdentifier, loadbalancer.EventHubName));
+            mockLog.Verify(m => m.UnclaimedPartitions(It.Is<HashSet<string>>(set => set.Count == 0 || set.All(item => partitionIds.Contains(item))), loadbalancer.EventHubName));
         }
 
         /// <summary>

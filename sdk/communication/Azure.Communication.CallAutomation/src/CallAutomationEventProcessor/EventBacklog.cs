@@ -52,6 +52,7 @@ namespace Azure.Communication.CallAutomation
         {
             // Match any event that matches in the events backlog
             var matchingKvp = _eventBacklog.FirstOrDefault(kvp => predicate(kvp.Value.Item1));
+            matchingEvent = default;
 
             // Try remove the item - if successful, return it as keyValuePair
             if (matchingKvp.Key != default && _eventBacklog.TryRemove(matchingKvp.Key, out var returnedValue))

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.SecurityCenter.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_SensitivitySettingResource
     {
-        // Update sensitivity settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateSensitivitySettings()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2023-02-15-preview/examples/SensitivitySettings/PutSensitivitySettings_example.json
@@ -52,9 +52,8 @@ Guid.Parse("f2f8a7a1-28c0-404b-9ab4-30a0a7af18cb"),Guid.Parse("b452f22b-f87d-4f4
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get sensitivity settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSensitivitySettings()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2023-02-15-preview/examples/SensitivitySettings/GetSensitivitySettings_example.json

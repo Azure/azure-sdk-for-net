@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.GuestConfiguration.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.GuestConfiguration.Samples
 {
     public partial class Sample_GuestConfigurationVMwarevSphereAssignmentResource
     {
-        // Create or update guest configuration assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateGuestConfigurationAssignment()
         {
             // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/createOrUpdateGuestConfigurationConnectedVMwarevSphereAssignment.json
@@ -73,9 +73,8 @@ Value = "NotePad,sql",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a guest configuration assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAGuestConfigurationAssignment()
         {
             // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/getGuestConfigurationConnectedVMwarevSphereAssignment.json
@@ -105,9 +104,8 @@ Value = "NotePad,sql",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete an guest configuration assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnGuestConfigurationAssignment()
         {
             // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/deleteGuestConfigurationConnectedVMwarevSphereAssignment.json
@@ -130,12 +128,11 @@ Value = "NotePad,sql",
             // invoke the operation
             await guestConfigurationVMwarevSphereAssignment.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List all guest configuration assignments for a virtual machine
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetGuestConfigurationConnectedVMwarevSphereAssignmentsReports_ListAllGuestConfigurationAssignmentsForAVirtualMachine()
         {
             // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/listAllGuestConfigurationConnectedVMwarevSphereAssignmentsReports.json
@@ -161,12 +158,11 @@ Value = "NotePad,sql",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a guest configuration assignment report by Id for a virtual machine
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetGuestConfigurationConnectedVMwarevSphereAssignmentsReport_GetAGuestConfigurationAssignmentReportByIdForAVirtualMachine()
         {
             // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/getGuestConfigurationConnectedVMwarevSphereAssignmentReportById.json

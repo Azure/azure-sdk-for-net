@@ -236,6 +236,38 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
+        public async Task CreateCallWithOPSSourceAsync_201Created(CallInvite target, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayloadForOPSCall, isOPSCall:true);
+
+            var options = new CreateCallOptions(target, callbackUri);
+            var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
+            CreateCallResult result = (CreateCallResult)response;
+            Assert.NotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
+            verifyOPSCallConnectionProperties(result.CallConnectionProperties);
+            Assert.Null(result.CallConnectionProperties.MediaSubscriptionId);
+            Assert.Null(result.CallConnectionProperties.DataSubscriptionId);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall))]
+        public void CreateCallWithOPSSource_201Created(CallInvite target, Uri callbackUri)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayloadForOPSCall, isOPSCall: true);
+
+            var options = new CreateCallOptions(target, callbackUri);
+            var response = callAutomationClient.CreateCall(options);
+            CreateCallResult result = (CreateCallResult)response;
+            Assert.NotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
+            verifyOPSCallConnectionProperties(result.CallConnectionProperties);
+            Assert.Null(result.CallConnectionProperties.MediaSubscriptionId);
+            Assert.Null(result.CallConnectionProperties.DataSubscriptionId);
+            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+        }
+
+        [TestCaseSource(nameof(TestData_CreateCall))]
         public async Task CreateCallWithOptionsAsync_201Created(CallInvite target, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload);
@@ -415,7 +447,19 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             {
                 new object?[]
                 {
-                    new CallInvite(new CommunicationUserIdentifier("12345")),
+                    new CallInvite(new CommunicationUserIdentifier("8:acs:12345")),
+                    new Uri("https://bot.contoso.com/callback")
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_CreateOPSCall()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new CallInvite(new MicrosoftTeamsAppIdentifier("28:acs:12345")),
                     new Uri("https://bot.contoso.com/callback")
                 },
             };

@@ -49,7 +49,7 @@ namespace BasicTypeSpec.Models
                 requiredBadDescription,
                 optionalNullableList?.ToList(),
                 requiredNullableList?.ToList(),
-                null);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> this is a roundtrip model. </summary>
@@ -116,7 +116,7 @@ namespace BasicTypeSpec.Models
                 readOnlyOptionalRecordUnknown,
                 modelWithRequiredNullable,
                 requiredBytes,
-                null);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A model with a few required nullable properties. </summary>
@@ -127,7 +127,7 @@ namespace BasicTypeSpec.Models
         public static ModelWithRequiredNullableProperties ModelWithRequiredNullableProperties(int? requiredNullablePrimitive = default, StringExtensibleEnum? requiredExtensibleEnum = default, StringFixedEnum? requiredFixedEnum = default)
         {
 
-            return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, null);
+            return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, additionalBinaryDataProperties: null);
         }
 
         /// <summary> this is not a friendly model but with a friendly name. </summary>
@@ -136,7 +136,7 @@ namespace BasicTypeSpec.Models
         public static Friend Friend(string name = default)
         {
 
-            return new Friend(name, null);
+            return new Friend(name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> this is a model with a projected name. </summary>
@@ -145,7 +145,7 @@ namespace BasicTypeSpec.Models
         public static ProjectedModel ProjectedModel(string name = default)
         {
 
-            return new ProjectedModel(name, null);
+            return new ProjectedModel(name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ReturnsAnonymousModelResponse. </summary>
@@ -153,7 +153,7 @@ namespace BasicTypeSpec.Models
         public static ReturnsAnonymousModelResponse ReturnsAnonymousModelResponse()
         {
 
-            return new ReturnsAnonymousModelResponse(null);
+            return new ReturnsAnonymousModelResponse(additionalBinaryDataProperties: null);
         }
     }
 }

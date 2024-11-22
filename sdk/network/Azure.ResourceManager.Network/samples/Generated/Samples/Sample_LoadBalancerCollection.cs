@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_LoadBalancerCollection
     {
-        // Get load balancer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetLoadBalancer()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerGet.json
@@ -51,9 +51,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get load balancer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetLoadBalancer()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerGet.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get load balancer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetLoadBalancer()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerGet.json
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -123,9 +121,8 @@ namespace Azure.ResourceManager.Network.Samples
             }
         }
 
-        // Get load balancer with inbound NAT rule port mapping
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetLoadBalancerWithInboundNATRulePortMapping()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerGetInboundNatRulePortMapping.json
@@ -157,9 +154,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get load balancer with inbound NAT rule port mapping
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetLoadBalancerWithInboundNATRulePortMapping()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerGetInboundNatRulePortMapping.json
@@ -187,9 +183,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get load balancer with inbound NAT rule port mapping
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetLoadBalancerWithInboundNATRulePortMapping()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerGetInboundNatRulePortMapping.json
@@ -217,7 +212,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -229,9 +224,8 @@ namespace Azure.ResourceManager.Network.Samples
             }
         }
 
-        // Create load balancer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancer()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreate.json
@@ -333,9 +327,8 @@ Name = "in-nat-rule",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with Frontend IP in Zone 1
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithFrontendIPInZone1()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateWithZones.json
@@ -446,9 +439,8 @@ Name = "in-nat-rule",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with Gateway Load Balancer Consumer configured
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithGatewayLoadBalancerConsumerConfigured()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateGatewayLoadBalancerConsumer.json
@@ -556,9 +548,8 @@ Name = "in-nat-rule",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with Gateway Load Balancer Provider configured with one Backend Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithGatewayLoadBalancerProviderConfiguredWithOneBackendPool()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateGatewayLoadBalancerProviderWithOneBackendPool.json
@@ -674,9 +665,8 @@ Name = "probe-lb",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with Gateway Load Balancer Provider configured with two Backend Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithGatewayLoadBalancerProviderConfiguredWithTwoBackendPool()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateGatewayLoadBalancerProviderWithTwoBackendPool.json
@@ -782,9 +772,8 @@ Name = "probe-lb",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with Global Tier and one regional load balancer in its backend pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithGlobalTierAndOneRegionalLoadBalancerInItsBackendPool()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateGlobalTier.json
@@ -881,9 +870,8 @@ Name = "probe-lb",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with Standard SKU
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithStandardSKU()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateStandardSku.json
@@ -990,9 +978,8 @@ Name = "in-nat-rule",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with Sync Mode Property on Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithSyncModePropertyOnPool()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateWithSyncModePropertyOnPool.json
@@ -1101,9 +1088,8 @@ Name = "in-nat-rule",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with inbound nat pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithInboundNatPool()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateWithInboundNatPool.json
@@ -1191,9 +1177,8 @@ Name = "test",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with outbound rules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithOutboundRules()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateWithOutboundRules.json
@@ -1314,9 +1299,8 @@ Name = "rule1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List load balancers in resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListLoadBalancersInResourceGroup()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerList.json
@@ -1347,7 +1331,7 @@ Name = "rule1",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

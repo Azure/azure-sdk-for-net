@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CustomerInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CustomerInsights.Samples
 {
     public partial class Sample_RoleAssignmentResourceFormatCollection
     {
-        // RoleAssignments_ListByHub
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_RoleAssignmentsListByHub()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsListByHub.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RoleAssignments_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RoleAssignmentsCreateOrUpdate()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsCreateOrUpdate.json
@@ -96,9 +95,8 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RoleAssignments_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RoleAssignmentsGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsGet.json
@@ -131,9 +129,8 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RoleAssignments_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RoleAssignmentsGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsGet.json
@@ -162,9 +159,8 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RoleAssignments_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RoleAssignmentsGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsGet.json
@@ -193,7 +189,7 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MongoCluster.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MongoCluster.Samples
 {
     public partial class Sample_MongoClusterPrivateEndpointConnectionResource
     {
-        // Get a private endpoint connection on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPrivateEndpointConnectionOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Approves a private endpoint connection on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApprovesAPrivateEndpointConnectionOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionPut.json
@@ -88,9 +87,8 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a private endpoint connection on a Mongo Cluster resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAPrivateEndpointConnectionOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionDelete.json
@@ -113,7 +111,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             // invoke the operation
             await mongoClusterPrivateEndpointConnectionResource.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -49,6 +49,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, Username);
             writer.WritePropertyName("database"u8);
             JsonSerializer.Serialize(writer, Database);
+            writer.WritePropertyName("authenticationType"u8);
+            JsonSerializer.Serialize(writer, AuthenticationType);
             writer.WritePropertyName("sslMode"u8);
             JsonSerializer.Serialize(writer, SslMode);
             if (Optional.IsDefined(Schema))
@@ -166,6 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<int> port = default;
             DataFactoryElement<string> username = default;
             DataFactoryElement<string> database = default;
+            DataFactoryElement<string> authenticationType = default;
             DataFactoryElement<int> sslMode = default;
             DataFactoryElement<string> schema = default;
             DataFactoryElement<bool> pooling = default;
@@ -275,6 +278,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                         if (property0.NameEquals("database"u8))
                         {
                             database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("authenticationType"u8))
+                        {
+                            authenticationType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sslMode"u8))
@@ -422,6 +430,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 port,
                 username,
                 database,
+                authenticationType,
                 sslMode,
                 schema,
                 pooling,

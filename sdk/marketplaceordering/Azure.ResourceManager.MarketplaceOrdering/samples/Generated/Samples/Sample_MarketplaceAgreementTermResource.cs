@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MarketplaceOrdering.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MarketplaceOrdering.Samples
 {
     public partial class Sample_MarketplaceAgreementTermResource
     {
-        // GetMarketplaceTerms
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMarketplaceTerms()
         {
             // Generated from example definition: specification/marketplaceordering/resource-manager/Microsoft.MarketplaceOrdering/stable/2021-01-01/examples/GetMarketplaceTerms.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SetMarketplaceTerms
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SetMarketplaceTerms()
         {
             // Generated from example definition: specification/marketplaceordering/resource-manager/Microsoft.MarketplaceOrdering/stable/2021-01-01/examples/SetMarketplaceTerms.json

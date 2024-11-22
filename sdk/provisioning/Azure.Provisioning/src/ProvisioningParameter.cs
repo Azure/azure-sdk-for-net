@@ -19,7 +19,7 @@ public class ProvisioningParameter : ProvisioningVariable
     /// </summary>
     public bool IsSecure
     {
-        get => _isSecure || Value.IsSecure;
+        get => _isSecure || ((IBicepValue)Value).IsSecure;
         set => _isSecure = value;
     }
     private bool _isSecure = false;
@@ -53,7 +53,7 @@ public class ProvisioningParameter : ProvisioningVariable
             BicepSyntax.Declare.Param(
                 BicepIdentifier,
                 BicepType,
-                Value.Kind == BicepValueKind.Unset ? null : Value.Compile());
+                ((IBicepValue)Value).Kind == BicepValueKind.Unset ? null : Value.Compile());
         if (IsSecure) { statement = statement.Decorate("secure"); }
         if (Description is not null) { statement = statement.Decorate("description", BicepSyntax.Value(Description)); }
         yield return statement;

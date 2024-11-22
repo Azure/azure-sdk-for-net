@@ -19,13 +19,21 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         void IJsonModel<RecommendationFinding>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RecommendationFinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecommendationFinding)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Finding))
             {
                 writer.WritePropertyName("finding"u8);
@@ -63,7 +71,6 @@ namespace Azure.Health.Insights.RadiologyInsights
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RecommendationFinding IJsonModel<RecommendationFinding>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

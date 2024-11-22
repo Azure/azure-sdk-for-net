@@ -20,51 +20,80 @@ public partial class StaticSiteUserProvidedFunctionApp : ProvisionableResource
     /// <summary>
     /// Gets or sets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The region of the function app registered with the static site.
     /// </summary>
-    public BicepValue<string> FunctionAppRegion { get => _functionAppRegion; set => _functionAppRegion.Assign(value); }
-    private readonly BicepValue<string> _functionAppRegion;
+    public BicepValue<string> FunctionAppRegion 
+    {
+        get { Initialize(); return _functionAppRegion!; }
+        set { Initialize(); _functionAppRegion!.Assign(value); }
+    }
+    private BicepValue<string>? _functionAppRegion;
 
     /// <summary>
     /// The resource id of the function app registered with the static site.
     /// </summary>
-    public BicepValue<ResourceIdentifier> FunctionAppResourceId { get => _functionAppResourceId; set => _functionAppResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _functionAppResourceId;
+    public BicepValue<ResourceIdentifier> FunctionAppResourceId 
+    {
+        get { Initialize(); return _functionAppResourceId!; }
+        set { Initialize(); _functionAppResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _functionAppResourceId;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The date and time on which the function app was registered with the
     /// static site.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent StaticSite.
     /// </summary>
-    public StaticSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<StaticSite> _parent;
+    public StaticSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<StaticSite>? _parent;
 
     /// <summary>
     /// Creates a new StaticSiteUserProvidedFunctionApp.
@@ -79,14 +108,22 @@ public partial class StaticSiteUserProvidedFunctionApp : ProvisionableResource
     public StaticSiteUserProvidedFunctionApp(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Web/staticSites/userProvidedFunctionApps", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _functionAppRegion = BicepValue<string>.DefineProperty(this, "FunctionAppRegion", ["properties", "functionAppRegion"]);
-        _functionAppResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "FunctionAppResourceId", ["properties", "functionAppResourceId"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdOn"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<StaticSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// StaticSiteUserProvidedFunctionApp.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _functionAppRegion = DefineProperty<string>("FunctionAppRegion", ["properties", "functionAppRegion"]);
+        _functionAppResourceId = DefineProperty<ResourceIdentifier>("FunctionAppResourceId", ["properties", "functionAppResourceId"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdOn"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<StaticSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

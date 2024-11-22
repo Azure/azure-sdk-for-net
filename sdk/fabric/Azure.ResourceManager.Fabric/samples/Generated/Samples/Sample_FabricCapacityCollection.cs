@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Fabric.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Fabric.Samples
 {
     public partial class Sample_FabricCapacityCollection
     {
-        // Get a capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.Fabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetACapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.Fabric.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetACapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
@@ -110,7 +108,7 @@ namespace Azure.ResourceManager.Fabric.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -122,9 +120,8 @@ namespace Azure.ResourceManager.Fabric.Samples
             }
         }
 
-        // Create or update a capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateACapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_CreateOrUpdate.json
@@ -161,9 +158,8 @@ namespace Azure.ResourceManager.Fabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List capacities by resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListCapacitiesByResourceGroup()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_ListByResourceGroup.json
@@ -194,7 +190,7 @@ namespace Azure.ResourceManager.Fabric.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

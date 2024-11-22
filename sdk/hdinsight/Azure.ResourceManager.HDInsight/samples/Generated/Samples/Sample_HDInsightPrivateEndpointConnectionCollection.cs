@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HDInsight.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HDInsight.Samples
 {
     public partial class Sample_HDInsightPrivateEndpointConnectionCollection
     {
-        // Get all private endpoint connections for a specific HDInsight cluster.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAllPrivateEndpointConnectionsForASpecificHDInsightCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetAllPrivateEndpointConnectionsInCluster.json
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.HDInsight.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Approve a private endpoint connection manually.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApproveAPrivateEndpointConnectionManually()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/ApprovePrivateEndpointConnection.json
@@ -93,9 +92,8 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get specific private endpoint connection for a specific HDInsight cluster.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSpecificPrivateEndpointConnectionForASpecificHDInsightCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetPrivateEndpointConnection.json
@@ -128,9 +126,8 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get specific private endpoint connection for a specific HDInsight cluster.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSpecificPrivateEndpointConnectionForASpecificHDInsightCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetPrivateEndpointConnection.json
@@ -159,9 +156,8 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get specific private endpoint connection for a specific HDInsight cluster.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSpecificPrivateEndpointConnectionForASpecificHDInsightCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetPrivateEndpointConnection.json
@@ -190,7 +186,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

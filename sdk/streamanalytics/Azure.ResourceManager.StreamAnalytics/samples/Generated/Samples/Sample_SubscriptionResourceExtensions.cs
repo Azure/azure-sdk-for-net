@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StreamAnalytics.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StreamAnalytics.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // List subscription quota information in West US
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetQuotasSubscriptions_ListSubscriptionQuotaInformationInWestUS()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Subscription_ListQuotas.json
@@ -42,12 +42,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Test the Stream Analytics query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TestQuerySubscription_TestTheStreamAnalyticsQuery()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Subscription_TestQuery.json
@@ -131,9 +130,8 @@ Name = "outputtest",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Compile the Stream Analytics query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CompileQuerySubscription_CompileTheStreamAnalyticsQuery()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Subscription_CompileQuery.json
@@ -179,9 +177,8 @@ DataType = "bigint",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Sample the Stream Analytics input data
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SampleInputSubscription_SampleTheStreamAnalyticsInputData()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Subscription_SampleInput.json
@@ -239,9 +236,8 @@ AccountKey = "someAccountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Test the Stream Analytics input
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TestInputSubscription_TestTheStreamAnalyticsInput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Subscription_TestInput.json
@@ -293,9 +289,8 @@ AccountKey = "someAccountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Test the Stream Analytics output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TestOutputSubscription_TestTheStreamAnalyticsOutput()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Subscription_TestOutput.json

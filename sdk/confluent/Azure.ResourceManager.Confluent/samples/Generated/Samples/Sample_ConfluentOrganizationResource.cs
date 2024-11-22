@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Confluent.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Confluent.Samples
 {
     public partial class Sample_ConfluentOrganizationResource
     {
-        // Organization_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConfluentOrganizations_OrganizationListBySubscription()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_ListBySubscription.json
@@ -45,12 +45,11 @@ namespace Azure.ResourceManager.Confluent.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Organization_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_OrganizationGet()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_Get.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Confluent_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ConfluentUpdate()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_Update.json
@@ -118,9 +116,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Confluent_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ConfluentDelete()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_Delete.json
@@ -142,12 +139,11 @@ namespace Azure.ResourceManager.Confluent.Samples
             // invoke the operation
             await confluentOrganization.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Organization_ListEnvironments
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetEnvironments_OrganizationListEnvironments()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_EnvironmentList.json
@@ -173,12 +169,11 @@ namespace Azure.ResourceManager.Confluent.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Organization_GetEnvironmentById
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetEnvironment_OrganizationGetEnvironmentById()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_GetEnvironmentById.json
@@ -204,9 +199,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Organization_ListClusters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusters_OrganizationListClusters()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_ClusterList.json
@@ -233,12 +227,11 @@ namespace Azure.ResourceManager.Confluent.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Organization_ListSchemaRegistryClusters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSchemaRegistryClusters_OrganizationListSchemaRegistryClusters()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_ListSchemaRegistryClusters.json
@@ -264,12 +257,11 @@ namespace Azure.ResourceManager.Confluent.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Organization_ListRegions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRegions_OrganizationListRegions()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_ListRegions.json
@@ -303,9 +295,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Organization_CreateAPIKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateApiKey_OrganizationCreateAPIKey()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_CreateClusterAPIKey.json
@@ -337,9 +328,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Organization_DeleteClusterAPIKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteClusterApiKey_OrganizationDeleteClusterAPIKey()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_DeleteClusterAPIKey.json
@@ -362,12 +352,11 @@ namespace Azure.ResourceManager.Confluent.Samples
             string apiKeyId = "ZFZ6SZZZWGYBEIFB";
             await confluentOrganization.DeleteClusterApiKeyAsync(apiKeyId);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Organization_GetClusterAPIKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterApiKey_OrganizationGetClusterAPIKey()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_GetClusterAPIKey.json
@@ -393,9 +382,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Organization_GetSchemaRegistryClusterById
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSchemaRegistryCluster_OrganizationGetSchemaRegistryClusterById()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_GetSchemaRegistryClusterById.json
@@ -422,9 +410,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Organization_GetClusterById
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCluster_OrganizationGetClusterById()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_GetClusterById.json
@@ -451,9 +438,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Access_UsersList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAccessUsers_AccessUsersList()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_UsersList.json
@@ -486,9 +472,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Access_ServiceAccountsList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAccessServiceAccounts_AccessServiceAccountsList()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_ServiceAccountsList.json
@@ -521,9 +506,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Access_InvitationsList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAccessInvitations_AccessInvitationsList()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_InvitationsList.json
@@ -557,9 +541,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Access_InviteUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task InviteUser_AccessInviteUser()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_InviteUser.json
@@ -592,9 +575,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Access_EnvironmentList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAccessEnvironments_AccessEnvironmentList()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_EnvironmentList.json
@@ -627,9 +609,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Access_ClusterList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAccessClusters_AccessClusterList()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_ClusterList.json
@@ -662,9 +643,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Access_RoleBindingList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAccessRoleBindings_AccessRoleBindingList()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_RoleBindingList.json
@@ -697,9 +677,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Access_CreateRoleBinding
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateAccessRoleBinding_AccessCreateRoleBinding()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_CreateRoleBinding.json
@@ -730,9 +709,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Access_DeleteRoleBinding
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteAccessRoleBinding_AccessDeleteRoleBinding()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_DeleteRoleBinding.json
@@ -755,12 +733,11 @@ namespace Azure.ResourceManager.Confluent.Samples
             string roleBindingId = "dlz-f3a90de";
             await confluentOrganization.DeleteAccessRoleBindingAsync(roleBindingId);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Access_RoleBindingNameList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAccessRoleBindingNames_AccessRoleBindingNameList()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_RoleBindingNameList.json

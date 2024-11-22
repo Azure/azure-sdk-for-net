@@ -1,6 +1,6 @@
 # Release History
 
-## 4.28.0-beta.1 (Unreleased)
+## 4.29.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.28.0 (2024-11-18)
+
+### Features Added
+
+- Added `ResourceNotificationsContainerServiceEventResourcesScheduledEventData` event.
+- Added `PolicyRunSummary` property to `StorageLifecyclePolicyCompletedEventData` event.
 
 ## 4.27.0 (2024-10-14)
 

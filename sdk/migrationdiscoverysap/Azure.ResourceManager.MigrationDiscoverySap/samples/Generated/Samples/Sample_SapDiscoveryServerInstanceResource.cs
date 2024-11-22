@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MigrationDiscoverySap.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
 {
     public partial class Sample_SapDiscoveryServerInstanceResource
     {
-        // GET a Server Instance resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GETAServerInstanceResource()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/ServerInstances_Get.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Updates the Server Instance resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesTheServerInstanceResource()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/ServerInstances_Update.json
@@ -85,9 +84,8 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes the Server Instance resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesTheServerInstanceResource()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/ServerInstances_Delete.json
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
             // invoke the operation
             await sapDiscoveryServerInstance.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

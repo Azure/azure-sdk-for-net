@@ -21,20 +21,32 @@ public partial class SubscriptionPolicyDefinition : ProvisionableResource
     /// <summary>
     /// The name of the policy definition to create.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The policy definition description.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// The display name of the policy definition.
     /// </summary>
-    public BicepValue<string> DisplayName { get => _displayName; set => _displayName.Assign(value); }
-    private readonly BicepValue<string> _displayName;
+    public BicepValue<string> DisplayName 
+    {
+        get { Initialize(); return _displayName!; }
+        set { Initialize(); _displayName!.Assign(value); }
+    }
+    private BicepValue<string>? _displayName;
 
     /// <summary>
     /// The policy definition metadata.  Metadata is an open ended object and
@@ -53,22 +65,34 @@ public partial class SubscriptionPolicyDefinition : ProvisionableResource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> Metadata { get => _metadata; set => _metadata.Assign(value); }
-    private readonly BicepValue<BinaryData> _metadata;
+    public BicepValue<BinaryData> Metadata 
+    {
+        get { Initialize(); return _metadata!; }
+        set { Initialize(); _metadata!.Assign(value); }
+    }
+    private BicepValue<BinaryData>? _metadata;
 
     /// <summary>
     /// The policy definition mode. Some examples are All, Indexed,
     /// Microsoft.KeyVault.Data.
     /// </summary>
-    public BicepValue<string> Mode { get => _mode; set => _mode.Assign(value); }
-    private readonly BicepValue<string> _mode;
+    public BicepValue<string> Mode 
+    {
+        get { Initialize(); return _mode!; }
+        set { Initialize(); _mode!.Assign(value); }
+    }
+    private BicepValue<string>? _mode;
 
     /// <summary>
     /// The parameter definitions for parameters used in the policy rule. The
     /// keys are the parameter names.
     /// </summary>
-    public BicepDictionary<ArmPolicyParameter> Parameters { get => _parameters; set => _parameters.Assign(value); }
-    private readonly BicepDictionary<ArmPolicyParameter> _parameters;
+    public BicepDictionary<ArmPolicyParameter> Parameters 
+    {
+        get { Initialize(); return _parameters!; }
+        set { Initialize(); _parameters!.Assign(value); }
+    }
+    private BicepDictionary<ArmPolicyParameter>? _parameters;
 
     /// <summary>
     /// The policy rule.                          To assign an object to this
@@ -86,29 +110,43 @@ public partial class SubscriptionPolicyDefinition : ProvisionableResource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> PolicyRule { get => _policyRule; set => _policyRule.Assign(value); }
-    private readonly BicepValue<BinaryData> _policyRule;
+    public BicepValue<BinaryData> PolicyRule 
+    {
+        get { Initialize(); return _policyRule!; }
+        set { Initialize(); _policyRule!.Assign(value); }
+    }
+    private BicepValue<BinaryData>? _policyRule;
 
     /// <summary>
     /// The type of policy definition. Possible values are NotSpecified,
     /// BuiltIn, Custom, and Static.
     /// </summary>
-    public BicepValue<PolicyType> PolicyType { get => _policyType; set => _policyType.Assign(value); }
-    private readonly BicepValue<PolicyType> _policyType;
+    public BicepValue<PolicyType> PolicyType 
+    {
+        get { Initialize(); return _policyType!; }
+        set { Initialize(); _policyType!.Assign(value); }
+    }
+    private BicepValue<PolicyType>? _policyType;
 
     /// <summary>
     /// Fully qualified resource ID for the resource. Ex -
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Azure Resource Manager metadata containing createdBy and modifiedBy
     /// information.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new SubscriptionPolicyDefinition.
@@ -123,16 +161,23 @@ public partial class SubscriptionPolicyDefinition : ProvisionableResource
     public SubscriptionPolicyDefinition(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Authorization/policyDefinitions", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["properties", "displayName"]);
-        _metadata = BicepValue<BinaryData>.DefineProperty(this, "Metadata", ["properties", "metadata"]);
-        _mode = BicepValue<string>.DefineProperty(this, "Mode", ["properties", "mode"]);
-        _parameters = BicepDictionary<ArmPolicyParameter>.DefineProperty(this, "Parameters", ["properties", "parameters"]);
-        _policyRule = BicepValue<BinaryData>.DefineProperty(this, "PolicyRule", ["properties", "policyRule"]);
-        _policyType = BicepValue<PolicyType>.DefineProperty(this, "PolicyType", ["properties", "policyType"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SubscriptionPolicyDefinition.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"]);
+        _metadata = DefineProperty<BinaryData>("Metadata", ["properties", "metadata"]);
+        _mode = DefineProperty<string>("Mode", ["properties", "mode"]);
+        _parameters = DefineDictionaryProperty<ArmPolicyParameter>("Parameters", ["properties", "parameters"]);
+        _policyRule = DefineProperty<BinaryData>("PolicyRule", ["properties", "policyRule"]);
+        _policyType = DefineProperty<PolicyType>("PolicyType", ["properties", "policyType"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>

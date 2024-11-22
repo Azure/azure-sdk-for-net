@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Samples
 {
     public partial class Sample_ActionGroupResource
     {
-        // Get an action group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnActionGroup()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/getActionGroup.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete an action group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnActionGroup()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/deleteActionGroup.json
@@ -71,12 +70,11 @@ namespace Azure.ResourceManager.Monitor.Samples
             // invoke the operation
             await actionGroup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Patch an action group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchAnActionGroup()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/patchActionGroup.json
@@ -114,9 +112,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create notifications at resource group level
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateNotifications_CreateNotificationsAtResourceGroupLevel()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/postTestNotificationsAtActionGroupResourceLevel.json
@@ -225,9 +222,8 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get notification details at resource group level
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNotificationStatus_GetNotificationDetailsAtResourceGroupLevel()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/getTestNotificationsAtActionGroupResourceLevel.json
@@ -253,9 +249,8 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List action groups at subscription level
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetActionGroups_ListActionGroupsAtSubscriptionLevel()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/listActionGroups.json
@@ -282,12 +277,11 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Enable the receiver
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task EnableReceiver_EnableTheReceiver()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/enableReceiver.json
@@ -310,7 +304,7 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
             ActionGroupEnableContent content = new ActionGroupEnableContent("John Doe's mobile");
             await actionGroup.EnableReceiverAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

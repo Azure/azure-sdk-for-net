@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Authorization.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {
-        // Elevate access global administrator
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ElevateAccessGlobalAdministrator_ElevateAccessGlobalAdministrator()
         {
             // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2015-07-01/examples/ElevateAccess.json
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Authorization.Samples
             // invoke the operation
             await tenantResource.ElevateAccessGlobalAdministratorAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

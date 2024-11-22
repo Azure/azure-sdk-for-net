@@ -19,13 +19,21 @@ namespace Azure.Compute.Batch
 
         void IJsonModel<VirtualMachineConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("imageReference"u8);
             writer.WriteObjectValue(ImageReference, options);
             writer.WritePropertyName("nodeAgentSKUId"u8);
@@ -105,7 +113,6 @@ namespace Azure.Compute.Batch
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         VirtualMachineConfiguration IJsonModel<VirtualMachineConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

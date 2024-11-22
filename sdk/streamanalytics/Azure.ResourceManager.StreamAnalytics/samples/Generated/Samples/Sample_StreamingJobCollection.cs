@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StreamAnalytics.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StreamAnalytics.Samples
 {
     public partial class Sample_StreamingJobCollection
     {
-        // Create a complete streaming job (a streaming job with a transformation, at least 1 input and at least 1 output)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateACompleteStreamingJobAStreamingJobWithATransformationAtLeast1InputAndAtLeast1Output()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_Create_CompleteJob.json
@@ -136,9 +136,8 @@ Name = "outputtest",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a streaming job shell (a streaming job with no inputs, outputs, transformation, or functions)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAStreamingJobShellAStreamingJobWithNoInputsOutputsTransformationOrFunctions()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_Create_JobShell.json
@@ -196,9 +195,8 @@ Name = "outputtest",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a streaming job and do not use the $expand OData query parameter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAStreamingJobAndDoNotUseTheExpandODataQueryParameter()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_Get_NoExpand.json
@@ -230,9 +228,8 @@ Name = "outputtest",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a streaming job and do not use the $expand OData query parameter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAStreamingJobAndDoNotUseTheExpandODataQueryParameter()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_Get_NoExpand.json
@@ -260,9 +257,8 @@ Name = "outputtest",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a streaming job and do not use the $expand OData query parameter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAStreamingJobAndDoNotUseTheExpandODataQueryParameter()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_Get_NoExpand.json
@@ -290,7 +286,7 @@ Name = "outputtest",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -302,9 +298,8 @@ Name = "outputtest",
             }
         }
 
-        // Get a streaming job and use the $expand OData query parameter to expand inputs, outputs, transformation, and functions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAStreamingJobAndUseTheExpandODataQueryParameterToExpandInputsOutputsTransformationAndFunctions()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_Get_Expand.json
@@ -337,9 +332,8 @@ Name = "outputtest",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a streaming job and use the $expand OData query parameter to expand inputs, outputs, transformation, and functions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAStreamingJobAndUseTheExpandODataQueryParameterToExpandInputsOutputsTransformationAndFunctions()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_Get_Expand.json
@@ -368,9 +362,8 @@ Name = "outputtest",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a streaming job and use the $expand OData query parameter to expand inputs, outputs, transformation, and functions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAStreamingJobAndUseTheExpandODataQueryParameterToExpandInputsOutputsTransformationAndFunctions()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_Get_Expand.json
@@ -399,7 +392,7 @@ Name = "outputtest",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -411,9 +404,8 @@ Name = "outputtest",
             }
         }
 
-        // List all streaming jobs in a resource group and do not use the $expand OData query parameter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllStreamingJobsInAResourceGroupAndDoNotUseTheExpandODataQueryParameter()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_List_ByResourceGroup_NoExpand.json
@@ -444,12 +436,11 @@ Name = "outputtest",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List all streaming jobs in a resource group and use the $expand OData query parameter to expand inputs, outputs, transformation, and functions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllStreamingJobsInAResourceGroupAndUseTheExpandODataQueryParameterToExpandInputsOutputsTransformationAndFunctions()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_List_ByResourceGroup_Expand.json
@@ -481,7 +472,7 @@ Name = "outputtest",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

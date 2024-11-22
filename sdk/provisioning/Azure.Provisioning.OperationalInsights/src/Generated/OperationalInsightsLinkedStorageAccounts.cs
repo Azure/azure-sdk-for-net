@@ -21,38 +21,59 @@ public partial class OperationalInsightsLinkedStorageAccounts : ProvisionableRes
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Linked storage accounts type.
     /// </summary>
-    public BicepValue<OperationalInsightsDataSourceType> DataSourceType { get => _dataSourceType; set => _dataSourceType.Assign(value); }
-    private readonly BicepValue<OperationalInsightsDataSourceType> _dataSourceType;
+    public BicepValue<OperationalInsightsDataSourceType> DataSourceType 
+    {
+        get { Initialize(); return _dataSourceType!; }
+        set { Initialize(); _dataSourceType!.Assign(value); }
+    }
+    private BicepValue<OperationalInsightsDataSourceType>? _dataSourceType;
 
     /// <summary>
     /// Linked storage accounts resources ids.
     /// </summary>
-    public BicepList<ResourceIdentifier> StorageAccountIds { get => _storageAccountIds; set => _storageAccountIds.Assign(value); }
-    private readonly BicepList<ResourceIdentifier> _storageAccountIds;
+    public BicepList<ResourceIdentifier> StorageAccountIds 
+    {
+        get { Initialize(); return _storageAccountIds!; }
+        set { Initialize(); _storageAccountIds!.Assign(value); }
+    }
+    private BicepList<ResourceIdentifier>? _storageAccountIds;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent OperationalInsightsWorkspace.
     /// </summary>
-    public OperationalInsightsWorkspace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<OperationalInsightsWorkspace> _parent;
+    public OperationalInsightsWorkspace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<OperationalInsightsWorkspace>? _parent;
 
     /// <summary>
     /// Creates a new OperationalInsightsLinkedStorageAccounts.
@@ -68,12 +89,20 @@ public partial class OperationalInsightsLinkedStorageAccounts : ProvisionableRes
     public OperationalInsightsLinkedStorageAccounts(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.OperationalInsights/workspaces/linkedStorageAccounts", resourceVersion ?? "2023-09-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _dataSourceType = BicepValue<OperationalInsightsDataSourceType>.DefineProperty(this, "DataSourceType", ["properties", "dataSourceType"], isRequired: true);
-        _storageAccountIds = BicepList<ResourceIdentifier>.DefineProperty(this, "StorageAccountIds", ["properties", "storageAccountIds"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<OperationalInsightsWorkspace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// OperationalInsightsLinkedStorageAccounts.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _dataSourceType = DefineProperty<OperationalInsightsDataSourceType>("DataSourceType", ["properties", "dataSourceType"], isRequired: true);
+        _storageAccountIds = DefineListProperty<ResourceIdentifier>("StorageAccountIds", ["properties", "storageAccountIds"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<OperationalInsightsWorkspace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

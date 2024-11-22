@@ -19,13 +19,21 @@ namespace Azure.AI.OpenAI.Assistants
 
         void IJsonModel<InternalOpenAIPageableListOfAssistantFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<InternalOpenAIPageableListOfAssistantFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAssistantFile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("object"u8);
             writer.WriteStringValue(Object.ToString());
             writer.WritePropertyName("data"u8);
@@ -56,7 +64,6 @@ namespace Azure.AI.OpenAI.Assistants
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         InternalOpenAIPageableListOfAssistantFile IJsonModel<InternalOpenAIPageableListOfAssistantFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

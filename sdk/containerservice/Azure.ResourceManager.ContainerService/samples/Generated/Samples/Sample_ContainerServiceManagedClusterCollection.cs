@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerService.Samples
 {
     public partial class Sample_ContainerServiceManagedClusterCollection
     {
-        // Get Managed Clusters by Resource Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetManagedClustersByResourceGroup()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersListByResourceGroup.json
@@ -50,12 +50,11 @@ namespace Azure.ResourceManager.ContainerService.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Managed Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagedCluster()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersGet.json
@@ -87,9 +86,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Managed Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetManagedCluster()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersGet.json
@@ -117,9 +115,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Managed Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetManagedCluster()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersGet.json
@@ -147,7 +144,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -159,9 +156,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             }
         }
 
-        // Create Managed Cluster using an agent pool snapshot
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterUsingAnAgentPoolSnapshot()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_Snapshot.json
@@ -258,9 +254,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with AKS-managed NAT gateway as outbound type
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithAKSManagedNATGatewayAsOutboundType()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_ManagedNATGateway.json
@@ -352,9 +347,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with Azure KeyVault Secrets Provider Addon
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithAzureKeyVaultSecretsProviderAddon()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_AzureKeyvaultSecretsProvider.json
@@ -457,9 +451,8 @@ Config =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with Capacity Reservation Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithCapacityReservationGroup()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_CRG.json
@@ -555,9 +548,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with Dedicated Host Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithDedicatedHostGroup()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_DedicatedHostGroup.json
@@ -652,9 +644,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with EncryptionAtHost enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithEncryptionAtHostEnabled()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_EnableEncryptionAtHost.json
@@ -750,9 +741,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with FIPS enabled OS
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithFIPSEnabledOS()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_EnabledFIPS.json
@@ -848,9 +838,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with GPUMIG
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithGPUMIG()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_GPUMIG.json
@@ -956,9 +945,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with HTTP proxy configured
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithHTTPProxyConfigured()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_HTTPProxy.json
@@ -1063,9 +1051,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with LongTermSupport
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithLongTermSupport()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_Premium.json
@@ -1165,9 +1152,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with Node Public IP Prefix
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithNodePublicIPPrefix()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_NodePublicIPPrefix.json
@@ -1263,9 +1249,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with OSSKU
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithOSSKU()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_OSSKU.json
@@ -1371,9 +1356,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with PPG
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithPPG()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_PPG.json
@@ -1469,9 +1453,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with PodIdentity enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithPodIdentityEnabled()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_PodIdentity.json
@@ -1571,9 +1554,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with RunCommand disabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithRunCommandDisabled()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_DisableRunCommand.json
@@ -1672,9 +1654,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with Security Profile configured
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithSecurityProfileConfigured()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_SecurityProfile.json
@@ -1759,9 +1740,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with UltraSSD enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithUltraSSDEnabled()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_EnableUltraSSD.json
@@ -1857,9 +1837,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Cluster with user-assigned NAT gateway as outbound type
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedClusterWithUserAssignedNATGatewayAsOutboundType()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_UserAssignedNATGateway.json
@@ -1947,9 +1926,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Private Cluster with Public FQDN specified
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedPrivateClusterWithPublicFQDNSpecified()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_PrivateClusterPublicFQDN.json
@@ -2049,9 +2027,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Managed Private Cluster with fqdn subdomain specified
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateManagedPrivateClusterWithFqdnSubdomainSpecified()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_PrivateClusterFQDNSubdomain.json
@@ -2151,9 +2128,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create/Update AAD Managed Cluster with EnableAzureRBAC
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateUpdateAADManagedClusterWithEnableAzureRBAC()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_UpdateWithEnableAzureRBAC.json
@@ -2257,9 +2233,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create/Update Managed Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateUpdateManagedCluster()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_Update.json
@@ -2377,9 +2352,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create/Update Managed Cluster with Azure Service Mesh
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateUpdateManagedClusterWithAzureServiceMesh()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_AzureServiceMesh.json
@@ -2513,9 +2487,8 @@ NodeSelector =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create/Update Managed Cluster with EnableAHUB
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateUpdateManagedClusterWithEnableAHUB()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_UpdateWithAHUB.json
@@ -2623,9 +2596,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create/Update Managed Cluster with Windows gMSA enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateUpdateManagedClusterWithWindowsGMSAEnabled()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_UpdateWindowsGmsa.json
@@ -2736,9 +2708,8 @@ new ContainerServiceSshPublicKey("keydata")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create/Update Managed Cluster with dual-stack networking
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateUpdateManagedClusterWithDualStackNetworking()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersCreate_DualStackNetworking.json

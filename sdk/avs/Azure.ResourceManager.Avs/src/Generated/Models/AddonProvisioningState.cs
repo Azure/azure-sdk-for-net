@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The state of the addon provisioning. </summary>
+    /// <summary> Addon provisioning state. </summary>
     public readonly partial struct AddonProvisioningState : IEquatable<AddonProvisioningState>
     {
         private readonly string _value;
@@ -24,26 +24,26 @@ namespace Azure.ResourceManager.Avs.Models
 
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
         private const string CancelledValue = "Cancelled";
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
-        private const string CanceledValue = "Canceled";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static AddonProvisioningState Succeeded { get; } = new AddonProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static AddonProvisioningState Failed { get; } = new AddonProvisioningState(FailedValue);
-        /// <summary> Cancelled. </summary>
-        public static AddonProvisioningState Cancelled { get; } = new AddonProvisioningState(CancelledValue);
-        /// <summary> Building. </summary>
-        public static AddonProvisioningState Building { get; } = new AddonProvisioningState(BuildingValue);
-        /// <summary> Deleting. </summary>
-        public static AddonProvisioningState Deleting { get; } = new AddonProvisioningState(DeletingValue);
-        /// <summary> Updating. </summary>
-        public static AddonProvisioningState Updating { get; } = new AddonProvisioningState(UpdatingValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static AddonProvisioningState Canceled { get; } = new AddonProvisioningState(CanceledValue);
+        /// <summary> is cancelled. </summary>
+        public static AddonProvisioningState Cancelled { get; } = new AddonProvisioningState(CancelledValue);
+        /// <summary> is building. </summary>
+        public static AddonProvisioningState Building { get; } = new AddonProvisioningState(BuildingValue);
+        /// <summary> is deleting. </summary>
+        public static AddonProvisioningState Deleting { get; } = new AddonProvisioningState(DeletingValue);
+        /// <summary> is updating. </summary>
+        public static AddonProvisioningState Updating { get; } = new AddonProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="AddonProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AddonProvisioningState left, AddonProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AddonProvisioningState"/> values are not the same. </summary>

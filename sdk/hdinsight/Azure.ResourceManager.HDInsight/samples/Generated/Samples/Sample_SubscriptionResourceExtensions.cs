@@ -12,14 +12,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HDInsight.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // Get the subscription capabilities for specific location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHDInsightCapabilities_GetTheSubscriptionCapabilitiesForSpecificLocation()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetHDInsightCapabilities.json
@@ -43,9 +43,8 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the subscription usages for specific location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHDInsightUsages_GetTheSubscriptionUsagesForSpecificLocation()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetHDInsightUsages.json
@@ -69,12 +68,11 @@ namespace Azure.ResourceManager.HDInsight.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get the subscription billingSpecs for the specified location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHDInsightBillingSpecs_GetTheSubscriptionBillingSpecsForTheSpecifiedLocation()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/HDI_Locations_ListBillingSpecs.json
@@ -98,9 +96,8 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the subscription usages for specific location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckHDInsightNameAvailability_GetTheSubscriptionUsagesForSpecificLocation()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/HDI_Locations_CheckClusterNameAvailability.json
@@ -129,9 +126,8 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the subscription usages for specific location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateHDInsightClusterCreation_GetTheSubscriptionUsagesForSpecificLocation()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/HDI_Locations_ValidateClusterCreateRequest.json

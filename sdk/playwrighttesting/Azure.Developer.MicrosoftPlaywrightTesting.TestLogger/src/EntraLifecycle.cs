@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Identity;
 using Microsoft.IdentityModel.JsonWebTokens;
 
@@ -16,9 +17,11 @@ internal class EntraLifecycle
     internal long? _entraIdAccessTokenExpiry;
     private readonly TokenCredential _tokenCredential;
     private readonly JsonWebTokenHandler _jsonWebTokenHandler;
+    private readonly IFrameworkLogger? _frameworkLogger;
 
-    public EntraLifecycle(TokenCredential? tokenCredential = null, JsonWebTokenHandler? jsonWebTokenHandler = null)
+    public EntraLifecycle(TokenCredential? tokenCredential = null, JsonWebTokenHandler? jsonWebTokenHandler = null, IFrameworkLogger? frameworkLogger = null)
     {
+        _frameworkLogger = frameworkLogger;
         _tokenCredential = tokenCredential ?? new DefaultAzureCredential();
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
         SetEntraIdAccessTokenFromEnvironment();
@@ -37,7 +40,7 @@ internal class EntraLifecycle
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine(ex);
+            _frameworkLogger?.Error(ex.ToString());
             throw new Exception(Constants.s_no_auth_error);
         }
     }

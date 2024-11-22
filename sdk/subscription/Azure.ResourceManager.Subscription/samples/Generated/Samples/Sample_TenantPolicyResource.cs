@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Subscription.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Subscription.Samples
 {
     public partial class Sample_TenantPolicyResource
     {
-        // TenantPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_TenantPolicy()
         {
             // Generated from example definition: specification/subscription/resource-manager/Microsoft.Subscription/stable/2021-10-01/examples/changeTenantPolicy.json
@@ -53,9 +53,8 @@ Guid.Parse("e879cf0f-2b4d-5431-109a-f72fc9868693"),Guid.Parse("9792da87-c97b-410
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // getTenantPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTenantPolicy()
         {
             // Generated from example definition: specification/subscription/resource-manager/Microsoft.Subscription/stable/2021-10-01/examples/getTenantPolicy.json

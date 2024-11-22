@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="adminUsername"> The name of the administrator to which the ssh public keys will be added into the authorized keys. </param>
         /// <param name="cloudServicesNetworkAttachment"> The cloud service network that provides platform-level services for the virtual machine. </param>
         /// <param name="cpuCores"> The number of CPU cores in the virtual machine. </param>
-        /// <param name="memorySizeInGB"> The memory size of the virtual machine in GB. </param>
+        /// <param name="memorySizeInGB"> The memory size of the virtual machine. Allocations are measured in gibibytes. </param>
         /// <param name="storageProfile"> The storage profile that specifies size and other parameters about the disks related to the virtual machine. </param>
         /// <param name="vmImage"> The virtual machine image that is currently provisioned to the OS disk, using the full url and tag notation used to pull the image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="adminUsername"/>, <paramref name="cloudServicesNetworkAttachment"/>, <paramref name="storageProfile"/> or <paramref name="vmImage"/> is null. </exception>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="adminUsername"> The name of the administrator to which the ssh public keys will be added into the authorized keys. </param>
         /// <param name="availabilityZone"> The cluster availability zone containing this virtual machine. </param>
-        /// <param name="bareMetalMachineId"> The resource ID of the bare metal machine the virtual machine has landed to. </param>
+        /// <param name="bareMetalMachineId"> The resource ID of the bare metal machine that hosts the virtual machine. </param>
         /// <param name="bootMethod"> Selects the boot method for the virtual machine. </param>
         /// <param name="cloudServicesNetworkAttachment"> The cloud service network that provides platform-level services for the virtual machine. </param>
         /// <param name="clusterId"> The resource ID of the cluster the virtual machine is created for. </param>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="detailedStatus"> The more detailed status of the virtual machine. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="isolateEmulatorThread"> Field Deprecated, the value will be ignored if provided. The indicator of whether one of the specified CPU cores is isolated to run the emulator thread for this virtual machine. </param>
-        /// <param name="memorySizeInGB"> The memory size of the virtual machine in GB. </param>
+        /// <param name="memorySizeInGB"> The memory size of the virtual machine. Allocations are measured in gibibytes. </param>
         /// <param name="networkAttachments"> The list of network attachments to the virtual machine. </param>
         /// <param name="networkData"> The Base64 encoded cloud-init network data. </param>
         /// <param name="placementHints"> The scheduling hints for the virtual machine. </param>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public string AdminUsername { get; set; }
         /// <summary> The cluster availability zone containing this virtual machine. </summary>
         public string AvailabilityZone { get; }
-        /// <summary> The resource ID of the bare metal machine the virtual machine has landed to. </summary>
+        /// <summary> The resource ID of the bare metal machine that hosts the virtual machine. </summary>
         public ResourceIdentifier BareMetalMachineId { get; }
         /// <summary> Selects the boot method for the virtual machine. </summary>
         public VirtualMachineBootMethod? BootMethod { get; set; }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public string DetailedStatusMessage { get; }
         /// <summary> Field Deprecated, the value will be ignored if provided. The indicator of whether one of the specified CPU cores is isolated to run the emulator thread for this virtual machine. </summary>
         public VirtualMachineIsolateEmulatorThread? IsolateEmulatorThread { get; set; }
-        /// <summary> The memory size of the virtual machine in GB. </summary>
+        /// <summary> The memory size of the virtual machine. Allocations are measured in gibibytes. </summary>
         public long MemorySizeInGB { get; set; }
         /// <summary> The list of network attachments to the virtual machine. </summary>
         public IList<NetworkAttachment> NetworkAttachments { get; }

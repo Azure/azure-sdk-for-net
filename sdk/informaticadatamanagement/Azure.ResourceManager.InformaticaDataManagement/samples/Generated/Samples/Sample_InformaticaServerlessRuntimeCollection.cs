@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.InformaticaDataManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 {
     public partial class Sample_InformaticaServerlessRuntimeCollection
     {
-        // ServerlessRuntimes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ServerlessRuntimesGet()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MaximumSet_Gen.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ServerlessRuntimes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ServerlessRuntimesGet()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MaximumSet_Gen.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ServerlessRuntimes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ServerlessRuntimesGet()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MaximumSet_Gen.json
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -124,9 +122,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             }
         }
 
-        // ServerlessRuntimes_Get_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ServerlessRuntimesGetMin()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MinimumSet_Gen.json
@@ -159,9 +156,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ServerlessRuntimes_Get_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ServerlessRuntimesGetMin()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MinimumSet_Gen.json
@@ -190,9 +186,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ServerlessRuntimes_Get_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ServerlessRuntimesGetMin()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MinimumSet_Gen.json
@@ -221,7 +216,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -233,9 +228,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             }
         }
 
-        // ServerlessRuntimes_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ServerlessRuntimesCreateOrUpdate()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_CreateOrUpdate_MaximumSet_Gen.json
@@ -319,9 +313,8 @@ Value = "uyiuegxnkgp",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ServerlessRuntimes_CreateOrUpdate_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ServerlessRuntimesCreateOrUpdateMin()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_CreateOrUpdate_MinimumSet_Gen.json

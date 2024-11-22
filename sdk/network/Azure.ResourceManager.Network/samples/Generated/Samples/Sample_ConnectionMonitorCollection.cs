@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_ConnectionMonitorCollection
     {
-        // Create connection monitor V1
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateConnectionMonitorV1()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkWatcherConnectionMonitorCreate.json
@@ -89,9 +89,8 @@ new ConnectionMonitorTestGroup("tg",new string[]
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create connection monitor V2
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateConnectionMonitorV2()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkWatcherConnectionMonitorV2Create.json
@@ -187,9 +186,8 @@ Disable = false,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create connection monitor with Arc Network
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateConnectionMonitorWithArcNetwork()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkWatcherConnectionMonitorCreateWithArcNetwork.json
@@ -288,9 +286,8 @@ Disable = false,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get connection monitor
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetConnectionMonitor()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkWatcherConnectionMonitorGet.json
@@ -323,9 +320,8 @@ Disable = false,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get connection monitor
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetConnectionMonitor()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkWatcherConnectionMonitorGet.json
@@ -354,9 +350,8 @@ Disable = false,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get connection monitor
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetConnectionMonitor()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkWatcherConnectionMonitorGet.json
@@ -385,7 +380,7 @@ Disable = false,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -397,9 +392,8 @@ Disable = false,
             }
         }
 
-        // List connection monitors
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListConnectionMonitors()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkWatcherConnectionMonitorList.json
@@ -431,7 +425,7 @@ Disable = false,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

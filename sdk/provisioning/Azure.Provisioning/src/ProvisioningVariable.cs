@@ -44,7 +44,7 @@ public class ProvisioningVariable : NamedProvisionableConstruct
         : base(bicepIdentifier)
     {
         BicepType = type;
-        _value = BicepValue<object>.DefineProperty(this, nameof(Value), bicepPath: null, defaultValue: value);
+        _value = DefineProperty<object>(nameof(Value), bicepPath: null, defaultValue: value);
     }
 
     /// <summary>

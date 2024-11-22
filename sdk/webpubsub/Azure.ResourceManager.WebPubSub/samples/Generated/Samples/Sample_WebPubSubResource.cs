@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.WebPubSub.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.WebPubSub.Samples
 {
     public partial class Sample_WebPubSubResource
     {
-        // WebPubSub_CheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckWebPubSubNameAvailability_WebPubSubCheckNameAvailability()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_CheckNameAvailability.json
@@ -44,9 +44,8 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // WebPubSub_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetWebPubSubs_WebPubSubListBySubscription()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_ListBySubscription.json
@@ -73,12 +72,11 @@ namespace Azure.ResourceManager.WebPubSub.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // WebPubSub_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_WebPubSubGet()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_Get.json
@@ -107,9 +105,8 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // WebPubSub_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_WebPubSubDelete()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_Delete.json
@@ -131,12 +128,11 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // invoke the operation
             await webPubSub.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // WebPubSub_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_WebPubSubUpdate()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_Update.json
@@ -214,9 +210,8 @@ WebPubSubRequestType.ServerConnection
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // WebPubSub_ListKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_WebPubSubListKeys()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_ListKeys.json
@@ -241,9 +236,8 @@ WebPubSubRequestType.ServerConnection
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // WebPubSub_RegenerateKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKey_WebPubSubRegenerateKey()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_RegenerateKey.json
@@ -273,9 +267,8 @@ WebPubSubRequestType.ServerConnection
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // WebPubSub_Restart
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Restart_WebPubSubRestart()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_Restart.json
@@ -297,12 +290,11 @@ WebPubSubRequestType.ServerConnection
             // invoke the operation
             await webPubSub.RestartAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // WebPubSub_ListSkus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSkus_WebPubSubListSkus()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_ListSkus.json
@@ -327,12 +319,11 @@ WebPubSubRequestType.ServerConnection
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // WebPubSubPrivateLinkResources_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetWebPubSubPrivateLinkResources_WebPubSubPrivateLinkResourcesList()
         {
             // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubPrivateLinkResources_List.json
@@ -357,7 +348,7 @@ WebPubSubRequestType.ServerConnection
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

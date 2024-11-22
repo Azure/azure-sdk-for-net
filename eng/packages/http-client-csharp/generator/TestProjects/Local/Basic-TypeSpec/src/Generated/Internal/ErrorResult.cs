@@ -5,22 +5,26 @@
 
 #nullable disable
 
-using System.ClientModel;
-using System.ClientModel.Primitives;
+using Azure;
 
 namespace BasicTypeSpec
 {
-    internal partial class ErrorResult<T> : ClientResult<T>
+    internal partial class ErrorResult<T> : Response<T>
     {
-        private readonly PipelineResponse _response;
-        private readonly ClientResultException _exception;
+        private readonly Response _response;
+        private readonly RequestFailedException _exception;
 
-        public ErrorResult(PipelineResponse response, ClientResultException exception) : base(default, response)
+        public ErrorResult(Response response, RequestFailedException exception)
         {
             _response = response;
             _exception = exception;
         }
 
         public override T Value => throw _exception;
+
+        public override Response GetRawResponse()
+        {
+            return _response;
+        }
     }
 }

@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="location"> The location. </param>
         public PostgreSqlFlexibleServerData(AzureLocation location) : base(location)
         {
+            PrivateEndpointConnections = new ChangeTrackingList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerData"/>. </summary>
@@ -84,9 +85,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="availabilityZone"> availability zone information of the server. </param>
         /// <param name="replicationRole"> Replication role of the server. </param>
         /// <param name="replicaCapacity"> Replicas allowed for a server. </param>
+        /// <param name="replica"> Replica properties of a server. These Replica properties are required to be passed only in case you want to Promote a server. </param>
         /// <param name="createMode"> The mode to create a new PostgreSQL server. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServerCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerCreateMode? createMode, IReadOnlyList<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -108,7 +111,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             AvailabilityZone = availabilityZone;
             ReplicationRole = replicationRole;
             ReplicaCapacity = replicaCapacity;
+            Replica = replica;
             CreateMode = createMode;
+            PrivateEndpointConnections = privateEndpointConnections;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -174,8 +179,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> Replication role of the server. </summary>
         [WirePath("properties.replicationRole")]
         public PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
+        /// <summary> Replica properties of a server. These Replica properties are required to be passed only in case you want to Promote a server. </summary>
+        [WirePath("properties.replica")]
+        public PostgreSqlFlexibleServersReplica Replica { get; set; }
         /// <summary> The mode to create a new PostgreSQL server. </summary>
         [WirePath("properties.createMode")]
         public PostgreSqlFlexibleServerCreateMode? CreateMode { get; set; }
+        /// <summary> List of private endpoint connections associated with the specified resource. </summary>
+        [WirePath("properties.privateEndpointConnections")]
+        public IReadOnlyList<PostgreSqlFlexibleServersPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

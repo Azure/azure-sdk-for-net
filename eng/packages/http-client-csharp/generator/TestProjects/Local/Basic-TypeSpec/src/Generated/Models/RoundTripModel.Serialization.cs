@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Core;
 using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
@@ -351,7 +352,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        intExtensibleEnum = null;
                         continue;
                     }
                     intExtensibleEnum = new IntExtensibleEnum(prop.Value.GetInt32());
@@ -375,7 +375,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        floatExtensibleEnum = null;
                         continue;
                     }
                     floatExtensibleEnum = new FloatExtensibleEnum(prop.Value.GetSingle());
@@ -385,7 +384,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        floatExtensibleEnumWithIntValue = null;
                         continue;
                     }
                     floatExtensibleEnumWithIntValue = new FloatExtensibleEnumWithIntValue(prop.Value.GetSingle());
@@ -409,7 +407,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        floatFixedEnum = null;
                         continue;
                     }
                     floatFixedEnum = prop.Value.GetSingle().ToFloatFixedEnum();
@@ -419,7 +416,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        floatFixedEnumWithIntValue = null;
                         continue;
                     }
                     floatFixedEnumWithIntValue = prop.Value.GetInt32().ToFloatFixedEnumWithIntValue();
@@ -443,7 +439,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        intFixedEnum = null;
                         continue;
                     }
                     intFixedEnum = prop.Value.GetInt32().ToIntFixedEnum();
@@ -467,7 +462,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        stringFixedEnum = null;
                         continue;
                     }
                     stringFixedEnum = prop.Value.GetString().ToStringFixedEnum();
@@ -482,7 +476,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        optionalUnknown = null;
                         continue;
                     }
                     optionalUnknown = BinaryData.FromString(prop.Value.GetRawText());
@@ -643,16 +636,22 @@ namespace BasicTypeSpec.Models
 
         string IPersistableModel<RoundTripModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="roundTripModel"> The <see cref="RoundTripModel"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(RoundTripModel roundTripModel)
+        /// <param name="roundTripModel"> The <see cref="RoundTripModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(RoundTripModel roundTripModel)
         {
-            return BinaryContent.Create(roundTripModel, ModelSerializationExtensions.WireOptions);
+            if (roundTripModel == null)
+            {
+                return null;
+            }
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(roundTripModel, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="RoundTripModel"/> from. </param>
-        public static explicit operator RoundTripModel(ClientResult result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="RoundTripModel"/> from. </param>
+        public static explicit operator RoundTripModel(Response result)
         {
-            using PipelineResponse response = result.GetRawResponse();
+            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeRoundTripModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

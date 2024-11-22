@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.PolicyInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PolicyInsights.Samples
 {
     public partial class Sample_PolicyAttestationResource
     {
-        // Create attestation at individual resource scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAttestationAtIndividualResourceScope()
         {
             // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2022-09-01/examples/Attestations_CreateResourceScope.json
@@ -68,9 +68,8 @@ SourceUri = new Uri("https://gist.github.com/contoso/9573e238762c60166c090ae16b8
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get attestation at individual resource scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAttestationAtIndividualResourceScope()
         {
             // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2022-09-01/examples/Attestations_GetResourceScope.json
@@ -98,9 +97,8 @@ SourceUri = new Uri("https://gist.github.com/contoso/9573e238762c60166c090ae16b8
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete attestation at individual resource scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAttestationAtIndividualResourceScope()
         {
             // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2022-09-01/examples/Attestations_DeleteResourceScope.json
@@ -121,7 +119,7 @@ SourceUri = new Uri("https://gist.github.com/contoso/9573e238762c60166c090ae16b8
             // invoke the operation
             await policyAttestation.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -19,7 +19,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -31,6 +30,7 @@ rename-mapping:
   AnalysisCreate : NginxAnalysisContent
   AnalysisCreateConfig: NginxAnalysisConfig
   NginxCertificateErrorResponseBody: NginxCertificateError
+  ActivationState : WebApplicationFirewallActivationState
 
 prepend-rp-prefix:
   - ProvisioningState

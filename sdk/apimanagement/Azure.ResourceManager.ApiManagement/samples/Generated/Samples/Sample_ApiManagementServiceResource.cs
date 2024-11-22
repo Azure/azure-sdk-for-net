@@ -12,14 +12,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiManagementServiceResource
     {
-        // ApiManagementListApisByTags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetApisByTags_ApiManagementListApisByTags()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListApisByTags.json
@@ -44,12 +44,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // HTTP Connectivity Check
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PerformConnectivityCheckAsync_HTTPConnectivityCheck()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementPerformConnectivityCheckHttpConnect.json
@@ -91,9 +90,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // TCP Connectivity Check
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PerformConnectivityCheckAsync_TCPConnectivityCheck()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementPerformConnectivityCheck.json
@@ -123,9 +121,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementListContentTypes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContentTypes_ApiManagementListContentTypes()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListContentTypes.json
@@ -150,12 +147,11 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetContentType
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContentType_ApiManagementGetContentType()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetContentType.json
@@ -181,9 +177,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementCreateContentType
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateContentType_ApiManagementCreateContentType()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateContentType.json
@@ -209,9 +204,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementDeleteContentType
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteContentType_ApiManagementDeleteContentType()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteContentType.json
@@ -235,12 +229,11 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             ETag ifMatch = new ETag("*");
             await apiManagementService.DeleteContentTypeAsync(contentTypeId, ifMatch);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListContentTypeContentItems
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContentItems_ApiManagementListContentTypeContentItems()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListContentTypeContentItems.json
@@ -266,12 +259,11 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementHeadContentTypeContentItem
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContentItemEntityTag_ApiManagementHeadContentTypeContentItem()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadContentTypeContentItem.json
@@ -298,9 +290,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementGetContentTypeContentItem
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContentItem_ApiManagementGetContentTypeContentItem()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetContentTypeContentItem.json
@@ -327,9 +318,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementCreateContentTypeContentItem
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateContentItem_ApiManagementCreateContentTypeContentItem()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateContentTypeContentItem.json
@@ -356,9 +346,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementDeleteContentTypeContentItem
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteContentItem_ApiManagementDeleteContentTypeContentItem()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteContentTypeContentItem.json
@@ -383,12 +372,11 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             ETag ifMatch = new ETag("*");
             await apiManagementService.DeleteContentItemAsync(contentTypeId, contentItemId, ifMatch);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListSKUs-Consumption
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableApiManagementServiceSkus_ApiManagementListSKUsConsumption()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListSKUs-Consumption.json
@@ -413,12 +401,11 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListSKUs-Dedicated
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableApiManagementServiceSkus_ApiManagementListSKUsDedicated()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListSKUs-Dedicated.json
@@ -443,12 +430,11 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementRestoreService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Restore_ApiManagementRestoreService()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementRestoreWithAccessKey.json
@@ -483,9 +469,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementBackupWithAccessKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Backup_ApiManagementBackupWithAccessKey()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementBackupWithAccessKey.json
@@ -520,9 +505,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementBackupWithSystemManagedIdentity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Backup_ApiManagementBackupWithSystemManagedIdentity()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementBackupWithSystemManagedIdentity.json
@@ -556,9 +540,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementBackupWithUserAssignedManagedIdentity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Backup_ApiManagementBackupWithUserAssignedManagedIdentity()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementBackupWithUserAssignedManagedIdentity.json
@@ -593,9 +576,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateServiceDisableTls10
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementUpdateServiceDisableTls10()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateServiceDisableTls10.json
@@ -632,9 +614,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateServicePublisherDetails
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementUpdateServicePublisherDetails()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateServicePublisherDetails.json
@@ -669,9 +650,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateServiceToNewVnetAndAvailabilityZones
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementUpdateServiceToNewVnetAndAvailabilityZones()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateServiceToNewVnetAndAZs.json
@@ -730,9 +710,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementServiceGetMultiRegionInternalVnet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementServiceGetMultiRegionInternalVnet()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetMultiRegionInternalVnet.json
@@ -761,9 +740,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementServiceGetService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementServiceGetService()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetService.json
@@ -792,9 +770,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementServiceGetServiceHavingMsi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementServiceGetServiceHavingMsi()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetServiceHavingMsi.json
@@ -823,9 +800,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementServiceDeleteService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementServiceDeleteService()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceDeleteService.json
@@ -847,12 +823,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             // invoke the operation
             await apiManagementService.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementMigrateService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MigrateToStv2_ApiManagementMigrateService()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceMigrateToStv2.json
@@ -886,9 +861,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementListServiceBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetApiManagementServices_ApiManagementListServiceBySubscription()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListServiceBySubscription.json
@@ -915,12 +889,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementServiceGetSsoToken
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSsoToken_ApiManagementServiceGetSsoToken()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetSsoToken.json
@@ -945,9 +918,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementServiceCheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckApiManagementServiceNameAvailability_ApiManagementServiceCheckNameAvailability()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceCheckNameAvailability.json
@@ -971,9 +943,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementServiceGetDomainOwnershipIdentifier
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetApiManagementServiceDomainOwnershipIdentifier_ApiManagementServiceGetDomainOwnershipIdentifier()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetDomainOwnershipIdentifier.json
@@ -996,9 +967,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementApplyNetworkConfigurationUpdates
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ApplyNetworkConfigurationUpdates_ApiManagementApplyNetworkConfigurationUpdates()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementApplyNetworkConfigurationUpdates.json
@@ -1032,9 +1002,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementServiceGetNetworkStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkStatuses_ApiManagementServiceGetNetworkStatus()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetNetworkStatus.json
@@ -1059,12 +1028,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementServiceGetNetworkStatusByLocation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkStatusByLocation_ApiManagementServiceGetNetworkStatusByLocation()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetNetworkStatusByLocation.json
@@ -1090,9 +1058,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementServiceGetOutboundNetworkDependenciesEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetOutboundNetworkDependenciesEndpoints_ApiManagementServiceGetOutboundNetworkDependenciesEndpoints()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetOutboundNetworkDependenciesEndpoints.json
@@ -1117,12 +1084,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListPolicyDescriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPolicyDescriptions_ApiManagementListPolicyDescriptions()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListPolicyDescriptions.json
@@ -1148,12 +1114,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListPortalSettings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPortalSettings_ApiManagementListPortalSettings()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListPortalSettings.json
@@ -1178,12 +1143,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListProductsByTags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetProductsByTags_ApiManagementListProductsByTags()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListProductsByTags.json
@@ -1208,12 +1172,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetQuotaCounterKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetQuotaByCounterKeys_ApiManagementGetQuotaCounterKeys()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetQuotaCounterKeys.json
@@ -1239,12 +1202,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementUpdateQuotaCounterKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateQuotaByCounterKeys_ApiManagementUpdateQuotaCounterKey()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateQuotaCounterKey.json
@@ -1275,12 +1237,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetQuotaCounterKeysByQuotaPeriod
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetQuotaByPeriodKey_ApiManagementGetQuotaCounterKeysByQuotaPeriod()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetQuotaCounterKeysByQuotaPeriod.json
@@ -1307,9 +1268,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementUpdateQuotaCounterKeyByQuotaPeriod
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateQuotaByPeriodKey_ApiManagementUpdateQuotaCounterKeyByQuotaPeriod()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateQuotaCounterKeyByQuotaPeriod.json
@@ -1341,9 +1301,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementListRegions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRegions_ApiManagementListRegions()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListRegions.json
@@ -1368,12 +1327,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsByApi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByApi_ApiManagementGetReportsByApi()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsByApi.json
@@ -1399,12 +1357,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsByUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByUser_ApiManagementGetReportsByUser()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsByUser.json
@@ -1430,12 +1387,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsByOperation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByOperation_ApiManagementGetReportsByOperation()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsByOperation.json
@@ -1461,12 +1417,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsByProduct
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByProduct_ApiManagementGetReportsByProduct()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsByProduct.json
@@ -1492,12 +1447,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsByGeo
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByGeo_ApiManagementGetReportsByGeo()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsByGeo.json
@@ -1523,12 +1477,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsBySubscription_ApiManagementGetReportsBySubscription()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsBySubscription.json
@@ -1554,12 +1507,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsByTime
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByTime_ApiManagementGetReportsByTime()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsByTime.json
@@ -1586,12 +1538,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsByRequest
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByRequest_ApiManagementGetReportsByRequest()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsByRequest.json
@@ -1617,12 +1568,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListTagResources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTagResources_ApiManagementListTagResources()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListTagResources.json
@@ -1647,12 +1597,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementTenantConfigurationDeploy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeployTenantConfiguration_ApiManagementTenantConfigurationDeploy()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementTenantConfigurationDeploy.json
@@ -1683,9 +1632,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementTenantConfigurationSave
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SaveTenantConfiguration_ApiManagementTenantConfigurationSave()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementTenantConfigurationSave.json
@@ -1716,9 +1664,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementTenantConfigurationValidate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateTenantConfiguration_ApiManagementTenantConfigurationValidate()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementTenantConfigurationValidate.json
@@ -1749,9 +1696,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementTenantAccessSyncState
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTenantConfigurationSyncState_ApiManagementTenantAccessSyncState()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementTenantAccessSyncState.json

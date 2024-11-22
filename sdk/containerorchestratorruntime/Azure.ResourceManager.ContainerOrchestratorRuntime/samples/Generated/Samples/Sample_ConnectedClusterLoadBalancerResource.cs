@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
 {
     public partial class Sample_ConnectedClusterLoadBalancerResource
     {
-        // LoadBalancers_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_LoadBalancersGet()
         {
             // Generated from example definition: 2024-03-01/LoadBalancers_Get.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LoadBalancers_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_LoadBalancersCreateOrUpdate()
         {
             // Generated from example definition: 2024-03-01/LoadBalancers_CreateOrUpdate.json
@@ -89,9 +88,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LoadBalancers_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_LoadBalancersDelete()
         {
             // Generated from example definition: 2024-03-01/LoadBalancers_Delete.json
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             // invoke the operation
             await connectedClusterLoadBalancer.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

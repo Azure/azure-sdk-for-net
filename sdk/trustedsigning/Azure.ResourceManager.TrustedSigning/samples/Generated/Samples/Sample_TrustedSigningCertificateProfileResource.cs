@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.TrustedSigning.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.TrustedSigning.Samples
 {
     public partial class Sample_TrustedSigningCertificateProfileResource
     {
-        // Get details of a certificate profile.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDetailsOfACertificateProfile()
         {
             // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CertificateProfiles_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a certificate profile.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateACertificateProfile()
         {
             // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CertificateProfiles_Create.json
@@ -87,9 +86,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a certificate profile.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteACertificateProfile()
         {
             // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CertificateProfiles_Delete.json
@@ -112,12 +110,11 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             // invoke the operation
             await trustedSigningCertificateProfile.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Revoke a certificate under a certificate profile.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RevokeCertificate_RevokeACertificateUnderACertificateProfile()
         {
             // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CertificateProfiles_RevokeCertificate.json
@@ -144,7 +141,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             };
             await trustedSigningCertificateProfile.RevokeCertificateAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

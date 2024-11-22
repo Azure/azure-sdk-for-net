@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2024-11-11)
+
+### Features Added
+
+This release marks the General Availability (GA) of the package. There are no changes from the previous version, but the API version has been updated.
 
 ## 1.0.0-beta.1 (2024-08-15)
 

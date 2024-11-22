@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Confluent.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Confluent.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {
-        // Validations_ValidateOrganizations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateOrganization_ValidationsValidateOrganizations()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Validations_ValidateOrganizations.json
@@ -67,9 +67,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Validations_ValidateOrganizations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateOrganizationV2_ValidationsValidateOrganizations()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Validations_ValidateOrganizationsV2.json

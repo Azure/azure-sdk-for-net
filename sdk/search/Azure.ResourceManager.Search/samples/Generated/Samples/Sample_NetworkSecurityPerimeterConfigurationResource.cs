@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Search.Samples
 {
     public partial class Sample_NetworkSecurityPerimeterConfigurationResource
     {
-        // Get an NSP config by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnNSPConfigByName()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/NetworkSecurityPerimeterConfigurationsGet.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.Search.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Reconcile NSP Config
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Reconcile_ReconcileNSPConfig()
         {
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/NetworkSecurityPerimeterConfigurationsReconcile.json
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Search.Samples
             // invoke the operation
             await networkSecurityPerimeterConfiguration.ReconcileAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

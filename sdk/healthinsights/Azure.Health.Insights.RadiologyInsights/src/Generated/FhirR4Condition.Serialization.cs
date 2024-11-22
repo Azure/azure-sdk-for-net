@@ -19,13 +19,22 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         void IJsonModel<FhirR4Condition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FhirR4Condition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FhirR4Condition)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
@@ -156,63 +165,6 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Text))
-            {
-                writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(Text, options);
-            }
-            if (Optional.IsCollectionDefined(Contained))
-            {
-                writer.WritePropertyName("contained"u8);
-                writer.WriteStartArray();
-                foreach (var item in Contained)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Extension))
-            {
-                writer.WritePropertyName("extension"u8);
-                writer.WriteStartArray();
-                foreach (var item in Extension)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ModifierExtension))
-            {
-                writer.WritePropertyName("modifierExtension"u8);
-                writer.WriteStartArray();
-                foreach (var item in ModifierExtension)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("resourceType"u8);
-            writer.WriteStringValue(ResourceType);
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Meta))
-            {
-                writer.WritePropertyName("meta"u8);
-                writer.WriteObjectValue(Meta, options);
-            }
-            if (Optional.IsDefined(ImplicitRules))
-            {
-                writer.WritePropertyName("implicitRules"u8);
-                writer.WriteStringValue(ImplicitRules);
-            }
-            if (Optional.IsDefined(Language))
-            {
-                writer.WritePropertyName("language"u8);
-                writer.WriteStringValue(Language);
-            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -225,7 +177,6 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         FhirR4Condition IJsonModel<FhirR4Condition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

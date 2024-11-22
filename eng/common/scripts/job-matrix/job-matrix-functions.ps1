@@ -213,7 +213,7 @@ function GetMatrixConfigFromFile([String] $config) {
 }
 
 function GetMatrixConfigFromYaml([String] $yamlConfig) {
-    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
     # ConvertTo then from json is to make sure the nested values are in PSCustomObject
     [MatrixConfig]$config = ConvertFrom-Yaml $yamlConfig -Ordered | ConvertTo-Json -Depth 100 | ConvertFrom-Json
     return GetMatrixConfig $config
@@ -490,7 +490,7 @@ function CloneOrderedDictionary([System.Collections.Specialized.OrderedDictionar
 function SerializePipelineMatrix([Array]$matrix) {
     $pipelineMatrix = [Ordered]@{}
     foreach ($entry in $matrix) {
-        if ($pipelineMatrix.Contains($entry.Name)) {
+        if ($pipelineMatrix.Contains($entry.name)) {
             Write-Warning "Found duplicate configurations for job `"$($entry.name)`". Multiple values may have been replaced with the same value."
             continue
         }
@@ -740,3 +740,28 @@ function Get4dMatrixIndex([int]$index, [Array]$dimensions) {
     return @($page3, $page2, $page1, $remainder)
 }
 
+function GenerateMatrixForConfig {
+    param (
+      [Parameter(Mandatory = $true)][string] $ConfigPath,
+      [Parameter(Mandatory = $True)][string] $Selection,
+      [Parameter(Mandatory = $false)][string] $DisplayNameFilter,
+      [Parameter(Mandatory = $false)][array] $Filters,
+      [Parameter(Mandatory = $false)][array] $Replace
+    )
+    $matrixFile = Join-Path $PSScriptRoot ".." ".." ".." ".." $ConfigPath
+
+    $resolvedMatrixFile = Resolve-Path $matrixFile
+
+    $config = GetMatrixConfigFromFile (Get-Content $resolvedMatrixFile -Raw)
+    # Strip empty string filters in order to be able to use azure pipelines yaml join()
+    $Filters = $Filters | Where-Object { $_ }
+
+    [array]$matrix = GenerateMatrix `
+      -config $config `
+      -selectFromMatrixType $Selection `
+      -displayNameFilter $DisplayNameFilter `
+      -filters $Filters `
+      -replace $Replace
+
+    return , $matrix
+}

@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         [AsyncOnly]
         public async Task Create() {
             var collection = await GetPlacementPolicyCollectionAsync();
-            string placementPolicyName = "policy1";
+            string placementPolicyName = "policy2";
             PlacementPolicyData data = new PlacementPolicyData()
             {
                 Properties = new VmHostPlacementPolicyProperties(new ResourceIdentifier[]
             {
-new ResourceIdentifier($"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{RESOURCE_GROUP_NAME}/providers/Microsoft.AVS/privateClouds/{PRIVATE_CLOUD_NAME}/clusters/{CLUSTER1_NAME}/virtualMachines/vm-1818")
+new ResourceIdentifier($"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{RESOURCE_GROUP_NAME}/providers/Microsoft.AVS/privateClouds/{PRIVATE_CLOUD_NAME}/clusters/{CLUSTER1_NAME}/virtualMachines/vm-153")
             }, new string[]
-            {"esx05-r20.p04.eastus.avs.azure.com"
+            {"esx01-r09.p02.westus2.avs.azure.com"
             }, AvsPlacementPolicyAffinityType.Affinity)
             };
             ArmOperation<PlacementPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, placementPolicyName, data);

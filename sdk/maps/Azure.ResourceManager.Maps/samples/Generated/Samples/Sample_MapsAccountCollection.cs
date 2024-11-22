@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Maps.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Maps.Samples
 {
     public partial class Sample_MapsAccountCollection
     {
-        // Create Account with Managed Identities
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAccountWithManagedIdentities()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/CreateAccountManagedIdentity.json
@@ -75,9 +75,8 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/21a9967a-e8a9-465
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Gen1 Account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateGen1Account()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/CreateAccount.json
@@ -129,9 +128,8 @@ new MapsCorsRule(new string[]
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Gen2 Account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateGen2Account()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/CreateAccountGen2.json
@@ -183,9 +181,8 @@ new MapsCorsRule(new string[]
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAccount()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/GetAccount.json
@@ -217,9 +214,8 @@ new MapsCorsRule(new string[]
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAccount()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/GetAccount.json
@@ -247,9 +243,8 @@ new MapsCorsRule(new string[]
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAccount()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/GetAccount.json
@@ -277,7 +272,7 @@ new MapsCorsRule(new string[]
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -289,9 +284,8 @@ new MapsCorsRule(new string[]
             }
         }
 
-        // List Accounts By Resource Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAccountsByResourceGroup()
         {
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/ListAccountsByResourceGroup.json
@@ -322,7 +316,7 @@ new MapsCorsRule(new string[]
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

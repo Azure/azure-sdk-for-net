@@ -21,38 +21,59 @@ public partial class LogAnalyticsQueryPack : ProvisionableResource
     /// <summary>
     /// The name of the Log Analytics QueryPack resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Creation Date for the Log Analytics QueryPack, in ISO 8601 format.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Last modified date of the Log Analytics QueryPack, in ISO 8601 format.
     /// </summary>
-    public BicepValue<DateTimeOffset> ModifiedOn { get => _modifiedOn; }
-    private readonly BicepValue<DateTimeOffset> _modifiedOn;
+    public BicepValue<DateTimeOffset> ModifiedOn 
+    {
+        get { Initialize(); return _modifiedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _modifiedOn;
 
     /// <summary>
     /// Current state of this QueryPack: whether or not is has been provisioned
@@ -60,20 +81,29 @@ public partial class LogAnalyticsQueryPack : ProvisionableResource
     /// value but are able to read from it. Values will include Succeeded,
     /// Deploying, Canceled, and Failed.
     /// </summary>
-    public BicepValue<string> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<string> _provisioningState;
+    public BicepValue<string> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<string>? _provisioningState;
 
     /// <summary>
     /// The unique ID of your application. This field cannot be changed.
     /// </summary>
-    public BicepValue<Guid> QueryPackId { get => _queryPackId; }
-    private readonly BicepValue<Guid> _queryPackId;
+    public BicepValue<Guid> QueryPackId 
+    {
+        get { Initialize(); return _queryPackId!; }
+    }
+    private BicepValue<Guid>? _queryPackId;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new LogAnalyticsQueryPack.
@@ -88,15 +118,22 @@ public partial class LogAnalyticsQueryPack : ProvisionableResource
     public LogAnalyticsQueryPack(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.OperationalInsights/queryPacks", resourceVersion ?? "2023-09-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "timeCreated"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _modifiedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "ModifiedOn", ["properties", "timeModified"], isOutput: true);
-        _provisioningState = BicepValue<string>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _queryPackId = BicepValue<Guid>.DefineProperty(this, "QueryPackId", ["properties", "queryPackId"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of LogAnalyticsQueryPack.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "timeCreated"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _modifiedOn = DefineProperty<DateTimeOffset>("ModifiedOn", ["properties", "timeModified"], isOutput: true);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _queryPackId = DefineProperty<Guid>("QueryPackId", ["properties", "queryPackId"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>

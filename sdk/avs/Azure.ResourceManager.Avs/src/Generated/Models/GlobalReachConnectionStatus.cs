@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The connection status of the global reach connection. </summary>
+    /// <summary> Global Reach Connection status. </summary>
     public readonly partial struct GlobalReachConnectionStatus : IEquatable<GlobalReachConnectionStatus>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Avs.Models
         private const string ConnectingValue = "Connecting";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary> Connected. </summary>
+        /// <summary> is connected. </summary>
         public static GlobalReachConnectionStatus Connected { get; } = new GlobalReachConnectionStatus(ConnectedValue);
-        /// <summary> Connecting. </summary>
+        /// <summary> is connecting. </summary>
         public static GlobalReachConnectionStatus Connecting { get; } = new GlobalReachConnectionStatus(ConnectingValue);
-        /// <summary> Disconnected. </summary>
+        /// <summary> is disconnected. </summary>
         public static GlobalReachConnectionStatus Disconnected { get; } = new GlobalReachConnectionStatus(DisconnectedValue);
         /// <summary> Determines if two <see cref="GlobalReachConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(GlobalReachConnectionStatus left, GlobalReachConnectionStatus right) => left.Equals(right);

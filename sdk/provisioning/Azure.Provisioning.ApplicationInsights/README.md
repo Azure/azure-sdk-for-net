@@ -9,7 +9,7 @@ Azure.Provisioning.ApplicationInsights simplifies declarative resource provision
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.ApplicationInsights --prerelease
+dotnet add package Azure.Provisioning.ApplicationInsights
 ```
 
 ### Prerequisites

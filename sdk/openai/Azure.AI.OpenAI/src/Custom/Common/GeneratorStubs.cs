@@ -8,3 +8,4 @@ namespace Azure.AI.OpenAI;
 [Experimental("AOAI001")][CodeGenModel("AzureContentFilterDetectionResult")] public partial class ContentFilterDetectionResult { }
 [Experimental("AOAI001")][CodeGenModel("AzureContentFilterResultForChoiceProtectedMaterialCode")] public partial class ContentFilterProtectedMaterialResult { }
 [Experimental("AOAI001")][CodeGenModel("AzureContentFilterSeverityResultSeverity")] public readonly partial struct ContentFilterSeverity { }
+[Experimental("AOAI001")][CodeGenModel("AzureContentFilterCompletionTextSpan")] public partial class ContentFilterTextSpan { }

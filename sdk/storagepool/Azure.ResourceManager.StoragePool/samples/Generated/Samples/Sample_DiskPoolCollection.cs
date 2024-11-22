@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StoragePool.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StoragePool.Samples
 {
     public partial class Sample_DiskPoolCollection
     {
-        // List Disk Pools
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDiskPools()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_ListByResourceGroup.json
@@ -50,12 +50,11 @@ namespace Azure.ResourceManager.StoragePool.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Create or Update Disk pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateDiskPool()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Put.json
@@ -112,9 +111,8 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Disk pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDiskPool()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Get.json
@@ -146,9 +144,8 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Disk pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetDiskPool()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Get.json
@@ -176,9 +173,8 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Disk pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetDiskPool()
         {
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Get.json
@@ -206,7 +202,7 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

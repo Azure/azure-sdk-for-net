@@ -239,6 +239,18 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="NetworkCloudKubernetesClusterFeatureResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudKubernetesClusterFeatureResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudKubernetesClusterFeatureResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkCloudKubernetesClusterFeatureResource"/> object. </returns>
+        public virtual NetworkCloudKubernetesClusterFeatureResource GetNetworkCloudKubernetesClusterFeatureResource(ResourceIdentifier id)
+        {
+            NetworkCloudKubernetesClusterFeatureResource.ValidateResourceId(id);
+            return new NetworkCloudKubernetesClusterFeatureResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudVirtualMachineConsoleResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudVirtualMachineConsoleResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudVirtualMachineConsoleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

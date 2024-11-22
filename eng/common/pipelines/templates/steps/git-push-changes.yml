@@ -28,6 +28,11 @@ steps:
   condition: succeeded()
   workingDirectory: ${{ parameters.WorkingDirectory }}
 
+- template: /eng/common/pipelines/templates/steps/emit-rate-limit-metrics.yml
+  parameters:
+    GitHubUser: azure-sdk
+    GitHubToken: $(azuresdk-github-pat)
+
 - task: PowerShell@2
   displayName: Push changes
   condition: and(succeeded(), eq(variables['HasChanges'], 'true'))

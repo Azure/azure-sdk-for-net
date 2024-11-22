@@ -32,6 +32,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string WaitingForCutoverTriggerValue = "WaitingForCutoverTrigger";
         private const string CompletingMigrationValue = "CompletingMigration";
         private const string CompletedValue = "Completed";
+        private const string CancelingRequestedDBMigrationsValue = "CancelingRequestedDBMigrations";
+        private const string ValidationInProgressValue = "ValidationInProgress";
 
         /// <summary> PerformingPreRequisiteSteps. </summary>
         public static PostgreSqlMigrationSubState PerformingPreRequisiteSteps { get; } = new PostgreSqlMigrationSubState(PerformingPreRequisiteStepsValue);
@@ -53,6 +55,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlMigrationSubState CompletingMigration { get; } = new PostgreSqlMigrationSubState(CompletingMigrationValue);
         /// <summary> Completed. </summary>
         public static PostgreSqlMigrationSubState Completed { get; } = new PostgreSqlMigrationSubState(CompletedValue);
+        /// <summary> CancelingRequestedDBMigrations. </summary>
+        public static PostgreSqlMigrationSubState CancelingRequestedDBMigrations { get; } = new PostgreSqlMigrationSubState(CancelingRequestedDBMigrationsValue);
+        /// <summary> ValidationInProgress. </summary>
+        public static PostgreSqlMigrationSubState ValidationInProgress { get; } = new PostgreSqlMigrationSubState(ValidationInProgressValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationSubState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationSubState left, PostgreSqlMigrationSubState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationSubState"/> values are not the same. </summary>

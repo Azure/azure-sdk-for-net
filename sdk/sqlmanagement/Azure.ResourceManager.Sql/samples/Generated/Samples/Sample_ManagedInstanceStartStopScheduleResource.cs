@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_ManagedInstanceStartStopScheduleResource
     {
-        // Gets the managed instance's Start/Stop schedule.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheManagedInstanceSStartStopSchedule()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/StartStopManagedInstanceScheduleGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates the managed instance's Start/Stop schedule with all optional parameters specified.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesOrUpdatesTheManagedInstanceSStartStopScheduleWithAllOptionalParametersSpecified()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/StartStopManagedInstanceScheduleCreateOrUpdateMax.json
@@ -89,9 +88,8 @@ new SqlScheduleItem(SqlDayOfWeek.Thursday,"18:00",SqlDayOfWeek.Thursday,"17:00")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates the managed instance's Start/Stop schedule with no optional parameters specified.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesOrUpdatesTheManagedInstanceSStartStopScheduleWithNoOptionalParametersSpecified()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/StartStopManagedInstanceScheduleCreateOrUpdateMin.json
@@ -129,9 +127,8 @@ new SqlScheduleItem(SqlDayOfWeek.Thursday,"18:00",SqlDayOfWeek.Thursday,"17:00")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes the managed instance's Start/Stop schedule.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesTheManagedInstanceSStartStopSchedule()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/StartStopManagedInstanceScheduleDelete.json
@@ -154,7 +151,7 @@ new SqlScheduleItem(SqlDayOfWeek.Thursday,"18:00",SqlDayOfWeek.Thursday,"17:00")
             // invoke the operation
             await managedInstanceStartStopSchedule.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

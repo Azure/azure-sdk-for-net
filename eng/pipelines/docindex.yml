@@ -16,8 +16,6 @@ jobs:
       name: $(LINUXPOOL)
     variables:
       DocRepoLocation: $(Pipeline.Workspace)/docs
-      DocRepoOwner: Azure
-      DocRepoName: azure-docs-sdk-dotnet
     steps:
       # Checkout the eng folder from the SDK repo
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml

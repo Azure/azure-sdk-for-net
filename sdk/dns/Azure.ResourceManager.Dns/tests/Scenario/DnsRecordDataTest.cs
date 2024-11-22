@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             await Create_SRV();
             await Create_TXT();
             await Create_PTR();
+            await Create_NAPTR();
             var allRecordData = _dnsZone.GetAllRecordDataAsync();
             // NS SOA is created by default
             await foreach (Dns.DnsRecordData item in allRecordData)
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
                 Console.WriteLine(recordType.ToString());
                 count++;
             }
-            Assert.AreEqual(count, 10);
+            Assert.AreEqual(count, 11);
         }
 
         private async Task Create_A()
@@ -174,6 +175,52 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
                 }
             };
             var mxRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, mxRecordName, data);
+        }
+
+        private async Task Create_NAPTR()
+        {
+            var collection = _dnsZone.GetDnsNaptrRecords();
+            string naptrRecordName = Recording.GenerateAssetName("naptr");
+            int orderValue1 = 1;
+            int orderValue2 = 2;
+            int preferenceValue1 = 10;
+            int preferenceValue2 = 20;
+            string flagsValue1 = "s";
+            string flagsValue2 = "a";
+            string servicesValue1 = "e2u";
+            string servicesValue2 = "sip";
+            string regexpValue1 = "!^(\\+441632960083)$!sip:\\1@example.com!";
+            string regexpValue2 = "";
+            string replacementValue1 = ".";
+            string replacementValue2 = "customer-service.example.com";
+
+            // CreateOrUpdate
+            var data = new DnsNaptrRecordData()
+            {
+                TtlInSeconds = 3600,
+                DnsNaptrRecords =
+                {
+                    new DnsNaptrRecordInfo()
+                    {
+                        Order = orderValue1,
+                        Preference = preferenceValue1,
+                        Flags = flagsValue1,
+                        Services = servicesValue1,
+                        Regexp = regexpValue1,
+                        Replacement = replacementValue1
+                    },
+                    new DnsNaptrRecordInfo()
+                    {
+                        Order = orderValue2,
+                        Preference = preferenceValue2,
+                        Flags = flagsValue2,
+                        Services = servicesValue2,
+                        Regexp = regexpValue2,
+                        Replacement = replacementValue2
+                    },
+                }
+            };
+            var naptrRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, naptrRecordName, data);
         }
 
         private async Task Create_SRV()

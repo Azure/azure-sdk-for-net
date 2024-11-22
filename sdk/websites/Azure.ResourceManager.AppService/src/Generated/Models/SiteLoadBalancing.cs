@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> RequestHash. </summary>
         RequestHash,
         /// <summary> PerSiteRoundRobin. </summary>
-        PerSiteRoundRobin
+        PerSiteRoundRobin,
+        /// <summary> LeastRequestsWithTieBreaker. </summary>
+        LeastRequestsWithTieBreaker
     }
 }

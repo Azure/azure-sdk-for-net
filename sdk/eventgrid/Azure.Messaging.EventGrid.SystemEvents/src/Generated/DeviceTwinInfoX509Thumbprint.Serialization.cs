@@ -19,13 +19,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<DeviceTwinInfoX509Thumbprint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DeviceTwinInfoX509Thumbprint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeviceTwinInfoX509Thumbprint)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryThumbprint))
             {
                 writer.WritePropertyName("primaryThumbprint"u8);
@@ -51,7 +59,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DeviceTwinInfoX509Thumbprint IJsonModel<DeviceTwinInfoX509Thumbprint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

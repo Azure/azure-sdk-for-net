@@ -79,7 +79,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var client = new ChatCompletionsClient(
                 endpoint,
                 credential,
-                new ChatCompletionsClientOptions());
+                new AzureAIInferenceClientOptions());
 
             var requestOptions = new ChatCompletionsOptions()
             {

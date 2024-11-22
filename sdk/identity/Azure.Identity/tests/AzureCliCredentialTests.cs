@@ -113,24 +113,52 @@ namespace Azure.Identity.Tests
         {
             // params
             // az thrown Exception message, expected message, expected  exception
-            yield return new object[] { AzureCliCredential.WinAzureCLIError, AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
-            yield return new object[] { "az: command not found", AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
-            yield return new object[] { "az: not found", AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
-            yield return new object[] { AzureCliCredential.AzNotLogIn, AzureCliCredential.AzNotLogIn, typeof(CredentialUnavailableException) };
-            yield return new object[] { RefreshTokenExpiredError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
-            yield return new object[] { AzureCliCredential.CLIInternalError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
-            yield return new object[] { "random unknown exception", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " random unknown exception", typeof(AuthenticationFailedException) };
-            yield return new object[] { "AADSTS12345: Some AAD error. To re-authenticate, please run: az login", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " AADSTS12345: Some AAD error. To re-authenticate, please run: az login", typeof(AuthenticationFailedException) };
+            yield return new object[] { null, AzureCliCredential.WinAzureCLIError, AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
+            yield return new object[] { null, "az: command not found", AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
+            yield return new object[] { null, "az: not found", AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
+            yield return new object[] { null, AzureCliCredential.AzNotLogIn, AzureCliCredential.AzNotLogIn, typeof(CredentialUnavailableException) };
+            yield return new object[] { null, RefreshTokenExpiredError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
+            yield return new object[] { null, AzureCliCredential.CLIInternalError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
+            yield return new object[] { null, "random unknown exception", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " random unknown exception", typeof(AuthenticationFailedException) };
+            yield return new object[] { GetExceptionAction(new AuthenticationFailedException("foo")), string.Empty, "foo", typeof(AuthenticationFailedException) };
+            yield return new object[] { GetExceptionAction(new OperationCanceledException("foo")), string.Empty, "Azure CLI authentication timed out.", typeof(AuthenticationFailedException) };
+            yield return new object[] { null, "AADSTS12345: Some AAD error. To re-authenticate, please run: az login", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " AADSTS12345: Some AAD error. To re-authenticate, please run: az login", typeof(AuthenticationFailedException) };
+        }
+
+        public static IEnumerable<object[]> AzureCliExceptionScenarios_IsChained()
+        {
+            // params
+            // az thrown Exception message, expected message, expected  exception
+            yield return new object[] { null, AzureCliCredential.WinAzureCLIError, AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
+            yield return new object[] { null, "az: command not found", AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
+            yield return new object[] { null, "az: not found", AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
+            yield return new object[] { null, AzureCliCredential.AzNotLogIn, AzureCliCredential.AzNotLogIn, typeof(CredentialUnavailableException) };
+            yield return new object[] { null, RefreshTokenExpiredError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
+            yield return new object[] { null, AzureCliCredential.CLIInternalError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
+            yield return new object[] { null, "random unknown exception", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " random unknown exception", typeof(CredentialUnavailableException) };
+            yield return new object[] { GetExceptionAction(new AuthenticationFailedException("foo")), string.Empty, "foo", typeof(CredentialUnavailableException) };
+            yield return new object[] { GetExceptionAction(new OperationCanceledException("foo")), string.Empty, "Azure CLI authentication timed out.", typeof(CredentialUnavailableException) };
+            yield return new object[] { null, "AADSTS12345: Some AAD error. To re-authenticate, please run: az login", AzureCliCredential.AzureCliFailedError + " " + AzureCliCredential.Troubleshoot + " AADSTS12345: Some AAD error. To re-authenticate, please run: az login", typeof(CredentialUnavailableException) };
         }
 
         [Test]
         [TestCaseSource(nameof(AzureCliExceptionScenarios))]
-        public void AuthenticateWithCliCredential_ExceptionScenarios(string errorMessage, string expectedMessage, Type exceptionType)
+        public void AuthenticateWithCliCredential_ExceptionScenarios(Action<object> exceptionOnStartHandler, string errorMessage, string expectedMessage, Type exceptionType)
         {
-            var testProcess = new TestProcess { Error = errorMessage };
+            var testProcess = new TestProcess { Error = errorMessage, ExceptionOnStartHandler = exceptionOnStartHandler };
             AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             var ex = Assert.ThrowsAsync(exceptionType, async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.AreEqual(expectedMessage, ex.Message);
+            Assert.That(ex.Message, Does.Contain(expectedMessage));
+        }
+
+        [Test]
+        [TestCaseSource(nameof(AzureCliExceptionScenarios_IsChained))]
+        public void AuthenticateWithCliCredential_ExceptionScenarios_IsChained(Action<object> exceptionOnStartHandler, string errorMessage, string expectedMessage, Type exceptionType)
+        {
+            var testProcess = new TestProcess { Error = errorMessage, ExceptionOnStartHandler = exceptionOnStartHandler };
+            AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess), new AzureCliCredentialOptions() { IsChainedCredential = true }));
+            var ex = Assert.ThrowsAsync(exceptionType, async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.That(ex.Message, Does.Contain(expectedMessage));
         }
 
         [Test]
@@ -161,7 +189,7 @@ namespace Azure.Identity.Tests
             {
                 ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             }
-            Assert.AreEqual(AzureCliCredential.AzureCliTimeoutError, ex.Message);
+            Assert.That(ex.Message, Does.Contain(AzureCliCredential.AzureCliTimeoutError));
         }
 
         [TestCaseSource(nameof(NegativeTestCharacters))]

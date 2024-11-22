@@ -28,7 +28,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 model-namespace: true
 public-clients: false
 head-as-boolean: false

@@ -41,7 +41,7 @@ namespace Azure.AI.Translation.Document.Tests
             var input = new DocumentTranslationInput(new Uri("http://source"), new Uri("http://target"), "fr");
             input.AddTarget(new Uri("http://target2"), "es", categoryId: "myCategoryId");
 
-            var startTranslationDetails = new StartTranslationDetails(new List<DocumentTranslationInput> { input });
+            var startTranslationDetails = new TranslationBatch(new List<DocumentTranslationInput> { input });
             using RequestContent content = startTranslationDetails.ToRequestContent();
 
             var contentString = GetString(content);

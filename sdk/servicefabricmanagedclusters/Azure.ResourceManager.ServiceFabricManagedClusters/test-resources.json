@@ -3,41 +3,23 @@
     "contentVersion": "1.0.0.0",
     "resources": [
         {
-            "apiVersion": "2023-03-01-preview",
+            "apiVersion": "2024-06-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters",
-            "name": "sfmctestcluster",
+            "name": "sfmctestclusternet1",
             "location": "southcentralus",
             "sku": {
-                "name" : "Standard"
+                "name": "Standard"
             },
             "tags": {
-                "SFRP.CertificateSource": "Dsms"
+                "SFRP.CertificateSource": "Dsms",
+                "SFRP.EnableDiagnosticMI": "true"
             },
             "properties": {
-                "dnsName": "sfmctestcluster",
+                "dnsName": "sfmctestclusternet1",
                 "adminUserName": "testusername",
                 "adminPassword": "TestPass123!",
                 "clientConnectionPort": 19000,
                 "httpGatewayConnectionPort": 19080
-            }
-        },
-        {
-            "apiVersion": "2023-03-01-preview",
-            "type": "Microsoft.ServiceFabric/managedclusters/nodetypes",
-            "name": "sfmctestcluster/nodetype1",
-            "location": "southcentralus",
-            "dependsOn": [
-              "['Microsoft.ServiceFabric/managedclusters/sfmctestcluster']"
-            ],
-            "properties": {
-                "isPrimary": true,
-                "vmImagePublisher": "MicrosoftWindowsServer",
-                "vmImageOffer": "WindowsServer",
-                "vmImageSku": "2022-datacenter",
-                "vmImageVersion": "latest",
-                "vmSize": "Standard_D8s_v3",
-                "vmInstanceCount": 5,
-                "dataDiskSizeGB": 100
             }
         }
     ]

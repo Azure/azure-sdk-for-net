@@ -39,7 +39,7 @@ internal static class BrowserConnectOptionsConverter
 
         foreach (System.Reflection.PropertyInfo? sourceProperty in sourceType.GetProperties())
         {
-            System.Reflection.PropertyInfo targetProperty = targetType.GetProperty(sourceProperty.Name);
+            System.Reflection.PropertyInfo? targetProperty = targetType.GetProperty(sourceProperty.Name);
             if (targetProperty != null && targetProperty.CanWrite)
             {
                 targetProperty.SetValue(target, sourceProperty.GetValue(source));

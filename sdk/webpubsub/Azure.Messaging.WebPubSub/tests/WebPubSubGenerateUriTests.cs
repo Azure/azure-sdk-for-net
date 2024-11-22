@@ -24,6 +24,7 @@ namespace Azure.Messaging.WebPubSub.Tests
 
         [TestCase(WebPubSubClientProtocol.Default, "/client")]
         [TestCase(WebPubSubClientProtocol.Mqtt, "/clients/mqtt")]
+        [TestCase(WebPubSubClientProtocol.SocketIO, "/clients/socketio")]
         public async Task GetClientAccessUri_AccessKey_Test(WebPubSubClientProtocol clientType, string clientUriPrefix)
         {
             var serviceClient = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
@@ -38,6 +39,7 @@ namespace Azure.Messaging.WebPubSub.Tests
 
         [TestCase(WebPubSubClientProtocol.Default, "/client", "default")]
         [TestCase(WebPubSubClientProtocol.Mqtt, "/clients/mqtt", "mqtt")]
+        [TestCase(WebPubSubClientProtocol.SocketIO, "/clients/socketio", "socketio")]
         public async Task GetClientAccessUri_MicrosoftEntraId_DefaultClient_Test(WebPubSubClientProtocol clientType, string clientUriPrefix, string clientTypeString)
         {
             var serviceClient = new WebPubSubServiceSubClass(new Uri("https://localhost"), "hub", new DefaultAzureCredential());

@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                     };
                 }
                 var response = new HttpResponseMessage(HttpStatusCode.OK);
-                response.Headers.Add("Webhook-Allowed-Origin", "eventgrid.azure.net");
+                response.Headers.Add("Webhook-Allowed-Origin", GetAllowedOriginResponseHeader(req));
                 return response;
             }
 
@@ -126,6 +126,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 // TODO disable function?
                 new HttpResponseMessage(HttpStatusCode.Accepted) :
                 new HttpResponseMessage(HttpStatusCode.BadRequest);
+        }
+
+        private static string GetAllowedOriginResponseHeader(HttpRequestMessage req)
+        {
+            const string publicCloudOrigin = "eventgrid.azure.net";
+            const string requestOriginHeader = "WebHook-Request-Origin";
+
+            if (!req.Headers.Contains(requestOriginHeader))
+            {
+                return publicCloudOrigin;
+            }
+
+            string allowedOrigin = req.Headers.GetValues(requestOriginHeader).FirstOrDefault();
+            switch (allowedOrigin)
+            {
+                case publicCloudOrigin:
+                case "eventgrid.azure.us":
+                case "eventgrid.azure.eaglex.ic.gov":
+                case "eventgrid.azure.microsoft.scloud":
+                case "eventgrid.azure.cn":
+                    return allowedOrigin;
+                default:
+                    return publicCloudOrigin;
+            }
         }
     }
 }

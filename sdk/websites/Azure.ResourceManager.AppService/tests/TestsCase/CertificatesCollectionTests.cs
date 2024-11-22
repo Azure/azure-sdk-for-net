@@ -50,15 +50,10 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
                 KeyVaultId = null // Test to see that if service works fine when we set KeyVaultId to null.
             };
             var collection = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", "testRG-666")).GetAppCertificates();
-#if DEBUG
-            Assert.ThrowsAsync<JsonException>(async delegate { await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data); });
-            await Task.CompletedTask;
-#else
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             var certificate = lro.Value;
             Assert.AreEqual(name, certificate.Data.Name);
             Assert.IsNull(certificate.Data.KeyVaultId);
-#endif
         }
 
         [TestCase]

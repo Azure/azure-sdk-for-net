@@ -21,62 +21,99 @@ public partial class AppServiceCertificate : ProvisionableResource
     /// <summary>
     /// Name of the certificate.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Key Vault resource Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> KeyVaultId { get => _keyVaultId; set => _keyVaultId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _keyVaultId;
+    public BicepValue<ResourceIdentifier> KeyVaultId 
+    {
+        get { Initialize(); return _keyVaultId!; }
+        set { Initialize(); _keyVaultId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _keyVaultId;
 
     /// <summary>
     /// Key Vault secret name.
     /// </summary>
-    public BicepValue<string> KeyVaultSecretName { get => _keyVaultSecretName; set => _keyVaultSecretName.Assign(value); }
-    private readonly BicepValue<string> _keyVaultSecretName;
+    public BicepValue<string> KeyVaultSecretName 
+    {
+        get { Initialize(); return _keyVaultSecretName!; }
+        set { Initialize(); _keyVaultSecretName!.Assign(value); }
+    }
+    private BicepValue<string>? _keyVaultSecretName;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Status of the Key Vault secret.
     /// </summary>
-    public BicepValue<KeyVaultSecretStatus> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<KeyVaultSecretStatus> _provisioningState;
+    public BicepValue<KeyVaultSecretStatus> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<KeyVaultSecretStatus>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent AppServiceCertificateOrder.
     /// </summary>
-    public AppServiceCertificateOrder? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<AppServiceCertificateOrder> _parent;
+    public AppServiceCertificateOrder? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<AppServiceCertificateOrder>? _parent;
 
     /// <summary>
     /// Creates a new AppServiceCertificate.
@@ -91,16 +128,23 @@ public partial class AppServiceCertificate : ProvisionableResource
     public AppServiceCertificate(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.CertificateRegistration/certificateOrders/certificates", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _keyVaultId = BicepValue<ResourceIdentifier>.DefineProperty(this, "KeyVaultId", ["properties", "keyVaultId"]);
-        _keyVaultSecretName = BicepValue<string>.DefineProperty(this, "KeyVaultSecretName", ["properties", "keyVaultSecretName"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<KeyVaultSecretStatus>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<AppServiceCertificateOrder>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of AppServiceCertificate.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _keyVaultId = DefineProperty<ResourceIdentifier>("KeyVaultId", ["properties", "keyVaultId"]);
+        _keyVaultSecretName = DefineProperty<string>("KeyVaultSecretName", ["properties", "keyVaultSecretName"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<KeyVaultSecretStatus>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<AppServiceCertificateOrder>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

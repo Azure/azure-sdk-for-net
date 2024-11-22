@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudOSDisk"/>. </summary>
-        /// <param name="diskSizeInGB"> The size of the disk in gigabytes. Required if the createOption is Ephemeral. </param>
+        /// <param name="diskSizeInGB"> The size of the disk. Required if the createOption is Ephemeral. Allocations are measured in gibibytes. </param>
         public NetworkCloudOSDisk(long diskSizeInGB)
         {
             DiskSizeInGB = diskSizeInGB;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="NetworkCloudOSDisk"/>. </summary>
         /// <param name="createOption"> The strategy for creating the OS disk. </param>
         /// <param name="deleteOption"> The strategy for deleting the OS disk. </param>
-        /// <param name="diskSizeInGB"> The size of the disk in gigabytes. Required if the createOption is Ephemeral. </param>
+        /// <param name="diskSizeInGB"> The size of the disk. Required if the createOption is Ephemeral. Allocations are measured in gibibytes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkCloudOSDisk(OSDiskCreateOption? createOption, OSDiskDeleteOption? deleteOption, long diskSizeInGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public OSDiskCreateOption? CreateOption { get; set; }
         /// <summary> The strategy for deleting the OS disk. </summary>
         public OSDiskDeleteOption? DeleteOption { get; set; }
-        /// <summary> The size of the disk in gigabytes. Required if the createOption is Ephemeral. </summary>
+        /// <summary> The size of the disk. Required if the createOption is Ephemeral. Allocations are measured in gibibytes. </summary>
         public long DiskSizeInGB { get; set; }
     }
 }

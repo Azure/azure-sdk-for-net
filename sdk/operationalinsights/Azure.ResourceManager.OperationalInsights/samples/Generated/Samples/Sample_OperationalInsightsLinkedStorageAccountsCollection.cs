@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.OperationalInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OperationalInsights.Samples
 {
     public partial class Sample_OperationalInsightsLinkedStorageAccountsCollection
     {
-        // LinkedStorageAccountsCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_LinkedStorageAccountsCreate()
         {
             // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/LinkedStorageAccountsCreate.json
@@ -58,9 +58,8 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resou
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LinkedStorageAccountsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_LinkedStorageAccountsGet()
         {
             // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/LinkedStorageAccountsGet.json
@@ -93,9 +92,8 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resou
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LinkedStorageAccountsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_LinkedStorageAccountsGet()
         {
             // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/LinkedStorageAccountsGet.json
@@ -124,9 +122,8 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resou
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // LinkedStorageAccountsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_LinkedStorageAccountsGet()
         {
             // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/LinkedStorageAccountsGet.json
@@ -155,7 +152,7 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resou
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -167,9 +164,8 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resou
             }
         }
 
-        // Gets list of linked storage accounts on a workspace.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsListOfLinkedStorageAccountsOnAWorkspace()
         {
             // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/LinkedStorageAccountsListByWorkspace.json
@@ -201,7 +197,7 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resou
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
