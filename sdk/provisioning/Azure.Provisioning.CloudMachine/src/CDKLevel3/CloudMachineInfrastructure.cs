@@ -9,6 +9,8 @@ using Azure.Provisioning.Primitives;
 using System.Collections.Generic;
 using Azure.Provisioning;
 using Azure.Provisioning.CloudMachine;
+using Azure.Core;
+using System.Runtime.CompilerServices;
 
 namespace Azure.CloudMachine;
 

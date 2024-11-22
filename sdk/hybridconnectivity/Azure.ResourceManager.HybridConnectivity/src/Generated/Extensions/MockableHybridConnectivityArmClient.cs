@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of SolutionConfigurationResources in the ArmClient. </summary>
+        /// <summary> Gets a collection of HybridConnectivitySolutionConfigurationResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SolutionConfigurationResources and their operations over a SolutionConfigurationResource. </returns>
-        public virtual SolutionConfigurationCollection GetSolutionConfigurations(ResourceIdentifier scope)
+        /// <returns> An object representing collection of HybridConnectivitySolutionConfigurationResources and their operations over a HybridConnectivitySolutionConfigurationResource. </returns>
+        public virtual HybridConnectivitySolutionConfigurationCollection GetHybridConnectivitySolutionConfigurations(ResourceIdentifier scope)
         {
-            return new SolutionConfigurationCollection(Client, scope);
+            return new HybridConnectivitySolutionConfigurationCollection(Client, scope);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SolutionConfigurationResource"/></description>
+        /// <description><see cref="HybridConnectivitySolutionConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="solutionConfiguration"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SolutionConfigurationResource>> GetSolutionConfigurationAsync(ResourceIdentifier scope, string solutionConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridConnectivitySolutionConfigurationResource>> GetHybridConnectivitySolutionConfigurationAsync(ResourceIdentifier scope, string solutionConfiguration, CancellationToken cancellationToken = default)
         {
-            return await GetSolutionConfigurations(scope).GetAsync(solutionConfiguration, cancellationToken).ConfigureAwait(false);
+            return await GetHybridConnectivitySolutionConfigurations(scope).GetAsync(solutionConfiguration, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SolutionConfigurationResource"/></description>
+        /// <description><see cref="HybridConnectivitySolutionConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -104,17 +104,17 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="solutionConfiguration"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SolutionConfigurationResource> GetSolutionConfiguration(ResourceIdentifier scope, string solutionConfiguration, CancellationToken cancellationToken = default)
+        public virtual Response<HybridConnectivitySolutionConfigurationResource> GetHybridConnectivitySolutionConfiguration(ResourceIdentifier scope, string solutionConfiguration, CancellationToken cancellationToken = default)
         {
-            return GetSolutionConfigurations(scope).Get(solutionConfiguration, cancellationToken);
+            return GetHybridConnectivitySolutionConfigurations(scope).Get(solutionConfiguration, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EndpointResources in the ArmClient. </summary>
+        /// <summary> Gets a collection of HybridConnectivityEndpointResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of EndpointResources and their operations over a EndpointResource. </returns>
-        public virtual EndpointResourceCollection GetEndpointResources(ResourceIdentifier scope)
+        /// <returns> An object representing collection of HybridConnectivityEndpointResources and their operations over a HybridConnectivityEndpointResource. </returns>
+        public virtual HybridConnectivityEndpointCollection GetHybridConnectivityEndpoints(ResourceIdentifier scope)
         {
-            return new EndpointResourceCollection(Client, scope);
+            return new HybridConnectivityEndpointCollection(Client, scope);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EndpointResource"/></description>
+        /// <description><see cref="HybridConnectivityEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EndpointResource>> GetEndpointResourceAsync(ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridConnectivityEndpointResource>> GetHybridConnectivityEndpointAsync(ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
         {
-            return await GetEndpointResources(scope).GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+            return await GetHybridConnectivityEndpoints(scope).GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EndpointResource"/></description>
+        /// <description><see cref="HybridConnectivityEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,21 +174,21 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EndpointResource> GetEndpointResource(ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<HybridConnectivityEndpointResource> GetHybridConnectivityEndpoint(ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
         {
-            return GetEndpointResources(scope).Get(endpointName, cancellationToken);
+            return GetHybridConnectivityEndpoints(scope).Get(endpointName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SolutionConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SolutionConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SolutionConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HybridConnectivitySolutionConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridConnectivitySolutionConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectivitySolutionConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SolutionConfigurationResource"/> object. </returns>
-        public virtual SolutionConfigurationResource GetSolutionConfigurationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridConnectivitySolutionConfigurationResource"/> object. </returns>
+        public virtual HybridConnectivitySolutionConfigurationResource GetHybridConnectivitySolutionConfigurationResource(ResourceIdentifier id)
         {
-            SolutionConfigurationResource.ValidateResourceId(id);
-            return new SolutionConfigurationResource(Client, id);
+            HybridConnectivitySolutionConfigurationResource.ValidateResourceId(id);
+            return new HybridConnectivitySolutionConfigurationResource(Client, id);
         }
 
         /// <summary>
@@ -204,51 +204,51 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PublicCloudConnectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PublicCloudConnectorResource.CreateResourceIdentifier" /> to create a <see cref="PublicCloudConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HybridConnectivityPublicCloudConnectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridConnectivityPublicCloudConnectorResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectivityPublicCloudConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PublicCloudConnectorResource"/> object. </returns>
-        public virtual PublicCloudConnectorResource GetPublicCloudConnectorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridConnectivityPublicCloudConnectorResource"/> object. </returns>
+        public virtual HybridConnectivityPublicCloudConnectorResource GetHybridConnectivityPublicCloudConnectorResource(ResourceIdentifier id)
         {
-            PublicCloudConnectorResource.ValidateResourceId(id);
-            return new PublicCloudConnectorResource(Client, id);
+            HybridConnectivityPublicCloudConnectorResource.ValidateResourceId(id);
+            return new HybridConnectivityPublicCloudConnectorResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SolutionTypeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SolutionTypeResource.CreateResourceIdentifier" /> to create a <see cref="SolutionTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HybridConnectivitySolutionTypeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridConnectivitySolutionTypeResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectivitySolutionTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SolutionTypeResource"/> object. </returns>
-        public virtual SolutionTypeResource GetSolutionTypeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridConnectivitySolutionTypeResource"/> object. </returns>
+        public virtual HybridConnectivitySolutionTypeResource GetHybridConnectivitySolutionTypeResource(ResourceIdentifier id)
         {
-            SolutionTypeResource.ValidateResourceId(id);
-            return new SolutionTypeResource(Client, id);
+            HybridConnectivitySolutionTypeResource.ValidateResourceId(id);
+            return new HybridConnectivitySolutionTypeResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HybridConnectivityEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridConnectivityEndpointResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectivityEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
-        public virtual EndpointResource GetEndpointResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridConnectivityEndpointResource"/> object. </returns>
+        public virtual HybridConnectivityEndpointResource GetHybridConnectivityEndpointResource(ResourceIdentifier id)
         {
-            EndpointResource.ValidateResourceId(id);
-            return new EndpointResource(Client, id);
+            HybridConnectivityEndpointResource.ValidateResourceId(id);
+            return new HybridConnectivityEndpointResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ServiceConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HybridConnectivityServiceConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridConnectivityServiceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectivityServiceConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceConfigurationResource"/> object. </returns>
-        public virtual ServiceConfigurationResource GetServiceConfigurationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridConnectivityServiceConfigurationResource"/> object. </returns>
+        public virtual HybridConnectivityServiceConfigurationResource GetHybridConnectivityServiceConfigurationResource(ResourceIdentifier id)
         {
-            ServiceConfigurationResource.ValidateResourceId(id);
-            return new ServiceConfigurationResource(Client, id);
+            HybridConnectivityServiceConfigurationResource.ValidateResourceId(id);
+            return new HybridConnectivityServiceConfigurationResource(Client, id);
         }
     }
 }

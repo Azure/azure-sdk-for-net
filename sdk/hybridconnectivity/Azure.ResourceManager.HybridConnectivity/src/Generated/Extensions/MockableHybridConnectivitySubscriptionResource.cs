@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
     {
         private ClientDiagnostics _generateAwsTemplateClientDiagnostics;
         private GenerateAwsTemplateRestOperations _generateAwsTemplateRestClient;
-        private ClientDiagnostics _publicCloudConnectorClientDiagnostics;
-        private PublicCloudConnectorsRestOperations _publicCloudConnectorRestClient;
-        private ClientDiagnostics _solutionTypeResourceSolutionTypesClientDiagnostics;
-        private SolutionTypesRestOperations _solutionTypeResourceSolutionTypesRestClient;
+        private ClientDiagnostics _hybridConnectivityPublicCloudConnectorPublicCloudConnectorsClientDiagnostics;
+        private PublicCloudConnectorsRestOperations _hybridConnectivityPublicCloudConnectorPublicCloudConnectorsRestClient;
+        private ClientDiagnostics _hybridConnectivitySolutionTypeSolutionTypesClientDiagnostics;
+        private SolutionTypesRestOperations _hybridConnectivitySolutionTypeSolutionTypesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableHybridConnectivitySubscriptionResource"/> class for mocking. </summary>
         protected MockableHybridConnectivitySubscriptionResource()
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
 
         private ClientDiagnostics GenerateAwsTemplateClientDiagnostics => _generateAwsTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private GenerateAwsTemplateRestOperations GenerateAwsTemplateRestClient => _generateAwsTemplateRestClient ??= new GenerateAwsTemplateRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PublicCloudConnectorClientDiagnostics => _publicCloudConnectorClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", PublicCloudConnectorResource.ResourceType.Namespace, Diagnostics);
-        private PublicCloudConnectorsRestOperations PublicCloudConnectorRestClient => _publicCloudConnectorRestClient ??= new PublicCloudConnectorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PublicCloudConnectorResource.ResourceType));
-        private ClientDiagnostics SolutionTypeResourceSolutionTypesClientDiagnostics => _solutionTypeResourceSolutionTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", SolutionTypeResource.ResourceType.Namespace, Diagnostics);
-        private SolutionTypesRestOperations SolutionTypeResourceSolutionTypesRestClient => _solutionTypeResourceSolutionTypesRestClient ??= new SolutionTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SolutionTypeResource.ResourceType));
+        private ClientDiagnostics HybridConnectivityPublicCloudConnectorPublicCloudConnectorsClientDiagnostics => _hybridConnectivityPublicCloudConnectorPublicCloudConnectorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", HybridConnectivityPublicCloudConnectorResource.ResourceType.Namespace, Diagnostics);
+        private PublicCloudConnectorsRestOperations HybridConnectivityPublicCloudConnectorPublicCloudConnectorsRestClient => _hybridConnectivityPublicCloudConnectorPublicCloudConnectorsRestClient ??= new PublicCloudConnectorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridConnectivityPublicCloudConnectorResource.ResourceType));
+        private ClientDiagnostics HybridConnectivitySolutionTypeSolutionTypesClientDiagnostics => _hybridConnectivitySolutionTypeSolutionTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", HybridConnectivitySolutionTypeResource.ResourceType.Namespace, Diagnostics);
+        private SolutionTypesRestOperations HybridConnectivitySolutionTypeSolutionTypesRestClient => _hybridConnectivitySolutionTypeSolutionTypesRestClient ??= new SolutionTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridConnectivitySolutionTypeResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -143,17 +143,17 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorResource"/></description>
+        /// <description><see cref="HybridConnectivityPublicCloudConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublicCloudConnectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PublicCloudConnectorResource> GetPublicCloudConnectorsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HybridConnectivityPublicCloudConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridConnectivityPublicCloudConnectorResource> GetHybridConnectivityPublicCloudConnectorsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PublicCloudConnectorRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PublicCloudConnectorRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PublicCloudConnectorResource(Client, PublicCloudConnectorData.DeserializePublicCloudConnectorData(e)), PublicCloudConnectorClientDiagnostics, Pipeline, "MockableHybridConnectivitySubscriptionResource.GetPublicCloudConnectors", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridConnectivityPublicCloudConnectorPublicCloudConnectorsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridConnectivityPublicCloudConnectorPublicCloudConnectorsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridConnectivityPublicCloudConnectorResource(Client, HybridConnectivityPublicCloudConnectorData.DeserializeHybridConnectivityPublicCloudConnectorData(e)), HybridConnectivityPublicCloudConnectorPublicCloudConnectorsClientDiagnostics, Pipeline, "MockableHybridConnectivitySubscriptionResource.GetHybridConnectivityPublicCloudConnectors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,17 +173,17 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorResource"/></description>
+        /// <description><see cref="HybridConnectivityPublicCloudConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PublicCloudConnectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PublicCloudConnectorResource> GetPublicCloudConnectors(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridConnectivityPublicCloudConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridConnectivityPublicCloudConnectorResource> GetHybridConnectivityPublicCloudConnectors(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PublicCloudConnectorRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PublicCloudConnectorRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PublicCloudConnectorResource(Client, PublicCloudConnectorData.DeserializePublicCloudConnectorData(e)), PublicCloudConnectorClientDiagnostics, Pipeline, "MockableHybridConnectivitySubscriptionResource.GetPublicCloudConnectors", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridConnectivityPublicCloudConnectorPublicCloudConnectorsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridConnectivityPublicCloudConnectorPublicCloudConnectorsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridConnectivityPublicCloudConnectorResource(Client, HybridConnectivityPublicCloudConnectorData.DeserializeHybridConnectivityPublicCloudConnectorData(e)), HybridConnectivityPublicCloudConnectorPublicCloudConnectorsClientDiagnostics, Pipeline, "MockableHybridConnectivitySubscriptionResource.GetHybridConnectivityPublicCloudConnectors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,17 +203,17 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SolutionTypeResource"/></description>
+        /// <description><see cref="HybridConnectivitySolutionTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SolutionTypeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SolutionTypeResource> GetSolutionTypeResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HybridConnectivitySolutionTypeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridConnectivitySolutionTypeResource> GetHybridConnectivitySolutionTypesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SolutionTypeResourceSolutionTypesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SolutionTypeResourceSolutionTypesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SolutionTypeResource(Client, SolutionTypeResourceData.DeserializeSolutionTypeResourceData(e)), SolutionTypeResourceSolutionTypesClientDiagnostics, Pipeline, "MockableHybridConnectivitySubscriptionResource.GetSolutionTypeResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridConnectivitySolutionTypeSolutionTypesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridConnectivitySolutionTypeSolutionTypesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridConnectivitySolutionTypeResource(Client, HybridConnectivitySolutionTypeData.DeserializeHybridConnectivitySolutionTypeData(e)), HybridConnectivitySolutionTypeSolutionTypesClientDiagnostics, Pipeline, "MockableHybridConnectivitySubscriptionResource.GetHybridConnectivitySolutionTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -233,17 +233,17 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SolutionTypeResource"/></description>
+        /// <description><see cref="HybridConnectivitySolutionTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SolutionTypeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SolutionTypeResource> GetSolutionTypeResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridConnectivitySolutionTypeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridConnectivitySolutionTypeResource> GetHybridConnectivitySolutionTypes(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SolutionTypeResourceSolutionTypesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SolutionTypeResourceSolutionTypesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SolutionTypeResource(Client, SolutionTypeResourceData.DeserializeSolutionTypeResourceData(e)), SolutionTypeResourceSolutionTypesClientDiagnostics, Pipeline, "MockableHybridConnectivitySubscriptionResource.GetSolutionTypeResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridConnectivitySolutionTypeSolutionTypesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridConnectivitySolutionTypeSolutionTypesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridConnectivitySolutionTypeResource(Client, HybridConnectivitySolutionTypeData.DeserializeHybridConnectivitySolutionTypeData(e)), HybridConnectivitySolutionTypeSolutionTypesClientDiagnostics, Pipeline, "MockableHybridConnectivitySubscriptionResource.GetHybridConnectivitySolutionTypes", "value", "nextLink", cancellationToken);
         }
     }
 }

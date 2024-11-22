@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             if (Optional.IsDefined(ServerId))
             {
                 writer.WritePropertyName("serverId"u8);
-                writer.WriteStringValue(ServerId);
+                writer.WriteStringValue(ServerId.Value);
             }
             if (Optional.IsDefined(TenantId))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 return null;
             }
             string hostname = default;
-            ResourceIdentifier serverId = default;
+            Guid? serverId = default;
             Guid? tenantId = default;
             string namespaceName = default;
             string namespaceNameSuffix = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                                     {
                                         continue;
                                     }
-                                    serverId = new ResourceIdentifier(property1.Value.GetString());
+                                    serverId = property1.Value.GetGuid();
                                     continue;
                                 }
                                 if (property1.NameEquals("tenantId"u8))

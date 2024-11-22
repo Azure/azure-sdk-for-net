@@ -23,6 +23,13 @@ internal class OpenAIFeature : CloudMachineFeature
 
         RequiredSystemRoles.Add(cognitiveServices, [(CognitiveServicesBuiltInRole.GetBuiltInRoleName(CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor) ,CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString())]);
 
+        cloudMachine.AddResource(cloudMachine.CreateRoleAssignment(
+            cognitiveServices,
+            cognitiveServices.Id,
+            CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor,
+            cloudMachine.Identity)
+        );
+
         Emitted = cognitiveServices;
 
         OpenAIModel? previous = null;

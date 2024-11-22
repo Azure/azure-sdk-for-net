@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
-    public partial class HybridConnectivityInventoryResource : IJsonModel<HybridConnectivityInventoryResourceData>
+    public partial class HybridConnectivityInventoryResource : IJsonModel<HybridConnectivityInventoryData>
     {
-        void IJsonModel<HybridConnectivityInventoryResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectivityInventoryResourceData>)Data).Write(writer, options);
+        void IJsonModel<HybridConnectivityInventoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectivityInventoryData>)Data).Write(writer, options);
 
-        HybridConnectivityInventoryResourceData IJsonModel<HybridConnectivityInventoryResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectivityInventoryResourceData>)Data).Create(ref reader, options);
+        HybridConnectivityInventoryData IJsonModel<HybridConnectivityInventoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectivityInventoryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridConnectivityInventoryResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HybridConnectivityInventoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        HybridConnectivityInventoryResourceData IPersistableModel<HybridConnectivityInventoryResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridConnectivityInventoryResourceData>(data, options);
+        HybridConnectivityInventoryData IPersistableModel<HybridConnectivityInventoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridConnectivityInventoryData>(data, options);
 
-        string IPersistableModel<HybridConnectivityInventoryResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridConnectivityInventoryResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HybridConnectivityInventoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridConnectivityInventoryData>)Data).GetFormatFromOptions(options);
     }
 }
