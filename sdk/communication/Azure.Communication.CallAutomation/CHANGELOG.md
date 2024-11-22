@@ -1,14 +1,19 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.4.0-beta.1 (2024-11-22)
 
 ### Features Added
+
+- Added support for real-time transcription.
+- Enhanced audio streaming with bidirectional capabilities, supporting audio formats in both directions. Currently, sample rates of 24kHz and 16kHz are supported.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Introduced audio streaming and transcription data parsing capabilities.
 
 ## 1.3.0-beta.2 (2024-10-28)
 
