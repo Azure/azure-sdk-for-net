@@ -80,7 +80,7 @@ function CompatibleConvertFrom-Yaml {
   $yqPresent = Get-Command 'yq' -ErrorAction SilentlyContinue
   if (-not $yqPresent) {
     . (Join-Path $PSScriptRoot PSModule-Helpers.ps1)
-    Install-ModuleIfNotInstalled -WhatIf:$false "powershell-yaml" "0.4.1" | Import-Module
+    Install-ModuleIfNotInstalled -WhatIf:$false "powershell-yaml" "0.4.7" | Import-Module
   }
 
   # Process the content (for example, you could convert from YAML here)

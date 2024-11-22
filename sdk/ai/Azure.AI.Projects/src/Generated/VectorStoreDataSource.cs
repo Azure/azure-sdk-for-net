@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="VectorStoreDataSource"/>. </summary>
         /// <param name="assetIdentifier"> Asset URI. </param>
-        /// <param name="assetType"> The asset type *. </param>
+        /// <param name="assetType"> The asset type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetIdentifier"/> is null. </exception>
         public VectorStoreDataSource(string assetIdentifier, VectorStoreDataSourceAssetType assetType)
         {
@@ -62,7 +62,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="VectorStoreDataSource"/>. </summary>
         /// <param name="assetIdentifier"> Asset URI. </param>
-        /// <param name="assetType"> The asset type *. </param>
+        /// <param name="assetType"> The asset type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VectorStoreDataSource(string assetIdentifier, VectorStoreDataSourceAssetType assetType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,7 +78,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Asset URI. </summary>
         public string AssetIdentifier { get; set; }
-        /// <summary> The asset type *. </summary>
+        /// <summary> The asset type. </summary>
         public VectorStoreDataSourceAssetType AssetType { get; set; }
     }
 }

@@ -50,7 +50,7 @@ if (-not $GitHubPat) {
 
 Write-Host "The spec used to release SDK should be from the main branch of Azure/azure-rest-api-specs repository."
 Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName, ArtifactLocation:$ArtifactLocation, PackageInfoDirectory:$PackageInfoDirectory."
-Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
 
 # This function is used to verify the 'require' and 'input-file' settings in autorest.md point to the main branch of Azure/azure-rest-api-specs repository
 # input-file may be: 

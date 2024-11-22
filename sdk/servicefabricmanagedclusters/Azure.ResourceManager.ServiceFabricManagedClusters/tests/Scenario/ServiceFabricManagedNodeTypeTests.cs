@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             Assert.AreEqual(ServiceFabricManagedDataDiskType.StandardSsdLrs, nodeType.DataDiskType);
             Assert.AreEqual("WindowsServer", nodeType.VmImageOffer);
             Assert.AreEqual("MicrosoftWindowsServer", nodeType.VmImagePublisher);
-            Assert.AreEqual("2019-Datacenter", nodeType.VmImageSku);
+            Assert.AreEqual("2022-Datacenter", nodeType.VmImageSku);
             Assert.AreEqual("latest", nodeType.VmImageVersion);
             Assert.AreEqual(6, nodeType.VmInstanceCount);
             Assert.AreEqual("Standard_D2_v2", nodeType.VmSize);

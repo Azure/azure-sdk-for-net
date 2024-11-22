@@ -53,7 +53,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNull(assistantId, nameof(assistantId));
 
             AssistantId = assistantId;
-            AdditionalMessages = new ChangeTrackingList<ThreadMessage>();
+            AdditionalMessages = new ChangeTrackingList<ThreadMessageOptions>();
             OverrideTools = new ChangeTrackingList<ToolDefinition>();
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
@@ -102,7 +102,7 @@ namespace Azure.AI.Projects
         /// <param name="responseFormat"> Specifies the format that the model must output. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateRunRequest(string assistantId, string overrideModelName, string overrideInstructions, string additionalInstructions, IReadOnlyList<ThreadMessage> additionalMessages, IReadOnlyList<ToolDefinition> overrideTools, bool? stream, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateRunRequest(string assistantId, string overrideModelName, string overrideInstructions, string additionalInstructions, IReadOnlyList<ThreadMessageOptions> additionalMessages, IReadOnlyList<ToolDefinition> overrideTools, bool? stream, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssistantId = assistantId;
             OverrideModelName = overrideModelName;
@@ -139,7 +139,7 @@ namespace Azure.AI.Projects
         /// </summary>
         public string AdditionalInstructions { get; }
         /// <summary> Adds additional messages to the thread before creating the run. </summary>
-        public IReadOnlyList<ThreadMessage> AdditionalMessages { get; }
+        public IReadOnlyList<ThreadMessageOptions> AdditionalMessages { get; }
         /// <summary>
         /// The overridden list of enabled tools that the agent should use to run the thread.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

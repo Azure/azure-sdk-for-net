@@ -268,7 +268,7 @@ namespace Azure.AI.Projects
             string model = default;
             string instructions = default;
             string additionalInstructions = default;
-            IReadOnlyList<ThreadMessage> additionalMessages = default;
+            IReadOnlyList<ThreadMessageOptions> additionalMessages = default;
             IReadOnlyList<ToolDefinition> tools = default;
             bool? stream = default;
             float? temperature = default;
@@ -324,10 +324,10 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    List<ThreadMessage> array = new List<ThreadMessage>();
+                    List<ThreadMessageOptions> array = new List<ThreadMessageOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreadMessage.DeserializeThreadMessage(item, options));
+                        array.Add(ThreadMessageOptions.DeserializeThreadMessageOptions(item, options));
                     }
                     additionalMessages = array;
                     continue;
@@ -450,7 +450,7 @@ namespace Azure.AI.Projects
                 model,
                 instructions,
                 additionalInstructions,
-                additionalMessages ?? new ChangeTrackingList<ThreadMessage>(),
+                additionalMessages ?? new ChangeTrackingList<ThreadMessageOptions>(),
                 tools ?? new ChangeTrackingList<ToolDefinition>(),
                 stream,
                 temperature,

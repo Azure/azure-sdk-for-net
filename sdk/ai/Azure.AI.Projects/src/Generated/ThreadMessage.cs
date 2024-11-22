@@ -65,7 +65,7 @@ namespace Azure.AI.Projects
         /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="threadId"/> or <paramref name="contentItems"/> is null. </exception>
-        public ThreadMessage(string id, DateTimeOffset createdAt, string threadId, MessageStatus status, MessageIncompleteDetails incompleteDetails, DateTimeOffset? completedAt, DateTimeOffset? incompleteAt, MessageRole role, IEnumerable<MessageContent> contentItems, string assistantId, string runId, IEnumerable<MessageAttachment> attachments, IDictionary<string, string> metadata)
+        internal ThreadMessage(string id, DateTimeOffset createdAt, string threadId, MessageStatus status, MessageIncompleteDetails incompleteDetails, DateTimeOffset? completedAt, DateTimeOffset? incompleteAt, MessageRole role, IEnumerable<MessageContent> contentItems, string assistantId, string runId, IEnumerable<MessageAttachment> attachments, IReadOnlyDictionary<string, string> metadata)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(threadId, nameof(threadId));
@@ -106,7 +106,7 @@ namespace Azure.AI.Projects
         /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThreadMessage(string id, string @object, DateTimeOffset createdAt, string threadId, MessageStatus status, MessageIncompleteDetails incompleteDetails, DateTimeOffset? completedAt, DateTimeOffset? incompleteAt, MessageRole role, IList<MessageContent> contentItems, string assistantId, string runId, IList<MessageAttachment> attachments, IDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ThreadMessage(string id, string @object, DateTimeOffset createdAt, string threadId, MessageStatus status, MessageIncompleteDetails incompleteDetails, DateTimeOffset? completedAt, DateTimeOffset? incompleteAt, MessageRole role, IReadOnlyList<MessageContent> contentItems, string assistantId, string runId, IReadOnlyList<MessageAttachment> attachments, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Object = @object;
@@ -131,35 +131,35 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The identifier, which can be referenced in API endpoints. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The Unix timestamp, in seconds, representing when this object was created. </summary>
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; }
         /// <summary> The ID of the thread that this message belongs to. </summary>
-        public string ThreadId { get; set; }
+        public string ThreadId { get; }
         /// <summary> The status of the message. </summary>
-        public MessageStatus Status { get; set; }
+        public MessageStatus Status { get; }
         /// <summary> On an incomplete message, details about why the message is incomplete. </summary>
-        public MessageIncompleteDetails IncompleteDetails { get; set; }
+        public MessageIncompleteDetails IncompleteDetails { get; }
         /// <summary> The Unix timestamp (in seconds) for when the message was completed. </summary>
-        public DateTimeOffset? CompletedAt { get; set; }
+        public DateTimeOffset? CompletedAt { get; }
         /// <summary> The Unix timestamp (in seconds) for when the message was marked as incomplete. </summary>
-        public DateTimeOffset? IncompleteAt { get; set; }
+        public DateTimeOffset? IncompleteAt { get; }
         /// <summary> The role associated with the agent thread message. </summary>
-        public MessageRole Role { get; set; }
+        public MessageRole Role { get; }
         /// <summary>
         /// The list of content items associated with the agent thread message.
         /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MessageImageFileContent"/> and <see cref="MessageTextContent"/>.
         /// </summary>
-        public IList<MessageContent> ContentItems { get; }
+        public IReadOnlyList<MessageContent> ContentItems { get; }
         /// <summary> If applicable, the ID of the agent that authored this message. </summary>
-        public string AssistantId { get; set; }
+        public string AssistantId { get; }
         /// <summary> If applicable, the ID of the run associated with the authoring of this message. </summary>
-        public string RunId { get; set; }
+        public string RunId { get; }
         /// <summary> A list of files attached to the message, and the tools they were added to. </summary>
-        public IList<MessageAttachment> Attachments { get; set; }
+        public IReadOnlyList<MessageAttachment> Attachments { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
-        public IDictionary<string, string> Metadata { get; set; }
+        public IReadOnlyDictionary<string, string> Metadata { get; }
     }
 }

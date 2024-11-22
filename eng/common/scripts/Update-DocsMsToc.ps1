@@ -55,7 +55,7 @@ param(
 . $PSScriptRoot/common.ps1
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
 
-Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
 
 Set-StrictMode -Version 3
 

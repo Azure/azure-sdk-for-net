@@ -193,7 +193,7 @@ public static partial class AIClientModelFactory
         attachments ??= new List<MessageAttachment>();
         metadata ??= new Dictionary<string, string>();
 
-        return new ThreadMessage(id, @object: null, createdAt, threadId, status, incompleteDetails, completedAt, incompleteAt, role, contentItems?.ToList(), agentId, runId, attachments?.ToList(), metadata, serializedAdditionalRawData: null);
+        return new ThreadMessage(id, @object: null, createdAt, threadId, status, incompleteDetails, completedAt, incompleteAt, role, contentItems?.ToList(), agentId, runId, attachments?.ToList(), (IReadOnlyDictionary<string, string>)metadata, serializedAdditionalRawData: null);
     }
 
     public static RequiredFunctionToolCall RequiredFunctionToolCall(string toolCallId, string functionName, string functionArguments)
