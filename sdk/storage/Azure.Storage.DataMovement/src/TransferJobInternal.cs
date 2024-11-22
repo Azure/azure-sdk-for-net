@@ -283,7 +283,12 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                await OnJobStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
+                // only change state to 'InProgress' if it was 'Queued'
+                // (this is to prevent 'Pausing' to be changed)
+                if (_dataTransfer.TransferStatus.State == DataTransferState.Queued)
+                {
+                    await OnJobStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
