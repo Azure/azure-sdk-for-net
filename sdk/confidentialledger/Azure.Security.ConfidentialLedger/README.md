@@ -351,7 +351,150 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-Coming Soon...
+## Examples
+
+The following sections provide several code snippets covering some of the most common Confidential ledger tasks. Note that there are sync and async methods available for both.
+
+* [Create a User Defined Endpoint](#create-a-userdefined-endpoint)
+
+### Create a User Defined Endpoint
+
+Creates a user defined endpoint 
+
+```C# Snippet:CreateUserDefinedEndpoint
+const string ledgerName = "myLedger";
+var ledgerUri = $"https://{ledgerName}.confidential-ledger.azure.com";
+var options = new ConfidentialLedgerClientOptions { CertificateEndpoint = "identityServiceEndpoint" };
+var ledgerClient = new ConfidentialLedgerClient(new Uri(ledgerUri), new DefaultAzureCredential(),options);
+RequestContent content = "content";
+RequestContext context = "context";
+Response response = ledgerClient.CreateUserDefinedEndpoint(content,context);
+```
+
+* [Get a User Defined Endpoint](#get-a-userdefined-endpoint)
+
+### Get a User Defined Endpoint
+
+Gets a user defined endpoint 
+
+```C# Snippet:GetUserDefinedEndpoint
+const string ledgerName = "myLedger";
+var ledgerUri = $"https://{ledgerName}.confidential-ledger.azure.com";
+var options = new ConfidentialLedgerClientOptions { CertificateEndpoint = "identityServiceEndpoint" };
+var ledgerClient = new ConfidentialLedgerClient(new Uri(ledgerUri), new DefaultAzureCredential(),options);
+RequestContext context = "context";
+Response response = ledgerClient.GetUserDefinedEndpoint(context);
+```
+
+* [Get a User Defined Endpoint Module](#get-a-userdefined-endpoint-module)
+
+### Get a User Defined Endpoint Module
+
+Creates a user defined endpoint module
+
+```C# Snippet:GetUserDefinedEndpointsModule
+const string ledgerName = "myLedger";
+var ledgerUri = $"https://{ledgerName}.confidential-ledger.azure.com";
+var options = new ConfidentialLedgerClientOptions { CertificateEndpoint = "identityServiceEndpoint" };
+var ledgerClient = new ConfidentialLedgerClient(new Uri(ledgerUri), new DefaultAzureCredential(),options);
+RequestContext context = "context";
+Response response = ledgerClient.GetUserDefinedEndpointsModule(module, context);
+```
+
+* [Get Runtime Options](#get-runtime-options)
+
+### Get Runtime Options
+
+Gets runtime options for user defined endpoints 
+
+```C# Snippet:GetRuntimeOptions
+const string ledgerName = "myLedger";
+var ledgerUri = $"https://{ledgerName}.confidential-ledger.azure.com";
+var options = new ConfidentialLedgerClientOptions { CertificateEndpoint = "identityServiceEndpoint" };
+var ledgerClient = new ConfidentialLedgerClient(new Uri(ledgerUri), new DefaultAzureCredential(),options);
+RequestContext context = "context";
+Response response = ledgerClient.GetRuntimeOptions(context);
+```
+
+* [Patch Runtime Options](#patch-runtime-options)
+
+### Patch Runtime Options
+
+Updates runtime options for user defined endpoints 
+
+```C# Snippet:PatchRuntimeOptions
+const string ledgerName = "myLedger";
+var ledgerUri = $"https://{ledgerName}.confidential-ledger.azure.com";
+var options = new ConfidentialLedgerClientOptions { CertificateEndpoint = "identityServiceEndpoint" };
+var ledgerClient = new ConfidentialLedgerClient(new Uri(ledgerUri), new DefaultAzureCredential(),options);
+RequestContent content = "content";
+RequestContext context = "context";
+Response response = ledgerClient.PatchRuntimeOptions(content,context);
+```
+
+* [Get User Defined Roles](#get-user-defined-roles)
+
+### Get User Defined Roles
+
+Gets user defined roles with role name and role actions 
+
+```C# Snippet:GetUserDefinedRole
+const string ledgerName = "myLedger";
+var ledgerUri = $"https://{ledgerName}.confidential-ledger.azure.com";
+var options = new ConfidentialLedgerClientOptions { CertificateEndpoint = "identityServiceEndpoint" };
+var ledgerClient = new ConfidentialLedgerClient(new Uri(ledgerUri), new DefaultAzureCredential(),options);
+string roleName = "rolename";
+RequestContext context = "context";
+Response response = ledgerClient.GetUserDefinedRole(roleName,context);
+```
+
+* [Put User Defined Roles](#put-user-defined-roles)
+
+### Put User Defined Roles
+
+Creates user defined roles with role name and role actions 
+
+```C# Snippet:PutUserDefinedRole
+const string ledgerName = "myLedger";
+var ledgerUri = $"https://{ledgerName}.confidential-ledger.azure.com";
+var options = new ConfidentialLedgerClientOptions { CertificateEndpoint = "identityServiceEndpoint" };
+var ledgerClient = new ConfidentialLedgerClient(new Uri(ledgerUri), new DefaultAzureCredential(),options);
+RequestContent content = "content";
+RequestContext context = "context";
+Response response = ledgerClient.PutUserDefinedRole(content,context);
+```
+
+* [Patch User Defined Roles](#patch-user-defined-roles)
+
+### Patch User Defined Roles
+
+Updates role actions for existing user defined roles
+
+```C# Snippet:PatchUserDefinedRole
+const string ledgerName = "myLedger";
+var ledgerUri = $"https://{ledgerName}.confidential-ledger.azure.com";
+var options = new ConfidentialLedgerClientOptions { CertificateEndpoint = "identityServiceEndpoint" };
+var ledgerClient = new ConfidentialLedgerClient(new Uri(ledgerUri), new DefaultAzureCredential(),options);
+RequestContent content = "content";
+RequestContext context = "context";
+Response response = ledgerClient.PatchUserDefinedRole(content,context);
+```
+
+* [Delete User Defined Roles](#delete-user-defined-roles)
+
+### Delete User Defined Roles
+
+Deletes user defined roles 
+
+```C# Snippet:DeleteUserDefinedRole
+const string ledgerName = "myLedger";
+var ledgerUri = $"https://{ledgerName}.confidential-ledger.azure.com";
+var options = new ConfidentialLedgerClientOptions { CertificateEndpoint = "identityServiceEndpoint" };
+var ledgerClient = new ConfidentialLedgerClient(new Uri(ledgerUri), new DefaultAzureCredential(),options);
+string roleName = "rolename";
+RequestContext context = "context";
+Response response = ledgerClient.DeleteUserDefinedRole((roleName,context));
+```
 
 ## Troubleshooting
 
