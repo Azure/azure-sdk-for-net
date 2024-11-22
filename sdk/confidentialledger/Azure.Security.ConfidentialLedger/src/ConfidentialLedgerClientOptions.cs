@@ -4,10 +4,14 @@
 using System;
 using Azure.Core;
 
+[assembly: CodeGenSuppressType("ConfidentialLedgerClientOptions")]
 namespace Azure.Security.ConfidentialLedger
 {
+    /// <summary> Client options for ConfidentialLedger library clients. </summary>
     public partial class ConfidentialLedgerClientOptions : ClientOptions
     {
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_08_22_Preview;
+
         /// <summary>
         /// The Identity Service URL. If not provided, the default endpoint "https://identity.confidential-ledger.core.azure.com" will be used.
         /// </summary>
@@ -19,5 +23,26 @@ namespace Azure.Security.ConfidentialLedger
         /// </summary>
         /// <value></value>
         public bool VerifyConnection { get; set; }
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> Service version "2022-05-13". </summary>
+            V2022_05_13 = 1,
+            /// <summary> Service version "2024-08-22-preview". </summary>
+            V2024_08_22_Preview = 2,
+        }
+        
+        internal string Version { get; }
+
+        /// <summary> Initializes new instance of ConfidentialLedgerClientOptions. </summary>
+        public ConfidentialLedgerClientOptions(ServiceVersion version = LatestVersion)
+        {
+            Version = version switch
+            {
+                ServiceVersion.V2024_08_22_Preview => "2024-08-22-preview",
+                _ => throw new NotSupportedException()
+            };
+        }
     }
 }
