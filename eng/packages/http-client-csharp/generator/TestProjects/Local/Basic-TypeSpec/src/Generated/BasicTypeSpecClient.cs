@@ -52,7 +52,7 @@ namespace BasicTypeSpec
 
             _endpoint = endpoint;
             _keyCredential = keyCredential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new Azure.Core.AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
