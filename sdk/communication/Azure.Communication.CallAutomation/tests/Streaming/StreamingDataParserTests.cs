@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 + "\"subscriptionId\": \"subscriptionId\","
                 + "\"encoding\": \"encodingType\","
                 + "\"sampleRate\": 8,"
-                + "\"channels\": 1,"
+                + "\"channels\": 2,"
                 + "\"length\": 640"
                 + "}"
                 + "}";
