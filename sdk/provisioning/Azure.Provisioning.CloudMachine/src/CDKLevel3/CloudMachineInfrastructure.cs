@@ -13,6 +13,8 @@ using Azure.Provisioning.Primitives;
 using System.Collections.Generic;
 using Azure.Provisioning;
 using Azure.Provisioning.CloudMachine;
+using Azure.Core;
+using System.Runtime.CompilerServices;
 
 namespace Azure.CloudMachine;
 
@@ -221,7 +223,8 @@ public class CloudMachineInfrastructure
     public void AddEndpoints<T>()
     {
         Type endpointsType = typeof(T);
-        if (!endpointsType.IsInterface) throw new InvalidOperationException("Endpoints type must be an interface.");
+        if (!endpointsType.IsInterface)
+            throw new InvalidOperationException("Endpoints type must be an interface.");
         Endpoints.Add(endpointsType);
     }
 
@@ -242,33 +245,35 @@ public class CloudMachineInfrastructure
         //Add(PrincipalTypeParameter);
         //Add(PrincipalNameParameter);
 
+        var storageBlobDataContributor = StorageBuiltInRole.StorageBlobDataContributor;
+        var storageTableDataContributor = StorageBuiltInRole.StorageTableDataContributor;
+        var azureServiceBusDataSender = ServiceBusBuiltInRole.AzureServiceBusDataSender;
+        var azureServiceBusDataOwner = ServiceBusBuiltInRole.AzureServiceBusDataOwner;
+
         _infrastructure.Add(Identity);
         _infrastructure.Add(_storage);
-        _infrastructure.Add(_storage.CreateRoleAssignment(StorageBuiltInRole.StorageBlobDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
-        _infrastructure.Add(_storage.CreateRoleAssignment(StorageBuiltInRole.StorageTableDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
+        _infrastructure.Add(_storage.CreateRoleAssignment(storageBlobDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
+        _infrastructure.Add(CreateRoleAssignment(_storage, _storage.Id, storageBlobDataContributor, Identity));
+        _infrastructure.Add(_storage.CreateRoleAssignment(storageTableDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
+        _infrastructure.Add(CreateRoleAssignment(_storage, _storage.Id, storageTableDataContributor, Identity));
         _infrastructure.Add(_container);
         _infrastructure.Add(_blobs);
         _infrastructure.Add(_serviceBusNamespace);
-        _infrastructure.Add(_serviceBusNamespace.CreateRoleAssignment(ServiceBusBuiltInRole.AzureServiceBusDataOwner, RoleManagementPrincipalType.User, PrincipalIdParameter));
+        _infrastructure.Add(_serviceBusNamespace.CreateRoleAssignment(azureServiceBusDataOwner, RoleManagementPrincipalType.User, PrincipalIdParameter));
+        _infrastructure.Add(CreateRoleAssignment(_serviceBusNamespace,_serviceBusNamespace.Id, azureServiceBusDataOwner, Identity));
         _infrastructure.Add(_serviceBusNamespaceAuthorizationRule);
         _infrastructure.Add(_serviceBusTopic_private);
         _infrastructure.Add(_serviceBusTopic_default);
         _infrastructure.Add(_serviceBusSubscription_private);
         _infrastructure.Add(_serviceBusSubscription_default);
 
-        // This is necessary until SystemTopic adds an AssignRole method.
-        var role = ServiceBusBuiltInRole.AzureServiceBusDataSender;
-        RoleAssignment roleAssignment = new RoleAssignment("cm_servicebus_role");
-        roleAssignment.Name = BicepFunction.CreateGuid(_serviceBusNamespace.Id, Identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
-        roleAssignment.Scope = new IdentifierExpression(_serviceBusNamespace.BicepIdentifier);
-        roleAssignment.PrincipalType = RoleManagementPrincipalType.ServicePrincipal;
-        roleAssignment.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString());
-        roleAssignment.PrincipalId = Identity.PrincipalId;
+        RoleAssignment roleAssignment = CreateRoleAssignment(_serviceBusNamespace, _serviceBusNamespace.Id, azureServiceBusDataSender, Identity);
         _infrastructure.Add(roleAssignment);
+
+        CreateRoleAssignment(_serviceBusNamespace, _serviceBusNamespace.Id, azureServiceBusDataSender, Identity);
         // the role assignment must exist before the system topic event subscription is created.
         _eventGridSubscription_blobs.DependsOn.Add(roleAssignment);
         _infrastructure.Add(_eventGridSubscription_blobs);
-
         _infrastructure.Add(_eventGridTopic_blobs);
 
         // Placeholders for now.
@@ -282,5 +287,22 @@ public class CloudMachineInfrastructure
         }
 
         return _infrastructure.Build(context);
+    }
+
+    // Temporary until the bug is fixed in the CDK generator which uses the PrincipalId instead of the Id in BicepFunction.CreateGuid.
+    internal RoleAssignment CreateRoleAssignment(ProvisionableResource resource, BicepValue<ResourceIdentifier> Id, object role, UserAssignedIdentity identity)
+    {
+        if (role is null) throw new ArgumentException("Role must not be null.", nameof(role));
+        var method = role.GetType().GetMethod("GetBuiltInRoleName", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+        string roleName = (string)method!.Invoke(null, [role])!;
+
+        return new($"{resource.BicepIdentifier}_{identity.BicepIdentifier}_{roleName}")
+        {
+            Name = BicepFunction.CreateGuid(Id, identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role!.ToString()!)),
+            Scope = new IdentifierExpression(resource.BicepIdentifier),
+            PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
+            RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()!),
+            PrincipalId = identity.PrincipalId
+        };
     }
 }

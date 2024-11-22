@@ -27,6 +27,13 @@ internal class OpenAIFeature : CloudMachineFeature
             cloudMachine.PrincipalIdParameter)
         );
 
+        cloudMachine.AddResource(cloudMachine.CreateRoleAssignment(
+            cognitiveServices,
+            cognitiveServices.Id,
+            CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor,
+            cloudMachine.Identity)
+        );
+
         Emitted = cognitiveServices;
 
         OpenAIModel? previous = null;
