@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .Build();
 
             var doubleCounter = meter.CreateCounter<double>("TestDoubleCounter");
-            doubleCounter.Add(123.45);
+            doubleCounter.Add(123.45, new("tag1", "value1"), new("tag2", new[] { 1, 2, 3 }));
             provider.ForceFlush();
 
             var metricResource = new AzureMonitorResource(
@@ -49,6 +49,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("TestDoubleCounter", metricsData.Metrics.First().Name);
             Assert.Equal(123.45, metricsData.Metrics.First().Value);
             Assert.Null(metricsData.Metrics.First().DataPointType);
+
+            Assert.Equal(2, metricsData.Properties.Count);
+            Assert.Contains(metricsData.Properties, kvp => kvp.Key == "tag1" && kvp.Value == "value1");
+            Assert.Contains(metricsData.Properties, kvp => kvp.Key == "tag2" && kvp.Value == "1,2,3");
         }
     }
 }
