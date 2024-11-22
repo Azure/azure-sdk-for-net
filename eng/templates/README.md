@@ -1,4 +1,4 @@
-# DotNet project templates (DO NOT USE!)
+CONTRIBUTING.md# DotNet project templates (DO NOT USE!)
 
 *  This document is for Track 2 .NET SDK (Azure.ResourceManager.XXX). Not for track 1 .NET SDK (Microsoft.Azure.Management.XXX)
 
