@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
         /// <param name="inputBinding"> Input storage queue. </param>
         /// <param name="outputBinding"> Output storage queue. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="internalFunction"/>, <paramref name="inputBinding"/> or <paramref name="outputBinding"/> is null. </exception>
-        public AzureFunctionDefinition(InternalFunctionDefinition internalFunction, AzureStorageQueueBinding inputBinding, AzureStorageQueueBinding outputBinding)
+        internal AzureFunctionDefinition(InternalFunctionDefinition internalFunction, AzureStorageQueueBinding inputBinding, AzureStorageQueueBinding outputBinding)
         {
             Argument.AssertNotNull(internalFunction, nameof(internalFunction));
             Argument.AssertNotNull(inputBinding, nameof(inputBinding));
