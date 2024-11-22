@@ -353,6 +353,47 @@ resource openai_cm0c420d2f21084cd_embedding 'Microsoft.CognitiveServices/account
   ]
 }
 
+resource cm_hosting_plan 'Microsoft.Web/serverfarms@2024-04-01' = {
+  name: 'cm0c420d2f21084cd'
+  location: location
+  kind: 'app'
+  sku: {
+    name: 'F1'
+    tier: 'Free'
+  }
+}
+
+resource cm_website 'Microsoft.Web/sites@2024-04-01' = {
+  name: 'cm0c420d2f21084cd'
+  location: location
+  properties: {
+    serverFarmId: cm_hosting_plan.id
+    enabled: true
+    httpsOnly: true
+    siteConfig: {
+      appSettings: [
+        {
+          name: 'CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID'
+          value: cm_identity.properties.clientId
+        }
+      ]
+      webSocketsEnabled: true
+      http20Enabled: true
+      minTlsVersion: '1.2'
+    }
+  }
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${cm_identity.id}': { }
+    }
+  }
+  kind: 'app'
+  tags: {
+    'azd-service-name': 'cm0c420d2f21084cd'
+  }
+}
+
 output cm_managed_identity_id string = cm_identity.id
 
 output storage_name string = cm_storage.name

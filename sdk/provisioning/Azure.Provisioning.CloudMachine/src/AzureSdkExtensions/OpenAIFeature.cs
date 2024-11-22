@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
-using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
@@ -22,13 +21,6 @@ internal class OpenAIFeature : CloudMachineFeature
         cloudMachine.AddResource(cognitiveServices);
 
         RequiredSystemRoles.Add(cognitiveServices, [(CognitiveServicesBuiltInRole.GetBuiltInRoleName(CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor) ,CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString())]);
-
-        cloudMachine.AddResource(cloudMachine.CreateRoleAssignment(
-            cognitiveServices,
-            cognitiveServices.Id,
-            CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor,
-            cloudMachine.Identity)
-        );
 
         Emitted = cognitiveServices;
 
