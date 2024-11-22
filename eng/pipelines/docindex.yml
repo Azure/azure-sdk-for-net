@@ -49,8 +49,7 @@ jobs:
       # made. These updates include new libraries and CSV updates in azure-sdk which, depending
       # on the column(s) updated can cause anything from package deprecation to service level
       # readme or ToC updates.
-      - ${{if or(eq(variables['Build.Reason'], 'Schedule'), ne(variables['Skip.MainUpdate'], 'true'))}}:
-
+      - ${{ if or(eq(variables['Build.Reason'], 'Schedule'), ne(variables['Skip.MainUpdate'], 'true')) }}:
         - task: Powershell@2
           inputs:
             pwsh: true
@@ -105,11 +104,10 @@ jobs:
             TargetRepoOwner: $(DocRepoOwner)
             WorkingDirectory: $(DocRepoLocation)
 
+
       # The scenario for running a Manual build is normally only for the main updates. The daily build
       # should really only get kicked off for scheduled runs.
-      - ${{if or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.DailyUpdate'], 'true'))}}:
-
-        # Prepare daily docs CI
+      - ${{ if or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.DailyUpdate'], 'true')) }}:
         - template: /eng/common/pipelines/templates/steps/set-daily-docs-branch-name.yml
           parameters:
             DailyBranchVariableName: DailyDocsBranchName
