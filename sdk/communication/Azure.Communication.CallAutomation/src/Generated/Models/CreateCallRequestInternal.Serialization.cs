@@ -37,11 +37,6 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (Optional.IsDefined(OpsSource))
-            {
-                writer.WritePropertyName("opsSource"u8);
-                writer.WriteObjectValue(OpsSource);
-            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

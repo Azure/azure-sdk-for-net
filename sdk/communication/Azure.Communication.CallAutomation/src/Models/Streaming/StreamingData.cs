@@ -17,23 +17,27 @@ namespace Azure.Communication.CallAutomation
         public static StreamingDataKind Kind { get; internal set; }
 
         /// <summary>
-        /// Convert the base64 string into streaming data subtypes.
-        /// ex. AudioData, AudioMetadata, TranscriptionData, TranscriptionMetadata
+        /// Parses a base64 encoded string into a StreamingData object,
+        /// which can be one of the following subtypes: AudioData, AudioMetadata, TranscriptionData, or TranscriptionMetadata.
         /// </summary>
-        /// <param name="data">The base64 string streaming data</param>
-        /// <returns> The streaming data</returns>
+        /// <param name="data">The base64 string represents streaming data that will be converted into the appropriate subtype of StreamingData.</param>
+        /// <returns>the type of StreamingData.</returns>
+        /// <exception cref="NotSupportedException">Throws a NotSupportedException if the provided base64 string does not correspond
+        /// to a supported data type for the specified Kind.</exception>
         public static StreamingData Parse(string data)
         {
             return ParseStreamingData(data);
         }
 
         /// <summary>
-        /// Convert the base64 string into streaming data subtypes.
-        /// ex. AudioData, AudioMetadata, TranscriptionData, TranscriptionMetadata
+        /// Parses a base64 encoded string into a StreamingData object,
+        /// which can be one of the following subtypes: AudioData, AudioMetadata, TranscriptionData, or TranscriptionMetadata.
         /// </summary>
-        /// <typeparam name="T"> Subtypes of StreamingData. </typeparam>
-        /// <param name="data">The base64 string streaming data</param>
-        /// <returns>Subtypes of StreamingData.</returns>
+        /// <typeparam name="T"> Subtypes of StreamingData -> AudioData, AudioMetadata, TranscriptionData, or TranscriptionMetadata</typeparam>
+        /// <param name="data">The base64 string represents streaming data that will be converted into the appropriate subtype of StreamingData.</param>
+        /// <returns>the type of StreamingData.</returns>
+        /// <exception cref="NotSupportedException">Throws a NotSupportedException if the provided base64 string does not correspond
+        /// to a supported data type for the specified Kind.</exception>
         public static T Parse<T>(string data) where T : StreamingData
         {
             return (T)ParseStreamingData(data);
@@ -50,7 +54,8 @@ namespace Azure.Communication.CallAutomation
             {
                 #region Audio
                 case "AudioMetadata":
-                    return JsonSerializer.Deserialize<AudioMetadata>(streamingData.GetProperty("audioMetadata").ToString());
+                    var audioMetadataInternal = JsonSerializer.Deserialize<AudioMetadataInternal>(streamingData.GetProperty("audioMetadata").ToString());
+                    return new AudioMetadata(audioMetadataInternal);
 
                 case "AudioData":
                     AudioDataInternal audioInternal = JsonSerializer.Deserialize<AudioDataInternal>(streamingData.GetProperty("audioData").ToString());
@@ -81,7 +86,7 @@ namespace Azure.Communication.CallAutomation
                 #endregion
 
                 default:
-                    throw new NotSupportedException(base64Data);
+                    throw new NotSupportedException($"The provided base64 string does not correspond to a supported data type for the Kind: {Kind}");
             }
         }
     }

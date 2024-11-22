@@ -22,15 +22,9 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary>
         /// The caller source of the call automation client.
-        /// Mutual exclusive with <see cref="OPSSource"/>.
-        /// </summary>
-        public CommunicationUserIdentifier Source { get; set; }
-
-        /// <summary>
-        /// The One Phone System caller source of the call automation client.
         /// Mutual exclusive with <see cref="Source"/>.
         /// </summary>
-        public MicrosoftTeamsAppIdentifier OPSSource { get; set; }
+        public CommunicationUserIdentifier Source { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CallAutomationClientOptions"/>.

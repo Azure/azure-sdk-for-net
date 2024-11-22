@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(AudioFormat left, AudioFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AudioFormat"/> values are not the same. </summary>
         public static bool operator !=(AudioFormat left, AudioFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AudioFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AudioFormat"/>. </summary>
         public static implicit operator AudioFormat(string value) => new AudioFormat(value);
 
         /// <inheritdoc />

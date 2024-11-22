@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 + "\"subscriptionId\": \"subscriptionId\","
                 + "\"encoding\": \"encodingType\","
                 + "\"sampleRate\": 8,"
-                + "\"channels\": 2,"
+                + "\"channels\": 1,"
                 + "\"length\": 640"
                 + "}"
                 + "}";
@@ -52,7 +52,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("subscriptionId", streamingAudioMetadata.MediaSubscriptionId);
             Assert.AreEqual("encodingType", streamingAudioMetadata.Encoding);
             Assert.AreEqual(8, streamingAudioMetadata.SampleRate);
-            Assert.AreEqual(2, streamingAudioMetadata.Channels);
+            Assert.AreEqual(2, (int)streamingAudioMetadata.Channels);
             Assert.AreEqual(640, streamingAudioMetadata.Length);
         }
 

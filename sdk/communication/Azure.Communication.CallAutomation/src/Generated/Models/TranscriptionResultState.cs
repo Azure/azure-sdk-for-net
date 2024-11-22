@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(TranscriptionResultState left, TranscriptionResultState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TranscriptionResultState"/> values are not the same. </summary>
         public static bool operator !=(TranscriptionResultState left, TranscriptionResultState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TranscriptionResultState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TranscriptionResultState"/>. </summary>
         public static implicit operator TranscriptionResultState(string value) => new TranscriptionResultState(value);
 
         /// <inheritdoc />

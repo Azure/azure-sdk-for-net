@@ -11,7 +11,7 @@ namespace Azure.Communication.CallAutomation
     public class AudioData : StreamingData
     {
         /// <summary>
-        /// Creates the new AudioData object
+        /// The audio data, encoded as a base64 string
         /// </summary>
         /// <param name="data"></param>
         public AudioData(byte[] data)
@@ -36,16 +36,19 @@ namespace Azure.Communication.CallAutomation
         public byte[] Data { get; }
 
         /// <summary>
-        /// The timestamp of thwn the media was sourced.
+        /// The timestamp indicating when the media content was received by the bot,
+        /// or if the bot is sending media, the timestamp of when the media was sourced.
+        /// The format is ISO 8601 (yyyy-mm-ddThh:mm).
         /// </summary>
         public DateTimeOffset Timestamp { get; }
+
         /// <summary>
-        /// Participant ID
+        /// The raw ID of the participant.
         /// </summary>
         public CommunicationIdentifier Participant { get; }
 
         /// <summary>
-        /// Indicates if the received audio buffer contains only silence.
+        /// Indicates whether the received audio buffer contains only silence.
         /// </summary>
         public bool IsSilent { get; }
     }
