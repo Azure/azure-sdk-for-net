@@ -44,11 +44,11 @@ jobs:
 
       - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
 
-      # Updating main is the default reason that manual builds of the docIndex run are kicked off.
-      # Manual builds of DocIndex are typically done to update Main when certain updates are made.
-      # These updates include new libraries and CSV updates in azure-sdk which, depending on the
-      # column(s) updated can cause anything from package deprecation to service level readme or
-      # ToC updates.
+      # Updating main is the default reason to kick off manual builds of the docIndex run.
+      # Manual builds of docIndex are typically done to update Main when certain updates are
+      # made. These updates include new libraries and CSV updates in azure-sdk which, depending
+      # on the column(s) updated can cause anything from package deprecation to service level
+      # readme or ToC updates.
       - ${{if or(eq(variables['Build.Reason'], 'Schedule'), ne(variables['Skip.MainUpdate'], 'true'))}}:
 
         - task: Powershell@2
