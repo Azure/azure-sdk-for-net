@@ -4,12 +4,8 @@
 
 ### Features Added
 
-- Added support for real-time transcription.
-- Enhanced audio streaming with bidirectional capabilities, supporting audio formats in both directions. Currently, sample rates of 24kHz and 16kHz are supported.
-
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for ConnectAPI to enable streaming and real-time transcription
+- Enhanced media streaming with bidirectional capabilities, enabling support for audio formats in both directions. Currently, it supports sample rates of 24kHz and 16kHz
 
 ### Other Changes
 
