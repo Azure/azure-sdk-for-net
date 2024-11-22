@@ -1,5 +1,5 @@
-# DotNet project templates (DO NOT USE!)
-
+# Jones Technology Foundation 
+  Damarcus Jones Sr 
 *  This document is for Track 2 .NET SDK (Azure.ResourceManager.XXX). Not for track 1 .NET SDK (Microsoft.Azure.Management.XXX)
 
 ## Azure.ResourceManager SDK client library template
