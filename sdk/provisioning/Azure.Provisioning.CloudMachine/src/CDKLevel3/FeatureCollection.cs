@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Provisioning.CloudMachine;
+using Azure.Provisioning.Primitives;
 
 namespace Azure.CloudMachine;
 
@@ -12,7 +14,13 @@ public class FeatureCollection
     private CloudMachineFeature[] _items = new CloudMachineFeature[4];
     private int _count;
 
-    public IEnumerable<T> FindAll<T>() where T: CloudMachineFeature
+    internal Dictionary<Provisionable, (string RoleName, string RoleId)[]> RoleAnnotations =>
+        _items.Take(_count)
+        .Select(f => f.RequiredSystemRoles)
+        .SelectMany(d => d)
+        .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+    public IEnumerable<T> FindAll<T>() where T : CloudMachineFeature
     {
         for (int i = 0; i < _count; i++)
         {
@@ -44,7 +52,8 @@ public class FeatureCollection
         int index = 0;
         while (true)
         {
-            if (index >= _count) break;
+            if (index >= _count)
+                break;
             CloudMachineFeature feature = _items[index++];
             feature.Emit(infrastructure);
         }

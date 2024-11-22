@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
-using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
@@ -14,25 +13,14 @@ internal class OpenAIFeature : CloudMachineFeature
     private List<OpenAIModel> _models = new List<OpenAIModel>();
 
     public OpenAIFeature()
-    {}
+    { }
 
     protected override ProvisionableResource EmitCore(CloudMachineInfrastructure cloudMachine)
     {
         CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(cloudMachine);
         cloudMachine.AddResource(cognitiveServices);
 
-        cloudMachine.AddResource(cognitiveServices.CreateRoleAssignment(
-            CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor,
-            RoleManagementPrincipalType.User,
-            cloudMachine.PrincipalIdParameter)
-        );
-
-        cloudMachine.AddResource(cloudMachine.CreateRoleAssignment(
-            cognitiveServices,
-            cognitiveServices.Id,
-            CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor,
-            cloudMachine.Identity)
-        );
+        RequiredSystemRoles.Add(cognitiveServices, [(CognitiveServicesBuiltInRole.GetBuiltInRoleName(CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor) ,CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString())]);
 
         Emitted = cognitiveServices;
 
@@ -52,7 +40,7 @@ internal class OpenAIFeature : CloudMachineFeature
 
     internal void AddModel(OpenAIModel model)
     {
-        if (model.Account!= null)
+        if (model.Account != null)
         {
             throw new InvalidOperationException("Model already added to an account");
         }
