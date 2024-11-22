@@ -47,7 +47,7 @@ public class AzureClientPlugin : ClientModelPlugin
     {
         base.Configure();
         AddMetadataReference(MetadataReference.CreateFromFile(typeof(Response).Assembly.Location));
-        AddSharedSourceDirectory(Path.Combine(GetRepositoryRootPath(), "sdk\\core\\Azure.Core\\src\\Shared"));
+        AddSharedSourceDirectory(Path.Combine(GetRepositoryRootPath(), "sdk/core/Azure.Core/src/Shared"));
     }
 
     private string GetRepositoryRootPath()
