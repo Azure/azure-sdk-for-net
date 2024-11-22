@@ -35,6 +35,18 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="CosmosDBChaosFaultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBChaosFaultResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBChaosFaultResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CosmosDBChaosFaultResource"/> object. </returns>
+        public virtual CosmosDBChaosFaultResource GetCosmosDBChaosFaultResource(ResourceIdentifier id)
+        {
+            CosmosDBChaosFaultResource.ValidateResourceId(id);
+            return new CosmosDBChaosFaultResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="CosmosDBAccountResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBAccountResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -335,6 +347,30 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="TableRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TableRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="TableRoleDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TableRoleDefinitionResource"/> object. </returns>
+        public virtual TableRoleDefinitionResource GetTableRoleDefinitionResource(ResourceIdentifier id)
+        {
+            TableRoleDefinitionResource.ValidateResourceId(id);
+            return new TableRoleDefinitionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TableRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TableRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="TableRoleAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TableRoleAssignmentResource"/> object. </returns>
+        public virtual TableRoleAssignmentResource GetTableRoleAssignmentResource(ResourceIdentifier id)
+        {
+            TableRoleAssignmentResource.ValidateResourceId(id);
+            return new TableRoleAssignmentResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="CassandraKeyspaceResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CassandraKeyspaceResource.CreateResourceIdentifier" /> to create a <see cref="CassandraKeyspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -524,18 +560,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         {
             CosmosDBThroughputPoolAccountResource.ValidateResourceId(id);
             return new CosmosDBThroughputPoolAccountResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBChaosFaultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBChaosFaultResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBChaosFaultResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBChaosFaultResource"/> object. </returns>
-        public virtual CosmosDBChaosFaultResource GetCosmosDBChaosFaultResource(ResourceIdentifier id)
-        {
-            CosmosDBChaosFaultResource.ValidateResourceId(id);
-            return new CosmosDBChaosFaultResource(Client, id);
         }
     }
 }

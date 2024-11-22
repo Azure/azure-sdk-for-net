@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="arguments"> The arguments for the command to be run. </param>
         /// <param name="host"> IP address of the cassandra host to run the command on. </param>
         /// <param name="cassandraStopStart"> If true, stops cassandra before executing the command and then start it again. </param>
-        /// <param name="allowWrite"> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </param>
+        /// <param name="readwrite"> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraCommandPostBody(string command, IDictionary<string, string> arguments, string host, bool? cassandraStopStart, bool? allowWrite, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CassandraCommandPostBody(string command, IDictionary<string, string> arguments, string host, bool? cassandraStopStart, bool? readwrite, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Command = command;
             Arguments = arguments;
             Host = host;
             CassandraStopStart = cassandraStopStart;
-            AllowWrite = allowWrite;
+            Readwrite = readwrite;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("cassandra-stop-start")]
         public bool? CassandraStopStart { get; set; }
         /// <summary> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </summary>
-        [WirePath("readWrite")]
-        public bool? AllowWrite { get; set; }
+        [WirePath("readwrite")]
+        public bool? Readwrite { get; set; }
     }
 }
