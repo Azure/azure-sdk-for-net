@@ -7,7 +7,4 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Chaos.</Description>
     <PackageTags>azure;management;arm;resource manager;chaos</PackageTags>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Customization\" />
-  </ItemGroup>
 </Project>
