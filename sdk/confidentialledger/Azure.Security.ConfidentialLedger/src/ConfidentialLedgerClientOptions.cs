@@ -11,6 +11,7 @@ namespace Azure.Security.ConfidentialLedger
     public partial class ConfidentialLedgerClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_08_22_Preview;
+        internal string Version { get; }
 
         /// <summary>
         /// The Identity Service URL. If not provided, the default endpoint "https://identity.confidential-ledger.core.azure.com" will be used.
@@ -32,8 +33,6 @@ namespace Azure.Security.ConfidentialLedger
             /// <summary> Service version "2024-08-22-preview". </summary>
             V2024_08_22_Preview = 2,
         }
-        
-        internal string Version { get; }
 
         /// <summary> Initializes new instance of ConfidentialLedgerClientOptions. </summary>
         public ConfidentialLedgerClientOptions(ServiceVersion version = LatestVersion)
