@@ -10,8 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Details on the error that may have occurred while processing a file for this vector store. </summary>
-    public partial class VectorStoreFileError
+    /// <summary>
+    /// The Azure function binding
+    /// Please note <see cref="AzureFunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AzureStorageQueueBinding"/>.
+    /// </summary>
+    public abstract partial class AzureFunctionBinding
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,39 +47,23 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFileError"/>. </summary>
-        /// <param name="code"> One of `server_error` or `rate_limit_exceeded`. </param>
-        /// <param name="message"> A human-readable description of the error. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        internal VectorStoreFileError(VectorStoreFileErrorCode code, string message)
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionBinding"/>. </summary>
+        protected AzureFunctionBinding()
         {
-            Argument.AssertNotNull(message, nameof(message));
-
-            Code = code;
-            Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFileError"/>. </summary>
-        /// <param name="code"> One of `server_error` or `rate_limit_exceeded`. </param>
-        /// <param name="message"> A human-readable description of the error. </param>
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionBinding"/>. </summary>
+        /// <param name="type"> The type of binding. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreFileError(VectorStoreFileErrorCode code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureFunctionBinding(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Code = code;
-            Message = message;
+            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFileError"/> for deserialization. </summary>
-        internal VectorStoreFileError()
-        {
-        }
-
-        /// <summary> One of `server_error` or `rate_limit_exceeded`. </summary>
-        public VectorStoreFileErrorCode Code { get; }
-        /// <summary> A human-readable description of the error. </summary>
-        public string Message { get; }
+        /// <summary> The type of binding. </summary>
+        internal string Type { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Details on the error that may have occurred while processing a file for this vector store. </summary>
-    public partial class VectorStoreFileError
+    /// <summary> The structure for keeping storage queue name and URI. </summary>
+    public partial class AzureFunctionStorageQueue
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +45,38 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFileError"/>. </summary>
-        /// <param name="code"> One of `server_error` or `rate_limit_exceeded`. </param>
-        /// <param name="message"> A human-readable description of the error. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        internal VectorStoreFileError(VectorStoreFileErrorCode code, string message)
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionStorageQueue"/>. </summary>
+        /// <param name="storageQueueUri"> The URI of an Azure function storage queue. </param>
+        /// <param name="queueName"> The name of an Azure function storage queue. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageQueueUri"/> or <paramref name="queueName"/> is null. </exception>
+        public AzureFunctionStorageQueue(string storageQueueUri, string queueName)
         {
-            Argument.AssertNotNull(message, nameof(message));
+            Argument.AssertNotNull(storageQueueUri, nameof(storageQueueUri));
+            Argument.AssertNotNull(queueName, nameof(queueName));
 
-            Code = code;
-            Message = message;
+            StorageQueueUri = storageQueueUri;
+            QueueName = queueName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFileError"/>. </summary>
-        /// <param name="code"> One of `server_error` or `rate_limit_exceeded`. </param>
-        /// <param name="message"> A human-readable description of the error. </param>
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionStorageQueue"/>. </summary>
+        /// <param name="storageQueueUri"> The URI of an Azure function storage queue. </param>
+        /// <param name="queueName"> The name of an Azure function storage queue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreFileError(VectorStoreFileErrorCode code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureFunctionStorageQueue(string storageQueueUri, string queueName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Code = code;
-            Message = message;
+            StorageQueueUri = storageQueueUri;
+            QueueName = queueName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFileError"/> for deserialization. </summary>
-        internal VectorStoreFileError()
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionStorageQueue"/> for deserialization. </summary>
+        internal AzureFunctionStorageQueue()
         {
         }
 
-        /// <summary> One of `server_error` or `rate_limit_exceeded`. </summary>
-        public VectorStoreFileErrorCode Code { get; }
-        /// <summary> A human-readable description of the error. </summary>
-        public string Message { get; }
+        /// <summary> The URI of an Azure function storage queue. </summary>
+        public string StorageQueueUri { get; set; }
+        /// <summary> The name of an Azure function storage queue. </summary>
+        public string QueueName { get; set; }
     }
 }
