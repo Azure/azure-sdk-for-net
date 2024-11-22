@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Tests.Scenario
     [LiveOnly]
     public class HybridConnectivityPublicCloudConnectorTest : HybridConnectivityManagementTestBase
     {
-        private PublicCloudConnectorResource _testConnector;
+        private HybridConnectivityPublicCloudConnectorResource _testConnector;
 
         private ResourceGroupResource _testRG;
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Tests.Scenario
         [RecordedTest]
         public async Task TestPublicCloudConnector()
         {
-            var connectorCollection = _testRG.GetPublicCloudConnectors();
+            var connectorCollection = _testRG.GetHybridConnectivityPublicCloudConnectors();
             Assert.IsNotNull(connectorCollection);
 
             await createSolutionConfiguration();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Tests.Scenario
         {
             var sc = await createSolutionConfiguration();
 
-            var patchData = new SolutionConfigurationPatch();
+            var patchData = new HybridConnectivitySolutionConfigurationPatch();
             patchData.Properties = new SolutionConfigurationPropertiesUpdate();
             patchData.Properties.SolutionType = "Microsoft.AssetManagement";
             patchData.Properties.SolutionSettings.Add("periodicSync", "true");
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Tests.Scenario
             Assert.AreEqual(200, deleteResp.GetRawResponse().Status);
         }
 
-        protected async Task<SolutionConfigurationResource> createSolutionConfiguration()
+        protected async Task<HybridConnectivitySolutionConfigurationResource> createSolutionConfiguration()
         {
             var scopeId = _testConnector.Id;
-            var scCollection = ArmClient.GetSolutionConfigurations(scopeId);
+            var scCollection = ArmClient.GetHybridConnectivitySolutionConfigurations(scopeId);
             Assert.IsNotNull(scCollection);
 
             var scProperties = new SolutionConfigurationProperties(AssetManagementType);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Tests.Scenario
             scProperties.SolutionSettings.Add("awsGlobalReadOnly", "true");
             scProperties.SolutionSettings.Add("cloudProviderRegions", "us-east-1");
 
-            var scData = new SolutionConfigurationData();
+            var scData = new HybridConnectivitySolutionConfigurationData();
             scData.Properties = scProperties;
 
             var scTask = await scCollection.CreateOrUpdateAsync(WaitUntil.Completed, SolutionConfigurationName, scData);

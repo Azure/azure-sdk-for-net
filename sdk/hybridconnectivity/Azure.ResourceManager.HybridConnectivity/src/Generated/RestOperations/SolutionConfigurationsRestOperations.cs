@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="solutionConfiguration"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SolutionConfigurationData>> GetAsync(string resourceUri, string solutionConfiguration, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridConnectivitySolutionConfigurationData>> GetAsync(string resourceUri, string solutionConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 case 200:
                     {
-                        SolutionConfigurationData value = default;
+                        HybridConnectivitySolutionConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SolutionConfigurationData.DeserializeSolutionConfigurationData(document.RootElement);
+                        value = HybridConnectivitySolutionConfigurationData.DeserializeHybridConnectivitySolutionConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SolutionConfigurationData)null, message.Response);
+                    return Response.FromValue((HybridConnectivitySolutionConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="solutionConfiguration"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SolutionConfigurationData> Get(string resourceUri, string solutionConfiguration, CancellationToken cancellationToken = default)
+        public Response<HybridConnectivitySolutionConfigurationData> Get(string resourceUri, string solutionConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
@@ -188,19 +188,19 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 case 200:
                     {
-                        SolutionConfigurationData value = default;
+                        HybridConnectivitySolutionConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SolutionConfigurationData.DeserializeSolutionConfigurationData(document.RootElement);
+                        value = HybridConnectivitySolutionConfigurationData.DeserializeHybridConnectivitySolutionConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SolutionConfigurationData)null, message.Response);
+                    return Response.FromValue((HybridConnectivitySolutionConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string solutionConfiguration, SolutionConfigurationData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string solutionConfiguration, HybridConnectivitySolutionConfigurationData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string solutionConfiguration, SolutionConfigurationData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string solutionConfiguration, HybridConnectivitySolutionConfigurationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="solutionConfiguration"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SolutionConfigurationData>> CreateOrUpdateAsync(string resourceUri, string solutionConfiguration, SolutionConfigurationData data, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridConnectivitySolutionConfigurationData>> CreateOrUpdateAsync(string resourceUri, string solutionConfiguration, HybridConnectivitySolutionConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
@@ -254,9 +254,9 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                 case 201:
                     {
-                        SolutionConfigurationData value = default;
+                        HybridConnectivitySolutionConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SolutionConfigurationData.DeserializeSolutionConfigurationData(document.RootElement);
+                        value = HybridConnectivitySolutionConfigurationData.DeserializeHybridConnectivitySolutionConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="solutionConfiguration"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SolutionConfigurationData> CreateOrUpdate(string resourceUri, string solutionConfiguration, SolutionConfigurationData data, CancellationToken cancellationToken = default)
+        public Response<HybridConnectivitySolutionConfigurationData> CreateOrUpdate(string resourceUri, string solutionConfiguration, HybridConnectivitySolutionConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
@@ -284,9 +284,9 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case 200:
                 case 201:
                     {
-                        SolutionConfigurationData value = default;
+                        HybridConnectivitySolutionConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SolutionConfigurationData.DeserializeSolutionConfigurationData(document.RootElement);
+                        value = HybridConnectivitySolutionConfigurationData.DeserializeHybridConnectivitySolutionConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string resourceUri, string solutionConfiguration, SolutionConfigurationPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string resourceUri, string solutionConfiguration, HybridConnectivitySolutionConfigurationPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceUri, string solutionConfiguration, SolutionConfigurationPatch patch)
+        internal HttpMessage CreateUpdateRequest(string resourceUri, string solutionConfiguration, HybridConnectivitySolutionConfigurationPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="solutionConfiguration"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SolutionConfigurationData>> UpdateAsync(string resourceUri, string solutionConfiguration, SolutionConfigurationPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridConnectivitySolutionConfigurationData>> UpdateAsync(string resourceUri, string solutionConfiguration, HybridConnectivitySolutionConfigurationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
@@ -347,9 +347,9 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 case 200:
                     {
-                        SolutionConfigurationData value = default;
+                        HybridConnectivitySolutionConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SolutionConfigurationData.DeserializeSolutionConfigurationData(document.RootElement);
+                        value = HybridConnectivitySolutionConfigurationData.DeserializeHybridConnectivitySolutionConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="solutionConfiguration"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionConfiguration"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SolutionConfigurationData> Update(string resourceUri, string solutionConfiguration, SolutionConfigurationPatch patch, CancellationToken cancellationToken = default)
+        public Response<HybridConnectivitySolutionConfigurationData> Update(string resourceUri, string solutionConfiguration, HybridConnectivitySolutionConfigurationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(solutionConfiguration, nameof(solutionConfiguration));
@@ -376,9 +376,9 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 case 200:
                     {
-                        SolutionConfigurationData value = default;
+                        HybridConnectivitySolutionConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SolutionConfigurationData.DeserializeSolutionConfigurationData(document.RootElement);
+                        value = HybridConnectivitySolutionConfigurationData.DeserializeHybridConnectivitySolutionConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
