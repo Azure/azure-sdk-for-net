@@ -56,14 +56,16 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="hybridConnectionName"> Azure Relay hybrid connection name for the resource. </param>
         /// <param name="accessKey"> Access key for hybrid connection. </param>
         /// <param name="expiresOn"> The expiration of access key in unix time. </param>
+        /// <param name="serviceConfigurationToken"> The token to access the enabled service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetResourceEndpointAccess(string namespaceName, string namespaceNameSuffix, string hybridConnectionName, string accessKey, long? expiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TargetResourceEndpointAccess(string namespaceName, string namespaceNameSuffix, string hybridConnectionName, string accessKey, long? expiresOn, string serviceConfigurationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NamespaceName = namespaceName;
             NamespaceNameSuffix = namespaceNameSuffix;
             HybridConnectionName = hybridConnectionName;
             AccessKey = accessKey;
             ExpiresOn = expiresOn;
+            ServiceConfigurationToken = serviceConfigurationToken;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,5 +79,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public string AccessKey { get; }
         /// <summary> The expiration of access key in unix time. </summary>
         public long? ExpiresOn { get; }
+        /// <summary> The token to access the enabled service. </summary>
+        public string ServiceConfigurationToken { get; }
     }
 }

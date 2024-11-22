@@ -61,47 +61,15 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="endpointType"> The type of endpoint. </param>
-        /// <param name="resourceId"> The resource Id of the connectivity endpoint (optional). </param>
-        /// <param name="provisioningState"></param>
-        /// <param name="createdBy"> The identity that created the resource. </param>
-        /// <param name="createdByType"> The type of identity that created the resource. </param>
-        /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
-        /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
-        /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
-        /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
+        /// <param name="properties"> The endpoint properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EndpointType? endpointType, string resourceId, string provisioningState, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridConnectivityEndpointProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            EndpointType = endpointType;
-            ResourceId = resourceId;
-            ProvisioningState = provisioningState;
-            CreatedBy = createdBy;
-            CreatedByType = createdByType;
-            CreatedOn = createdOn;
-            LastModifiedBy = lastModifiedBy;
-            LastModifiedByType = lastModifiedByType;
-            LastModifiedOn = lastModifiedOn;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of endpoint. </summary>
-        public EndpointType? EndpointType { get; set; }
-        /// <summary> The resource Id of the connectivity endpoint (optional). </summary>
-        public string ResourceId { get; set; }
-        /// <summary> Gets the provisioning state. </summary>
-        public string ProvisioningState { get; }
-        /// <summary> The identity that created the resource. </summary>
-        public string CreatedBy { get; set; }
-        /// <summary> The type of identity that created the resource. </summary>
-        public Models.CreatedByType? CreatedByType { get; set; }
-        /// <summary> The timestamp of resource creation (UTC). </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> The identity that last modified the resource. </summary>
-        public string LastModifiedBy { get; set; }
-        /// <summary> The type of identity that last modified the resource. </summary>
-        public Models.CreatedByType? LastModifiedByType { get; set; }
-        /// <summary> The timestamp of resource last modification (UTC). </summary>
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        /// <summary> The endpoint properties. </summary>
+        public HybridConnectivityEndpointProperties Properties { get; set; }
     }
 }
