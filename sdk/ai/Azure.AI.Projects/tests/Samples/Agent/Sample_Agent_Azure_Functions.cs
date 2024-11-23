@@ -4,13 +4,12 @@
 #nullable disable
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Inference;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -22,7 +21,10 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var storageQueueUri = TestEnvironment.STORAGE_QUEUE_URI;
-        AgentsClient client = new(connectionString, new DefaultAzureCredential());
+        // Add experimental headers policy
+        AIProjectClientOptions clientOptions = new();
+        clientOptions.AddPolicy(new ExperimentalHeaderPolicy(), HttpPipelinePosition.PerCall);
+        AgentsClient client = new(connectionString, new DefaultAzureCredential(), clientOptions);
 
         #region Snippet:AzureFunctionsDefineFunctionTools
         // Example of Azure Function
@@ -67,9 +69,8 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
         #endregion
 
         #region Snippet:AzureFunctionsCreateAgentWithFunctionTools
-        // note: parallel function calling is only supported with newer models like gpt-4-1106-preview
         Response<Agent> agentResponse = await client.CreateAgentAsync(
-            model: "gpt-4-1106-preview",
+            model: "gpt-4",
             name: "SDK Test Agent - Functions",
                 instructions: "You are a weather bot. Use the provided functions to help answer questions. "
                     + "Customize your responses to the user's preferences as much as possible and use friendly "
@@ -120,6 +121,19 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
                 }
                 Console.WriteLine();
             }
+        }
+    }
+    private class ExperimentalHeaderPolicy : HttpPipelinePolicy
+    {
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            message.Request.Headers.Add("x-ms-enable-preview", "true");
+            ProcessNext(message, pipeline);
+        }
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            message.Request.Headers.Add("x-ms-enable-preview", "true");
+            return ProcessNextAsync(message, pipeline);
         }
     }
 }
