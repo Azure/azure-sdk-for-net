@@ -253,11 +253,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         {
             // Arrange
             string projectName = "Test-data-labels";
-            string jobId = "00b65817-7e9a-4708-9019-8b05118f654e_638676576000000000";
+            string jobId = "cd8db9c3-49eb-4cfa-969d-ddd4f72f8e16_638678304000000000";
 
             // Act
             Operation<TrainingJobResult> cancelOperation = await client.CancelTrainingJobAsync(
-                waitUntil: WaitUntil.Completed,
+                waitUntil: WaitUntil.Started,
                 projectName: projectName,
                 jobId: jobId
             );
