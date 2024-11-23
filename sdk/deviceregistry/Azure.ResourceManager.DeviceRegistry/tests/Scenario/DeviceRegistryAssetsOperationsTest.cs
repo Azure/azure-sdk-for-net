@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Core;
-using NUnit.Framework;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.DeviceRegistry.Models;
-using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 {

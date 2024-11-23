@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Core;
-using NUnit.Framework;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.DeviceRegistry.Models;
-using System.Collections;
-using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 {
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             *                  *
             *******************/
 
-            var schemaRegistriesCollection = rg.GetSchemaRegistries();;
+            var schemaRegistriesCollection = rg.GetSchemaRegistries();
 
             // Create DeviceRegistry SchemaRegistry
             var schemaRegistryData = new SchemaRegistryData(AzureLocation.WestUS)
