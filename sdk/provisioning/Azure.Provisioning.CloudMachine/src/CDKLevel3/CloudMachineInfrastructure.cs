@@ -63,7 +63,7 @@ public class CloudMachineInfrastructure
         Features.Add(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_default", sbTopic_default));
         var systemTopic = new EventGridSystemTopicFeature(_cmId, storage);
         Features.Add(systemTopic);
-        Features.Add(new SystemTopicEventSubscriptionFeature("cm_eventgrid_subscription_blob", systemTopic, sbTopic_private));
+        Features.Add(new SystemTopicEventSubscriptionFeature("cm_eventgrid_subscription_blob", systemTopic, sbTopic_private, sbNamespace));
     }
 
     public void AddResource(NamedProvisionableConstruct resource)
@@ -101,6 +101,13 @@ public class CloudMachineInfrastructure
             Description = "The location for the resource(s) to be deployed.",
             Value = BicepFunction.GetResourceGroup().Location
         });
+
+        _infrastructure.Add(new ProvisioningParameter("principalId", typeof(string))
+        {
+            Description = "The objectId of the current user principal.",
+        });
+
+        _infrastructure.Add(Identity);
 
         // Add any add-on resources to the infrastructure.
         foreach (Provisionable resource in _resources)

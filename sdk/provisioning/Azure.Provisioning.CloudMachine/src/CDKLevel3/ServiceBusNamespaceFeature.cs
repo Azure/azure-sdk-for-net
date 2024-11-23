@@ -37,19 +37,6 @@ public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = Ser
                 (ServiceBusBuiltInRole.GetBuiltInRoleName(ServiceBusBuiltInRole.AzureServiceBusDataOwner), ServiceBusBuiltInRole.AzureServiceBusDataOwner.ToString()),
             ]);
 
-        var role = ServiceBusBuiltInRole.AzureServiceBusDataSender;
-
-        infrastructure.AddResource(
-            new RoleAssignment($"cm_servicebus_{name}_role")
-            {
-                Name = BicepFunction.CreateGuid(_serviceBusNamespace.Id, infrastructure.Identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-                Scope = new IdentifierExpression(_serviceBusNamespace.BicepIdentifier),
-                PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
-                RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
-                PrincipalId = infrastructure.Identity.PrincipalId,
-            }
-        );
-
         Emitted = _serviceBusNamespace;
         return _serviceBusNamespace;
     }
