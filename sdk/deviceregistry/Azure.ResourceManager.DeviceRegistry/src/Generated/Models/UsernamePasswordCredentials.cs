@@ -46,26 +46,26 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UsernamePasswordCredentials"/>. </summary>
-        /// <param name="usernameReference"> A reference to secret containing the username. </param>
-        /// <param name="passwordReference"> A reference to secret containing the password. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="usernameReference"/> or <paramref name="passwordReference"/> is null. </exception>
-        public UsernamePasswordCredentials(string usernameReference, string passwordReference)
+        /// <param name="usernameSecretName"> The name of the secret containing the username. </param>
+        /// <param name="passwordSecretName"> The name of the secret containing the password. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="usernameSecretName"/> or <paramref name="passwordSecretName"/> is null. </exception>
+        public UsernamePasswordCredentials(string usernameSecretName, string passwordSecretName)
         {
-            Argument.AssertNotNull(usernameReference, nameof(usernameReference));
-            Argument.AssertNotNull(passwordReference, nameof(passwordReference));
+            Argument.AssertNotNull(usernameSecretName, nameof(usernameSecretName));
+            Argument.AssertNotNull(passwordSecretName, nameof(passwordSecretName));
 
-            UsernameReference = usernameReference;
-            PasswordReference = passwordReference;
+            UsernameSecretName = usernameSecretName;
+            PasswordSecretName = passwordSecretName;
         }
 
         /// <summary> Initializes a new instance of <see cref="UsernamePasswordCredentials"/>. </summary>
-        /// <param name="usernameReference"> A reference to secret containing the username. </param>
-        /// <param name="passwordReference"> A reference to secret containing the password. </param>
+        /// <param name="usernameSecretName"> The name of the secret containing the username. </param>
+        /// <param name="passwordSecretName"> The name of the secret containing the password. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UsernamePasswordCredentials(string usernameReference, string passwordReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UsernamePasswordCredentials(string usernameSecretName, string passwordSecretName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            UsernameReference = usernameReference;
-            PasswordReference = passwordReference;
+            UsernameSecretName = usernameSecretName;
+            PasswordSecretName = passwordSecretName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         {
         }
 
-        /// <summary> A reference to secret containing the username. </summary>
-        public string UsernameReference { get; set; }
-        /// <summary> A reference to secret containing the password. </summary>
-        public string PasswordReference { get; set; }
+        /// <summary> The name of the secret containing the username. </summary>
+        public string UsernameSecretName { get; set; }
+        /// <summary> The name of the secret containing the password. </summary>
+        public string PasswordSecretName { get; set; }
     }
 }

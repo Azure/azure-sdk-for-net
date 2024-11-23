@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 throw new FormatException($"The model {nameof(AssetStatusError)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Code))
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteNumberValue(Code.Value);
             }
-            if (Optional.IsDefined(Message))
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

@@ -46,21 +46,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="X509Credentials"/>. </summary>
-        /// <param name="certificateReference"> A reference to secret containing the certificate and private key (e.g. stored as .der/.pem or .der/.pfx). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateReference"/> is null. </exception>
-        public X509Credentials(string certificateReference)
+        /// <param name="certificateSecretName"> The name of the secret containing the certificate and private key (e.g. stored as .der/.pem or .der/.pfx). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateSecretName"/> is null. </exception>
+        public X509Credentials(string certificateSecretName)
         {
-            Argument.AssertNotNull(certificateReference, nameof(certificateReference));
+            Argument.AssertNotNull(certificateSecretName, nameof(certificateSecretName));
 
-            CertificateReference = certificateReference;
+            CertificateSecretName = certificateSecretName;
         }
 
         /// <summary> Initializes a new instance of <see cref="X509Credentials"/>. </summary>
-        /// <param name="certificateReference"> A reference to secret containing the certificate and private key (e.g. stored as .der/.pem or .der/.pfx). </param>
+        /// <param name="certificateSecretName"> The name of the secret containing the certificate and private key (e.g. stored as .der/.pem or .der/.pfx). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal X509Credentials(string certificateReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal X509Credentials(string certificateSecretName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CertificateReference = certificateReference;
+            CertificateSecretName = certificateSecretName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         {
         }
 
-        /// <summary> A reference to secret containing the certificate and private key (e.g. stored as .der/.pem or .der/.pfx). </summary>
-        public string CertificateReference { get; set; }
+        /// <summary> The name of the secret containing the certificate and private key (e.g. stored as .der/.pem or .der/.pfx). </summary>
+        public string CertificateSecretName { get; set; }
     }
 }

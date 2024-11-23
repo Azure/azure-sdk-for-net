@@ -36,44 +36,50 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             // Create DeviceRegistry Asset
             var assetData = new DeviceRegistryAssetData(AzureLocation.WestUS, extendedLocation)
             {
-                Description = "This is an asset.",
-                AssetEndpointProfileUri = new Uri("http://assetendpointprofileref"),
+                Properties = new()
+                {
+                    AssetEndpointProfileRef = "assetEndpointProfileReference",
+                    Description = "This is an asset."
+                }
             };
             var assetCreateOrUpdateResponse = await assetsCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, assetData, CancellationToken.None);
             Assert.IsNotNull(assetCreateOrUpdateResponse.Value);
-            Assert.IsTrue(Guid.TryParse(assetCreateOrUpdateResponse.Value.Data.Uuid, out _));
-            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.ExternalAssetId, assetCreateOrUpdateResponse.Value.Data.Uuid);
-            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.AssetEndpointProfileUri, assetData.AssetEndpointProfileUri);
-            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.DisplayName, assetCreateOrUpdateResponse.Value.Data.Name);
-            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Description, assetData.Description);
-            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Version, 1);
-            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Enabled, true);
+            Assert.IsTrue(Guid.TryParse(assetCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _));
+            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.ExternalAssetId, assetCreateOrUpdateResponse.Value.Data.Properties.Uuid);
+            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.AssetEndpointProfileRef, assetData.Properties.AssetEndpointProfileRef);
+            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.DisplayName, assetCreateOrUpdateResponse.Value.Data.Name);
+            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.Description, assetData.Properties.Description);
+            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.Version, 1);
+            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.Enabled, true);
 
             // Read DeviceRegistry Asset
             var assetReadResponse = await assetsCollection.GetAsync(assetName, CancellationToken.None);
             Assert.IsNotNull(assetReadResponse.Value);
-            Assert.IsTrue(Guid.TryParse(assetReadResponse.Value.Data.Uuid, out _));
-            Assert.AreEqual(assetReadResponse.Value.Data.ExternalAssetId, assetReadResponse.Value.Data.Uuid);
-            Assert.AreEqual(assetReadResponse.Value.Data.AssetEndpointProfileUri, assetData.AssetEndpointProfileUri);
-            Assert.AreEqual(assetReadResponse.Value.Data.DisplayName, assetReadResponse.Value.Data.Name);
-            Assert.AreEqual(assetReadResponse.Value.Data.Version, 1);
-            Assert.AreEqual(assetReadResponse.Value.Data.Enabled, true);
+            Assert.IsTrue(Guid.TryParse(assetReadResponse.Value.Data.Properties.Uuid, out _));
+            Assert.AreEqual(assetReadResponse.Value.Data.Properties.ExternalAssetId, assetReadResponse.Value.Data.Properties.Uuid);
+            Assert.AreEqual(assetReadResponse.Value.Data.Properties.AssetEndpointProfileRef, assetData.Properties.AssetEndpointProfileRef);
+            Assert.AreEqual(assetReadResponse.Value.Data.Properties.DisplayName, assetReadResponse.Value.Data.Name);
+            Assert.AreEqual(assetReadResponse.Value.Data.Properties.Version, 1);
+            Assert.AreEqual(assetReadResponse.Value.Data.Properties.Enabled, true);
 
             // Update DeviceRegistry Asset
             var asset = assetReadResponse.Value;
             var assetPatchData = new DeviceRegistryAssetPatch
             {
-                Description = "This is a patched Asset."
+                Properties = new()
+                {
+                    Description = "This is a patched Asset."
+                }
             };
             var assetUpdateResponse = await asset.UpdateAsync(WaitUntil.Completed, assetPatchData, CancellationToken.None);
             Assert.IsNotNull(assetUpdateResponse.Value);
-            Assert.IsTrue(Guid.TryParse(assetUpdateResponse.Value.Data.Uuid, out _));
-            Assert.AreEqual(assetUpdateResponse.Value.Data.ExternalAssetId, assetUpdateResponse.Value.Data.Uuid);
-            Assert.AreEqual(assetUpdateResponse.Value.Data.AssetEndpointProfileUri, assetData.AssetEndpointProfileUri);
-            Assert.AreEqual(assetUpdateResponse.Value.Data.DisplayName, assetUpdateResponse.Value.Data.Name);
-            Assert.AreEqual(assetUpdateResponse.Value.Data.Description, assetPatchData.Description);
-            Assert.AreEqual(assetUpdateResponse.Value.Data.Version, 2);
-            Assert.AreEqual(assetUpdateResponse.Value.Data.Enabled, true);
+            Assert.IsTrue(Guid.TryParse(assetUpdateResponse.Value.Data.Properties.Uuid, out _));
+            Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.ExternalAssetId, assetUpdateResponse.Value.Data.Properties.Uuid);
+            Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.AssetEndpointProfileRef, assetData.Properties.AssetEndpointProfileRef);
+            Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.DisplayName, assetUpdateResponse.Value.Data.Name);
+            Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.Description, assetPatchData.Properties.Description);
+            Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.Version, 2);
+            Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.Enabled, true);
 
             // Delete DeviceRegistry Asset
             await asset.DeleteAsync(WaitUntil.Completed, CancellationToken.None);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,42 +34,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 throw new FormatException($"The model {nameof(DataPoint)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            writer.WritePropertyName("dataSource"u8);
-            writer.WriteStringValue(DataSource);
-            if (Optional.IsDefined(CapabilityId))
-            {
-                writer.WritePropertyName("capabilityId"u8);
-                writer.WriteStringValue(CapabilityId);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ObservabilityMode))
             {
                 writer.WritePropertyName("observabilityMode"u8);
                 writer.WriteStringValue(ObservabilityMode.Value.ToString());
-            }
-            if (Optional.IsDefined(DataPointConfiguration))
-            {
-                writer.WritePropertyName("dataPointConfiguration"u8);
-                writer.WriteStringValue(DataPointConfiguration);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
         }
 
@@ -93,15 +62,23 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
+            DataPointObservabilityMode? observabilityMode = default;
             string name = default;
             string dataSource = default;
-            string capabilityId = default;
-            DataPointsObservabilityMode? observabilityMode = default;
             string dataPointConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("observabilityMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    observabilityMode = new DataPointObservabilityMode(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -110,20 +87,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 if (property.NameEquals("dataSource"u8))
                 {
                     dataSource = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("capabilityId"u8))
-                {
-                    capabilityId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("observabilityMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    observabilityMode = new DataPointsObservabilityMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataPointConfiguration"u8))
@@ -137,13 +100,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataPoint(
-                name,
-                dataSource,
-                capabilityId,
-                observabilityMode,
-                dataPointConfiguration,
-                serializedAdditionalRawData);
+            return new DataPoint(name, dataSource, dataPointConfiguration, serializedAdditionalRawData, observabilityMode);
         }
 
         BinaryData IPersistableModel<DataPoint>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AssetEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,42 +34,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 throw new FormatException($"The model {nameof(AssetEvent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            writer.WritePropertyName("eventNotifier"u8);
-            writer.WriteStringValue(EventNotifier);
-            if (Optional.IsDefined(CapabilityId))
-            {
-                writer.WritePropertyName("capabilityId"u8);
-                writer.WriteStringValue(CapabilityId);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ObservabilityMode))
             {
                 writer.WritePropertyName("observabilityMode"u8);
                 writer.WriteStringValue(ObservabilityMode.Value.ToString());
-            }
-            if (Optional.IsDefined(EventConfiguration))
-            {
-                writer.WritePropertyName("eventConfiguration"u8);
-                writer.WriteStringValue(EventConfiguration);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
         }
 
@@ -93,15 +62,24 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
+            EventObservabilityMode? observabilityMode = default;
             string name = default;
             string eventNotifier = default;
-            string capabilityId = default;
-            EventsObservabilityMode? observabilityMode = default;
             string eventConfiguration = default;
+            Topic topic = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("observabilityMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    observabilityMode = new EventObservabilityMode(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -112,23 +90,18 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     eventNotifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capabilityId"u8))
+                if (property.NameEquals("eventConfiguration"u8))
                 {
-                    capabilityId = property.Value.GetString();
+                    eventConfiguration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("observabilityMode"u8))
+                if (property.NameEquals("topic"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    observabilityMode = new EventsObservabilityMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("eventConfiguration"u8))
-                {
-                    eventConfiguration = property.Value.GetString();
+                    topic = Topic.DeserializeTopic(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,10 +113,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new AssetEvent(
                 name,
                 eventNotifier,
-                capabilityId,
-                observabilityMode,
                 eventConfiguration,
-                serializedAdditionalRawData);
+                topic,
+                serializedAdditionalRawData,
+                observabilityMode);
         }
 
         BinaryData IPersistableModel<AssetEvent>.Write(ModelReaderWriterOptions options)

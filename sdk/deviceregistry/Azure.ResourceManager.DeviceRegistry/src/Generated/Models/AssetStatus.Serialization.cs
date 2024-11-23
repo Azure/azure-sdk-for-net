@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 throw new FormatException($"The model {nameof(AssetStatus)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -44,10 +44,30 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Version))
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Datasets))
+            {
+                writer.WritePropertyName("datasets"u8);
+                writer.WriteStartArray();
+                foreach (var item in Datasets)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Events))
+            {
+                writer.WritePropertyName("events"u8);
+                writer.WriteStartArray();
+                foreach (var item in Events)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +107,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 return null;
             }
             IReadOnlyList<AssetStatusError> errors = default;
-            int? version = default;
+            long? version = default;
+            IReadOnlyList<AssetStatusDataset> datasets = default;
+            IReadOnlyList<AssetStatusEvent> events = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +134,35 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    version = property.Value.GetInt32();
+                    version = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("datasets"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AssetStatusDataset> array = new List<AssetStatusDataset>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AssetStatusDataset.DeserializeAssetStatusDataset(item, options));
+                    }
+                    datasets = array;
+                    continue;
+                }
+                if (property.NameEquals("events"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AssetStatusEvent> array = new List<AssetStatusEvent>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AssetStatusEvent.DeserializeAssetStatusEvent(item, options));
+                    }
+                    events = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -121,7 +171,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssetStatus(errors ?? new ChangeTrackingList<AssetStatusError>(), version, serializedAdditionalRawData);
+            return new AssetStatus(errors ?? new ChangeTrackingList<AssetStatusError>(), version, datasets ?? new ChangeTrackingList<AssetStatusDataset>(), events ?? new ChangeTrackingList<AssetStatusEvent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssetStatus>.Write(ModelReaderWriterOptions options)

@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 throw new FormatException($"The model {nameof(UsernamePasswordCredentials)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("usernameReference"u8);
-            writer.WriteStringValue(UsernameReference);
-            writer.WritePropertyName("passwordReference"u8);
-            writer.WriteStringValue(PasswordReference);
+            writer.WritePropertyName("usernameSecretName"u8);
+            writer.WriteStringValue(UsernameSecretName);
+            writer.WritePropertyName("passwordSecretName"u8);
+            writer.WriteStringValue(PasswordSecretName);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
-            string usernameReference = default;
-            string passwordReference = default;
+            string usernameSecretName = default;
+            string passwordSecretName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("usernameReference"u8))
+                if (property.NameEquals("usernameSecretName"u8))
                 {
-                    usernameReference = property.Value.GetString();
+                    usernameSecretName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("passwordReference"u8))
+                if (property.NameEquals("passwordSecretName"u8))
                 {
-                    passwordReference = property.Value.GetString();
+                    passwordSecretName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UsernamePasswordCredentials(usernameReference, passwordReference, serializedAdditionalRawData);
+            return new UsernamePasswordCredentials(usernameSecretName, passwordSecretName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UsernamePasswordCredentials>.Write(ModelReaderWriterOptions options)

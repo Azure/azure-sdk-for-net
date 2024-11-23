@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UsernamePasswordCredentialsUpdate"/>. </summary>
-        /// <param name="usernameReference"> A reference to secret containing the username. </param>
-        /// <param name="passwordReference"> A reference to secret containing the password. </param>
+        /// <param name="usernameSecretName"> The name of the secret containing the username. </param>
+        /// <param name="passwordSecretName"> The name of the secret containing the password. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UsernamePasswordCredentialsUpdate(string usernameReference, string passwordReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UsernamePasswordCredentialsUpdate(string usernameSecretName, string passwordSecretName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            UsernameReference = usernameReference;
-            PasswordReference = passwordReference;
+            UsernameSecretName = usernameSecretName;
+            PasswordSecretName = passwordSecretName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A reference to secret containing the username. </summary>
-        public string UsernameReference { get; set; }
-        /// <summary> A reference to secret containing the password. </summary>
-        public string PasswordReference { get; set; }
+        /// <summary> The name of the secret containing the username. </summary>
+        public string UsernameSecretName { get; set; }
+        /// <summary> The name of the secret containing the password. </summary>
+        public string PasswordSecretName { get; set; }
     }
 }

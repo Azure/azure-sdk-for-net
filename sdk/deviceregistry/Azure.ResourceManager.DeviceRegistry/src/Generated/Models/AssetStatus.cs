@@ -49,22 +49,32 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         internal AssetStatus()
         {
             Errors = new ChangeTrackingList<AssetStatusError>();
+            Datasets = new ChangeTrackingList<AssetStatusDataset>();
+            Events = new ChangeTrackingList<AssetStatusEvent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AssetStatus"/>. </summary>
         /// <param name="errors"> Array object to transfer and persist errors that originate from the Edge. </param>
         /// <param name="version"> A read only incremental counter indicating the number of times the configuration has been modified from the perspective of the current actual (Edge) state of the Asset. Edge would be the only writer of this value and would sync back up to the cloud. In steady state, this should equal version. </param>
+        /// <param name="datasets"> Array of dataset statuses that describe the status of each dataset. </param>
+        /// <param name="events"> Array of event statuses that describe the status of each event. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetStatus(IReadOnlyList<AssetStatusError> errors, int? version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssetStatus(IReadOnlyList<AssetStatusError> errors, long? version, IReadOnlyList<AssetStatusDataset> datasets, IReadOnlyList<AssetStatusEvent> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Errors = errors;
             Version = version;
+            Datasets = datasets;
+            Events = events;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array object to transfer and persist errors that originate from the Edge. </summary>
         public IReadOnlyList<AssetStatusError> Errors { get; }
         /// <summary> A read only incremental counter indicating the number of times the configuration has been modified from the perspective of the current actual (Edge) state of the Asset. Edge would be the only writer of this value and would sync back up to the cloud. In steady state, this should equal version. </summary>
-        public int? Version { get; }
+        public long? Version { get; }
+        /// <summary> Array of dataset statuses that describe the status of each dataset. </summary>
+        public IReadOnlyList<AssetStatusDataset> Datasets { get; }
+        /// <summary> Array of event statuses that describe the status of each event. </summary>
+        public IReadOnlyList<AssetStatusEvent> Events { get; }
     }
 }

@@ -36,34 +36,58 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             // Create DeviceRegistry AssetEndpointProfile
             var assetEndpointProfileData = new DeviceRegistryAssetEndpointProfileData(AzureLocation.WestUS, extendedLocation)
             {
-                TargetAddress = new Uri("opc.tcp://aep-uri"),
-                UserAuthentication = new UserAuthentication
+                Properties = new()
                 {
-                    Mode = UserAuthenticationMode.Anonymous
+                    TargetAddress = new Uri("opc.tcp://aep-uri"),
+                    EndpointProfileType = "Microsoft.OpcUa",
+                    Authentication = new()
+                    {
+                        Method = AuthenticationMethod.UsernamePassword,
+                        UsernamePasswordCredentials = new()
+                        {
+                            UsernameSecretName = "usernameSecretNameRef",
+                            PasswordSecretName = "passwordSecretNameRef"
+                        }
+                    }
                 }
             };
-            var assetCreateOrUpdateResponse = await assetEndpointProfilesCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetEndpointProfileName, assetEndpointProfileData, CancellationToken.None);
-            Assert.IsNotNull(assetCreateOrUpdateResponse.Value);
-            Assert.IsTrue(Guid.TryParse(assetCreateOrUpdateResponse.Value.Data.Uuid, out _));
-            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.TargetAddress, assetEndpointProfileData.TargetAddress);
+            var assetEndpointProfileCreateOrUpdateResponse = await assetEndpointProfilesCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetEndpointProfileName, assetEndpointProfileData, CancellationToken.None);
+            Assert.IsNotNull(assetEndpointProfileCreateOrUpdateResponse.Value);
+            Assert.IsTrue(Guid.TryParse(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _));
+            Assert.AreEqual(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.TargetAddress, assetEndpointProfileData.Properties.TargetAddress);
+            Assert.AreEqual(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.EndpointProfileType, assetEndpointProfileData.Properties.EndpointProfileType);
+            Assert.AreEqual(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.Authentication.Method, assetEndpointProfileData.Properties.Authentication.Method);
+            Assert.AreEqual(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName, assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName);
+            Assert.AreEqual(assetEndpointProfileCreateOrUpdateResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName, assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName);
 
             // Read DeviceRegistry AssetEndpointProfile
             var assetEndpointProfileReadResponse = await assetEndpointProfilesCollection.GetAsync(assetEndpointProfileName, CancellationToken.None);
             Assert.IsNotNull(assetEndpointProfileReadResponse.Value);
-            Assert.IsTrue(Guid.TryParse(assetEndpointProfileReadResponse.Value.Data.Uuid, out _));
-            Assert.AreEqual(assetEndpointProfileReadResponse.Value.Data.TargetAddress, assetEndpointProfileData.TargetAddress);
+            Assert.IsTrue(Guid.TryParse(assetEndpointProfileReadResponse.Value.Data.Properties.Uuid, out _));
+            Assert.AreEqual(assetEndpointProfileReadResponse.Value.Data.Properties.TargetAddress, assetEndpointProfileData.Properties.TargetAddress);
+            Assert.AreEqual(assetEndpointProfileReadResponse.Value.Data.Properties.EndpointProfileType, assetEndpointProfileData.Properties.EndpointProfileType);
+            Assert.AreEqual(assetEndpointProfileReadResponse.Value.Data.Properties.Authentication.Method, assetEndpointProfileData.Properties.Authentication.Method);
+            Assert.AreEqual(assetEndpointProfileReadResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName, assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName);
+            Assert.AreEqual(assetEndpointProfileReadResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName, assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName);
 
             // Update DeviceRegistry AssetEndpointProfile
             var assetEndpointProfile = assetEndpointProfileReadResponse.Value;
-            var assetPatchData = new DeviceRegistryAssetEndpointProfilePatch
+            var assetEndpointProfilePatchData = new DeviceRegistryAssetEndpointProfilePatch
             {
-                AdditionalConfiguration = "{\"foo\":\"bar\"}"
+                Properties = new()
+                {
+                    AdditionalConfiguration = "{\"refreshIntervalMs\":1000}"
+                }
             };
-            var assetEndpointProfileUpdateResponse = await assetEndpointProfile.UpdateAsync(WaitUntil.Completed, assetPatchData, CancellationToken.None);
+            var assetEndpointProfileUpdateResponse = await assetEndpointProfile.UpdateAsync(WaitUntil.Completed, assetEndpointProfilePatchData, CancellationToken.None);
             Assert.IsNotNull(assetEndpointProfileUpdateResponse.Value);
-            Assert.IsTrue(Guid.TryParse(assetEndpointProfileUpdateResponse.Value.Data.Uuid, out _));
-            Assert.AreEqual(assetEndpointProfileUpdateResponse.Value.Data.TargetAddress, assetEndpointProfileData.TargetAddress);
-            Assert.AreEqual(assetEndpointProfileUpdateResponse.Value.Data.AdditionalConfiguration, assetPatchData.AdditionalConfiguration);
+            Assert.IsTrue(Guid.TryParse(assetEndpointProfileUpdateResponse.Value.Data.Properties.Uuid, out _));
+            Assert.AreEqual(assetEndpointProfileUpdateResponse.Value.Data.Properties.TargetAddress, assetEndpointProfileData.Properties.TargetAddress);
+            Assert.AreEqual(assetEndpointProfileUpdateResponse.Value.Data.Properties.EndpointProfileType, assetEndpointProfileData.Properties.EndpointProfileType);
+            Assert.AreEqual(assetEndpointProfileUpdateResponse.Value.Data.Properties.Authentication.Method, assetEndpointProfileData.Properties.Authentication.Method);
+            Assert.AreEqual(assetEndpointProfileUpdateResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName, assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.UsernameSecretName);
+            Assert.AreEqual(assetEndpointProfileUpdateResponse.Value.Data.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName, assetEndpointProfileData.Properties.Authentication.UsernamePasswordCredentials.PasswordSecretName);
+            Assert.AreEqual(assetEndpointProfileUpdateResponse.Value.Data.Properties.AdditionalConfiguration, assetEndpointProfilePatchData.Properties.AdditionalConfiguration);
 
             // Delete DeviceRegistry AssetEndpointProfile
             await assetEndpointProfile.DeleteAsync(WaitUntil.Completed, CancellationToken.None);

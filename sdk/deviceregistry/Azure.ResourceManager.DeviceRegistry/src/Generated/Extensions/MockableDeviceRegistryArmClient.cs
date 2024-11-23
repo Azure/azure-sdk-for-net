@@ -57,5 +57,77 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             DeviceRegistryAssetResource.ValidateResourceId(id);
             return new DeviceRegistryAssetResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingContainerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingContainerResource.CreateResourceIdentifier" /> to create a <see cref="BillingContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingContainerResource"/> object. </returns>
+        public virtual BillingContainerResource GetBillingContainerResource(ResourceIdentifier id)
+        {
+            BillingContainerResource.ValidateResourceId(id);
+            return new BillingContainerResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DiscoveredAssetEndpointProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiscoveredAssetEndpointProfileResource.CreateResourceIdentifier" /> to create a <see cref="DiscoveredAssetEndpointProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiscoveredAssetEndpointProfileResource"/> object. </returns>
+        public virtual DiscoveredAssetEndpointProfileResource GetDiscoveredAssetEndpointProfileResource(ResourceIdentifier id)
+        {
+            DiscoveredAssetEndpointProfileResource.ValidateResourceId(id);
+            return new DiscoveredAssetEndpointProfileResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DiscoveredAssetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiscoveredAssetResource.CreateResourceIdentifier" /> to create a <see cref="DiscoveredAssetResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiscoveredAssetResource"/> object. </returns>
+        public virtual DiscoveredAssetResource GetDiscoveredAssetResource(ResourceIdentifier id)
+        {
+            DiscoveredAssetResource.ValidateResourceId(id);
+            return new DiscoveredAssetResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SchemaRegistryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SchemaRegistryResource.CreateResourceIdentifier" /> to create a <see cref="SchemaRegistryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SchemaRegistryResource"/> object. </returns>
+        public virtual SchemaRegistryResource GetSchemaRegistryResource(ResourceIdentifier id)
+        {
+            SchemaRegistryResource.ValidateResourceId(id);
+            return new SchemaRegistryResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SchemaResource.CreateResourceIdentifier" /> to create a <see cref="SchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SchemaResource"/> object. </returns>
+        public virtual SchemaResource GetSchemaResource(ResourceIdentifier id)
+        {
+            SchemaResource.ValidateResourceId(id);
+            return new SchemaResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SchemaVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SchemaVersionResource.CreateResourceIdentifier" /> to create a <see cref="SchemaVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SchemaVersionResource"/> object. </returns>
+        public virtual SchemaVersionResource GetSchemaVersionResource(ResourceIdentifier id)
+        {
+            SchemaVersionResource.ValidateResourceId(id);
+            return new SchemaVersionResource(Client, id);
+        }
     }
 }

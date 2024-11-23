@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 throw new FormatException($"The model {nameof(X509CredentialsUpdate)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(CertificateReference))
+            if (Optional.IsDefined(CertificateSecretName))
             {
-                writer.WritePropertyName("certificateReference"u8);
-                writer.WriteStringValue(CertificateReference);
+                writer.WritePropertyName("certificateSecretName"u8);
+                writer.WriteStringValue(CertificateSecretName);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
-            string certificateReference = default;
+            string certificateSecretName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateReference"u8))
+                if (property.NameEquals("certificateSecretName"u8))
                 {
-                    certificateReference = property.Value.GetString();
+                    certificateSecretName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new X509CredentialsUpdate(certificateReference, serializedAdditionalRawData);
+            return new X509CredentialsUpdate(certificateSecretName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X509CredentialsUpdate>.Write(ModelReaderWriterOptions options)
