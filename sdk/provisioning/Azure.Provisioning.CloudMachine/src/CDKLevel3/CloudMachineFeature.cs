@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.CloudMachine;
@@ -28,4 +29,11 @@ public abstract class CloudMachineFeature
     public ProvisionableResource Emitted { get; protected set; } = default!;
 
     protected internal Dictionary<Provisionable, (string RoleName, string RoleId)[]> RequiredSystemRoles { get; } = [];
+
+    protected static T ValidateIsOfType<T>(CloudMachineFeature resource)
+    {
+        if (resource.Emitted is T typed)
+            return typed;
+        throw new ArgumentException($"Expected resource of type {typeof(T).Name}, but got {resource.GetType().Name}");
+    }
 }

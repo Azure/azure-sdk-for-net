@@ -141,7 +141,7 @@ resource cm_servicebus_topic_private 'Microsoft.ServiceBus/namespaces/topics@202
   parent: cm_servicebus
 }
 
-resource cm_servicebus_topic_default 'Microsoft.ServiceBus/namespaces/topics@2021-11-01' = {
+resource cm_servicebus_default_topic 'Microsoft.ServiceBus/namespaces/topics@2021-11-01' = {
   name: 'cm_servicebus_default_topic'
   properties: {
     defaultMessageTimeToLive: 'P14D'
