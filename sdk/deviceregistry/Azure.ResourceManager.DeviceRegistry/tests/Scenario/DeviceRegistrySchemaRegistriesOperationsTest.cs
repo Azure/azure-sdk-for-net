@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{_subscriptionId}"));
             var rg = await CreateResourceGroup(subscription, _rgNamePrefix, AzureLocation.WestUS);
 
+            #region SchemaRegistries
             /*******************
             *                  *
             * SchemaRegistries *
@@ -132,6 +133,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(schemaRegistryUpdateResponse.Value.Data.Properties.DisplayName, schemaRegistryData.Properties.DisplayName);
             Assert.AreEqual(schemaRegistryUpdateResponse.Value.Data.Properties.StorageAccountContainerUri, schemaRegistryData.Properties.StorageAccountContainerUri);
 
+            #endregion
+            #region SchemaRegistries/Schemas
             /***************************
             *                          *
             * SchemaRegistries/Schemas *
@@ -185,6 +188,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             var schemaRegistrySchema = schemaRegistrySchemaReadResponse.Value;
 
+            #endregion
+            #region SchemaRegistries/Schemas/SchemaVersions
             /******************************************
             *                                         *
             * SchemaRegistries/Schemas/SchemaVersions *
@@ -216,6 +221,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(schemaRegistrySchemaVersionReadResponse.Value.Data.Properties.Description, schemaRegistrySchemaVersionData.Properties.Description);
 
             var schemaRegistrySchemaVersion = schemaRegistrySchemaVersionReadResponse.Value;
+
+            #endregion
 
             // Delete DeviceRegistry SchemaRegistry Schema Version
             await schemaRegistrySchemaVersion.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
