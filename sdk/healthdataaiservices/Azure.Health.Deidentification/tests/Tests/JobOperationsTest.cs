@@ -19,7 +19,7 @@ namespace Azure.Health.Deidentification.Tests
     [TestFixture]
     public class JobOperationsTest : DeidentificationTestBase
     {
-        private const string OUTPUT_FOLDER = "_output";
+        private const string OUTPUT_FOLDER = "_output/";
 
         public JobOperationsTest() : base(true)
         {
@@ -120,7 +120,7 @@ namespace Azure.Health.Deidentification.Tests
             DeidentificationJob job = new()
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix),
-                TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER),
+                TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER, overwrite: true, null),
                 Operation = DeidentificationOperationType.Surrogate
             };
 
