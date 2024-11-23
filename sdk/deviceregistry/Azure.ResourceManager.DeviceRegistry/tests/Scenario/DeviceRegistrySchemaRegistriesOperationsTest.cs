@@ -8,6 +8,8 @@ using Azure.Core.TestFramework;
 using Azure.Core;
 using NUnit.Framework;
 using Azure.ResourceManager.DeviceRegistry.Models;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 {
@@ -75,6 +77,42 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(schemaRegistryReadResponse.Value.Data.Properties.DisplayName, schemaRegistryData.Properties.DisplayName);
             Assert.AreEqual(schemaRegistryReadResponse.Value.Data.Properties.StorageAccountContainerUri, schemaRegistryData.Properties.StorageAccountContainerUri);
 
+            // List DeviceRegistry SchemaRegistry by Resource Group
+            var schemaRegistryResourcesListByResourceGroup = new List<SchemaRegistryResource>();
+            var schemaRegistryResourceListByResourceGroupAsyncIterator = schemaRegistriesCollection.GetAllAsync(CancellationToken.None);
+            await foreach (var schemaRegistryEntry in schemaRegistryResourceListByResourceGroupAsyncIterator)
+            {
+                schemaRegistryResourcesListByResourceGroup.Add(schemaRegistryEntry);
+            }
+            Assert.IsNotEmpty(schemaRegistryResourcesListByResourceGroup);
+            Assert.AreEqual(schemaRegistryResourcesListByResourceGroup.Count, 1);
+            Assert.IsNotNull(schemaRegistryResourcesListByResourceGroup[0].Data.Identity.TenantId);
+            Assert.IsNotNull(schemaRegistryResourcesListByResourceGroup[0].Data.Identity.PrincipalId);
+            Assert.AreEqual(schemaRegistryResourcesListByResourceGroup[0].Data.Identity.ManagedServiceIdentityType, ResourceManager.Models.ManagedServiceIdentityType.SystemAssigned);
+            Assert.IsTrue(Guid.TryParse(schemaRegistryResourcesListByResourceGroup[0].Data.Properties.Uuid, out _));
+            Assert.AreEqual(schemaRegistryResourcesListByResourceGroup[0].Data.Properties.Namespace, schemaRegistryData.Properties.Namespace);
+            Assert.AreEqual(schemaRegistryResourcesListByResourceGroup[0].Data.Properties.Description, schemaRegistryData.Properties.Description);
+            Assert.AreEqual(schemaRegistryResourcesListByResourceGroup[0].Data.Properties.DisplayName, schemaRegistryData.Properties.DisplayName);
+            Assert.AreEqual(schemaRegistryResourcesListByResourceGroup[0].Data.Properties.StorageAccountContainerUri, schemaRegistryData.Properties.StorageAccountContainerUri);
+
+            // List DeviceRegistry SchemaRegistry by Subscription
+            var schemaRegistryResourcesListBySubscription = new List<SchemaRegistryResource>();
+            var schemaRegistryResourceListBySubscriptionAsyncIterator = subscription.GetSchemaRegistriesAsync(CancellationToken.None);
+            await foreach (var schemaRegistryEntry in schemaRegistryResourceListBySubscriptionAsyncIterator)
+            {
+                schemaRegistryResourcesListBySubscription.Add(schemaRegistryEntry);
+            }
+            Assert.IsNotEmpty(schemaRegistryResourcesListBySubscription);
+            Assert.AreEqual(schemaRegistryResourcesListBySubscription.Count, 1);
+            Assert.IsNotNull(schemaRegistryResourcesListBySubscription[0].Data.Identity.TenantId);
+            Assert.IsNotNull(schemaRegistryResourcesListBySubscription[0].Data.Identity.PrincipalId);
+            Assert.AreEqual(schemaRegistryResourcesListBySubscription[0].Data.Identity.ManagedServiceIdentityType, ResourceManager.Models.ManagedServiceIdentityType.SystemAssigned);
+            Assert.IsTrue(Guid.TryParse(schemaRegistryResourcesListBySubscription[0].Data.Properties.Uuid, out _));
+            Assert.AreEqual(schemaRegistryResourcesListBySubscription[0].Data.Properties.Namespace, schemaRegistryData.Properties.Namespace);
+            Assert.AreEqual(schemaRegistryResourcesListBySubscription[0].Data.Properties.Description, schemaRegistryData.Properties.Description);
+            Assert.AreEqual(schemaRegistryResourcesListBySubscription[0].Data.Properties.DisplayName, schemaRegistryData.Properties.DisplayName);
+            Assert.AreEqual(schemaRegistryResourcesListBySubscription[0].Data.Properties.StorageAccountContainerUri, schemaRegistryData.Properties.StorageAccountContainerUri);
+
             // Update DeviceRegistry SchemaRegistry
             var schemaRegistry = schemaRegistryReadResponse.Value;
             var schemaRegistryPatchData = new SchemaRegistryPatch
@@ -131,13 +169,28 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(schemaRegistrySchemaReadResponse.Value.Data.Properties.Description, schemaRegistrySchemaData.Properties.Description);
             Assert.AreEqual(schemaRegistrySchemaReadResponse.Value.Data.Properties.DisplayName, schemaRegistrySchemaData.Properties.DisplayName);
 
+            // List DeviceRegistry SchemaRegistry Schema by SchemaRegistry
+            var schemaResourcesListBySchemaRegistry = new List<SchemaResource>();
+            var schemaRegistrySchemaListBySchemaRegistryAsyncIterator = schemaRegistriesSchemasCollection.GetAllAsync(CancellationToken.None);
+            await foreach (var schemaEntry in schemaRegistrySchemaListBySchemaRegistryAsyncIterator)
+            {
+                schemaResourcesListBySchemaRegistry.Add(schemaEntry);
+            }
+            Assert.IsNotEmpty(schemaResourcesListBySchemaRegistry);
+            Assert.AreEqual(schemaResourcesListBySchemaRegistry.Count, 1);
+            Assert.IsTrue(Guid.TryParse(schemaResourcesListBySchemaRegistry[0].Data.Properties.Uuid, out _));
+            Assert.AreEqual(schemaResourcesListBySchemaRegistry[0].Data.Properties.SchemaType, schemaRegistrySchemaData.Properties.SchemaType);
+            Assert.AreEqual(schemaResourcesListBySchemaRegistry[0].Data.Properties.Format, schemaRegistrySchemaData.Properties.Format);
+            Assert.AreEqual(schemaResourcesListBySchemaRegistry[0].Data.Properties.Description, schemaRegistrySchemaData.Properties.Description);
+            Assert.AreEqual(schemaResourcesListBySchemaRegistry[0].Data.Properties.DisplayName, schemaRegistrySchemaData.Properties.DisplayName);
+
             var schemaRegistrySchema = schemaRegistrySchemaReadResponse.Value;
 
-            /*****************************************
-            *                                        *
-            * SchemaRegistries/Schemas/SchemaVersion *
-            *                                        *
-            *****************************************/
+            /******************************************
+            *                                         *
+            * SchemaRegistries/Schemas/SchemaVersions *
+            *                                         *
+            ******************************************/
 
             var schemaRegistriesSchemaVersionsCollection = schemaRegistrySchema.GetSchemaVersions();
 

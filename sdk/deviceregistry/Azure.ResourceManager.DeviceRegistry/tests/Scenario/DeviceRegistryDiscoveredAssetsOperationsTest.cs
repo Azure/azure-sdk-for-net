@@ -8,6 +8,7 @@ using Azure.Core.TestFramework;
 using Azure.Core;
 using NUnit.Framework;
 using Azure.ResourceManager.DeviceRegistry.Models;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 {
@@ -52,6 +53,30 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.IsNotNull(discoveredAssetReadResponse.Value);
             Assert.AreEqual(discoveredAssetReadResponse.Value.Data.Properties.AssetEndpointProfileRef, discoveredAssetData.Properties.AssetEndpointProfileRef);
             Assert.AreEqual(discoveredAssetReadResponse.Value.Data.Properties.Manufacturer, discoveredAssetData.Properties.Manufacturer);
+
+            // List DeviceRegistry DiscoveredAsset by Resource Group
+            var discoveredAssetResourcesListByResourceGroup = new List<DiscoveredAssetResource>();
+            var discoveredAssetResourceListByResourceGroupAsyncIterator = discoveredAssetsCollection.GetAllAsync(CancellationToken.None);
+            await foreach (var discoveredAssetEntry in discoveredAssetResourceListByResourceGroupAsyncIterator)
+            {
+                discoveredAssetResourcesListByResourceGroup.Add(discoveredAssetEntry);
+            }
+            Assert.IsNotEmpty(discoveredAssetResourcesListByResourceGroup);
+            Assert.AreEqual(discoveredAssetResourcesListByResourceGroup.Count, 1);
+            Assert.AreEqual(discoveredAssetResourcesListByResourceGroup[0].Data.Properties.AssetEndpointProfileRef, discoveredAssetData.Properties.AssetEndpointProfileRef);
+            Assert.AreEqual(discoveredAssetResourcesListByResourceGroup[0].Data.Properties.Manufacturer, discoveredAssetData.Properties.Manufacturer);
+
+            // List DeviceRegistry Asset by Subscription
+            var discoveredAssetResourcesListBySubscription = new List<DiscoveredAssetResource>();
+            var discoveredAssetResourceListBySubscriptionAsyncIterator = subscription.GetDiscoveredAssetsAsync(CancellationToken.None);
+            await foreach (var discoveredAssetEntry in discoveredAssetResourceListBySubscriptionAsyncIterator)
+            {
+                discoveredAssetResourcesListBySubscription.Add(discoveredAssetEntry);
+            }
+            Assert.IsNotEmpty(discoveredAssetResourcesListBySubscription);
+            Assert.AreEqual(discoveredAssetResourcesListBySubscription.Count, 1);
+            Assert.AreEqual(discoveredAssetResourcesListBySubscription[0].Data.Properties.AssetEndpointProfileRef, discoveredAssetData.Properties.AssetEndpointProfileRef);
+            Assert.AreEqual(discoveredAssetResourcesListBySubscription[0].Data.Properties.Manufacturer, discoveredAssetData.Properties.Manufacturer);
 
             // Update DeviceRegistry DiscoveredAsset
             var discoveredAsset = discoveredAssetReadResponse.Value;

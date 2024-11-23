@@ -8,6 +8,7 @@ using Azure.Core.TestFramework;
 using Azure.Core;
 using NUnit.Framework;
 using Azure.ResourceManager.DeviceRegistry.Models;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 {
@@ -61,6 +62,38 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(assetReadResponse.Value.Data.Properties.DisplayName, assetReadResponse.Value.Data.Name);
             Assert.AreEqual(assetReadResponse.Value.Data.Properties.Version, 1);
             Assert.AreEqual(assetReadResponse.Value.Data.Properties.Enabled, true);
+
+            // List DeviceRegistry Asset by Resource Group
+            var assetResourcesListByResourceGroup = new List<DeviceRegistryAssetResource>();
+            var assetResourceListByResourceGroupAsyncIterator = assetsCollection.GetAllAsync(CancellationToken.None);
+            await foreach (var assetEntry in assetResourceListByResourceGroupAsyncIterator)
+            {
+                assetResourcesListByResourceGroup.Add(assetEntry);
+            }
+            Assert.IsNotEmpty(assetResourcesListByResourceGroup);
+            Assert.AreEqual(assetResourcesListByResourceGroup.Count, 1);
+            Assert.IsTrue(Guid.TryParse(assetResourcesListByResourceGroup[0].Data.Properties.Uuid, out _));
+            Assert.AreEqual(assetResourcesListByResourceGroup[0].Data.Properties.ExternalAssetId, assetReadResponse.Value.Data.Properties.Uuid);
+            Assert.AreEqual(assetResourcesListByResourceGroup[0].Data.Properties.AssetEndpointProfileRef, assetData.Properties.AssetEndpointProfileRef);
+            Assert.AreEqual(assetResourcesListByResourceGroup[0].Data.Properties.DisplayName, assetReadResponse.Value.Data.Name);
+            Assert.AreEqual(assetResourcesListByResourceGroup[0].Data.Properties.Version, 1);
+            Assert.AreEqual(assetResourcesListByResourceGroup[0].Data.Properties.Enabled, true);
+
+            // List DeviceRegistry Asset by Subscription
+            var assetResourcesListBySubscription = new List<DeviceRegistryAssetResource>();
+            var assetResourceListBySubscriptionAsyncIterator = subscription.GetDeviceRegistryAssetsAsync(CancellationToken.None);
+            await foreach (var assetEntry in assetResourceListBySubscriptionAsyncIterator)
+            {
+                assetResourcesListBySubscription.Add(assetEntry);
+            }
+            Assert.IsNotEmpty(assetResourcesListBySubscription);
+            Assert.AreEqual(assetResourcesListBySubscription.Count, 1);
+            Assert.IsTrue(Guid.TryParse(assetResourcesListBySubscription[0].Data.Properties.Uuid, out _));
+            Assert.AreEqual(assetResourcesListBySubscription[0].Data.Properties.ExternalAssetId, assetReadResponse.Value.Data.Properties.Uuid);
+            Assert.AreEqual(assetResourcesListBySubscription[0].Data.Properties.AssetEndpointProfileRef, assetData.Properties.AssetEndpointProfileRef);
+            Assert.AreEqual(assetResourcesListBySubscription[0].Data.Properties.DisplayName, assetReadResponse.Value.Data.Name);
+            Assert.AreEqual(assetResourcesListBySubscription[0].Data.Properties.Version, 1);
+            Assert.AreEqual(assetResourcesListBySubscription[0].Data.Properties.Enabled, true);
 
             // Update DeviceRegistry Asset
             var asset = assetReadResponse.Value;

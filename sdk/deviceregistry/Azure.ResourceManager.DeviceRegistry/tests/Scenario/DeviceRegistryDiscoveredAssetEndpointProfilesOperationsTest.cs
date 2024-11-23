@@ -8,6 +8,7 @@ using Azure.Core.TestFramework;
 using Azure.Core;
 using NUnit.Framework;
 using Azure.ResourceManager.DeviceRegistry.Models;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 {
@@ -59,6 +60,34 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(discoveredAssetEndpointProfileReadResponse.Value.Data.Properties.EndpointProfileType, discoveredAssetEndpointProfileData.Properties.EndpointProfileType);
             Assert.AreEqual(discoveredAssetEndpointProfileReadResponse.Value.Data.Properties.SupportedAuthenticationMethods[0], discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods[0]);
             Assert.AreEqual(discoveredAssetEndpointProfileReadResponse.Value.Data.Properties.SupportedAuthenticationMethods[1], discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods[1]);
+
+            // List DeviceRegistry DiscoveredAssetEndpointProfile by Resource Group
+            var discoveredAssetEndpointProfileResourcesListByResourceGroup = new List<DiscoveredAssetEndpointProfileResource>();
+            var discoveredAssetEndpointProfileResourceListByResourceGroupAsyncIterator = discoveredAssetEndpointProfilesCollection.GetAllAsync(CancellationToken.None);
+            await foreach (var discoveredAssetEndpointProfileEntry in discoveredAssetEndpointProfileResourceListByResourceGroupAsyncIterator)
+            {
+                discoveredAssetEndpointProfileResourcesListByResourceGroup.Add(discoveredAssetEndpointProfileEntry);
+            }
+            Assert.IsNotEmpty(discoveredAssetEndpointProfileResourcesListByResourceGroup);
+            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListByResourceGroup.Count, 1);
+            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListByResourceGroup[0].Data.Properties.TargetAddress, discoveredAssetEndpointProfileData.Properties.TargetAddress);
+            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListByResourceGroup[0].Data.Properties.EndpointProfileType, discoveredAssetEndpointProfileData.Properties.EndpointProfileType);
+            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListByResourceGroup[0].Data.Properties.SupportedAuthenticationMethods[0], discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods[0]);
+            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListByResourceGroup[0].Data.Properties.SupportedAuthenticationMethods[1], discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods[1]);
+
+            // List DeviceRegistry DiscoveredAssetEndpointProfile by Subscription
+            var discoveredAssetEndpointProfileResourcesListBySubscription = new List<DiscoveredAssetEndpointProfileResource>();
+            var discoveredAssetEndpointProfileResourceListBySubscriptionAsyncIterator = subscription.GetDiscoveredAssetEndpointProfilesAsync(CancellationToken.None);
+            await foreach (var discoveredAssetEndpointProfileEntry in discoveredAssetEndpointProfileResourceListBySubscriptionAsyncIterator)
+            {
+                discoveredAssetEndpointProfileResourcesListBySubscription.Add(discoveredAssetEndpointProfileEntry);
+            }
+            Assert.IsNotEmpty(discoveredAssetEndpointProfileResourcesListBySubscription);
+            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListBySubscription.Count, 1);
+            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListBySubscription[0].Data.Properties.TargetAddress, discoveredAssetEndpointProfileData.Properties.TargetAddress);
+            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListBySubscription[0].Data.Properties.EndpointProfileType, discoveredAssetEndpointProfileData.Properties.EndpointProfileType);
+            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListBySubscription[0].Data.Properties.SupportedAuthenticationMethods[0], discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods[0]);
+            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListBySubscription[0].Data.Properties.SupportedAuthenticationMethods[1], discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods[1]);
 
             // Update DeviceRegistry DiscoveredAssetEndpointProfile
             var discoveredAssetEndpointProfile = discoveredAssetEndpointProfileReadResponse.Value;
