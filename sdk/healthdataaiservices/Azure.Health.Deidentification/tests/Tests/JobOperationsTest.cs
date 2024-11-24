@@ -120,9 +120,10 @@ namespace Azure.Health.Deidentification.Tests
             DeidentificationJob job = new()
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix),
-                TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER, overwrite: true, null),
+                TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER),
                 Operation = DeidentificationOperationType.Surrogate
             };
+            job.TargetLocation.Overwrite = true;
 
             job = (await client.DeidentifyDocumentsAsync(WaitUntil.Completed, jobName, job)).Value;
             job = await client.GetJobAsync(jobName);
