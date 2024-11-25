@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Provisioning.Authorization;
-using Azure.Provisioning.Expressions;
-using Azure.Provisioning.Roles;
-using Azure.Provisioning.Primitives;
 using System.Collections.Generic;
 using Azure.Provisioning;
+using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CloudMachine;
+using Azure.Provisioning.Expressions;
+using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Roles;
 
 namespace Azure.CloudMachine;
 
@@ -16,20 +16,19 @@ public class CloudMachineInfrastructure
 {
     internal const string SB_PRIVATE_TOPIC = "cm_servicebus_topic_private";
     internal const string SB_PRIVATE_SUB = "cm_servicebus_subscription_private";
-    private readonly string _cmId;
 
-    private Infrastructure _infrastructure = new Infrastructure("cm");
-    private List<Provisionable> _resources = new();
+    private readonly Infrastructure _infrastructure = new("cm");
+    private readonly List<Provisionable> _resources = [];
+    internal List<Type> Endpoints { get; } = [];
+
     public FeatureCollection Features { get; } = new();
-    internal List<Type> Endpoints { get; } = new();
-
     public UserAssignedIdentity Identity { get; private set; }
-    public string Id => _cmId;
+    public string Id { get; private set; }
 
     /// <summary>
     /// The common principalId parameter.
     /// </summary>
-    public ProvisioningParameter PrincipalIdParameter => new ProvisioningParameter("principalId", typeof(string));
+    public ProvisioningParameter PrincipalIdParameter => new("principalId", typeof(string));
 
     ///// <summary>
     ///// The common principalType parameter.
@@ -43,27 +42,27 @@ public class CloudMachineInfrastructure
 
     public CloudMachineInfrastructure(string cmId)
     {
-        _cmId = cmId;
+        Id = cmId;
 
         // setup CM identity
         Identity = new UserAssignedIdentity("cm_identity");
-        Identity.Name = _cmId;
-        _infrastructure.Add(new ProvisioningOutput($"cm_managed_identity_id", typeof(string)) { Value = Identity.Id });
+        Identity.Name = Id;
+        _infrastructure.Add(new ProvisioningOutput("cm_managed_identity_id", typeof(string)) { Value = Identity.Id });
 
         // Add core features
-        var storage = new StorageFeature(_cmId);
+        var storage = new StorageFeature(Id);
         Features.Add(storage);
-        var sbNamespace = new ServiceBusNamespaceFeature(_cmId);
+        var sbNamespace = new ServiceBusNamespaceFeature(Id);
         Features.Add(sbNamespace);
-        var sbTopic_private = new ServiceBusTopicFeature("cm_servicebus_topic_private", sbNamespace);
-        Features.Add(sbTopic_private);
-        var sbTopic_default = new ServiceBusTopicFeature("cm_servicebus_default_topic", sbNamespace);
-        Features.Add(sbTopic_default);
-        Features.Add(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_private", sbTopic_private));
-        Features.Add(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_default", sbTopic_default));
-        var systemTopic = new EventGridSystemTopicFeature(_cmId, storage);
+        var sbTopicPrivate = new ServiceBusTopicFeature("cm_servicebus_topic_private", sbNamespace);
+        Features.Add(sbTopicPrivate);
+        var sbTopicDefault = new ServiceBusTopicFeature("cm_servicebus_default_topic", sbNamespace);
+        Features.Add(sbTopicDefault);
+        Features.Add(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_private", sbTopicPrivate));
+        Features.Add(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_default", sbTopicDefault));
+        var systemTopic = new EventGridSystemTopicFeature(Id, storage);
         Features.Add(systemTopic);
-        Features.Add(new SystemTopicEventSubscriptionFeature("cm_eventgrid_subscription_blob", systemTopic, sbTopic_private, sbNamespace));
+        Features.Add(new SystemTopicEventSubscriptionFeature("cm_eventgrid_subscription_blob", systemTopic, sbTopicPrivate, sbNamespace));
     }
 
     public void AddResource(NamedProvisionableConstruct resource)
@@ -85,8 +84,7 @@ public class CloudMachineInfrastructure
 
     public ProvisioningPlan Build(ProvisioningBuildOptions? context = null)
     {
-        if (context == null)
-            context = new ProvisioningBuildOptions();
+        context ??= new ProvisioningBuildOptions();
 
         Features.Emit(this);
 
@@ -127,28 +125,28 @@ public class CloudMachineInfrastructure
                 yield return provisionable;
                 if (annotations.TryGetValue(provisionable, out (string RoleName, string RoleId)[]? roles) && provisionable is ProvisionableResource resource && roles is not null)
                 {
-                    foreach ((string RoleName, string RoleId) role in roles)
+                    foreach ((string RoleName, string RoleId) in roles)
                     {
                         foreach (BicepValue<Guid> userPrincipal in userPrincipals)
                         {
-                            yield return new RoleAssignment($"{resource.BicepIdentifier}_{userPrincipal.Value.ToString().Replace('-', '_')}_{role.RoleName}")
+                            yield return new RoleAssignment($"{resource.BicepIdentifier}_{userPrincipal.Value.ToString().Replace('-', '_')}_{RoleName}")
                             {
-                                Name = BicepFunction.CreateGuid(resource.BicepIdentifier, userPrincipal, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.RoleId)),
+                                Name = BicepFunction.CreateGuid(resource.BicepIdentifier, userPrincipal, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", RoleId)),
                                 Scope = new IdentifierExpression(resource.BicepIdentifier),
                                 PrincipalType = RoleManagementPrincipalType.User,
-                                RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.RoleId),
+                                RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", RoleId),
                                 PrincipalId = userPrincipal
                             };
                         }
 
                         foreach (UserAssignedIdentity identity in managedIdentities)
                         {
-                            yield return new RoleAssignment($"{resource.BicepIdentifier}_{identity.BicepIdentifier}_{role.RoleName}")
+                            yield return new RoleAssignment($"{resource.BicepIdentifier}_{identity.BicepIdentifier}_{RoleName}")
                             {
-                                Name = BicepFunction.CreateGuid(resource.BicepIdentifier, identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.RoleId)),
+                                Name = BicepFunction.CreateGuid(resource.BicepIdentifier, identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", RoleId)),
                                 Scope = new IdentifierExpression(resource.BicepIdentifier),
                                 PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
-                                RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.RoleId),
+                                RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", RoleId),
                                 PrincipalId = identity.PrincipalId
                             };
                         }

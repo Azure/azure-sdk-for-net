@@ -14,9 +14,9 @@ namespace Azure.CloudMachine;
 
 public class StorageFeature : CloudMachineFeature
 {
-    private List<string> _containerNames;
-    private StorageSkuName _skuName;
-    private string _name;
+    private readonly List<string> _containerNames;
+    private readonly StorageSkuName _skuName;
+    private readonly string _name;
 
     public StorageFeature(string accountName, StorageSkuName sku = StorageSkuName.StandardLrs, IEnumerable<string>? containerNames = null)
     {

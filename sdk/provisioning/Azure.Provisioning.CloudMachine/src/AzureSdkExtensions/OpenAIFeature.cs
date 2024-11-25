@@ -10,14 +10,14 @@ namespace Azure.CloudMachine.OpenAI;
 
 internal class OpenAIFeature : CloudMachineFeature
 {
-    private List<OpenAIModel> _models = new List<OpenAIModel>();
+    private readonly List<OpenAIModel> _models = [];
 
     public OpenAIFeature()
     { }
 
     protected override ProvisionableResource EmitCore(CloudMachineInfrastructure cloudMachine)
     {
-        CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(cloudMachine);
+        CognitiveServicesAccount cognitiveServices = OpenAIFeature.CreateOpenAIAccount(cloudMachine);
         cloudMachine.AddResource(cognitiveServices);
 
         RequiredSystemRoles.Add(cognitiveServices, [(CognitiveServicesBuiltInRole.GetBuiltInRoleName(CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor) ,CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString())]);
@@ -48,7 +48,7 @@ internal class OpenAIFeature : CloudMachineFeature
         _models.Add(model);
     }
 
-    internal CognitiveServicesAccount CreateOpenAIAccount(CloudMachineInfrastructure cm)
+    internal static CognitiveServicesAccount CreateOpenAIAccount(CloudMachineInfrastructure cm)
     {
         return new("openai")
         {

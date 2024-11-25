@@ -34,8 +34,8 @@ public static class TypeSpecWriter
         writer.WriteLine();
         writer.WriteLine($"@client interface {name}Client {{");
 
-        HashSet<Type> models = new HashSet<Type>();
-        foreach (var method in service.GetMethods())
+        HashSet<Type> models = [];
+        foreach (MethodInfo method in service.GetMethods())
         {
             writer.Write("  ");
             WriteOperation(writer, method, models);
@@ -44,7 +44,7 @@ public static class TypeSpecWriter
         writer.WriteLine();
         writer.Flush();
 
-        foreach (var model in models)
+        foreach (Type model in models)
         {
             WriteModel(output, model);
         }
@@ -69,7 +69,7 @@ public static class TypeSpecWriter
     }
     public static void WriteModel<T>(Stream output)
     {
-        var model = typeof(T);
+        Type model = typeof(T);
         WriteModel(output, model);
     }
 
@@ -77,7 +77,7 @@ public static class TypeSpecWriter
     {
         writer.WriteLine($"model {model.Name} {{");
 
-        foreach (var property in model.GetProperties())
+        foreach (PropertyInfo property in model.GetProperties())
         {
             WriteClassModelProperty(writer, property);
         }
@@ -109,7 +109,7 @@ public static class TypeSpecWriter
         writer.Write($"{httpVerb} @route(\"{ToCamel(methodName)}\") {methodName}(");
 
         bool first = true;
-        foreach (var parameter in method.GetParameters())
+        foreach (ParameterInfo parameter in method.GetParameters())
         {
             Type parameterType = parameter.ParameterType;
 
@@ -139,7 +139,7 @@ public static class TypeSpecWriter
         writer.WriteLine(") : {");
         writer.WriteLine($"    @statusCode statusCode: 200;");
 
-        var returnType = method.ReturnType;
+        Type returnType = method.ReturnType;
         if (returnType == typeof(Task)) returnType = typeof(void);
         else if (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Task<>))
             returnType = returnType.GetGenericArguments()[0];
@@ -197,7 +197,7 @@ public static class TypeSpecWriter
 
     private static string ToCamel(this string text)
     {
-        return $"{Char.ToLower(text[0])}{text.Substring(1)}";
+        return $"{char.ToLower(text[0])}{text.Substring(1)}";
     }
     private static string ToTspType(this Type type)
     {

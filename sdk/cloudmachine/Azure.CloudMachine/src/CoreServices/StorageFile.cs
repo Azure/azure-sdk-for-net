@@ -15,7 +15,7 @@ public class StorageFile
 {
     private readonly Response _response;
 
-    private StorageServices _storage;
+    private readonly StorageServices _storage;
 
     /// <summary>
     /// The path of the file in the storage account.
@@ -23,7 +23,7 @@ public class StorageFile
     public string Path { get; internal set; }
 
     /// <summary>
-    /// The requestId for the storage operation that triggered this event
+    /// The requestId for the storage operation that triggered this event.
     /// </summary>
     public string RequestId { get; internal set; }
 

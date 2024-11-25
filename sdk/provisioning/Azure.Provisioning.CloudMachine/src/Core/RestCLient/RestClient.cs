@@ -9,11 +9,9 @@ namespace Azure
 {
     public class RestClient
     {
-        private static readonly RestClient _shared = new RestClient();
-
         private readonly ClientPipeline _pipeline;
 
-        public static RestClient Shared => _shared;
+        public static RestClient Shared { get; } = new RestClient();
 
         public RestClient() : this(default(RestClientOptions))
         {
@@ -25,15 +23,14 @@ namespace Azure
 
         private static RestClientOptions CreateOptions(PipelinePolicy auth)
         {
-            RestClientOptions options = new RestClientOptions();
+            RestClientOptions options = new();
             options.AddPolicy(auth, PipelinePosition.PerTry);
             return options;
         }
 
         private RestClient(RestClientOptions? options = default)
         {
-            if (options == null)
-                options = new RestClientOptions();
+            options ??= new RestClientOptions();
             _pipeline = ClientPipeline.Create(options);
         }
 

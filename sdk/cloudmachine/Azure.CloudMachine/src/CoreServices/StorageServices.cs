@@ -86,7 +86,7 @@ public readonly struct StorageServices
     public string Upload(Stream fileStream, string name = default, string contentType = default, bool overwrite = false)
     {
         BlockBlobClient client = GetBlobClient(ref name);
-        BlobUploadOptions options = CreateUploadOptions(overwrite, contentType);
+        BlobUploadOptions options = StorageServices.CreateUploadOptions(overwrite, contentType);
 
         client.Upload(fileStream, options);
         return name;
@@ -103,7 +103,7 @@ public readonly struct StorageServices
     public async Task<string> UploadAsync(Stream fileStream, string name = default, string contentType = default, bool overwrite = false)
     {
         BlockBlobClient client = GetBlobClient(ref name);
-        BlobUploadOptions options = CreateUploadOptions(overwrite, contentType);
+        BlobUploadOptions options = StorageServices.CreateUploadOptions(overwrite, contentType);
 
         await client.UploadAsync(fileStream, options).ConfigureAwait(false);
         return name;
@@ -117,9 +117,9 @@ public readonly struct StorageServices
         return client;
     }
 
-    private BlobUploadOptions CreateUploadOptions(bool overwrite, string contentType)
+    private static BlobUploadOptions CreateUploadOptions(bool overwrite, string contentType)
     {
-        if (contentType == null) contentType = ContentType.ApplicationOctetStream.ToString();
+        contentType ??= ContentType.ApplicationOctetStream.ToString();
         BlobUploadOptions options = new()
         {
             Conditions = overwrite ? null : new BlobRequestConditions { IfNoneMatch = new ETag("*") },
@@ -206,15 +206,15 @@ public readonly struct StorageServices
 
     private BlobClient GetBlobClientFromPath(string path, string containerName)
     {
-        var _blobContainer = GetDefaultContainer();
-        var blobPath = ConvertPathToBlobPath(path, _blobContainer);
+        BlobContainerClient _blobContainer = GetDefaultContainer();
+        string blobPath = ConvertPathToBlobPath(path, _blobContainer);
         if (containerName is null)
         {
             return _blobContainer.GetBlobClient(blobPath);
         }
         else
         {
-            var container = GetContainer(containerName);
+            BlobContainerClient container = GetContainer(containerName);
             container.CreateIfNotExists();
             return container.GetBlobClient(blobPath);
         }

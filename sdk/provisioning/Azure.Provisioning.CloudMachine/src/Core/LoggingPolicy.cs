@@ -13,7 +13,7 @@ internal class LoggingPolicy : PipelinePolicy
 {
     public LoggingPolicy() {}
 
-    public List<string> AllowedHeaders { get; } = new List<string>(["Content-Type", "Accept", "User-Agent", "x-ms-client-request-id"]);
+    public List<string> AllowedHeaders { get; } = ["Content-Type", "Accept", "User-Agent", "x-ms-client-request-id"];
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         LogRequest(message);
@@ -45,7 +45,7 @@ internal class LoggingPolicy : PipelinePolicy
     }
 
     protected virtual string FormatRequestLog(PipelineMessage message) {
-        StringBuilder logMessage = new StringBuilder();
+        StringBuilder logMessage = new();
         FormatRequestLine(message, logMessage);
         FormatHeaders(message, logMessage);
         FormatContent(message, logMessage);
@@ -53,9 +53,9 @@ internal class LoggingPolicy : PipelinePolicy
     }
     protected virtual string FormatResponseLog(PipelineMessage message)
     {
-        StringBuilder logMessage = new StringBuilder();
+        StringBuilder logMessage = new();
         PipelineResponse response = message.Response!;
-        logMessage.Append(response.Status.ToString());
+        logMessage.Append(response.Status);
         logMessage.Append(' ');
         logMessage.AppendLine(response.ReasonPhrase);
         FormatHeaders(message, logMessage);
@@ -72,7 +72,7 @@ internal class LoggingPolicy : PipelinePolicy
     }
     protected virtual void FormatHeaders(PipelineMessage message, StringBuilder logMessage)
     {
-        foreach (var header in message.Request.Headers)
+        foreach (KeyValuePair<string, string> header in message.Request.Headers)
         {
             if (AllowedHeaders.Contains(header.Key))
             {

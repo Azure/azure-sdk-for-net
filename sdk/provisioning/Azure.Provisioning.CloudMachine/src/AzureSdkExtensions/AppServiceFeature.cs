@@ -51,8 +51,8 @@ public class AppServiceFeature : CloudMachineFeature
                 IsHttp20Enabled = true,
                 MinTlsVersion = AppServiceSupportedTlsVersion.Tls1_2,
                 IsWebSocketsEnabled = true,
-                AppSettings = new()
-                {
+                AppSettings =
+                [
                     // This is used by the CloudMachineWorkspace to detect that it is running in a deployed App Service.
                     // The ClientId is used to create a ManagedIdentityCredential so that it wires up to our CloudMachine user-assigned identity.
                     new AppServiceNameValuePair
@@ -60,7 +60,7 @@ public class AppServiceFeature : CloudMachineFeature
                         Name = "CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID",
                         Value = infrastructure.Identity.ClientId
                     },
-                }
+                ]
             }
         };
         infrastructure.AddResource(appService);

@@ -70,29 +70,19 @@ public class CloudMachineWorkspace : ClientWorkspace
         if (instanceId != null && instanceId.StartsWith("$"))
             clientId = $"{clientType.FullName}{instanceId}";
 
-        switch (clientId)
+        return clientId switch
         {
-            case "Azure.Security.KeyVault.Secrets.SecretClient":
-                return new ClientConnectionOptions(new($"https://{Id}.vault.azure.net/"), Credential);
-            case "Azure.Messaging.ServiceBus.ServiceBusClient":
-                return new ClientConnectionOptions(new($"https://{Id}.servicebus.windows.net"), Credential);
-            case "Azure.Messaging.ServiceBus.ServiceBusSender":
-                return new ClientConnectionOptions(instanceId ?? "cm_servicebus_default_topic");
-            case "Azure.Messaging.ServiceBus.ServiceBusProcessor":
-                return new ClientConnectionOptions("cm_servicebus_default_topic/cm_servicebus_subscription_default");
-            case "Azure.Messaging.ServiceBus.ServiceBusProcessor$private":
-                return new ClientConnectionOptions("cm_servicebus_topic_private/cm_servicebus_subscription_private");
-            case "Azure.Storage.Blobs.BlobContainerClient":
-                return new ClientConnectionOptions(new($"https://{Id}.blob.core.windows.net/{instanceId ?? "default"}"), Credential);
-            case "Azure.AI.OpenAI.AzureOpenAIClient":
-                return new ClientConnectionOptions(new($"https://{Id}.openai.azure.com"), Credential);
-            case "OpenAI.Chat.ChatClient":
-                return new ClientConnectionOptions($"{Id}_chat");
-            case "OpenAI.Embeddings.EmbeddingClient":
-                return new ClientConnectionOptions($"{Id}_embedding");
-            default:
-                throw new Exception($"unknown client {clientId}");
-        }
+            "Azure.Security.KeyVault.Secrets.SecretClient" => new ClientConnectionOptions(new($"https://{Id}.vault.azure.net/"), Credential),
+            "Azure.Messaging.ServiceBus.ServiceBusClient" => new ClientConnectionOptions(new($"https://{Id}.servicebus.windows.net"), Credential),
+            "Azure.Messaging.ServiceBus.ServiceBusSender" => new ClientConnectionOptions(instanceId ?? "cm_servicebus_default_topic"),
+            "Azure.Messaging.ServiceBus.ServiceBusProcessor" => new ClientConnectionOptions("cm_servicebus_default_topic/cm_servicebus_subscription_default"),
+            "Azure.Messaging.ServiceBus.ServiceBusProcessor$private" => new ClientConnectionOptions("cm_servicebus_topic_private/cm_servicebus_subscription_private"),
+            "Azure.Storage.Blobs.BlobContainerClient" => new ClientConnectionOptions(new($"https://{Id}.blob.core.windows.net/{instanceId ?? "default"}"), Credential),
+            "Azure.AI.OpenAI.AzureOpenAIClient" => new ClientConnectionOptions(new($"https://{Id}.openai.azure.com"), Credential),
+            "OpenAI.Chat.ChatClient" => new ClientConnectionOptions($"{Id}_chat"),
+            "OpenAI.Embeddings.EmbeddingClient" => new ClientConnectionOptions($"{Id}_embedding"),
+            _ => throw new Exception($"unknown client {clientId}"),
+        };
     }
 
     /// <inheritdoc/>
@@ -118,7 +108,7 @@ public class CloudMachineWorkspace : ClientWorkspace
             cmid = GenerateCloudMachineId();
 
             using FileStream file = File.OpenWrite(appsettings);
-            Utf8JsonWriter writer = new Utf8JsonWriter(file);
+            Utf8JsonWriter writer = new(file);
             writer.WriteStartObject();
             writer.WritePropertyName("CloudMachine"u8);
             writer.WriteStartObject();

@@ -88,7 +88,7 @@ internal static class AzdHelpers
             cmid = GenerateCloudMachineId();
 
             using FileStream file = File.OpenWrite(appsettings);
-            Utf8JsonWriter writer = new Utf8JsonWriter(file);
+            Utf8JsonWriter writer = new(file);
             writer.WriteStartObject();
             writer.WritePropertyName("CloudMachine"u8);
             writer.WriteStartObject();

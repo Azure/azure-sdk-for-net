@@ -16,10 +16,7 @@ public class KeyVaultFeature : CloudMachineFeature
 
     public KeyVaultFeature(KeyVaultSku? sku = default)
     {
-        if (sku == null)
-        {
-            sku = new KeyVaultSku { Name = KeyVaultSkuName.Standard, Family = KeyVaultSkuFamily.A, };
-        }
+        sku ??= new KeyVaultSku { Name = KeyVaultSkuName.Standard, Family = KeyVaultSkuFamily.A, };
         Sku = sku;
     }
     protected override ProvisionableResource EmitCore(CloudMachineInfrastructure infrastructure)
@@ -31,7 +28,7 @@ public class KeyVaultFeature : CloudMachineFeature
             Properties =
                 new KeyVaultProperties
                 {
-                    Sku = this.Sku,
+                    Sku = Sku,
                     TenantId = BicepFunction.GetSubscription().TenantId,
                     EnabledForDeployment = true,
                     AccessPolicies = [

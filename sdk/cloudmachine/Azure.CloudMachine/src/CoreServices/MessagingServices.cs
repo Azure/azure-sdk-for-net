@@ -46,8 +46,8 @@ public readonly struct MessagingServices
     /// <param name="received"></param>
     public void WhenMessageReceived(Action<string> received)
     {
-        var processor = _cm.Messaging.GetServiceBusProcessor(default);
-        var cm = _cm;
+        ServiceBusProcessor processor = _cm.Messaging.GetServiceBusProcessor(default);
+        CloudMachineClient cm = _cm;
 
         // TODO: How to unsubscribe?
         // TODO: Use a subscription filter to ignore Event Grid system events

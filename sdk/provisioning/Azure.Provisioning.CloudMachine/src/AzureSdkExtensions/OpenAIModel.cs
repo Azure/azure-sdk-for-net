@@ -24,7 +24,7 @@ public class OpenAIModel : CloudMachineFeature
 
     internal OpenAIFeature Account { get; set; } = default!;
 
-    private OpenAIFeature GetOrCreateOpenAI(CloudMachineInfrastructure cm)
+    private static OpenAIFeature GetOrCreateOpenAI(CloudMachineInfrastructure cm)
     {
         foreach (OpenAIFeature feature in cm.Features.FindAll<OpenAIFeature>())
         {
@@ -37,7 +37,7 @@ public class OpenAIModel : CloudMachineFeature
 
     public override void AddTo(CloudMachineInfrastructure cm)
     {
-        OpenAIFeature openAI = GetOrCreateOpenAI(cm);
+        OpenAIFeature openAI = OpenAIModel.GetOrCreateOpenAI(cm);
         openAI.AddModel(this);
     }
 
@@ -51,7 +51,7 @@ public class OpenAIModel : CloudMachineFeature
         };
 
         Debug.Assert(Account != null);
-        var emitted = Account!.Emitted;
+        ProvisionableResource emitted = Account!.Emitted;
         if (emitted == null)
         {
             Account.Emit(cm);

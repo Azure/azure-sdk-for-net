@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
 using System;
-using System.ClientModel.TypeSpec;
 using System.ClientModel.Primitives;
+using System.ClientModel.TypeSpec;
+using System.IO;
+using System.Text.Json;
 using Azure.AI.OpenAI;
 using Azure.Core;
 using Azure.Identity;
-using System.Text.Json;
 
 namespace Azure.CloudMachine;
 
@@ -46,7 +46,7 @@ public class CloudMachineCommands
 
         return false;
 
-        bool Handled(bool exitProcessIfHandled)
+        static bool Handled(bool exitProcessIfHandled)
         {
             if (exitProcessIfHandled) Environment.Exit(0);
             return true;
@@ -63,9 +63,8 @@ public class CloudMachineCommands
         );
         string audience = "https://cognitiveservices.azure.com/.default";
         TokenCredentialAuthenticationPolicy auth = new(credential, [audience]);
-        RestClient client = new RestClient(auth);
+        RestClient client = new(auth);
         string uri = $"https://{cmid}.openai.azure.com/openai/models?api-version=2024-10-21";
-        RequestOptions options = new RequestOptions();
         PipelineResponse response = client.Get(uri);
         if (response.Status != 200)
         {
