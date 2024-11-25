@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_NameSpaceAuthorizationRuleCreate()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/SBNameSpaceAuthorizationRuleCreate.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/NameSpaces/SBNameSpaceAuthorizationRuleCreate.json
             // this example is just showing the usage of "NamespaceAuthorizationRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +59,7 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_NameSpaceAuthorizationRuleDelete()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/SBNameSpaceAuthorizationRuleDelete.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/NameSpaces/SBNameSpaceAuthorizationRuleDelete.json
             // this example is just showing the usage of "NamespaceAuthorizationRules_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NameSpaceAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/SBNameSpaceAuthorizationRuleGet.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/NameSpaces/SBNameSpaceAuthorizationRuleGet.json
             // this example is just showing the usage of "NamespaceAuthorizationRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +117,7 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
         [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_NameSpaceAuthorizationRuleListKey()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/SBNameSpaceAuthorizationRuleListKey.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/NameSpaces/SBNameSpaceAuthorizationRuleListKey.json
             // this example is just showing the usage of "NamespaceAuthorizationRules_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +144,7 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
         [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKeys_NameSpaceAuthorizationRuleRegenerateKey()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/SBNameSpaceAuthorizationRuleRegenerateKey.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/NameSpaces/SBNameSpaceAuthorizationRuleRegenerateKey.json
             // this example is just showing the usage of "NamespaceAuthorizationRules_RegenerateKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
