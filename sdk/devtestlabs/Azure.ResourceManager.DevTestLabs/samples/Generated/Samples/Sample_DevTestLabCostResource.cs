@@ -69,46 +69,43 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabCostResource devTestLabCost = client.GetDevTestLabCostResource(devTestLabCostResourceId);
 
             // invoke the operation
-            DevTestLabCostData data = new DevTestLabCostData(new AzureLocation("placeholder"))
+            DevTestLabCostData data = new DevTestLabCostData(default)
             {
-                TargetCost = new DevTestLabTargetCost()
+                TargetCost = new DevTestLabTargetCost
                 {
                     Status = DevTestLabTargetCostStatus.Enabled,
                     Target = 100,
-                    CostThresholds =
-{
-new DevTestLabCostThreshold()
+                    CostThresholds = {new DevTestLabCostThreshold
 {
 ThresholdId = "00000000-0000-0000-0000-000000000001",
 ThresholdValue = 25,
 DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
 SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-},new DevTestLabCostThreshold()
+}, new DevTestLabCostThreshold
 {
 ThresholdId = "00000000-0000-0000-0000-000000000002",
 ThresholdValue = 50,
 DisplayOnChart = DevTestLabCostThresholdStatus.Enabled,
 SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Enabled,
-},new DevTestLabCostThreshold()
+}, new DevTestLabCostThreshold
 {
 ThresholdId = "00000000-0000-0000-0000-000000000003",
 ThresholdValue = 75,
 DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
 SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-},new DevTestLabCostThreshold()
+}, new DevTestLabCostThreshold
 {
 ThresholdId = "00000000-0000-0000-0000-000000000004",
 ThresholdValue = 100,
 DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
 SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-},new DevTestLabCostThreshold()
+}, new DevTestLabCostThreshold
 {
 ThresholdId = "00000000-0000-0000-0000-000000000005",
 ThresholdValue = 125,
 DisplayOnChart = DevTestLabCostThresholdStatus.Disabled,
 SendNotificationWhenExceeded = DevTestLabCostThresholdStatus.Disabled,
-}
-},
+}},
                     CycleStartOn = DateTimeOffset.Parse("2020-12-01T00:00:00.000Z"),
                     CycleEndOn = DateTimeOffset.Parse("2020-12-31T00:00:00.000Z"),
                     CycleType = DevTestLabReportingCycleType.CalendarMonth,

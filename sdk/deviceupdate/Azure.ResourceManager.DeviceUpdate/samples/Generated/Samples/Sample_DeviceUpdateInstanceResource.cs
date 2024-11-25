@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
             DeviceUpdateInstanceResource deviceUpdateInstance = client.GetDeviceUpdateInstanceResource(deviceUpdateInstanceResourceId);
 
             // invoke the operation
-            DeviceUpdateInstancePatch patch = new DeviceUpdateInstancePatch()
+            DeviceUpdateInstancePatch patch = new DeviceUpdateInstancePatch
             {
                 Tags =
 {
-["tagKey"] = "tagValue",
+["tagKey"] = "tagValue"
 },
             };
             DeviceUpdateInstanceResource result = await deviceUpdateInstance.UpdateAsync(patch);
