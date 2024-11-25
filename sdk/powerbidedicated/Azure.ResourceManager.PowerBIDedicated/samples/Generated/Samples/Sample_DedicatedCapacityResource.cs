@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.PowerBIDedicated.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Samples
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
             DedicatedCapacityResource dedicatedCapacity = client.GetDedicatedCapacityResource(dedicatedCapacityResourceId);
 
             // invoke the operation
-            DedicatedCapacityPatch patch = new DedicatedCapacityPatch()
+            DedicatedCapacityPatch patch = new DedicatedCapacityPatch
             {
                 Sku = new CapacitySku("A1")
                 {
@@ -102,12 +101,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
                 },
                 Tags =
 {
-["testKey"] = "testValue",
+["testKey"] = "testValue"
 },
-                AdministrationMembers =
-{
-"azsdktest@microsoft.com","azsdktest2@microsoft.com"
-},
+                AdministrationMembers = { "azsdktest@microsoft.com", "azsdktest2@microsoft.com" },
             };
             ArmOperation<DedicatedCapacityResource> lro = await dedicatedCapacity.UpdateAsync(WaitUntil.Completed, patch);
             DedicatedCapacityResource result = lro.Value;
@@ -140,7 +136,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
             DedicatedCapacityResource dedicatedCapacity = client.GetDedicatedCapacityResource(dedicatedCapacityResourceId);
 
             // invoke the operation
-            DedicatedCapacityPatch patch = new DedicatedCapacityPatch()
+            DedicatedCapacityPatch patch = new DedicatedCapacityPatch
             {
                 Sku = new CapacitySku("A1")
                 {
@@ -148,7 +144,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
                 },
                 Tags =
 {
-["testKey"] = "testValue",
+["testKey"] = "testValue"
 },
                 Mode = Mode.Gen2,
             };
@@ -216,64 +212,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetDedicatedCapacities_GetDetailsOfACapacity()
-        {
-            // Generated from example definition: specification/powerbidedicated/resource-manager/Microsoft.PowerBIdedicated/stable/2021-01-01/examples/listCapacitiesInSubscription.json
-            // this example is just showing the usage of "Capacities_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (DedicatedCapacityResource item in subscriptionResource.GetDedicatedCapacitiesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DedicatedCapacityData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetSkusCapacities_ListEligibleSKUsForANewCapacity()
-        {
-            // Generated from example definition: specification/powerbidedicated/resource-manager/Microsoft.PowerBIdedicated/stable/2021-01-01/examples/listSKUsForNew.json
-            // this example is just showing the usage of "Capacities_ListSkus" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CapacitySku item in subscriptionResource.GetSkusCapacitiesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetSkusForCapacity_ListEligibleSKUsForAnExistingCapacity()
         {
             // Generated from example definition: specification/powerbidedicated/resource-manager/Microsoft.PowerBIdedicated/stable/2021-01-01/examples/listSKUsForExisting.json
@@ -299,36 +237,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
             }
 
             Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CheckNameAvailabilityCapacity_CheckNameAvailabilityOfACapacity()
-        {
-            // Generated from example definition: specification/powerbidedicated/resource-manager/Microsoft.PowerBIdedicated/stable/2021-01-01/examples/checkNameAvailability.json
-            // this example is just showing the usage of "Capacities_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            AzureLocation location = new AzureLocation("West US");
-            CheckCapacityNameAvailabilityContent content = new CheckCapacityNameAvailabilityContent()
-            {
-                Name = "azsdktest",
-                ResourceType = "Microsoft.PowerBIDedicated/capacities",
-            };
-            CheckCapacityNameAvailabilityResult result = await subscriptionResource.CheckNameAvailabilityCapacityAsync(location, content);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }
