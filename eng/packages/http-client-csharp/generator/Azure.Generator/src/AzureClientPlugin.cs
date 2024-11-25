@@ -5,10 +5,9 @@ using Microsoft.CodeAnalysis;
 using Microsoft.Generator.CSharp;
 using Microsoft.Generator.CSharp.ClientModel;
 using System;
-using System.ClientModel;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Reflection;
 
 namespace Azure.Generator;
 
@@ -47,19 +46,8 @@ public class AzureClientPlugin : ClientModelPlugin
     {
         base.Configure();
         AddMetadataReference(MetadataReference.CreateFromFile(typeof(Response).Assembly.Location));
-        AddSharedSourceDirectory(Path.Combine(GetRepositoryRootPath(), "sdk/core/Azure.Core/src/Shared"));
-    }
-
-    private string GetRepositoryRootPath()
-    {
-        // This assumes we're always running in place, in the repo
-        string? path = Environment.CurrentDirectory;
-        while (path is not null && !Directory.Exists(Path.Combine(path, ".git")))
-        {
-            // Walk up a level
-            path = Path.GetDirectoryName(path);
-        }
-        return path ?? throw new InvalidOperationException("Can't find the repository root directory.");
+        var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "Shared/Core");
+        AddSharedSourceDirectory(sharedSourceDirectory);
     }
 
     /// <summary>
