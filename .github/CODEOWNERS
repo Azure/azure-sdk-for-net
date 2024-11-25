@@ -1073,10 +1073,10 @@
 # ServiceOwners:                                                   @sahilarora92 @dhruvil009 @rahuls-microsoft
 
 # PRLabel: %HybridConnectivity
-/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @alexmahonic
+/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @alexmahonic @PriyankaHariharan @apmehrotra
 
 # ServiceLabel: %%HybridConnectivity %Mgmt
-# ServiceOwners:                                                   @alexmahonic
+# ServiceOwners:                                                   @alexmahonic @PriyankaHariharan @apmehrotra
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
