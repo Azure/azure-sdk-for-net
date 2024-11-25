@@ -10,6 +10,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Azure.Communication.Sms.Models;
 
 namespace Azure.Communication.Sms.Tests
 {
@@ -31,8 +32,8 @@ namespace Azure.Communication.Sms.Tests
                    message: "Hi");
                 SmsSendResult result = response.Value;
                 Console.WriteLine($"Sms id: {result.MessageId}");
-                AssertHappyPath(result);
-                AssertRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
+                AssertSmsSendingHappyPath(result);
+                AssertSmsSendingRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
             }
             catch (RequestFailedException ex)
             {
@@ -57,8 +58,8 @@ namespace Azure.Communication.Sms.Tests
                    message: "Hi");
                 SmsSendResult result = response.Value;
                 Console.WriteLine($"Sms id: {result.MessageId}");
-                AssertHappyPath(result);
-                AssertRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
+                AssertSmsSendingHappyPath(result);
+                AssertSmsSendingRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
             }
             catch (RequestFailedException ex)
             {
@@ -110,11 +111,11 @@ namespace Azure.Communication.Sms.Tests
                        Tag = "marketing", // custom tags
                        DeliveryReportTimeoutInSeconds = 90 // OPTIONAL
                    });
-                AssertRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
+                AssertSmsSendingRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
                 foreach (SmsSendResult result in response.Value)
                 {
                     Console.WriteLine($"Sms id: {result.MessageId}");
-                    AssertHappyPath(result);
+                    AssertSmsSendingHappyPath(result);
                 }
             }
             catch (RequestFailedException ex)
@@ -143,15 +144,15 @@ namespace Azure.Communication.Sms.Tests
                    to: TestEnvironment.ToPhoneNumber,
                    message: "Hi");
 
-                AssertRawResponseHappyPath(firstMessageResponse.GetRawResponse().ContentStream ?? new MemoryStream());
-                AssertRawResponseHappyPath(secondMessageResponse.GetRawResponse().ContentStream ?? new MemoryStream());
+                AssertSmsSendingRawResponseHappyPath(firstMessageResponse.GetRawResponse().ContentStream ?? new MemoryStream());
+                AssertSmsSendingRawResponseHappyPath(secondMessageResponse.GetRawResponse().ContentStream ?? new MemoryStream());
 
                 SmsSendResult firstMessageResult = firstMessageResponse.Value;
                 SmsSendResult secondMessageResult = secondMessageResponse.Value;
 
                 Assert.AreNotEqual(firstMessageResult.MessageId, secondMessageResult.MessageId);
-                AssertHappyPath(firstMessageResult);
-                AssertHappyPath(secondMessageResult);
+                AssertSmsSendingHappyPath(firstMessageResult);
+                AssertSmsSendingHappyPath(secondMessageResult);
             }
             catch (RequestFailedException ex)
             {
@@ -203,14 +204,134 @@ namespace Azure.Communication.Sms.Tests
             Assert.Fail("SendAsync should have thrown an exception.");
         }
 
-        private void AssertHappyPath(SmsSendResult sendResult)
+        [Test]
+        public async Task CheckOptOutFromNullNumberShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+                IEnumerable<string>? to = new string[] { TestEnvironment.ToPhoneNumber };
+                Response<IReadOnlyList<OptOutResponseItem>> result = await client.OptOuts.CheckAsync(
+                    from: null,
+                    to: to);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("from", ex.ParamName);
+                return;
+            }
+            Assert.Fail("CheckAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task CheckOptOutToNullNumberShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+                IEnumerable<string>? to = null;
+                Response<IReadOnlyList<OptOutResponseItem>> result = await client.OptOuts.CheckAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("to", ex.ParamName);
+                return;
+            }
+            Assert.Fail("CheckAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task CheckOptOutToCollectionContainingNullShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+                IEnumerable<string>? to = new string[]
+                {
+                    TestEnvironment.ToPhoneNumber,
+                    null
+                };
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
+                Response<IReadOnlyList<OptOutResponseItem>> result = await client.OptOuts.CheckAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("to", ex.ParamName);
+                return;
+            }
+            Assert.Fail("CheckAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task AddOptOutEndpointShouldMarkRecipientAsOptedOut()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+                IEnumerable<string>? to = new[] { TestEnvironment.ToPhoneNumber };
+
+                Response<IReadOnlyList<OptOutChangeResponseItem>> addResult = await client.OptOuts.AddAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+
+                Response<IReadOnlyList<OptOutResponseItem>> checkResult = await client.OptOuts.CheckAsync(
+                  from: TestEnvironment.FromPhoneNumber,
+                  to: to);
+
+                Assert.IsTrue(checkResult.Value[0].IsOptedOut);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("Exception should not have been thrown.");
+                Console.WriteLine(ex);
+                return;
+            }
+        }
+
+        [Test]
+        public async Task RemoveOptOutEndpointShouldMarkRecipientAsOptedIn()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+                IEnumerable<string>? to = new[] { TestEnvironment.ToPhoneNumber };
+
+                Response<IReadOnlyList<OptOutChangeResponseItem>> addResult = await client.OptOuts.AddAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+
+                Response<IReadOnlyList<OptOutChangeResponseItem>> removeResult = await client.OptOuts.RemoveAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+
+                Response<IReadOnlyList<OptOutResponseItem>> checkResult = await client.OptOuts.CheckAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+
+                Assert.IsFalse(checkResult.Value[0].IsOptedOut);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("Exception should not have been thrown.");
+                Console.WriteLine(ex);
+                return;
+            }
+        }
+
+        private void AssertSmsSendingHappyPath(SmsSendResult sendResult)
         {
             Assert.True(sendResult.Successful);
             Assert.AreEqual(202, sendResult.HttpStatusCode);
             Assert.IsFalse(string.IsNullOrWhiteSpace(sendResult.MessageId));
         }
 
-        private void AssertRawResponseHappyPath(Stream contentStream)
+        private void AssertSmsSendingRawResponseHappyPath(Stream contentStream)
         {
             if (contentStream.Length > 0)
             {
