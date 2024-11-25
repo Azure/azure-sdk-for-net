@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Maps.TimeZones;
 
 namespace Azure.Maps.TimeZones.Tests
@@ -15,7 +16,8 @@ namespace Azure.Maps.TimeZones.Tests
         protected MapsTimeZoneClient CreateClient()
         {
             return InstrumentClient(new MapsTimeZoneClient(
-                credential: new AzureKeyCredential("<My Subscription Key>"),
+                credential: TestEnvironment.Credential,
+                clientId: TestEnvironment.MapAccountClientId,
                 options: InstrumentClientOptions(new MapsTimeZoneClientOptions())
              ));
         }
