@@ -88,54 +88,45 @@ namespace Azure.ResourceManager.Compute.Samples
                     Product = "windows-data-science-vm",
                     PromotionCode = "aaaaaaaaaa",
                 },
-                Identity = new ManagedServiceIdentity("SystemAssigned")
+                Properties = new VirtualMachineScaleSetPatchProperties()
                 {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("key3951")] = new UserAssignedIdentity(),
-},
-                },
-                Zones =
-{
-"1","2","3"
-},
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
-                {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                    RollingUpgradePolicy = new RollingUpgradePolicy()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        MaxBatchInstancePercent = 49,
-                        MaxUnhealthyInstancePercent = 81,
-                        MaxUnhealthyUpgradedInstancePercent = 98,
-                        PauseTimeBetweenBatches = "aaaaaaaaaaaaaaa",
-                        EnableCrossZoneUpgrade = true,
-                        PrioritizeUnhealthyInstances = true,
-                        RollbackFailedInstancesOnPolicyBreach = true,
-                        IsMaxSurgeEnabled = true,
-                    },
-                    AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
-                    {
-                        EnableAutomaticOSUpgrade = true,
-                        DisableAutomaticRollback = true,
-                        OSRollingUpgradeDeferral = true,
-                    },
-                },
-                AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
-                {
-                    Enabled = true,
-                    GracePeriod = "PT30M",
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetUpdateVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetUpdateOSProfile()
-                    {
-                        CustomData = "aaaaaaaaaaaaaaaaaaaaaaaaaa",
-                        WindowsConfiguration = new WindowsConfiguration()
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
+                        RollingUpgradePolicy = new RollingUpgradePolicy()
                         {
-                            ProvisionVmAgent = true,
-                            IsAutomaticUpdatesEnabled = true,
-                            TimeZone = "aaaaaaaaaaaaaaaa",
-                            AdditionalUnattendContent =
+                            MaxBatchInstancePercent = 49,
+                            MaxUnhealthyInstancePercent = 81,
+                            MaxUnhealthyUpgradedInstancePercent = 98,
+                            PauseTimeBetweenBatches = "aaaaaaaaaaaaaaa",
+                            EnableCrossZoneUpgrade = true,
+                            PrioritizeUnhealthyInstances = true,
+                            RollbackFailedInstancesOnPolicyBreach = true,
+                            IsMaxSurgeEnabled = true,
+                        },
+                        AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
+                        {
+                            EnableAutomaticOSUpgrade = true,
+                            DisableAutomaticRollback = true,
+                            OSRollingUpgradeDeferral = true,
+                        },
+                    },
+                    AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
+                    {
+                        Enabled = true,
+                        GracePeriod = "PT30M",
+                    },
+                    VirtualMachineProfile = new VirtualMachineScaleSetUpdateVmProfile()
+                    {
+                        OSProfile = new VirtualMachineScaleSetUpdateOSProfile()
+                        {
+                            CustomData = "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+                            WindowsConfiguration = new WindowsConfiguration()
+                            {
+                                ProvisionVmAgent = true,
+                                IsAutomaticUpdatesEnabled = true,
+                                TimeZone = "aaaaaaaaaaaaaaaa",
+                                AdditionalUnattendContent =
 {
 new AdditionalUnattendContent()
 {
@@ -145,17 +136,17 @@ SettingName = SettingName.AutoLogon,
 Content = "aaaaaaaaaaaaaaaaaaaa",
 }
 },
-                            PatchSettings = new PatchSettings()
-                            {
-                                PatchMode = WindowsVmGuestPatchMode.AutomaticByPlatform,
-                                EnableHotpatching = true,
-                                AssessmentMode = WindowsPatchAssessmentMode.ImageDefault,
-                                AutomaticByPlatformSettings = new WindowsVmGuestPatchAutomaticByPlatformSettings()
+                                PatchSettings = new PatchSettings()
                                 {
-                                    RebootSetting = WindowsVmGuestPatchAutomaticByPlatformRebootSetting.Never,
+                                    PatchMode = WindowsVmGuestPatchMode.AutomaticByPlatform,
+                                    EnableHotpatching = true,
+                                    AssessmentMode = WindowsPatchAssessmentMode.ImageDefault,
+                                    AutomaticByPlatformSettings = new WindowsVmGuestPatchAutomaticByPlatformSettings()
+                                    {
+                                        RebootSetting = WindowsVmGuestPatchAutomaticByPlatformRebootSetting.Never,
+                                    },
                                 },
-                            },
-                            WinRMListeners =
+                                WinRMListeners =
 {
 new WinRMListener()
 {
@@ -163,11 +154,11 @@ Protocol = WinRMListenerProtocolType.Http,
 CertificateUri = new Uri("aaaaaaaaaaaaaaaaaaaaaa"),
 }
 },
-                        },
-                        LinuxConfiguration = new LinuxConfiguration()
-                        {
-                            IsPasswordAuthenticationDisabled = true,
-                            SshPublicKeys =
+                            },
+                            LinuxConfiguration = new LinuxConfiguration()
+                            {
+                                IsPasswordAuthenticationDisabled = true,
+                                SshPublicKeys =
 {
 new SshPublicKeyConfiguration()
 {
@@ -175,14 +166,14 @@ Path = "/home/{your-username}/.ssh/authorized_keys",
 KeyData = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1",
 }
 },
-                            ProvisionVmAgent = true,
-                            PatchSettings = new LinuxPatchSettings()
-                            {
-                                PatchMode = LinuxVmGuestPatchMode.ImageDefault,
-                                AssessmentMode = LinuxPatchAssessmentMode.ImageDefault,
+                                ProvisionVmAgent = true,
+                                PatchSettings = new LinuxPatchSettings()
+                                {
+                                    PatchMode = LinuxVmGuestPatchMode.ImageDefault,
+                                    AssessmentMode = LinuxPatchAssessmentMode.ImageDefault,
+                                },
                             },
-                        },
-                        Secrets =
+                            Secrets =
 {
 new VaultSecretGroup()
 {
@@ -197,40 +188,40 @@ CertificateStore = "aaaaaaaaaaaaaaaaaaaaaaaaa",
 },
 }
 },
-                    },
-                    StorageProfile = new VirtualMachineScaleSetUpdateStorageProfile()
-                    {
-                        ImageReference = new ImageReference()
-                        {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
-                            SharedGalleryImageUniqueId = "aaaaaa",
-                            Id = new ResourceIdentifier("aaaaaaaaaaaaaaaaaaa"),
                         },
-                        OSDisk = new VirtualMachineScaleSetUpdateOSDisk()
+                        StorageProfile = new VirtualMachineScaleSetUpdateStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            WriteAcceleratorEnabled = true,
-                            DiffDiskSettings = new DiffDiskSettings()
+                            ImageReference = new ImageReference()
                             {
-                                Option = DiffDiskOption.Local,
-                                Placement = DiffDiskPlacement.CacheDisk,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                                SharedGalleryImageUniqueId = "aaaaaa",
+                                Id = new ResourceIdentifier("aaaaaaaaaaaaaaaaaaa"),
                             },
-                            DiskSizeGB = 6,
-                            ImageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk.vhd"),
-                            VhdContainers =
+                            OSDisk = new VirtualMachineScaleSetUpdateOSDisk()
+                            {
+                                Caching = CachingType.ReadWrite,
+                                WriteAcceleratorEnabled = true,
+                                DiffDiskSettings = new DiffDiskSettings()
+                                {
+                                    Option = DiffDiskOption.Local,
+                                    Placement = DiffDiskPlacement.CacheDisk,
+                                },
+                                DiskSizeGB = 6,
+                                ImageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk.vhd"),
+                                VhdContainers =
 {
 "aa"
 },
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
-                            {
-                                StorageAccountType = StorageAccountType.StandardLrs,
-                                DiskEncryptionSetId = new ResourceIdentifier("aaaaaaaaaaaa"),
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                    DiskEncryptionSetId = new ResourceIdentifier("aaaaaaaaaaaa"),
+                                },
                             },
-                        },
-                        DataDisks =
+                            DataDisks =
 {
 new VirtualMachineScaleSetDataDisk(26,DiskCreateOptionType.Empty)
 {
@@ -247,11 +238,11 @@ DiskIopsReadWrite = 28L,
 DiskMBpsReadWrite = 15L,
 }
 },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetUpdateNetworkProfile()
-                    {
-                        HealthProbeId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/disk123"),
-                        NetworkInterfaceConfigurations =
+                        },
+                        NetworkProfile = new VirtualMachineScaleSetUpdateNetworkProfile()
+                        {
+                            HealthProbeId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/disk123"),
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetUpdateNetworkConfiguration()
 {
@@ -312,26 +303,26 @@ EnableIPForwarding = true,
 DeleteOption = ComputeDeleteOption.Delete,
 }
 },
-                        NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,
-                    },
-                    SecurityProfile = new SecurityProfile()
-                    {
-                        UefiSettings = new UefiSettings()
-                        {
-                            IsSecureBootEnabled = true,
-                            IsVirtualTpmEnabled = true,
+                            NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,
                         },
-                        EncryptionAtHost = true,
-                        SecurityType = SecurityType.TrustedLaunch,
-                    },
-                    BootDiagnostics = new BootDiagnostics()
-                    {
-                        Enabled = true,
-                        StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
-                    },
-                    ExtensionProfile = new VirtualMachineScaleSetExtensionProfile()
-                    {
-                        Extensions =
+                        SecurityProfile = new SecurityProfile()
+                        {
+                            UefiSettings = new UefiSettings()
+                            {
+                                IsSecureBootEnabled = true,
+                                IsVirtualTpmEnabled = true,
+                            },
+                            EncryptionAtHost = true,
+                            SecurityType = SecurityType.TrustedLaunch,
+                        },
+                        BootDiagnostics = new BootDiagnostics()
+                        {
+                            Enabled = true,
+                            StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
+                        },
+                        ExtensionProfile = new VirtualMachineScaleSetExtensionProfile()
+                        {
+                            Extensions =
 {
 new VirtualMachineScaleSetExtensionData()
 {
@@ -354,37 +345,49 @@ ProvisionAfterExtensions =
 SuppressFailures = true,
 }
 },
-                        ExtensionsTimeBudget = "PT1H20M",
-                    },
-                    LicenseType = "aaaaaaaaaaaa",
-                    BillingMaxPrice = -1,
-                    ScheduledEventsProfile = new ComputeScheduledEventsProfile()
-                    {
-                        TerminateNotificationProfile = new TerminateNotificationProfile()
-                        {
-                            NotBeforeTimeout = "PT10M",
-                            Enable = true,
+                            ExtensionsTimeBudget = "PT1H20M",
                         },
+                        LicenseType = "aaaaaaaaaaaa",
+                        BillingMaxPrice = -1,
+                        ScheduledEventsProfile = new ComputeScheduledEventsProfile()
+                        {
+                            TerminateNotificationProfile = new TerminateNotificationProfile()
+                            {
+                                NotBeforeTimeout = "PT10M",
+                                Enable = true,
+                            },
+                        },
+                        UserData = "aaaaaaaaaaaaa",
                     },
-                    UserData = "aaaaaaaaaaaaa",
-                },
-                Overprovision = true,
-                DoNotRunExtensionsOnOverprovisionedVms = true,
-                SinglePlacementGroup = true,
-                AdditionalCapabilities = new AdditionalCapabilities()
-                {
-                    UltraSsdEnabled = true,
-                    HibernationEnabled = true,
-                },
-                ScaleInPolicy = new ScaleInPolicy()
-                {
-                    Rules =
+                    Overprovision = true,
+                    DoNotRunExtensionsOnOverprovisionedVms = true,
+                    SinglePlacementGroup = true,
+                    AdditionalCapabilities = new AdditionalCapabilities()
+                    {
+                        UltraSsdEnabled = true,
+                        HibernationEnabled = true,
+                    },
+                    ScaleInPolicy = new ScaleInPolicy()
+                    {
+                        Rules =
 {
 VirtualMachineScaleSetScaleInRule.OldestVm
 },
-                    ForceDeletion = true,
+                        ForceDeletion = true,
+                    },
+                    ProximityPlacementGroupId = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
                 },
-                ProximityPlacementGroupId = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
+                Identity = new ManagedServiceIdentity("SystemAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("key3951")] = new UserAssignedIdentity(),
+},
+                },
+                Zones =
+{
+"1","2","3"
+},
                 Tags =
 {
 ["key246"] = "aaaaaaaaaaaaaaaaaaaaaaaa",
