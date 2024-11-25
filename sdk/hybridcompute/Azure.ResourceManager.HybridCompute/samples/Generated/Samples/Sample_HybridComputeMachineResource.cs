@@ -12,90 +12,12 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridCompute.Samples
 {
     public partial class Sample_HybridComputeMachineResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateAMachine()
-        {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_Update.json
-            // this example is just showing the usage of "Machines_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HybridComputeMachineResource created on azure
-            // for more information of creating HybridComputeMachineResource, please refer to the document of HybridComputeMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string machineName = "myMachine";
-            ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
-            HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
-
-            // invoke the operation
-            HybridComputeMachinePatch patch = new HybridComputeMachinePatch()
-            {
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
-                LocationData = new HybridComputeLocation("Redmond"),
-                OSProfile = new HybridComputeOSProfile()
-                {
-                    WindowsConfiguration = new HybridComputeWindowsConfiguration()
-                    {
-                        AssessmentMode = AssessmentModeType.ImageDefault,
-                        PatchMode = PatchModeType.AutomaticByPlatform,
-                        IsHotpatchingEnabled = true,
-                    },
-                    LinuxConfiguration = new HybridComputeLinuxConfiguration()
-                    {
-                        AssessmentMode = AssessmentModeType.ImageDefault,
-                        PatchMode = PatchModeType.Manual,
-                    },
-                },
-                ParentClusterResourceId = new ResourceIdentifier("{AzureStackHCIResourceId}"),
-                PrivateLinkScopeResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.HybridCompute/privateLinkScopes/privateLinkScopeName"),
-            };
-            HybridComputeMachineResource result = await hybridComputeMachine.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HybridComputeMachineData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteAMachine()
-        {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_Delete.json
-            // this example is just showing the usage of "Machines_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HybridComputeMachineResource created on azure
-            // for more information of creating HybridComputeMachineResource, please refer to the document of HybridComputeMachineResource
-            string subscriptionId = "{subscriptionId}";
-            string resourceGroupName = "myResourceGroup";
-            string machineName = "myMachine";
-            ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
-            HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
-
-            // invoke the operation
-            await hybridComputeMachine.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMachine()
@@ -159,6 +81,83 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteAMachine()
+        {
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_Delete.json
+            // this example is just showing the usage of "Machines_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HybridComputeMachineResource created on azure
+            // for more information of creating HybridComputeMachineResource, please refer to the document of HybridComputeMachineResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "myResourceGroup";
+            string machineName = "myMachine";
+            ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
+            HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
+
+            // invoke the operation
+            await hybridComputeMachine.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateAMachine()
+        {
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_Update.json
+            // this example is just showing the usage of "Machines_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HybridComputeMachineResource created on azure
+            // for more information of creating HybridComputeMachineResource, please refer to the document of HybridComputeMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string machineName = "myMachine";
+            ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
+            HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
+
+            // invoke the operation
+            HybridComputeMachinePatch patch = new HybridComputeMachinePatch
+            {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                LocationData = new HybridComputeLocation("Redmond"),
+                OSProfile = new HybridComputeOSProfile
+                {
+                    WindowsConfiguration = new HybridComputeWindowsConfiguration
+                    {
+                        AssessmentMode = AssessmentModeType.ImageDefault,
+                        PatchMode = PatchModeType.AutomaticByPlatform,
+                        IsHotpatchingEnabled = true,
+                    },
+                    LinuxConfiguration = new HybridComputeLinuxConfiguration
+                    {
+                        AssessmentMode = AssessmentModeType.ImageDefault,
+                        PatchMode = PatchModeType.Manual,
+                    },
+                },
+                ParentClusterResourceId = new ResourceIdentifier("{AzureStackHCIResourceId}"),
+                PrivateLinkScopeResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.HybridCompute/privateLinkScopes/privateLinkScopeName"),
+            };
+            HybridComputeMachineResource result = await hybridComputeMachine.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HybridComputeMachineData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AssessPatches_AssessPatchStateOfAMachine()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machine_AssessPatches.json
@@ -207,12 +206,9 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             // invoke the operation
             MachineInstallPatchesContent content = new MachineInstallPatchesContent(XmlConvert.ToTimeSpan("PT4H"), VmGuestPatchRebootSetting.IfRequired)
             {
-                WindowsParameters = new HybridComputeWindowsParameters()
+                WindowsParameters = new HybridComputeWindowsParameters
                 {
-                    ClassificationsToInclude =
-{
-VmGuestPatchClassificationWindow.Critical,VmGuestPatchClassificationWindow.Security
-},
+                    ClassificationsToInclude = { VmGuestPatchClassificationWindow.Critical, VmGuestPatchClassificationWindow.Security },
                     MaxPatchPublishOn = DateTimeOffset.Parse("2021-08-19T02:36:43.0539904+00:00"),
                 },
             };
@@ -220,37 +216,6 @@ VmGuestPatchClassificationWindow.Critical,VmGuestPatchClassificationWindow.Secur
             MachineInstallPatchesResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetHybridComputeMachines_ListMachinesByResourceGroup()
-        {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_ListBySubscription.json
-            // this example is just showing the usage of "Machines_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (HybridComputeMachineResource item in subscriptionResource.GetHybridComputeMachinesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                HybridComputeMachineData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -274,18 +239,18 @@ VmGuestPatchClassificationWindow.Critical,VmGuestPatchClassificationWindow.Secur
             HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
 
             // invoke the operation
-            MachineExtensionUpgrade extensionUpgradeParameters = new MachineExtensionUpgrade()
+            MachineExtensionUpgrade extensionUpgradeParameters = new MachineExtensionUpgrade
             {
                 ExtensionTargets =
 {
-["Microsoft.Azure.Monitoring"] = new ExtensionTargetProperties()
+["Microsoft.Azure.Monitoring"] = new ExtensionTargetProperties
 {
 TargetVersion = "2.0",
 },
-["Microsoft.Compute.CustomScriptExtension"] = new ExtensionTargetProperties()
+["Microsoft.Compute.CustomScriptExtension"] = new ExtensionTargetProperties
 {
 TargetVersion = "1.10",
-},
+}
 },
             };
             await hybridComputeMachine.UpgradeExtensionsAsync(WaitUntil.Completed, extensionUpgradeParameters);

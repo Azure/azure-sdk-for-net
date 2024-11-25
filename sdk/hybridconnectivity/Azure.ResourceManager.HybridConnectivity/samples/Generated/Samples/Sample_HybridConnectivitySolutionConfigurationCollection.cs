@@ -18,6 +18,68 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_SolutionConfigurationsCreateOrUpdate()
+        {
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/PublicCloud/stable/2024-12-01/examples/SolutionConfigurations_CreateOrUpdate.json
+            // this example is just showing the usage of "SolutionConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this HybridConnectivitySolutionConfigurationResource
+            string resourceUri = "ymuj";
+            HybridConnectivitySolutionConfigurationCollection collection = client.GetHybridConnectivitySolutionConfigurations(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string solutionConfiguration = "keebwujt";
+            HybridConnectivitySolutionConfigurationData data = new HybridConnectivitySolutionConfigurationData
+            {
+                Properties = new SolutionConfigurationProperties("nmtqllkyohwtsthxaimsye")
+                {
+                    SolutionSettings = { },
+                },
+            };
+            ArmOperation<HybridConnectivitySolutionConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, solutionConfiguration, data);
+            HybridConnectivitySolutionConfigurationResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HybridConnectivitySolutionConfigurationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_SolutionConfigurationsGet()
+        {
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/PublicCloud/stable/2024-12-01/examples/SolutionConfigurations_Get.json
+            // this example is just showing the usage of "SolutionConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this HybridConnectivitySolutionConfigurationResource
+            string resourceUri = "ymuj";
+            HybridConnectivitySolutionConfigurationCollection collection = client.GetHybridConnectivitySolutionConfigurations(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string solutionConfiguration = "tks";
+            HybridConnectivitySolutionConfigurationResource result = await collection.GetAsync(solutionConfiguration);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HybridConnectivitySolutionConfigurationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SolutionConfigurationsList()
         {
             // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/PublicCloud/stable/2024-12-01/examples/SolutionConfigurations_List.json
@@ -28,13 +90,9 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this HybridConnectivitySolutionConfigurationResource
             string resourceUri = "ymuj";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            HybridConnectivitySolutionConfigurationCollection collection = client.GetHybridConnectivitySolutionConfigurations(scopeId);
+            HybridConnectivitySolutionConfigurationCollection collection = client.GetHybridConnectivitySolutionConfigurations(new ResourceIdentifier(resourceUri));
 
             // invoke the operation and iterate over the result
             await foreach (HybridConnectivitySolutionConfigurationResource item in collection.GetAllAsync())
@@ -51,37 +109,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_SolutionConfigurationsGet()
-        {
-            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/PublicCloud/stable/2024-12-01/examples/SolutionConfigurations_Get.json
-            // this example is just showing the usage of "SolutionConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this HybridConnectivitySolutionConfigurationResource
-            string resourceUri = "ymuj";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            HybridConnectivitySolutionConfigurationCollection collection = client.GetHybridConnectivitySolutionConfigurations(scopeId);
-
-            // invoke the operation
-            string solutionConfiguration = "tks";
-            HybridConnectivitySolutionConfigurationResource result = await collection.GetAsync(solutionConfiguration);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HybridConnectivitySolutionConfigurationData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Exists_SolutionConfigurationsGet()
         {
             // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/PublicCloud/stable/2024-12-01/examples/SolutionConfigurations_Get.json
@@ -92,13 +119,9 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this HybridConnectivitySolutionConfigurationResource
             string resourceUri = "ymuj";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            HybridConnectivitySolutionConfigurationCollection collection = client.GetHybridConnectivitySolutionConfigurations(scopeId);
+            HybridConnectivitySolutionConfigurationCollection collection = client.GetHybridConnectivitySolutionConfigurations(new ResourceIdentifier(resourceUri));
 
             // invoke the operation
             string solutionConfiguration = "tks";
@@ -119,13 +142,9 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this HybridConnectivitySolutionConfigurationResource
             string resourceUri = "ymuj";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            HybridConnectivitySolutionConfigurationCollection collection = client.GetHybridConnectivitySolutionConfigurations(scopeId);
+            HybridConnectivitySolutionConfigurationCollection collection = client.GetHybridConnectivitySolutionConfigurations(new ResourceIdentifier(resourceUri));
 
             // invoke the operation
             string solutionConfiguration = "tks";
@@ -144,47 +163,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_SolutionConfigurationsCreateOrUpdate()
-        {
-            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/PublicCloud/stable/2024-12-01/examples/SolutionConfigurations_CreateOrUpdate.json
-            // this example is just showing the usage of "SolutionConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this HybridConnectivitySolutionConfigurationResource
-            string resourceUri = "ymuj";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            HybridConnectivitySolutionConfigurationCollection collection = client.GetHybridConnectivitySolutionConfigurations(scopeId);
-
-            // invoke the operation
-            string solutionConfiguration = "keebwujt";
-            HybridConnectivitySolutionConfigurationData data = new HybridConnectivitySolutionConfigurationData()
-            {
-                Properties = new SolutionConfigurationProperties("nmtqllkyohwtsthxaimsye")
-                {
-                    SolutionSettings =
-{
-},
-                },
-            };
-            ArmOperation<HybridConnectivitySolutionConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, solutionConfiguration, data);
-            HybridConnectivitySolutionConfigurationResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HybridConnectivitySolutionConfigurationData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }
