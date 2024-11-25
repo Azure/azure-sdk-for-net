@@ -4,7 +4,6 @@
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -244,10 +243,10 @@ public class ClientLoggingOptions
 
     internal PipelineMessageSanitizer GetPipelineMessageSanitizer()
     {
-        string[] headers = _allowedHeaderNames == null ? DefaultAllowedHeaderNames : _allowedHeaderNames.ToArray();
-        string[] queryParams = _allowedQueryParameters == null ? DefaultAllowedQueryParameters : _allowedQueryParameters.ToArray();
+        string[] headers = _allowedHeaderNames == null ? DefaultAllowedHeaderNames : [.. _allowedHeaderNames];
+        string[] queryParams = _allowedQueryParameters == null ? DefaultAllowedQueryParameters : [.. _allowedQueryParameters];
 
-        _sanitizer ??= new PipelineMessageSanitizer(headers, queryParams);
+        _sanitizer ??= new PipelineMessageSanitizer(queryParams, headers);
 
         return _sanitizer;
     }

@@ -72,7 +72,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         };
 
         var response = new MockPipelineResponse(isError ? 500 : 200);
-        response.SetContent(new byte[] { 1, 2, 3 });
+        response.SetContent([1, 2, 3]);
 
         await CreatePipelineAndSendRequest(response, loggingOptions, requestContentBytes: Encoding.UTF8.GetBytes(("Hello world")));
 

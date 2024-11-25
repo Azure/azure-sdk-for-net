@@ -15,10 +15,10 @@ public class TestLogger : ILogger
     private LogLevel _logLevel;
     private readonly ConcurrentQueue<LoggerEvent> _logs = new();
 
-    public TestLogger(LogLevel logLevel)
+    public TestLogger(LogLevel logLevel, string name)
     {
         _logLevel = logLevel;
-        Name = "<Will be set by the logger factory>";
+        Name = name;
     }
 
     public IEnumerable<LoggerEvent> Logs => _logs;

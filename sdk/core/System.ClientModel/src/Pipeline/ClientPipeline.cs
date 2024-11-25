@@ -142,11 +142,11 @@ public sealed partial class ClientPipeline
         // Add retry policy.
         if (loggingOptions == null || loggingOptions.ShouldUseDefaultRetryPolicy())
         {
-            policies[index++] = options.RetryPolicy ?? new ClientRetryPolicy();
+            policies[index++] = options.RetryPolicy ?? ClientRetryPolicy.Default;
         }
         else
         {
-            policies[index++] = options.RetryPolicy ?? ClientRetryPolicy.Default;
+            policies[index++] = options.RetryPolicy ?? new ClientRetryPolicy(3, loggingOptions.EnableLogging ?? ClientLoggingOptions.DefaultEnableLogging, loggingOptions.LoggerFactory);
         }
 
         // Per try policies come after the retry policy.

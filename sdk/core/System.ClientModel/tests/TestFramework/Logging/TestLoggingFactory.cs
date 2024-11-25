@@ -3,19 +3,22 @@
 
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace ClientModel.Tests;
 
 public class TestLoggingFactory : ILoggerFactory
 {
-    private readonly TestLogger _logger;
+    private readonly ConcurrentDictionary<string, TestLogger> _loggers;
 
-    public TestLoggingFactory(TestLogger logger)
+    public TestLoggingFactory(LogLevel level)
     {
-        _logger = logger;
+        _loggers = new();
+        LogLevel = level;
     }
 
-    public LogLevel LogLevel { get; set; }
+    public LogLevel LogLevel { get; }
 
     public void AddProvider(ILoggerProvider provider)
     {
@@ -24,11 +27,16 @@ public class TestLoggingFactory : ILoggerFactory
 
     public ILogger CreateLogger(string categoryName)
     {
-        _logger.Name = categoryName;
-        return _logger;
+        return _loggers.GetOrAdd(categoryName, name => new TestLogger(LogLevel, name));
+    }
+
+    public TestLogger GetLogger(string categoryName)
+    {
+        return _loggers[categoryName];
     }
 
     public void Dispose()
     {
+        _loggers.Clear();
     }
 }

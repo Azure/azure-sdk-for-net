@@ -8,13 +8,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace ClientModel.Tests.Mocks;
 
 public class MockPipelineTransport : PipelineTransport
 {
-    private int _retryCount;
     private readonly Func<PipelineMessage, MockPipelineResponse> _responseFactory;
+    private readonly bool _addDelay;
 
     public string Id { get; }
 
@@ -28,10 +29,11 @@ public class MockPipelineTransport : PipelineTransport
         _responseFactory = _ => { return new MockPipelineResponse(codes[requestIndex++]); };
     }
 
-    public MockPipelineTransport(string id, Func<PipelineMessage, MockPipelineResponse> responseFactory)
+    public MockPipelineTransport(string id, Func<PipelineMessage, MockPipelineResponse> responseFactory, bool enableLogging = false, ILoggerFactory? loggerFactory = null, bool addDelay = false) : base(enableLogging, loggerFactory)
     {
         Id = id;
         _responseFactory = responseFactory;
+        _addDelay = addDelay;
     }
 
     protected override PipelineMessage CreateMessageCore()
@@ -47,10 +49,15 @@ public class MockPipelineTransport : PipelineTransport
 
         ((MockPipelineMessage)message).SetResponse(_responseFactory(message));
 
+        if (_addDelay)
+        {
+            Task.Delay(TimeSpan.FromSeconds(4)).Wait();
+        }
+
         OnReceivedResponse?.Invoke((MockPipelineMessage)message);
     }
 
-    protected override ValueTask ProcessCoreAsync(PipelineMessage message)
+    protected override async ValueTask ProcessCoreAsync(PipelineMessage message)
     {
         Stamp(message, "Transport");
 
@@ -58,9 +65,12 @@ public class MockPipelineTransport : PipelineTransport
 
         ((MockPipelineMessage)message).SetResponse(_responseFactory(message));
 
-        OnReceivedResponse?.Invoke((MockPipelineMessage)message);
+        if (_addDelay)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(4));
+        }
 
-        return new ValueTask();
+        OnReceivedResponse?.Invoke((MockPipelineMessage)message);
     }
 
     private void Stamp(PipelineMessage message, string prefix)

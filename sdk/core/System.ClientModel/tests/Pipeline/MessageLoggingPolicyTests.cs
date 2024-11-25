@@ -19,7 +19,7 @@ public class MessageLoggingPolicyTests : SyncAsyncTestBase
 
     public MessageLoggingPolicyTests(bool isAsync) : base(isAsync)
     {
-        _loggerFactory = new TestLoggingFactory(new TestLogger(LogLevel.Debug));
+        _loggerFactory = new TestLoggingFactory(LogLevel.Debug);
     }
 
     [Test]
