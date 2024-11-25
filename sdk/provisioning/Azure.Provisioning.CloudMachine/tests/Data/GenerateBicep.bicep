@@ -1,6 +1,7 @@
 @description('The location for the resource(s) to be deployed.')
 param location string = resourceGroup().location
 
+@description('The objectId of the current user principal.')
 param principalId string
 
 resource cm_identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
@@ -67,14 +68,14 @@ resource cm_storage_cm_identity_StorageTableDataContributor 'Microsoft.Authoriza
   scope: cm_storage
 }
 
-resource cm_storage_blobs_container 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
-  name: 'default'
-  parent: cm_storage_blobs
-}
-
 resource cm_storage_blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
   name: 'default'
   parent: cm_storage
+}
+
+resource cm_storage_blobs_container_default 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
+  name: 'default'
+  parent: cm_storage_blobs
 }
 
 resource cm_servicebus 'Microsoft.ServiceBus/namespaces@2024-01-01' = {
@@ -106,16 +107,6 @@ resource cm_servicebus_cm_identity_AzureServiceBusDataOwner 'Microsoft.Authoriza
   scope: cm_servicebus
 }
 
-resource cm_servicebus_role 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(cm_servicebus.id, cm_identity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '69a216fc-b8fb-44d8-bc22-1f3c2cd27a39'))
-  properties: {
-    principalId: cm_identity.properties.principalId
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '69a216fc-b8fb-44d8-bc22-1f3c2cd27a39')
-    principalType: 'ServicePrincipal'
-  }
-  scope: cm_servicebus
-}
-
 resource cm_servicebus_auth_rule 'Microsoft.ServiceBus/namespaces/AuthorizationRules@2021-11-01' = {
   name: take('cm_servicebus_auth_rule-${uniqueString(resourceGroup().id)}', 50)
   properties: {
@@ -141,7 +132,7 @@ resource cm_servicebus_topic_private 'Microsoft.ServiceBus/namespaces/topics@202
   parent: cm_servicebus
 }
 
-resource cm_servicebus_topic_default 'Microsoft.ServiceBus/namespaces/topics@2021-11-01' = {
+resource cm_servicebus_default_topic 'Microsoft.ServiceBus/namespaces/topics@2021-11-01' = {
   name: 'cm_servicebus_default_topic'
   properties: {
     defaultMessageTimeToLive: 'P14D'
@@ -183,11 +174,26 @@ resource cm_servicebus_subscription_default 'Microsoft.ServiceBus/namespaces/top
     requiresSession: false
     status: 'Active'
   }
-  parent: cm_servicebus_topic_default
+  parent: cm_servicebus_default_topic
+}
+
+resource cm_eventgrid_topic 'Microsoft.EventGrid/systemTopics@2022-06-15' = {
+  name: 'cm0c420d2f21084cd'
+  location: location
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${cm_identity.id}': { }
+    }
+  }
+  properties: {
+    source: cm_storage.id
+    topicType: 'Microsoft.Storage.StorageAccounts'
+  }
 }
 
 resource cm_eventgrid_subscription_blob 'Microsoft.EventGrid/systemTopics/eventSubscriptions@2022-06-15' = {
-  name: 'cm-eventgrid-subscription-blob'
+  name: 'cm_eventgrid_subscription_blob'
   properties: {
     deliveryWithResourceIdentity: {
       identity: {
@@ -215,25 +221,20 @@ resource cm_eventgrid_subscription_blob 'Microsoft.EventGrid/systemTopics/eventS
       eventTimeToLiveInMinutes: 1440
     }
   }
-  parent: cm_eventgrid_topic_blob
+  parent: cm_eventgrid_topic
   dependsOn: [
-    cm_servicebus_role
+    cm_servicebus_cm0c420d2f21084cd_role
   ]
 }
 
-resource cm_eventgrid_topic_blob 'Microsoft.EventGrid/systemTopics@2022-06-15' = {
-  name: 'cm0c420d2f21084cd'
-  location: location
-  identity: {
-    type: 'UserAssigned'
-    userAssignedIdentities: {
-      '${cm_identity.id}': { }
-    }
-  }
+resource cm_servicebus_cm0c420d2f21084cd_role 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(cm_servicebus.id, cm_identity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '69a216fc-b8fb-44d8-bc22-1f3c2cd27a39'))
   properties: {
-    source: cm_storage.id
-    topicType: 'Microsoft.Storage.StorageAccounts'
+    principalId: cm_identity.properties.principalId
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '69a216fc-b8fb-44d8-bc22-1f3c2cd27a39')
+    principalType: 'ServicePrincipal'
   }
+  scope: cm_servicebus
 }
 
 resource cm_kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
@@ -397,5 +398,3 @@ resource cm_website 'Microsoft.Web/sites@2024-04-01' = {
 output cm_managed_identity_id string = cm_identity.id
 
 output storage_name string = cm_storage.name
-
-output servicebus_name string = cm_servicebus.name
